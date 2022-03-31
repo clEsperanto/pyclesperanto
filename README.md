@@ -11,3 +11,19 @@ pyclEsperanto is a python package for [clEsperanto](http://clesperanto.net/) - a
 clEsperanto uses [OpenCL kernels](https://github.com/clEsperanto/clij-opencl-kernels/tree/development/src/main/java/net/haesleinhuepf/clij/kernels) from [CLIJ](http://clij.github.io/). 
 
 This package rely on the [CLIc](https://github.com/clEsperanto/CLIc_prototype) back-end for processing.
+
+## Install
+
+Download the repository and update the submodule
+```
+git clone https://github.com/clEsperanto/pyclesperanto.git
+cd pyclesperanto && git submodule update --init --recursive
+```
+compile both sources and python package 
+```
+pip install .
+```
+and test package by running
+```
+python -m pytest .
+```

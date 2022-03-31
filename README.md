@@ -1,4 +1,5 @@
 # py-clEsperanto
+[![Build](https://github.com/clEsperanto/pyclesperanto/actions/workflows/build_and_deploy.yml/badge.svg)](https://github.com/clEsperanto/pyclesperanto/actions/workflows/build_and_deploy.yml)
 
 pyclEsperanto is a python package for [clEsperanto](http://clesperanto.net/) - a multi-language framework for GPU-accelerated image processing.
 

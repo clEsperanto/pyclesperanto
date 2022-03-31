@@ -1,0 +1,65 @@
+name: Build
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+
+  build:
+
+    name: ${{ matrix.platform }} ( ${{ matrix.python-version }})
+    runs-on: ${{ matrix.platform }}
+    strategy:
+      fail-fast: false
+      max-parallel: 8
+      matrix:
+        python-version: [3.7, 3.8, 3.9]
+        platform: [ubuntu-latest] #, windows-latest, macos-latest] 
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          submodules: true 
+      
+      - name: OCL install
+        shell: bash -l {0}
+        run: |
+          sudo apt install opencl-headers ocl-icd-dev ocl-icd-opencl-dev
+
+      - name: Set up conda ${{ matrix.python-version }}
+        uses: conda-incubator/setup-miniconda@v2.0.0
+        with:
+          auto-update-conda: true
+          activate-environment: test
+          python-version: ${{ matrix.python-version }}
+          channels: conda-forge
+
+      - name: Conda info
+        shell: bash -l {0}
+        run: conda info
+
+      - name: Install oclgrind
+        shell: bash -l {0}
+        run: conda install -y oclgrind
+
+      - name: Install dependencies
+        shell: bash -l {0}
+        run: |
+          python --version
+          python -m pip install --upgrade pip
+          pip install -y scikit-build cmake numpy setuptools pytest pytest-cov pytest-benchmark
+ 
+      - name: Compile
+        shell: bash -l {0}
+        run: pip install -e .
+
+      - name: Test
+        shell: bash -l {0}
+        run: python -m pytest . 
+
+      # - name: Coverage
+      #   uses: codecov/codecov-action@v1

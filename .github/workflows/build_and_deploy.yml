@@ -58,9 +58,10 @@ jobs:
         shell: bash -l {0}
         run: pip install -e .
 
-      - name: Test
-        shell: bash -l {0}
-        run: python -m pytest . 
+      # Test are not working with << OpenCL-error -1001 "CL_PLATFORM_NOT_FOUND_KHR" >> return code
+      # - name: Test
+      #   shell: bash -l {0}
+      #   run: python -m pytest . 
 
       # - name: Coverage
       #   uses: codecov/codecov-action@v1

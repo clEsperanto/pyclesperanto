@@ -28,6 +28,7 @@ jobs:
       - name: OCL install
         shell: bash -l {0}
         run: |
+          sudo apt update
           sudo apt install opencl-headers ocl-icd-dev ocl-icd-opencl-dev
 
       - name: Set up conda ${{ matrix.python-version }}

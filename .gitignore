@@ -6,8 +6,13 @@ __pycache__/
 # C extensions
 *.so
 
+# IDE 
+.vscode
+
 # Distribution / packaging
+_skbuild
 .Python
+.benchmarks
 build/
 develop-eggs/
 dist/
@@ -15,6 +20,7 @@ downloads/
 eggs/
 .eggs/
 lib/
+include/
 lib64/
 parts/
 sdist/
@@ -42,6 +48,7 @@ htmlcov/
 .tox/
 .nox/
 .coverage
+coverage.xml
 .coverage.*
 .cache
 nosetests.xml

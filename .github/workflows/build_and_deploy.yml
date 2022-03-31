@@ -23,7 +23,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
         with:
-          submodules: true 
+          submodules: recursive 
       
       - name: OCL install
         shell: bash -l {0}

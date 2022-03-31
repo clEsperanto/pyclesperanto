@@ -1,0 +1,3 @@
+[submodule "CLIc"]
+	path = CLIc
+	url = https://github.com/clEsperanto/CLIc_prototype.git

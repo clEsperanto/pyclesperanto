@@ -5,5 +5,5 @@ from ._pyclesperanto import maximum_all_pixels
 from ._pyclesperanto import copy
 from ._pyclesperanto import connected_component_labelling_box
 
-__common_alias__ = "pyclesperanto"
-__version__ = "0.5.2"
+__common_alias__ = "cle"
+__version__ = "0.1.0"

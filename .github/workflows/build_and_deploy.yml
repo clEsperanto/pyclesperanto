@@ -52,7 +52,7 @@ jobs:
         run: |
           python --version
           python -m pip install --upgrade pip
-          pip install -y scikit-build cmake numpy setuptools pytest pytest-cov pytest-benchmark
+          pip install scikit-build cmake numpy setuptools pytest pytest-cov pytest-benchmark
  
       - name: Compile
         shell: bash -l {0}

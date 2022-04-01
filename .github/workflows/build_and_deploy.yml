@@ -43,9 +43,9 @@ jobs:
         shell: bash -l {0}
         run: conda info
 
-      - name: Install oclgrind
+      - name: Install pocl
         shell: bash -l {0}
-        run: conda install -y oclgrind
+        run: conda install -y pocl
 
       - name: Install dependencies
         shell: bash -l {0}

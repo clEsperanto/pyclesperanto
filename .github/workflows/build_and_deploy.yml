@@ -25,11 +25,11 @@ jobs:
         with:
           submodules: recursive 
       
-      - name: OCL install
-        shell: bash -l {0}
-        run: |
-          sudo apt update
-          sudo apt install opencl-headers ocl-icd-dev ocl-icd-opencl-dev
+      # - name: OCL install
+      #   shell: bash -l {0}
+      #   run: |
+      #     sudo apt update
+      #     sudo apt install opencl-headers ocl-icd-dev ocl-icd-opencl-dev
 
       - name: Set up conda ${{ matrix.python-version }}
         uses: conda-incubator/setup-miniconda@v2.0.0
@@ -59,9 +59,9 @@ jobs:
         run: pip install -e .
 
       # Test are not working with << OpenCL-error -1001 "CL_PLATFORM_NOT_FOUND_KHR" >> return code
-      # - name: Test
-      #   shell: bash -l {0}
-      #   run: python -m pytest . 
+      - name: Test
+        shell: bash -l {0}
+        run: python -m pytest . 
 
       # - name: Coverage
       #   uses: codecov/codecov-action@v1

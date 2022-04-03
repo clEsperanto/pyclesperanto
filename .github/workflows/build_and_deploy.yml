@@ -51,6 +51,7 @@ jobs:
         shell: bash -l {0}
         run: |
           python --version
+          conda install -y pyopencl
           python -m pip install --upgrade pip
           pip install scikit-build cmake numpy setuptools pytest pytest-cov pytest-benchmark
  

@@ -1,9 +1,9 @@
 import time
 import numpy as np
-import pyclesperanto as cle
 
 
 def test_gpu_info():
+    import pyclesperanto as cle
     gpu = cle.gpu()
     print(gpu.info())
 
@@ -13,6 +13,7 @@ def test_pycle_p():
 
 def test_execute_kernel():
     # init gpu and print info
+    import pyclesperanto as cle
     gpu = cle.gpu()
     gpu.set_wait_for_kernel_to_finish()
         

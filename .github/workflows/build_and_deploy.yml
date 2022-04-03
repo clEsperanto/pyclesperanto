@@ -25,11 +25,11 @@ jobs:
         with:
           submodules: recursive 
       
-      - name: OCL install
-        shell: bash -l {0}
-        run: |
-          sudo apt update
-          sudo apt install opencl-headers ocl-icd-opencl-dev
+      #- name: OCL install
+      #  shell: bash -l {0}
+      #  run: |
+      #    sudo apt update
+      #    sudo apt install opencl-headers ocl-icd-opencl-dev
 
       - name: Set up conda ${{ matrix.python-version }}
         uses: conda-incubator/setup-miniconda@v2.0.0
@@ -51,7 +51,7 @@ jobs:
         shell: bash -l {0}
         run: |
           python --version
-          conda install -c conda-forge ocl-icd-system pyclesperanto-prototype
+          conda install -c conda-forge -y pyopencl pyclesperanto-prototype
           python -m pip install --upgrade pip
           pip install scikit-build cmake numpy setuptools pytest pytest-cov pytest-benchmark
  

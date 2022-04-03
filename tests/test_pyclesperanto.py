@@ -17,18 +17,18 @@ def test_execute_kernel():
     valid = np.ones((3,3,1), dtype=np.float32) + 100
 
     # push and create buffer
-    out = gpu.create(input.shape)
-    int = gpu.push(input)
+    output_gpu = gpu.create(input.shape)
+    input_gpu = gpu.push(input)
     
     time.sleep(1)
 
     # apply kernel
-    cle.add_image_and_scalar(gpu, int, out, 100)
+    cle.add_image_and_scalar(gpu, input_gpu, output_gpu, 100)
     
     time.sleep(1)
 
     # pull from device result and assert
-    result = gpu.pull(out)
+    result = gpu.pull(output_gpu)
     
     time.sleep(1)
     

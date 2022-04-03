@@ -21,7 +21,7 @@ cd pyclesperanto && git submodule update --init --recursive
 ```
 compile both sources and python package 
 ```
-pip install .
+pip install -e .
 ```
 and test package by running
 ```

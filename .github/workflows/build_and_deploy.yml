@@ -55,9 +55,9 @@ jobs:
           python -m pip install --upgrade pip
           pip install scikit-build cmake numpy setuptools pytest pytest-cov pytest-benchmark
  
-      #- name: Compile
-      #  shell: bash -l {0}
-      #  run: pip install -e .
+      - name: Compile
+        shell: bash -l {0}
+        run: pip install -e .
 
       # Test are not working with oclgrind, return value are incorrect...
       - name: Test

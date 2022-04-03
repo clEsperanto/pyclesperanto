@@ -51,7 +51,7 @@ jobs:
         shell: bash -l {0}
         run: |
           python --version
-          conda install -c conda-forge ocl-icd-system
+          conda install -c conda-forge ocl-icd-system pyclesperanto-prototype
           python -m pip install --upgrade pip
           pip install scikit-build cmake numpy setuptools pytest pytest-cov pytest-benchmark
  

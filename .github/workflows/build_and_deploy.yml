@@ -29,7 +29,7 @@ jobs:
         shell: bash -l {0}
         run: |
           sudo apt update
-          sudo apt install opencl-headers ocl-icd-opencl-dev ocl-icd-libopencl1
+          sudo apt install ocl-icd-opencl-dev
 
       - name: Set up conda ${{ matrix.python-version }}
         uses: conda-incubator/setup-miniconda@v2.0.0
@@ -43,21 +43,26 @@ jobs:
         shell: bash -l {0}
         run: conda info
 
-      - name: Install pocl
-        shell: bash -l {0}
-        run: conda install -y pocl
-
       - name: Install dependencies
         shell: bash -l {0}
         run: |
           python --version
-          conda install -c conda-forge -y pyopencl pyclesperanto-prototype
           python -m pip install --upgrade pip
           pip install scikit-build cmake numpy setuptools pytest pytest-cov pytest-benchmark
- 
+      
       - name: Compile
         shell: bash -l {0}
         run: pip install -e .
+
+      - name: Install pocl
+        shell: bash -l {0}
+        run: conda install -y pocl
+
+      - name: Install pyopencl pyclesperanto-prototype
+        shell: bash -l {0}
+        run: |
+          python --version
+          conda install -c conda-forge -y pyopencl pyclesperanto-prototype
 
       # Test are not working with oclgrind, return value are incorrect...
       - name: Test

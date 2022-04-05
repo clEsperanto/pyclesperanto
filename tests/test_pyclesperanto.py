@@ -3,9 +3,8 @@ import numpy as np
 
 
 def test_gpu_info():
-    import pyclesperanto as cle
-    gpu = cle.gpu()
-    print(gpu.info())
+    from pyclesperanto import gpu
+    print(gpu().info())
 
 def test_pycle_p():
     from pyclesperanto_prototype import available_device_names

@@ -76,7 +76,7 @@ void init_pytier1(pybind11::module_ &m) {
     m.def("copy", &Copy, "copy data",
         pybind11::arg("device"), pybind11::arg("input"), pybind11::arg("output"));    
 
-    m.def("connected_component_labelling_box", &ConnectedComponentLabellingBox, "copy data",
+    m.def("connected_components_labeling_box", &ConnectedComponentsLabelingBox, "copy data",
         pybind11::arg("device"), pybind11::arg("input"), pybind11::arg("output")); 
 
     m.doc() = R"pbdoc(

@@ -29,7 +29,7 @@ jobs:
         shell: bash -l {0}
         run: |
           sudo apt update
-          sudo apt install beignet beignet-dev
+          sudo apt install beignet-opencl-icd
 
       - name: Set up conda ${{ matrix.python-version }}
         uses: conda-incubator/setup-miniconda@v2.0.0

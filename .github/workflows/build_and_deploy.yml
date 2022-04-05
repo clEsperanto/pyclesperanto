@@ -29,7 +29,7 @@ jobs:
         shell: bash -l {0}
         run: |
           sudo apt update
-          sudo apt install opencl-headers ocl-icd-libopencl1 ocl-icd-dev
+          sudo apt install opencl-headers ocl-icd-dev
 
       - name: Set up conda ${{ matrix.python-version }}
         uses: conda-incubator/setup-miniconda@v2.0.0

@@ -6,7 +6,7 @@
 #include "cleAddImageAndScalarKernel.hpp"
 #include "cleGaussianBlurKernel.hpp"
 #include "cleMaximumOfAllPixelsKernel.hpp"
-#include "cleConnectedComponentLabellingBoxKernel.hpp"
+#include "cleConnectedComponentsLabelingBoxKernel.hpp"
 #include "cleCopyKernel.hpp"
 
 #include "pygpu.hpp"  // todo: find a cleaner way to call the class PyGPU
@@ -53,9 +53,9 @@ void Copy(PyGPU& device, Object& input, Object& output)
     kernel.Execute();
 }
 
-void ConnectedComponentLabellingBox(PyGPU& device, Object& input, Object& output)
+void ConnectedComponentsLabelingBox(PyGPU& device, Object& input, Object& output)
 {
-    ConnectedComponentLabellingBoxKernel kernel(std::make_shared<GPU>(device));
+    ConnectedComponentsLabelingBoxKernel kernel(std::make_shared<GPU>(device));
     kernel.SetInput(input);
     kernel.SetOutput(output);
     kernel.Execute();

@@ -15,9 +15,11 @@ find_package(Python COMPONENTS Interpreter Development REQUIRED)
 file(GLOB OpenCL_LIBRARY ${Python_LIBRARY_DIRS}/libOpenCL.so) 
 if(OpenCL_LIBRARY STREQUAL "")
     message(STATUS "No ICD found in virtual environment.")
+else()
+    set(OpenCL_LIBRARIES ${OpenCL_LIBRARY})
+    find_package(OpenCL 1.2 PATHS ${Python_LIBRARY_DIRS} ${Python_INCLUDE_DIRS})
+    set(OpenCL_FOUND TRUE)
 endif()
-
-find_package(OpenCL 1.2 PATHS ${Python_LIBRARY_DIRS} ${Python_INCLUDE_DIRS})
 
 # Compile CLIc Back-end library
 add_subdirectory(CLIc)

@@ -8,6 +8,17 @@ project(pyClesperanto VERSION 0.5.2)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC")
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fPIC")
 
+# find required package
+set(Python_FIND_VIRTUALENV "FIRST") # look for python in virtual env or conda first before checking the system.
+find_package(Python COMPONENTS Interpreter Development REQUIRED)
+
+file(GLOB OpenCL_LIBRARY ${Python_LIBRARY_DIRS}/libOpenCL.so) 
+if(OpenCL_LIBRARY STREQUAL "")
+    message(STATUS "No ICD found in virtual environment.")
+endif()
+
+find_package(OpenCL 1.2 PATHS ${Python_LIBRARY_DIRS} ${Python_INCLUDE_DIRS})
+
 # Compile CLIc Back-end library
 add_subdirectory(CLIc)
 

@@ -40,3 +40,8 @@ def test_execute_kernel():
     print("result:", result.flatten(), result.dtype)
             
     assert(np.sum(result.flatten()) == np.sum(valid.flatten()))
+
+
+test_gpu_info()
+test_pycle_p()
+test_execute_kernel()

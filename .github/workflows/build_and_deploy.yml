@@ -68,7 +68,7 @@ jobs:
       # Test are not working with oclgrind, return value are incorrect...
       - name: Test
         shell: bash -l {0}
-        run: python ./test/test_pyclesperanto.py
+        run: pytest .
 
       # - name: Coverage
       #   uses: codecov/codecov-action@v1

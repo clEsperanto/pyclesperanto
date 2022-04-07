@@ -49,7 +49,7 @@ if(DEFINED SKBUILD)
     find_package(pybind11)
 
     pybind11_add_module(_pyclesperanto MODULE ${PY_SOURCES_FILES})
-    target_link_libraries(_pyclesperanto PRIVATE CLIc)
+    target_link_libraries(_pyclesperanto PRIVATE CLIc::CLIc)
     add_dependencies(_pyclesperanto CLIc)
     target_include_directories(_pyclesperanto PUBLIC 
         "$<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/pyclesperanto/>")

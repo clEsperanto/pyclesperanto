@@ -63,7 +63,7 @@ jobs:
       
       - name: Compile
         shell: bash -l {0}
-        run: pip install -e -v .
+        run: pip install -v -e .
 
       # Test are not working with oclgrind, return value are incorrect...
       - name: Test

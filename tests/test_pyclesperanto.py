@@ -2,24 +2,20 @@ import time
 import numpy as np
 
 
-
+def test_pycle_p():
+    from pyclesperanto_prototype import available_device_names, select_device
+    print(available_device_names())
 
 def test_gpu_info():
     from pyclesperanto import gpu
     dev = gpu()
-    dev.select_device("Intel")
     print(dev.info())
-    
-def test_pycle_p():
-    from pyclesperanto_prototype import available_device_names, select_device
-    print(available_device_names())
-    
+        
 
 def test_execute_kernel():
     # init gpu and print info
     import pyclesperanto as cle
     gpu = cle.gpu()
-    gpu.select_device("Intel")
     gpu.set_wait_for_kernel_to_finish()
         
     input = np.ones((3,3,1), dtype=np.float32)

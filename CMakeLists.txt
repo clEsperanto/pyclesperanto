@@ -5,8 +5,8 @@ cmake_minimum_required(VERSION 3.20)
 project(pyClesperanto VERSION 0.1.0)
 
 # Compilation tag for CLIc library linking
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC")
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fPIC")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC -fvisibility=hidden")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fPIC -fvisibility=hidden")
 
 # find required package
 set(Python_FIND_VIRTUALENV "FIRST") # look for python in virtual env or conda first before checking the system.
@@ -39,6 +39,8 @@ add_subdirectory(CLIc)
 # split c++ stand-alone build from python wrapper build with scikit-build
 if(DEFINED SKBUILD)
 
+    find_package(PythonExtensions)
+
     set(ignoreMe "${SKBUILD}")
 
     file(GLOB_RECURSE PY_SOURCES_FILES ${CMAKE_CURRENT_SOURCE_DIR}/pyclesperanto/*.cpp) 
@@ -49,7 +51,7 @@ if(DEFINED SKBUILD)
     find_package(pybind11)
 
     pybind11_add_module(_pyclesperanto MODULE ${PY_SOURCES_FILES})
-    target_link_libraries(_pyclesperanto PRIVATE CLIc::CLIc)
+    target_link_libraries(_pyclesperanto PRIVATE ${OpenCL_LIBRARIES} CLIc::CLIc)
     add_dependencies(_pyclesperanto CLIc)
     target_include_directories(_pyclesperanto PUBLIC 
         "$<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/pyclesperanto/>")

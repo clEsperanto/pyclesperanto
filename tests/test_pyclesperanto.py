@@ -2,9 +2,10 @@ import time
 import numpy as np
 
 
-def test_pycle_p():
-    from pyclesperanto_prototype import available_device_names, select_device
-    print(available_device_names())
+# def test_pycle_p():
+#     from pyclesperanto_prototype import available_device_names, select_device
+#     print(available_device_names())
+
 
 def test_gpu_info():
     from pyclesperanto import gpu

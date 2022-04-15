@@ -19,12 +19,9 @@ Object PyGPU::Create(ndarray_f& dimensions, std::string& t_type)
     }
     float* ptr = static_cast<float*>(arr.ptr);
     std::array<size_t,3> shape = {1, 1, 1};
-    for (auto i = 0;  i < arr.size; ++i)
+    for (int i = arr.size-1, j = 0;  i >= 0 && j < shape.size(); --i, ++j)
     {
-        if(ptr[i] > 0)
-        {
-            shape[i] = static_cast<size_t>(ptr[i]);
-        }
+        shape[j] = static_cast<size_t>(ptr[i]); //! We flip the dimensions from numpy to c++
     }
     return GPU::Create<float>(shape, t_type); 
 };
@@ -37,12 +34,9 @@ Object PyGPU::Push(ndarray_f& ndarray, std::string& t_type)
         throw std::runtime_error("Number of dimensions must be three or less");
     }
     std::array<size_t,3> shape = {1, 1, 1};
-    for (auto i = 0;  i < arr.ndim; ++i)
+    for (int i = arr.ndim-1, j = 0;  i >= 0 && j < shape.size(); --i, ++j)
     {
-        if(arr.shape[i] > 0)
-        {
-            shape[i] = static_cast<size_t>(arr.shape[i]);
-        }
+        shape[j] = static_cast<size_t>(arr.shape[i]); //! We flip the dimensions from numpy to c++
     }
     float* arr_ptr = static_cast<float*>(arr.ptr);
     std::vector<float> values(arr_ptr, arr_ptr + arr.size);
@@ -58,7 +52,7 @@ PyGPU::ndarray_f PyGPU::Pull(Object& buffer)
     {
         ptr[i] = output[i];
     }
-    result.resize({buffer.Shape()[0], buffer.Shape()[1], buffer.Shape()[2]});
+    result.resize({buffer.Shape()[2], buffer.Shape()[1], buffer.Shape()[0]}); //! We flip the dimensions from c++ to numpy
     return result.squeeze();
 }    
 

@@ -6,7 +6,7 @@
 #include "cleAddImageAndScalarKernel.hpp"
 #include "cleGaussianBlurKernel.hpp"
 #include "cleMaximumOfAllPixelsKernel.hpp"
-#include "cleConnectedComponentLabellingBoxKernel.hpp"
+#include "cleConnectedComponentsLabelingBoxKernel.hpp"
 #include "cleCopyKernel.hpp"
 
 #include "pygpu.hpp"  // todo: find a cleaner way to call the class PyGPU
@@ -53,9 +53,9 @@ void Copy(PyGPU& device, Object& input, Object& output)
     kernel.Execute();
 }
 
-void ConnectedComponentLabellingBox(PyGPU& device, Object& input, Object& output)
+void ConnectedComponentsLabelingBox(PyGPU& device, Object& input, Object& output)
 {
-    ConnectedComponentLabellingBoxKernel kernel(std::make_shared<GPU>(device));
+    ConnectedComponentsLabelingBoxKernel kernel(std::make_shared<GPU>(device));
     kernel.SetInput(input);
     kernel.SetOutput(output);
     kernel.Execute();
@@ -76,7 +76,7 @@ void init_pytier1(pybind11::module_ &m) {
     m.def("copy", &Copy, "copy data",
         pybind11::arg("device"), pybind11::arg("input"), pybind11::arg("output"));    
 
-    m.def("connected_component_labelling_box", &ConnectedComponentLabellingBox, "copy data",
+    m.def("connected_components_labeling_box", &ConnectedComponentsLabelingBox, "copy data",
         pybind11::arg("device"), pybind11::arg("input"), pybind11::arg("output")); 
 
     m.doc() = R"pbdoc(

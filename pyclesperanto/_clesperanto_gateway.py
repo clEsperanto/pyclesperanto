@@ -12,7 +12,7 @@ class Clesperanto:
     def create_like(self, image):
         from ._pyclesperanto import data
         if isinstance(image, data):
-            return self.create(image.shape())
+            return self.create(np.flip(image.shape()).squeeze())
         else:
             return self.create(image.shape)
 

@@ -2,11 +2,12 @@
 
 #include "pyclesperanto.hpp"
 #include "pygpu.hpp"
+#include "pydata.hpp"
 
 using namespace cle;
 
 
-Object PyGPU::Create(ndarray_f& dimensions, std::string& t_type) 
+PyData PyGPU::Create(ndarray_f& dimensions, std::string& t_type) 
 { 
     pybind11::buffer_info arr = dimensions.request();
     if (arr.ndim > 1)
@@ -26,7 +27,7 @@ Object PyGPU::Create(ndarray_f& dimensions, std::string& t_type)
     return GPU::Create<float>(shape, t_type); 
 };
 
-Object PyGPU::Push(ndarray_f& ndarray, std::string& t_type) 
+PyData PyGPU::Push(ndarray_f& ndarray, std::string& t_type) 
 { 
     pybind11::buffer_info arr = ndarray.request();
     if (arr.ndim > 3)
@@ -43,7 +44,7 @@ Object PyGPU::Push(ndarray_f& ndarray, std::string& t_type)
     return GPU::Push<float>(values, shape, t_type); 
 };
 
-PyGPU::ndarray_f PyGPU::Pull(Object& buffer) 
+PyGPU::ndarray_f PyGPU::Pull(PyData& buffer) 
 { 
     auto output = GPU::Pull<float>(buffer);
     auto result = ndarray_f(output.size());

@@ -1,15 +1,14 @@
 
 
-#include "cleObject.hpp"
 #include "cleGPU.hpp"
-
 #include "cleAddImageAndScalarKernel.hpp"
 #include "cleGaussianBlurKernel.hpp"
 #include "cleMaximumOfAllPixelsKernel.hpp"
 #include "cleConnectedComponentsLabelingBoxKernel.hpp"
 #include "cleCopyKernel.hpp"
 
-#include "pygpu.hpp"  // todo: find a cleaner way to call the class PyGPU
+#include "pydata.hpp"
+#include "pygpu.hpp" 
 #include "pyclesperanto.hpp"
 
 using namespace cle;
@@ -17,7 +16,7 @@ using namespace cle;
 
 
 
-void AddImageAndScalar(PyGPU& device, Object& input, Object& output, float scalar)
+void AddImageAndScalar(PyGPU& device, PyData& input, PyData& output, float scalar)
 {
     AddImageAndScalarKernel kernel(std::make_shared<GPU>(device));
     kernel.SetInput(input);
@@ -27,7 +26,7 @@ void AddImageAndScalar(PyGPU& device, Object& input, Object& output, float scala
 }
 
 
-void GaussianBlur(PyGPU& device, Object& input, Object& output, float simga_x, float sigma_y, float sigma_z)
+void GaussianBlur(PyGPU& device, PyData& input, PyData& output, float simga_x, float sigma_y, float sigma_z)
 {
     GaussianBlurKernel kernel(std::make_shared<GPU>(device));
     kernel.SetInput(input);
@@ -37,7 +36,7 @@ void GaussianBlur(PyGPU& device, Object& input, Object& output, float simga_x, f
 }
 
 
-void MaximumOfAllPixels(PyGPU& device, Object& input, Object& output)
+void MaximumOfAllPixels(PyGPU& device, PyData& input, PyData& output)
 {
     MaximumOfAllPixelsKernel kernel(std::make_shared<GPU>(device));
     kernel.SetInput(input);
@@ -45,7 +44,7 @@ void MaximumOfAllPixels(PyGPU& device, Object& input, Object& output)
     kernel.Execute();
 }
 
-void Copy(PyGPU& device, Object& input, Object& output)
+void Copy(PyGPU& device, PyData& input, PyData& output)
 {
     CopyKernel kernel(std::make_shared<GPU>(device));
     kernel.SetInput(input);
@@ -53,7 +52,7 @@ void Copy(PyGPU& device, Object& input, Object& output)
     kernel.Execute();
 }
 
-void ConnectedComponentsLabelingBox(PyGPU& device, Object& input, Object& output)
+void ConnectedComponentsLabelingBox(PyGPU& device, PyData& input, PyData& output)
 {
     ConnectedComponentsLabelingBoxKernel kernel(std::make_shared<GPU>(device));
     kernel.SetInput(input);

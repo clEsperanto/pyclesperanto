@@ -7,15 +7,9 @@
 // #include <pybind11/functional.h>
 
 #include "cleGPU.hpp"
-#include "cleObject.hpp"
-
-// #include "pyclesperanto.hpp"
+#include "pydata.hpp"
 
 using namespace cle;
-
-
-// todo: trampoline class for interface C++ python
-// Should we do that for all wrapped class? (aka overlayer of wrapper)
 
 class PyGPU : public GPU {
 public:
@@ -28,9 +22,9 @@ public:
     // using ndarray_c = pybind11::array_t<char, pybind11::array::c_style | pybind11::array::forcecast>;
     // using ndarray_uc = pybind11::array_t<unsigned char, pybind11::array::c_style | pybind11::array::forcecast>;
 
-    Object Create(ndarray_f&, std::string&);
-    Object Push(ndarray_f&, std::string&);
-    ndarray_f Pull(Object&);
+    PyData Create(ndarray_f&, std::string&);
+    PyData Push(ndarray_f&, std::string&);
+    ndarray_f Pull(PyData&);
    
 };
 

@@ -1,4 +1,3 @@
-import time
 import numpy as np
 import pyclesperanto as cle
 
@@ -10,27 +9,21 @@ def test_gpu_info():
 
 def test_execute_kernel():
     # init gpu and print info
-    gpu = cle.gpu()
-    gpu.set_wait_for_kernel_to_finish()
+    device = cle.gpu()
+    device.set_wait_for_kernel_to_finish()
         
     input = np.ones((3,3,1), dtype=np.float32)
     valid = np.ones((3,3,1), dtype=np.float32) + 100
 
     # push and create buffer
-    out = gpu.create(input.shape)
-    int = gpu.push(input)
-    
-    time.sleep(1)
+    gpu_output = device.create(input.shape)
+    gpu_input = device.push(input)
 
     # apply kernel
-    cle.add_image_and_scalar(gpu, int, out, 100)
-    
-    time.sleep(1)
+    cle.add_image_and_scalar(device=device, input=gpu_input, output=gpu_output, scalar=100)
 
     # pull from device result and assert
-    result = gpu.pull(out)
-    
-    time.sleep(1)
+    result = device.pull(gpu_output)
     
     print("input:", input.flatten(), input.dtype)
     print("valid:", valid.flatten(), valid.dtype)

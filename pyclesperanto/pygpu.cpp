@@ -55,6 +55,7 @@ PyGPU::ndarray_f PyGPU::Pull(PyData& buffer)
     }
     result.resize({buffer.Shape()[2], buffer.Shape()[1], buffer.Shape()[0]}); //! We flip the dimensions from c++ to numpy
     return result.squeeze();
+    //! return 1d array
 }    
 
 // PYBIND11_MODULE(_gpu, m) {  // define a module. module name = file name = cmake target name 

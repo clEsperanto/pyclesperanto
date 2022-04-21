@@ -29,13 +29,14 @@ void init_pydata(pybind11::module_ &m) {
     object.def("shape_zyx", &PyData::Shape_zyx, "return object shape (z,y,x)");
     object.def("shape", &PyData::Shape, "return object shape (x,y,z)");
     object.def("dtype", &PyData::GetDataType, "return object data type (float, double, etc.)");
-    object.def("reset", &PyData::Reset, "reset object, free device memory");
     object.doc() = R"pbdoc(
         data class wrapper
-        -----------------------
-        shape()
+        -----------------------        
         ndim()
         size()
+        shape_zyx()
+        shape()
+        dtype()
     )pbdoc";
 
 }

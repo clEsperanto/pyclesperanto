@@ -39,7 +39,7 @@ jobs:
 
       - name: Install pocl
         shell: bash -l {0}
-        run: conda install -y ocl-icd ocl-icd-system pocl
+        run: conda install -y pocl
 
       - name: Install dependencies
         shell: bash -l {0}

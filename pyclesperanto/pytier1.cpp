@@ -1,14 +1,14 @@
 
 
-#include "cleObject.hpp"
-#include "cleGPU.hpp"
+
 
 #include "cleAddImageAndScalarKernel.hpp"
 #include "cleGaussianBlurKernel.hpp"
 #include "cleMaximumOfAllPixelsKernel.hpp"
-#include "cleConnectedComponentLabellingBoxKernel.hpp"
+#include "cleConnectedComponentsLabelingBoxKernel.hpp"
 #include "cleCopyKernel.hpp"
 
+#include "pydata.hpp"
 #include "pygpu.hpp"  // todo: find a cleaner way to call the class PyGPU
 #include "pyclesperanto.hpp"
 
@@ -17,7 +17,7 @@ using namespace cle;
 
 
 
-void AddImageAndScalar(PyGPU& device, Object& input, Object& output, float scalar)
+void AddImageAndScalar(PyGPU& device, PyData& input, PyData& output, float scalar)
 {
     AddImageAndScalarKernel kernel(std::make_shared<GPU>(device));
     kernel.SetInput(input);
@@ -27,17 +27,17 @@ void AddImageAndScalar(PyGPU& device, Object& input, Object& output, float scala
 }
 
 
-void GaussianBlur(PyGPU& device, Object& input, Object& output, float simga_x, float sigma_y, float sigma_z)
+void GaussianBlur(PyGPU& device, PyData& input, PyData& output, float sigma_x, float sigma_y, float sigma_z)
 {
     GaussianBlurKernel kernel(std::make_shared<GPU>(device));
     kernel.SetInput(input);
     kernel.SetOutput(output);
-    kernel.SetSigma(simga_x, sigma_y, sigma_z);
+    kernel.SetSigma(sigma_x, sigma_y, sigma_z);
     kernel.Execute();
 }
 
 
-void MaximumOfAllPixels(PyGPU& device, Object& input, Object& output)
+void MaximumOfAllPixels(PyGPU& device, PyData& input, PyData& output)
 {
     MaximumOfAllPixelsKernel kernel(std::make_shared<GPU>(device));
     kernel.SetInput(input);
@@ -45,7 +45,7 @@ void MaximumOfAllPixels(PyGPU& device, Object& input, Object& output)
     kernel.Execute();
 }
 
-void Copy(PyGPU& device, Object& input, Object& output)
+void Copy(PyGPU& device, PyData& input, PyData& output)
 {
     CopyKernel kernel(std::make_shared<GPU>(device));
     kernel.SetInput(input);
@@ -53,9 +53,9 @@ void Copy(PyGPU& device, Object& input, Object& output)
     kernel.Execute();
 }
 
-void ConnectedComponentLabellingBox(PyGPU& device, Object& input, Object& output)
+void ConnectedComponentsLabelingBox(PyGPU& device, PyData& input, PyData& output)
 {
-    ConnectedComponentLabellingBoxKernel kernel(std::make_shared<GPU>(device));
+    ConnectedComponentsLabelingBoxKernel kernel(std::make_shared<GPU>(device));
     kernel.SetInput(input);
     kernel.SetOutput(output);
     kernel.Execute();
@@ -68,7 +68,7 @@ void init_pytier1(pybind11::module_ &m) {
         pybind11::arg("device"), pybind11::arg("input"), pybind11::arg("output"), pybind11::arg("scalar") =0);
 
     m.def("gaussian_blur", &GaussianBlur, "Apply gaussian blur",
-        pybind11::arg("device"), pybind11::arg("input"), pybind11::arg("output"), pybind11::arg("simga_x") =0, pybind11::arg("simga_y") =0, pybind11::arg("simga_z") =0);
+        pybind11::arg("device"), pybind11::arg("input"), pybind11::arg("output"), pybind11::arg("sigma_x") =0, pybind11::arg("sigma_y") =0, pybind11::arg("sigma_z") =0);
 
     m.def("maximum_all_pixels", &MaximumOfAllPixels, "return maximum pixel value",
         pybind11::arg("device"), pybind11::arg("input"), pybind11::arg("output"));
@@ -76,7 +76,7 @@ void init_pytier1(pybind11::module_ &m) {
     m.def("copy", &Copy, "copy data",
         pybind11::arg("device"), pybind11::arg("input"), pybind11::arg("output"));    
 
-    m.def("connected_component_labelling_box", &ConnectedComponentLabellingBox, "copy data",
+    m.def("connected_components_labeling_box", &ConnectedComponentsLabelingBox, "copy data",
         pybind11::arg("device"), pybind11::arg("input"), pybind11::arg("output")); 
 
     m.doc() = R"pbdoc(
@@ -86,7 +86,7 @@ void init_pytier1(pybind11::module_ &m) {
         maximum_all_pixels()
         gaussian_blur()
         copy()
-        connected_component_labelling_box()
+        connected_component_labeling_box()
     )pbdoc";
 
 }

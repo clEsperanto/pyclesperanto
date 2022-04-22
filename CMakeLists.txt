@@ -2,7 +2,7 @@
 cmake_minimum_required(VERSION 3.20)
 
 # Set project name and version
-project(pyClesperanto VERSION 0.2.0)
+project(pyClesperanto VERSION 0.3.0)
 
 # Compilation tag for CLIc library linking
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC -fvisibility=hidden")

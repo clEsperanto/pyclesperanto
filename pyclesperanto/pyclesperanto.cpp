@@ -7,4 +7,7 @@ PYBIND11_MODULE(_pyclesperanto, m) {  // define a module. module name = file nam
     init_pygpu(m);
     init_pydata(m);
     init_pytier1(m);
+    init_pytier2(m);
+    init_pytier3(m);
+    init_pytier4(m);
 }

@@ -41,7 +41,7 @@ class Clesperanto:
     @plugin_function
     def gaussian_blur(self, input_image: Image, output_image: Image = None, sigma_x: float = 0, sigma_y: float = 0, sigma_z: float = 0):
         from ._pyclesperanto import gaussian_blur as op
-        op(self._gpu, input_image, output_image, simga_x=float(sigma_x), simga_y=float(sigma_y), simga_z=float(sigma_z))
+        op(self._gpu, input_image, output_image, sigma_x=float(sigma_x), sigma_y=float(sigma_y), sigma_z=float(sigma_z))
         return output_image
 
     @plugin_function
@@ -57,8 +57,8 @@ class Clesperanto:
         return output_image
 
     @plugin_function
-    def connected_component_labelling_box(self, input_image: Image, output_image: Image = None):
-        from ._pyclesperanto import connected_component_labelling_box as op
+    def connected_components_labeling_box(self, input_image: Image, output_image: Image = None):
+        from ._pyclesperanto import connected_components_labeling_box as op
         op(self._gpu, input_image, output_image)
         return output_image
 

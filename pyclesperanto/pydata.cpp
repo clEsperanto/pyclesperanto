@@ -27,7 +27,7 @@ void init_pydata(pybind11::module_ &m) {
     object.def(pybind11::init<>());
     object.def("ndim", &PyData::nDim, "return object dimensionality");
     object.def("size", &PyData::Size, "return object size (elements wise)");
-    object.def("shape", &PyData::Shape, "return object shape (x,y,z)");
+    object.def("shape", &PyData::Shape_zyx, "return object shape (z,y,x)");
     object.def("shape_xyz", &PyData::Shape_xyz, "return object shape (x,y,z)");
     object.def("shape_zyx", &PyData::Shape_zyx, "return object shape (z,y,x)");
     object.def("dtype", &PyData::GetDataType, "return object data type (float, double, etc.)");

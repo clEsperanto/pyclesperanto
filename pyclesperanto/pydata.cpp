@@ -31,6 +31,7 @@ void init_pydata(pybind11::module_ &m) {
     object.def("shape_xyz", &PyData::Shape_xyz, "return object shape (x,y,z)");
     object.def("shape_zyx", &PyData::Shape_zyx, "return object shape (z,y,x)");
     object.def("dtype", &PyData::GetDataType, "return object data type (float, double, etc.)");
+    object.def("otype", &PyData::GetObjectType, "return object type (buffer, image, etc.)");
     object.doc() = R"pbdoc(
         data class wrapper
         -----------------------

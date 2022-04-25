@@ -64,15 +64,16 @@ void init_pygpu(pybind11::module_ &m) {
     pybind11::class_<PyGPU, std::shared_ptr<PyGPU>> object(m, "gpu");
 
         object.def(pybind11::init<>(), "GPU default constructor", pybind11::return_value_policy::move);
-        object.def(pybind11::init<const char*, const char*>(), "GPU constructor", pybind11::return_value_policy::move, pybind11::arg("t_device_name"), pybind11::arg("t_device_type") = "all");
+        object.def(pybind11::init<const char*, const char*>(), "GPU constructor", pybind11::return_value_policy::move, pybind11::arg("t_device_name"), pybind11::arg("t_device_type"));
 
-        object.def("select_device", &PyGPU::SelectDevice, "select device from string, return full device name string", pybind11::arg("t_device_name"), pybind11::arg("t_device_type") ="all");
+        object.def("select_device", &PyGPU::SelectDevice, "select device from string, return full device name string", pybind11::arg("t_device_name"), pybind11::arg("t_device_type"));
+        object.def("list_available_devices", &PyGPU::ListAvailableDevices, "list devices available to use on the system", pybind11::arg("t_device_type"));
         object.def("info", &PyGPU::Info, "return device informations");
         object.def("name", &PyGPU::Name, "return device name");
         object.def("score", &PyGPU::Score, "return device score");
-        object.def("set_wait_for_kernel_to_finish", &GPU::SetWaitForKernelToFinish, "Force device to wait until kernel finished", pybind11::arg("t_flag") =true );
-        object.def("create", &PyGPU::Create, pybind11::return_value_policy::move, "create an empty gpu array", pybind11::arg("dimensions"), pybind11::arg("t_type") ="buffer");
-        object.def("push", &PyGPU::Push, pybind11::return_value_policy::move, "create a gpu array and write numpy array into it", pybind11::arg("ndarray"), pybind11::arg("t_type") ="buffer");
+        object.def("set_wait_for_kernel_to_finish", &GPU::SetWaitForKernelToFinish, "Force device to wait until kernel finished", pybind11::arg("t_flag"));
+        object.def("create", &PyGPU::Create, pybind11::return_value_policy::move, "create an empty gpu array", pybind11::arg("dimensions"), pybind11::arg("t_type"));
+        object.def("push", &PyGPU::Push, pybind11::return_value_policy::move, "create a gpu array and write numpy array into it", pybind11::arg("ndarray"), pybind11::arg("t_type"));
         object.def("pull", &PyGPU::Pull, pybind11::return_value_policy::move, "read a gpu array into numpy", pybind11::arg("gpu_array"));
 
         object.doc() = R"pbdoc(

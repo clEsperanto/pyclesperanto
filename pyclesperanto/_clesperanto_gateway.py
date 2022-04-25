@@ -107,3 +107,9 @@ class Clesperanto:
         from ._pyclesperanto import binary_not as op
         op(self._gpu, input_image, output_image)
         return output_image
+    
+    @plugin_function
+    def threshold_otsu(self, input_image: Image, output_image: Image = None):
+        from ._pyclesperanto import threshold_otsu as op
+        op(self._gpu, input_image, output_image)
+        return output_image

@@ -2,35 +2,63 @@ import numpy as np
 from ._types import Image, plugin_function
 
 class Clesperanto:
-    def __init__(self):
+    
+    def __init__(self, device_name: str=""):
         from ._pyclesperanto import gpu
-        self._gpu = gpu()
+        if device_name != "": 
+            self._gpu = gpu(device_name, "all")
+        else:
+            self._gpu = gpu()
+    
+    
+    
+    @property
+    def info(self) -> str:
+        return print(self._gpu.info())
+    
+    @property
+    def name(self) -> str:
+        return print(self._gpu.name())
+    
+    @property
+    def score(self) -> int:
+        return print(self._gpu.score())
+    
+    
+    
+    def list_available_devices(self) -> list:
+        return self._gpu.list_available_devices("all")
+    
+    def select_device(self, device_name: str) -> str:
+        return self._gpu.select_device(device_name, "all")
+    
+    def set_wait_for_kernel_to_finish(self, flag: bool=True):
+        return self._gpu.set_wait_for_kernel_to_finish(flag)
 
-    def create(self, shape):
-        return self._gpu.create(shape)
+
+
+
+    def create(self, shape : list =(1,1,1), otype: str="buffer"):
+        return self._gpu.create(shape, otype)
 
     def create_like(self, image):
         from ._pyclesperanto import data
         if isinstance(image, data):
-            return self.create(image.shape())
+            return self.create(shape=image.shape(), otype=image.otype())
         else:
-            return self.create(image.shape)
+            return self.create(shape=image.shape)
 
-    def push(self, any_array):
+    def push(self, any_array, otype: str="buffer"):
         from ._pyclesperanto import data
         if isinstance(any_array, data):
             return any_array
         else:
-            return self._gpu.push(np.asarray(any_array))
+            return self._gpu.push(np.asarray(any_array), otype)
 
     def pull(self, np_array):
         return self._gpu.pull(np_array)
 
-    def info(self):
-        return self._gpu.info()
 
-    def set_wait_for_kernel_to_finish(self):
-        return self._gpu.set_wait_for_kernel_to_finish()
 
     @plugin_function
     def add_image_and_scalar(self, input_image: Image, output_image: Image = None, scalar: float = 0):
@@ -62,3 +90,20 @@ class Clesperanto:
         op(self._gpu, input_image, output_image)
         return output_image
 
+    @plugin_function
+    def threshold_otsu(self, input_image: Image, output_image: Image = None):
+        from ._pyclesperanto import threshold_otsu as op
+        op(self._gpu, input_image, output_image)
+        return output_image
+    
+    @plugin_function
+    def greater_or_equal_constant(self, input_image: Image, output_image: Image = None, scalar : float = 0):
+        from ._pyclesperanto import greater_or_equal_constant as op
+        op(self._gpu, input_image, output_image, float(scalar))
+        return output_image
+    
+    @plugin_function
+    def binary_not(self, input_image: Image, output_image: Image = None):
+        from ._pyclesperanto import binary_not as op
+        op(self._gpu, input_image, output_image)
+        return output_image

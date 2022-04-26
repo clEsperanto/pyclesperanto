@@ -113,3 +113,9 @@ class Clesperanto:
         from ._pyclesperanto import threshold_otsu as op
         op(self._gpu, input_image, output_image)
         return output_image
+    
+    @plugin_function
+    def histogram(self, input_image: Image, output_image: Image = None, bins : int = 256):
+        from ._pyclesperanto import histogram as op
+        op(self._gpu, input_image, output_image, bins)
+        return output_image

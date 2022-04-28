@@ -122,7 +122,6 @@ class Clesperanto:
         op(self._gpu, input_image1, input_image2, output_image, factor1, factor2)
         return output_image
 
-
     @plugin_function
     def gaussian_blur(self, input_image: Image, output_image: Image = None, sigma_x: float = 0, sigma_y: float = 0, sigma_z: float = 0):
         from ._pyclesperanto import gaussian_blur as op

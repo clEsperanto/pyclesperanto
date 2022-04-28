@@ -179,6 +179,14 @@ class Clesperanto:
         return output_image
 
     @plugin_function
+    def maximum_y_projection(self, input_image: Image, output_image: Image = None):
+        shape = input_image.shape()
+        output_image = self.create([shape[0], shape[2]])
+        from ._pyclesperanto import maximum_y_projection as op
+        op(self._gpu, input_image, output_image)
+        return output_image
+
+    @plugin_function
     def maximum_x_projection(self, input_image: Image, output_image: Image = None):
         shape = input_image.shape()
         output_image = self.create([shape[1], shape[0]])

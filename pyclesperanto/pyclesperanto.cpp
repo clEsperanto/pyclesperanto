@@ -11,4 +11,5 @@ PYBIND11_MODULE(_pyclesperanto, m) {  // define a module. module name = file nam
     init_pytier3(m);
     init_pytier4(m);
     init_pytier5(m);
+    init_pytier6(m);
 }

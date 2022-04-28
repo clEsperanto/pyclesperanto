@@ -239,6 +239,11 @@ class Clesperanto:
         op(self._gpu, input_image, mask_image, output_image)
         return output_image
 
+    @plugin_function
+    def voronoi_otsu_labeling(self, input_image: Image, output_image: Image = None, spot_sigma: float = 2, outline_sigma: float = 2):
+        from ._pyclesperanto import voronoi_otsu_labeling as op
+        op(self._gpu, input_image, output_image, float(spot_sigma), float(outline_sigma))
+        return output_image
 
 
 

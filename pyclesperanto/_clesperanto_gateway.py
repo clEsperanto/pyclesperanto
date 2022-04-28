@@ -232,3 +232,14 @@ class Clesperanto:
            float(sigma2_z),
            )
         return output_image
+
+    @plugin_function
+    def masked_voronoi_labeling(self, input_image: Image, mask_image: Image, output_image: Image = None):
+        from ._pyclesperanto import masked_voronoi_labeling as op
+        op(self._gpu, input_image, mask_image, output_image)
+        return output_image
+
+
+
+
+

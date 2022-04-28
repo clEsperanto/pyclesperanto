@@ -117,6 +117,13 @@ class Clesperanto:
         return output_image
 
     @plugin_function
+    def add_images_weighted(self, input_image1: Image, input_image2: Image, output_image: Image = None, factor1: float = 1, factor2: float = 1):
+        from ._pyclesperanto import add_images_weighted as op
+        op(self._gpu, input_image1, input_image2, output_image, factor1, factor2)
+        return output_image
+
+
+    @plugin_function
     def gaussian_blur(self, input_image: Image, output_image: Image = None, sigma_x: float = 0, sigma_y: float = 0, sigma_z: float = 0):
         from ._pyclesperanto import gaussian_blur as op
         op(self._gpu, input_image, output_image, sigma_x=float(sigma_x), sigma_y=float(sigma_y), sigma_z=float(sigma_z))

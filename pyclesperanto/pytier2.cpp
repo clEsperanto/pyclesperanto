@@ -9,6 +9,7 @@
 #include "cleMaximumOfAllPixelsKernel.hpp"
 #include "cleMinimumOfAllPixelsKernel.hpp"
 #include "cleSumOfAllPixelsKernel.hpp"
+#include "cleTopHatBoxKernel.hpp"
 
 using namespace cle;
 
@@ -44,6 +45,15 @@ void SumOfAllPixels(PyGPU& device, PyData& input, PyData& output)
     kernel.Execute();
 }
 
+void TopHatBox(PyGPU& device, PyData& input, PyData& output, float radius_x, float radius_y, float radius_z)
+{
+    TopHatBoxKernel kernel(std::make_shared<GPU>(device));
+    kernel.SetInput(input);
+    kernel.SetOutput(output);
+    kernel.SetRadius(radius_x, radius_y, radius_z);
+    kernel.Execute();
+}
+
 void init_pytier2(pybind11::module_ &m) {
     
     m.def("extend_label_via_voronoi", &ExtendLabelingViaVoronoi, "Add buffer and scalar",
@@ -58,6 +68,9 @@ void init_pytier2(pybind11::module_ &m) {
     m.def("sum_all_pixels", &SumOfAllPixels, "return sum values of all pixels",
         pybind11::arg("device"), pybind11::arg("input"), pybind11::arg("output"));
 
+    m.def("top_hat_box", &TopHatBox, "perform a top hat box filter",
+        pybind11::arg("device"), pybind11::arg("input"), pybind11::arg("output"), pybind11::arg("radius_x"), pybind11::arg("radius_y"), pybind11::arg("radius_z"));
+
     m.doc() = R"pbdoc(
         tier2 wrapper
         -----------------------
@@ -65,6 +78,7 @@ void init_pytier2(pybind11::module_ &m) {
         maximum_all_pixels()
         minimum_all_pixels()
         sum_all_pixels()
+        top_hat_box()
     )pbdoc";
 
 }

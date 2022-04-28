@@ -109,6 +109,9 @@ class Clesperanto:
                         interpolation='nearest', alpha=alpha)
             if colorbar:
                 plot.colorbar()
+                
+                
+    # Operation list
 
     @plugin_function
     def add_image_and_scalar(self, input_image: Image, output_image: Image = None, scalar: float = 0):
@@ -198,6 +201,16 @@ class Clesperanto:
         output_image = self.create([shape[1], shape[0]])
         from ._pyclesperanto import maximum_x_projection as op
         op(self._gpu, input_image, output_image)
+        return output_image
+    
+    @plugin_function
+    def top_hat_box(self, input_image: Image, output_image: Image = None,
+                               radius_x : float = 0,
+                               radius_y : float = 0,
+                               radius_z : float = 0
+                               ):
+        from ._pyclesperanto import top_hat_box as op
+        op(self._gpu, input_image, output_image, float(radius_x), float(radius_y), float(radius_z))
         return output_image
 
     @plugin_function

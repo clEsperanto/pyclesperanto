@@ -40,19 +40,25 @@ result = cle.pull(gpu_output)
 <tr><td>
 <img src="user_docs/images/labeled_blobs.png" width="300"/>
 </td><td>
+
 [Segment + analyze blobs](user_docs/images/process_blobs.ipynb)
+
 </td></tr>
 
 <tr><td>
 <img src="user_docs/images/image_filtering.png" width="300"/>
 </td><td>
-[3D Tribolium nuclei segmentation](user_docs/images/image_filtering.ipynb)
+
+[3D image filtering](user_docs/images/image_filtering.ipynb)
+
 </td></tr>
 
 <tr><td>
 <img src="user_docs/images/tribolium3d_segmentation.png" width="300"/>
 </td><td>
+
 [3D Tribolium nuclei segmentation](user_docs/images/process_tribolium.ipynb)
+
 </td></tr>
 
 

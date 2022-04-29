@@ -14,16 +14,15 @@ class Clesperanto:
     
     @property
     def info(self) -> str:
-        return print(self._gpu.info())
+        return self._gpu.info()
     
     @property
     def name(self) -> str:
-        return print(self._gpu.name())
+        return self._gpu.name()
     
     @property
     def score(self) -> int:
-        return print(self._gpu.score())
-    
+        return self._gpu.score()
     
     
     def list_available_devices(self) -> list:

@@ -65,7 +65,7 @@ void init_pytier2(pybind11::module_ &m) {
     m.def("minimum_of_all_pixels", &MinimumOfAllPixels, "return the minimum value of all pixels",
         pybind11::arg("device"), pybind11::arg("input"), pybind11::arg("output"));
 
-    m.def("sum_all_pixels", &SumOfAllPixels, "return sum values of all pixels",
+    m.def("sum_of_all_pixels", &SumOfAllPixels, "return sum values of all pixels",
         pybind11::arg("device"), pybind11::arg("input"), pybind11::arg("output"));
 
     m.def("top_hat_box", &TopHatBox, "perform a top hat box filter",

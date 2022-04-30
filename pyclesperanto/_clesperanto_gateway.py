@@ -165,7 +165,21 @@ class Clesperanto:
         output_image = self.create([1,1,1])
         from ._pyclesperanto import maximum_of_all_pixels as op
         op(self._gpu, input_image, output_image)
-        return self.pull(output_image)[0,0,0]
+        return self.pull(output_image).item()
+
+    @plugin_function
+    def minimum_of_all_pixels(self, input_image: Image, output_image: Image = None):
+        output_image = self.create([1,1,1])
+        from ._pyclesperanto import minimum_of_all_pixels as op
+        op(self._gpu, input_image, output_image)
+        return self.pull(output_image).item()
+
+    @plugin_function
+    def sum_of_all_pixels(self, input_image: Image, output_image: Image = None):
+        output_image = self.create([1,1,1])
+        from ._pyclesperanto import sum_of_all_pixels as op
+        op(self._gpu, input_image, output_image)
+        return self.pull(output_image).item()
 
     @plugin_function
     def copy(self, input_image: Image, output_image: Image = None):
@@ -190,13 +204,61 @@ class Clesperanto:
         from ._pyclesperanto import greater_or_equal_constant as op
         op(self._gpu, input_image, output_image, float(scalar))
         return output_image
-    
+
+    @plugin_function
+    def greater_or_equal(self, input_image1: Image, input_image2: Image, output_image: Image = None):
+        from ._pyclesperanto import greater_or_equal as op
+        op(self._gpu, input_image1, input_image2, output_image)
+        return output_image
+
     @plugin_function
     def binary_not(self, input_image: Image, output_image: Image = None):
         from ._pyclesperanto import binary_not as op
         op(self._gpu, input_image, output_image)
         return output_image
-    
+
+    @plugin_function
+    def binary_and(self, input_image1: Image, input_image2: Image, output_image: Image = None):
+        from ._pyclesperanto import binary_and as op
+        op(self._gpu, input_image1, input_image2, output_image)
+        return output_image
+
+    @plugin_function
+    def binary_or(self, input_image1: Image, input_image2: Image, output_image: Image = None):
+        from ._pyclesperanto import binary_or as op
+        op(self._gpu, input_image1, input_image2, output_image)
+        return output_image
+
+    @plugin_function
+    def binary_xor(self, input_image1: Image, input_image2: Image, output_image: Image = None):
+        from ._pyclesperanto import binary_xor as op
+        op(self._gpu, input_image1, input_image2, output_image)
+        return output_image
+
+    @plugin_function
+    def binary_subtract(self, input_image1: Image, input_image2: Image, output_image: Image = None):
+        from ._pyclesperanto import binary_subtract as op
+        op(self._gpu, input_image1, input_image2, output_image)
+        return output_image
+
+    @plugin_function
+    def dilate_sphere(self, input_image: Image, output_image: Image = None):
+        from ._pyclesperanto import dilate_sphere as op
+        op(self._gpu, input_image, output_image)
+        return output_image
+
+    @plugin_function
+    def erode_sphere(self, input_image: Image, output_image: Image = None):
+        from ._pyclesperanto import erode_sphere as op
+        op(self._gpu, input_image, output_image)
+        return output_image
+
+    @plugin_function
+    def extend_labeling_via_voronoi(self, input_image: Image, output_image: Image = None):
+        from ._pyclesperanto import extend_labeling_via_voronoi as op
+        op(self._gpu, input_image, output_image)
+        return output_image
+
     @plugin_function
     def threshold_otsu(self, input_image: Image, output_image: Image = None):
         from ._pyclesperanto import threshold_otsu as op

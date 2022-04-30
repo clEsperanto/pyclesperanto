@@ -56,13 +56,13 @@ void TopHatBox(PyGPU& device, PyData& input, PyData& output, float radius_x, flo
 
 void init_pytier2(pybind11::module_ &m) {
     
-    m.def("extend_label_via_voronoi", &ExtendLabelingViaVoronoi, "Add buffer and scalar",
+    m.def("extend_labeling_via_voronoi", &ExtendLabelingViaVoronoi, "Add buffer and scalar",
         pybind11::arg("device"), pybind11::arg("input"), pybind11::arg("output"));
 
-    m.def("maximum_all_pixels", &MaximumOfAllPixels, "return the maximum value of all pixels",
+    m.def("maximum_of_all_pixels", &MaximumOfAllPixels, "return the maximum value of all pixels",
         pybind11::arg("device"), pybind11::arg("input"), pybind11::arg("output"));
 
-    m.def("minimum_all_pixels", &MinimumOfAllPixels, "return the minimum value of all pixels",
+    m.def("minimum_of_all_pixels", &MinimumOfAllPixels, "return the minimum value of all pixels",
         pybind11::arg("device"), pybind11::arg("input"), pybind11::arg("output"));
 
     m.def("sum_all_pixels", &SumOfAllPixels, "return sum values of all pixels",

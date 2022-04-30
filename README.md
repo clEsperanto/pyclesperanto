@@ -61,6 +61,15 @@ result = cle.pull(gpu_output)
 
 </td></tr>
 
+
+<tr><td>
+<img src="user_docs/images/find_local_maxima.png" width="300"/>
+</td><td>
+
+[3D image filtering](user_docs/images/find_local_maxima.ipynb)
+
+</td></tr>
+
 <tr><td>
 <img src="user_docs/images/tribolium3d_segmentation.png" width="300"/>
 </td><td>

@@ -46,6 +46,14 @@ result = cle.pull(gpu_output)
 </td></tr>
 
 <tr><td>
+<img src="user_docs/images/cell_segmentation.png" width="300"/>
+</td><td>
+
+[Cell segmentation + Voronoi labeling](user_docs/images/cell_segmentation.ipynb)
+
+</td></tr>
+
+<tr><td>
 <img src="user_docs/images/image_filtering.png" width="300"/>
 </td><td>
 
@@ -68,6 +76,7 @@ result = cle.pull(gpu_output)
 [Explore application programming interface (API)](user_docs/images/explore_API.ipynb)
 
 </td></tr>
+
 
 
 <!--

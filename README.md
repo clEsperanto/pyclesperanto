@@ -66,7 +66,7 @@ result = cle.pull(gpu_output)
 <img src="user_docs/images/find_local_maxima.png" width="300"/>
 </td><td>
 
-[3D image filtering](user_docs/images/find_local_maxima.ipynb)
+[Find local maxima](user_docs/images/find_local_maxima.ipynb)
 
 </td></tr>
 

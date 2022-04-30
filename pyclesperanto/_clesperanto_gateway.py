@@ -164,6 +164,24 @@ class Clesperanto:
         return output_image
 
     @plugin_function
+    def mean_box(self, input_image: Image, output_image: Image = None, radius_x: int = 0, radius_y: int = 0, radius_z: int = 0):
+        from ._pyclesperanto import mean_box as op
+        op(self._gpu, input_image, output_image, radius_x=int(radius_x), radius_y=int(radius_y), radius_z=int(radius_z))
+        return output_image
+
+    @plugin_function
+    def maximum_box(self, input_image: Image, output_image: Image = None, radius_x: int = 0, radius_y: int = 0, radius_z: int = 0):
+        from ._pyclesperanto import maximum_box as op
+        op(self._gpu, input_image, output_image, radius_x=int(radius_x), radius_y=int(radius_y), radius_z=int(radius_z))
+        return output_image
+
+    @plugin_function
+    def minimum_box(self, input_image: Image, output_image: Image = None, radius_x: int = 0, radius_y: int = 0, radius_z: int = 0):
+        from ._pyclesperanto import minimum_box as op
+        op(self._gpu, input_image, output_image, radius_x=int(radius_x), radius_y=int(radius_y), radius_z=int(radius_z))
+        return output_image
+
+    @plugin_function
     def maximum_of_all_pixels(self, input_image: Image, output_image: Image = None):
         output_image = self.create([1,1,1])
         from ._pyclesperanto import maximum_of_all_pixels as op
@@ -202,6 +220,12 @@ class Clesperanto:
         op(self._gpu, input_image, output_image)
         return output_image
     
+    @plugin_function
+    def detect_maxima_box(self, input_image: Image, output_image: Image = None):
+        from ._pyclesperanto import detect_maxima_box as op
+        op(self._gpu, input_image, output_image)
+        return output_image
+
     @plugin_function
     def greater_or_equal_constant(self, input_image: Image, output_image: Image = None, scalar : float = 0):
         from ._pyclesperanto import greater_or_equal_constant as op

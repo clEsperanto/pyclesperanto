@@ -61,6 +61,13 @@ result = cle.pull(gpu_output)
 
 </td></tr>
 
+<tr><td>
+<img src="user_docs/images/explore_API.png" width="300"/>
+</td><td>
+
+[Explore application programming interface (API)](user_docs/images/explore_API.ipynb)
+
+</td></tr>
 
 
 <!--
@@ -75,6 +82,8 @@ result = cle.pull(gpu_output)
 </td></tr>
 -->
 </table>
+
+
 More usage and example can be found as notebooks in the [demo](./demo) folder
 
 ## Installation

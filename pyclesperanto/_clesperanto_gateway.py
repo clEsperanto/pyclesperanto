@@ -34,8 +34,19 @@ class Clesperanto:
     def set_wait_for_kernel_to_finish(self, flag: bool=True):
         return self._gpu.set_wait_for_kernel_to_finish(flag)
 
+    def operations(self):
+        all_operation_names = dir(self)
+        result = {}
+        for operation_name in [o for o in all_operation_names if not o.startswith("_")]:
+            potential_function = getattr(self, operation_name)
+            if callable(potential_function):
+                result[operation_name] = potential_function
+        return result
 
-
+    def operation(self, operation_name:str):
+        potential_function = getattr(self, operation_name)
+        if callable(potential_function):
+            return potential_function
 
     def create(self, shape : list =(1,1,1), otype: str="buffer"):
         return self._gpu.create(shape, otype)
@@ -113,10 +124,29 @@ class Clesperanto:
     # Operation list
 
     @plugin_function
-    def add_image_and_scalar(self, input_image: Image, output_image: Image = None, scalar: float = 0):
+    def add_image_and_scalar(self, source: Image, destination: Image = None, scalar: float = 0):
+        """Adds a scalar value s to all pixels x of a given image X.
+
+        <pre>f(x, s) = x + s</pre>
+
+        Parameters
+        ----------
+        source : Image
+            The input image where scalare should be added.
+        destination : Image, optional
+            The output image where results are written into.
+        scalar : float, optional
+            The constant number which will be added to all pixels.
+
+
+        Returns
+        -------
+        destination
+        """
+
         from ._pyclesperanto import add_image_and_scalar as op
-        op(self._gpu, input_image, output_image, scalar)
-        return output_image
+        op(self._gpu, source, destination, scalar)
+        return destination
 
     @plugin_function
     def add_images_weighted(self, input_image1: Image, input_image2: Image, output_image: Image = None, factor1: float = 1, factor2: float = 1):
@@ -131,10 +161,11 @@ class Clesperanto:
         return output_image
 
     @plugin_function
-    def maximum_all_pixels(self, input_image: Image, output_image: Image = None):
-        from ._pyclesperanto import maximum_all_pixels as op
+    def maximum_of_all_pixels(self, input_image: Image, output_image: Image = None):
+        output_image = self.create([1,1,1])
+        from ._pyclesperanto import maximum_of_all_pixels as op
         op(self._gpu, input_image, output_image)
-        return output_image
+        return self.pull(output_image)[0,0,0]
 
     @plugin_function
     def copy(self, input_image: Image, output_image: Image = None):

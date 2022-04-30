@@ -30,7 +30,10 @@ class Clesperanto:
     
     def select_device(self, device_name: str) -> str:
         return self._gpu.select_device(device_name, "all")
-    
+
+    def get_device(self) -> str:
+        return self._gpu.name()
+
     def set_wait_for_kernel_to_finish(self, flag: bool=True):
         return self._gpu.set_wait_for_kernel_to_finish(flag)
 

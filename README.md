@@ -41,7 +41,7 @@ result = cle.pull(gpu_output)
 <img src="user_docs/images/labeled_blobs.png" width="300"/>
 </td><td>
 
-[Segment + analyze blobs](user_docs/images/process_blobs.ipynb)
+[Segment + analyze blobs](user_docs/process_blobs.ipynb)
 
 </td></tr>
 
@@ -49,7 +49,7 @@ result = cle.pull(gpu_output)
 <img src="user_docs/images/cell_segmentation.png" width="300"/>
 </td><td>
 
-[Cell segmentation + Voronoi labeling](user_docs/images/cell_segmentation.ipynb)
+[Cell segmentation + Voronoi labeling](user_docs/cell_segmentation.ipynb)
 
 </td></tr>
 
@@ -57,7 +57,7 @@ result = cle.pull(gpu_output)
 <img src="user_docs/images/image_filtering.png" width="300"/>
 </td><td>
 
-[3D image filtering](user_docs/images/image_filtering.ipynb)
+[3D image filtering](user_docs/image_filtering.ipynb)
 
 </td></tr>
 
@@ -66,7 +66,7 @@ result = cle.pull(gpu_output)
 <img src="user_docs/images/find_local_maxima.png" width="300"/>
 </td><td>
 
-[Find local maxima](user_docs/images/find_local_maxima.ipynb)
+[Find local maxima](user_docs/find_local_maxima.ipynb)
 
 </td></tr>
 
@@ -74,7 +74,7 @@ result = cle.pull(gpu_output)
 <img src="user_docs/images/tribolium3d_segmentation.png" width="300"/>
 </td><td>
 
-[3D Tribolium nuclei segmentation](user_docs/images/process_tribolium.ipynb)
+[3D Tribolium nuclei segmentation](user_docs/process_tribolium.ipynb)
 
 </td></tr>
 
@@ -82,7 +82,7 @@ result = cle.pull(gpu_output)
 <img src="user_docs/images/explore_API.png" width="300"/>
 </td><td>
 
-[Explore application programming interface (API)](user_docs/images/explore_API.ipynb)
+[Explore application programming interface (API)](user_docs/explore_API.ipynb)
 
 </td></tr>
 
@@ -95,7 +95,7 @@ result = cle.pull(gpu_output)
 
 </td><td>
 
-[Multi-GPU developer_docs](user_docs/images/multi_gpu_demo.ipynb)
+[Multi-GPU developer_docs](user_docs/multi_gpu_demo.ipynb)
 
 </td></tr>
 -->

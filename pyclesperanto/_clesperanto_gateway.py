@@ -428,7 +428,7 @@ class Clesperanto:
         return output_image
     
     @plugin_function
-    def detect_maxima_box(self, input_image: Image, output_image: Image = None):
+    def detect_maxima_box(self, input_image: Image, output_image: Image = None, radius_x : int = 0, radius_y : int = 0, radius_z : int = 0):
         """Detects local maxima in a given square/cubic neighborhood.
 
         Pixels in the resulting image are set to 1 if there is no other pixel in a
@@ -445,7 +445,7 @@ class Clesperanto:
         output_image
         """
         from ._pyclic import detect_maxima_box as op
-        op(self._gpu, input_image, output_image)
+        op(self._gpu, input_image, output_image, int(radius_x), int(radius_y), int(radius_z))
         return output_image
 
     @plugin_function
@@ -871,6 +871,34 @@ class Clesperanto:
         op(self._gpu, input_image, output_image, float(spot_sigma), float(outline_sigma))
         return output_image
 
+    @plugin_function
+    def subtract_image_from_scalar(self, input_image: Image, output_image: Image = None, scalar: float = 0):
+        """Subtracts one image X from a scalar s pixel wise.
+    
+        <pre>f(x, s) = s - x</pre> 
+        
+        Parameters
+        ----------
+        source : Image
+        destination : Image, optional
+        scalar : Number, optional
+        
+        Returns
+        -------
+        destination
+        
+        Examples
+        --------
+        >>> import pyclesperanto_prototype as cle
+        >>> cle.subtract_image_from_scalar(input, destination, scalar)
+        
+        References
+        ----------
+        .. [1] https://clij.github.io/clij2-docs/reference_subtractImageFromScalar
+        """
+        from ._pyclic import subtract_image_from_scalar as op
+        op(self._gpu, input_image, output_image, float(scalar))
+        return output_image
 
 
 

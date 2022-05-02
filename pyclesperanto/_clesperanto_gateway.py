@@ -4,7 +4,7 @@ from ._types import Image, plugin_function
 class Clesperanto:
     
     def __init__(self, device_name: str=""):
-        from ._pyclesperanto import gpu
+        from ._pyclic import gpu
         if device_name != "": 
             self._gpu = gpu(device_name, "all")
         else:
@@ -66,7 +66,7 @@ class Clesperanto:
 
     def create_like(self, image):
         """Create an OpenCL backed image/buffer with the same size and type like the given image."""
-        from ._pyclesperanto import data
+        from ._pyclic import data
         if isinstance(image, data):
             return self.create(shape=image.shape(), otype=image.otype())
         else:
@@ -74,7 +74,7 @@ class Clesperanto:
 
     def push(self, any_array, otype: str="buffer"):
         """Transfer a numpy-compatible array to GPU memory."""
-        from ._pyclesperanto import data
+        from ._pyclic import data
         if isinstance(any_array, data):
             return any_array
         else:
@@ -188,7 +188,7 @@ class Clesperanto:
         destination
         """
 
-        from ._pyclesperanto import add_image_and_scalar as op
+        from ._pyclic import add_image_and_scalar as op
         op(self._gpu, source, destination, scalar)
         return destination
 
@@ -217,7 +217,7 @@ class Clesperanto:
         -------
         output_image
         """
-        from ._pyclesperanto import add_images_weighted as op
+        from ._pyclic import add_images_weighted as op
         op(self._gpu, input_image1, input_image2, output_image, factor1, factor2)
         return output_image
 
@@ -243,7 +243,7 @@ class Clesperanto:
         -------
         output_image
         """
-        from ._pyclesperanto import gaussian_blur as op
+        from ._pyclic import gaussian_blur as op
         op(self._gpu, input_image, output_image, sigma_x=float(sigma_x), sigma_y=float(sigma_y), sigma_z=float(sigma_z))
         return output_image
 
@@ -266,7 +266,7 @@ class Clesperanto:
         -------
         output_image
         """
-        from ._pyclesperanto import mean_box as op
+        from ._pyclic import mean_box as op
         op(self._gpu, input_image, output_image, radius_x=int(radius_x), radius_y=int(radius_y), radius_z=int(radius_z))
         return output_image
 
@@ -290,7 +290,7 @@ class Clesperanto:
         output_image
         """
 
-        from ._pyclesperanto import maximum_box as op
+        from ._pyclic import maximum_box as op
         op(self._gpu, input_image, output_image, radius_x=int(radius_x), radius_y=int(radius_y), radius_z=int(radius_z))
         return output_image
 
@@ -313,7 +313,7 @@ class Clesperanto:
         -------
         output_image
         """
-        from ._pyclesperanto import minimum_box as op
+        from ._pyclic import minimum_box as op
         op(self._gpu, input_image, output_image, radius_x=int(radius_x), radius_y=int(radius_y), radius_z=int(radius_z))
         return output_image
 
@@ -334,7 +334,7 @@ class Clesperanto:
         float
         """
         output_image = self.create([1,1,1])
-        from ._pyclesperanto import maximum_of_all_pixels as op
+        from ._pyclic import maximum_of_all_pixels as op
         op(self._gpu, input_image, output_image)
         return self.pull(output_image).item()
 
@@ -355,7 +355,7 @@ class Clesperanto:
         float
         """
         output_image = self.create([1,1,1])
-        from ._pyclesperanto import minimum_of_all_pixels as op
+        from ._pyclic import minimum_of_all_pixels as op
         op(self._gpu, input_image, output_image)
         return self.pull(output_image).item()
 
@@ -376,14 +376,14 @@ class Clesperanto:
         float
         """
         output_image = self.create([1,1,1])
-        from ._pyclesperanto import sum_of_all_pixels as op
+        from ._pyclic import sum_of_all_pixels as op
         op(self._gpu, input_image, output_image)
         return self.pull(output_image).item()
 
     @plugin_function
     def copy(self, input_image: Image, output_image: Image = None):
         """Copies an image."""
-        from ._pyclesperanto import copy as op
+        from ._pyclic import copy as op
         op(self._gpu, input_image, output_image)
         return output_image
 
@@ -401,7 +401,7 @@ class Clesperanto:
         -------
         output_image
         """
-        from ._pyclesperanto import connected_components_labeling_box as op
+        from ._pyclic import connected_components_labeling_box as op
         op(self._gpu, input_image, output_image)
         return output_image
 
@@ -423,7 +423,7 @@ class Clesperanto:
         ----------
         .. [1] https://ieeexplore.ieee.org/document/4310076
         """
-        from ._pyclesperanto import threshold_otsu as op
+        from ._pyclic import threshold_otsu as op
         op(self._gpu, input_image, output_image)
         return output_image
     
@@ -444,7 +444,7 @@ class Clesperanto:
         -------
         output_image
         """
-        from ._pyclesperanto import detect_maxima_box as op
+        from ._pyclic import detect_maxima_box as op
         op(self._gpu, input_image, output_image)
         return output_image
 
@@ -464,7 +464,7 @@ class Clesperanto:
         -------
         output_image
         """
-        from ._pyclesperanto import greater_or_equal_constant as op
+        from ._pyclic import greater_or_equal_constant as op
         op(self._gpu, input_image, output_image, float(scalar))
         return output_image
 
@@ -484,7 +484,7 @@ class Clesperanto:
         -------
         output_image
         """
-        from ._pyclesperanto import greater_or_equal as op
+        from ._pyclic import greater_or_equal as op
         op(self._gpu, input_image1, input_image2, output_image)
         return output_image
 
@@ -509,7 +509,7 @@ class Clesperanto:
         -------
         output_image
         """
-        from ._pyclesperanto import binary_not as op
+        from ._pyclic import binary_not as op
         op(self._gpu, input_image, output_image)
         return output_image
 
@@ -535,7 +535,7 @@ class Clesperanto:
         -------
         output_image
         """
-        from ._pyclesperanto import binary_and as op
+        from ._pyclic import binary_and as op
         op(self._gpu, input_image1, input_image2, output_image)
         return output_image
 
@@ -561,7 +561,7 @@ class Clesperanto:
         -------
         output_image
         """
-        from ._pyclesperanto import binary_or as op
+        from ._pyclic import binary_or as op
         op(self._gpu, input_image1, input_image2, output_image)
         return output_image
 
@@ -589,7 +589,7 @@ class Clesperanto:
         -------
         output_image
         """
-        from ._pyclesperanto import binary_xor as op
+        from ._pyclic import binary_xor as op
         op(self._gpu, input_image1, input_image2, output_image)
         return output_image
 
@@ -610,7 +610,7 @@ class Clesperanto:
         -------
         output_image
         """
-        from ._pyclesperanto import binary_subtract as op
+        from ._pyclic import binary_subtract as op
         op(self._gpu, input_image1, input_image2, output_image)
         return output_image
 
@@ -633,7 +633,7 @@ class Clesperanto:
         -------
         output_image
         """
-        from ._pyclesperanto import dilate_sphere as op
+        from ._pyclic import dilate_sphere as op
         op(self._gpu, input_image, output_image)
         return output_image
 
@@ -656,7 +656,7 @@ class Clesperanto:
         -------
         output_image
         """
-        from ._pyclesperanto import erode_sphere as op
+        from ._pyclic import erode_sphere as op
         op(self._gpu, input_image, output_image)
         return output_image
 
@@ -676,13 +676,13 @@ class Clesperanto:
         -------
         output_image
         """
-        from ._pyclesperanto import extend_labeling_via_voronoi as op
+        from ._pyclic import extend_labeling_via_voronoi as op
         op(self._gpu, input_image, output_image)
         return output_image
 
     @plugin_function
     def histogram(self, input_image: Image, output_image: Image = None, bins : int = 256):
-        from ._pyclesperanto import histogram as op
+        from ._pyclic import histogram as op
         op(self._gpu, input_image, output_image, bins)
         return output_image
 
@@ -700,7 +700,7 @@ class Clesperanto:
         """
         shape = input_image.shape()
         output_image = self.create([shape[1], shape[2]])
-        from ._pyclesperanto import maximum_z_projection as op
+        from ._pyclic import maximum_z_projection as op
         op(self._gpu, input_image, output_image)
         return output_image
 
@@ -718,7 +718,7 @@ class Clesperanto:
         """
         shape = input_image.shape()
         output_image = self.create([shape[0], shape[2]])
-        from ._pyclesperanto import maximum_y_projection as op
+        from ._pyclic import maximum_y_projection as op
         op(self._gpu, input_image, output_image)
         return output_image
 
@@ -736,7 +736,7 @@ class Clesperanto:
         """
         shape = input_image.shape()
         output_image = self.create([shape[1], shape[0]])
-        from ._pyclesperanto import maximum_x_projection as op
+        from ._pyclic import maximum_x_projection as op
         op(self._gpu, input_image, output_image)
         return output_image
     
@@ -765,7 +765,7 @@ class Clesperanto:
         -------
         output_image
         """
-        from ._pyclesperanto import top_hat_box as op
+        from ._pyclic import top_hat_box as op
         op(self._gpu, input_image, output_image, float(radius_x), float(radius_y), float(radius_z))
         return output_image
 
@@ -807,7 +807,7 @@ class Clesperanto:
         -------
         output_image
         """
-        from ._pyclesperanto import difference_of_gaussian as op
+        from ._pyclic import difference_of_gaussian as op
         op(self._gpu, input_image, output_image,
            float(sigma1_x),
            float(sigma1_y),
@@ -835,7 +835,7 @@ class Clesperanto:
         -------
         output_image
         """
-        from ._pyclesperanto import masked_voronoi_labeling as op
+        from ._pyclic import masked_voronoi_labeling as op
         op(self._gpu, input_image, mask_image, output_image)
         return output_image
 
@@ -867,7 +867,7 @@ class Clesperanto:
         .. [1] https://ieeexplore.ieee.org/document/4310076
         .. [2] https://en.wikipedia.org/wiki/Voronoi_diagram
         """
-        from ._pyclesperanto import voronoi_otsu_labeling as op
+        from ._pyclic import voronoi_otsu_labeling as op
         op(self._gpu, input_image, output_image, float(spot_sigma), float(outline_sigma))
         return output_image
 

@@ -1,14 +1,12 @@
 import numpy as np
-from pyclesperanto import Clesperanto
+from pyclesperanto import cle
 
 def test_gpu_info():
-    cle = Clesperanto()
-    print(cle.info())
+    print(cle.info)
 
 def test_execute_kernel():
     # init gpu and print info
-    cle = Clesperanto()
-    cle.set_wait_for_kernel_to_finish()
+    cle.set_wait_for_kernel_to_finish(True)
         
     input_image = np.ones((3,3,1), dtype=np.float32)
     valid = np.ones((3,3,1), dtype=np.float32) + 100

@@ -14,17 +14,17 @@ This package relies on the [CLIc](https://github.com/clEsperanto/CLIc_prototype)
 **Note**: This project is under heavy development. Functions and parameters are subject to change.
 
 ```python
-import numpy as np
+from skimage.io import imread
 from pyclesperanto import cle
 
-arr = np.ones((3,3,1))
+image = imread("https://imagej.nih.gov/ij/images/blobs.gif")
 
 # push and create buffer
-gpu_output = cle.create(arr.shape)
-gpu_input = cle.push(arr)
+gpu_output = cle.create(image.shape)
+gpu_input = cle.push(image)
 
 # apply kernel
-cle.add_image_and_scalar(gpu_input, gpu_output, scalar=100)
+cle.add_image_and_scalar(input_image=gpu_input, output_image=gpu_output, scalar=100)
 
 # visualize result
 cle.imshow(gpu_output)
@@ -102,29 +102,35 @@ result = cle.pull(gpu_output)
 </table>
 
 
-More usage and example can be found as notebooks in the [demo](./demo) folder
+More usage and example can be found as notebooks in the [user documentation](./user_docs) folder
 
 ## Installation
 
-Download the repository and update the submodule
+Download the repository and update the associated submodules:
 ```
 git clone https://github.com/clEsperanto/pyclesperanto.git
 cd pyclesperanto && git submodule update --init --recursive
 ```
 
-We assume that your system has an OpenCL valide device and that all its drivers are correctly installed.
-Using anaconda (or miniconda), create a virtual environment and activate it as such:
+Here, we assume that your system has an OpenCL valid device and that all its drivers are correctly installed.
+Using anaconda (or miniconda), create a virtual environment and activate it:
 ```
 conda create --name pycle python=3.9
 conda activate pycle
 ```
-Install the following package in order to compile our package
-```
-conda install -c conda-forge -y ocl-icd ocl-icd-system scikit-build numpy cmake pytest pytest-cov pytest-benchmark
-```
-You can then use the pip to compile and install pyclesperanto on your environment
+Finally, install pyclesperanto and all its dependencies by running the command:
 ```
 pip install -e .
+```
+
+***For MacOS users***, Please install the following package:
+```
+conda install -c conda-forge -y ocl_icd_wrapper_apple
+```
+
+***For Linux users***, Please install the following package:
+```
+conda install -c conda-forge -y ocl-icd-system
 ```
 
 ## Contributing
@@ -135,12 +141,11 @@ Contributions are very welcome. Before spending effort on coding and filing a pu
 ## License
 
 Distributed under the terms of the [BSD-3] license,
-"napari-workflow-inspector" is free and open source software
+"py-clesperanto" is free and open source software
 
 ## Issues
 
 If you encounter any problems, please [file an issue] along with a detailed description.
 
 [BSD-3]: http://opensource.org/licenses/BSD-3-Clause
-
-[file an issue]: https://github.com/haesleinhuepf/napari-workflow-inspector/issues
+[file an issue]: https://github.com/clEsperanto/pyclesperanto/issues

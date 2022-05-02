@@ -591,13 +591,13 @@ void init_pytier1(pybind11::module_ &m) {
         pybind11::arg("device"), pybind11::arg("input"), pybind11::arg("output"), pybind11::arg("scalar"));
     
     m.def("maximum_box", &MaximumBox, "maximum box filter",
-        pybind11::arg("device"), pybind11::arg("input"), pybind11::arg("output"), pybind11::arg("radiux_x"), pybind11::arg("radiux_y"), pybind11::arg("radiux_z"));
+        pybind11::arg("device"), pybind11::arg("input"), pybind11::arg("output"), pybind11::arg("radius_x"), pybind11::arg("radius_y"), pybind11::arg("radius_z"));
     
     m.def("minimum_box", &MinimumBox, "minimum box filter",
-        pybind11::arg("device"), pybind11::arg("input"), pybind11::arg("output"), pybind11::arg("radiux_x"), pybind11::arg("radiux_y"), pybind11::arg("radiux_z"));
+        pybind11::arg("device"), pybind11::arg("input"), pybind11::arg("output"), pybind11::arg("radius_x"), pybind11::arg("radius_y"), pybind11::arg("radius_z"));
     
     m.def("mean_box", &MeanBox, "mean box filter",
-        pybind11::arg("device"), pybind11::arg("input"), pybind11::arg("output"), pybind11::arg("radiux_x"), pybind11::arg("radiux_y"), pybind11::arg("radiux_z"));
+        pybind11::arg("device"), pybind11::arg("input"), pybind11::arg("output"), pybind11::arg("radius_x"), pybind11::arg("radius_y"), pybind11::arg("radius_z"));
     
     m.def("mask", &Mask, "mask",
         pybind11::arg("device"), pybind11::arg("input"), pybind11::arg("mask"), pybind11::arg("output"));
@@ -621,7 +621,7 @@ void init_pytier1(pybind11::module_ &m) {
         pybind11::arg("device"), pybind11::arg("input"), pybind11::arg("output"));
     
     m.def("mean_sphere", &MeanSphere, "mean sphere",
-        pybind11::arg("device"), pybind11::arg("input"), pybind11::arg("output"), pybind11::arg("radiux_x"), pybind11::arg("radiux_y"), pybind11::arg("radiux_z"));
+        pybind11::arg("device"), pybind11::arg("input"), pybind11::arg("output"), pybind11::arg("radius_x"), pybind11::arg("radius_y"), pybind11::arg("radius_z"));
     
     m.def("nonzero_minimum_box", &NonzeroMinimumBox, "non-zero minimum value box",
         pybind11::arg("device"), pybind11::arg("input"), pybind11::arg("flag"), pybind11::arg("output"));

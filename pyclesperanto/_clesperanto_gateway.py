@@ -681,7 +681,8 @@ class Clesperanto:
         return output_image
 
     @plugin_function
-    def histogram(self, input_image: Image, output_image: Image = None, bins : int = 256):
+    def histogram(self, input_image: Image, bins : int = 256):
+        output_image = self.create([bins])
         from ._pyclic import histogram as op
         op(self._gpu, input_image, output_image, bins)
         return output_image
@@ -889,7 +890,7 @@ class Clesperanto:
         
         Examples
         --------
-        >>> import pyclesperanto_prototype as cle
+        >>> from pyclesperanto import cle
         >>> cle.subtract_image_from_scalar(input, destination, scalar)
         
         References
@@ -900,5 +901,30 @@ class Clesperanto:
         op(self._gpu, input_image, output_image, float(scalar))
         return output_image
 
-
-
+    @plugin_function
+    def sobel(self, input_image: Image, output_image: Image = None):
+        """Convolve the image with the Sobel kernel. 
+    
+        Author(s): Ruth Whelan-Jeans, Robert Haase
+        
+        Parameters
+        ----------
+        source : Image
+        destination : Image, optional
+        
+        Returns
+        -------
+        destination
+        
+        Examples
+        --------
+        >>> from pyclesperanto import cle
+        >>> cle.sobel(source, destination)
+        
+        References
+        ----------
+        .. [1] https://clij.github.io/clij2-docs/reference_sobel
+        """
+        from ._pyclic import sobel as op
+        op(self._gpu, input_image, output_image)
+        return output_image

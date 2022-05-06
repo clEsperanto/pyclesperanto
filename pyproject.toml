@@ -5,7 +5,10 @@ requires = [
     "scikit-build",
     "cmake>=3.20",
     "ninja",
-    "pybind11>=2.6"
+    "pybind11>=2.6",
+    "numpy",
+    "matplotlib",
+    "toolz",
 ]
 build-backend = "setuptools.build_meta"
 

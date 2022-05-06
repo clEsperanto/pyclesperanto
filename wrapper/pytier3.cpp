@@ -30,12 +30,15 @@ void DifferenceOfGaussian(PyGPU& device, PyData& input, PyData& output, float si
     kernel.Execute();
 }
 
-
-void Histogram(PyGPU& device, PyData& input, PyData& output)
+void Histogram(PyGPU& device, PyData& input, PyData& output, int bins)
 {
     HistogramKernel kernel(std::make_shared<GPU>(device));
     kernel.SetInput(input);
     kernel.SetOutput(output);
+    kernel.SetSteps(1, 1, 1);
+    kernel.SetNumBins(bins);
+    // kernel.SetMinimumIntensity(min);
+    // kernel.SetMaximumIntensity(max);
     kernel.Execute();
 }
 
@@ -45,13 +48,13 @@ void init_pytier3(pybind11::module_ &m) {
         pybind11::arg("device"), pybind11::arg("input"), pybind11::arg("output"), 
         pybind11::arg("scalar"));
 
-    m.def("differnce_of_gaussian", &DifferenceOfGaussian, "Apply a difference of gaussian",
+    m.def("difference_of_gaussian", &DifferenceOfGaussian, "Apply a difference of gaussian",
         pybind11::arg("device"), pybind11::arg("input"), pybind11::arg("output"),
-        pybind11::arg("simga1_x"), pybind11::arg("simga1_y"), pybind11::arg("simga1_z"), 
-        pybind11::arg("simga2_x"), pybind11::arg("simga2_y"), pybind11::arg("simga2_z"));
+        pybind11::arg("sigma1_x"), pybind11::arg("sigma1_y"), pybind11::arg("sigma1_z"),
+        pybind11::arg("sigma2_x"), pybind11::arg("sigma2_y"), pybind11::arg("sigma2_z"));
 
     m.def("histogram", &Histogram, "return the histogram",
-        pybind11::arg("device"), pybind11::arg("input"), pybind11::arg("output"));
+        pybind11::arg("device"), pybind11::arg("input"), pybind11::arg("output"), pybind11::arg("bins"));
 
     m.doc() = R"pbdoc(
         tier1 wrapper

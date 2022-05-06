@@ -17,8 +17,8 @@
 #include "cleBlockEnumerateKernel.hpp"
 #include "cleCopyKernel.hpp"
 #include "cleCustomKernel.hpp"
-#include "cleDetectMaximaKernel.hpp"
 #include "cleDilateSphereKernel.hpp"
+#include "cleDivideImagesKernel.hpp"
 #include "cleEqualConstantKernel.hpp"
 #include "cleEqualKernel.hpp"
 #include "cleErodeSphereKernel.hpp"
@@ -41,6 +41,7 @@
 #include "cleMinimumXProjectionKernel.hpp"
 #include "cleMinimumYProjectionKernel.hpp"
 #include "cleMinimumZProjectionKernel.hpp"
+#include "cleMultiplyImagesKernel.hpp"
 #include "cleNonzeroMinimumBoxKernel.hpp"
 #include "cleNotEqualConstantKernel.hpp"
 #include "cleNotEqualKernel.hpp"
@@ -57,6 +58,7 @@
 #include "cleSmallerOrEqualConstantKernel.hpp"
 #include "cleSmallerOrEqualKernel.hpp"
 #include "cleSobelKernel.hpp"
+#include "cleSubtractImageFromScalarKernel.hpp"
 #include "cleSumReductionXKernel.hpp"
 #include "cleSumXProjectionKernel.hpp"
 #include "cleSumYProjectionKernel.hpp"
@@ -159,18 +161,19 @@ void Copy(PyGPU& device, PyData& input, PyData& output)
     kernel.Execute();
 }
 
-void DetectMaximaBox(PyGPU& device, PyData& t_src, PyData& t_dst)
-{
-    DetectMaximaKernel kernel(std::make_shared<GPU>(device));
-    kernel.SetInput(t_src);
-    kernel.SetOutput(t_dst);
-    kernel.Execute();  
-}
-
 void DilateSphere(PyGPU& device, PyData& t_src, PyData& t_dst)
 {
     DilateSphereKernel kernel(std::make_shared<GPU>(device));
     kernel.SetInput(t_src);
+    kernel.SetOutput(t_dst);
+    kernel.Execute();
+}
+
+void DivideImages(PyGPU& device, PyData& t_src1, PyData& t_src2, PyData& t_dst)
+{
+    DivideImagesKernel kernel(std::make_shared<GPU>(device));
+    kernel.SetInput1(t_src1);
+    kernel.SetInput2(t_src2);
     kernel.SetOutput(t_dst);
     kernel.Execute();
 }
@@ -347,6 +350,15 @@ void MeanSphere(PyGPU& device, PyData& t_src, PyData& t_dst, int t_radius_x, int
     kernel.Execute();
 }
 
+void MultiplyImages(PyGPU& device, PyData& t_src1, PyData& t_src2, PyData& t_dst)
+{
+    MultiplyImagesKernel kernel(std::make_shared<GPU>(device));
+    kernel.SetInput1(t_src1);
+    kernel.SetInput2(t_src2);
+    kernel.SetOutput(t_dst);
+    kernel.Execute();
+}
+
 void NonzeroMinimumBox(PyGPU& device, PyData& t_src, PyData& t_flag, PyData& t_dst)
 {
     NonzeroMinimumBoxKernel kernel(std::make_shared<GPU>(device));
@@ -490,6 +502,15 @@ void SetNonzeroPixelsToPixelindex(PyGPU& device, PyData& t_src, PyData& t_dst)
     kernel.Execute();  
 }
 
+void SubtractImageFromScalar(PyGPU& device, PyData& input, PyData& output, float scalar)
+{
+    SubtractImageFromScalarKernel kernel(std::make_shared<GPU>(device));
+    kernel.SetInput(input);
+    kernel.SetOutput(output);
+    kernel.SetScalar(scalar);
+    kernel.Execute();
+}
+
 void SumZProjection(PyGPU& device, PyData& t_src, PyData& t_dst)
 {
     SumZProjectionKernel kernel(std::make_shared<GPU>(device));
@@ -557,11 +578,11 @@ void init_pytier1(pybind11::module_ &m) {
     m.def("copy", &Copy, "copy",
         pybind11::arg("device"), pybind11::arg("input"), pybind11::arg("output"));
     
-    m.def("detect_maxima_box", &DetectMaximaBox, "detect maxima",
-        pybind11::arg("device"), pybind11::arg("input"), pybind11::arg("output"));
-    
     m.def("dilate_sphere", &DilateSphere, "dilate sphere",
         pybind11::arg("device"), pybind11::arg("input"), pybind11::arg("output"));
+
+    m.def("divide_images", &DivideImages, "divide images",
+        pybind11::arg("device"), pybind11::arg("input1"), pybind11::arg("input2"), pybind11::arg("output"));
     
     m.def("erode_sphere", &ErodeSphere, "erode sphere",
         pybind11::arg("device"), pybind11::arg("input"), pybind11::arg("output"));
@@ -591,13 +612,13 @@ void init_pytier1(pybind11::module_ &m) {
         pybind11::arg("device"), pybind11::arg("input"), pybind11::arg("output"), pybind11::arg("scalar"));
     
     m.def("maximum_box", &MaximumBox, "maximum box filter",
-        pybind11::arg("device"), pybind11::arg("input"), pybind11::arg("output"), pybind11::arg("radiux_x"), pybind11::arg("radiux_y"), pybind11::arg("radiux_z"));
+        pybind11::arg("device"), pybind11::arg("input"), pybind11::arg("output"), pybind11::arg("radius_x"), pybind11::arg("radius_y"), pybind11::arg("radius_z"));
     
     m.def("minimum_box", &MinimumBox, "minimum box filter",
-        pybind11::arg("device"), pybind11::arg("input"), pybind11::arg("output"), pybind11::arg("radiux_x"), pybind11::arg("radiux_y"), pybind11::arg("radiux_z"));
+        pybind11::arg("device"), pybind11::arg("input"), pybind11::arg("output"), pybind11::arg("radius_x"), pybind11::arg("radius_y"), pybind11::arg("radius_z"));
     
     m.def("mean_box", &MeanBox, "mean box filter",
-        pybind11::arg("device"), pybind11::arg("input"), pybind11::arg("output"), pybind11::arg("radiux_x"), pybind11::arg("radiux_y"), pybind11::arg("radiux_z"));
+        pybind11::arg("device"), pybind11::arg("input"), pybind11::arg("output"), pybind11::arg("radius_x"), pybind11::arg("radius_y"), pybind11::arg("radius_z"));
     
     m.def("mask", &Mask, "mask",
         pybind11::arg("device"), pybind11::arg("input"), pybind11::arg("mask"), pybind11::arg("output"));
@@ -621,7 +642,10 @@ void init_pytier1(pybind11::module_ &m) {
         pybind11::arg("device"), pybind11::arg("input"), pybind11::arg("output"));
     
     m.def("mean_sphere", &MeanSphere, "mean sphere",
-        pybind11::arg("device"), pybind11::arg("input"), pybind11::arg("output"), pybind11::arg("radiux_x"), pybind11::arg("radiux_y"), pybind11::arg("radiux_z"));
+        pybind11::arg("device"), pybind11::arg("input"), pybind11::arg("output"), pybind11::arg("radius_x"), pybind11::arg("radius_y"), pybind11::arg("radius_z"));
+
+    m.def("multiply_images", &MultiplyImages, "multiply images",
+        pybind11::arg("device"), pybind11::arg("input1"), pybind11::arg("input2"), pybind11::arg("output"));
     
     m.def("nonzero_minimum_box", &NonzeroMinimumBox, "non-zero minimum value box",
         pybind11::arg("device"), pybind11::arg("input"), pybind11::arg("flag"), pybind11::arg("output"));
@@ -670,6 +694,9 @@ void init_pytier1(pybind11::module_ &m) {
     
     m.def("set_nonzero_pixels_to_pixelindex", &SetNonzeroPixelsToPixelindex, "",
         pybind11::arg("device"), pybind11::arg("input"), pybind11::arg("output"));
+
+    m.def("subtract_image_from_scalar", &SubtractImageFromScalar, "subtract scalar value from image",
+        pybind11::arg("device"), pybind11::arg("input"), pybind11::arg("output"), pybind11::arg("scalar"));
     
     m.def("sum_z_projection", &SumZProjection, "sum z projection",
         pybind11::arg("device"), pybind11::arg("input"), pybind11::arg("output"));
@@ -697,7 +724,6 @@ void init_pytier1(pybind11::module_ &m) {
         binary_subtract()
         binary_xor()
         copy()
-        detect_maxima_box()
         dilate_sphere()
         erode_sphere()
         equal()

@@ -14,6 +14,7 @@ public:
 
     using Object::Object;
        
+    PyData() = default;   
     PyData(const Object&);
     std::array<size_t,3> Shape_zyx() const;
     std::array<size_t,3> Shape_xyz() const;

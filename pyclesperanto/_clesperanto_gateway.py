@@ -10,8 +10,6 @@ class Clesperanto:
         else:
             self._gpu = gpu()
     
-    
-    
     @property
     def info(self) -> str:
         """Return details about the current OpenCL device"""
@@ -168,16 +166,16 @@ class Clesperanto:
     # Operation list
 
     @plugin_function
-    def add_image_and_scalar(self, source: Image, destination: Image = None, scalar: float = 0):
+    def add_image_and_scalar(self, input_image: Image, output_image: Image = None, scalar: float = 0):
         """Adds a scalar value s to all pixels x of a given image X.
 
         <pre>f(x, s) = x + s</pre>
 
         Parameters
         ----------
-        source : Image
+        input_image : Image
             The input image where scalare should be added.
-        destination : Image, optional
+        output_image : Image, optional
             The output image where results are written into.
         scalar : float, optional
             The constant number which will be added to all pixels.
@@ -185,12 +183,12 @@ class Clesperanto:
 
         Returns
         -------
-        destination
+        output_image
         """
 
         from ._pyclic import add_image_and_scalar as op
-        op(self._gpu, source, destination, scalar)
-        return destination
+        op(self._gpu, input_image, output_image, scalar)
+        return output_image
 
     @plugin_function
     def add_images_weighted(self, input_image1: Image, input_image2: Image, output_image: Image = None, factor1: float = 1, factor2: float = 1):
@@ -528,7 +526,7 @@ class Clesperanto:
             The first binary input image to be processed.
         input_image2 : Image
             The second binary input image to be processed.
-        destination : Image, optional
+        output_image : Image, optional
             The output image where results are written into.
 
         Returns
@@ -554,7 +552,7 @@ class Clesperanto:
             The first binary input image to be processed.
         input_image2 : Image
             The second binary input image to be processed.
-        destination : Image, optional
+        output_image : Image, optional
             The output image where results are written into.
 
         Returns
@@ -582,7 +580,7 @@ class Clesperanto:
             The first binary input image to be processed.
         input_image2 : Image
             The second binary input image to be processed.
-        destination : Image, optional
+        output_image : Image, optional
             The output image where results are written into.
 
         Returns
@@ -603,7 +601,7 @@ class Clesperanto:
             The first binary input image to be processed.
         input_image2 : Image
             The second binary input image to be processed.
-        destination : Image, optional
+        output_image : Image, optional
             The output image where results are written into.
 
         Returns
@@ -880,18 +878,13 @@ class Clesperanto:
         
         Parameters
         ----------
-        source : Image
-        destination : Image, optional
+        input_image : Image
+        output_image : Image, optional
         scalar : Number, optional
         
         Returns
         -------
-        destination
-        
-        Examples
-        --------
-        >>> from pyclesperanto import cle
-        >>> cle.subtract_image_from_scalar(input, destination, scalar)
+        output_image
         
         References
         ----------
@@ -909,18 +902,13 @@ class Clesperanto:
         
         Parameters
         ----------
-        source : Image
-        destination : Image, optional
+        input_image : Image
+        output_image : Image, optional
         
         Returns
         -------
-        destination
-        
-        Examples
-        --------
-        >>> from pyclesperanto import cle
-        >>> cle.sobel(source, destination)
-        
+        output_image
+                
         References
         ----------
         .. [1] https://clij.github.io/clij2-docs/reference_sobel

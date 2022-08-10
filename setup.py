@@ -17,12 +17,12 @@ setup(
     packages=['pyclesperanto'],
     cmake_install_dir='pyclesperanto',
     python_requires=">=3.7",
-    install_requires =[
+    install_requires=[
         'numpy',
         'toolz',
         'matplotlib',
-        ],
-    extras_require={"test": ["pytest"]},
+    ],
+    extras_require={"test": ["pytest", "pytest-cov", "pytest-benchmark"]},
     classifiers=[
         'Development Status :: 2 - Pre-Alpha',
         'Intended Audience :: Science/Research',
@@ -38,11 +38,11 @@ setup(
         'License :: OSI Approved :: BSD License',
     ],
     project_urls={
-    'Documentation': 'https://github.com/clEsperanto/pyclesperanto#README.md',
-    'Source': 'https://github.com/clEsperanto/pyclesperanto/',
-    'Tracker': 'https://github.com/clEsperanto/pyclesperanto/issues',
+        'Documentation': 'https://github.com/clEsperanto/pyclesperanto#README.md',
+        'Source': 'https://github.com/clEsperanto/pyclesperanto/',
+        'Tracker': 'https://github.com/clEsperanto/pyclesperanto/issues',
     },
-    )
+)
 
 # When building extension modules `cmake_install_dir` should always be set to the
 # location of the package you are building extension modules for.

@@ -30,4 +30,4 @@ def test_execute_kernel():
     print("valid:", valid.flatten(), valid.dtype)
     print("result:", result.flatten(), result.dtype)
 
-    assert(np.sum(result.flatten()) == np.sum(valid.flatten()))
+    assert np.sum(result.flatten()) == np.sum(valid.flatten())

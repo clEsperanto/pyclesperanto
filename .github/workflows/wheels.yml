@@ -35,7 +35,7 @@ jobs:
         with:
           auto-update-conda: true
           activate-environment: test
-          python-version: ${{ matrix.python-version }}
+          python-version: 3.7
           channels: conda-forge
 
       - name: Build wheels

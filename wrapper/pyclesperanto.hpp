@@ -1,19 +1,12 @@
-#ifndef __pyclesperanto_h
-#define __pyclesperanto_h
+#ifndef __WRAPPER_PYCLESPERANTO_HPP
+#define __WRAPPER_PYCLESPERANTO_HPP
 
-
-#include <pybind11/pybind11.h>
-#include <pybind11/numpy.h>
-#include <pybind11/stl.h>
 #include <pybind11/functional.h>
+#include <pybind11/numpy.h>
+#include <pybind11/pybind11.h>
+#include <pybind11/stl.h>
 
-void init_pygpu(pybind11::module_ &);
-void init_pydata(pybind11::module_ &);
-void init_pytier1(pybind11::module_ &);
-void init_pytier2(pybind11::module_ &);
-void init_pytier3(pybind11::module_ &);
-void init_pytier4(pybind11::module_ &);
-void init_pytier5(pybind11::module_ &);
-void init_pytier6(pybind11::module_ &);
+auto init_pygateway(const pybind11::module_ &module) -> void;
+auto init_pyimage(const pybind11::module_ &module) -> void;
 
-#endif // __pyclesperanto_h
+#endif // __WRAPPER_PYCLESPERANTO_HPP

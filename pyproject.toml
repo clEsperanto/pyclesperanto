@@ -17,16 +17,16 @@ testpaths = ["tests"]
 addopts= "-v --cov=./ --cov-report=xml"
 
 
-[tool.cibuildwheel.linux]
-test-command = ""
-before-all = [
-    "yum install -y git openssl-devel ruby",
-    "bash {package}/scripts/unix-opencl-build.sh",
-]
-
-[[tool.cibuildwheel.overrides]]
-select = "*-musllinux*"
-before-all = [
-    "apk add ruby git openssl-dev",
-    "bash {package}/scripts/build-ocl.sh",
-]
+#[tool.cibuildwheel.linux]
+#test-command = ""
+#before-all = [
+#    "yum install -y git openssl-devel ruby",
+#    "bash {package}/scripts/unix-opencl-build.sh",
+#]
+#
+#[[tool.cibuildwheel.overrides]]
+#select = "*-musllinux*"
+#before-all = [
+#    "apk add ruby git openssl-dev",
+#    "bash {package}/scripts/unix-opencl-build.sh",
+#]

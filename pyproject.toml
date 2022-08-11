@@ -12,10 +12,9 @@ requires = [
 ]
 build-backend = "setuptools.build_meta"
 
-[tool.pytest.ini_options]
-testpaths = ["tests"]
-addopts= "-v --cov=./ --cov-report=xml"
-
+[tool.cibuildwheel]
+test-command = "pytest {project}/tests"
+test-extras = ["tests"]
 
 [tool.cibuildwheel.linux]
 test-command = ""

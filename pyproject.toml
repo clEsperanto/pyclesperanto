@@ -20,13 +20,13 @@ addopts= "-v --cov=./ --cov-report=xml"
 [tool.cibuildwheel.linux]
 test-command = ""
 before-all = [
-    "yum install -y git ruby",
+    "yum install -y ruby",
     "bash {package}/scripts/unix-opencl-build.sh",
 ]
 
-#[[tool.cibuildwheel.overrides]]
-#select = "*-musllinux*"
-#before-all = [
-#    "apk add ruby git openssl-dev",
-#    "bash {package}/scripts/unix-opencl-build.sh",
-#]
+[[tool.cibuildwheel.overrides]]
+select = "*-musllinux*"
+before-all = [
+    "apk add ruby git",
+    "bash {package}/scripts/unix-opencl-build.sh",
+]

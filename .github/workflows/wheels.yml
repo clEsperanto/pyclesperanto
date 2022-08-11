@@ -26,7 +26,7 @@ jobs:
         os: [ubuntu-latest] #, windows-latest, macos-latest]
     env:
       CIBW_BUILD: cp37-* cp38-* cp39-* cp310-*
-      CIBW_SKIP: cp27-* pp*
+      CIBW_SKIP: cp27-* pp* *-musllinux_*
 
     steps:
       - uses: actions/checkout@v3

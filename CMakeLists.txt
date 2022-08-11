@@ -10,16 +10,16 @@ set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fPIC")
 
 # find required package
 set(Python_FIND_VIRTUALENV "FIRST") # look for python in virtual env or conda first before checking the system.
-find_package(Python3 COMPONENTS Interpreter Development.Module REQUIRED)
+find_package(Python3 COMPONENTS Development.Module REQUIRED)
+message(NOTICE "Python include dirs: ${Python3_INCLUDE_DIRS}")
 
-# message(NOTICE "Python include dirs: ${Python3_INCLUDE_DIRS}")
 # include_directories(SYSTEM ${Python3_INCLUDE_DIRS})
 
 # find opencl icd-loader in virtual environment
 file(GLOB PYTHON_OpenCL_LIBRARY ${Python_LIBRARY_DIRS}/libOpenCL.so)
 
 if(PYTHON_OpenCL_LIBRARY STREQUAL "")
-    message(STATUS "WARNING: No ICD found in virtual environment.")
+    message(STATUS "WARNING: No ICD found in virtual environment, searching for system ICD.")
 else()
     message(STATUS ${PYTHON_OpenCL_LIBRARY})
     set(OpenCL_LIBRARIES ${PYTHON_OpenCL_LIBRARY})

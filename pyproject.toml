@@ -17,13 +17,13 @@ testpaths = ["tests"]
 addopts= "-v --cov=./ --cov-report=xml"
 
 
-#[tool.cibuildwheel.linux]
-#test-command = ""
-#before-all = [
-#    "yum install -y git openssl-devel ruby",
+[tool.cibuildwheel.linux]
+test-command = ""
+before-all = [
+    "yum install -y git openssl-devel ruby",
 #    "bash {package}/scripts/unix-opencl-build.sh",
-#]
-#
+]
+
 #[[tool.cibuildwheel.overrides]]
 #select = "*-musllinux*"
 #before-all = [

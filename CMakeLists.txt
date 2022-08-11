@@ -10,13 +10,23 @@ set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fPIC")
 
 # find required package
 set(Python_FIND_VIRTUALENV "FIRST") # look for python in virtual env or conda first before checking the system.
-find_package(Python COMPONENTS Interpreter Development.Module Development.Embed)
-message(NOTICE "Python include dirs: ${Python3_INCLUDE_DIRS}")
+find_package(Python3 COMPONENTS Interpreter Development.Embed Development.Module)
+
+if(Python3_Development.Module_FOUND)
+    message(STATUS "Python Developement Module found")
+endif()
+
+if(Python3_Development.Embed_FOUND)
+    message(STATUS "Python Developement Embed found")
+endif()
+
+message(STATUS "Python include dirs: ${Python3_INCLUDE_DIRS}")
+message(STATUS "Python library dirs: ${Python3_LIBRARY_DIRS}")
 
 # include_directories(SYSTEM ${Python3_INCLUDE_DIRS})
 
 # find opencl icd-loader in virtual environment
-file(GLOB PYTHON_OpenCL_LIBRARY ${Python_LIBRARY_DIRS}/libOpenCL.so)
+file(GLOB PYTHON_OpenCL_LIBRARY ${Python3_LIBRARY_DIRS}/libOpenCL.so)
 
 if(PYTHON_OpenCL_LIBRARY STREQUAL "")
     message(STATUS "WARNING: No ICD found in virtual environment, searching for system ICD.")
@@ -30,34 +40,34 @@ endif()
 # Compile CLIc Back-end library
 add_subdirectory(CLIc)
 
-# # split c++ stand-alone build from python wrapper build with scikit-build
+# extra steps for scikit-build to find pybind11
 if(DEFINED SKBUILD)
-    set(ignoreMe "${SKBUILD}")
-    set(PACKAGE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/pyclesperanto)
-    set(WRAPPER_DIR ${CMAKE_CURRENT_SOURCE_DIR}/wrapper)
-
-    file(GLOB_RECURSE WRAPPER_SOURCES_FILES ${WRAPPER_DIR}/*.cpp)
-
     # call pybind11-config to obtain the root of the cmake package
     execute_process(COMMAND ${PYTHON_EXECUTABLE} -m pybind11 --cmakedir
         OUTPUT_VARIABLE pybind11_ROOT_RAW)
     string(STRIP ${pybind11_ROOT_RAW} pybind11_ROOT)
-    find_package(pybind11 CONFIG REQUIRED)
+endif()
 
-    pybind11_add_module(_pyclesperanto MODULE ${WRAPPER_SOURCES_FILES})
-    target_link_libraries(_pyclesperanto PRIVATE CLIc::CLIc)
-    add_dependencies(_pyclesperanto CLIc)
-    target_include_directories(_pyclesperanto PUBLIC "$<BUILD_INTERFACE:${WRAPPER_DIR}>")
-    target_compile_definitions(_pyclesperanto PRIVATE VERSION_INFO=${PROJECT_VERSION})
+set(PACKAGE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/pyclesperanto)
+set(WRAPPER_DIR ${CMAKE_CURRENT_SOURCE_DIR}/wrapper)
+file(GLOB_RECURSE WRAPPER_SOURCES_FILES ${WRAPPER_DIR}/*.cpp)
 
-    # Installing the extension module to the root of the package
-    install(TARGETS _pyclesperanto DESTINATION .)
+find_package(pybind11 CONFIG REQUIRED)
 
-    if(APPLE)
-        set_target_properties(
-            _pyclesperanto PROPERTIES INSTALL_RPATH "@loader_path/${CMAKE_INSTALL_LIBDIR}")
-    else()
-        set_target_properties(_pyclesperanto PROPERTIES INSTALL_RPATH
-            "$ORIGIN/${CMAKE_INSTALL_LIBDIR}")
-    endif()
+pybind11_add_module(_pyclesperanto MODULE ${WRAPPER_SOURCES_FILES})
+
+target_link_libraries(_pyclesperanto PRIVATE CLIc::CLIc)
+add_dependencies(_pyclesperanto CLIc)
+target_include_directories(_pyclesperanto PUBLIC "$<BUILD_INTERFACE:${WRAPPER_DIR}>")
+target_compile_definitions(_pyclesperanto PRIVATE VERSION_INFO=${PROJECT_VERSION})
+
+# Installing the extension module to the root of the package
+install(TARGETS _pyclesperanto DESTINATION .)
+
+if(APPLE)
+    set_target_properties(
+        _pyclesperanto PROPERTIES INSTALL_RPATH "@loader_path/${CMAKE_INSTALL_LIBDIR}")
+else()
+    set_target_properties(_pyclesperanto PROPERTIES INSTALL_RPATH
+        "$ORIGIN/${CMAKE_INSTALL_LIBDIR}")
 endif()

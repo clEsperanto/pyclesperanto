@@ -3,7 +3,7 @@ import numpy as np
 
 def test_gpu_info():
     print("run test_gpu_info") 
-    #from pyclesperanto import cle
+    from pyclesperanto import cle
     #print(cle.Info)
 
 """

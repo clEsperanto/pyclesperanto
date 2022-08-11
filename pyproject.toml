@@ -20,7 +20,7 @@ addopts= "-v --cov=./ --cov-report=xml"
 [tool.cibuildwheel.linux]
 test-command = ""
 before-all = [
-    "bash ./scripts/unix-opencl-build.sh",
+    "bash {package}/scripts/unix-opencl-build.sh",
 ]
 
 #[[tool.cibuildwheel.overrides]]

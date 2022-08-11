@@ -32,8 +32,8 @@ jobs:
 
       - name: Build wheels
         uses: pypa/cibuildwheel@v2.8.1
-        env:
-          CIBW_BEFORE_BUILD: python -m pip install --upgrade cmake
+        # env:
+        #   CIBW_BEFORE_BUILD: python -m pip install --upgrade cmake
 
       - name: Verify clean directory
         run: git diff --exit-code

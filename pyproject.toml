@@ -12,9 +12,9 @@ requires = [
 ]
 build-backend = "setuptools.build_meta"
 
-[tool.cibuildwheel]
-test-command = "pytest {project}/tests"
-test-extras = ["tests"]
+#[tool.cibuildwheel]
+#test-command = "pytest {project}/tests"
+#test-extras = ["tests"]
 
 [tool.cibuildwheel.linux]
 test-command = ""

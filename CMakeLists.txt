@@ -10,7 +10,7 @@ set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fPIC")
 
 # find required package
 set(Python_FIND_VIRTUALENV "FIRST") # look for python in virtual env or conda first before checking the system.
-find_package(Python3 COMPONENTS Interpreter Development REQUIRED)
+find_package(Python3 COMPONENTS Interpreter Development.Module REQUIRED)
 message(NOTICE "Python include dirs: ${Python3_INCLUDE_DIRS}")
 include_directories(SYSTEM ${Python3_INCLUDE_DIRS})
 

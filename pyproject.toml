@@ -21,7 +21,7 @@ addopts= "-v --cov=./ --cov-report=xml"
 test-command = ""
 before-all = [
     "yum install -y git openssl-devel ruby",
-    "bash {package}/scripts/build-ocl.sh",
+    "bash {package}/scripts/unix-opencl-build.sh",
 ]
 
 [[tool.cibuildwheel.overrides]]

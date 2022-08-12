@@ -1,10 +1,12 @@
-import numpy as np
+# import numpy as np
 
 
 def test_gpu_info():
-    print("run test_gpu_info") 
+    print("run test_gpu_info")
     from pyclesperanto import cle
-    #print(cle.Info)
+
+    print(cle.Info())
+
 
 """
 def test_execute_kernel():
@@ -33,3 +35,5 @@ def test_execute_kernel():
 
     assert np.sum(result.flatten()) == np.sum(valid.flatten())
 """
+
+test_gpu_info()

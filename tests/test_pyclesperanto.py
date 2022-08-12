@@ -1,4 +1,3 @@
-import numpy as np
 
 def test_gpu_info():
     print("run test_gpu_info")
@@ -8,7 +7,8 @@ def test_gpu_info():
 
 def test_execute_kernel():
     # init gpu and print info
-    # cle.set_wait_for_kernel_to_finish(True)
+    import numpy as np
+    from pyclesperanto import cle
 
     input_image = np.ones((3, 3, 1), dtype=np.float32)
     valid = np.ones((3, 3, 1), dtype=np.float32) + 100

@@ -35,5 +35,3 @@ def test_execute_kernel():
 
     assert np.sum(result.flatten()) == np.sum(valid.flatten())
 """
-
-test_gpu_info()

@@ -7,7 +7,7 @@ long_description = (this_directory / "README.md").read_text()
 
 setup(
     name="pyclesperanto",
-    version="0.4.0",
+    version="0.6.0",
     author="Stephane Rigaud",
     author_email="stephane.rigaud@pasteur.fr",
     license="BSD-3-Clause",

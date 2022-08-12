@@ -26,3 +26,7 @@ before-all = [
 [[tool.cibuildwheel.windows]]
 test-command = ""
 before-all = "bash {package}/scripts/build-opencl-windows.sh"
+
+[tool.cibuildwheel.macos]
+test-command = ""
+before-all = "bash {package}/scripts/build-opencl-macos.sh"

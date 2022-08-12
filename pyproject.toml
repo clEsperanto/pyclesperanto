@@ -1,14 +1,9 @@
 [build-system]
 requires = [
     "setuptools>=42",
-    "wheel",
-    "scikit-build",
+    "scikit-build>=0.15.0",
     "cmake>=3.20",
-    "ninja",
-    "pybind11>=2.6",
-    "numpy",
-    "matplotlib",
-    "toolz",
+    "pybind11>=2.10.0",
 ]
 build-backend = "setuptools.build_meta"
 

@@ -23,12 +23,12 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest] #, windows-latest, macos-latest]
+        os: [windows-latest] #,ubuntu-latest, macos-latest]
     env:
       CIBW_BUILD: cp37-* cp38-* cp39-* cp310-*
-      CIBW_SKIP: cp27-* pp* *-musllinux_*
-      CIBW_TEST_REQUIRES: pytest
-      CIBW_TEST_COMMAND: "pytest {project}/tests"
+      CIBW_SKIP: cp27-* pp* *-musllinux_* *-win32
+      # CIBW_TEST_REQUIRES: pytest
+      # CIBW_TEST_COMMAND: "pytest {project}/tests"
 
     steps:
       - uses: actions/checkout@v3
@@ -37,8 +37,6 @@ jobs:
 
       - name: Build wheels
         uses: pypa/cibuildwheel@v2.8.1
-        # env:
-        #   CIBW_BEFORE_BUILD: python -m pip install --upgrade cmake
 
       - name: Verify clean directory
         run: git diff --exit-code

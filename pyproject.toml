@@ -20,12 +20,9 @@ build-backend = "setuptools.build_meta"
 test-command = ""
 before-all = [
     "yum install -y ruby",
-    "bash {package}/scripts/unix-opencl-build.sh",
+    "bash {package}/scripts/build-opencl-linux.sh",
 ]
 
-[[tool.cibuildwheel.overrides]]
-select = "*-musllinux*"
-before-all = [
-    "apk add ruby git",
-    "bash {package}/scripts/unix-opencl-build.sh",
-]
+[[tool.cibuildwheel.windows]]
+test-command = ""
+before-all = "bash {package}/scripts/build-opencl-windows.sh"

@@ -1,5 +1,4 @@
-# import numpy as np
-
+import numpy as np
 
 def test_gpu_info():
     print("run test_gpu_info")
@@ -7,8 +6,6 @@ def test_gpu_info():
 
     print(cle.Info())
 
-
-"""
 def test_execute_kernel():
     # init gpu and print info
     # cle.set_wait_for_kernel_to_finish(True)
@@ -34,4 +31,4 @@ def test_execute_kernel():
     print("result:", result.flatten(), result.dtype)
 
     assert np.sum(result.flatten()) == np.sum(valid.flatten())
-"""
+    

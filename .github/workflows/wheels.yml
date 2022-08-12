@@ -27,7 +27,7 @@ jobs:
     env:
       CIBW_BUILD: cp37-* cp39-* cp38-* cp310-*
       CIBW_SKIP: cp27-* pp* *-musllinux_* *-win32
-      CIBW_TEST_REQUIRES: pytest
+      CIBW_TEST_REQUIRES: numpy pytest
       CIBW_TEST_COMMAND: "pytest {project}/tests"
 
     steps:

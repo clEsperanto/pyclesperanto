@@ -1,9 +1,13 @@
-from skbuild import setup
 
 # read the contents of your README file
 from pathlib import Path
 this_directory = Path(__file__).parent
 long_description = (this_directory / "README.md").read_text()
+
+import sys, os
+sys.path.append(os.path.dirname(__file__))
+
+from skbuild import setup
 
 setup(
     name="pyclesperanto",
@@ -22,7 +26,7 @@ setup(
         'toolz',
         'matplotlib',
     ],
-    extras_require={"test": ["pytest", "pytest-cov", "pytest-benchmark"]},
+    # extras_require={"test": ["pytest", "pytest-cov", "pytest-benchmark"]},
     classifiers=[
         'Development Status :: 2 - Pre-Alpha',
         'Intended Audience :: Science/Research',
@@ -34,6 +38,7 @@ setup(
         'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: 3.8',
         'Programming Language :: Python :: 3.9',
+        'Programming Language :: Python :: 3.10',
         'Operating System :: OS Independent',
         'License :: OSI Approved :: BSD License',
     ],

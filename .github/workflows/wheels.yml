@@ -23,7 +23,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [macos-latest]
+        os: [ubuntu-latest] #, macos-latest]
     env:
       CIBW_BUILD: cp37-* cp39-* cp38-* cp310-*
       CIBW_SKIP: cp27-* pp* *-musllinux_* *-win32 *universal2*

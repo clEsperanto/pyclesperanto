@@ -8,12 +8,11 @@ requires = [
 build-backend = "setuptools.build_meta"
 
 [tool.cibuildwheel]
-test-requires = [numpy, pytest]
+test-requires = ["numpy", "pytest"]
 test-command = "pytest {project}/tests"
 #test-extras = ["tests"]
 
 [tool.cibuildwheel.linux]
-test-command = ""
 before-all = [
     "yum install -y ruby",
     "bash {package}/scripts/build-opencl-linux.sh",
@@ -21,9 +20,7 @@ before-all = [
 repair-wheel-command = "auditwheel repair --lib-sdir . -w {dest_dir} {wheel}"
 
 [[tool.cibuildwheel.windows]]
-test-command = ""
 before-all = "bash {package}/scripts/build-opencl-windows.sh"
 
 [tool.cibuildwheel.macos]
-test-command = ""
 before-all = "bash {package}/scripts/build-opencl-macos.sh"

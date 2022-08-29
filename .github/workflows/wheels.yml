@@ -27,8 +27,6 @@ jobs:
     env:
       CIBW_BUILD: cp37-* cp39-* cp38-* cp310-*
       CIBW_SKIP: cp27-* pp* *-musllinux_* *-win32 *universal2*
-      CIBW_TEST_REQUIRES: numpy pytest
-      CIBW_TEST_COMMAND: "pytest {project}/tests"
 
     steps:
       - uses: actions/checkout@v3
@@ -44,7 +42,7 @@ jobs:
 
       - uses: actions/upload-artifact@v3
         with:
-          path: wheelhouse/*.whl
+          path: ./wheelhouse/*.whl
 
   build_sdist:
     name: Build source distribution

@@ -7,8 +7,9 @@ requires = [
 ]
 build-backend = "setuptools.build_meta"
 
-#[tool.cibuildwheel]
-#test-command = "pytest {project}/tests"
+[tool.cibuildwheel]
+test-requires = [numpy, pytest]
+test-command = "pytest {project}/tests"
 #test-extras = ["tests"]
 
 [tool.cibuildwheel.linux]
@@ -17,6 +18,7 @@ before-all = [
     "yum install -y ruby",
     "bash {package}/scripts/build-opencl-linux.sh",
 ]
+repair-wheel-command = "auditwheel repair --lib-sdir . -w {dest_dir} {wheel}"
 
 [[tool.cibuildwheel.windows]]
 test-command = ""

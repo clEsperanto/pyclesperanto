@@ -11,24 +11,29 @@ build-backend = "setuptools.build_meta"
 build = ["cp37-*", "cp39-*", "cp38-*", "cp310-*"]
 build-verbosity = 1
 build-frontend = "build"
-test-requires = ["numpy", "pytest"]
+test-command = ""
+#test-requires = ["numpy", "pytest"]
 #test-command = "pytest {project}/tests"
 
 [tool.cibuildwheel.linux]
-skip = ["cp27-*", "pp*", "*-musllinux_*"]
+skip = ["cp27-*", "pp*"]
 before-all = [
     "yum install -y ruby",
     "bash {package}/scripts/build-opencl-linux.sh",
 ]
 repair-wheel-command = "auditwheel show {wheel} && auditwheel repair --lib-sdir .libs -w {dest_dir} {wheel}"
-test-command = ""
+
+[[tool.cibuildwheel.overrides]]
+select = "*-musllinux*"
+before-all = [
+    "apk add ruby",
+    "bash {package}/scripts/build-ocl.sh",
+]
 
 [[tool.cibuildwheel.windows]]
 skip = ["cp27-*", "pp*", "*-win32"]
 before-all = "bash {package}/scripts/build-opencl-windows.sh"
-test-command = ""
 
 [tool.cibuildwheel.macos]
 skip = ["cp27-*", "pp*", "*_universal2"]
 before-all = "bash {package}/scripts/build-opencl-macos.sh"
-test-command = ""

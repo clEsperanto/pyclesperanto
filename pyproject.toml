@@ -8,6 +8,8 @@ requires = [
 build-backend = "setuptools.build_meta"
 
 [tool.cibuildwheel]
+build-verbosity = 1
+build-frontend = "build"
 test-requires = ["numpy", "pytest"]
 test-command = "pytest {project}/tests"
 
@@ -25,3 +27,4 @@ test-command = ""
 
 [tool.cibuildwheel.macos]
 before-all = "bash {package}/scripts/build-opencl-macos.sh"
+test-command = ""

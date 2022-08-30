@@ -38,51 +38,51 @@ result = cle.pull(gpu_output)
 <table border="0">
 
 <tr><td>
-<img src="user_docs/images/labeled_blobs.png" width="300"/>
+<img src="https://raw.githubusercontent.com/clEsperanto/pyclesperanto/main/user_docs/images/labeled_blobs.png" width="300"/>
 </td><td>
 
-[Segment + analyze blobs](user_docs/process_blobs.ipynb)
+[Segment + analyze blobs](https://github.com/clEsperanto/pyclesperanto/tree/main/user_docs/process_blobs.ipynb)
 
 </td></tr>
 
 <tr><td>
-<img src="user_docs/images/cell_segmentation.png" width="300"/>
+<img src="https://raw.githubusercontent.com/clEsperanto/pyclesperanto/main/user_docs/images/cell_segmentation.png" width="300"/>
 </td><td>
 
-[Cell segmentation + Voronoi labeling](user_docs/cell_segmentation.ipynb)
+[Cell segmentation + Voronoi labeling](https://github.com/clEsperanto/pyclesperanto/tree/main/user_docs/cell_segmentation.ipynb)
 
 </td></tr>
 
 <tr><td>
-<img src="user_docs/images/image_filtering.png" width="300"/>
+<img src="https://raw.githubusercontent.com/clEsperanto/pyclesperanto/main/user_docs/images/image_filtering.png" width="300"/>
 </td><td>
 
-[3D image filtering](user_docs/image_filtering.ipynb)
+[3D image filtering](https://github.com/clEsperanto/pyclesperanto/tree/main/user_docs/image_filtering.ipynb)
 
 </td></tr>
 
 
 <tr><td>
-<img src="user_docs/images/find_local_maxima.png" width="300"/>
+<img src="https://raw.githubusercontent.com/clEsperanto/pyclesperanto/main/user_docs/images/find_local_maxima.png" width="300"/>
 </td><td>
 
-[Find local maxima](user_docs/find_local_maxima.ipynb)
+[Find local maxima](https://github.com/clEsperanto/pyclesperanto/tree/main/user_docs/find_local_maxima.ipynb)
 
 </td></tr>
 
 <tr><td>
-<img src="user_docs/images/tribolium3d_segmentation.png" width="300"/>
+<img src="https://raw.githubusercontent.com/clEsperanto/pyclesperanto/main/user_docs/images/tribolium3d_segmentation.png" width="300"/>
 </td><td>
 
-[3D Tribolium nuclei segmentation](user_docs/process_tribolium.ipynb)
+[3D Tribolium nuclei segmentation](https://github.com/clEsperanto/pyclesperanto/tree/main/user_docs/process_tribolium.ipynb)
 
 </td></tr>
 
 <tr><td>
-<img src="user_docs/images/explore_API.png" width="300"/>
+<img src="https://raw.githubusercontent.com/clEsperanto/pyclesperanto/main/user_docs/images/explore_API.png" width="300"/>
 </td><td>
 
-[Explore application programming interface (API)](user_docs/explore_API.ipynb)
+[Explore application programming interface (API)](https://github.com/clEsperanto/pyclesperanto/tree/main/user_docs/explore_API.ipynb)
 
 </td></tr>
 
@@ -91,11 +91,11 @@ result = cle.pull(gpu_output)
 <!--
 <tr><td>
 
-<img src="user_docs/images/multi-gpu.png" width="300"/>
+<img src="https://raw.githubusercontent.com/clEsperanto/pyclesperanto/main/user_docs/images/multi-gpu.png" width="300"/>
 
 </td><td>
 
-[Multi-GPU developer_docs](user_docs/multi_gpu_demo.ipynb)
+[Multi-GPU developer_docs](https://github.com/clEsperanto/pyclesperanto/tree/main/user_docs/multi_gpu_demo.ipynb)
 
 </td></tr>
 -->

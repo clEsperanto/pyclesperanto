@@ -24,9 +24,6 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest, macos-latest]
-    env:
-      CIBW_BUILD: cp37-* cp39-* cp38-* cp310-*
-      CIBW_SKIP: cp27-* pp* *-musllinux_* *-win32 *universal2* *i686*
 
     steps:
       - uses: actions/checkout@v3
@@ -46,7 +43,7 @@ jobs:
 
   build_sdist:
     name: Build source distribution
-    runs-on: ubuntu-lateste
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
 

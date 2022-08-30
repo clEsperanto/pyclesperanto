@@ -18,5 +18,10 @@ cmake --build ./OpenCL-Headers/build --target install
 cmake -D CMAKE_PREFIX_PATH=${PWD}/OpenCL-Headers/install -D OPENCL_ICD_LOADER_HEADERS_DIR=${PWD}/OpenCL-Headers/install/include -S ./OpenCL-ICD-Loader -B ./OpenCL-ICD-Loader/build2 -A x64
 cmake --build ./OpenCL-ICD-Loader/build2 --target install --config Release
 
-# echo "pyclesperanto wheel includes Khronos Group OpenCL-ICD-Loader which is licensed as below" >> ${SCRIPT_DIR}/../LICENSE
-# cat ./OpenCL-ICD-Loader/LICENSE >> ${SCRIPT_DIR}/../LICENSE
+# why not had c++ binding in the mix?
+
+echo "pyclesperanto wheel includes Khronos Group OpenCL-ICD-Loader which is licensed as below" >> ${SCRIPT_DIR}/../LICENSE
+cat ./OpenCL-ICD-Loader/LICENSE >> ${SCRIPT_DIR}/../LICENSE
+
+setx /M path "$($env:path);C:\Program Files\OpenCL-ICD-Loader\lib\"
+echo %PATH%

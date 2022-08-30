@@ -23,7 +23,7 @@ before-all = [
 ]
 repair-wheel-command = "auditwheel show {wheel} && auditwheel repair --lib-sdir .libs -w {dest_dir} {wheel}"
 
-[tool.cibuildwheel.overrides]
+[[tool.cibuildwheel.overrides]]
 select = "*-musllinux*"
 before-all = [
     "apk add ruby",

@@ -17,8 +17,7 @@ before-all = [
     "yum install -y ruby",
     "bash {package}/scripts/build-opencl-linux.sh",
 ]
-after-all = "auditwheel show {wheel}"
-repair-wheel-command = "auditwheel repair --lib-sdir .libs -w {dest_dir} {wheel}"
+repair-wheel-command = "auditwheel show {wheel} && auditwheel repair --lib-sdir .libs -w {dest_dir} {wheel}"
 
 [[tool.cibuildwheel.windows]]
 before-all = "bash {package}/scripts/build-opencl-windows.sh"

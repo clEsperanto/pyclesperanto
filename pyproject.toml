@@ -23,14 +23,14 @@ before-all = [
 ]
 repair-wheel-command = "auditwheel show {wheel} && auditwheel repair --lib-sdir .libs -w {dest_dir} {wheel}"
 
-[[tool.cibuildwheel.overrides]]
+[tool.cibuildwheel.overrides]
 select = "*-musllinux*"
 before-all = [
     "apk add ruby",
     "bash {package}/scripts/build-ocl.sh",
 ]
 
-[[tool.cibuildwheel.windows]]
+[tool.cibuildwheel.windows]
 skip = ["cp27-*", "pp*", "*-win32"]
 before-all = "bash {package}/scripts/build-opencl-windows.sh"
 

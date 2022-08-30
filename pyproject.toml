@@ -33,8 +33,8 @@ before-all = [
 [tool.cibuildwheel.windows]
 skip = ["cp27-*", "cp36-*", "pp*", "*-win32"]
 before-all = "bash {package}/scripts/build-opencl-windows.sh"
+before-build = "Powershell -Command " setx -m pathtest \"$env:path ";" $env:C:/Program Files/OpenCL-ICD-Loader/lib\""
 #before-build = "cmake configure.py --cxxflags=-ID:/a/pyopencl/pyopencl/OpenCL-Headers/install/include --ldflags=\"/LIBPATH:C:/Program Files/OpenCL-ICD-Loader/lib\""
-before-build = "Powershell -Command " setx -m pathtest \"$env:path ";" $env:C:/Program Files/OpenCL-ICD-Loader/lib\"""
 
 [tool.cibuildwheel.macos]
 skip = ["cp27-*", "cp36-*", "pp*", "*_universal2"]

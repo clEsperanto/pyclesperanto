@@ -8,9 +8,8 @@ requires = [
 build-backend = "setuptools.build_meta"
 
 [tool.cibuildwheel]
-test-requires = ["pocl-binary-distribution", "numpy", "pytest"]
+test-requires = ["numpy", "pytest"]
 test-command = "pytest {project}/tests"
-#test-extras = ["tests"]
 
 [tool.cibuildwheel.linux]
 before-all = [
@@ -18,9 +17,11 @@ before-all = [
     "bash {package}/scripts/build-opencl-linux.sh",
 ]
 repair-wheel-command = "auditwheel show {wheel} && auditwheel repair --lib-sdir .libs -w {dest_dir} {wheel}"
+test-command = ""
 
 [[tool.cibuildwheel.windows]]
 before-all = "bash {package}/scripts/build-opencl-windows.sh"
+test-command = ""
 
 [tool.cibuildwheel.macos]
 before-all = "bash {package}/scripts/build-opencl-macos.sh"

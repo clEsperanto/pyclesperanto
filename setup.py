@@ -11,7 +11,7 @@ from skbuild import setup
 
 setup(
     name="pyclesperanto",
-    version="0.6.0",
+    version="0.6.1",
     author="Stephane Rigaud",
     author_email="stephane.rigaud@pasteur.fr",
     license="BSD-3-Clause",

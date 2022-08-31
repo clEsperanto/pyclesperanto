@@ -35,10 +35,6 @@ jobs:
         env:
           CIBW_ARCHS_MACOS: x86_64 arm64
 
-      - name: Verify clean directory
-        run: git diff --exit-code
-        shell: bash
-
       - uses: actions/upload-artifact@v3
         with:
           path: ./wheelhouse/*.whl

@@ -5,8 +5,12 @@ cmake_minimum_required(VERSION 3.20)
 project(pyClesperanto VERSION "0.6.0")
 
 # Compilation tag for CLIc library linking
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC")
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fPIC")
+if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC")
+  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fPIC")
+endif()
+set(CMAKE_CXX_STANDARD 17) # Use C++17
+set(CMAKE_CXX_STANDARD_REQUIRED ON) # Require (at least) it
 
 # find required package
 set(Python_FIND_VIRTUALENV "FIRST") # look for python in virtual env or conda first before checking the system.
@@ -42,6 +46,7 @@ add_subdirectory(CLIc)
 
 # extra steps for scikit-build to find pybind11
 if(DEFINED SKBUILD)
+    message(STATUS "SKBUILD BUILD CALL")
     # call pybind11-config to obtain the root of the cmake package
     execute_process(COMMAND ${PYTHON_EXECUTABLE} -m pybind11 --cmakedir
         OUTPUT_VARIABLE pybind11_ROOT_RAW)

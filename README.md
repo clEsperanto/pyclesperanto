@@ -1,7 +1,9 @@
 # pyclesperanto
 [![Build](https://github.com/clEsperanto/pyclesperanto/actions/workflows/build_and_deploy.yml/badge.svg)](https://github.com/clEsperanto/pyclesperanto/actions/workflows/build_and_deploy.yml)
-[![License](https://img.shields.io/badge/license-BSD-informational)](https://github.com/clEsperanto/pyclesperanto/blob/main/LICENSE)
+[![License](https://img.shields.io/pypi/l/pyclesperanto.svg?color=green)](https://github.com/clEsperanto/pyclesperanto/raw/main/LICENSE)
 [![Website](https://img.shields.io/website?url=http%3A%2F%2Fclesperanto.net)](http://clesperanto.net)
+[![Python Version](https://img.shields.io/pypi/pyversions/pyclesperanto.svg?color=green)](https://python.org)
+[![Development Status](https://img.shields.io/pypi/status/pyclesperanto.svg)](https://en.wikipedia.org/wiki/Software_release_life_cycle#Alpha)
 [![GitHub stars](https://img.shields.io/github/stars/clEsperanto/pyclesperanto?style=social)](https://github.com/clEsperanto/pyclesperanto)
 [![GitHub forks](https://img.shields.io/github/forks/clEsperanto/pyclesperanto?style=social)](https://github.com/clEsperanto/pyclesperanto)
 
@@ -38,7 +40,7 @@ result = cle.pull(gpu_output)
 <table border="0">
 
 <tr><td>
-<img src="https://raw.githubusercontent.com/clEsperanto/pyclesperanto/main/user_docs/images/labeled_blobs.png" width="300"/>
+<img src="https://github.com/clEsperanto/pyclesperanto/raw/main/user_docs/images/labeled_blobs.png" width="300"/>
 </td><td>
 
 [Segment + analyze blobs](https://github.com/clEsperanto/pyclesperanto/tree/main/user_docs/process_blobs.ipynb)
@@ -46,7 +48,7 @@ result = cle.pull(gpu_output)
 </td></tr>
 
 <tr><td>
-<img src="https://raw.githubusercontent.com/clEsperanto/pyclesperanto/main/user_docs/images/cell_segmentation.png" width="300"/>
+<img src="https://github.com/clEsperanto/pyclesperanto/raw/main/user_docs/images/cell_segmentation.png" width="300"/>
 </td><td>
 
 [Cell segmentation + Voronoi labeling](https://github.com/clEsperanto/pyclesperanto/tree/main/user_docs/cell_segmentation.ipynb)
@@ -54,7 +56,7 @@ result = cle.pull(gpu_output)
 </td></tr>
 
 <tr><td>
-<img src="https://raw.githubusercontent.com/clEsperanto/pyclesperanto/main/user_docs/images/image_filtering.png" width="300"/>
+<img src="https://github.com/clEsperanto/pyclesperanto/raw/main/user_docs/images/image_filtering.png" width="300"/>
 </td><td>
 
 [3D image filtering](https://github.com/clEsperanto/pyclesperanto/tree/main/user_docs/image_filtering.ipynb)
@@ -63,7 +65,7 @@ result = cle.pull(gpu_output)
 
 
 <tr><td>
-<img src="https://raw.githubusercontent.com/clEsperanto/pyclesperanto/main/user_docs/images/find_local_maxima.png" width="300"/>
+<img src="https://github.com/clEsperanto/pyclesperanto/raw/main/user_docs/images/find_local_maxima.png" width="300"/>
 </td><td>
 
 [Find local maxima](https://github.com/clEsperanto/pyclesperanto/tree/main/user_docs/find_local_maxima.ipynb)
@@ -71,7 +73,7 @@ result = cle.pull(gpu_output)
 </td></tr>
 
 <tr><td>
-<img src="https://raw.githubusercontent.com/clEsperanto/pyclesperanto/main/user_docs/images/tribolium3d_segmentation.png" width="300"/>
+<img src="https://github.com/clEsperanto/pyclesperanto/raw/main/user_docs/images/tribolium3d_segmentation.png" width="300"/>
 </td><td>
 
 [3D Tribolium nuclei segmentation](https://github.com/clEsperanto/pyclesperanto/tree/main/user_docs/process_tribolium.ipynb)
@@ -79,7 +81,7 @@ result = cle.pull(gpu_output)
 </td></tr>
 
 <tr><td>
-<img src="https://raw.githubusercontent.com/clEsperanto/pyclesperanto/main/user_docs/images/explore_API.png" width="300"/>
+<img src="https://github.com/clEsperanto/pyclesperanto/raw/main/user_docs/images/explore_API.png" width="300"/>
 </td><td>
 
 [Explore application programming interface (API)](https://github.com/clEsperanto/pyclesperanto/tree/main/user_docs/explore_API.ipynb)

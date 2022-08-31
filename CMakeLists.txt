@@ -26,16 +26,15 @@ message(STATUS "Python library dirs: ${Python3_LIBRARY_DIRS}")
 # include_directories(SYSTEM ${Python3_INCLUDE_DIRS})
 
 # find opencl icd-loader in virtual environment
-file(GLOB PYTHON_OpenCL_LIBRARY ${Python3_LIBRARY_DIRS}/libOpenCL.so)
-
-if(PYTHON_OpenCL_LIBRARY STREQUAL "")
-    message(STATUS "WARNING: No ICD found in virtual environment, searching for system ICD.")
-else()
-    message(STATUS ${PYTHON_OpenCL_LIBRARY})
-    set(OpenCL_LIBRARIES ${PYTHON_OpenCL_LIBRARY})
-    set(OpenCL_LIBRARY ${PYTHON_OpenCL_LIBRARY})
-    set(OpenCL_FOUND TRUE)
-endif()
+# file(GLOB PYTHON_OpenCL_LIBRARY ${Python3_LIBRARY_DIRS}/libOpenCL.so)
+# if(PYTHON_OpenCL_LIBRARY STREQUAL "")
+#     message(STATUS "WARNING: No ICD found in virtual environment, searching for system ICD.")
+# else()
+#     message(STATUS ${PYTHON_OpenCL_LIBRARY})
+#     set(OpenCL_LIBRARIES ${PYTHON_OpenCL_LIBRARY})
+#     set(OpenCL_LIBRARY ${PYTHON_OpenCL_LIBRARY})
+#     set(OpenCL_FOUND TRUE)
+# endif()
 
 # Compile CLIc Back-end library
 add_subdirectory(CLIc)

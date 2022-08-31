@@ -22,7 +22,3 @@ cmake --build ./OpenCL-ICD-Loader/build2 --target install --config Release
 
 echo "pyclesperanto wheel includes Khronos Group OpenCL-ICD-Loader which is licensed as below" >> ${SCRIPT_DIR}/../LICENSE
 cat ./OpenCL-ICD-Loader/LICENSE >> ${SCRIPT_DIR}/../LICENSE
-
-# setx /M "PATH=C:/Program Files/OpenCL-ICD-Loader/lib/;$PATH"
-# echo $PATH
-export PATH=$PATH:"C:/Program Files/OpenCL-ICD-Loader/lib/"

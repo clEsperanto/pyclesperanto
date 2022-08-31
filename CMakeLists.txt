@@ -20,8 +20,9 @@ if(Python3_Development.Embed_FOUND)
     message(STATUS "Python Developement Embed found")
 endif()
 
-message(STATUS "POpenCL_FOUND: ${OpenCL_FOUND}")
+message(STATUS "OpenCL_FOUND: ${OpenCL_FOUND}")
 message(STATUS "OpenCL_LIBRARY: ${OpenCL_LIBRARY}")
+message(STATUS "OpenCL_LIBRARIES: ${OpenCL_LIBRARIES}")
 
 # include_directories(SYSTEM ${Python3_INCLUDE_DIRS})
 

@@ -33,7 +33,7 @@ before-all = [
 [tool.cibuildwheel.windows]
 skip = ["cp27-*", "cp36-*", "pp*", "*-win32"]
 before-all = "bash {package}/scripts/build-opencl-windows.sh"
-before-build = "setx SKBUILD_CONFIGURE_OPTIONS \"-DOpenCL_LIBRARY=C:/Program Files/OpenCL-ICD-Loader/lib/OpenCL.lib -DOpenCL_FOUND=TRUE\""
+before-build = "setx SKBUILD_CONFIGURE_OPTIONS \"-DOpenCL_LIBRARY=C:/Program Files/OpenCL-ICD-Loader/lib/OpenCL.lib -DOpenCL_LIBRARIES=C:/Program Files/OpenCL-ICD-Loader/lib/OpenCL.lib -DOpenCL_FOUND=TRUE\""
 
 [tool.cibuildwheel.macos]
 skip = ["cp27-*", "cp36-*", "pp*", "*_universal2"]

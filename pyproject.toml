@@ -16,25 +16,29 @@ test-command = ""
 #test-command = "pytest {project}/tests"
 
 [tool.cibuildwheel.linux]
-skip = ["cp27-*", "cp36-*", "pp*"]
+skip = ["cp27-*", "cp36-*", "pp*", "*-musllinux*"]
 before-all = [
     "yum install -y ruby",
     "bash {package}/scripts/build-opencl-linux.sh",
 ]
 repair-wheel-command = "auditwheel show {wheel} && auditwheel repair --lib-sdir .libs -w {dest_dir} {wheel}"
+environment = { SKBUILD_CONFIGURE_OPTIONS="-DBUILD_TESTING:BOOL=FALSE" }
 
-[[tool.cibuildwheel.overrides]]
-select = "*-musllinux*"
-before-all = [
-    "apk add ruby",
-    "bash {package}/scripts/build-ocl.sh",
-]
+
+#[[tool.cibuildwheel.overrides]]
+#select = "*-musllinux*"
+#before-all = [
+#    "apk add ruby",
+#    "bash {package}/scripts/build-ocl.sh",
+#]
 
 [tool.cibuildwheel.windows]
 skip = ["cp27-*", "cp36-*", "pp*", "*-win32"]
 before-all = "bash {package}/scripts/build-opencl-windows.sh"
-environment = { SKBUILD_CONFIGURE_OPTIONS="-DOpenCL_LIBRARY:FILEPATH='C:/Program Files/OpenCL-ICD-Loader/lib/OpenCL.lib' -DOpenCL_LIBRARIES:FILEPATH='C:/Program Files/OpenCL-ICD-Loader/lib/OpenCL.lib' -DOpenCL_FOUND:BOOL=TRUE" }
+environment = { SKBUILD_CONFIGURE_OPTIONS="-DOpenCL_LIBRARY:FILEPATH='C:/Program Files/OpenCL-ICD-Loader/lib/OpenCL.lib' -DOpenCL_LIBRARIES:FILEPATH='C:/Program Files/OpenCL-ICD-Loader/lib/OpenCL.lib' -DOpenCL_FOUND:BOOL=TRUE -DBUILD_TESTING:BOOL=FALSE" }
 
 [tool.cibuildwheel.macos]
 skip = ["cp27-*", "cp36-*", "pp*", "*_universal2"]
 before-all = "bash {package}/scripts/build-opencl-macos.sh"
+environment = { SKBUILD_CONFIGURE_OPTIONS="-DBUILD_TESTING:BOOL=FALSE" }
+

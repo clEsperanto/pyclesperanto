@@ -29,7 +29,6 @@ message(STATUS "OpenCL_LIBRARY: ${OpenCL_LIBRARY}")
 message(STATUS "OpenCL_LIBRARIES: ${OpenCL_LIBRARIES}")
 
 # include_directories(SYSTEM ${Python3_INCLUDE_DIRS})
-
 # find opencl icd-loader in virtual environment
 # file(GLOB PYTHON_OpenCL_LIBRARY ${Python3_LIBRARY_DIRS}/libOpenCL.so)
 # if(PYTHON_OpenCL_LIBRARY STREQUAL "")
@@ -46,7 +45,6 @@ add_subdirectory(CLIc)
 
 # extra steps for scikit-build to find pybind11
 if(DEFINED SKBUILD)
-    message(STATUS "SKBUILD BUILD CALL")
     # call pybind11-config to obtain the root of the cmake package
     execute_process(COMMAND ${PYTHON_EXECUTABLE} -m pybind11 --cmakedir
         OUTPUT_VARIABLE pybind11_ROOT_RAW)

@@ -26,7 +26,6 @@ setup(
         'toolz',
         'matplotlib',
     ],
-    # extras_require={"test": ["pytest", "pytest-cov", "pytest-benchmark"]},
     classifiers=[
         'Development Status :: 2 - Pre-Alpha',
         'Intended Audience :: Science/Research',

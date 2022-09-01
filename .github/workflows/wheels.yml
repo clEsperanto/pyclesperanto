@@ -6,8 +6,8 @@ on:
     branches: [main]
   pull_request:
     branches: [main]
-  # schedule:
-  #  - cron: "17 3 * * 0"
+ schedule:
+   - cron: "17 3 * * 0"
 
 jobs:
   build_wheels:
@@ -50,7 +50,7 @@ jobs:
     needs: [build_wheels, build_sdist]
     runs-on: ubuntu-latest
     # upload to PyPI on every tag starting with 'v'
-    # if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')
+    if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')
 
     steps:
       - uses: actions/setup-python@v4
@@ -65,5 +65,5 @@ jobs:
       - uses: pypa/gh-action-pypi-publish@v1.5.1
         with:
           password: ${{ secrets.PYPI_API_TOKEN }}
-          skip_existing: true
+          # skip_existing: true
           verbose: true

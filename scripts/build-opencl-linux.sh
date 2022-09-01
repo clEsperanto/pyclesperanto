@@ -26,5 +26,5 @@ make -j4
 make install
 
 # Bundle license files
-# echo "pyclesperanto wheel includes ocl-icd which is licensed as below" >> ${SCRIPT_DIR}/../LICENSE
-# cat ~/deps/ocl-icd/COPYING >> ${SCRIPT_DIR}/../LICENSE 
+echo "pyclesperanto wheel includes ocl-icd which is licensed as below" >> ${SCRIPT_DIR}/../LICENSE
+cat ~/deps/ocl-icd/COPYING >> ${SCRIPT_DIR}/../LICENSE 

@@ -7,11 +7,21 @@ long_description = (this_directory / "README.md").read_text()
 import sys, os
 sys.path.append(os.path.dirname(__file__))
 
+
+ver_dic = {}
+version_file = open("pyclesperanto/version.py")
+try:
+    version_file_contents = version_file.read()
+finally:
+    version_file.close()
+
+exec(compile(version_file_contents, "pyclesperanto/version.py", "exec"), ver_dic)
+
 from skbuild import setup
 
 setup(
     name="pyclesperanto",
-    version="0.6.2",
+    version=ver_dic["VERSION_TEXT"],
     author="Stephane Rigaud",
     author_email="stephane.rigaud@pasteur.fr",
     license="BSD-3-Clause",

@@ -1,4 +1,6 @@
 
+build_version = "0.6.2"
+
 # read the contents of your README file
 from pathlib import Path
 this_directory = Path(__file__).parent
@@ -11,7 +13,7 @@ from skbuild import setup
 
 setup(
     name="pyclesperanto",
-    version="0.6.2",
+    version=build_version,
     author="Stephane Rigaud",
     author_email="stephane.rigaud@pasteur.fr",
     license="BSD-3-Clause",
@@ -26,6 +28,7 @@ setup(
         'toolz',
         'matplotlib',
     ],
+    cmake_args=['-DCMAKE_PROJECT_VERSION:String={0}'.format(build_version)],
     classifiers=[
         'Development Status :: 2 - Pre-Alpha',
         'Intended Audience :: Science/Research',

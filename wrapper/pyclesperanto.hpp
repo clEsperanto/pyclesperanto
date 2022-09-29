@@ -6,7 +6,8 @@
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
 
-auto init_pygateway(const pybind11::module_ &module) -> void;
-auto init_pyimage(const pybind11::module_ &module) -> void;
+auto init_clgateway(const pybind11::module_ &module) -> void;
+auto init_climage(const pybind11::module_ &module) -> void;
+auto init_cltypes(const pybind11::module_ &module) -> void;
 
 #endif // __WRAPPER_PYCLESPERANTO_HPP

@@ -1,5 +1,5 @@
-#ifndef __WRAPPER_PYGATEWAY_HPP
-#define __WRAPPER_PYGATEWAY_HPP
+#ifndef __WRAPPER_CLGATEWAY_HPP
+#define __WRAPPER_CLGATEWAY_HPP
 
 #include <pybind11/functional.h>
 #include <pybind11/numpy.h>
@@ -9,25 +9,19 @@
 #include "clImage.hpp"
 #include "clesperanto.hpp"
 
-using pybind11::array;
-using pybind11::array_t;
-
-using cle::Clesperanto;
+// using cle::Clesperanto;
 // using cle::Image;
 // using cle::MemoryType;
 
-class clGateway : public Clesperanto
+class clGateway : public cle::Clesperanto
 {
 public:
-  using Clesperanto::Clesperanto;
+  using cle::Clesperanto::Clesperanto;
+  using ndarray_f = pybind11::array_t<float, pybind11::array::c_style | pybind11::array::forcecast>;
 
-  //* numpy array datatype
-  using ndarray_f = array_t<float, array::c_style | array::forcecast>;
-
-  //* overload create push pull operation from gpu
-  auto Create(ndarray_f &shape) -> clImage;
-  auto Push(ndarray_f &source) -> clImage;
-  auto Pull(clImage &source) -> ndarray_f;
+  auto Create(const pybind11::tuple &shape, const cle::MemoryType &mtype) -> clImage;
+  auto Push(ndarray_f &nd_arr, const cle::MemoryType &mtype) -> clImage;
+  auto Pull(clImage &image) -> ndarray_f;
 };
 
-#endif // __WRAPPER_PYGATEWAY_HPP
+#endif // __WRAPPER_CLGATEWAY_HPP

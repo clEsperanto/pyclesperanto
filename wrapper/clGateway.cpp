@@ -2,32 +2,24 @@
 #include "clGateway.hpp"
 #include "clImage.hpp"
 
-#include "cleTypes.hpp"
-
-auto clGateway::Create(clGateway::ndarray_f &shape) -> clImage
+auto clGateway::Create(const pybind11::tuple &shape, const cle::MemoryType &mtype) -> clImage
 {
-  pybind11::buffer_info arr = shape.request();
-  if (arr.ndim > 1)
+  if (pybind11::len(shape) > 3)
   {
-    throw std::runtime_error("Expecting 1d shape array");
+    throw std::runtime_error("Wrong number of dimension provided. pyClesperanto does not support dimension > 3.");
   }
-  if (arr.size > 3)
-  {
-    throw std::runtime_error("Number of dimensions must be three or less");
-  }
-  float *ptr = static_cast<float *>(arr.ptr);
-  std::array<size_t, 3> shape_arr = {1, 1, 1};
-  for (int i = arr.size - 1, j = 0; i >= 0 && j < shape_arr.size(); --i, ++j)
+  std::array<size_t, 3> arr = {1, 1, 1};
+  for (int i = pybind11::len(shape) - 1, j = 0; i >= 0 && j < arr.size(); --i, ++j)
   {
     //! We flip the dimensions from numpy to c++
-    shape_arr[j] = static_cast<size_t>(ptr[i]);
+    arr[j] = shape[i].cast<size_t>();
   }
-  return this->Clesperanto::Create<float>(shape_arr, cle::BUFFER);
+  return this->Clesperanto::Create<float>(arr, mtype);
 };
 
-auto clGateway::Push(clGateway::ndarray_f &source) -> clImage
+auto clGateway::Push(clGateway::ndarray_f &nd_arr, const cle::MemoryType &mtype) -> clImage
 {
-  pybind11::buffer_info arr = source.request();
+  pybind11::buffer_info arr = nd_arr.request();
   if (arr.ndim > 3)
   {
     throw std::runtime_error("Number of dimensions must be three or less");
@@ -65,10 +57,8 @@ auto init_clgateway(const pybind11::module_ &m) -> void
 
   object.def(pybind11::init<>(), "default constructor");
 
-  object.def("Create", &clGateway::Create, "", pybind11::arg("shape"));
-
-  object.def("Push", &clGateway::Push, "", pybind11::arg("array"));
-
+  object.def("Create", &clGateway::Create, "", pybind11::arg("shape"), pybind11::arg("mtype") = cle::BUFFER);
+  object.def("Push", &clGateway::Push, "", pybind11::arg("nd_arr"), pybind11::arg("mtype") = cle::BUFFER);
   object.def("Pull", &clGateway::Pull, "", pybind11::arg("image"));
 
   object.def("WaitForKernelToFinish", &clGateway::WaitForKernelToFinish, "",
@@ -83,7 +73,7 @@ auto init_clgateway(const pybind11::module_ &m) -> void
              pybind11::arg("destination"));
   object.def("AddImageAndScalar", &clGateway::AddImageAndScalar, "",
              pybind11::arg("source"), pybind11::arg("destination"),
-             pybind11::arg("scalar") = 0);
+             pybind11::arg("scalar"));
   object.def("AddImages", &clGateway::AddImages, "", pybind11::arg("source1"),
              pybind11::arg("source2"), pybind11::arg("destination"));
   object.def("AddImagesWeighted", &clGateway::AddImagesWeighted, "",
@@ -103,7 +93,7 @@ auto init_clgateway(const pybind11::module_ &m) -> void
              pybind11::arg("source2"), pybind11::arg("destination"));
   object.def("BlockEnumerate", &clGateway::BlockEnumerate, "",
              pybind11::arg("source"), pybind11::arg("sum"),
-             pybind11::arg("destination"), pybind11::arg("block_size") = 1);
+             pybind11::arg("destination"), pybind11::arg("block_size"));
   object.def("CloseIndexGapsInLabelMap", &clGateway::CloseIndexGapsInLabelMap,
              "", pybind11::arg("source"), pybind11::arg("destination"),
              pybind11::arg("block_size") = 4096);
@@ -116,9 +106,9 @@ auto init_clgateway(const pybind11::module_ &m) -> void
              pybind11::arg("source"), pybind11::arg("destination"));
   object.def("DifferenceOfGaussian", &clGateway::DifferenceOfGaussian, "",
              pybind11::arg("source"), pybind11::arg("destination"),
-             pybind11::arg("sigma1_x") = 0, pybind11::arg("sigma1_y") = 0,
-             pybind11::arg("sigma1_z") = 0, pybind11::arg("sigma2_x") = 0,
-             pybind11::arg("sigma2_y") = 0, pybind11::arg("sigma2_z") = 0);
+             pybind11::arg("sigma1_x"), pybind11::arg("sigma1_y"),
+             pybind11::arg("sigma1_z"), pybind11::arg("sigma2_x"),
+             pybind11::arg("sigma2_y"), pybind11::arg("sigma2_z"));
   object.def("DilateLabels", &clGateway::DilateLabels, "",
              pybind11::arg("source"), pybind11::arg("destination"),
              pybind11::arg("radius"));
@@ -131,7 +121,7 @@ auto init_clgateway(const pybind11::module_ &m) -> void
              pybind11::arg("source2"), pybind11::arg("destination"));
   object.def("EqualConstant", &clGateway::EqualConstant, "",
              pybind11::arg("source"), pybind11::arg("destination"),
-             pybind11::arg("scalar") = 0);
+             pybind11::arg("scalar"));
   object.def("ErodeSphere", &clGateway::ErodeSphere, "",
              pybind11::arg("source"), pybind11::arg("destination"));
   object.def("ExtendLabelingViaVoronoi", &clGateway::ExtendLabelingViaVoronoi,
@@ -140,21 +130,21 @@ auto init_clgateway(const pybind11::module_ &m) -> void
              pybind11::arg("source"), pybind11::arg("destination"));
   object.def("GaussianBlur", &clGateway::GaussianBlur, "",
              pybind11::arg("source"), pybind11::arg("destination"),
-             pybind11::arg("sigma_x") = 0, pybind11::arg("sigma_y") = 0,
-             pybind11::arg("sigma_z") = 0);
+             pybind11::arg("sigma_x"), pybind11::arg("sigma_y"),
+             pybind11::arg("sigma_z"));
   object.def("Greater", &clGateway::Greater, "", pybind11::arg("source1"),
              pybind11::arg("source2"), pybind11::arg("destination"));
   object.def("GreaterConstant", &clGateway::GreaterConstant, "",
              pybind11::arg("source"), pybind11::arg("destination"),
-             pybind11::arg("scalar") = 0);
+             pybind11::arg("scalar"));
   object.def("GreaterOrEqual", &clGateway::GreaterOrEqual, "",
              pybind11::arg("source1"), pybind11::arg("source2"),
              pybind11::arg("destination"));
   object.def("GreaterOrEqualConstant", &clGateway::GreaterOrEqualConstant, "",
              pybind11::arg("source"), pybind11::arg("destination"),
-             pybind11::arg("scalar") = 0);
+             pybind11::arg("scalar"));
   object.def("Histogram", &clGateway::Histogram, "", pybind11::arg("source"),
-             pybind11::arg("destination"), pybind11::arg("  bins") = 255,
+             pybind11::arg("destination"), pybind11::arg("bins"),
              pybind11::arg("min_intensity") = pybind11::none(),
              pybind11::arg("max_intensity") = pybind11::none());
   object.def("Mask", &clGateway::Mask, "", pybind11::arg("source"),
@@ -163,8 +153,8 @@ auto init_clgateway(const pybind11::module_ &m) -> void
              pybind11::arg("source"), pybind11::arg("t_mask"),
              pybind11::arg("destination"));
   object.def("MaximumBox", &clGateway::MaximumBox, "", pybind11::arg("source"),
-             pybind11::arg("destination"), pybind11::arg("radius_x") = 0,
-             pybind11::arg("radius_y") = 0, pybind11::arg("radius_z") = 0);
+             pybind11::arg("destination"), pybind11::arg("radius_x"),
+             pybind11::arg("radius_y"), pybind11::arg("radius_z"));
   object.def("MaximumOfAllPixels", &clGateway::MaximumOfAllPixels, "",
              pybind11::arg("source"), pybind11::arg("destination"));
   object.def("MaximumXProjection", &clGateway::MaximumXProjection, "",
@@ -174,14 +164,14 @@ auto init_clgateway(const pybind11::module_ &m) -> void
   object.def("MaximumZProjection", &clGateway::MaximumZProjection, "",
              pybind11::arg("source"), pybind11::arg("destination"));
   object.def("MeanBox", &clGateway::MeanBox, "", pybind11::arg("source"),
-             pybind11::arg("destination"), pybind11::arg("radius_x") = 0,
-             pybind11::arg("radius_y") = 0, pybind11::arg("radius_z") = 0);
+             pybind11::arg("destination"), pybind11::arg("radius_x"),
+             pybind11::arg("radius_y"), pybind11::arg("radius_z"));
   object.def("MeanSphere", &clGateway::MeanSphere, "", pybind11::arg("source"),
-             pybind11::arg("destination"), pybind11::arg("radius_x") = 0,
-             pybind11::arg("radius_y") = 0, pybind11::arg("radius_z") = 0);
+             pybind11::arg("destination"), pybind11::arg("radius_x"),
+             pybind11::arg("radius_y"), pybind11::arg("radius_z"));
   object.def("MinimumBox", &clGateway::MinimumBox, "", pybind11::arg("source"),
-             pybind11::arg("destination"), pybind11::arg("radius_x") = 0,
-             pybind11::arg("radius_y") = 0, pybind11::arg("radius_z") = 0);
+             pybind11::arg("destination"), pybind11::arg("radius_x"),
+             pybind11::arg("radius_y"), pybind11::arg("radius_z"));
   object.def("MinimumOfAllPixels", &clGateway::MinimumOfAllPixels, "",
              pybind11::arg("source"), pybind11::arg("destination"));
   object.def("MinimumXProjection", &clGateway::MinimumXProjection, "",
@@ -200,7 +190,7 @@ auto init_clgateway(const pybind11::module_ &m) -> void
              pybind11::arg("source2"), pybind11::arg("destination"));
   object.def("NotEqualConstant", &clGateway::NotEqualConstant, "",
              pybind11::arg("source"), pybind11::arg("destination"),
-             pybind11::arg("scalar") = 0);
+             pybind11::arg("scalar"));
   object.def("OnlyzeroOverwriteMaximumBox",
              &clGateway::OnlyzeroOverwriteMaximumBox, "",
              pybind11::arg("source"), pybind11::arg("flag"),
@@ -217,9 +207,9 @@ auto init_clgateway(const pybind11::module_ &m) -> void
              pybind11::arg("input_intensity"),
              pybind11::arg("output_intensity"));
   object.def("Set", &clGateway::Set, "", pybind11::arg("source"),
-             pybind11::arg("scalar") = 0);
+             pybind11::arg("scalar"));
   object.def("SetColumn", &clGateway::SetColumn, "", pybind11::arg("source"),
-             pybind11::arg("column_index"), pybind11::arg("scalar") = 0);
+             pybind11::arg("column_index"), pybind11::arg("scalar"));
   object.def("SetNonzeroPixelsToPixelindex",
              &clGateway::SetNonzeroPixelsToPixelindex, "",
              pybind11::arg("source"), pybind11::arg("destination"));
@@ -227,18 +217,18 @@ auto init_clgateway(const pybind11::module_ &m) -> void
              pybind11::arg("source2"), pybind11::arg("destination"));
   object.def("SmallerConstant", &clGateway::SmallerConstant, "",
              pybind11::arg("source"), pybind11::arg("destination"),
-             pybind11::arg("scalar") = 0);
+             pybind11::arg("scalar"));
   object.def("SmallerOrEqual", &clGateway::SmallerOrEqual, "",
              pybind11::arg("source1"), pybind11::arg("source2"),
              pybind11::arg("destination"));
   object.def("SmallerOrEqualConstant", &clGateway::SmallerOrEqualConstant, "",
              pybind11::arg("source"), pybind11::arg("destination"),
-             pybind11::arg("scalar") = 0);
+             pybind11::arg("scalar"));
   object.def("Sobel", &clGateway::Sobel, "", pybind11::arg("source"),
              pybind11::arg("destination"));
   object.def("SubtractImageFromScalar", &clGateway::SubtractImageFromScalar, "",
              pybind11::arg("source"), pybind11::arg("destination"),
-             pybind11::arg("scalar") = 0);
+             pybind11::arg("scalar"));
   object.def("SubtractImages", &clGateway::SubtractImages, "",
              pybind11::arg("source1"), pybind11::arg("source2"),
              pybind11::arg("destination"));
@@ -256,12 +246,12 @@ auto init_clgateway(const pybind11::module_ &m) -> void
   object.def("ThresholdOtsu", &clGateway::ThresholdOtsu, "",
              pybind11::arg("source"), pybind11::arg("destination"));
   object.def("TopHatBox", &clGateway::TopHatBox, "", pybind11::arg("source"),
-             pybind11::arg("destination"), pybind11::arg("radius_x") = 0,
-             pybind11::arg("radius_y") = 0, pybind11::arg("radius_z") = 0);
+             pybind11::arg("destination"), pybind11::arg("radius_x"),
+             pybind11::arg("radius_y"), pybind11::arg("radius_z"));
   object.def("VoronoiOtsuLabeling", &clGateway::VoronoiOtsuLabeling, "",
              pybind11::arg("source"), pybind11::arg("destination"),
-             pybind11::arg("sigma_spot") = 0,
-             pybind11::arg("sigma_outline") = 0);
+             pybind11::arg("sigma_spot"),
+             pybind11::arg("sigma_outline"));
 
   object.doc() = R"pbdoc(
             gpu class wrapper

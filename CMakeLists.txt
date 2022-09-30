@@ -22,7 +22,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON) # Require (at least) it
 # find python dev library
 # look for python in virtual env or conda first before checking the system.
 set(Python_FIND_VIRTUALENV "FIRST") 
-find_package(Python3 COMPONENTS  Development REQUIRED)
+find_package(Python3 COMPONENTS Interpreter Development.Embed Development.Module REQUIRED)
 
 message(STATUS "OpenCL_FOUND: ${OpenCL_FOUND}")
 message(STATUS "OpenCL_LIBRARY: ${OpenCL_LIBRARY}")

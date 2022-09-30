@@ -21,8 +21,16 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON) # Require (at least) it
 
 # find python dev library
 # look for python in virtual env or conda first before checking the system.
-set(Python_FIND_VIRTUALENV "FIRST") 
-find_package(Python3 COMPONENTS Interpreter Development.Embed Development.Module REQUIRED)
+set(Python_FIND_VIRTUALENV "FIRST")
+find_package(Python3 COMPONENTS Interpreter Development.Embed Development.Module)
+
+if(Python3_Development.Module_FOUND)
+    message(STATUS "Python Developement Module found")
+endif()
+
+if(Python3_Development.Embed_FOUND)
+    message(STATUS "Python Developement Embed found")
+endif()
 
 message(STATUS "OpenCL_FOUND: ${OpenCL_FOUND}")
 message(STATUS "OpenCL_LIBRARY: ${OpenCL_LIBRARY}")
@@ -30,7 +38,6 @@ message(STATUS "OpenCL_LIBRARIES: ${OpenCL_LIBRARIES}")
 
 # CMake Warning:
 #   Manually-specified variables were not used by the project:
-
 #     PYTHON_INCLUDE_DIR
 #     PYTHON_LIBRARY
 #     PYTHON_VERSION_STRING

@@ -1,6 +1,3 @@
-#ifndef __WRAPPER_CLENUMTYPE_CPP
-#define __WRAPPER_CLENUMTYPE_CPP
-
 #include "cleTypes.hpp"
 
 #include <pybind11/functional.h>
@@ -8,9 +5,9 @@
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
 
-auto init_cltypes(const pybind11::module_ &m) -> void
+auto init_cletypes(pybind11::module_ &m) -> void
 {
-    pybind11::enum_<cle::DataType> dtype(m, "DataType");
+    pybind11::enum_<cle::DataType> dtype(m, "cleDataType");
     dtype.value("float", cle::DataType::FLOAT);
     dtype.value("int32", cle::DataType::INT32);
     dtype.value("int16", cle::DataType::INT16);
@@ -20,7 +17,7 @@ auto init_cltypes(const pybind11::module_ &m) -> void
     dtype.value("uint8", cle::DataType::UINT8);
     dtype.export_values();
 
-    pybind11::enum_<cle::MemoryType> otype(m, "MemoryType");
+    pybind11::enum_<cle::MemoryType> otype(m, "cleMemType");
     otype.value("buffer", cle::MemoryType::BUFFER);
     otype.value("image", cle::MemoryType::IMAGE);
     otype.value("image1d", cle::MemoryType::IMAGE1D);
@@ -28,5 +25,3 @@ auto init_cltypes(const pybind11::module_ &m) -> void
     otype.value("image3d", cle::MemoryType::IMAGE3D);
     otype.export_values();
 }
-
-#endif // __WRAPPER_CLENUMTYPE_CPP

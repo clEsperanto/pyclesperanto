@@ -7,6 +7,7 @@
 ![GitHub issues](https://img.shields.io/github/issues-raw/clEsperanto/pyclesperanto)
 [![GitHub stars](https://img.shields.io/github/stars/clEsperanto/pyclesperanto?style=social)](https://github.com/clEsperanto/pyclesperanto)
 [![GitHub forks](https://img.shields.io/github/forks/clEsperanto/pyclesperanto?style=social)](https://github.com/clEsperanto/pyclesperanto)
+[![PyPI - Downloads](https://img.shields.io/pypi/dm/pyclesperanto)](https://pypistats.org/packages/pyclesperanto)
 
 pyclesperanto is the python package of [clEsperanto] - a multi-language framework for GPU-accelerated image processing.
 clEsperanto uses [OpenCL kernels] from [CLIJ].

@@ -7,7 +7,7 @@
 
 auto init_cletypes(pybind11::module_ &m) -> void
 {
-    pybind11::enum_<cle::DataType> dtype(m, "cleDataType");
+    pybind11::enum_<cle::DataType> dtype(m, "_cleDataType");
     dtype.value("float", cle::DataType::FLOAT);
     dtype.value("int32", cle::DataType::INT32);
     dtype.value("int16", cle::DataType::INT16);
@@ -17,7 +17,7 @@ auto init_cletypes(pybind11::module_ &m) -> void
     dtype.value("uint8", cle::DataType::UINT8);
     dtype.export_values();
 
-    pybind11::enum_<cle::MemoryType> otype(m, "cleMemType");
+    pybind11::enum_<cle::MemoryType> otype(m, "_cleMemType");
     otype.value("buffer", cle::MemoryType::BUFFER);
     otype.value("image", cle::MemoryType::IMAGE);
     otype.value("image1d", cle::MemoryType::IMAGE1D);

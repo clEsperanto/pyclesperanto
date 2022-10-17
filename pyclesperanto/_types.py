@@ -1,72 +1,126 @@
-# import numpy as np
-# from typing import Union
-# import inspect
-# from typing import Callable
-# from functools import wraps
-# from toolz import curry
+import numpy as np
+from typing import Union
+import inspect
+from typing import Callable
+from functools import wraps
+from toolz import curry
 
-# from ._pyclic import data
+from ._pyclesperanto import _cleImage
+from ._pyclesperanto import _cleMemType, _cleDataType
 
-# Image = Union[np.ndarray, data]
+class cleImage (_cleImage) :
+    def __init__(self) -> None:
+        super().__init__()
+    def __init__(self, image: _cleImage) -> None:
+        super().__init__(image)
 
-# def is_image(object):
-#     return isinstance(object, np.ndarray) or \
-#            isinstance(object, tuple) or \
-#            isinstance(object, list) or \
-#            isinstance(object, data) or \
-#            str(type(object)) in ["<class 'cupy._core.core.ndarray'>",
-#                                  "<class 'dask.array.core.Array'>",
-#                                  "<class 'xarray.core.dataarray.DataArray'>"]
+    @property
+    def device(self):
+        return super().GetDevice()
+    @property
+    def ndim(self):
+        return super().Ndim()
+    @property
+    def dtype(self):
+        return super().GetDataType()
+    @property
+    def mtype(self):
+        return super().GetMemoryType()
+    @property
+    def shape(self):
+        return super().Shape()
+    @property
+    def nbytes(self):
+        return super().GetSize()
+    @property
+    def size(self):
+        return super().size()
+    
+    def __str__(self) -> str:
+        return super().__str__()
+
+    def __repr__(self) -> str:
+        return super().__repr__()
+
+    def __len__(self) -> int:
+        return super().__len__()
+
+    def fill(self, value: float | int) -> None:
+        super().Fill(value)
+
+    def copy_to(self, image: _cleImage) -> None:
+        super().CopyDataTo(image)
+
+    def absolute(self):
+        from ._pyclesperanto import _AbsoluteKernel_Call as op
+        from ._pyclesperanto import _Create
+        output = cleImage(_Create(self.device, self.shape, self.mtype))
+        op(self.device, self, output)
+        return output
 
 
-# @curry
-# def plugin_function(
-#     function: Callable,
-# ) -> Callable:
-#     """Function decorator to ensure correct types and values of all parameters.
+Image = Union[np.ndarray, cleImage]
+mType = _cleMemType
+dType = _cleDataType
 
-#     The given input parameters are either of type OpenCL data/image/buffer (which the GPU
-#     understands) or are converted to this type (see push function). If output
-#     parameters of type Image are not set, an empty image is created and
-#     handed over.
+def is_image(any_array):
+    return isinstance(any_array, np.ndarray) or \
+           isinstance(any_array, tuple) or \
+           isinstance(any_array, list) or \
+           isinstance(any_array, cleImage) or \
+           str(type(any_array)) in ["<class 'cupy._core.core.ndarray'>",
+                                    "<class 'dask.array.core.Array'>",
+                                    "<class 'xarray.core.dataarray.DataArray'>"]
 
-#     Parameters
-#     ----------
-#     function : callable
-#         The function to be executed on the GPU.
 
-#     Returns
-#     -------
-#     worker_function : callable
-#         The actual function call that will be executed, magically creating
-#         output arguments of the correct type.
-#     """
+@curry
+def plugin_function(
+    function: Callable,
+) -> Callable:
+    """Function decorator to ensure correct types and values of all parameters.
 
-#     @wraps(function)
-#     def worker_function(*args, **kwargs):
-#         sig = inspect.signature(function)
-#         # create mapping from position and keyword arguments to parameters
-#         # will raise a TypeError if the provided arguments do not match the signature
-#         # https://docs.python.org/3/library/inspect.html#inspect.Signature.bind
-#         bound = sig.bind(*args, **kwargs)
-#         # set default values for missing arguments
-#         # https://docs.python.org/3/library/inspect.html#inspect.BoundArguments.apply_defaults
-#         bound.apply_defaults()
+    The given input parameters are either of type OpenCL data/image/buffer (which the GPU
+    understands) or are converted to this type (see push function). If output
+    parameters of type Image are not set, an empty image is created and
+    handed over.
 
-#         myself = args[0]
+    Parameters
+    ----------
+    function : callable
+        The function to be executed on the GPU.
 
-#         # copy images to GPU, and create output array if necessary
-#         for key, value in bound.arguments.items():
-#             if is_image(value) and key in sig.parameters and sig.parameters[key].annotation is Image:
-#                 bound.arguments[key] = myself.push(value)
-#             if key in sig.parameters and sig.parameters[key].annotation is Image and value is None:
-#                 sig2 = inspect.signature(myself.create_like)
-#                 bound.arguments[key] = myself.create_like(*bound.args[1:len(sig2.parameters) + 1])
+    Returns
+    -------
+    worker_function : callable
+        The actual function call that will be executed, magically creating
+        output arguments of the correct type.
+    """
 
-#         # call the decorated function
-#         return function(*bound.args, **bound.kwargs)
+    @wraps(function)
+    def worker_function(*args, **kwargs):
+        sig = inspect.signature(function)
+        # create mapping from position and keyword arguments to parameters
+        # will raise a TypeError if the provided arguments do not match the signature
+        # https://docs.python.org/3/library/inspect.html#inspect.Signature.bind
+        bound = sig.bind(*args, **kwargs)
+        # set default values for missing arguments
+        # https://docs.python.org/3/library/inspect.html#inspect.BoundArguments.apply_defaults
+        bound.apply_defaults()
 
-#     # this is necessary to obfuscate pyclesperanto's internal structure
-#     worker_function.__module__ = "pyclesperanto_prototype"
+        myself = args[0]
 
-#     return worker_function
+        # copy images to GPU, and create output array if necessary
+        for key, value in bound.arguments.items():
+            if is_image(value) and key in sig.parameters and sig.parameters[key].annotation is Image:
+                bound.arguments[key] = myself.push(value)
+            if key in sig.parameters and sig.parameters[key].annotation is Image and value is None:
+                sig2 = inspect.signature(myself.create_like)
+                bound.arguments[key] = myself.create_like(*bound.args[1:len(sig2.parameters) + 1])
+
+        # call the decorated function
+        return function(*bound.args, **bound.kwargs)
+
+    # this is necessary to obfuscate pyclesperanto's internal structure
+    worker_function.__module__ = "pyclesperanto"
+
+    return worker_function

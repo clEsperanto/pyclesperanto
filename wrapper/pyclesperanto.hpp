@@ -9,6 +9,10 @@
 auto init_cletypes(pybind11::module_ &module) -> void;
 auto init_cleimage(pybind11::module_ &module) -> void;
 auto init_cleprocessor(pybind11::module_ &module) -> void;
+auto init_clememory(pybind11::module_ &module) -> void;
+
 auto init_clegateway(pybind11::module_ &module) -> void;
+
+auto init_cletier1(pybind11::module_ &module) -> void;
 
 #endif // __WRAPPER_PYCLESPERANTO_HPP

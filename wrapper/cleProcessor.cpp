@@ -33,5 +33,5 @@ auto init_cleprocessor(pybind11::module_ &m) -> void
                  return out_string.str(); },
         "");
 
-    m.def("ListAvailableDevices", &cle::Processor::ListAvailableDevices, "");
+    m.def("_ListAvailableDevices", &cle::Processor::ListAvailableDevices, "");
 }

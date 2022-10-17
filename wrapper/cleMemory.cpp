@@ -58,7 +58,7 @@ auto Pull(const cle::Image &image) -> pybind11::array_t<float, pybind11::array::
 
 auto init_clememory(pybind11::module_ &m) -> void
 {
-    m.def("Create", &Create, "", pybind11::arg("device"), pybind11::arg("shape"), pybind11::arg("mtype"));
-    m.def("Push", &Push, "", pybind11::arg("device"), pybind11::arg("array"), pybind11::arg("mtype"));
-    m.def("Pull", &Pull, "", pybind11::arg("image"));
+    m.def("_Create", &Create, "", pybind11::arg("device"), pybind11::arg("shape"), pybind11::arg("mtype"));
+    m.def("_Push", &Push, "", pybind11::arg("device"), pybind11::arg("array"), pybind11::arg("mtype"));
+    m.def("_Pull", &Pull, "", pybind11::arg("image"));
 }

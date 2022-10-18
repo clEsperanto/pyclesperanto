@@ -1,10 +1,11 @@
 from ._types import mType, dType, Image
 from ._types import plugin_function
 
-class Clesperanto:
 
-    def __init__(self, device_name: str=""):
+class Clesperanto:
+    def __init__(self, device_name: str = ""):
         from ._pyclesperanto import _cleProcessor
+
         self._gpu = _cleProcessor()
         self._gpu.select_device(device_name)
 
@@ -25,22 +26,25 @@ class Clesperanto:
 
     @property
     def buffer(self) -> mType:
+        """Return buffer memory type code"""
         return mType.buffer
 
     @property
     def image(self) -> mType:
+        """Return Image memory type code"""
         return mType.image
 
     def list_available_devices(self) -> list:
         """Retrieve a list of names of available OpenCL-devices"""
         from ._pyclesperanto import _ListAvailableDevices
+
         return list(_ListAvailableDevices())
 
     def select_device(self, device_name: str) -> str:
         """Select an OpenCL device that contains `device_name` in its name."""
         return self._gpu.select_device(device_name)
 
-    def set_wait_for_kernel_to_finish(self, flag: bool=True):
+    def set_wait_for_kernel_to_finish(self, flag: bool = True):
         """Configure asyncronous execution of OpenCL kernels (False)"""
         return self._gpu.set_wait_for_kernel_to_finish(flag)
 
@@ -54,131 +58,137 @@ class Clesperanto:
                 result[operation_name] = potential_function
         return result
 
-    def operation(self, operation_name:str):
+    def operation(self, operation_name: str):
         """Return a function pyclesperanto supports specified by name"""
         potential_function = getattr(self, operation_name)
         if callable(potential_function):
             return potential_function
 
-    def create(self, shape : list =(1,1,1), mtype: mType =mType.buffer) -> Image:
+    def create(self, shape: list = (1, 1, 1), mtype: mType = mType.buffer) -> Image:
         """Create an OpenCL backed image/buffer with specified shape."""
         from ._pyclesperanto import _Create
         from ._types import cleImage
+
         return cleImage(_Create(self.device, shape, mtype))
 
     def create_like(self, image) -> Image:
         """Create an OpenCL backed image/buffer with the same size and type like the given image."""
         from ._types import cleImage
+
         if isinstance(image, cleImage):
             return self.create(shape=image.shape, mtype=image.mtype)
         else:
             return self.create(shape=image.shape)
 
-    def push(self, any_array, mtype: mType =mType.buffer) -> Image:
+    def push(self, any_array, mtype: mType = mType.buffer) -> Image:
         """Transfer a numpy-compatible array to GPU memory."""
         from ._types import cleImage
+
         if isinstance(any_array, cleImage):
             return any_array
         else:
             import numpy as np
             from ._pyclesperanto import _Push
+
             return cleImage(_Push(self.device, np.asarray(any_array), mtype))
 
     def pull(self, any_array) -> Image:
         """Return a OpenCL/GPU backed image from GPU memory as numpy array."""
         from ._types import cleImage
+
         if isinstance(any_array, cleImage):
             from ._pyclesperanto import _Pull
+
             return _Pull(any_array)
         else:
             return any_array
 
-#     def imshow(self, image, title: str = None, labels: bool = False, min_display_intensity: float = None,
-#                max_display_intensity: float = None, color_map=None, plot=None, colorbar: bool = False, colormap=None,
-#                alpha: float = None, continue_drawing: bool = False):
-#         """Visualize an image, e.g. in Jupyter notebooks.
+    #     def imshow(self, image, title: str = None, labels: bool = False, min_display_intensity: float = None,
+    #                max_display_intensity: float = None, color_map=None, plot=None, colorbar: bool = False, colormap=None,
+    #                alpha: float = None, continue_drawing: bool = False):
+    #         """Visualize an image, e.g. in Jupyter notebooks.
 
-#         Parameters
-#         ----------
-#         image: np.ndarray
-#             numpy or OpenCL-backed image to visualize
-#         title: str
-#             Obsolete (kept for ImageJ-compatibility)
-#         labels: bool
-#             True: integer labels will be visualized with colors
-#             False: Specified or default colormap will be used to display intensities.
-#         min_display_intensity: float
-#             lower limit for display range
-#         max_display_intensity: float
-#             upper limit for display range
-#         color_map: str
-#             deprecated, use colormap instead
-#         plot: matplotlib axis
-#             Plot object where the image should be shown. Useful for putting multiple images in subfigures.
-#         colorbar: bool
-#             True puts a colorbar next to the image. Will not work with label images and when visualizing multiple
-#             images (continue_drawing=True).
-#         colormap: str or matplotlib colormap
-#         alpha: float
-#             alpha blending value
-#         continue_drawing: float
-#             True: the next shown image can be visualized on top of the current one, e.g. with alpha = 0.5
-#         """
-#         import numpy as np
+    #         Parameters
+    #         ----------
+    #         image: np.ndarray
+    #             numpy or OpenCL-backed image to visualize
+    #         title: str
+    #             Obsolete (kept for ImageJ-compatibility)
+    #         labels: bool
+    #             True: integer labels will be visualized with colors
+    #             False: Specified or default colormap will be used to display intensities.
+    #         min_display_intensity: float
+    #             lower limit for display range
+    #         max_display_intensity: float
+    #             upper limit for display range
+    #         color_map: str
+    #             deprecated, use colormap instead
+    #         plot: matplotlib axis
+    #             Plot object where the image should be shown. Useful for putting multiple images in subfigures.
+    #         colorbar: bool
+    #             True puts a colorbar next to the image. Will not work with label images and when visualizing multiple
+    #             images (continue_drawing=True).
+    #         colormap: str or matplotlib colormap
+    #         alpha: float
+    #             alpha blending value
+    #         continue_drawing: float
+    #             True: the next shown image can be visualized on top of the current one, e.g. with alpha = 0.5
+    #         """
+    #         import numpy as np
 
-#         if not isinstance(image, np.ndarray):
-#             # Todo: add self.pull here
-#             image = self.pull(image)
+    #         if not isinstance(image, np.ndarray):
+    #             # Todo: add self.pull here
+    #             image = self.pull(image)
 
-#         if len(image.shape) == 3:
-#             image = self.pull(self.maximum_z_projection(image))
+    #         if len(image.shape) == 3:
+    #             image = self.pull(self.maximum_z_projection(image))
 
-#         if color_map is not None:
-#             import warnings
-#             warnings.warn("The imshow parameter color_map is deprecated. Use colormap instead.")
-#             if colormap is None:
-#                 colormap = color_map
+    #         if color_map is not None:
+    #             import warnings
+    #             warnings.warn("The imshow parameter color_map is deprecated. Use colormap instead.")
+    #             if colormap is None:
+    #                 colormap = color_map
 
-#         if colormap is None:
-#             colormap = "Greys_r"
+    #         if colormap is None:
+    #             colormap = "Greys_r"
 
-#         cmap = colormap
-#         if labels:
-#             import matplotlib
-#             import numpy as np
+    #         cmap = colormap
+    #         if labels:
+    #             import matplotlib
+    #             import numpy as np
 
-#             if not hasattr(self, "labels_cmap"):
-#                 from numpy.random import MT19937
-#                 from numpy.random import RandomState, SeedSequence
-#                 rs = RandomState(MT19937(SeedSequence(3)))
-#                 lut = rs.rand(65537, 3)
-#                 lut[0, :] = 0
-#                 self.labels_cmap = matplotlib.colors.ListedColormap(lut)
-#             cmap = self.labels_cmap
+    #             if not hasattr(self, "labels_cmap"):
+    #                 from numpy.random import MT19937
+    #                 from numpy.random import RandomState, SeedSequence
+    #                 rs = RandomState(MT19937(SeedSequence(3)))
+    #                 lut = rs.rand(65537, 3)
+    #                 lut[0, :] = 0
+    #                 self.labels_cmap = matplotlib.colors.ListedColormap(lut)
+    #             cmap = self.labels_cmap
 
-#             if min_display_intensity is None:
-#                 min_display_intensity = 0
+    #             if min_display_intensity is None:
+    #                 min_display_intensity = 0
 
-#         if plot is None:
-#             import matplotlib.pyplot as plt
-#             plt.imshow(image, cmap=cmap, vmin=min_display_intensity, vmax=max_display_intensity,
-#                        interpolation='nearest', alpha=alpha)
-#             if colorbar:
-#                 plt.colorbar()
-#             if not continue_drawing:
-#                 plt.show()
-#         else:
-#             plot.imshow(image, cmap=cmap, vmin=min_display_intensity, vmax=max_display_intensity,
-#                         interpolation='nearest', alpha=alpha)
-#             if colorbar:
-#                 plot.colorbar()
-
+    #         if plot is None:
+    #             import matplotlib.pyplot as plt
+    #             plt.imshow(image, cmap=cmap, vmin=min_display_intensity, vmax=max_display_intensity,
+    #                        interpolation='nearest', alpha=alpha)
+    #             if colorbar:
+    #                 plt.colorbar()
+    #             if not continue_drawing:
+    #                 plt.show()
+    #         else:
+    #             plot.imshow(image, cmap=cmap, vmin=min_display_intensity, vmax=max_display_intensity,
+    #                         interpolation='nearest', alpha=alpha)
+    #             if colorbar:
+    #                 plot.colorbar()
 
     # Operation list
 
     @plugin_function
     def absolute(self, input_image: Image, output_image: Image = None) -> Image:
         from ._pyclesperanto import _AbsoluteKernel_Call as op
+
         op(self.device, input_image, output_image)
         return output_image
 

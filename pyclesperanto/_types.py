@@ -8,34 +8,42 @@ from toolz import curry
 from ._pyclesperanto import _cleImage
 from ._pyclesperanto import _cleMemType, _cleDataType
 
-class cleImage (_cleImage) :
+
+class cleImage(_cleImage):
     def __init__(self) -> None:
         super().__init__()
+
     def __init__(self, image: _cleImage) -> None:
         super().__init__(image)
 
     @property
     def device(self):
         return super().GetDevice()
+
     @property
     def ndim(self):
         return super().Ndim()
+
     @property
     def dtype(self):
         return super().GetDataType()
+
     @property
     def mtype(self):
         return super().GetMemoryType()
+
     @property
     def shape(self):
         return super().Shape()
+
     @property
     def nbytes(self):
         return super().GetSize()
+
     @property
     def size(self):
         return super().size()
-    
+
     def __str__(self) -> str:
         return super().__str__()
 
@@ -49,11 +57,13 @@ class cleImage (_cleImage) :
         super().Fill(value)
 
     def copy_to(self, image: _cleImage) -> None:
+        """copy memory in an other image"""
         super().CopyDataTo(image)
 
     def absolute(self):
         from ._pyclesperanto import _AbsoluteKernel_Call as op
         from ._pyclesperanto import _Create
+
         output = cleImage(_Create(self.device, self.shape, self.mtype))
         op(self.device, self, output)
         return output
@@ -63,14 +73,20 @@ Image = Union[np.ndarray, cleImage]
 mType = _cleMemType
 dType = _cleDataType
 
+
 def is_image(any_array):
-    return isinstance(any_array, np.ndarray) or \
-           isinstance(any_array, tuple) or \
-           isinstance(any_array, list) or \
-           isinstance(any_array, cleImage) or \
-           str(type(any_array)) in ["<class 'cupy._core.core.ndarray'>",
-                                    "<class 'dask.array.core.Array'>",
-                                    "<class 'xarray.core.dataarray.DataArray'>"]
+    return (
+        isinstance(any_array, np.ndarray)
+        or isinstance(any_array, tuple)
+        or isinstance(any_array, list)
+        or isinstance(any_array, cleImage)
+        or str(type(any_array))
+        in [
+            "<class 'cupy._core.core.ndarray'>",
+            "<class 'dask.array.core.Array'>",
+            "<class 'xarray.core.dataarray.DataArray'>",
+        ]
+    )
 
 
 @curry
@@ -111,11 +127,21 @@ def plugin_function(
 
         # copy images to GPU, and create output array if necessary
         for key, value in bound.arguments.items():
-            if is_image(value) and key in sig.parameters and sig.parameters[key].annotation is Image:
+            if (
+                is_image(value)
+                and key in sig.parameters
+                and sig.parameters[key].annotation is Image
+            ):
                 bound.arguments[key] = myself.push(value)
-            if key in sig.parameters and sig.parameters[key].annotation is Image and value is None:
+            if (
+                key in sig.parameters
+                and sig.parameters[key].annotation is Image
+                and value is None
+            ):
                 sig2 = inspect.signature(myself.create_like)
-                bound.arguments[key] = myself.create_like(*bound.args[1:len(sig2.parameters) + 1])
+                bound.arguments[key] = myself.create_like(
+                    *bound.args[1 : len(sig2.parameters) + 1]
+                )
 
         # call the decorated function
         return function(*bound.args, **bound.kwargs)

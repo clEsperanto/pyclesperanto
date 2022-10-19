@@ -5,8 +5,8 @@ from ._pyclesperanto import _Create, _Push, _Pull
 from ._pyclesperanto import _ListAvailableDevices
 from ._pyclesperanto import _AbsoluteKernel_Call
 
-from pyclesperanto import _types, _clesperanto_gateway
-from pyclesperanto._clesperanto_gateway import Clesperanto
+from pyclesperanto import _gateway, _types
+from _gateway import Clesperanto
 
 
 # This supports ocl-icd find shipped OpenCL ICDs, cf.

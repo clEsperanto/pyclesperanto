@@ -1,21 +1,22 @@
-
 # read the contents of your README file
 from pathlib import Path
+
 this_directory = Path(__file__).parent
 long_description = (this_directory / "README.md").read_text()
 
 import sys, os
+
 sys.path.append(os.path.dirname(__file__))
 
 
 ver_dic = {}
-version_file = open("pyclesperanto/version.py")
+version_file = open("pyclesperanto/_version.py")
 try:
     version_file_contents = version_file.read()
 finally:
     version_file.close()
 
-exec(compile(version_file_contents, "pyclesperanto/version.py", "exec"), ver_dic)
+exec(compile(version_file_contents, "pyclesperanto/_version.py", "exec"), ver_dic)
 
 from skbuild import setup
 
@@ -27,35 +28,35 @@ setup(
     license="BSD-3-Clause",
     description="GPU-accelerated image processing in python using OpenCL",
     long_description=long_description,
-    long_description_content_type='text/markdown',
-    packages=['pyclesperanto'],
-    cmake_install_dir='pyclesperanto',
+    long_description_content_type="text/markdown",
+    packages=["pyclesperanto"],
+    cmake_install_dir="pyclesperanto",
     python_requires=">=3.7",
     install_requires=[
-        'numpy',
-        'toolz',
-        'matplotlib',
+        "numpy",
+        "toolz",
+        "matplotlib",
     ],
     classifiers=[
-        'Development Status :: 2 - Pre-Alpha',
-        'Intended Audience :: Science/Research',
-        'Intended Audience :: Developers',
-        'Topic :: Scientific/Engineering :: Image Processing',
-        'Topic :: Scientific/Engineering :: Information Analysis',
-        'Programming Language :: Python',
-        'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.7',
-        'Programming Language :: Python :: 3.8',
-        'Programming Language :: Python :: 3.9',
-        'Programming Language :: Python :: 3.10',
-        'Programming Language :: Python :: 3.11',
-        'Operating System :: OS Independent',
-        'License :: OSI Approved :: BSD License',
+        "Development Status :: 2 - Pre-Alpha",
+        "Intended Audience :: Science/Research",
+        "Intended Audience :: Developers",
+        "Topic :: Scientific/Engineering :: Image Processing",
+        "Topic :: Scientific/Engineering :: Information Analysis",
+        "Programming Language :: Python",
+        "Programming Language :: Python :: 3",
+        "Programming Language :: Python :: 3.7",
+        "Programming Language :: Python :: 3.8",
+        "Programming Language :: Python :: 3.9",
+        "Programming Language :: Python :: 3.10",
+        "Programming Language :: Python :: 3.11",
+        "Operating System :: OS Independent",
+        "License :: OSI Approved :: BSD License",
     ],
     project_urls={
-        'Documentation': 'https://github.com/clEsperanto/pyclesperanto#README.md',
-        'Source': 'https://github.com/clEsperanto/pyclesperanto/',
-        'Tracker': 'https://github.com/clEsperanto/pyclesperanto/issues',
+        "Documentation": "https://github.com/clEsperanto/pyclesperanto#README.md",
+        "Source": "https://github.com/clEsperanto/pyclesperanto/",
+        "Tracker": "https://github.com/clEsperanto/pyclesperanto/issues",
     },
 )
 

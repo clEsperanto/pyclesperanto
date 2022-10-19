@@ -1,12 +1,16 @@
-import numpy as np
-from typing import Union
+from __future__ import annotations
+
 import inspect
-from typing import Callable
+import numpy as np
+from typing import Union, Callable
 from functools import wraps
 from toolz import curry
 
 from ._pyclesperanto import _cleImage
 from ._pyclesperanto import _cleMemType, _cleDataType
+
+mType = _cleMemType
+dType = _cleDataType
 
 
 class cleImage(_cleImage):
@@ -21,27 +25,27 @@ class cleImage(_cleImage):
         return super().GetDevice()
 
     @property
-    def ndim(self):
+    def ndim(self) -> int:
         return super().Ndim()
 
     @property
-    def dtype(self):
+    def dtype(self) -> dType:
         return super().GetDataType()
 
     @property
-    def mtype(self):
+    def mtype(self) -> mType:
         return super().GetMemoryType()
 
     @property
-    def shape(self):
+    def shape(self) -> tuple:
         return super().Shape()
 
     @property
-    def nbytes(self):
+    def nbytes(self) -> int:
         return super().GetSize()
 
     @property
-    def size(self):
+    def size(self) -> int:
         return super().size()
 
     def __str__(self) -> str:
@@ -54,13 +58,14 @@ class cleImage(_cleImage):
         return super().__len__()
 
     def fill(self, value: float | int) -> None:
+        """fill memory with value"""
         super().Fill(value)
 
-    def copy_to(self, image: _cleImage) -> None:
+    def copy_to(self, image: cleImage) -> None:
         """copy memory in an other image"""
         super().CopyDataTo(image)
 
-    def absolute(self):
+    def absolute(self) -> cleImage:
         from ._pyclesperanto import _AbsoluteKernel_Call as op
         from ._pyclesperanto import _Create
 
@@ -70,8 +75,6 @@ class cleImage(_cleImage):
 
 
 Image = Union[np.ndarray, cleImage]
-mType = _cleMemType
-dType = _cleDataType
 
 
 def is_image(any_array):

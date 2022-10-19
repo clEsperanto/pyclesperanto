@@ -7,7 +7,7 @@ from ._pyclesperanto import _AbsoluteKernel_Call
 
 from pyclesperanto import _gateway, _types
 from _gateway import Clesperanto
-
+from _types import cleImage, mType, dType
 
 # This supports ocl-icd find shipped OpenCL ICDs, cf.
 import os

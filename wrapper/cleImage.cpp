@@ -26,11 +26,11 @@ auto init_cleimage(pybind11::module_ &m) -> void
       },
       "");
   object.def(
-      "nbytes", [](const cle::Image &image)
+      "SizeInBytes", [](const cle::Image &image)
       { return image.GetSize(); },
       "");
   object.def(
-      "size", [](const cle::Image &image)
+      "Size", [](const cle::Image &image)
       { return image.Shape()[2] * image.Shape()[1] * image.Shape()[0]; },
       "");
   object.def("Fill", &cle::Image::Fill, "", pybind11::arg("value"));

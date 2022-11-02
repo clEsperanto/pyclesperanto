@@ -1,28 +1,29 @@
 [build-system]
-requires = [
-    "setuptools>=42",
-    "scikit-build>=0.15.0",
-    "cmake>=3.20",
-    "pybind11>=2.10.0",
-]
 build-backend = "setuptools.build_meta"
+requires = [
+  "setuptools",
+  "wheel",
+  "scikit-build>=0.15.0",
+  "cmake>=3.20",
+  "pybind11>=2.10.0",
+]
 
 [tool.cibuildwheel]
 build = ["cp37-*", "cp39-*", "cp38-*", "cp310-*", "cp311-*"]
-build-verbosity = 1
 build-frontend = "build"
+build-verbosity = 1
 test-command = ""
 #test-requires = ["numpy", "pytest"]
 #test-command = "pytest {project}/tests"
 
 [tool.cibuildwheel.linux]
-skip = ["cp27-*", "cp36-*", "pp*", "*-musllinux*"]
 before-all = [
-    "yum install -y ruby",
-    "bash {package}/scripts/build-opencl-linux.sh",
+  "yum install -y ruby",
+  "bash {package}/scripts/build-opencl-linux.sh",
 ]
+environment = {SKBUILD_CONFIGURE_OPTIONS = "-DBUILD_TESTING:BOOL=FALSE"}
 repair-wheel-command = "auditwheel show {wheel} && auditwheel repair --lib-sdir .libs -w {dest_dir} {wheel}"
-environment = { SKBUILD_CONFIGURE_OPTIONS="-DBUILD_TESTING:BOOL=FALSE" }
+skip = ["cp27-*", "cp36-*", "pp*", "*-musllinux*"]
 
 #[[tool.cibuildwheel.overrides]]
 #select = "*-musllinux*"
@@ -32,12 +33,11 @@ environment = { SKBUILD_CONFIGURE_OPTIONS="-DBUILD_TESTING:BOOL=FALSE" }
 #]
 
 [tool.cibuildwheel.windows]
-skip = ["cp27-*", "cp36-*", "pp*", "*-win32"]
 before-all = "bash {package}/scripts/build-opencl-windows.sh"
-environment = { SKBUILD_CONFIGURE_OPTIONS="-DOpenCL_LIBRARY:FILEPATH='C:/Program Files/OpenCL-ICD-Loader/lib/OpenCL.lib' -DOpenCL_LIBRARIES:FILEPATH='C:/Program Files/OpenCL-ICD-Loader/lib/OpenCL.lib' -DOpenCL_FOUND:BOOL=TRUE -DBUILD_TESTING:BOOL=FALSE" }
+environment = {SKBUILD_CONFIGURE_OPTIONS = "-DOpenCL_LIBRARY:FILEPATH='C:/Program Files/OpenCL-ICD-Loader/lib/OpenCL.lib' -DOpenCL_LIBRARIES:FILEPATH='C:/Program Files/OpenCL-ICD-Loader/lib/OpenCL.lib' -DOpenCL_FOUND:BOOL=TRUE -DBUILD_TESTING:BOOL=FALSE"}
+skip = ["cp27-*", "cp36-*", "pp*", "*-win32"]
 
 [tool.cibuildwheel.macos]
-skip = ["cp27-*", "cp36-*", "pp*", "*_universal2"]
 before-all = "bash {package}/scripts/build-opencl-macos.sh"
-environment = { SKBUILD_CONFIGURE_OPTIONS="-DBUILD_TESTING:BOOL=FALSE" }
-
+environment = {SKBUILD_CONFIGURE_OPTIONS = "-DBUILD_TESTING:BOOL=FALSE"}
+skip = ["cp27-*", "cp36-*", "pp*", "*_universal2"]

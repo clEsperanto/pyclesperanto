@@ -1,3 +1,3 @@
-VERSION = (0, 6, 2)
+VERSION_CODE = (0, 6, 2)
 VERSION_STATUS = "a1"
-VERSION_TEXT = ".".join(str(x) for x in VERSION) + VERSION_STATUS
+VERSION = ".".join(str(x) for x in VERSION_CODE) + VERSION_STATUS

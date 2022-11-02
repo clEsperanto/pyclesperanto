@@ -6,7 +6,7 @@
 
 # pyClEsperanto Import
 # from . import _gateway, _types, _version
-from ._version import VERSION, VERSION_STATUS, VERSION_TEXT
+from ._version import VERSION as __version__
 from ._gateway import Clesperanto
 from ._types import MemoryType, DataType, Image
 
@@ -17,5 +17,5 @@ import os
 os.environ["PYCLESPERANTO_HOME"] = os.path.dirname(os.path.abspath(__file__))
 
 # Init pyclesperanto
-print("pyclesperanto version:", VERSION_TEXT)
+print("pyclesperanto version:", __version__)
 cle = Clesperanto()

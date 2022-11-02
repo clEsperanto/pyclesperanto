@@ -1,8 +1,12 @@
-# read the contents of your README file
-from pathlib import Path
+# # read the contents of your README file
+# from pathlib import Path
 
-this_directory = Path(__file__).parent
-long_description = (this_directory / "README.md").read_text()
+# this_directory = Path(__file__).parent
+# long_description = (this_directory / "README.md").read_text()
+
+with open("README.md") as fp:
+    readme = fp.read()
+
 
 import sys, os
 
@@ -22,12 +26,12 @@ from skbuild import setup
 
 setup(
     name="pyclesperanto",
-    version=ver_dic["VERSION_TEXT"],
+    version=ver_dic["VERSION"],
     author="Stephane Rigaud",
     author_email="stephane.rigaud@pasteur.fr",
     license="BSD-3-Clause",
     description="GPU-accelerated image processing in python using OpenCL",
-    long_description=long_description,
+    long_description=readme,
     long_description_content_type="text/markdown",
     packages=["pyclesperanto"],
     cmake_install_dir="pyclesperanto",
@@ -41,6 +45,7 @@ setup(
         "Development Status :: 2 - Pre-Alpha",
         "Intended Audience :: Science/Research",
         "Intended Audience :: Developers",
+        "Topic :: Software Development :: Libraries :: Python Modules",
         "Topic :: Scientific/Engineering :: Image Processing",
         "Topic :: Scientific/Engineering :: Information Analysis",
         "Programming Language :: Python",
@@ -56,7 +61,7 @@ setup(
     project_urls={
         "Documentation": "https://github.com/clEsperanto/pyclesperanto#README.md",
         "Source": "https://github.com/clEsperanto/pyclesperanto/",
-        "Tracker": "https://github.com/clEsperanto/pyclesperanto/issues",
+        "Issues": "https://github.com/clEsperanto/pyclesperanto/issues",
     },
 )
 

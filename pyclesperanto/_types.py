@@ -9,8 +9,8 @@ from toolz import curry
 from ._pyclesperanto import _cleImage
 from ._pyclesperanto import _cleMemType, _cleDataType
 
-mType = _cleMemType
-dType = _cleDataType
+MemoryType = _cleMemType
+DataType = _cleDataType
 
 
 class cleImage(_cleImage):
@@ -29,11 +29,11 @@ class cleImage(_cleImage):
         return super().Ndim()
 
     @property
-    def dtype(self) -> dType:
+    def dtype(self) -> DataType:
         return super().GetDataType()
 
     @property
-    def mtype(self) -> mType:
+    def mtype(self) -> MemoryType:
         return super().GetMemoryType()
 
     @property
@@ -42,11 +42,11 @@ class cleImage(_cleImage):
 
     @property
     def nbytes(self) -> int:
-        return super().GetSize()
+        return super().SizeInBytes()
 
     @property
     def size(self) -> int:
-        return super().size()
+        return super().Size()
 
     def __str__(self) -> str:
         return super().__str__()

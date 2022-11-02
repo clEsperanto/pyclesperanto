@@ -1,8 +1,18 @@
-from ._types import mType, dType, Image
+from ._types import MemoryType, DataType, Image
 from ._types import plugin_function
 
 
 class Clesperanto:
+    from ._functionalities import (
+        list_available_devices,
+        select_device,
+        set_wait_for_kernel_to_finish,
+        operation,
+        operations,
+    )
+    from ._communications import create, create_like, push, pull
+    from ._tier1 import absolute
+
     def __init__(self, device_name: str = ""):
         from ._pyclesperanto import _cleProcessor
 
@@ -25,83 +35,88 @@ class Clesperanto:
         return self._gpu
 
     @property
-    def buffer(self) -> mType:
+    def buffer(self) -> MemoryType:
         """Return buffer memory type code"""
-        return mType.buffer
+        return MemoryType.buffer
 
     @property
-    def image(self) -> mType:
+    def image(self) -> MemoryType:
         """Return Image memory type code"""
-        return mType.image
+        return MemoryType.image
 
-    def list_available_devices(self) -> list:
-        """Retrieve a list of names of available OpenCL-devices"""
-        from ._pyclesperanto import _ListAvailableDevices
+    # def list_available_devices(self) -> list:
+    #     """Retrieve a list of names of available OpenCL-devices"""
+    #     from ._pyclesperanto import _ListAvailableDevices
 
-        return list(_ListAvailableDevices())
+    #     return list(_ListAvailableDevices())
 
-    def select_device(self, device_name: str) -> str:
-        """Select an OpenCL device that contains `device_name` in its name."""
-        return self._gpu.select_device(device_name)
+    # def select_device(self, device_name: str) -> str:
+    #     """Select an OpenCL device that contains `device_name` in its name."""
+    #     return self._gpu.select_device(device_name)
 
-    def set_wait_for_kernel_to_finish(self, flag: bool = True):
-        """Configure asyncronous execution of OpenCL kernels (False)"""
-        return self._gpu.set_wait_for_kernel_to_finish(flag)
+    # def set_wait_for_kernel_to_finish(self, flag: bool = True):
+    #     """Configure asyncronous execution of OpenCL kernels (False)"""
+    #     return self._gpu.set_wait_for_kernel_to_finish(flag)
 
-    def operations(self):
-        """Return all operations/filters pyclesperanto supports"""
-        all_operation_names = dir(self)
-        result = {}
-        for operation_name in [o for o in all_operation_names if not o.startswith("_")]:
-            potential_function = getattr(self, operation_name)
-            if callable(potential_function):
-                result[operation_name] = potential_function
-        return result
+    # def operations(self):
+    #     """Return all operations/filters pyclesperanto supports"""
+    #     all_operation_names = dir(self)
+    #     result = {}
+    #     for operation_name in [o for o in all_operation_names if not o.startswith("_")]:
+    #         potential_function = getattr(self, operation_name)
+    #         if callable(potential_function):
+    #             result[operation_name] = potential_function
+    #     return result
 
-    def operation(self, operation_name: str):
-        """Return a function pyclesperanto supports specified by name"""
-        potential_function = getattr(self, operation_name)
-        if callable(potential_function):
-            return potential_function
+    # def operation(self, operation_name: str):
+    #     """Return a function pyclesperanto supports specified by name"""
+    #     potential_function = getattr(self, operation_name)
+    #     if callable(potential_function):
+    #         return potential_function
 
-    def create(self, shape: list = (1, 1, 1), mtype: mType = mType.buffer) -> Image:
-        """Create an OpenCL backed image/buffer with specified shape."""
-        from ._pyclesperanto import _Create
-        from ._types import cleImage
+    # def create(self, shape: list = (1, 1, 1), mtype: MemoryType = None) -> Image:
+    #     """Create an OpenCL backed image/buffer with specified shape."""
+    #     from ._pyclesperanto import _Create
+    #     from ._types import cleImage
 
-        return cleImage(_Create(self.device, shape, mtype))
+    #     if mtype is None:
+    #         mtype = self.buffer
+    #     return cleImage(_Create(self.device, shape, mtype))
 
-    def create_like(self, image) -> Image:
-        """Create an OpenCL backed image/buffer with the same size and type like the given image."""
-        from ._types import cleImage
+    # def create_like(self, image) -> Image:
+    #     """Create an OpenCL backed image/buffer with the same size and type like the given image."""
+    #     from ._types import cleImage
 
-        if isinstance(image, cleImage):
-            return self.create(shape=image.shape, mtype=image.mtype)
-        else:
-            return self.create(shape=image.shape)
+    #     if isinstance(image, cleImage):
+    #         return self.create(shape=image.shape, mtype=image.mtype)
+    #     else:
+    #         return self.create(shape=image.shape)
 
-    def push(self, any_array, mtype: mType = mType.buffer) -> Image:
-        """Transfer a numpy-compatible array to GPU memory."""
-        from ._types import cleImage
+    # def push(self, any_array, mtype: MemoryType = None) -> Image:
+    #     """Transfer a numpy-compatible array to GPU memory."""
+    #     from ._types import cleImage
 
-        if isinstance(any_array, cleImage):
-            return any_array
-        else:
-            import numpy as np
-            from ._pyclesperanto import _Push
+    #     if mtype is None:
+    #         mtype = self.buffer
 
-            return cleImage(_Push(self.device, np.asarray(any_array), mtype))
+    #     if isinstance(any_array, cleImage):
+    #         return any_array
+    #     else:
+    #         import numpy as np
+    #         from ._pyclesperanto import _Push
 
-    def pull(self, any_array) -> Image:
-        """Return a OpenCL/GPU backed image from GPU memory as numpy array."""
-        from ._types import cleImage
+    #         return cleImage(_Push(self.device, np.asarray(any_array), mtype))
 
-        if isinstance(any_array, cleImage):
-            from ._pyclesperanto import _Pull
+    # def pull(self, any_array) -> Image:
+    #     """Return a OpenCL/GPU backed image from GPU memory as numpy array."""
+    #     from ._types import cleImage
 
-            return _Pull(any_array)
-        else:
-            return any_array
+    #     if isinstance(any_array, cleImage):
+    #         from ._pyclesperanto import _Pull
+
+    #         return _Pull(any_array)
+    #     else:
+    #         return any_array
 
     #     def imshow(self, image, title: str = None, labels: bool = False, min_display_intensity: float = None,
     #                max_display_intensity: float = None, color_map=None, plot=None, colorbar: bool = False, colormap=None,
@@ -185,12 +200,12 @@ class Clesperanto:
 
     # Operation list
 
-    @plugin_function
-    def absolute(self, input_image: Image, output_image: Image = None) -> Image:
-        from ._pyclesperanto import _AbsoluteKernel_Call as op
+    # @plugin_function
+    # def absolute(self, input_image: Image, output_image: Image = None) -> Image:
+    #     from ._pyclesperanto import _AbsoluteKernel_Call as op
 
-        op(self.device, input_image, output_image)
-        return output_image
+    #     op(self.device, input_image, output_image)
+    #     return output_image
 
 
 #     @plugin_function

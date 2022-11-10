@@ -5,6 +5,8 @@ cmake_minimum_required(VERSION 3.20)
 # - package version is managed in file `version.py`
 project(pyClesperanto)
 
+set(CMAKE_BUILD_TYPE Release)
+
 string(TOLOWER ${PROJECT_NAME} PY_PACKAGE_NAME)
 set(CY_PACKAGE_NAME _${PY_PACKAGE_NAME})
 

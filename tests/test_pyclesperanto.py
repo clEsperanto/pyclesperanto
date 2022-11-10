@@ -1,34 +1,74 @@
+import numpy as np
 
 def test_gpu_info():
     print("run test_gpu_info")
-    from pyclesperanto import cle
+    import pyclesperanto as cle
 
-    print(cle.Info())
+    # print(cle.list_available_devices())
+    cle.select_device("GTX")
+    # print(cle.info())
 
-def test_execute_kernel():
-    # init gpu and print info
+def test_execute_kernel_1(n:int=2048):
     import numpy as np
-    from pyclesperanto import cle
+    import pyclesperanto_prototype as cle
 
-    input_image = np.ones((3, 3, 1), dtype=np.float32)
-    valid = np.ones((3, 3, 1), dtype=np.float32) + 100
+    valid = np.round(np.random.rand(n,n) * 10)
+    input_image = valid * -1
 
-    # push and create buffer
-    output_gpu = cle.Create(input_image.shape)
-    input_gpu = cle.Push(input_image)
+    input = cle.push(input_image)
+    output_gpu = cle.create_like(input)
 
-    print(input_gpu.ToString())
-    print(output_gpu.ToString())
+    for n in range(20):
+        cle.absolute(input, output_gpu)
 
-    # apply kernel
-    cle.AddImageAndScalar(input_gpu, output_gpu, 100)
+    result = cle.pull(output_gpu)
 
-    # # pull from device result and assert
-    result = cle.Pull(output_gpu)
+    assert np.all(result == valid)
 
-    print("input:", input_image.flatten(), input_image.dtype)
-    print("valid:", valid.flatten(), valid.dtype)
-    print("result:", result.flatten(), result.dtype)
+def test_execute_kernel_2(n:int=2048):
+    import numpy as np
+    import pyclesperanto as cle
 
-    assert np.sum(result.flatten()) == np.sum(valid.flatten())
-    
+    valid = np.round(np.random.rand(n,n) * 10)
+    input_image = valid * -1
+
+    input = cle.push(input_image)
+    output_gpu = cle.create_like(input)
+
+    for n in range(20):
+        cle.absolute(input, output_gpu)
+
+    result = cle.pull(output_gpu)
+
+    assert np.all(result == valid)
+
+def test_execute_kernel_4(n:int=2048):
+    import numpy as np
+
+    valid = np.round(np.random.rand(n,n) * 10)
+    input_image = valid * -1
+
+    for n in range(20):
+        result = np.abs(input_image)
+
+    assert np.all(result == valid)
+
+def timeit_absolute():
+    import timeit
+    num_runs = 10
+
+    duration = timeit.Timer(test_execute_kernel_1).timeit(number = num_runs)
+    avg_duration = duration/num_runs
+    print(f'proto On average it took {avg_duration} seconds')
+
+    duration = timeit.Timer(test_execute_kernel_2).timeit(number = num_runs)
+    avg_duration = duration/num_runs
+    print(f'pycle On average it took {avg_duration} seconds')
+
+    duration = timeit.Timer(test_execute_kernel_4).timeit(number = num_runs)
+    avg_duration = duration/num_runs
+    print(f'numpy On average it took {avg_duration} seconds')
+
+# test_gpu_info()
+timeit_absolute()
+

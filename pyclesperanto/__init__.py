@@ -8,9 +8,19 @@
 from ._version import VERSION as __version__
 from ._memory_operations import create, create_like, pull, push
 from ._image import Image, mType
-from ._device import get_device, select_device, list_available_devices, set_wait_for_kernel_to_finish, info
+from ._device import (
+    get_device,
+    select_device,
+    list_available_devices,
+    set_wait_for_kernel_to_finish,
+    info,
+)
 from ._tier1 import (
-    absolute
+    absolute,
+    gaussian_blur,
+    maximum_z_projection,
+    threshold_otsu,
+    connect_component_labeling_box,
 )
 
 # Generic Import
@@ -24,4 +34,3 @@ print("pyclesperanto version:", __version__)
 
 buffer = mType.buffer
 image = mType.image
-

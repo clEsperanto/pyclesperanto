@@ -88,6 +88,22 @@ def maximum_y_projection(
 
 
 @plugin_function
+def maximum_x_projection(
+    input_image: Image,
+    output_image: Image = None,
+    device: cleDevice = None,
+) -> Image:
+
+    from ._pyclesperanto import _MaximumXProjectionKernel_Call as op
+
+    if device is None:
+        device = get_device()
+
+    op(device, input_image, output_image)
+    return output_image
+
+
+@plugin_function
 def threshold_otsu(
     input_image: Image,
     output_image: Image = None,

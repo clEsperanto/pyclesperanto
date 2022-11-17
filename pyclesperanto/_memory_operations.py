@@ -1,9 +1,10 @@
 import numpy as np
 from ._pyclesperanto import _Create, _Push, _Pull
-from ._device import get_device
+from ._device import cleDevice, get_device
 from ._image import cleImage, Image, mType
 
-def create(shape: tuple, mtype: mType =None) -> Image:
+
+def create(shape: tuple, mtype: mType = None, device: cleDevice = None) -> Image:
     """create:
 
     Conventional method to create images on the GPU and return its handle
@@ -22,7 +23,10 @@ def create(shape: tuple, mtype: mType =None) -> Image:
     """
     if mtype is None:
         mtype = mType.buffer
-    return cleImage(_Create(get_device(), shape, mtype))
+    if device is None:
+        device = get_device()
+    return cleImage(_Create(device, shape, mtype))
+
 
 def create_like(image: Image) -> Image:
     """create_like:
@@ -33,7 +37,7 @@ def create_like(image: Image) -> Image:
     ----------
     image : Image
         A GPU image or any other Image alternative compatible with pyclesperanto.
-        If the source image is not a GPU image, the newly create image will be a buffer type. 
+        If the source image is not a GPU image, the newly create image will be a buffer type.
 
     Returns
     -------
@@ -41,11 +45,12 @@ def create_like(image: Image) -> Image:
         Handle of the empty GPU image
     """
     if isinstance(image, cleImage):
-        return create(shape=image.shape, mtype=image.mtype)
+        return create(shape=tuple(image.shape), mtype=image.mtype, device=image.device)
     else:
-        return create(shape=image.shape, mtype=mType.buffer)
+        return create(shape=tuple(image.shape), mtype=mType.buffer)
 
-def push(array: Image, mtype: mType=None) -> Image:
+
+def push(array: Image, mtype: mType = None, device: cleDevice = None) -> Image:
     """push:
 
     Copy an host array to the GPU device and return its handle
@@ -67,8 +72,11 @@ def push(array: Image, mtype: mType=None) -> Image:
     else:
         if mtype is None:
             mtype = mType.buffer
-        return cleImage(_Push(get_device(), np.asarray(array), mtype))
-    
+        if device is None:
+            device = get_device()
+        return cleImage(_Push(device, np.asarray(array), mtype))
+
+
 def pull(image: Image) -> Image:
     """pull:
 

@@ -103,6 +103,7 @@ def maximum_x_projection(
     return output_image
 
 
+
 @plugin_function
 def threshold_otsu(
     input_image: Image,

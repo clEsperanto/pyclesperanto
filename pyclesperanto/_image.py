@@ -10,6 +10,7 @@ from ._image_operators import ImageOperators
 dType = _cleDataType
 mType = _cleMemType
 
+
 class cleImage(_cleImage, ImageOperators):
     """cleImage
 
@@ -20,9 +21,10 @@ class cleImage(_cleImage, ImageOperators):
     _cleImage : C++ wrapper class
         C++ OpenCL Image class running behind cleImage accessible using `super()`
     """
+
     def __init__(self, image: _cleImage) -> None:
         super().__init__(image)
-    
+
     @property
     def device(self):
         return super().GetDevice()
@@ -42,11 +44,11 @@ class cleImage(_cleImage, ImageOperators):
     @property
     def shape(self) -> tuple:
         if self.ndim == 3:
-            return super().Shape()[-3:]
+            return super().Shape()
         elif self.ndim == 2:
-            return super().Shape()[-2:]
+            return super().Shape()
         elif self.ndim == 1:
-            return super().Shape()[-1]
+            return super().Shape()
 
     @property
     def nbytes(self) -> int:
@@ -73,7 +75,9 @@ class cleImage(_cleImage, ImageOperators):
         """copy memory in an other image"""
         super().CopyDataTo(image)
 
+
 Image = Union[np.ndarray, cleImage]
+
 
 def is_image(any_array):
     return (

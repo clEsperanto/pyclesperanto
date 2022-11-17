@@ -55,10 +55,10 @@ auto init_cletier1(pybind11::module_ &m) -> void
           pybind11::arg("scalar"));
     m.def("_ErodeSphereKernel_Call", &cle::ErodeSphereKernel_Call, "", pybind11::arg("device"),
           pybind11::arg("src"), pybind11::arg("dst"));
-    m.def("_ExtendLabelingViaVoronoiKernel_Call", &cle::ExtendLabelingViaVoronoiKernel_Call,
-          "", pybind11::arg("src"), pybind11::arg("dst"));
-    m.def("_FlagExistingLabelsKernel_Call", &cle::FlagExistingLabelsKernel_Call, "", pybind11::arg("device"),
-          pybind11::arg("src"), pybind11::arg("dst"));
+    // m.def("_ExtendLabelingViaVoronoiKernel_Call", &cle::ExtendLabelingViaVoronoiKernel_Call,
+    //       "", pybind11::arg("src"), pybind11::arg("dst"));
+    // m.def("_FlagExistingLabelsKernel_Call", &cle::FlagExistingLabelsKernel_Call, "", pybind11::arg("device"),
+    //       pybind11::arg("src"), pybind11::arg("dst"));
     m.def("_GaussianBlurKernel_Call", &cle::GaussianBlurKernel_Call, "", pybind11::arg("device"),
           pybind11::arg("src"), pybind11::arg("dst"),
           pybind11::arg("sigma_x"), pybind11::arg("sigma_y"),
@@ -141,9 +141,9 @@ auto init_cletier1(pybind11::module_ &m) -> void
           pybind11::arg("scalar"));
     m.def("_SetColumnKernel_Call", &cle::SetColumnKernel_Call, "", pybind11::arg("device"), pybind11::arg("src"),
           pybind11::arg("column_index"), pybind11::arg("scalar"));
-    m.def("_SetNonzeroPixelsToPixelindexKernel_Call",
-          &cle::SetNonzeroPixelsToPixelindexKernel_Call, "", pybind11::arg("device"),
-          pybind11::arg("src"), pybind11::arg("dst"));
+    // m.def("_SetNonzeroPixelsToPixelindexKernel_Call",
+    //       &cle::SetNonzeroPixelsToPixelindexKernel_Call, "", pybind11::arg("device"),
+    //       pybind11::arg("src"), pybind11::arg("dst"));
     m.def("_SmallerKernel_Call", &cle::SmallerKernel_Call, "", pybind11::arg("device"), pybind11::arg("src1"),
           pybind11::arg("src2"), pybind11::arg("dst"));
     m.def("_SmallerConstantKernel_Call", &cle::SmallerConstantKernel_Call, "", pybind11::arg("device"),

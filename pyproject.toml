@@ -12,7 +12,6 @@ requires = [
 build = ["cp37-*", "cp39-*", "cp38-*", "cp310-*", "cp311-*"]
 build-frontend = "build"
 build-verbosity = 1
-test-command = ""
 test-command = "pytest {project}/tests"
 test-requires = ["numpy", "pytest"]
 

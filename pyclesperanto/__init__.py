@@ -19,6 +19,8 @@ from ._tier1 import (
     absolute,
     gaussian_blur,
     maximum_z_projection,
+)
+from ._tier4 import (
     threshold_otsu,
     connect_component_labeling_box,
 )

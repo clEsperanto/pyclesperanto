@@ -11,8 +11,11 @@ auto init_cleimage(pybind11::module_ &module) -> void;
 auto init_cleprocessor(pybind11::module_ &module) -> void;
 auto init_clememory(pybind11::module_ &module) -> void;
 
-auto init_clegateway(pybind11::module_ &module) -> void;
-
 auto init_cletier1(pybind11::module_ &module) -> void;
+auto init_cletier2(pybind11::module_ &module) -> void;
+auto init_cletier3(pybind11::module_ &module) -> void;
+auto init_cletier4(pybind11::module_ &module) -> void;
+auto init_cletier5(pybind11::module_ &module) -> void;
+auto init_cletier6(pybind11::module_ &module) -> void;
 
 #endif // __WRAPPER_PYCLESPERANTO_HPP

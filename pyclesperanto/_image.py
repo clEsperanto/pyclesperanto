@@ -6,6 +6,7 @@ import numpy as np
 from ._pyclesperanto import _cleImage
 from ._pyclesperanto import _cleMemType, _cleDataType
 from ._image_operators import ImageOperators
+from ._device import Device
 
 dType = _cleDataType
 mType = _cleMemType
@@ -26,7 +27,7 @@ class cleImage(_cleImage, ImageOperators):
         super().__init__(image)
 
     @property
-    def device(self):
+    def device(self) -> Device:
         return super().GetDevice()
 
     @property

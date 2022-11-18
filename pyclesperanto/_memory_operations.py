@@ -1,10 +1,10 @@
 import numpy as np
 from ._pyclesperanto import _Create, _Push, _Pull
-from ._device import cleDevice, get_device
+from ._device import Device, get_device
 from ._image import cleImage, Image, mType
 
 
-def create(shape: tuple, mtype: mType = None, device: cleDevice = None) -> Image:
+def create(shape: tuple, mtype: mType = None, device: Device = None) -> Image:
     """create:
 
     Conventional method to create images on the GPU and return its handle
@@ -50,7 +50,7 @@ def create_like(image: Image) -> Image:
         return create(shape=tuple(image.shape), mtype=mType.buffer)
 
 
-def push(array: Image, mtype: mType = None, device: cleDevice = None) -> Image:
+def push(array: Image, mtype: mType = None, device: Device = None) -> Image:
     """push:
 
     Copy an host array to the GPU device and return its handle

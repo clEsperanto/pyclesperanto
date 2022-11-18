@@ -1,5 +1,5 @@
 # py-clesperanto
-[![Build](https://github.com/clEsperanto/pyclesperanto/actions/workflows/build_and_deploy.yml/badge.svg)](https://github.com/clEsperanto/pyclesperanto/actions/workflows/build_and_deploy.yml)
+[![Build & Deploy](https://github.com/clEsperanto/pyclesperanto/actions/workflows/wheels.yml/badge.svg)](https://github.com/clEsperanto/pyclesperanto/actions/workflows/wheels.yml)
 [![License](https://img.shields.io/pypi/l/pyclesperanto.svg?color=green)](https://github.com/clEsperanto/pyclesperanto/raw/main/LICENSE)
 [![Website](https://img.shields.io/website?url=http%3A%2F%2Fclesperanto.net)](http://clesperanto.net)
 [![Python Version](https://img.shields.io/pypi/pyversions/pyclesperanto.svg?color=green)](https://python.org)
@@ -35,21 +35,20 @@ pip install pyclesperanto
 **Note**: This project is under heavy development. General API, functions, and parameters are subject to change.
 
 ```python
-from pyclesperanto import cle
+import pyclesperanto as cle
 from skimage.io import imread, imsave
 
 # initialize GPU
-device = cle.select_device("GTX")
+device = cle.select_device()
 print("Used GPU: ", device)
 
 image = imread("https://imagej.nih.gov/ij/images/blobs.gif")
 
-# push and create buffer
-gpu_output = cle.create(image.shape)
-gpu_input = cle.push(image)
+# push image to device memory
+input_image = cle.push(image)
 
 # process the image
-inverted = cle.subtract_image_from_scalar(image, scalar=255)
+inverted = cle.subtract_image_from_scalar(input_image, scalar=255)
 blurred = cle.gaussian_blur(inverted, sigma_x=1, sigma_y=1)
 binary = cle.threshold_otsu(blurred)
 labeled = cle.connected_components_labeling_box(binary)
@@ -60,8 +59,9 @@ num_labels = cle.maximum_of_all_pixels(labeled)
 # print out result
 print("Num objects in the image: " + str(num_labels))
 
-# save image to disc
-imsave("result.tif", labeled)
+# read image from device memory
+output_image = cle.pull(labeled)
+imsave("result.tif", output_image)
 ```
 
 ## __Example gallery__ 

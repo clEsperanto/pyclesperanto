@@ -1,4 +1,3 @@
-
 from typing import Callable
 from functools import wraps
 from toolz import curry
@@ -6,6 +5,8 @@ import inspect
 
 from ._memory_operations import create_like, push
 from ._image import Image, is_image
+from ._device import Device, get_device
+
 
 @curry
 def plugin_function(
@@ -59,11 +60,18 @@ def plugin_function(
                     *bound.args[0 : len(sig2.parameters)]
                 )
 
+            if (
+                key in sig.parameters
+                and sig.parameters[key].annotation is Device
+                and value is None
+            ):
+                sig2 = inspect.signature(get_device)
+                bound.arguments[key] = get_device()
+
         # call the decorated function
         return function(*bound.args, **bound.kwargs)
 
     # this is necessary to obfuscate pyclesperanto's internal structure
     worker_function.__module__ = "pyclesperanto"
 
-    return worker_function    
-    
+    return worker_function

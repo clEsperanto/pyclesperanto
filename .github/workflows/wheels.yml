@@ -1,4 +1,4 @@
-name: Upload to PyPI
+name: Build & Deploy
 
 # Build on every branch push, tag push, and pull request change:
 on:

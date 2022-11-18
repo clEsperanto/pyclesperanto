@@ -4,7 +4,7 @@
 [![Website](https://img.shields.io/website?url=http%3A%2F%2Fclesperanto.net)](http://clesperanto.net)
 [![Python Version](https://img.shields.io/pypi/pyversions/pyclesperanto.svg?color=green)](https://python.org)
 [![Development Status](https://img.shields.io/pypi/status/pyclesperanto.svg)](https://en.wikipedia.org/wiki/Software_release_life_cycle#Alpha)
-![GitHub issues](https://img.shields.io/github/issues-raw/clEsperanto/pyclesperanto)
+[![GitHub issues](https://img.shields.io/github/issues-raw/clEsperanto/pyclesperanto)](https://github.com/clEsperanto/pyclesperanto/issues)
 [![GitHub stars](https://img.shields.io/github/stars/clEsperanto/pyclesperanto?style=social)](https://github.com/clEsperanto/pyclesperanto)
 [![GitHub forks](https://img.shields.io/github/forks/clEsperanto/pyclesperanto?style=social)](https://github.com/clEsperanto/pyclesperanto)
 [![PyPI - Downloads](https://img.shields.io/pypi/dm/pyclesperanto)](https://pypistats.org/packages/pyclesperanto)
@@ -21,7 +21,7 @@ Get a conda/python environment, e.b. via [mini-conda](https://docs.conda.io/en/l
 conda create --name my_env python=3.10
 conda activate my_env
 ```
-Install pyclesperanto package using __conda__:
+~~Install pyclesperanto package using __conda__:~~ __(WIP, use pip instead)__
 ```
 conda install -c conda-forge pyclesperanto
 ```

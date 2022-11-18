@@ -14,9 +14,9 @@ jobs:
     runs-on: ${{ matrix.platform }}
     strategy:
       fail-fast: false
-      max-parallel: 8
+      max-parallel: 3
       matrix:
-        python-version: [3.7, 3.8, 3.9]
+        python-version: [3.7, 3.8, 3.9, 3.10]
         platform: [ubuntu-latest] #, windows-latest, macos-latest] 
 
     steps:
@@ -49,12 +49,5 @@ jobs:
  
       - name: Compile
         shell: bash -l {0}
-        run: pip install -e .
+        run: pip install -e . -vvv
 
-      # Issue to link with ICD-loader and ICDs coming from python
-      # - name: Test
-      #   shell: bash -l {0}
-      #   run: oclgrind python -m pytest . 
-
-      # - name: Coverage
-      #   uses: codecov/codecov-action@v1

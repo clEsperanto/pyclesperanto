@@ -44,12 +44,7 @@ class cleImage(_cleImage, ImageOperators):
 
     @property
     def shape(self) -> tuple:
-        if self.ndim == 3:
-            return super().Shape()
-        elif self.ndim == 2:
-            return super().Shape()
-        elif self.ndim == 1:
-            return super().Shape()
+        return super().Shape()
 
     @property
     def nbytes(self) -> int:

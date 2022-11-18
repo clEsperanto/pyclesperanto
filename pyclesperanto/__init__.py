@@ -82,9 +82,9 @@ image = mType.image
 
 # redefine data type for easy usage
 float = dType.float
-int = dType.int
-uint = dType.uint
-char = dType.char
-uchar = dType.uchar
-short = dType.short
-ushort = dType.ushort
+int32 = dType.int32
+uint32 = dType.uint32
+int8 = dType.int8
+uint8 = dType.uint8
+int16 = dType.int16
+uint16 = dType.uint16

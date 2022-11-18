@@ -173,37 +173,37 @@ def sum_of_all_pixels(
     return pull(output_image).item()
 
 
-# @plugin_function
-# def extend_labeling_via_voronoi(
-#     input_image: Image, output_image: Image = None, device: Device = None
-# ) -> Image:
-#     """Takes a label map image and dilates the regions using a octagon shape
-#     until they touch.
+@plugin_function
+def extend_labeling_via_voronoi(
+    input_image: Image, output_image: Image = None, device: Device = None
+) -> Image:
+    """Takes a label map image and dilates the regions using a octagon shape
+    until they touch.
 
-#     The resulting label map is written to the output.
+    The resulting label map is written to the output.
 
-#     Parameters
-#     ----------
-#     input_image : Image
-#     output_image : Image, optional
+    Parameters
+    ----------
+    input_image : Image
+    output_image : Image, optional
 
-#     Returns
-#     -------
-#     output_image
-#     """
-#     from ._pyclesperanto import _ExtendLabelingViaVoronoiKernel_Call as op
+    Returns
+    -------
+    output_image
+    """
+    from ._pyclesperanto import _ExtendLabelingViaVoronoiKernel_Call as op
 
-#     op(device, src=input_image, dst=output_image)
-#     return output_image
+    op(device, src=input_image, dst=output_image)
+    return output_image
 
 
 @plugin_function
 def top_hat_box(
     input_image: Image,
     output_image: Image = None,
-    radius_x: float = 0,
-    radius_y: float = 0,
-    radius_z: float = 0,
+    radius_x: int = 0,
+    radius_y: int = 0,
+    radius_z: int = 0,
     device: Device = None,
 ) -> Image:
     """Applies a top-hat filter for background subtraction to the input image.
@@ -231,8 +231,8 @@ def top_hat_box(
         device,
         src=input_image,
         dst=output_image,
-        radius_x=float(radius_x),
-        radius_y=float(radius_y),
-        radius_z=float(radius_z),
+        radius_x=int(radius_x),
+        radius_y=int(radius_y),
+        radius_z=int(radius_z),
     )
     return output_image

@@ -68,14 +68,14 @@ def imshow(
         import matplotlib
         import numpy as np
 
-        if not hasattr("labels_cmap"):
-            from numpy.random import MT19937
-            from numpy.random import RandomState, SeedSequence
+        # if not hasattr("labels_cmap"):
+        from numpy.random import MT19937
+        from numpy.random import RandomState, SeedSequence
 
-            rs = RandomState(MT19937(SeedSequence(3)))
-            lut = rs.rand(65537, 3)
-            lut[0, :] = 0
-            labels_cmap = matplotlib.colors.ListedColormap(lut)
+        rs = RandomState(MT19937(SeedSequence(3)))
+        lut = rs.rand(65537, 3)
+        lut[0, :] = 0
+        labels_cmap = matplotlib.colors.ListedColormap(lut)
         cmap = labels_cmap
 
         if min_display_intensity is None:

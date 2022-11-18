@@ -532,7 +532,7 @@ def maximum_z_projection(
     -------
     Image 2D
     """
-    shape = input_image.shape()
+    shape = input_image.shape
     output_image = create((shape[1], shape[2]))
     from ._pyclesperanto import _MaximumZProjectionKernel_Call as op
 
@@ -554,7 +554,7 @@ def maximum_y_projection(
     -------
     Image 2D
     """
-    shape = input_image.shape()
+    shape = input_image.shape
     output_image = create((shape[0], shape[2]))
     from ._pyclesperanto import _MaximumYProjectionKernel_Call as op
 
@@ -576,7 +576,7 @@ def maximum_x_projection(
     -------
     Image 2D
     """
-    shape = input_image.shape()
+    shape = input_image.shape
     output_image = create((shape[1], shape[0]))
     from ._pyclesperanto import _MaximumXProjectionKernel_Call as op
 

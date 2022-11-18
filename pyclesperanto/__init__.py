@@ -50,7 +50,7 @@ from ._tier2 import (
     maximum_of_all_pixels,
     minimum_of_all_pixels,
     sum_of_all_pixels,
-    # extend_labeling_via_voronoi,
+    extend_labeling_via_voronoi,
     top_hat_box,
 )
 from ._tier3 import (
@@ -88,3 +88,6 @@ int8 = dType.int8
 uint8 = dType.uint8
 int16 = dType.int16
 uint16 = dType.uint16
+
+
+__common_alias__ = "cle"

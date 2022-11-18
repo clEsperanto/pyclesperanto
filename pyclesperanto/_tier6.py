@@ -37,7 +37,7 @@ def voronoi_otsu_labeling(
     .. [1] https://ieeexplore.ieee.org/document/4310076
     .. [2] https://en.wikipedia.org/wiki/Voronoi_diagram
     """
-    from ._pyclesperanto import _MaskedVoronoiLabelingKernel_Call as op
+    from ._pyclesperanto import _VoronoiOtsuLabelingKernel_Call as op
 
     op(
         device,

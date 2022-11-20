@@ -640,3 +640,133 @@ def sobel(
 
     op(device, src=input_image, dst=output_image)
     return output_image
+
+@plugin_function
+def minimum_z_projection(
+    input_image: Image, output_image: Image = None, device: Device = None
+) -> Image:
+    """Determines the minimum intensity projection of an image along Z.
+
+    Parameters
+    ----------
+    input_image : Image 3D
+
+    Returns
+    -------
+    Image 2D
+    """
+    shape = input_image.shape
+    output_image = create((shape[1], shape[2]))
+    from ._pyclesperanto import _MinimumZProjectionKernel_Call as op
+
+    op(device, src=input_image, dst=output_image)
+    return output_image
+
+
+@plugin_function
+def minimum_y_projection(
+    input_image: Image, output_image: Image = None, device: Device = None
+) -> Image:
+    """Determines the minimum intensity projection of an image along Y.
+
+    Parameters
+    ----------
+    input_image : Image 3D
+
+    Returns
+    -------
+    Image 2D
+    """
+    shape = input_image.shape
+    output_image = create((shape[0], shape[2]))
+    from ._pyclesperanto import _MinimumYProjectionKernel_Call as op
+
+    op(device, src=input_image, dst=output_image)
+    return output_image
+
+
+@plugin_function
+def minimum_x_projection(
+    input_image: Image, output_image: Image = None, device: Device = None
+) -> Image:
+    """Determines the minimum intensity projection of an image along X.
+
+    Parameters
+    ----------
+    input_image : Image 3D
+
+    Returns
+    -------
+    Image 2D
+    """
+    shape = input_image.shape
+    output_image = create((shape[1], shape[0]))
+    from ._pyclesperanto import _MinimumXProjectionKernel_Call as op
+
+    op(device, src=input_image, dst=output_image)
+    return output_image
+
+@plugin_function
+def sum_z_projection(
+    input_image: Image, output_image: Image = None, device: Device = None
+) -> Image:
+    """Determines the sum intensity projection of an image along Z.
+
+    Parameters
+    ----------
+    input_image : Image 3D
+
+    Returns
+    -------
+    Image 2D
+    """
+    shape = input_image.shape
+    output_image = create((shape[1], shape[2]))
+    from ._pyclesperanto import _SumZProjectionKernel_Call as op
+
+    op(device, src=input_image, dst=output_image)
+    return output_image
+
+
+@plugin_function
+def sum_y_projection(
+    input_image: Image, output_image: Image = None, device: Device = None
+) -> Image:
+    """Determines the sum intensity projection of an image along Y.
+
+    Parameters
+    ----------
+    input_image : Image 3D
+
+    Returns
+    -------
+    Image 2D
+    """
+    shape = input_image.shape
+    output_image = create((shape[0], shape[2]))
+    from ._pyclesperanto import _SumYProjectionKernel_Call as op
+
+    op(device, src=input_image, dst=output_image)
+    return output_image
+
+
+@plugin_function
+def sum_x_projection(
+    input_image: Image, output_image: Image = None, device: Device = None
+) -> Image:
+    """Determines the sum intensity projection of an image along X.
+
+    Parameters
+    ----------
+    input_image : Image 3D
+
+    Returns
+    -------
+    Image 2D
+    """
+    shape = input_image.shape
+    output_image = create((shape[1], shape[0]))
+    from ._pyclesperanto import _SumXProjectionKernel_Call as op
+
+    op(device, src=input_image, dst=output_image)
+    return output_image

@@ -1,24 +1,20 @@
-// #include <pybind11/stl.h>
-// #include <pybind11/functional.h>
 
 #include "pyclesperanto.hpp"
 
-#define STRINGIFY(x) #x
-#define MACRO_STRINGIFY(x) STRINGIFY(x)
+// define a module. module name = file name = cmake target name
+PYBIND11_MODULE(_pyclesperanto, m)
+{
+  // Wrap clesperanto core functionality for operability
+  init_cletypes(m);
+  init_cleprocessor(m);
+  init_cleimage(m);
+  init_clememory(m);
 
-PYBIND11_MODULE(_pyclic, m) {  // define a module. module name = file name = cmake target name 
-    init_pygpu(m);
-    init_pydata(m);
-    init_pytier1(m);
-    init_pytier2(m);
-    init_pytier3(m);
-    init_pytier4(m);
-    init_pytier5(m);
-    init_pytier6(m);
-
-#ifdef VERSION_INFO
-    m.attr("__version__") = MACRO_STRINGIFY(VERSION_INFO);
-#else
-    m.attr("__version__") = "dev";
-#endif   
+  // Wrap clesperanto kernel function per tiers
+  init_cletier1(m);
+  init_cletier2(m);
+  init_cletier3(m);
+  init_cletier4(m);
+  init_cletier5(m);
+  init_cletier6(m);
 }

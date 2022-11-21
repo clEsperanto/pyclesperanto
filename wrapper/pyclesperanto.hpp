@@ -1,19 +1,21 @@
-#ifndef __pyclesperanto_h
-#define __pyclesperanto_h
+#ifndef __WRAPPER_PYCLESPERANTO_HPP
+#define __WRAPPER_PYCLESPERANTO_HPP
 
-
-#include <pybind11/pybind11.h>
-#include <pybind11/numpy.h>
-#include <pybind11/stl.h>
 #include <pybind11/functional.h>
+#include <pybind11/numpy.h>
+#include <pybind11/pybind11.h>
+#include <pybind11/stl.h>
 
-void init_pygpu(pybind11::module_ &);
-void init_pydata(pybind11::module_ &);
-void init_pytier1(pybind11::module_ &);
-void init_pytier2(pybind11::module_ &);
-void init_pytier3(pybind11::module_ &);
-void init_pytier4(pybind11::module_ &);
-void init_pytier5(pybind11::module_ &);
-void init_pytier6(pybind11::module_ &);
+auto init_cletypes(pybind11::module_ &module) -> void;
+auto init_cleimage(pybind11::module_ &module) -> void;
+auto init_cleprocessor(pybind11::module_ &module) -> void;
+auto init_clememory(pybind11::module_ &module) -> void;
 
-#endif // __pyclesperanto_h
+auto init_cletier1(pybind11::module_ &module) -> void;
+auto init_cletier2(pybind11::module_ &module) -> void;
+auto init_cletier3(pybind11::module_ &module) -> void;
+auto init_cletier4(pybind11::module_ &module) -> void;
+auto init_cletier5(pybind11::module_ &module) -> void;
+auto init_cletier6(pybind11::module_ &module) -> void;
+
+#endif // __WRAPPER_PYCLESPERANTO_HPP

@@ -57,6 +57,9 @@ auto init_cletier1(pybind11::module_ &m) -> void
       m.def("_GreaterKernel_Call", &cle::GreaterKernel_Call, "", pybind11::arg("device"), pybind11::arg("src1"),
             pybind11::arg("src2"), pybind11::arg("dst"));
 
+      m.def("_GradientZKernel_Call", &cle::GradientZKernel_Call, "",
+            pybind11::arg("device"), pybind11::arg("src"), pybind11::arg("dst"));
+
       m.def("_GreaterConstantKernel_Call", &cle::GreaterConstantKernel_Call, "", pybind11::arg("device"),
             pybind11::arg("src"), pybind11::arg("dst"), pybind11::arg("scalar"));
 

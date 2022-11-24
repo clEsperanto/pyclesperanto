@@ -253,6 +253,30 @@ def copy(
 
 
 @plugin_function
+def gradient_x(
+    input_image: Image,
+    output_image: Image = None,
+    device: Device = None
+) -> Image:
+    """Computes the gradient of an image along Y direction.
+    Args:
+        input_image (Image): Image
+        output_image (Image, optional): Image
+        device (Device, optional): Device. Defaults to None.
+    Returns:
+        Image: Image
+    """
+    from ._pyclesperanto import _GradientYKernel_Call as op
+
+    op(
+        device,
+        src=input_image,
+        dst=output_image
+    )
+    return output_image
+
+
+@plugin_function
 def greater_or_equal_constant(
     input_image: Image,
     output_image: Image = None,
@@ -641,6 +665,7 @@ def sobel(
     op(device, src=input_image, dst=output_image)
     return output_image
 
+
 @plugin_function
 def minimum_z_projection(
     input_image: Image, output_image: Image = None, device: Device = None
@@ -705,6 +730,7 @@ def minimum_x_projection(
 
     op(device, src=input_image, dst=output_image)
     return output_image
+
 
 @plugin_function
 def sum_z_projection(

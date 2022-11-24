@@ -54,6 +54,9 @@ auto init_cletier1(pybind11::module_ &m) -> void
       m.def("_GaussianBlurKernel_Call", &cle::GaussianBlurKernel_Call, "", pybind11::arg("device"),
             pybind11::arg("src"), pybind11::arg("dst"), pybind11::arg("sigma_x"), pybind11::arg("sigma_y"), pybind11::arg("sigma_z"));
 
+      m.def("_GradientYKernel_Call", &cle::GradientYKernel_Call, "", pybind11::arg("device"),
+            pybind11::arg("src"), pybind11::arg("dst"));
+
       m.def("_GreaterKernel_Call", &cle::GreaterKernel_Call, "", pybind11::arg("device"), pybind11::arg("src1"),
             pybind11::arg("src2"), pybind11::arg("dst"));
 

@@ -251,6 +251,55 @@ def copy(
     op(device, src=input_image, dst=output_image)
     return output_image
 
+@plugin_function
+def gradient_x(
+    input_image: Image,
+    output_image: Image = None,
+    device: Device = None,
+) -> Image:
+    """Computes the gradient of an image along X direction.
+
+    Args:
+        input_image (Image): Image
+        output_image (Image, optional): Image
+        device (Device, optional): Device. Defaults to None.
+
+    Returns:
+        Image: Image
+    """
+    from ._pyclesperanto import _GradientXKernel_Call as op
+
+    op(
+        device,
+        src=input_image,
+        dst=output_image,
+    )
+    return output_image
+
+
+@plugin_function
+def gradient_z(
+    input_image: Image,
+    output_image: Image = None,
+    device: Device = None,
+) -> Image:
+    """Computes the gradient of an image along Z direction.
+    Args:
+        input_image (Image): Image
+        output_image (Image, optional): Image
+        device (Device, optional): Device. Defaults to None.
+    Returns:
+        Image: Image
+    """
+    from ._pyclesperanto import _GradientZKernel_Call as op
+
+    op(
+        device,
+        src=input_image,
+        dst=output_image,
+    )
+    return output_image
+
 
 @plugin_function
 def gradient_y(

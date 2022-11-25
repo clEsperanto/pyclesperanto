@@ -253,7 +253,7 @@ def copy(
 
 
 @plugin_function
-def gradient_x(
+def gradient_y(
     input_image: Image,
     output_image: Image = None,
     device: Device = None

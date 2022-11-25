@@ -101,6 +101,12 @@ auto init_cletier1(pybind11::module_ &m) -> void {
   m.def("_MaximumYProjectionKernel_Call", &cle::MaximumYProjectionKernel_Call,
         "", pybind11::arg("device"), pybind11::arg("src"),
         pybind11::arg("dst"));
+        
+  m.def("_GradientZKernel_Call", &cle::GradientZKernel_Call, "",
+        pybind11::arg("device"), pybind11::arg("src"), pybind11::arg("dst"));
+
+  m.def("_GreaterConstantKernel_Call", &cle::GreaterConstantKernel_Call, "", pybind11::arg("device"),
+        pybind11::arg("src"), pybind11::arg("dst"), pybind11::arg("scalar"));
 
   m.def("_MaximumZProjectionKernel_Call", &cle::MaximumZProjectionKernel_Call,
         "", pybind11::arg("device"), pybind11::arg("src"),

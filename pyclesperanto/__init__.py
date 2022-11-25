@@ -30,6 +30,7 @@ from ._tier1 import (
     minimum_box,
     copy,
     gradient_x,
+    gradient_z,
     greater_or_equal_constant,
     greater_or_equal,
     binary_not,

@@ -10,7 +10,7 @@ updates:
     schedule:
       interval: "weekly"
   
-  - package-ecosystem: "gitsubmodule" # See documentation for possible values
-    directory: "/" # Location of package manifests
-    schedule:
-      interval: "weekly"
+  # - package-ecosystem: "gitsubmodule" # See documentation for possible values
+  #   directory: "/" # Location of package manifests
+  #   schedule:
+  #     interval: "weekly"

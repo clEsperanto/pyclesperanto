@@ -9,6 +9,7 @@
 [![GitHub stars](https://img.shields.io/github/stars/clEsperanto/pyclesperanto?style=social)](https://github.com/clEsperanto/pyclesperanto)
 [![GitHub forks](https://img.shields.io/github/forks/clEsperanto/pyclesperanto?style=social)](https://github.com/clEsperanto/pyclesperanto)
 [![PyPI - Downloads](https://img.shields.io/pypi/dm/pyclesperanto)](https://pypistats.org/packages/pyclesperanto)
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
 pyclesperanto is the python package of [clEsperanto] - a multi-language framework for GPU-accelerated image processing.
 clEsperanto uses [OpenCL kernels] from [CLIJ].
@@ -140,9 +141,11 @@ More usage and example can be found as notebooks in the [user documentation](./u
 Contributions are very welcome. Before spending effort on coding and filing a pull-request, please get in touch, 
 [file an issue], and let's discuss your potential contribution.
 
-## __Feedback welcome!__
+# __Feedback welcome!__
 
-clesperanto is developed in the open because we believe in the open source community. See our [community guidelines]. Feel free to drop feedback as [github issue] or via [image.sc].
+clEsperanto is developed in the open because we believe in the [open source community]. 
+Feel free to drop feedback as [github issue] or via [image.sc forum].  
+And if you liked our work, star the repository, share it with your friends, and use it to make cool stuff!
 
 [clEsperanto]: http://clesperanto.net/
 [OpenCL kernels]: https://github.com/clEsperanto/clij-opencl-kernels/tree/development/src/main/java/net/haesleinhuepf/clij/kernels
@@ -150,5 +153,4 @@ clesperanto is developed in the open because we believe in the open source commu
 [CLIc]: https://github.com/clEsperanto/CLIc_prototype
 [community guidelines]: https://clij.github.io/clij2-docs/community_guidelines
 [github issue]: https://github.com/clEsperanto/pyclesperanto/issues
-[image.sc]: https://forum.image.sc/
-
+[image.sc forum]: https://forum.image.sc/

@@ -5,6 +5,7 @@ cmake_minimum_required(VERSION 3.20)
 # - package version is managed in file `version.py`
 project(pyClesperanto)
 
+# enforce release build type
 set(CMAKE_BUILD_TYPE Release)
 
 string(TOLOWER ${PROJECT_NAME} PY_PACKAGE_NAME)
@@ -25,19 +26,16 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON) # Require (at least) it
 # look for python in virtual env or conda first before checking the system.
 set(Python_FIND_VIRTUALENV "FIRST")
 find_package(Python3 COMPONENTS Interpreter Development.Embed Development.Module)
-
 if(Python3_Development.Module_FOUND)
     message(STATUS "Python Developement Module found")
 endif()
-
 if(Python3_Development.Embed_FOUND)
     message(STATUS "Python Developement Embed found")
 endif()
 
-message(STATUS "OpenCL_FOUND: ${OpenCL_FOUND}")
-message(STATUS "OpenCL_LIBRARY: ${OpenCL_LIBRARY}")
-message(STATUS "OpenCL_LIBRARIES: ${OpenCL_LIBRARIES}")
-
+# message(STATUS "OpenCL_FOUND: ${OpenCL_FOUND}")
+# message(STATUS "OpenCL_LIBRARY: ${OpenCL_LIBRARY}")
+# message(STATUS "OpenCL_LIBRARIES: ${OpenCL_LIBRARIES}")
 # CMake Warning:
 #   Manually-specified variables were not used by the project:
 #     PYTHON_INCLUDE_DIR
@@ -47,9 +45,25 @@ message(STATUS "OpenCL_LIBRARIES: ${OpenCL_LIBRARIES}")
 #     Python_INCLUDE_DIR
 #     Python_LIBRARY
 
-# Define CLIc Backend library
+## fetch CLIc using CMake FetchContent
+include(FetchContent)
+
+# ! how can we define the latest version, what happen if empty?
+# if(NOT CLIC_VERSION) # if not set, use latest
+#   set(CLIC_VERSION "0.6.2" CACHE PATH "CLIc version tag")
+# endif()
+
+# avoid build tests and examples for convenience
 option(BUILD_TESTING  OFF)
-add_subdirectory(CLIc)
+# fetch CLIc library
+FetchContent_Declare(
+  CLIc_lib 
+  GIT_REPOSITORY https://github.com/clEsperanto/CLIc_prototype.git
+  GIT_TAG ${CLIC_VERSION}
+)
+FetchContent_MakeAvailable(CLIc_lib)
+# Define CLIc Backend library
+# add_subdirectory(CLIc)
 
 if(SKBUILD)
   # Scikit-Build does not add your site-packages to the search path

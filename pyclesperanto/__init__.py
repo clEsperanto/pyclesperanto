@@ -1,5 +1,6 @@
 # pyClEsperanto Import
 from ._version import VERSION as __version__
+from ._version import CLIC_VERSION as __clic_version__
 from ._memory_operations import (
     create,
     create_like,

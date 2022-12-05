@@ -20,13 +20,12 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-        with:
-          submodules: recursive
 
       - name: Build wheels
         uses: pypa/cibuildwheel@v2.11.2
         env:
           CIBW_ARCHS_MACOS: x86_64 arm64
+          CIBW_TEST_SKIP: *-macosx_arm64
 
       - uses: actions/upload-artifact@v3
         with:
@@ -37,8 +36,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-        with:
-          submodules: recursive
 
       - name: Build sdist
         run: pipx run build --sdist

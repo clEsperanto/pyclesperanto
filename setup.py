@@ -1,17 +1,10 @@
-# # read the contents of your README file
-# from pathlib import Path
-
-# this_directory = Path(__file__).parent
-# long_description = (this_directory / "README.md").read_text()
-
-with open("README.md") as fp:
-    readme = fp.read()
-
-
 import sys, os
 
 sys.path.append(os.path.dirname(__file__))
 
+# Get the version from the version file and the package description from the README file
+with open("README.md") as fp:
+    readme = fp.read()
 
 ver_dic = {}
 version_file = open("pyclesperanto/_version.py")
@@ -22,11 +15,14 @@ finally:
 
 exec(compile(version_file_contents, "pyclesperanto/_version.py", "exec"), ver_dic)
 
+# build the package using skbuild
+
 from skbuild import setup
 
 setup(
     name="pyclesperanto",
     version=ver_dic["VERSION"],
+    cmake_args=["-DCLIC_VERSION:String=" + ver_dic["CLIC_VERSION"]],
     author="Stephane Rigaud",
     author_email="stephane.rigaud@pasteur.fr",
     license="BSD-3-Clause",

@@ -1,6 +1,7 @@
 # pyClEsperanto Import
 from ._version import VERSION as __version__
 from ._version import CLIC_VERSION as __clic_version__
+
 from ._memory_operations import (
     create,
     create_like,
@@ -76,9 +77,6 @@ import os
 
 # Supports for ocl-icd find shipped OpenCL ICDs, cf.
 os.environ["PYCLESPERANTO_HOME"] = os.path.dirname(os.path.abspath(__file__))
-
-# Init pyclesperanto (to remove in future)
-print("pyclesperanto version:", __version__)
 
 # redefine memory type for easy usage
 buffer = mType.buffer

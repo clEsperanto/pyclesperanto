@@ -35,23 +35,17 @@ auto Push(const std::shared_ptr<cle::Processor> &device, const pybind11::array_t
         shape[j] = static_cast<size_t>(arr.shape[i]);
     }
     float *arr_ptr = static_cast<float *>(arr.ptr);
-    std::vector<float> values(arr_ptr, arr_ptr + arr.size);
-
     auto image = cle::Memory::AllocateMemory(device, shape, cle::DataType::FLOAT, mtype);
-    cle::Memory::WriteObject(image, values);
+    cle::Memory::WriteObject(image, arr_ptr, arr.size * sizeof(float));
     return image;
 };
 
 auto Pull(const cle::Image &image) -> pybind11::array_t<float, pybind11::array::c_style | pybind11::array::forcecast>
 {
-    auto output = cle::Memory::ReadObject<float>(image);
-    auto result = pybind11::array_t<float, pybind11::array::c_style | pybind11::array::forcecast>(output.size());
+    const size_t size = image.Shape()[0] * image.Shape()[1] * image.Shape()[2];
+    auto result = pybind11::array_t<float, pybind11::array::c_style | pybind11::array::forcecast>(size);
     float *ptr = static_cast<float *>(result.request().ptr);
-    for (int i = 0; i < output.size(); ++i)
-    {
-        ptr[i] = output[i];
-    }
-    //! We flip the dimensions from c++ to numpy
+    cle::Memory::ReadObject<float>(image, ptr, size * sizeof(float));
     result.resize({image.Shape()[2], image.Shape()[1], image.Shape()[0]});
     return result.squeeze();
 }

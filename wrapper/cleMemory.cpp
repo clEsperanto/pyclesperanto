@@ -6,7 +6,7 @@
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
 
-auto Create(const std::shared_ptr<cle::Processor> &device, const pybind11::tuple &shape, const cle::MemoryType &mtype) -> cle::Image
+auto Create(const std::shared_ptr<cle::Processor> &device, const pybind11::tuple &shape, const cle::DataType &dtype, const cle::MemoryType &mtype) -> cle::Image
 {
     if (pybind11::len(shape) > 3 || pybind11::len(shape) < 1)
     {
@@ -28,10 +28,11 @@ auto Create(const std::shared_ptr<cle::Processor> &device, const pybind11::tuple
         c_shape[1] = shape[1].cast<size_t>();
         c_shape[2] = shape[0].cast<size_t>();
     }
-    return cle::Memory::AllocateMemory(device, c_shape, cle::DataType::FLOAT, mtype);
+    return cle::Memory::AllocateMemory(device, c_shape, dtype, mtype);
 };
 
-auto Push(const std::shared_ptr<cle::Processor> &device, const pybind11::array_t<float, pybind11::array::c_style | pybind11::array::forcecast> &nd_array, const cle::MemoryType &mtype) -> cle::Image
+template <typename Type>
+auto Push(const std::shared_ptr<cle::Processor> &device, const pybind11::array_t<Type, pybind11::array::c_style | pybind11::array::forcecast> &nd_array, const cle::MemoryType &mtype) -> cle::Image
 {
     pybind11::buffer_info arr = nd_array.request();
     if (arr.ndim > 3)
@@ -54,34 +55,173 @@ auto Push(const std::shared_ptr<cle::Processor> &device, const pybind11::array_t
         c_shape[1] = static_cast<size_t>(arr.shape[1]);
         c_shape[2] = static_cast<size_t>(arr.shape[0]);
     }
-    auto image = cle::Memory::AllocateMemory(device, c_shape, cle::DataType::FLOAT, mtype);
-    cle::Memory::WriteObject(image, arr.ptr, arr.size * sizeof(float));
+
+    cle::DataType dtype = cle::DataType::FLOAT;
+    if (std::is_same<Type, int32_t>::value)
+    {
+        dtype = cle::DataType::INT32;
+    }
+    else if (std::is_same<Type, int16_t>::value)
+    {
+        dtype = cle::DataType::INT16;
+    }
+    else if (std::is_same<Type, int8_t>::value)
+    {
+        dtype = cle::DataType::INT8;
+    }
+    else if (std::is_same<Type, uint32_t>::value)
+    {
+        dtype = cle::DataType::UINT32;
+    }
+    else if (std::is_same<Type, uint16_t>::value)
+    {
+        dtype = cle::DataType::UINT16;
+    }
+    else if (std::is_same<Type, uint8_t>::value)
+    {
+        dtype = cle::DataType::UINT8;
+    }
+    auto image = cle::Memory::AllocateMemory(device, c_shape, dtype, mtype);
+    cle::Memory::WriteObject(image, arr.ptr, arr.size * sizeof(Type));
     return image;
 };
 
-auto Pull(const cle::Image &image) -> pybind11::array_t<float, pybind11::array::c_style>
+auto PullFloat(const cle::Image &image) -> pybind11::array_t<float, pybind11::array::c_style>
 {
     const size_t size = image.Shape()[0] * image.Shape()[1] * image.Shape()[2];
-    if (image.Ndim() == 1)
-    {
-        pybind11::array_t<float, pybind11::array::c_style> result(image.Shape()[0]);
-        cle::Memory::ReadObject<float>(image, (float *)result.request().ptr, size * sizeof(float));
-        return result;
-    }
+
+    pybind11::array_t<float, pybind11::array::c_style> result(size);
+    cle::Memory::ReadObject<float>(image, (float *)result.request().ptr, size * sizeof(float));
     if (image.Ndim() == 2)
     {
-        pybind11::array_t<float, pybind11::array::c_style> result({image.Shape()[1], image.Shape()[0]});
-        cle::Memory::ReadObject<float>(image, (float *)result.request().ptr, size * sizeof(float));
-        return result;
+        result.resize({image.Shape()[1], image.Shape()[0]});
     }
-    pybind11::array_t<float, pybind11::array::c_style> result({image.Shape()[2], image.Shape()[1], image.Shape()[0]});
-    cle::Memory::ReadObject<float>(image, (float *)result.request().ptr, size * sizeof(float));
+    else if (image.Ndim() == 3)
+    {
+        result.resize({image.Shape()[2], image.Shape()[1], image.Shape()[0]});
+    }
+    return result;
+}
+
+auto PullInt32(const cle::Image &image) -> pybind11::array_t<int32_t, pybind11::array::c_style>
+{
+    const size_t size = image.Shape()[0] * image.Shape()[1] * image.Shape()[2];
+
+    pybind11::array_t<int32_t, pybind11::array::c_style> result(size);
+    cle::Memory::ReadObject<int32_t>(image, (int32_t *)result.request().ptr, size * sizeof(int32_t));
+    if (image.Ndim() == 2)
+    {
+        result.resize({image.Shape()[1], image.Shape()[0]});
+    }
+    else if (image.Ndim() == 3)
+    {
+        result.resize({image.Shape()[2], image.Shape()[1], image.Shape()[0]});
+    }
+    return result;
+}
+
+auto PullInt16(const cle::Image &image) -> pybind11::array_t<int16_t, pybind11::array::c_style>
+{
+    const size_t size = image.Shape()[0] * image.Shape()[1] * image.Shape()[2];
+
+    pybind11::array_t<int16_t, pybind11::array::c_style> result(size);
+    cle::Memory::ReadObject<int16_t>(image, (int16_t *)result.request().ptr, size * sizeof(int16_t));
+    if (image.Ndim() == 2)
+    {
+        result.resize({image.Shape()[1], image.Shape()[0]});
+    }
+    else if (image.Ndim() == 3)
+    {
+        result.resize({image.Shape()[2], image.Shape()[1], image.Shape()[0]});
+    }
+    return result;
+}
+
+auto PullInt8(const cle::Image &image) -> pybind11::array_t<int8_t, pybind11::array::c_style>
+{
+    const size_t size = image.Shape()[0] * image.Shape()[1] * image.Shape()[2];
+
+    pybind11::array_t<int8_t, pybind11::array::c_style> result(size);
+    cle::Memory::ReadObject<int8_t>(image, (int8_t *)result.request().ptr, size * sizeof(int8_t));
+    if (image.Ndim() == 2)
+    {
+        result.resize({image.Shape()[1], image.Shape()[0]});
+    }
+    else if (image.Ndim() == 3)
+    {
+        result.resize({image.Shape()[2], image.Shape()[1], image.Shape()[0]});
+    }
+    return result;
+}
+
+auto PullUint32(const cle::Image &image) -> pybind11::array_t<uint32_t, pybind11::array::c_style>
+{
+    const size_t size = image.Shape()[0] * image.Shape()[1] * image.Shape()[2];
+
+    pybind11::array_t<uint32_t, pybind11::array::c_style> result(size);
+    cle::Memory::ReadObject<uint32_t>(image, (uint32_t *)result.request().ptr, size * sizeof(uint32_t));
+    if (image.Ndim() == 2)
+    {
+        result.resize({image.Shape()[1], image.Shape()[0]});
+    }
+    else if (image.Ndim() == 3)
+    {
+        result.resize({image.Shape()[2], image.Shape()[1], image.Shape()[0]});
+    }
+    return result;
+}
+
+auto PullUint16(const cle::Image &image) -> pybind11::array_t<uint16_t, pybind11::array::c_style>
+{
+    const size_t size = image.Shape()[0] * image.Shape()[1] * image.Shape()[2];
+
+    pybind11::array_t<uint16_t, pybind11::array::c_style> result(size);
+    cle::Memory::ReadObject<uint16_t>(image, (uint16_t *)result.request().ptr, size * sizeof(uint16_t));
+    if (image.Ndim() == 2)
+    {
+        result.resize({image.Shape()[1], image.Shape()[0]});
+    }
+    else if (image.Ndim() == 3)
+    {
+        result.resize({image.Shape()[2], image.Shape()[1], image.Shape()[0]});
+    }
+    return result;
+}
+
+auto PullUint8(const cle::Image &image) -> pybind11::array_t<uint8_t, pybind11::array::c_style>
+{
+    const size_t size = image.Shape()[0] * image.Shape()[1] * image.Shape()[2];
+
+    pybind11::array_t<uint8_t, pybind11::array::c_style> result(size);
+    cle::Memory::ReadObject<uint8_t>(image, (uint8_t *)result.request().ptr, size * sizeof(uint8_t));
+    if (image.Ndim() == 2)
+    {
+        result.resize({image.Shape()[1], image.Shape()[0]});
+    }
+    else if (image.Ndim() == 3)
+    {
+        result.resize({image.Shape()[2], image.Shape()[1], image.Shape()[0]});
+    }
     return result;
 }
 
 auto init_clememory(pybind11::module_ &m) -> void
 {
-    m.def("_Create", &Create, "", pybind11::arg("device"), pybind11::arg("shape"), pybind11::arg("mtype"));
-    m.def("_Push", &Push, "", pybind11::arg("device"), pybind11::arg("array"), pybind11::arg("mtype"));
-    m.def("_Pull", &Pull, "", pybind11::arg("image"));
+    m.def("_Create", &Create, "", pybind11::arg("device"), pybind11::arg("shape"), pybind11::arg("dtype"), pybind11::arg("mtype"));
+
+    m.def("_Push", &Push<float>, "", pybind11::arg("device"), pybind11::arg("array"), pybind11::arg("mtype"));
+    m.def("_Push", &Push<int32_t>, "", pybind11::arg("device"), pybind11::arg("array"), pybind11::arg("mtype"));
+    m.def("_Push", &Push<int16_t>, "", pybind11::arg("device"), pybind11::arg("array"), pybind11::arg("mtype"));
+    m.def("_Push", &Push<int8_t>, "", pybind11::arg("device"), pybind11::arg("array"), pybind11::arg("mtype"));
+    m.def("_Push", &Push<uint32_t>, "", pybind11::arg("device"), pybind11::arg("array"), pybind11::arg("mtype"));
+    m.def("_Push", &Push<uint16_t>, "", pybind11::arg("device"), pybind11::arg("array"), pybind11::arg("mtype"));
+    m.def("_Push", &Push<uint8_t>, "", pybind11::arg("device"), pybind11::arg("array"), pybind11::arg("mtype"));
+
+    m.def("_PullFloat", &PullFloat, "", pybind11::arg("image"));
+    m.def("_PullInt32", &PullInt32, "", pybind11::arg("image"));
+    m.def("_PullInt16", &PullInt16, "", pybind11::arg("image"));
+    m.def("_PullInt8", &PullInt8, "", pybind11::arg("image"));
+    m.def("_PullUint32", &PullUint32, "", pybind11::arg("image"));
+    m.def("_PullUint16", &PullUint16, "", pybind11::arg("image"));
+    m.def("_PullUint8", &PullUint8, "", pybind11::arg("image"));
 }

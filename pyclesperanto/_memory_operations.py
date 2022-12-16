@@ -1,10 +1,22 @@
 import numpy as np
-from ._pyclesperanto import _Create, _Push, _Pull
+from ._pyclesperanto import (
+    _Create,
+    _Push,
+    _PullFloat,
+    _PullInt32,
+    _PullInt16,
+    _PullInt8,
+    _PullUint32,
+    _PullUint16,
+    _PullUint8,
+)
 from ._device import Device, get_device
-from ._image import cleImage, Image, mType
+from ._image import cleImage, Image, mType, dType
 
 
-def create(shape: tuple, mtype: mType = None, device: Device = None) -> Image:
+def create(
+    shape: tuple, mtype: mType = None, dtype: dType = None, device: Device = None
+) -> Image:
     """create:
 
     Conventional method to create images on the GPU and return its handle
@@ -23,9 +35,11 @@ def create(shape: tuple, mtype: mType = None, device: Device = None) -> Image:
     """
     if mtype is None:
         mtype = mType.buffer
+    if dtype is None:
+        dtype = dType.float
     if device is None:
         device = get_device()
-    return cleImage(_Create(device, shape, mtype))
+    return cleImage(_Create(device, shape, dtype, mtype))
 
 
 def create_like(image: Image) -> Image:
@@ -45,7 +59,12 @@ def create_like(image: Image) -> Image:
         Handle of the empty GPU image
     """
     if isinstance(image, cleImage):
-        return create(shape=tuple(image.shape), mtype=image.mtype, device=image.device)
+        return create(
+            shape=tuple(image.shape),
+            dtype=image.dtype,
+            mtype=image.mtype,
+            device=image.device,
+        )
     else:
         return create(shape=tuple(image.shape), mtype=mType.buffer)
 
@@ -93,6 +112,18 @@ def pull(image: Image) -> Image:
         numpy compatible array
     """
     if isinstance(image, cleImage):
-        return _Pull(image)
+        if image.dtype == dType.uint8:
+            return _PullUint8(image)
+        elif image.dtype == dType.uint16:
+            return _PullUint16(image)
+        elif image.dtype == dType.uint32:
+            return _PullUint32(image)
+        elif image.dtype == dType.int8:
+            return _PullInt8(image)
+        elif image.dtype == dType.int16:
+            return _PullInt16(image)
+        elif image.dtype == dType.int32:
+            return _PullInt32(image)
+        return _PullFloat(image)
     else:
         return image

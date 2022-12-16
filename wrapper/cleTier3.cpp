@@ -10,5 +10,5 @@ auto init_cletier3(pybind11::module_ &m) -> void
             "", pybind11::arg("src"), pybind11::arg("dst"), pybind11::arg("value"));
 
       m.def("_HistogramKernel_Call", &cle::HistogramKernel_Call, "", pybind11::arg("device"), pybind11::arg("src"),
-            pybind11::arg("dst"), pybind11::arg("bins"), pybind11::arg("min_intensity"), pybind11::arg("max_intensity"));
+            pybind11::arg("dst"), pybind11::arg("min_intensity"), pybind11::arg("max_intensity"), pybind11::arg("bins"));
 }

@@ -1,5 +1,5 @@
 import numpy as np
-from ._pyclesperanto import _Pull
+from ._pyclesperanto import _PullFloat
 
 cl_buffer_datatype_dict = {
     bool: "bool",
@@ -40,7 +40,7 @@ class ImageOperators:
         else:
             raise ValueError("Axis " + axis + " not supported")
         if out is not None:
-            np.copyto(out, _Pull(result).astype(out.dtype))
+            np.copyto(out, _PullFloat(result).astype(out.dtype))
         return result
 
     def min(self, axis: int = None, out=None):
@@ -61,7 +61,7 @@ class ImageOperators:
         else:
             raise ValueError("Axis " + axis + " not supported")
         if out is not None:
-            np.copyto(out, _Pull(result).astype(out.dtype))
+            np.copyto(out, _PullFloat(result).astype(out.dtype))
         return result
 
     def sum(self, axis=None, out=None):
@@ -81,7 +81,7 @@ class ImageOperators:
         else:
             raise ValueError("Axis " + axis + " not supported")
         if out is not None:
-            np.copyto(out, _Pull(result).astype(out.dtype))
+            np.copyto(out, _PullFloat(result).astype(out.dtype))
         return result
 
     # TODO: Not sure if the following are necessary / could be circumvented.

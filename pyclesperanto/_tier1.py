@@ -251,6 +251,37 @@ def copy(
     op(device, src=input_image, dst=output_image)
     return output_image
 
+
+@plugin_function
+def divide_images(
+    input_image1: Image,
+    input_image2: Image,
+    output_image: Image = None,
+    device: Device = None,
+) -> Image:
+    """Divides two images pixel wise.
+
+    Parameters
+    ----------
+    input_image1 : Image
+    input_image2 : Image
+    output_image : Image, optional
+
+    Returns
+    -------
+    output_image
+    """
+    from ._pyclesperanto import _DivideImagesKernel_Call as op
+
+    op(
+        device,
+        src1=input_image1,
+        src2=input_image2,
+        dst=output_image,
+    )
+    return output_image
+
+
 @plugin_function
 def gradient_x(
     input_image: Image,
@@ -303,9 +334,7 @@ def gradient_z(
 
 @plugin_function
 def gradient_y(
-    input_image: Image,
-    output_image: Image = None,
-    device: Device = None
+    input_image: Image, output_image: Image = None, device: Device = None
 ) -> Image:
     """Computes the gradient of an image along Y direction.
     Args:
@@ -317,10 +346,38 @@ def gradient_y(
     """
     from ._pyclesperanto import _GradientYKernel_Call as op
 
+    op(device, src=input_image, dst=output_image)
+    return output_image
+
+
+@plugin_function
+def greater(
+    input_image1: Image,
+    input_image2: Image,
+    output_image: Image = None,
+    device: Device = None,
+) -> Image:
+    """Determines if an images A is greater than image B.
+
+    f(a, b) = 1 if a > b; 0 otherwise.
+
+    Parameters
+    ----------
+    input_image1 : Image
+    input_image2 : Image
+    output_image : Image, optional
+
+    Returns
+    -------
+    output_image
+    """
+    from ._pyclesperanto import _GreaterKernel_Call as op
+
     op(
         device,
-        src=input_image,
-        dst=output_image
+        src1=input_image1,
+        src2=input_image2,
+        dst=output_image,
     )
     return output_image
 
@@ -347,6 +404,33 @@ def greater_or_equal_constant(
     output_image
     """
     from ._pyclesperanto import _GreaterOrEqualConstantKernel_Call as op
+
+    op(device, src=input_image, dst=output_image, scalar=float(scalar))
+    return output_image
+
+
+@plugin_function
+def greater_constant(
+    input_image: Image,
+    output_image: Image = None,
+    scalar: float = 0,
+    device: Device = None,
+) -> Image:
+    """Determines if an images A is greater a given scalar b.
+
+    f(a, b) = 1 if a > b; 0 otherwise.
+
+    Parameters
+    ----------
+    input_image : Image
+    output_image : Image, optional
+    scalar : Number, optional
+
+    Returns
+    -------
+    output_image
+    """
+    from ._pyclesperanto import _GreaterConstantKernel_Call as op
 
     op(device, src=input_image, dst=output_image, scalar=float(scalar))
     return output_image
@@ -565,6 +649,69 @@ def dilate_sphere(
 
 
 @plugin_function
+def equal_constant(
+    input_image: Image,
+    constant: float,
+    output_image: Image = None,
+    device: Device = None,
+) -> Image:
+    """Computes a binary image with pixel values 0 and 1 containing the
+    result of comparing each pixel value in a given input image
+    to a constant value.
+
+    <pre>f(x) = x == constant</pre>
+
+    Parameters
+    ----------
+    input_image : Image
+        The input image to be processed.
+    constant : float
+        The constant value to be compared to.
+    output_image : Image, optional
+        The output image where results are written into.
+
+    Returns
+    -------
+    output_image
+    """
+    from ._pyclesperanto import _EqualConstantKernel_Call as op
+
+    op(device, src=input_image, dst=output_image, constant=constant)
+    return output_image
+
+
+@plugin_function
+def equal(
+    input_image1: Image,
+    input_image2: Image,
+    output_image: Image = None,
+    device: Device = None,
+) -> Image:
+    """Computes a binary image with pixel values 0 and 1 containing the
+    result of comparing each pixel value in two given input images.
+
+    <pre>f(x, y) = x == y</pre>
+
+    Parameters
+    ----------
+    input_image1 : Image
+        The first input image to be processed.
+    input_image2 : Image
+        The second input image to be processed.
+    output_image : Image, optional
+        The output image where results are written into.
+
+    Returns
+    -------
+    output_image
+    """
+    from ._pyclesperanto import _EqualKernel_Call as op
+
+    op(device, src1=input_image1, src2=input_image2, dst=output_image)
+    return output_image
+
+
+@plugin_function
 def erode_sphere(
     input_image: Image, output_image: Image = None, device: Device = None
 ) -> Image:
@@ -778,6 +925,313 @@ def minimum_x_projection(
     from ._pyclesperanto import _MinimumXProjectionKernel_Call as op
 
     op(device, src=input_image, dst=output_image)
+    return output_image
+
+
+@plugin_function
+def multiply_images(
+    input_image1: Image,
+    input_image2: Image,
+    output_image: Image = None,
+    device: Device = None,
+) -> Image:
+    """Multiplies two images X and Y pixel wise.
+
+    <pre>f(x, y) = x * y</pre>
+
+    Parameters
+    ----------
+    input_image1 : Image
+    input_image2 : Image
+    output_image : Image, optional
+
+    Returns
+    -------
+    output_image
+
+    References
+    ----------
+    .. [1] https://clij.github.io/clij2-docs/reference_multiplyImages
+    """
+    from ._pyclesperanto import _MultiplyImagesKernel_Call as op
+
+    op(device, src1=input_image1, src2=input_image2, dst=output_image)
+    return output_image
+
+
+@plugin_function
+def multiply_image_and_scalar(
+    input_image: Image,
+    output_image: Image = None,
+    scalar: float = 0,
+    device: Device = None,
+) -> Image:
+    """Multiplies one image X with a scalar s pixel wise.
+
+    <pre>f(x, s) = x * s</pre>
+
+    Parameters
+    ----------
+    input_image : Image
+    output_image : Image, optional
+    scalar : Number, optional
+
+    Returns
+    -------
+    output_image
+
+    References
+    ----------
+    .. [1] https://clij.github.io/clij2-docs/reference_multiplyImageAndScalar
+    """
+    from ._pyclesperanto import _MultiplyImageAndScalarKernel_Call as op
+
+    op(device, src=input_image, dst=output_image, scalar=float(scalar))
+    return output_image
+
+
+@plugin_function
+def not_equal_constant(
+    input_image: Image,
+    output_image: Image = None,
+    constant: float = 0,
+    device: Device = None,
+) -> Image:
+    """Computes a binary image with pixel values 0 if the corresponding pixel in X is not equal to a given constant c and 1 otherwise.
+
+    <pre>f(x, c) = (x != c ? 1 : 0)</pre>
+
+    Parameters
+    ----------
+    input_image : Image
+    output_image : Image, optional
+    constant : Number, optional
+
+    Returns
+    -------
+    output_image
+
+    References
+    ----------
+    .. [1] https://clij.github.io/clij2-docs/reference_notEqualConstant
+    """
+    from ._pyclesperanto import _NotEqualConstantKernel_Call as op
+
+    op(device, src=input_image, dst=output_image, constant=float(constant))
+    return output_image
+
+
+@plugin_function
+def not_equal(
+    input_image1: Image,
+    input_image2: Image,
+    output_image: Image = None,
+    device: Device = None,
+) -> Image:
+    """Computes a binary image with pixel values 0 if the corresponding pixel in X and Y are equal and 1 otherwise.
+
+    <pre>f(x, y) = (x != y ? 1 : 0)</pre>
+
+    Parameters
+    ----------
+    input_image1 : Image
+    input_image2 : Image
+    output_image : Image, optional
+
+    Returns
+    -------
+    output_image
+
+    References
+    ----------
+    .. [1] https://clij.github.io/clij2-docs/reference_notEqual
+    """
+    from ._pyclesperanto import _NotEqualKernel_Call as op
+
+    op(device, src1=input_image1, src2=input_image2, dst=output_image)
+    return output_image
+
+
+@plugin_function
+def power(
+    input_image: Image,
+    output_image: Image = None,
+    exponent: float = 1,
+    device: Device = None,
+) -> Image:
+    """Computes all pixels value x to the power of a given exponent a.
+
+    <pre>f(x, a) = x ^ a</pre>
+
+    Parameters
+    ----------
+    input_image : Image
+    output_image : Image, optional
+    exponent : Number, optional
+
+    Returns
+    -------
+    output_image
+
+    References
+    ----------
+    .. [1] https://clij.github.io/clij2-docs/reference_power
+    """
+    from ._pyclesperanto import _PowerKernel_Call as op
+
+    op(device, src=input_image, dst=output_image, exponent=float(exponent))
+    return output_image
+
+
+@plugin_function
+def power_images(
+    input_image1: Image, input_image2: Image, output_image: Image, device: Device = None
+) -> Image:
+    """Computes all pairs of pixels x and y value x to the power of y.
+
+    <pre>f(x, y) = x ^ y</pre>
+
+    Parameters
+    ----------
+    input_image1 : Image
+    input_image2 : Image
+    output_image : Image, optional
+
+    Returns
+    -------
+    output_image
+
+    References
+    ----------
+    .. [1] https://clij.github.io/clij2-docs/reference_powerImages
+    """
+    from ._pyclesperanto import _PowerImagesKernel_Call as op
+
+    op(device, src1=input_image1, src2=input_image2, dst=output_image)
+    return output_image
+
+
+@plugin_function
+def smaller_constant(
+    input_image: Image,
+    output_image: Image = None,
+    constant: float = 0,
+    device: Device = None,
+) -> Image:
+    """Determines if all pixels x smaller than a constant c.
+
+    <pre>f(x, c) = x < c ? 1 : 0</pre>
+
+    Parameters
+    ----------
+    input_image : Image
+    output_image : Image, optional
+    constant : Number, optional
+
+    Returns
+    -------
+    output_image
+
+    References
+    ----------
+    .. [1] https://clij.github.io/clij2-docs/reference_smallerConstant
+    """
+    from ._pyclesperanto import _SmallerConstantKernel_Call as op
+
+    op(device, src=input_image, dst=output_image, constant=float(constant))
+    return output_image
+
+
+@plugin_function
+def smaller(
+    input_image1: Image,
+    input_image2: Image,
+    output_image: Image = None,
+    device: Device = None,
+) -> Image:
+    """Determines if all pairs of pixels x, y smaller.
+
+    <pre>f(x, y) = x < y ? 1 : 0</pre>
+
+    Parameters
+    ----------
+    input_image1 : Image
+    input_image2 : Image
+    output_image : Image, optional
+
+    Returns
+    -------
+    output_image
+
+    References
+    ----------
+    .. [1] https://clij.github.io/clij2-docs/reference_smaller
+    """
+    from ._pyclesperanto import _SmallerKernel_Call as op
+
+    op(device, src1=input_image1, src2=input_image2, dst=output_image)
+    return output_image
+
+
+@plugin_function
+def smaller_or_equal_constant(
+    input_image: Image,
+    output_image: Image = None,
+    constant: float = 0,
+    device: Device = None,
+) -> Image:
+    """Determines if all pixels x smaller or equal to a constant c.
+
+    <pre>f(x, c) = x <= c ? 1 : 0</pre>
+
+    Parameters
+    ----------
+    input_image : Image
+    output_image : Image, optional
+    constant : Number, optional
+
+    Returns
+    -------
+    output_image
+
+    References
+    ----------
+    .. [1] https://clij.github.io/clij2-docs/reference_smallerOrEqualConstant
+    """
+    from ._pyclesperanto import _SmallerOrEqualConstantKernel_Call as op
+
+    op(device, src=input_image, dst=output_image, constant=float(constant))
+    return output_image
+
+
+@plugin_function
+def smaller_or_equal(
+    input_image1: Image,
+    input_image2: Image,
+    output_image: Image = None,
+    device: Device = None,
+) -> Image:
+    """Determines if all pairs of pixels x, y smaller or equal.
+
+    <pre>f(x, y) = x <= y ? 1 : 0</pre>
+
+    Parameters
+    ----------
+    input_image1 : Image
+    input_image2 : Image
+    output_image : Image, optional
+
+    Returns
+    -------
+    output_image
+
+    References
+    ----------
+    .. [1] https://clij.github.io/clij2-docs/reference_smallerOrEqual
+    """
+    from ._pyclesperanto import _SmallerOrEqualKernel_Call as op
+
+    op(device, src1=input_image1, src2=input_image2, dst=output_image)
     return output_image
 
 

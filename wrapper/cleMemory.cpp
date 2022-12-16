@@ -8,17 +8,28 @@
 
 auto Create(const std::shared_ptr<cle::Processor> &device, const pybind11::tuple &shape, const cle::MemoryType &mtype) -> cle::Image
 {
-    if (pybind11::len(shape) > 3)
+    if (pybind11::len(shape) > 3 || pybind11::len(shape) < 1)
     {
         throw std::runtime_error("Wrong number of dimension provided. pyClesperanto does not support dimension > 3.");
     }
-    std::array<size_t, 3> arr = {1, 1, 1};
-    for (int i = pybind11::len(shape) - 1, j = 0; i >= 0 && j < arr.size(); --i, ++j)
+
+    std::array<size_t, 3> c_shape = {1, 1, 1};
+    if (pybind11::len(shape) == 1)
     {
-        //! We flip the dimensions from numpy to c++
-        arr[j] = shape[i].cast<size_t>();
+        c_shape[0] = shape[0].cast<size_t>();
     }
-    return cle::Memory::AllocateMemory(device, arr, cle::DataType::FLOAT, mtype);
+    else if (pybind11::len(shape) == 2)
+    {
+        c_shape[0] = shape[1].cast<size_t>();
+        c_shape[1] = shape[0].cast<size_t>();
+    }
+    else if (pybind11::len(shape) == 3)
+    {
+        c_shape[0] = shape[2].cast<size_t>();
+        c_shape[1] = shape[1].cast<size_t>();
+        c_shape[2] = shape[0].cast<size_t>();
+    }
+    return cle::Memory::AllocateMemory(device, c_shape, cle::DataType::FLOAT, mtype);
 };
 
 auto Push(const std::shared_ptr<cle::Processor> &device, const pybind11::array_t<float, pybind11::array::c_style | pybind11::array::forcecast> &nd_array, const cle::MemoryType &mtype) -> cle::Image
@@ -28,14 +39,26 @@ auto Push(const std::shared_ptr<cle::Processor> &device, const pybind11::array_t
     {
         throw std::runtime_error("Number of dimensions must be three or less");
     }
-    std::array<size_t, 3> shape = {1, 1, 1};
-    for (int i = arr.ndim - 1, j = 0; i >= 0 && j < shape.size(); --i, ++j)
+
+    std::array<size_t, 3> c_shape = {1, 1, 1};
+    if (arr.ndim == 1)
     {
-        //! We flip the dimensions from numpy to c++
-        shape[j] = static_cast<size_t>(arr.shape[i]);
+        c_shape[0] = static_cast<size_t>(arr.shape[0]);
     }
+    else if (arr.ndim == 2)
+    {
+        c_shape[0] = static_cast<size_t>(arr.shape[1]);
+        c_shape[1] = static_cast<size_t>(arr.shape[0]);
+    }
+    else if (arr.ndim == 3)
+    {
+        c_shape[0] = static_cast<size_t>(arr.shape[2]);
+        c_shape[1] = static_cast<size_t>(arr.shape[1]);
+        c_shape[2] = static_cast<size_t>(arr.shape[0]);
+    }
+
     float *arr_ptr = static_cast<float *>(arr.ptr);
-    auto image = cle::Memory::AllocateMemory(device, shape, cle::DataType::FLOAT, mtype);
+    auto image = cle::Memory::AllocateMemory(device, c_shape, cle::DataType::FLOAT, mtype);
     cle::Memory::WriteObject(image, arr_ptr, arr.size * sizeof(float));
     return image;
 };
@@ -43,11 +66,24 @@ auto Push(const std::shared_ptr<cle::Processor> &device, const pybind11::array_t
 auto Pull(const cle::Image &image) -> pybind11::array_t<float, pybind11::array::c_style | pybind11::array::forcecast>
 {
     const size_t size = image.Shape()[0] * image.Shape()[1] * image.Shape()[2];
-    auto result = pybind11::array_t<float, pybind11::array::c_style | pybind11::array::forcecast>(size);
+    if (image.Ndim() == 1)
+    {
+        pybind11::array_t<float, pybind11::array::c_style | pybind11::array::forcecast> result(image.Shape()[0]);
+        float *ptr = static_cast<float *>(result.request().ptr);
+        cle::Memory::ReadObject<float>(image, ptr, size * sizeof(float));
+        return result;
+    }
+    if (image.Ndim() == 2)
+    {
+        pybind11::array_t<float, pybind11::array::c_style | pybind11::array::forcecast> result({image.Shape()[1], image.Shape()[0]});
+        float *ptr = static_cast<float *>(result.request().ptr);
+        cle::Memory::ReadObject<float>(image, ptr, size * sizeof(float));
+        return result;
+    }
+    pybind11::array_t<float, pybind11::array::c_style | pybind11::array::forcecast> result({image.Shape()[2], image.Shape()[1], image.Shape()[0]});
     float *ptr = static_cast<float *>(result.request().ptr);
     cle::Memory::ReadObject<float>(image, ptr, size * sizeof(float));
-    result.resize({image.Shape()[2], image.Shape()[1], image.Shape()[0]});
-    return result.squeeze();
+    return result;
 }
 
 auto init_clememory(pybind11::module_ &m) -> void

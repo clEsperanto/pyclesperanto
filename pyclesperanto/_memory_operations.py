@@ -3,9 +3,11 @@ from ._pyclesperanto import (
     _Create,
     _Push,
     _PullFloat,
+    _PullInt64,
     _PullInt32,
     _PullInt16,
     _PullInt8,
+    _PullUint64,
     _PullUint32,
     _PullUint16,
     _PullUint8,
@@ -118,12 +120,16 @@ def pull(image: Image) -> Image:
             return _PullUint16(image)
         elif image.dtype == dType.uint32:
             return _PullUint32(image)
+        elif image.dtype == dType.uint64:
+            return _PullUint64(image)
         elif image.dtype == dType.int8:
             return _PullInt8(image)
         elif image.dtype == dType.int16:
             return _PullInt16(image)
         elif image.dtype == dType.int32:
             return _PullInt32(image)
+        elif image.dtype == dType.int64:
+            return _PullInt64(image)
         return _PullFloat(image)
     else:
         return image

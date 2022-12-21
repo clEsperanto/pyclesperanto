@@ -53,7 +53,7 @@ class cleImage(_cleImage, ImageOperators):
 
     @property
     def nbytes(self) -> int:
-        return super().SizeInBytes()
+        return super().BytesSize()
 
     @property
     def size(self) -> int:

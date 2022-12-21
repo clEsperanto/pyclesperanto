@@ -2,9 +2,11 @@ import numpy as np
 from ._pyclesperanto import (
     _PullFloat,
     _PullInt32,
+    _PullInt64,
     _PullInt16,
     _PullInt8,
     _PullUint32,
+    _PullUint64,
     _PullUint16,
     _PullUint8,
 )
@@ -55,12 +57,16 @@ class ImageOperators:
                 np.copyto(out, _PullUint16(result).astype(out.dtype))
             elif result.dtype == _cleDataType.uint32:
                 np.copyto(out, _PullUint32(result).astype(out.dtype))
+            elif result.dtype == _cleDataType.uint64:
+                np.copyto(out, _PullUint64(result).astype(out.dtype))
             elif result.dtype == _cleDataType.int8:
                 np.copyto(out, _PullInt8(result).astype(out.dtype))
             elif result.dtype == _cleDataType.int16:
                 np.copyto(out, _PullInt16(result).astype(out.dtype))
             elif result.dtype == _cleDataType.int32:
                 np.copyto(out, _PullInt32(result).astype(out.dtype))
+            elif result.dtype == _cleDataType.int64:
+                np.copyto(out, _PullInt64(result).astype(out.dtype))
             np.copyto(out, _PullFloat(result).astype(out.dtype))
         return result
 
@@ -88,12 +94,16 @@ class ImageOperators:
                 np.copyto(out, _PullUint16(result).astype(out.dtype))
             elif result.dtype == _cleDataType.uint32:
                 np.copyto(out, _PullUint32(result).astype(out.dtype))
+            elif result.dtype == _cleDataType.uint64:
+                np.copyto(out, _PullUint64(result).astype(out.dtype))
             elif result.dtype == _cleDataType.int8:
                 np.copyto(out, _PullInt8(result).astype(out.dtype))
             elif result.dtype == _cleDataType.int16:
                 np.copyto(out, _PullInt16(result).astype(out.dtype))
             elif result.dtype == _cleDataType.int32:
                 np.copyto(out, _PullInt32(result).astype(out.dtype))
+            elif result.dtype == _cleDataType.int64:
+                np.copyto(out, _PullInt64(result).astype(out.dtype))
             np.copyto(out, _PullFloat(result).astype(out.dtype))
         return result
 
@@ -120,12 +130,16 @@ class ImageOperators:
                 np.copyto(out, _PullUint16(result).astype(out.dtype))
             elif result.dtype == _cleDataType.uint32:
                 np.copyto(out, _PullUint32(result).astype(out.dtype))
+            elif result.dtype == _cleDataType.uint64:
+                np.copyto(out, _PullUint64(result).astype(out.dtype))
             elif result.dtype == _cleDataType.int8:
                 np.copyto(out, _PullInt8(result).astype(out.dtype))
             elif result.dtype == _cleDataType.int16:
                 np.copyto(out, _PullInt16(result).astype(out.dtype))
             elif result.dtype == _cleDataType.int32:
                 np.copyto(out, _PullInt32(result).astype(out.dtype))
+            elif result.dtype == _cleDataType.int64:
+                np.copyto(out, _PullInt64(result).astype(out.dtype))
             np.copyto(out, _PullFloat(result).astype(out.dtype))
         return result
 

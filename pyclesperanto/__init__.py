@@ -105,6 +105,8 @@ image = mType.image
 
 # redefine data type for easy usage
 float = dType.float
+int64 = dType.int64
+uint64 = dType.uint64
 int32 = dType.int32
 uint32 = dType.uint32
 int8 = dType.int8

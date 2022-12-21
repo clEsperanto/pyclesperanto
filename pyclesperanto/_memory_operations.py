@@ -114,6 +114,7 @@ def pull(image: Image) -> Image:
         numpy compatible array
     """
     if isinstance(image, cleImage):
+        # return _Pull(image, image.dtype)
         if image.dtype == dType.uint8:
             return _PullUint8(image)
         elif image.dtype == dType.uint16:

@@ -116,7 +116,7 @@ def maximum_of_all_pixels(
     -------
     float
     """
-    output_image = create((1, 1, 1))
+    output_image = create((1, 1, 1), dtype=input_image.dtype)
     from ._pyclesperanto import _MaximumOfAllPixelsKernel_Call as op
 
     op(device, src=input_image, dst=output_image)
@@ -141,7 +141,7 @@ def minimum_of_all_pixels(
     -------
     float
     """
-    output_image = create((1, 1, 1))
+    output_image = create((1, 1, 1), dtype=input_image.dtype)
     from ._pyclesperanto import _MinimumOfAllPixelsKernel_Call as op
 
     op(device, src=input_image, dst=output_image)
@@ -166,7 +166,7 @@ def sum_of_all_pixels(
     -------
     float
     """
-    output_image = create((1, 1, 1))
+    output_image = create((1, 1, 1), dtype=input_image.dtype)
     from ._pyclesperanto import _SumOfAllPixelsKernel_Call as op
 
     op(device, src=input_image, dst=output_image)

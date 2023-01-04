@@ -753,7 +753,7 @@ def maximum_z_projection(
     Image 2D
     """
     shape = input_image.shape
-    output_image = create((shape[1], shape[2]))
+    output_image = create((shape[1], shape[2]), dtype=input_image.dtype)
     from ._pyclesperanto import _MaximumZProjectionKernel_Call as op
 
     op(device, src=input_image, dst=output_image)
@@ -775,7 +775,7 @@ def maximum_y_projection(
     Image 2D
     """
     shape = input_image.shape
-    output_image = create((shape[0], shape[2]))
+    output_image = create((shape[0], shape[2]), dtype=input_image.dtype)
     from ._pyclesperanto import _MaximumYProjectionKernel_Call as op
 
     op(device, src=input_image, dst=output_image)
@@ -797,7 +797,7 @@ def maximum_x_projection(
     Image 2D
     """
     shape = input_image.shape
-    output_image = create((shape[1], shape[0]))
+    output_image = create((shape[1], shape[0]), dtype=input_image.dtype)
     from ._pyclesperanto import _MaximumXProjectionKernel_Call as op
 
     op(device, src=input_image, dst=output_image)
@@ -877,7 +877,7 @@ def minimum_z_projection(
     Image 2D
     """
     shape = input_image.shape
-    output_image = create((shape[1], shape[2]))
+    output_image = create((shape[1], shape[2]), dtype=input_image.dtype)
     from ._pyclesperanto import _MinimumZProjectionKernel_Call as op
 
     op(device, src=input_image, dst=output_image)
@@ -899,7 +899,7 @@ def minimum_y_projection(
     Image 2D
     """
     shape = input_image.shape
-    output_image = create((shape[0], shape[2]))
+    output_image = create((shape[0], shape[2]), dtype=input_image.dtype)
     from ._pyclesperanto import _MinimumYProjectionKernel_Call as op
 
     op(device, src=input_image, dst=output_image)
@@ -921,7 +921,7 @@ def minimum_x_projection(
     Image 2D
     """
     shape = input_image.shape
-    output_image = create((shape[1], shape[0]))
+    output_image = create((shape[1], shape[0]), dtype=input_image.dtype)
     from ._pyclesperanto import _MinimumXProjectionKernel_Call as op
 
     op(device, src=input_image, dst=output_image)
@@ -1250,7 +1250,7 @@ def sum_z_projection(
     Image 2D
     """
     shape = input_image.shape
-    output_image = create((shape[1], shape[2]))
+    output_image = create((shape[1], shape[2]), dtype=input_image.dtype)
     from ._pyclesperanto import _SumZProjectionKernel_Call as op
 
     op(device, src=input_image, dst=output_image)
@@ -1272,7 +1272,7 @@ def sum_y_projection(
     Image 2D
     """
     shape = input_image.shape
-    output_image = create((shape[0], shape[2]))
+    output_image = create((shape[0], shape[2]), dtype=input_image.dtype)
     from ._pyclesperanto import _SumYProjectionKernel_Call as op
 
     op(device, src=input_image, dst=output_image)
@@ -1294,7 +1294,7 @@ def sum_x_projection(
     Image 2D
     """
     shape = input_image.shape
-    output_image = create((shape[1], shape[0]))
+    output_image = create((shape[1], shape[0]), dtype=input_image.dtype)
     from ._pyclesperanto import _SumXProjectionKernel_Call as op
 
     op(device, src=input_image, dst=output_image)

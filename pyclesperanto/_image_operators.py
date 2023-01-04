@@ -12,6 +12,7 @@ from ._pyclesperanto import (
 )
 from ._pyclesperanto import _cleDataType
 
+
 cl_buffer_datatype_dict = {
     bool: "bool",
     np.uint8: "uchar",
@@ -51,23 +52,13 @@ class ImageOperators:
         else:
             raise ValueError("Axis " + axis + " not supported")
         if out is not None:
-            if result.dtype == _cleDataType.uint8:
-                np.copyto(out, _PullUint8(result).astype(out.dtype))
-            elif result.dtype == _cleDataType.uint16:
-                np.copyto(out, _PullUint16(result).astype(out.dtype))
-            elif result.dtype == _cleDataType.uint32:
-                np.copyto(out, _PullUint32(result).astype(out.dtype))
-            elif result.dtype == _cleDataType.uint64:
-                np.copyto(out, _PullUint64(result).astype(out.dtype))
-            elif result.dtype == _cleDataType.int8:
-                np.copyto(out, _PullInt8(result).astype(out.dtype))
-            elif result.dtype == _cleDataType.int16:
-                np.copyto(out, _PullInt16(result).astype(out.dtype))
-            elif result.dtype == _cleDataType.int32:
-                np.copyto(out, _PullInt32(result).astype(out.dtype))
-            elif result.dtype == _cleDataType.int64:
-                np.copyto(out, _PullInt64(result).astype(out.dtype))
-            np.copyto(out, _PullFloat(result).astype(out.dtype))
+            from ._memory_operations import pull
+            from ._image import Image
+
+            if isinstance(out, Image):
+                np.copyto(out, pull(result).astype(out.dtype))
+            else:
+                out = result
         return result
 
     def min(self, axis: int = None, out=None):
@@ -88,23 +79,11 @@ class ImageOperators:
         else:
             raise ValueError("Axis " + axis + " not supported")
         if out is not None:
-            if result.dtype == _cleDataType.uint8:
-                np.copyto(out, _PullUint8(result).astype(out.dtype))
-            elif result.dtype == _cleDataType.uint16:
-                np.copyto(out, _PullUint16(result).astype(out.dtype))
-            elif result.dtype == _cleDataType.uint32:
-                np.copyto(out, _PullUint32(result).astype(out.dtype))
-            elif result.dtype == _cleDataType.uint64:
-                np.copyto(out, _PullUint64(result).astype(out.dtype))
-            elif result.dtype == _cleDataType.int8:
-                np.copyto(out, _PullInt8(result).astype(out.dtype))
-            elif result.dtype == _cleDataType.int16:
-                np.copyto(out, _PullInt16(result).astype(out.dtype))
-            elif result.dtype == _cleDataType.int32:
-                np.copyto(out, _PullInt32(result).astype(out.dtype))
-            elif result.dtype == _cleDataType.int64:
-                np.copyto(out, _PullInt64(result).astype(out.dtype))
-            np.copyto(out, _PullFloat(result).astype(out.dtype))
+            from ._memory_operations import pull
+            from ._image import Image
+
+            if isinstance(out, Image):
+                np.copyto(out, pull(result).astype(out.dtype))
         return result
 
     def sum(self, axis=None, out=None):
@@ -124,23 +103,11 @@ class ImageOperators:
         else:
             raise ValueError("Axis " + axis + " not supported")
         if out is not None:
-            if result.dtype == _cleDataType.uint8:
-                np.copyto(out, _PullUint8(result).astype(out.dtype))
-            elif result.dtype == _cleDataType.uint16:
-                np.copyto(out, _PullUint16(result).astype(out.dtype))
-            elif result.dtype == _cleDataType.uint32:
-                np.copyto(out, _PullUint32(result).astype(out.dtype))
-            elif result.dtype == _cleDataType.uint64:
-                np.copyto(out, _PullUint64(result).astype(out.dtype))
-            elif result.dtype == _cleDataType.int8:
-                np.copyto(out, _PullInt8(result).astype(out.dtype))
-            elif result.dtype == _cleDataType.int16:
-                np.copyto(out, _PullInt16(result).astype(out.dtype))
-            elif result.dtype == _cleDataType.int32:
-                np.copyto(out, _PullInt32(result).astype(out.dtype))
-            elif result.dtype == _cleDataType.int64:
-                np.copyto(out, _PullInt64(result).astype(out.dtype))
-            np.copyto(out, _PullFloat(result).astype(out.dtype))
+            from ._memory_operations import pull
+            from ._image import Image
+
+            if isinstance(out, Image):
+                np.copyto(out, pull(result).astype(out.dtype))
         return result
 
     def __iadd__(x1, x2):

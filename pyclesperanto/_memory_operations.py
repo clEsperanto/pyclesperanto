@@ -13,7 +13,7 @@ from ._pyclesperanto import (
     _PullUint8,
 )
 from ._device import Device, get_device
-from ._image import cleImage, Image, mType, dType
+from ._image import Image, mType, dType
 
 
 def create(
@@ -35,10 +35,12 @@ def create(
     Image
         Handle of the empty GPU image
     """
+    from ._image import cleImage
+
     if mtype is None:
         mtype = mType.buffer
     if dtype is None:
-        dtype = dType.float
+        dtype = dType.float32
     if device is None:
         device = get_device()
     return cleImage(_Create(device, shape, dtype, mtype))
@@ -60,6 +62,8 @@ def create_like(image: Image) -> Image:
     Image
         Handle of the empty GPU image
     """
+    from ._image import cleImage
+
     if isinstance(image, cleImage):
         return create(
             shape=tuple(image.shape),
@@ -88,6 +92,8 @@ def push(array: Image, mtype: mType = None, device: Device = None) -> Image:
     Image
         Handle of the GPU image
     """
+    from ._image import cleImage
+
     if isinstance(array, cleImage):
         return array
     else:
@@ -113,6 +119,8 @@ def pull(image: Image) -> Image:
     Image
         numpy compatible array
     """
+    from ._image import cleImage
+
     if isinstance(image, cleImage):
         # return _Pull(image, image.dtype)
         if image.dtype == dType.uint8:

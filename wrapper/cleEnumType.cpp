@@ -8,7 +8,7 @@
 auto init_cletypes(pybind11::module_ &m) -> void
 {
     pybind11::enum_<cle::DataType> dtype(m, "_cleDataType");
-    dtype.value("float", cle::DataType::FLOAT);
+    dtype.value("float32", cle::DataType::FLOAT32);
     dtype.value("int64", cle::DataType::INT64);
     dtype.value("int32", cle::DataType::INT32);
     dtype.value("int16", cle::DataType::INT16);

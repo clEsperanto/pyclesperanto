@@ -104,7 +104,7 @@ buffer = mType.buffer
 image = mType.image
 
 # redefine data type for easy usage
-float = dType.float
+float32 = dType.float32
 int64 = dType.int64
 uint64 = dType.uint64
 int32 = dType.int32

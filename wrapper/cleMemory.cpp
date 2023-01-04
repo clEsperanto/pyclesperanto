@@ -56,7 +56,7 @@ auto Push(const std::shared_ptr<cle::Processor> &device, const pybind11::array_t
         c_shape[2] = static_cast<size_t>(arr.shape[0]);
     }
 
-    cle::DataType dtype = cle::DataType::FLOAT;
+    cle::DataType dtype = cle::DataType::FLOAT32;
     if (std::is_same<Type, int64_t>::value)
     {
         dtype = cle::DataType::INT64;

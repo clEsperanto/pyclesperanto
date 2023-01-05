@@ -59,7 +59,7 @@ option(BUILD_TESTING  OFF)
 FetchContent_Declare(
   CLIc_lib 
   GIT_REPOSITORY https://github.com/clEsperanto/CLIc_prototype.git
-  GIT_TAG Add-double-and-int64-support #${CLIC_VERSION}
+  GIT_TAG master #${CLIC_VERSION}
 )
 FetchContent_MakeAvailable(CLIc_lib)
 # Define CLIc Backend library

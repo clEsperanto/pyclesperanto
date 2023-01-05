@@ -109,10 +109,10 @@ int64 = dType.int64
 uint64 = dType.uint64
 int32 = dType.int32
 uint32 = dType.uint32
-int8 = dType.int8
-uint8 = dType.uint8
 int16 = dType.int16
 uint16 = dType.uint16
+int8 = dType.int8
+uint8 = dType.uint8
 
 
 __common_alias__ = "cle"

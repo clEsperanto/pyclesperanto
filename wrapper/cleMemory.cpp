@@ -6,7 +6,7 @@
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
 
-auto Create(const std::shared_ptr<cle::Processor> &device, const pybind11::tuple &shape, const cle::DataType &dtype, const cle::MemoryType &mtype) -> cle::Image
+auto Create(const std::shared_ptr<cle::Processor> &device, const pybind11::tuple &shape, const pybind11::object &dtype, const cle::MemoryType &mtype) -> cle::Image
 {
     if (pybind11::len(shape) > 3 || pybind11::len(shape) < 1)
     {
@@ -28,8 +28,48 @@ auto Create(const std::shared_ptr<cle::Processor> &device, const pybind11::tuple
         c_shape[1] = shape[1].cast<size_t>();
         c_shape[2] = shape[0].cast<size_t>();
     }
-    return cle::Memory::AllocateMemory(device, c_shape, dtype, mtype);
-};
+
+    if (pybind11::dtype::from_args(dtype).is(pybind11::dtype("float32")))
+    {
+        return cle::Memory::AllocateMemory(device, c_shape, cle::DataType::FLOAT32, mtype);
+    }
+    else if (pybind11::dtype::from_args(dtype).is(pybind11::dtype("int64")) || pybind11::dtype::from_args(dtype).is(pybind11::dtype("int")))
+    {
+        return cle::Memory::AllocateMemory(device, c_shape, cle::DataType::INT64, mtype);
+    }
+    else if (pybind11::dtype::from_args(dtype).is(pybind11::dtype("int32")))
+    {
+        return cle::Memory::AllocateMemory(device, c_shape, cle::DataType::INT32, mtype);
+    }
+    else if (pybind11::dtype::from_args(dtype).is(pybind11::dtype("int16")))
+    {
+        return cle::Memory::AllocateMemory(device, c_shape, cle::DataType::INT16, mtype);
+    }
+    else if (pybind11::dtype::from_args(dtype).is(pybind11::dtype("int8")))
+    {
+        return cle::Memory::AllocateMemory(device, c_shape, cle::DataType::INT8, mtype);
+    }
+    else if (pybind11::dtype::from_args(dtype).is(pybind11::dtype("uint64")))
+    {
+        return cle::Memory::AllocateMemory(device, c_shape, cle::DataType::UINT64, mtype);
+    }
+    else if (pybind11::dtype::from_args(dtype).is(pybind11::dtype("uint32")))
+    {
+        return cle::Memory::AllocateMemory(device, c_shape, cle::DataType::UINT32, mtype);
+    }
+    else if (pybind11::dtype::from_args(dtype).is(pybind11::dtype("uint16")))
+    {
+        return cle::Memory::AllocateMemory(device, c_shape, cle::DataType::UINT16, mtype);
+    }
+    else if (pybind11::dtype::from_args(dtype).is(pybind11::dtype("uint8")))
+    {
+        return cle::Memory::AllocateMemory(device, c_shape, cle::DataType::UINT8, mtype);
+    }
+    else
+    {
+        throw std::runtime_error("Unsupported data type");
+    }
+}
 
 template <typename Type>
 auto Push(const std::shared_ptr<cle::Processor> &device, const pybind11::array_t<Type, pybind11::array::c_style | pybind11::array::forcecast> &nd_array, const cle::MemoryType &mtype) -> cle::Image
@@ -251,7 +291,7 @@ auto PullUint8(const cle::Image &image) -> pybind11::array_t<uint8_t, pybind11::
 // auto Pull(const cle::Image &image, const cle::DataType &dtype) -> pybind11::array_t<Type, pybind11::array::c_style | pybind11::array::forcecast>
 // {
 //     const size_t size = image.Shape()[0] * image.Shape()[1] * image.Shape()[2];
-
+//
 //     switch (dtype)
 //     {
 //     case cle::DataType::FLOAT:

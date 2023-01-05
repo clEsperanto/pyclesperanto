@@ -10,8 +10,8 @@ from ._memory_operations import (
 )
 from ._image import (
     Image,
-    mType,
-    dType,
+    MemoryType,
+    DataType,
 )
 from ._device import (
     get_device,
@@ -100,19 +100,19 @@ import os
 os.environ["PYCLESPERANTO_HOME"] = os.path.dirname(os.path.abspath(__file__))
 
 # redefine memory type for easy usage
-buffer = mType.buffer
-image = mType.image
+buffer = MemoryType.buffer
+image = MemoryType.image
 
 # redefine data type for easy usage
-float32 = dType.float32
-int64 = dType.int64
-uint64 = dType.uint64
-int32 = dType.int32
-uint32 = dType.uint32
-int16 = dType.int16
-uint16 = dType.uint16
-int8 = dType.int8
-uint8 = dType.uint8
+float32 = DataType.float32
+int64 = DataType.int64
+uint64 = DataType.uint64
+int32 = DataType.int32
+uint32 = DataType.uint32
+int16 = DataType.int16
+uint16 = DataType.uint16
+int8 = DataType.int8
+uint8 = DataType.uint8
 
 
 __common_alias__ = "cle"

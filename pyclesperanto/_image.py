@@ -8,8 +8,8 @@ from ._pyclesperanto import _cleMemType, _cleDataType
 from ._image_operators import ImageOperators
 from ._device import Device
 
-dType = _cleDataType
-mType = _cleMemType
+DataType = _cleDataType
+MemoryType = _cleMemType
 
 
 class cleImage(_cleImage, ImageOperators):
@@ -23,6 +23,18 @@ class cleImage(_cleImage, ImageOperators):
         C++ OpenCL Image class running behind cleImage accessible using `super()`
     """
 
+    _data_type_dict = {  # type: ignore
+        DataType.uint8: np.uint8,
+        DataType.uint16: np.uint16,
+        DataType.uint32: np.uint32,
+        DataType.uint64: np.uint64,
+        DataType.int8: np.int8,
+        DataType.int16: np.int16,
+        DataType.int32: np.int32,
+        DataType.int64: np.int64,
+        DataType.float32: np.float32,
+    }
+
     def __init__(self, image: _cleImage) -> None:
         super().__init__(image)
 
@@ -35,11 +47,11 @@ class cleImage(_cleImage, ImageOperators):
         return super().Ndim()
 
     @property
-    def dtype(self) -> dType:
-        return super().GetDataType()
+    def dtype(self) -> type:
+        return self._data_type_dict[super().GetDataType()]
 
     @property
-    def mtype(self) -> mType:
+    def mtype(self) -> MemoryType:
         return super().GetMemoryType()
 
     @property

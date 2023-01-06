@@ -1,4 +1,5 @@
 import numpy as np
+from typing import Optional, Union
 from ._pyclesperanto import (
     _PullFloat,
     _PullInt32,
@@ -34,7 +35,7 @@ _supported_numeric_types = tuple(cl_buffer_datatype_dict.keys())
 
 
 class ImageOperators:
-    def max(self, axis: int = None, out=None):
+    def max(self, axis: Optional[int] = None, out=None):
 
         from ._tier2 import maximum_of_all_pixels
         from ._tier1 import maximum_x_projection
@@ -61,7 +62,7 @@ class ImageOperators:
                 out = result
         return result
 
-    def min(self, axis: int = None, out=None):
+    def min(self, axis: Optional[int] = None, out=None):
 
         from ._tier2 import minimum_of_all_pixels
         from ._tier1 import minimum_x_projection
@@ -86,7 +87,7 @@ class ImageOperators:
                 np.copyto(out, pull(result).astype(out.dtype))
         return result
 
-    def sum(self, axis=None, out=None):
+    def sum(self, axis: Optional[int] = None, out=None):
         from ._tier2 import sum_of_all_pixels
         from ._tier1 import sum_x_projection
         from ._tier1 import sum_y_projection

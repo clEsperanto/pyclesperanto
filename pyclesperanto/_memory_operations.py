@@ -14,10 +14,14 @@ from ._pyclesperanto import (
 )
 from ._device import Device, get_device
 from ._image import Image, MemoryType
+from typing import Optional
 
 
 def create(
-    shape: tuple, mtype: MemoryType = None, dtype: type = None, device: Device = None
+    shape: tuple,
+    mtype: Optional[MemoryType] = None,
+    dtype: Optional[type] = None,
+    device: Optional[Device] = None,
 ):
     """create:
 
@@ -27,8 +31,12 @@ def create(
     ----------
     shape : tuple
         shape of the memory to create, using the zyx convention
-    mtype : mType, optional
+    mtype : MemoryType, optional
         buffer or image structure
+    dtype : type, optional
+        data type of the memory to create
+    device : Device, optional
+        Device to create the memory on
 
     Returns
     -------
@@ -77,7 +85,9 @@ def create_like(image: Image) -> Image:
         )
 
 
-def push(array: Image, mtype: MemoryType = None, device: Device = None) -> Image:
+def push(
+    array: Image, mtype: Optional[MemoryType] = None, device: Optional[Device] = None
+) -> Image:
     """push:
 
     Copy an host array to the GPU device and return its handle
@@ -86,8 +96,10 @@ def push(array: Image, mtype: MemoryType = None, device: Device = None) -> Image
     ----------
     array : Image (numpy array, etc.)
         Can be of other type compatible with numpy
-    mtype : mType, optional
+    mtype : MemoryType, optional
         buffer or image memory structure structure
+    device : Device, optional
+        Device to create the memory on
 
     Returns
     -------
@@ -123,6 +135,7 @@ def pull(image: Image) -> Image:
     """
     from ._image import cleImage
 
+    # TODO: should this dict be moved in the cleImage class?
     pull_dict = {
         np.float32: _PullFloat,
         np.uint8: _PullUint8,
@@ -134,26 +147,7 @@ def pull(image: Image) -> Image:
         np.int32: _PullInt32,
         np.int64: _PullInt64,
     }
-
     if isinstance(image, cleImage):
-        # return _Pull(image, image.dtype)
-        # if image.dtype == np.uint8:
-        #     return _PullUint8(image)
-        # elif image.dtype == np.uint16:
-        #     return _PullUint16(image)
-        # elif image.dtype == np.uint32:
-        #     return _PullUint32(image)
-        # elif image.dtype == np.uint64:
-        #     return _PullUint64(image)
-        # elif image.dtype == np.int8:
-        #     return _PullInt8(image)
-        # elif image.dtype == np.int16:
-        #     return _PullInt16(image)
-        # elif image.dtype == np.int32:
-        #     return _PullInt32(image)
-        # elif image.dtype == np.int64:
-        #     return _PullInt64(image)
-        # return _PullFloat(image)
         return pull_dict[image.dtype](image)
     else:
         return image

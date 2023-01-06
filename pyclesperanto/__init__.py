@@ -103,16 +103,4 @@ os.environ["PYCLESPERANTO_HOME"] = os.path.dirname(os.path.abspath(__file__))
 buffer = MemoryType.buffer
 image = MemoryType.image
 
-# redefine data type for easy usage
-float32 = DataType.float32
-int64 = DataType.int64
-uint64 = DataType.uint64
-int32 = DataType.int32
-uint32 = DataType.uint32
-int16 = DataType.int16
-uint16 = DataType.uint16
-int8 = DataType.int8
-uint8 = DataType.uint8
-
-
 __common_alias__ = "cle"

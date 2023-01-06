@@ -35,6 +35,11 @@ class cleImage(_cleImage, ImageOperators):
         DataType.float32: np.float32,
     }
 
+    _memory_type_dict = {  # type: ignore
+        MemoryType.buffer: "buffer",
+        MemoryType.image: "image",
+    }
+
     def __init__(self, image: _cleImage) -> None:
         super().__init__(image)
 
@@ -56,12 +61,12 @@ class cleImage(_cleImage, ImageOperators):
 
     @property
     def shape(self) -> tuple:
-        if self.ndim == 1:
-            return (super().Shape()[2],)
-        elif self.ndim == 2:
-            return (super().Shape()[1], super().Shape()[2])
-        elif self.ndim == 3:
-            return (super().Shape()[0], super().Shape()[1], super().Shape()[2])
+        shape_dict = {  # type: ignore
+            1: (super().Shape()[2],),
+            2: (super().Shape()[1], super().Shape()[2]),
+            3: (super().Shape()[0], super().Shape()[1], super().Shape()[2]),
+        }
+        return shape_dict[self.ndim]
 
     @property
     def nbytes(self) -> int:
@@ -72,7 +77,16 @@ class cleImage(_cleImage, ImageOperators):
         return super().Size()
 
     def __str__(self) -> str:
-        return super().__str__()
+        return str(
+            "py::cle::Image("
+            + self._memory_type_dict[self.mtype]
+            + str(self.ndim)
+            + "d, shape="
+            + str(self.shape)
+            + ", dtype="
+            + str(np.dtype(self.dtype))
+            + ")"
+        )
 
     def __repr__(self) -> str:
         return super().__repr__()

@@ -14,7 +14,7 @@ from ._pyclesperanto import (
 )
 from ._device import Device, get_device
 from ._image import Image, MemoryType
-from typing import Optional
+from typing import Optional, Union
 
 
 def create(
@@ -72,17 +72,14 @@ def create_like(image: Image) -> Image:
     """
     from ._image import cleImage
 
+    mtype = MemoryType.buffer
+    device = None
     if isinstance(image, cleImage):
-        return create(
-            shape=tuple(image.shape),
-            dtype=image.dtype,
-            mtype=image.mtype,
-            device=image.device,
-        )
-    else:
-        return create(
-            shape=tuple(image.shape), dtype=image.dtype, mtype=MemoryType.buffer
-        )
+        mtype = image.mtype
+        device = image.device
+    return create(
+        shape=tuple(image.shape), dtype=image.dtype, mtype=mtype, device=device
+    )
 
 
 def push(

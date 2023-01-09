@@ -36,7 +36,7 @@ def connected_components_labeling_box(
     return output_image
 
 
-@plugin_function(categories=["label processing", "map", "in assistant"])
+@plugin_function
 def threshold_otsu(
     input_image: Image,
     output_image: Image = None,

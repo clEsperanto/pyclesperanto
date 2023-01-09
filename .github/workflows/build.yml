@@ -47,7 +47,7 @@ jobs:
  
       - name: Compile
         shell: bash -l {0}
-        run: pip install -e . -vvv
+        run: pip install --verbose .
 
       - name: Test
         shell: bash -l {0}

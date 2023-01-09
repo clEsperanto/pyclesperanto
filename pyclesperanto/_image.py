@@ -95,11 +95,24 @@ class cleImage(_cleImage, ImageOperators):
         return super().__len__()
 
     def fill(self, value: float | int) -> None:
-        """fill memory with value"""
+        """Fill memory with value
+
+        Parameters
+        ----------
+        value : float | int
+            Value to fill memory with
+        """
         super().Fill(value)
 
     def copy_to(self, image: cleImage) -> None:
-        """copy memory in an other image"""
+        """Copy image data to an other image
+
+        Parameters
+        ----------
+        image : cleImage
+            Image to copy data to
+            Must be of the same shape and data type, and on the same device
+        """
         super().CopyDataTo(image)
 
 

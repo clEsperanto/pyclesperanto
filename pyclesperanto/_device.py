@@ -36,12 +36,30 @@ class _current_device:
 
 
 def get_device() -> Device:
-    """Return the current device"""
+    """Return the current device instance
+
+    Returns
+    -------
+    device : Device
+    """
     return _current_device._instance or select_device()
 
 
 def select_device(name: str = "") -> Device:
-    """Return the selected device"""
+    """Select a device by name and return it
+
+    Select device using its name or subname (e.g. "NVIDIA", "RTX", "Intel Iris", etc.)
+    To retrieve a list of available devices, use `list_available_devices()`
+
+    Parameters
+    ----------
+    name : str, default = ""
+        Name or subname of the device to be selected (e.g. "NVIDIA", "RTX", "Intel Iris", etc.)
+
+    Returns
+    -------
+    device : Device
+    """
     if not _current_device._instance:
         _current_device._instance = Device()
     _current_device._instance.select_device(name)
@@ -49,17 +67,37 @@ def select_device(name: str = "") -> Device:
 
 
 def list_available_devices() -> list:
-    """Retrieve a list of names of available OpenCL-devices"""
+    """Retrieve a list of names of available OpenCL-devices
+
+    Will search system for available OpenCL compatible device and return a list of their names.
+    Use 'select_device' to select a device by name.
+
+    Returns
+    -------
+    name list : list[str]
+    """
     from ._pyclesperanto import _ListAvailableDevices
 
     return list(_ListAvailableDevices())
 
 
 def set_wait_for_kernel_to_finish(flag: bool = True) -> None:
-    """Configure asyncronous execution of OpenCL kernels (False)"""
+    """Configure asyncronous execution of OpenCL kernels (False)
+
+    Configure clEsperanto to wait for the kernel to finish before returning control to the host.
+
+    Parameters
+    ----------
+    flag : bool, default = True
+    """
     get_device().wait_for_kernel_to_finish(flag)
 
 
 def info() -> str:
-    """Return full description of the current device"""
+    """Return description of the current device
+
+    Returns
+    -------
+    info : str
+    """
     return get_device().info

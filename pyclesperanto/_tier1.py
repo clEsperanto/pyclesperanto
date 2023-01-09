@@ -2,15 +2,14 @@ from ._image import Image
 from ._device import Device
 from ._memory_operations import create
 from ._decorators import plugin_function
-from typing import Optional
 
 
 @plugin_function
 def add_image_and_scalar(
     input_image: Image,
-    output_image: Optional[Image] = None,
+    output_image: Image = None,
     scalar: float = 0,
-    device: Optional[Device] = None,
+    device: Device = None,
 ) -> Image:
     """Adds a scalar value s to all pixels x of a given image X.
 
@@ -46,10 +45,10 @@ def add_image_and_scalar(
 def add_images_weighted(
     input_image1: Image,
     input_image2: Image,
-    output_image: Optional[Image] = None,
+    output_image: Image = None,
     factor1: float = 1,
     factor2: float = 1,
-    device: Optional[Device] = None,
+    device: Device = None,
 ) -> Image:
     """Calculates the sum of pairs of pixels x and y from images X and Y
     weighted with factors a and b.
@@ -95,11 +94,11 @@ def add_images_weighted(
 @plugin_function
 def gaussian_blur(
     input_image: Image,
-    output_image: Optional[Image] = None,
+    output_image: Image = None,
     sigma_x: float = 0,
     sigma_y: float = 0,
     sigma_z: float = 0,
-    device: Optional[Device] = None,
+    device: Device = None,
 ) -> Image:
     """Computes the Gaussian blurred image of an image given sigma values
     in X, Y and Z.
@@ -145,11 +144,11 @@ def gaussian_blur(
 @plugin_function
 def mean_box(
     input_image: Image,
-    output_image: Optional[Image] = None,
+    output_image: Image = None,
     radius_x: int = 0,
     radius_y: int = 0,
     radius_z: int = 0,
-    device: Optional[Device] = None,
+    device: Device = None,
 ) -> Image:
     """Computes the local mean average of a pixels box-shaped neighborhood.
 
@@ -192,11 +191,11 @@ def mean_box(
 @plugin_function
 def maximum_box(
     input_image: Image,
-    output_image: Optional[Image] = None,
+    output_image: Image = None,
     radius_x: int = 0,
     radius_y: int = 0,
     radius_z: int = 0,
-    device: Optional[Device] = None,
+    device: Device = None,
 ) -> Image:
     """Computes the local maximum of a pixels cube neighborhood.
 
@@ -240,11 +239,11 @@ def maximum_box(
 @plugin_function
 def minimum_box(
     input_image: Image,
-    output_image: Optional[Image] = None,
+    output_image: Image = None,
     radius_x: int = 0,
     radius_y: int = 0,
     radius_z: int = 0,
-    device: Optional[Device] = None,
+    device: Device = None,
 ) -> Image:
     """Computes the local minimum of a pixels cube neighborhood.
 
@@ -287,8 +286,8 @@ def minimum_box(
 @plugin_function
 def copy(
     input_image: Image,
-    output_image: Optional[Image] = None,
-    device: Optional[Device] = None,
+    output_image: Image = None,
+    device: Device = None,
 ) -> Image:
     """Copies an image into a new image.
 
@@ -319,8 +318,8 @@ def copy(
 def divide_images(
     input_image1: Image,
     input_image2: Image,
-    output_image: Optional[Image] = None,
-    device: Optional[Device] = None,
+    output_image: Image = None,
+    device: Device = None,
 ) -> Image:
     """Divides two images pixel wise.
 
@@ -357,8 +356,8 @@ def divide_images(
 @plugin_function
 def gradient_x(
     input_image: Image,
-    output_image: Optional[Image] = None,
-    device: Optional[Device] = None,
+    output_image: Image = None,
+    device: Device = None,
 ) -> Image:
     """Computes the gradient of an image along X direction.
 
@@ -392,8 +391,8 @@ def gradient_x(
 @plugin_function
 def gradient_z(
     input_image: Image,
-    output_image: Optional[Image] = None,
-    device: Optional[Device] = None,
+    output_image: Image = None,
+    device: Device = None,
 ) -> Image:
     """Computes the gradient of an image along Z direction.
 
@@ -427,8 +426,8 @@ def gradient_z(
 @plugin_function
 def gradient_y(
     input_image: Image,
-    output_image: Optional[Image] = None,
-    device: Optional[Device] = None,
+    output_image: Image = None,
+    device: Device = None,
 ) -> Image:
     """Computes the gradient of an image along Y direction.
 
@@ -459,8 +458,8 @@ def gradient_y(
 def greater(
     input_image1: Image,
     input_image2: Image,
-    output_image: Optional[Image] = None,
-    device: Optional[Device] = None,
+    output_image: Image = None,
+    device: Device = None,
 ) -> Image:
     """Determines if an images A is greater than image B.
 
@@ -499,9 +498,9 @@ def greater(
 @plugin_function
 def greater_or_equal_constant(
     input_image: Image,
-    output_image: Optional[Image] = None,
+    output_image: Image = None,
     scalar: float = 0,
-    device: Optional[Device] = None,
+    device: Device = None,
 ) -> Image:
     """Determines if an images A is greater or equal a given scalar b.
 
@@ -534,9 +533,9 @@ def greater_or_equal_constant(
 @plugin_function
 def greater_constant(
     input_image: Image,
-    output_image: Optional[Image] = None,
+    output_image: Image = None,
     scalar: float = 0,
-    device: Optional[Device] = None,
+    device: Device = None,
 ) -> Image:
     """Determines if an images A is greater a given scalar b.
 
@@ -570,8 +569,8 @@ def greater_constant(
 def greater_or_equal(
     input_image1: Image,
     input_image2: Image,
-    output_image: Optional[Image] = None,
-    device: Optional[Device] = None,
+    output_image: Image = None,
+    device: Device = None,
 ) -> Image:
     """Determines if two images A and B greater or equal pixel wise.
 
@@ -605,8 +604,8 @@ def greater_or_equal(
 @plugin_function
 def binary_not(
     input_image: Image,
-    output_image: Optional[Image] = None,
-    device: Optional[Device] = None,
+    output_image: Image = None,
+    device: Device = None,
 ) -> Image:
     """Computes a binary image (containing pixel values 0 and 1) from an image
     X by negating its pixel values
@@ -643,8 +642,8 @@ def binary_not(
 def binary_and(
     input_image1: Image,
     input_image2: Image,
-    output_image: Optional[Image] = None,
-    device: Optional[Device] = None,
+    output_image: Image = None,
+    device: Device = None,
 ) -> Image:
     """Computes a binary image (containing pixel values 0 and 1) from two
     images X and Y by connecting pairs of
@@ -682,8 +681,8 @@ def binary_and(
 def binary_or(
     input_image1: Image,
     input_image2: Image,
-    output_image: Optional[Image] = None,
-    device: Optional[Device] = None,
+    output_image: Image = None,
+    device: Device = None,
 ) -> Image:
     """Computes a binary image (containing pixel values 0 and 1) from two
     images X and Y by connecting pairs of
@@ -721,8 +720,8 @@ def binary_or(
 def binary_xor(
     input_image1: Image,
     input_image2: Image,
-    output_image: Optional[Image] = None,
-    device: Optional[Device] = None,
+    output_image: Image = None,
+    device: Device = None,
 ) -> Image:
     """Computes a binary image (containing pixel values 0 and 1) from two
     images X and Y by connecting pairs of
@@ -762,8 +761,8 @@ def binary_xor(
 def binary_subtract(
     input_image1: Image,
     input_image2: Image,
-    output_image: Optional[Image] = None,
-    device: Optional[Device] = None,
+    output_image: Image = None,
+    device: Device = None,
 ) -> Image:
     """Subtracts one binary image from another.
 
@@ -791,8 +790,8 @@ def binary_subtract(
 @plugin_function
 def dilate_sphere(
     input_image: Image,
-    output_image: Optional[Image] = None,
-    device: Optional[Device] = None,
+    output_image: Image = None,
+    device: Device = None,
 ) -> Image:
     """Computes a binary image with pixel values 0 and 1 containing the binary
     dilation of a given input image.
@@ -829,8 +828,8 @@ def dilate_sphere(
 def equal_constant(
     input_image: Image,
     constant: float = 0,
-    output_image: Optional[Image] = None,
-    device: Optional[Device] = None,
+    output_image: Image = None,
+    device: Device = None,
 ) -> Image:
     """Computes a binary image with pixel values 0 and 1 containing the
     result of comparing each pixel value in a given input image
@@ -867,8 +866,8 @@ def equal_constant(
 def equal(
     input_image1: Image,
     input_image2: Image,
-    output_image: Optional[Image] = None,
-    device: Optional[Device] = None,
+    output_image: Image = None,
+    device: Device = None,
 ) -> Image:
     """Computes a binary image with pixel values 0 and 1 containing the
     result of comparing each pixel value in two given input images.
@@ -903,8 +902,8 @@ def equal(
 @plugin_function
 def erode_sphere(
     input_image: Image,
-    output_image: Optional[Image] = None,
-    device: Optional[Device] = None,
+    output_image: Image = None,
+    device: Device = None,
 ) -> Image:
     """Computes a binary image with pixel values 0 and 1 containing the binary
     erosion of a given input image.
@@ -940,8 +939,8 @@ def erode_sphere(
 @plugin_function
 def maximum_z_projection(
     input_image: Image,
-    output_image: Optional[Image] = None,
-    device: Optional[Device] = None,
+    output_image: Image = None,
+    device: Device = None,
 ) -> Image:
     """Determines the maximum intensity projection of an image along Z.
 
@@ -973,8 +972,8 @@ def maximum_z_projection(
 @plugin_function
 def maximum_y_projection(
     input_image: Image,
-    output_image: Optional[Image] = None,
-    device: Optional[Device] = None,
+    output_image: Image = None,
+    device: Device = None,
 ) -> Image:
     """Determines the maximum intensity projection of an image along Y.
 
@@ -1006,8 +1005,8 @@ def maximum_y_projection(
 @plugin_function
 def maximum_x_projection(
     input_image: Image,
-    output_image: Optional[Image] = None,
-    device: Optional[Device] = None,
+    output_image: Image = None,
+    device: Device = None,
 ) -> Image:
     """Determines the maximum intensity projection of an image along X.
 
@@ -1039,9 +1038,9 @@ def maximum_x_projection(
 @plugin_function
 def subtract_image_from_scalar(
     input_image: Image,
-    output_image: Optional[Image] = None,
+    output_image: Image = None,
     scalar: float = 0,
-    device: Optional[Device] = None,
+    device: Device = None,
 ) -> Image:
     """Subtracts one image X from a scalar s pixel wise.
 
@@ -1072,12 +1071,12 @@ def subtract_image_from_scalar(
 @plugin_function
 def sobel(
     input_image: Image,
-    output_image: Optional[Image] = None,
-    device: Optional[Device] = None,
+    output_image: Image = None,
+    device: Device = None,
 ) -> Image:
     """Convolve the image with the Sobel kernel.
 
-    Author( device: Optional[Device] = Nones) -> Image: Ruth Whelan-Jeans, Robert Haase
+    Author( device: Device = Nones) -> Image: Ruth Whelan-Jeans, Robert Haase
 
     Parameters
     ----------
@@ -1105,8 +1104,8 @@ def sobel(
 @plugin_function
 def minimum_z_projection(
     input_image: Image,
-    output_image: Optional[Image] = None,
-    device: Optional[Device] = None,
+    output_image: Image = None,
+    device: Device = None,
 ) -> Image:
     """Determines the minimum intensity projection of an image along Z.
 
@@ -1138,8 +1137,8 @@ def minimum_z_projection(
 @plugin_function
 def minimum_y_projection(
     input_image: Image,
-    output_image: Optional[Image] = None,
-    device: Optional[Device] = None,
+    output_image: Image = None,
+    device: Device = None,
 ) -> Image:
     """Determines the minimum intensity projection of an image along Y.
 
@@ -1171,8 +1170,8 @@ def minimum_y_projection(
 @plugin_function
 def minimum_x_projection(
     input_image: Image,
-    output_image: Optional[Image] = None,
-    device: Optional[Device] = None,
+    output_image: Image = None,
+    device: Device = None,
 ) -> Image:
     """Determines the minimum intensity projection of an image along X.
 
@@ -1205,8 +1204,8 @@ def minimum_x_projection(
 def multiply_images(
     input_image1: Image,
     input_image2: Image,
-    output_image: Optional[Image] = None,
-    device: Optional[Device] = None,
+    output_image: Image = None,
+    device: Device = None,
 ) -> Image:
     """Multiplies two images X and Y pixel wise.
 
@@ -1240,9 +1239,9 @@ def multiply_images(
 @plugin_function
 def multiply_image_and_scalar(
     input_image: Image,
-    output_image: Optional[Image] = None,
+    output_image: Image = None,
     scalar: float = 0,
-    device: Optional[Device] = None,
+    device: Device = None,
 ) -> Image:
     """Multiplies one image X with a scalar s pixel wise.
 
@@ -1276,9 +1275,9 @@ def multiply_image_and_scalar(
 @plugin_function
 def not_equal_constant(
     input_image: Image,
-    output_image: Optional[Image] = None,
+    output_image: Image = None,
     constant: float = 0,
-    device: Optional[Device] = None,
+    device: Device = None,
 ) -> Image:
     """Computes a binary image with pixel values 0 if the corresponding pixel in X is not equal to a given constant c and 1 otherwise.
 
@@ -1313,8 +1312,8 @@ def not_equal_constant(
 def not_equal(
     input_image1: Image,
     input_image2: Image,
-    output_image: Optional[Image] = None,
-    device: Optional[Device] = None,
+    output_image: Image = None,
+    device: Device = None,
 ) -> Image:
     """Computes a binary image with pixel values 0 if the corresponding pixel in X and Y are equal and 1 otherwise.
 
@@ -1348,9 +1347,9 @@ def not_equal(
 @plugin_function
 def power(
     input_image: Image,
-    output_image: Optional[Image] = None,
+    output_image: Image = None,
     exponent: float = 1,
-    device: Optional[Device] = None,
+    device: Device = None,
 ) -> Image:
     """Computes all pixels value x to the power of a given exponent a.
 
@@ -1386,7 +1385,7 @@ def power_images(
     input_image1: Image,
     input_image2: Image,
     output_image: Image,
-    device: Optional[Device] = None,
+    device: Device = None,
 ) -> Image:
     """Computes all pairs of pixels x and y value x to the power of y.
 
@@ -1420,9 +1419,9 @@ def power_images(
 @plugin_function
 def smaller_constant(
     input_image: Image,
-    output_image: Optional[Image] = None,
+    output_image: Image = None,
     constant: float = 0,
-    device: Optional[Device] = None,
+    device: Device = None,
 ) -> Image:
     """Determines if all pixels x smaller than a constant c.
 
@@ -1457,8 +1456,8 @@ def smaller_constant(
 def smaller(
     input_image1: Image,
     input_image2: Image,
-    output_image: Optional[Image] = None,
-    device: Optional[Device] = None,
+    output_image: Image = None,
+    device: Device = None,
 ) -> Image:
     """Determines if all pairs of pixels x, y smaller.
 
@@ -1492,9 +1491,9 @@ def smaller(
 @plugin_function
 def smaller_or_equal_constant(
     input_image: Image,
-    output_image: Optional[Image] = None,
+    output_image: Image = None,
     constant: float = 0,
-    device: Optional[Device] = None,
+    device: Device = None,
 ) -> Image:
     """Determines if all pixels x smaller or equal to a constant c.
 
@@ -1529,8 +1528,8 @@ def smaller_or_equal_constant(
 def smaller_or_equal(
     input_image1: Image,
     input_image2: Image,
-    output_image: Optional[Image] = None,
-    device: Optional[Device] = None,
+    output_image: Image = None,
+    device: Device = None,
 ) -> Image:
     """Determines if all pairs of pixels x, y smaller or equal.
 
@@ -1564,8 +1563,8 @@ def smaller_or_equal(
 @plugin_function
 def sum_z_projection(
     input_image: Image,
-    output_image: Optional[Image] = None,
-    device: Optional[Device] = None,
+    output_image: Image = None,
+    device: Device = None,
 ) -> Image:
     """Determines the sum intensity projection of an image along Z.
 
@@ -1597,8 +1596,8 @@ def sum_z_projection(
 @plugin_function
 def sum_y_projection(
     input_image: Image,
-    output_image: Optional[Image] = None,
-    device: Optional[Device] = None,
+    output_image: Image = None,
+    device: Device = None,
 ) -> Image:
     """Determines the sum intensity projection of an image along Y.
 
@@ -1630,8 +1629,8 @@ def sum_y_projection(
 @plugin_function
 def sum_x_projection(
     input_image: Image,
-    output_image: Optional[Image] = None,
-    device: Optional[Device] = None,
+    output_image: Image = None,
+    device: Device = None,
 ) -> Image:
     """Determines the sum intensity projection of an image along X.
 

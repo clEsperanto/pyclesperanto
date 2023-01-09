@@ -23,19 +23,22 @@ def voronoi_otsu_labeling(
         Input grey-value image
     output_image : Image, optional
         Output image
-    spot_sigma : float, optional
+    spot_sigma : float, default 2
         controls how close detected cells can be
-    outline_sigma : float, optional
+    outline_sigma : float, default 2
         controls how precise segmented objects are outlined.
+    device: Device, optional
+        The device to be used for computation.
 
     Returns
     -------
-    output_image
+    output_image : Image
 
     References
     ----------
     .. [1] https://ieeexplore.ieee.org/document/4310076
     .. [2] https://en.wikipedia.org/wiki/Voronoi_diagram
+    .. [3] https://clij.github.io/clij2-docs/reference_voronoiOtsuLabeling
     """
     from ._pyclesperanto import _VoronoiOtsuLabelingKernel_Call as op
 

@@ -18,12 +18,21 @@ def masked_voronoi_labeling(
     Parameters
     ----------
     input_image : Image
+        The input binary image.
     mask_image : Image
+        The mask image.
     output_image : Image, optional
+        The output label map.
+    device: Device, optional
+        The device to be used for computation.
 
     Returns
     -------
-    output_image
+    output_image : Image
+
+    References
+    ----------
+    .. [1] https://clij.github.io/clij2-docs/reference_maskedVoronoiLabeling
     """
     from ._pyclesperanto import _MaskedVoronoiLabelingKernel_Call as op
 

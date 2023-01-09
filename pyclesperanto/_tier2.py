@@ -28,22 +28,28 @@ def difference_of_gaussian(
         The input image to be processed.
     output_image : Image, optional
         The output image where results are written into.
-    sigma1_x : float, optional
+    sigma1_x : float, default 0
         Sigma of the first Gaussian filter in x
-    sigma1_y : float, optional
+    sigma1_y : float, default 0
         Sigma of the first Gaussian filter in y
-    sigma1_z : float, optional
+    sigma1_z : float, default 0
         Sigma of the first Gaussian filter in z
-    sigma2_x : float, optional
+    sigma2_x : float, default 0
         Sigma of the second Gaussian filter in x
-    sigma2_y : float, optional
+    sigma2_y : float, default 0
         Sigma of the second Gaussian filter in y
-    sigma2_z : float, optional
+    sigma2_z : float, default 0
         Sigma of the second Gaussian filter in z
+    device : Device, optional
+        The device to be used for computation.
 
     Returns
     -------
-    output_image
+    output_image : Image
+
+    References
+    ----------
+    .. [1] https://clij.github.io/clij2-docs/reference_differenceOfGaussian
     """
     from ._pyclesperanto import _DifferenceOfGaussianKernel_Call as op
 
@@ -79,11 +85,25 @@ def detect_maxima_box(
     Parameters
     ----------
     input_image : Image
+        The input image to be processed.
     output_image : Image, optional
+        The output image where results are written into.
+    radius_x : int, default 0
+        Radius of the square/cubic neighborhood in x
+    radius_y : int, default 0
+        Radius of the square/cubic neighborhood in y
+    radius_z : int, default 0
+        Radius of the square/cubic neighborhood in z
+    device : Device, optional
+        The device to be used for computation.
 
     Returns
     -------
-    output_image
+    output_image: Image
+
+    References
+    ----------
+    .. [1] https://clij.github.io/clij2-docs/reference_detectMaximaBox
     """
     from ._pyclesperanto import _DetectMaximaBoxKernel_Call as op
 
@@ -100,7 +120,9 @@ def detect_maxima_box(
 
 @plugin_function
 def maximum_of_all_pixels(
-    input_image: Image, output_image: Image = None, device: Device = None
+    input_image: Image,
+    output_image: Image = None,
+    device: Device = None,
 ) -> Image:
     """Determines the maximum of all pixels in a given image.
 
@@ -111,10 +133,18 @@ def maximum_of_all_pixels(
     ----------
     input_image : Image
         The image of which the maximum of all pixels or voxels will be determined.
+    output_image : Image, optional
+        The output image where results are written into.
+    device: Device, optional
+        The device to be used for computation.
 
     Returns
     -------
-    float
+    maximum : scalar
+
+    References
+    ----------
+    .. [1] https://clij.github.io/clij2-docs/reference_maximumOfAllPixels
     """
     output_image = create((1, 1, 1), dtype=input_image.dtype)
     from ._pyclesperanto import _MaximumOfAllPixelsKernel_Call as op
@@ -125,7 +155,9 @@ def maximum_of_all_pixels(
 
 @plugin_function
 def minimum_of_all_pixels(
-    input_image: Image, output_image: Image = None, device: Device = None
+    input_image: Image,
+    output_image: Image = None,
+    device: Device = None,
 ) -> Image:
     """Determines the minimum of all pixels in a given image.
 
@@ -136,10 +168,18 @@ def minimum_of_all_pixels(
     ----------
     input_image : Image
         The image of which the minimum of all pixels or voxels will be determined.
+    output_image : Image, optional
+        The output image where results are written into.
+    device: Device, optional
+        The device to be used for computation.
 
     Returns
     -------
-    float
+    minimum : scalar
+
+    References
+    ----------
+    .. [1] https://clij.github.io/clij2-docs/reference_minimumOfAllPixels
     """
     output_image = create((1, 1, 1), dtype=input_image.dtype)
     from ._pyclesperanto import _MinimumOfAllPixelsKernel_Call as op
@@ -150,7 +190,9 @@ def minimum_of_all_pixels(
 
 @plugin_function
 def sum_of_all_pixels(
-    input_image: Image, output_image: Image = None, device: Device = None
+    input_image: Image,
+    output_image: Image = None,
+    device: Device = None,
 ) -> Image:
     """Determines the sum of all pixels in a given image.
 
@@ -161,10 +203,18 @@ def sum_of_all_pixels(
     ----------
     input_image : Image
         The image of which all pixels or voxels will be summed.
+    output_image : Image, optional
+        The output image where results are written into.
+    device: Device, optional
+        The device to be used for computation.
 
     Returns
     -------
-    float
+    sum : scalar
+
+    References
+    ----------
+    .. [1] https://clij.github.io/clij2-docs/reference_sumOfAllPixels
     """
     output_image = create((1, 1, 1), dtype=input_image.dtype)
     from ._pyclesperanto import _SumOfAllPixelsKernel_Call as op
@@ -175,7 +225,9 @@ def sum_of_all_pixels(
 
 @plugin_function
 def extend_labeling_via_voronoi(
-    input_image: Image, output_image: Image = None, device: Device = None
+    input_image: Image,
+    output_image: Image = None,
+    device: Device = None,
 ) -> Image:
     """Takes a label map image and dilates the regions using a octagon shape
     until they touch.
@@ -185,11 +237,18 @@ def extend_labeling_via_voronoi(
     Parameters
     ----------
     input_image : Image
+        The input label map.
     output_image : Image, optional
+        The output label map.
+    device: Device, optional
 
     Returns
     -------
-    output_image
+    output_image : Image
+
+    References
+    ----------
+    .. [1] https://clij.github.io/clij2-docs/reference_extendLabelingViaVoronoi
     """
     from ._pyclesperanto import _ExtendLabelingViaVoronoiKernel_Call as op
 
@@ -214,16 +273,22 @@ def top_hat_box(
         The input image where the background is subtracted from.
     output_image : Image, optional
         The output image where results are written into.
-    radius_x : Image, optional
+    radius_x : Image, default 0
         Radius of the background determination region in X.
-    radius_y : Image, optional
+    radius_y : Image, default 0
         Radius of the background determination region in Y.
-    radius_z : Image, optional
+    radius_z : Image, default 0
         Radius of the background determination region in Z.
+    device: Device, optional
+        The device to be used for computation.
 
     Returns
     -------
-    output_image
+    output_image : Image
+
+    References
+    ----------
+    .. [1] https://clij.github.io/clij2-docs/reference_topHatBox
     """
     from ._pyclesperanto import _TopHatBoxKernel_Call as op
 

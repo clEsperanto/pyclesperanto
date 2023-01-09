@@ -49,3 +49,10 @@ jobs:
         shell: bash -l {0}
         run: pip install -e . -vvv
 
+      - name: Test
+        shell: bash -l {0}
+        run: pytest -v --cov=./ --cov-report=xml
+
+      # - name: Coverage
+      #   uses: codecov/codecov-action@v1
+

@@ -54,7 +54,12 @@ def create(
     return cleImage(_Create(device, shape, dtype, mtype))
 
 
-def create_like(image: Image) -> Image:
+def create_like(
+    image: Image,
+    mtype: Optional[MemoryType] = None,
+    dtype: Optional[type] = None,
+    device: Optional[Device] = None,
+) -> Image:
     """create_like:
 
     Create an empty copy of the provided image on the GPU and return its handle
@@ -72,14 +77,13 @@ def create_like(image: Image) -> Image:
     """
     from ._image import cleImage
 
-    mtype = MemoryType.buffer
-    device = None
-    if isinstance(image, cleImage):
-        mtype = image.mtype
-        device = image.device
-    return create(
-        shape=tuple(image.shape), dtype=image.dtype, mtype=mtype, device=device
-    )
+    if dtype is None:
+        dtype = image.dtype
+    if mtype is None:
+        mtype = image.mtype if isinstance(image, cleImage) else MemoryType.buffer
+    if device is None:
+        device = image.device if isinstance(image, cleImage) else get_device()
+    return create(shape=tuple(image.shape), dtype=dtype, mtype=mtype, device=device)
 
 
 def push(

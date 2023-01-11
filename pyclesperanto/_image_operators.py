@@ -35,6 +35,24 @@ _supported_numeric_types = tuple(cl_buffer_datatype_dict.keys())
 
 
 class ImageOperators:
+    def astype(self, dtype: type):
+        if dtype not in _supported_numeric_types:
+            raise ValueError(
+                "dtype "
+                + str(dtype)
+                + " not supported. Use one of "
+                + str(_supported_numeric_types)
+            )
+        if dtype == self.dtype:
+            return self
+
+        from ._tier1 import copy
+        from ._memory_operations import create_like
+
+        result = create_like(self, dtype=dtype)
+        copy(self, output_image=result)
+        return result
+
     def max(self, axis: Optional[int] = None, out=None):
 
         from ._tier2 import maximum_of_all_pixels

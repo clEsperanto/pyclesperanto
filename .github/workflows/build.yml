@@ -53,7 +53,10 @@ jobs:
  
       - name: Compile
         shell: bash -l {0}
-        run: pip install . -vvv
+        run: |
+          export SKBUILD_CONFIGURE_OPTIONS="-DOpenCL_LIBRARY=$CONDA_PREFIX/lib/libOpenCL.so"
+          echo $SKBUILD_CONFIGURE_OPTIONS
+          pip install . -vvv
 
       - name: Test
         shell: bash -l {0}

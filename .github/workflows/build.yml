@@ -1,4 +1,4 @@
-name: Build
+name: Build and test
 
 on:
   push:
@@ -44,8 +44,16 @@ jobs:
         run: |
           python --version
           conda install -y scikit-build cmake numpy setuptools pytest pytest-cov pytest-benchmark
+
+      - name: Define environment variables
+        shell: bash -l {0}
+        run: export SKBUILD_CONFIGURATION_OPTIONS="-DOpenCL_LIBRARY=$CONDA_PREFIX/lib/libOpenCL.so"
  
       - name: Compile
         shell: bash -l {0}
-        run: pip install -e . -vvv
+        run: pip install . -vvv
+
+      - name: Test
+        shell: bash -l {0}
+        run: pytest -v --cov=./ --cov-report=xml
 

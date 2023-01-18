@@ -48,9 +48,7 @@ jobs:
         run: |
           export SKBUILD_CONFIGURE_OPTIONS="-DOpenCL_LIBRARY=$CONDA_PREFIX/lib/libOpenCL.so"
           pip install .[test] -vvv
-      
-      - name: Test
-        shell: bash -l {0}
-        run: |
           pytest -v
+      
+          
 

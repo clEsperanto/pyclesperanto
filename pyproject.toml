@@ -8,6 +8,12 @@ requires = [
   "pybind11>=2.10.0",
 ]
 
+[tool.pytest.ini_options]
+addopts = "-ra -q"
+testpaths = [
+  "tests",
+]
+
 [tool.cibuildwheel]
 build = ["cp37-*", "cp39-*", "cp38-*", "cp310-*", "cp311-*"]
 build-frontend = "build"

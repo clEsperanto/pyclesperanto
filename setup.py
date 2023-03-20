@@ -19,10 +19,17 @@ exec(compile(version_file_contents, "pyclesperanto/_version.py", "exec"), ver_di
 
 from skbuild import setup
 
+cmake_args_list = [
+    # existing options
+    "-DCMAKE_BUILD_TYPE=Release",
+    "-DCLIC_VERSION:String=" + ver_dic["CLIC_VERSION"],
+    # "-DOpenCL_LIBRARY:FILEPATH=/home/stephane/Libraries/miniconda3/envs/skbuild/lib/libOpenCL.so",
+]
+
 setup(
     name="pyclesperanto",
     version=ver_dic["VERSION"],
-    cmake_args=["-DCLIC_VERSION:String=" + ver_dic["CLIC_VERSION"]],
+    cmake_args=cmake_args_list,
     author="Stephane Rigaud",
     author_email="stephane.rigaud@pasteur.fr",
     license="BSD-3-Clause",

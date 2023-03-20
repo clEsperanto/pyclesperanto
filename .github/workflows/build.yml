@@ -37,7 +37,7 @@ jobs:
 
       - name: Install scikit-build
         shell: bash -l {0}
-        run: pip install -y scikit-build pytest pytest-cov pytest-benchmark
+        run: pip install scikit-build pytest pytest-cov pytest-benchmark
 
       - name: Install pocl
         shell: bash -l {0}

@@ -35,13 +35,17 @@ jobs:
         shell: bash -l {0}
         run: conda info
 
+      - name: Install scikit-build
+        shell: bash -l {0}
+        run: pip install -y scikit-build pytest pytest-cov pytest-benchmark
+
       - name: Install pocl
         shell: bash -l {0}
         run: conda install -y pocl
 
-      - name: Install tests dependencies
-        shell: bash -l {0}
-        run: conda install -y numpy pytest pytest-cov pytest-benchmark
+      # - name: Install tests dependencies
+      #   shell: bash -l {0}
+      #   run: conda install -y numpy pytest pytest-cov pytest-benchmark
 
       - name: Compile
         shell: bash -l {0}

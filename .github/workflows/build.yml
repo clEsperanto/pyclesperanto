@@ -46,7 +46,7 @@ jobs:
       - name: Compile
         shell: bash -l {0}
         run: |
-          export SKBUILD_CONFIGURE_OPTIONS="-DOpenCL_LIBRARY=$CONDA_PREFIX/lib/libpocl.so"
+          export SKBUILD_CONFIGURE_OPTIONS="-DOpenCL_LIBRARY=$CONDA_PREFIX/lib/libpocl.so -DBUILD_BENCHMARK=OFF"
           pip install .[test] -vvv
           pytest -v
       

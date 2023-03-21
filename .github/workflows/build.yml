@@ -16,7 +16,7 @@ jobs:
       fail-fast: false
       max-parallel: 3
       matrix:
-        python-version: ["3.9"]
+        python-version: ["3.10"]
         platform: [ubuntu-latest] #, windows-latest, macos-latest] 
 
     steps:
@@ -56,6 +56,8 @@ jobs:
       - name: Tests
         shell: bash -l {0}
         run: |
+          echo $CONDA_PREFIX
+          ldd ./_skbuild/linux-x86_64-3.10/setuptools/lib.linux-x86_64-cpython-310/pyclesperanto/_pyclesperanto.cpython-310-x86_64-linux-gnu.so
           pytest -v
       
           

@@ -57,7 +57,8 @@ jobs:
       - name: Tests
         shell: bash -l {0}
         run: |
-          
+          pytest -v
+
       # export LD_LIBRARY_PATH=$CONDA_PREFIX/lib:$LD_LIBRARY_PATH
 
       # echo CONDA_PREFIX=$CONDA_PREFIX
@@ -67,7 +68,6 @@ jobs:
       # ldd $CONDA_PREFIX/lib/libOpenCL.so.1
       # echo "ldd _pyclesperanto.so"
       # ldd ./_skbuild/linux-x86_64-3.10/setuptools/lib.linux-x86_64-cpython-310/pyclesperanto/_pyclesperanto.cpython-310-x86_64-linux-gnu.so
-          pytest -v
       
           
 

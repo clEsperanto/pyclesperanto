@@ -34,6 +34,8 @@ if(Python3_Development.Embed_FOUND)
 endif()
 
 message(STATUS "LIB DIR : ${CMAKE_PREFIX_PATH}/lib/")
+find_package(OpenCL REQUIRED)
+message(STATUS "OpenCL_LIBRARY 11: ${OpenCL_LIBRARY}")
 
 # message(STATUS "OpenCL_FOUND: ${OpenCL_FOUND}")
 # message(STATUS "OpenCL_LIBRARY: ${OpenCL_LIBRARY}")
@@ -86,7 +88,7 @@ find_package(pybind11 CONFIG REQUIRED)
 
 pybind11_add_module(${CY_PACKAGE_NAME} MODULE ${WRAPPER_SOURCES_FILES})
 
-target_link_libraries(${CY_PACKAGE_NAME} PRIVATE CLIc::CLIc)
+target_link_libraries(${CY_PACKAGE_NAME} PRIVATE CLIc::CLIc OpenCL::OpenCL)
 add_dependencies(${CY_PACKAGE_NAME} CLIc)
 target_include_directories(${CY_PACKAGE_NAME} PUBLIC "$<BUILD_INTERFACE:${WRAPPER_DIR}>")
 target_compile_features(${CY_PACKAGE_NAME} PRIVATE cxx_std_17)

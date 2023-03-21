@@ -23,7 +23,7 @@ cmake_args_list = [
     # existing options
     "-DCMAKE_BUILD_TYPE=Release",
     "-DCLIC_VERSION:String=" + ver_dic["CLIC_VERSION"],
-    # "-DCMAKE_PREFIX_PATH=$CONDA_PREFIX",
+    # "-DCMAKE_PREFIX_PATH:FILEPATH=/home/stephane/Libraries/miniconda3/envs/skbuild",
     # "-DOpenCL_LIBRARY:FILEPATH=/home/stephane/Libraries/miniconda3/envs/skbuild/lib/libOpenCL.so",
 ]
 

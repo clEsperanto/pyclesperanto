@@ -88,7 +88,7 @@ find_package(pybind11 CONFIG REQUIRED)
 
 pybind11_add_module(${CY_PACKAGE_NAME} MODULE ${WRAPPER_SOURCES_FILES})
 
-target_link_libraries(${CY_PACKAGE_NAME} PRIVATE CLIc::CLIc OpenCL::OpenCL)
+target_link_libraries(${CY_PACKAGE_NAME} PRIVATE CLIc::CLIc ${OpenCL_LIBRARY})
 add_dependencies(${CY_PACKAGE_NAME} CLIc)
 target_include_directories(${CY_PACKAGE_NAME} PUBLIC "$<BUILD_INTERFACE:${WRAPPER_DIR}>")
 target_compile_features(${CY_PACKAGE_NAME} PRIVATE cxx_std_17)

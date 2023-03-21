@@ -56,6 +56,9 @@ jobs:
       - name: Tests
         shell: bash -l {0}
         run: |
+          
+          export LD_LIBRARY_PATH=$CONDA_PREFIX/lib:$LD_LIBRARY_PATH
+
           echo CONDA_PREFIX=$CONDA_PREFIX
           echo "ldd libOpenCL.so"
           ldd $CONDA_PREFIX/lib/libOpenCL.so

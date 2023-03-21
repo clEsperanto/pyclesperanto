@@ -19,8 +19,8 @@ conda_prefix = os.environ.get('CONDA_PREFIX')
 cmake_args_list = [
     "-DCLIC_VERSION:String=" + ver_dic["CLIC_VERSION"]
 ]
-# if conda_prefix != "":
-#     cmake_args_list.append("-DCMAKE_PREFIX_PATH:FILEPATH=" + conda_prefix)
+if conda_prefix:
+    cmake_args_list.append("-DCMAKE_PREFIX_PATH:FILEPATH=" + conda_prefix)
 
 from skbuild import setup
 

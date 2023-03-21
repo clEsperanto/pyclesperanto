@@ -97,10 +97,18 @@ set_property(TARGET ${CY_PACKAGE_NAME} APPEND PROPERTY
 # Installing the extension module to the root of the package
 install(TARGETS ${CY_PACKAGE_NAME} DESTINATION .)
 
+# if(APPLE)
+#     set_target_properties(
+#         ${CY_PACKAGE_NAME} PROPERTIES INSTALL_RPATH "@loader_path/${CMAKE_INSTALL_LIBDIR}")
+# else()
+#     set_target_properties(${CY_PACKAGE_NAME} PROPERTIES INSTALL_RPATH
+#         "$ORIGIN/${CMAKE_INSTALL_LIBDIR}")
+# endif()
+
 if(APPLE)
     set_target_properties(
-        ${CY_PACKAGE_NAME} PROPERTIES INSTALL_RPATH "@loader_path/${CMAKE_INSTALL_LIBDIR}")
+        ${CY_PACKAGE_NAME} PROPERTIES INSTALL_RPATH "@loader_path/${CMAKE_INSTALL_LIBDIR};${CMAKE_PREFIX_PATH}/lib")
 else()
     set_target_properties(${CY_PACKAGE_NAME} PROPERTIES INSTALL_RPATH
-        "$ORIGIN/${CMAKE_INSTALL_LIBDIR}")
+        "$ORIGIN/${CMAKE_INSTALL_LIBDIR}:$ORIGIN/../lib:${CMAKE_PREFIX_PATH}/lib")
 endif()

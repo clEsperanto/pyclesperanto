@@ -57,7 +57,7 @@ jobs:
         shell: bash -l {0}
         run: |
           echo CONDA_PREFIX=$CONDA_PREFIX
-          ldd ./$CONDA_PREFIX/lib/libOpenCL.so
+          ldd $CONDA_PREFIX/lib/libOpenCL.so
           ldd ./_skbuild/linux-x86_64-3.10/setuptools/lib.linux-x86_64-cpython-310/pyclesperanto/_pyclesperanto.cpython-310-x86_64-linux-gnu.so
           pytest -v
       

@@ -33,6 +33,8 @@ if(Python3_Development.Embed_FOUND)
     message(STATUS "Python Developement Embed found")
 endif()
 
+message(STATUS "LIB DIR : ${CMAKE_PREFIX_PATH}/lib/")
+
 # message(STATUS "OpenCL_FOUND: ${OpenCL_FOUND}")
 # message(STATUS "OpenCL_LIBRARY: ${OpenCL_LIBRARY}")
 # message(STATUS "OpenCL_LIBRARIES: ${OpenCL_LIBRARIES}")
@@ -88,6 +90,9 @@ target_link_libraries(${CY_PACKAGE_NAME} PRIVATE CLIc::CLIc)
 add_dependencies(${CY_PACKAGE_NAME} CLIc)
 target_include_directories(${CY_PACKAGE_NAME} PUBLIC "$<BUILD_INTERFACE:${WRAPPER_DIR}>")
 target_compile_features(${CY_PACKAGE_NAME} PRIVATE cxx_std_17)
+
+set_property(TARGET ${CY_PACKAGE_NAME} APPEND PROPERTY
+  ENVIRONMENT LD_LIBRARY_PATH="${CMAKE_PREFIX_PATH}/lib/:${LD_LIBRARY_PATH}")
 
 # Installing the extension module to the root of the package
 install(TARGETS ${CY_PACKAGE_NAME} DESTINATION .)

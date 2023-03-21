@@ -17,7 +17,6 @@ if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
   set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fPIC")
 endif()
 
-
 # find python dev library
 # look for python in virtual env or conda first before checking the system.
 set(Python_FIND_VIRTUALENV "FIRST")
@@ -29,7 +28,9 @@ if(Python3_Development.Embed_FOUND)
     message(STATUS "Python Developement Embed found")
 endif()
 
-find_package(OpenCL REQUIRED)
+if(NOT DEFINED OpenCL_LIBRARY)
+  find_package(OpenCL REQUIRED)
+endif()
 message(STATUS "OpenCL_LIBRARY: ${OpenCL_LIBRARY}")
 
 ## fetch CLIc using CMake FetchContent
@@ -65,9 +66,6 @@ target_link_libraries(${CY_PACKAGE_NAME} PRIVATE CLIc::CLIc ${OpenCL_LIBRARY})
 add_dependencies(${CY_PACKAGE_NAME} CLIc)
 target_include_directories(${CY_PACKAGE_NAME} PUBLIC "$<BUILD_INTERFACE:${WRAPPER_DIR}>")
 target_compile_features(${CY_PACKAGE_NAME} PRIVATE cxx_std_17)
-
-# set_property(TARGET ${CY_PACKAGE_NAME} APPEND PROPERTY
-#   ENVIRONMENT LD_LIBRARY_PATH="${CMAKE_PREFIX_PATH}/lib:${LD_LIBRARY_PATH}")
 
 # Installing the extension module to the root of the package
 install(TARGETS ${CY_PACKAGE_NAME} DESTINATION .)

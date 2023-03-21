@@ -19,13 +19,13 @@ exec(compile(version_file_contents, "pyclesperanto/_version.py", "exec"), ver_di
 
 from skbuild import setup
 
+conda_prefix = os.environ.get('CONDA_PREFIX')
 cmake_args_list = [
-    # existing options
-    "-DCMAKE_BUILD_TYPE=Release",
     "-DCLIC_VERSION:String=" + ver_dic["CLIC_VERSION"],
     # "-DCMAKE_PREFIX_PATH:FILEPATH=/home/stephane/Libraries/miniconda3/envs/skbuild",
-    # "-DOpenCL_LIBRARY:FILEPATH=/home/stephane/Libraries/miniconda3/envs/skbuild/lib/libOpenCL.so",
 ]
+if conda_prefix != "":
+    cmake_args_list.append("-DCMAKE_PREFIX_PATH:FILEPATH=" + conda_prefix)
 
 setup(
     name="pyclesperanto",

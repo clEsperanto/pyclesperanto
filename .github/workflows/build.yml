@@ -50,8 +50,10 @@ jobs:
       - name: Compile
         shell: bash -l {0}
         run: |
-          export SKBUILD_CONFIGURE_OPTIONS="-DCMAKE_PREFIX_PATH=$CONDA_PREFIX -DBUILD_BENCHMARK=OFF -DBUILD_TESTING=OFF"
           pip install . -vvv
+          pytest -v
+      
+      # export SKBUILD_CONFIGURE_OPTIONS="-DCMAKE_PREFIX_PATH=$CONDA_PREFIX -DBUILD_BENCHMARK=OFF -DBUILD_TESTING=OFF"
       
       - name: Tests
         shell: bash -l {0}

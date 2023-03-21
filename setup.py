@@ -17,15 +17,15 @@ exec(compile(version_file_contents, "pyclesperanto/_version.py", "exec"), ver_di
 
 # build the package using skbuild
 
-from skbuild import setup
 
 conda_prefix = os.environ.get('CONDA_PREFIX')
 cmake_args_list = [
-    "-DCLIC_VERSION:String=" + ver_dic["CLIC_VERSION"],
-    # "-DCMAKE_PREFIX_PATH:FILEPATH=/home/stephane/Libraries/miniconda3/envs/skbuild",
+    "-DCLIC_VERSION:String=" + ver_dic["CLIC_VERSION"]
 ]
 if conda_prefix != "":
     cmake_args_list.append("-DCMAKE_PREFIX_PATH:FILEPATH=" + conda_prefix)
+
+from skbuild import setup
 
 setup(
     name="pyclesperanto",

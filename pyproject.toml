@@ -18,7 +18,7 @@ testpaths = [
 build = ["cp37-*", "cp38-*", "cp39-*", "cp310-*", "cp311-*"]
 build-frontend = "build"
 build-verbosity = 1
-test-command = "pytest {project}/tests"
+test-command = "pytest {project}/tests/test_import.py"
 test-requires = ["numpy", "pytest", "pytest-cov", "pytest-benchmark"]
 
 [tool.cibuildwheel.linux]

@@ -1,9 +1,10 @@
 # py-clesperanto
 [![Build & Deploy](https://github.com/clEsperanto/pyclesperanto/actions/workflows/wheels.yml/badge.svg)](https://github.com/clEsperanto/pyclesperanto/actions/workflows/wheels.yml)
+[![Tests](https://github.com/clEsperanto/pyclesperanto/actions/workflows/build_and_test.yml/badge.svg)](https://github.com/clEsperanto/pyclesperanto/actions/workflows/build_and_test.yml)
+[![codecov](https://codecov.io/gh/clesperanto/pyclesperanto/branch/main/graph/badge.svg)](https://codecov.io/gh/clesperanto/pyclesperanto)
 [![License](https://img.shields.io/pypi/l/pyclesperanto.svg?color=green)](https://github.com/clEsperanto/pyclesperanto/raw/main/LICENSE)
-[![Website](https://img.shields.io/website?url=http%3A%2F%2Fclesperanto.net)](http://clesperanto.net)
-[![Python Version](https://img.shields.io/pypi/pyversions/pyclesperanto.svg?color=green)](https://python.org)
 [![PyPI](https://img.shields.io/pypi/v/pyclesperanto.svg?color=green)](https://pypi.org/project/pyclesperanto)
+[![Python Version](https://img.shields.io/pypi/pyversions/pyclesperanto.svg?color=green)](https://python.org)
 [![Development Status](https://img.shields.io/pypi/status/pyclesperanto.svg)](https://en.wikipedia.org/wiki/Software_release_life_cycle#Alpha)
 [![GitHub issues](https://img.shields.io/github/issues-raw/clEsperanto/pyclesperanto)](https://github.com/clEsperanto/pyclesperanto/issues)
 [![GitHub stars](https://img.shields.io/github/stars/clEsperanto/pyclesperanto?style=social)](https://github.com/clEsperanto/pyclesperanto)
@@ -23,7 +24,7 @@ Get a conda/python environment, e.b. via [mini-conda](https://docs.conda.io/en/l
 conda create --name my_env python=3.10
 conda activate my_env
 ```
-~~Install pyclesperanto package using __conda__:~~ __(WIP, use pip instead)__
+~~Install pyclesperanto package using __conda__:~~ __(WIP, please use pip instead)__
 ```
 conda install -c conda-forge pyclesperanto
 ```
@@ -71,81 +72,75 @@ imsave("result.tif", output_image)
 <table border="0">
 
 <tr><td>
-<img src="https://github.com/clEsperanto/pyclesperanto/raw/main/user_docs/images/labeled_blobs.png" width="300"/>
+<img src="https://github.com/clEsperanto/pyclesperanto/raw/main/demos/images/labeled_blobs.png" width="300"/>
 </td><td>
 
-[Segment + analyze blobs](https://github.com/clEsperanto/pyclesperanto/tree/main/user_docs/process_blobs.ipynb)
+[Segment + analyze blobs](https://github.com/clEsperanto/pyclesperanto/tree/main/demos/process_blobs.ipynb)
 
 </td></tr>
 
 <tr><td>
-<img src="https://github.com/clEsperanto/pyclesperanto/raw/main/user_docs/images/cell_segmentation.png" width="300"/>
+<img src="https://github.com/clEsperanto/pyclesperanto/raw/main/demos/images/cell_segmentation.png" width="300"/>
 </td><td>
 
-[Cell segmentation + Voronoi labeling](https://github.com/clEsperanto/pyclesperanto/tree/main/user_docs/cell_segmentation.ipynb)
+[Cell segmentation + Voronoi labeling](https://github.com/clEsperanto/pyclesperanto/tree/main/demos/cell_segmentation.ipynb)
 
 </td></tr>
 
 <tr><td>
-<img src="https://github.com/clEsperanto/pyclesperanto/raw/main/user_docs/images/image_filtering.png" width="300"/>
+<img src="https://github.com/clEsperanto/pyclesperanto/raw/main/demos/images/image_filtering.png" width="300"/>
 </td><td>
 
-[3D image filtering](https://github.com/clEsperanto/pyclesperanto/tree/main/user_docs/image_filtering.ipynb)
+[3D image filtering](https://github.com/clEsperanto/pyclesperanto/tree/main/demos/image_filtering.ipynb)
 
 </td></tr>
 
 
 <tr><td>
-<img src="https://github.com/clEsperanto/pyclesperanto/raw/main/user_docs/images/find_local_maxima.png" width="300"/>
+<img src="https://github.com/clEsperanto/pyclesperanto/raw/main/demos/images/find_local_maxima.png" width="300"/>
 </td><td>
 
-[Find local maxima](https://github.com/clEsperanto/pyclesperanto/tree/main/user_docs/find_local_maxima.ipynb)
+[Find local maxima](https://github.com/clEsperanto/pyclesperanto/tree/main/demos/find_local_maxima.ipynb)
 
 </td></tr>
 
 <tr><td>
-<img src="https://github.com/clEsperanto/pyclesperanto/raw/main/user_docs/images/tribolium3d_segmentation.png" width="300"/>
+<img src="https://github.com/clEsperanto/pyclesperanto/raw/main/demos/images/tribolium3d_segmentation.png" width="300"/>
 </td><td>
 
-[3D Tribolium nuclei segmentation](https://github.com/clEsperanto/pyclesperanto/tree/main/user_docs/process_tribolium.ipynb)
+[3D Tribolium nuclei segmentation](https://github.com/clEsperanto/pyclesperanto/tree/main/demos/process_tribolium.ipynb)
 
 </td></tr>
 
 <tr><td>
-<img src="https://github.com/clEsperanto/pyclesperanto/raw/main/user_docs/images/explore_API.png" width="300"/>
+<img src="https://github.com/clEsperanto/pyclesperanto/raw/main/demos/images/explore_API.png" width="300"/>
 </td><td>
 
-[Explore application programming interface (API)](https://github.com/clEsperanto/pyclesperanto/tree/main/user_docs/explore_API.ipynb)
+[Explore application programming interface (API)](https://github.com/clEsperanto/pyclesperanto/tree/main/demos/explore_API.ipynb)
 
 </td></tr>
-
-
 
 <!--
 <tr><td>
 
-<img src="https://raw.githubusercontent.com/clEsperanto/pyclesperanto/main/user_docs/images/multi-gpu.png" width="300"/>
+<img src="https://raw.githubusercontent.com/clEsperanto/pyclesperanto/main/demos/images/multi-gpu.png" width="300"/>
 
 </td><td>
 
-[Multi-GPU developer_docs](https://github.com/clEsperanto/pyclesperanto/tree/main/user_docs/multi_gpu_demo.ipynb)
+[Multi-GPU developer_docs](https://github.com/clEsperanto/pyclesperanto/tree/main/demos/multi_gpu_demo.ipynb)
 
 </td></tr>
 -->
 </table>
 
-More usage and example can be found as notebooks in the [user documentation](./user_docs) folder
+More usage and example can be found as notebooks in the [demos](./user_docs) folder
 
-## __Contributing__
-
-Contributions are very welcome. Before spending effort on coding and filing a pull-request, please get in touch, 
-[file an issue], and let's discuss your potential contribution.
-
-# __Feedback welcome!__
+# __Contributing and Feedback__
 
 clEsperanto is developed in the open because we believe in the [open source community]. 
 Feel free to drop feedback as [github issue] or via [image.sc forum].  
-And if you liked our work, star the repository, share it with your friends, and use it to make cool stuff!
+Contribution are also very welcome. Please read our [community guidelines] before you start and get in touch with us so that we can help you get started.
+If you liked our work, star the repository, share it with your friends, and use it to make cool stuff!
 
 [clEsperanto]: http://clesperanto.net/
 [OpenCL kernels]: https://github.com/clEsperanto/clij-opencl-kernels/tree/development/src/main/java/net/haesleinhuepf/clij/kernels

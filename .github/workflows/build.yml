@@ -51,6 +51,9 @@ jobs:
       - name: Tests
         shell: bash -l {0}
         run: |
-          pytest -v
+          pytest -v -v --cov=./ --cov-report=xml
+
+      - name: Coverage
+        uses: codecov/codecov-action@v3
         
 

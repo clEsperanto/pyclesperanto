@@ -8,19 +8,24 @@ requires = [
   "pybind11>=2.10.0",
 ]
 
+[tool.pytest.ini_options]
+addopts = "-ra -q"
+testpaths = [
+  "tests",
+]
+
 [tool.cibuildwheel]
-build = ["cp37-*", "cp39-*", "cp38-*", "cp310-*", "cp311-*"]
+build = ["cp37-*", "cp38-*", "cp39-*", "cp310-*", "cp311-*"]
 build-frontend = "build"
 build-verbosity = 1
-test-command = "pytest {project}/tests"
-test-requires = ["numpy", "pytest"]
+test-command = "pytest {project}/tests/test_import.py"
+test-requires = ["numpy", "pytest", "pytest-cov", "pytest-benchmark"]
 
 [tool.cibuildwheel.linux]
 before-all = [
   "yum install -y ruby",
   "bash {package}/scripts/build-opencl-linux.sh",
 ]
-environment = {SKBUILD_CONFIGURE_OPTIONS = "-DBUILD_TESTING:BOOL=FALSE"}
 repair-wheel-command = "auditwheel show {wheel} && auditwheel repair --lib-sdir .libs -w {dest_dir} {wheel}"
 skip = ["cp27-*", "cp36-*", "pp*", "*-musllinux*"]
 
@@ -33,10 +38,9 @@ skip = ["cp27-*", "cp36-*", "pp*", "*-musllinux*"]
 
 [tool.cibuildwheel.windows]
 before-all = "bash {package}/scripts/build-opencl-windows.sh"
-environment = {SKBUILD_CONFIGURE_OPTIONS = "-DOpenCL_LIBRARY:FILEPATH='C:/Program Files/OpenCL-ICD-Loader/lib/OpenCL.lib' -DOpenCL_LIBRARIES:FILEPATH='C:/Program Files/OpenCL-ICD-Loader/lib/OpenCL.lib' -DOpenCL_FOUND:BOOL=TRUE -DBUILD_TESTING:BOOL=FALSE"}
+environment = {SKBUILD_CONFIGURE_OPTIONS = "-DOpenCL_LIBRARY:FILEPATH='C:/Program Files/OpenCL-ICD-Loader/lib/OpenCL.lib' -DOpenCL_LIBRARIES:FILEPATH='C:/Program Files/OpenCL-ICD-Loader/lib/OpenCL.lib' -DOpenCL_FOUND:BOOL=TRUE"}
 skip = ["cp27-*", "cp36-*", "pp*", "*-win32"]
 
 [tool.cibuildwheel.macos]
 before-all = "bash {package}/scripts/build-opencl-macos.sh"
-environment = {SKBUILD_CONFIGURE_OPTIONS = "-DBUILD_TESTING:BOOL=FALSE"}
 skip = ["cp27-*", "cp36-*", "pp*", "*_universal2"]

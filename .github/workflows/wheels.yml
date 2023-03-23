@@ -4,6 +4,11 @@ name: Build & Deploy
 on:
   push:
     branches: [main]
+    paths-ignore:
+      - '**.md'
+      - '**.rst'
+      - '**.txt'
+      - '**.yml'
   pull_request:
     branches: [main]
   release:

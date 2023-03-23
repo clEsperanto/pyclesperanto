@@ -5,7 +5,7 @@
 
 import os
 import sys
-sys.path.insert(0, os.path.abspath('../'))
+sys.path.insert(0, os.path.abspath('../../'))
 
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
@@ -30,6 +30,7 @@ extensions = [
 templates_path = ['_templates']
 exclude_patterns = ['build', '_build', 'Thumbs.db', '.DS_Store']
 
+autodoc_mock_imports = ["pyclesperanto._pyclesperanto", "toolz", "matplotlib"]
 add_module_names = False
 modindex_common_prefix = ['pyclesperanto.']
 

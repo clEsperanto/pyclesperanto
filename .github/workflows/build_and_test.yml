@@ -7,7 +7,6 @@ on:
       - '**.md'
       - '**.rst'
       - '**.txt'
-      - '**.yml'
   pull_request:
     branches: [ main ]
 

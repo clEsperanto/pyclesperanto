@@ -7,8 +7,8 @@
 py-clesperanto documentation
 ******************************************************
 
-pyclesperanto is the python package of clEsperanto - a multi-language framework for GPU-accelerated image processing.
-You will find here a first draft of the API for reference and documentation purposes.
+py-clesperanto is the python package of clEsperanto - a multi-language framework for GPU-accelerated image processing.
+You will find here a first draft of the API for reference and documentation purposes as well as how to use the package.
 
 .. note::
 

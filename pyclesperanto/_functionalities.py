@@ -1,42 +1,43 @@
 from ._memory_operations import pull
+from typing import Optional, Union
 
 
 def imshow(
     image,
-    title: str = None,
-    labels: bool = False,
-    min_display_intensity: float = None,
-    max_display_intensity: float = None,
-    color_map=None,
+    title: Optional[str] = None,
+    labels: Optional[bool] = False,
+    min_display_intensity: Optional[float] = None,
+    max_display_intensity: Optional[float] = None,
+    color_map: Optional[str]=None,
     plot=None,
-    colorbar: bool = False,
-    colormap=None,
-    alpha: float = None,
-    continue_drawing: bool = False,
+    colorbar: Optional[bool] = False,
+    colormap: Union[str, None] = None,
+    alpha: Optional[float] = None,
+    continue_drawing: Optional[bool] = False,
 ):
     """Visualize an image, e.g. in Jupyter notebooks.
     Parameters
     ----------
     image: np.ndarray
         numpy or OpenCL-backed image to visualize
-    title: str
+    title: str, optional
         Obsolete (kept for ImageJ-compatibility)
-    labels: bool
+    labels: bool, optional
         True: integer labels will be visualized with colors
         False: Specified or default colormap will be used to display intensities.
-    min_display_intensity: float
+    min_display_intensity: float, optional
         lower limit for display range
-    max_display_intensity: float
+    max_display_intensity: float, optional
         upper limit for display range
-    color_map: str
+    color_map: str, optional
         deprecated, use colormap instead
-    plot: matplotlib axis
+    plot: matplotlib axis, optional
         Plot object where the image should be shown. Useful for putting multiple images in subfigures.
-    colorbar: bool
+    colorbar: bool, optional
         True puts a colorbar next to the image. Will not work with label images and when visualizing multiple
         images (continue_drawing=True).
-    colormap: str or matplotlib colormap
-    alpha: float
+    colormap: str or matplotlib colormap, optional
+    alpha: float, optional
         alpha blending value
     continue_drawing: float
         True: the next shown image can be visualized on top of the current one, e.g. with alpha = 0.5

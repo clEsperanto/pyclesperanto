@@ -1,5 +1,18 @@
 import numpy as np
-from ._pyclesperanto import _Pull
+from typing import Optional, Union
+from ._pyclesperanto import (
+    _PullFloat,
+    _PullInt32,
+    _PullInt64,
+    _PullInt16,
+    _PullInt8,
+    _PullUint32,
+    _PullUint64,
+    _PullUint16,
+    _PullUint8,
+)
+from ._pyclesperanto import _cleDataType
+
 
 cl_buffer_datatype_dict = {
     bool: "bool",
@@ -22,7 +35,25 @@ _supported_numeric_types = tuple(cl_buffer_datatype_dict.keys())
 
 
 class ImageOperators:
-    def max(self, axis: int = None, out=None):
+    def astype(self, dtype: type):
+        if dtype not in _supported_numeric_types:
+            raise ValueError(
+                "dtype "
+                + str(dtype)
+                + " not supported. Use one of "
+                + str(_supported_numeric_types)
+            )
+        if dtype == self.dtype:
+            return self
+
+        from ._tier1 import copy
+        from ._memory_operations import create_like
+
+        result = create_like(self, dtype=dtype)
+        copy(self, output_image=result)
+        return result
+
+    def max(self, axis: Optional[int] = None, out=None):
 
         from ._tier2 import maximum_of_all_pixels
         from ._tier1 import maximum_x_projection
@@ -40,10 +71,16 @@ class ImageOperators:
         else:
             raise ValueError("Axis " + axis + " not supported")
         if out is not None:
-            np.copyto(out, _Pull(result).astype(out.dtype))
+            from ._memory_operations import pull
+            from ._image import Image
+
+            if isinstance(out, Image):
+                np.copyto(out, pull(result).astype(out.dtype))
+            else:
+                out = result
         return result
 
-    def min(self, axis: int = None, out=None):
+    def min(self, axis: Optional[int] = None, out=None):
 
         from ._tier2 import minimum_of_all_pixels
         from ._tier1 import minimum_x_projection
@@ -61,10 +98,14 @@ class ImageOperators:
         else:
             raise ValueError("Axis " + axis + " not supported")
         if out is not None:
-            np.copyto(out, _Pull(result).astype(out.dtype))
+            from ._memory_operations import pull
+            from ._image import Image
+
+            if isinstance(out, Image):
+                np.copyto(out, pull(result).astype(out.dtype))
         return result
 
-    def sum(self, axis=None, out=None):
+    def sum(self, axis: Optional[int] = None, out=None):
         from ._tier2 import sum_of_all_pixels
         from ._tier1 import sum_x_projection
         from ._tier1 import sum_y_projection
@@ -81,7 +122,11 @@ class ImageOperators:
         else:
             raise ValueError("Axis " + axis + " not supported")
         if out is not None:
-            np.copyto(out, _Pull(result).astype(out.dtype))
+            from ._memory_operations import pull
+            from ._image import Image
+
+            if isinstance(out, Image):
+                np.copyto(out, pull(result).astype(out.dtype))
         return result
 
     def __iadd__(x1, x2):

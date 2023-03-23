@@ -1,10 +1,28 @@
 import numpy as np
-from ._pyclesperanto import _Create, _Push, _Pull
+from ._pyclesperanto import (
+    _Create,
+    _Push,
+    _PullFloat,
+    _PullInt64,
+    _PullInt32,
+    _PullInt16,
+    _PullInt8,
+    _PullUint64,
+    _PullUint32,
+    _PullUint16,
+    _PullUint8,
+)
 from ._device import Device, get_device
-from ._image import cleImage, Image, mType
+from ._image import Image, MemoryType
+from typing import Optional, Union
 
 
-def create(shape: tuple, mtype: mType = None, device: Device = None) -> Image:
+def create(
+    shape: tuple,
+    mtype: Optional[MemoryType] = None,
+    dtype: Optional[type] = None,
+    device: Optional[Device] = None,
+):
     """create:
 
     Conventional method to create images on the GPU and return its handle
@@ -13,22 +31,35 @@ def create(shape: tuple, mtype: mType = None, device: Device = None) -> Image:
     ----------
     shape : tuple
         shape of the memory to create, using the zyx convention
-    mtype : mType, optional
+    mtype : MemoryType, optional
         buffer or image structure
+    dtype : type, optional
+        data type of the memory to create
+    device : Device, optional
+        Device to create the memory on
 
     Returns
     -------
     Image
         Handle of the empty GPU image
     """
+    from ._image import cleImage
+
     if mtype is None:
-        mtype = mType.buffer
+        mtype = MemoryType.buffer
+    if dtype is None:
+        dtype = np.float32
     if device is None:
         device = get_device()
-    return cleImage(_Create(device, shape, mtype))
+    return cleImage(_Create(device, shape, dtype, mtype))
 
 
-def create_like(image: Image) -> Image:
+def create_like(
+    image: Image,
+    mtype: Optional[MemoryType] = None,
+    dtype: Optional[type] = None,
+    device: Optional[Device] = None,
+) -> Image:
     """create_like:
 
     Create an empty copy of the provided image on the GPU and return its handle
@@ -44,13 +75,20 @@ def create_like(image: Image) -> Image:
     Image
         Handle of the empty GPU image
     """
-    if isinstance(image, cleImage):
-        return create(shape=tuple(image.shape), mtype=image.mtype, device=image.device)
-    else:
-        return create(shape=tuple(image.shape), mtype=mType.buffer)
+    from ._image import cleImage
+
+    if dtype is None:
+        dtype = image.dtype
+    if mtype is None:
+        mtype = image.mtype if isinstance(image, cleImage) else MemoryType.buffer
+    if device is None:
+        device = image.device if isinstance(image, cleImage) else get_device()
+    return create(shape=tuple(image.shape), dtype=dtype, mtype=mtype, device=device)
 
 
-def push(array: Image, mtype: mType = None, device: Device = None) -> Image:
+def push(
+    array: Image, mtype: Optional[MemoryType] = None, device: Optional[Device] = None
+) -> Image:
     """push:
 
     Copy an host array to the GPU device and return its handle
@@ -59,19 +97,23 @@ def push(array: Image, mtype: mType = None, device: Device = None) -> Image:
     ----------
     array : Image (numpy array, etc.)
         Can be of other type compatible with numpy
-    mtype : mType, optional
+    mtype : MemoryType, optional
         buffer or image memory structure structure
+    device : Device, optional
+        Device to create the memory on
 
     Returns
     -------
     Image
         Handle of the GPU image
     """
+    from ._image import cleImage
+
     if isinstance(array, cleImage):
         return array
     else:
         if mtype is None:
-            mtype = mType.buffer
+            mtype = MemoryType.buffer
         if device is None:
             device = get_device()
         return cleImage(_Push(device, np.asarray(array), mtype))
@@ -92,7 +134,21 @@ def pull(image: Image) -> Image:
     Image
         numpy compatible array
     """
+    from ._image import cleImage
+
+    # TODO: should this dict be moved in the cleImage class?
+    pull_dict = {
+        np.float32: _PullFloat,
+        np.uint8: _PullUint8,
+        np.uint16: _PullUint16,
+        np.uint32: _PullUint32,
+        np.uint64: _PullUint64,
+        np.int8: _PullInt8,
+        np.int16: _PullInt16,
+        np.int32: _PullInt32,
+        np.int64: _PullInt64,
+    }
     if isinstance(image, cleImage):
-        return _Pull(image)
+        return pull_dict[image.dtype](image)
     else:
         return image

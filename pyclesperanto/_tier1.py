@@ -21,13 +21,18 @@ def add_image_and_scalar(
         The input image where scalare should be added.
     output_image : Image, optional
         The output image where results are written into.
-    scalar : float, optional
+    scalar : float, default: 0
         The constant number which will be added to all pixels.
-
+    device : Device, optional
+        The device where the operation should take place on.
 
     Returns
     -------
-    output_image
+    output_image : Image
+
+    References
+    ----------
+    .. [1] https://clij.github.io/clij2-docs/reference_addImageAndScalar
     """
 
     from ._pyclesperanto import _AddImageAndScalarKernel_Call as op
@@ -58,15 +63,20 @@ def add_images_weighted(
         The second image to be added.
     output_image : Image, optional
         The output image where results are written into.
-    factor1 : float, optional
+    factor1 : float, default: 1
         The constant number which will be multiplied with each pixel of summand1 before adding it.
-    factor2 : float, optional
+    factor2 : float, default: 1
         The constant number which will be multiplied with each pixel of summand2 before adding it.
-
+    device : Device, optional
+        The device where the operation should take place on.
 
     Returns
     -------
-    output_image
+    output_image : Image
+
+    References
+    ----------
+    .. [1] https://clij.github.io/clij2-docs/reference_addImagesWeighted
     """
     from ._pyclesperanto import _AddImagesWeightedKernel_Call as op
 
@@ -101,14 +111,22 @@ def gaussian_blur(
     Parameters
     ----------
     input_image : Image
+        image to be filtered
     output_image : Image, optional
-    sigma_x : Number, optional
-    sigma_y : Number, optional
-    sigma_z : Number, optional
+        The output image where results are written into.
+    sigma_x : Number, default: 0
+    sigma_y : Number, default: 0
+    sigma_z : Number, default: 0
+    device : Device, optional
+        The device where the operation should take place on.
 
     Returns
     -------
-    output_image
+    output_image : Image
+
+    References
+    ----------
+    .. [1] https://clij.github.io/clij2-docs/reference_gaussianBlur
     """
     from ._pyclesperanto import _GaussianBlurKernel_Call as op
 
@@ -140,14 +158,22 @@ def mean_box(
     Parameters
     ----------
     input_image : Image
+        image to be filtered
     output_image : Image, optional
-    radius_x : Number, optional
-    radius_y : Number, optional
-    radius_z : Number, optional
+        The output image where results are written into.
+    radius_x : Number, default: 0
+    radius_y : Number, default: 0
+    radius_z : Number, default: 0
+    device : Device, optional
+        The device where the operation should take place on.
 
     Returns
     -------
-    output_image
+    output_image : Image
+
+    References
+    ----------
+    .. [1] https://clij.github.io/clij2-docs/reference_meanBox
     """
     from ._pyclesperanto import _MeanBoxKernel_Call as op
 
@@ -179,14 +205,22 @@ def maximum_box(
     Parameters
     ----------
     input_image : Image
+        image to be filtered
     output_image : Image, optional
-    radius_x : Number, optional
-    radius_y : Number, optional
-    radius_z : Number, optional
+        The output image where results are written into.
+    radius_x : Number, default: 0
+    radius_y : Number, default: 0
+    radius_z : Number, default: 0
+    device : Device, optional
+        The device where the operation should take place on.
 
     Returns
     -------
-    output_image
+    output_image : Image
+
+    References
+    ----------
+    .. [1] https://clij.github.io/clij2-docs/reference_maximumBox
     """
 
     from ._pyclesperanto import _MaximumBoxKernel_Call as op
@@ -219,14 +253,22 @@ def minimum_box(
     Parameters
     ----------
     input_image : Image
+        image to be filtered
     output_image : Image, optional
-    radius_x : Number, optional
-    radius_y : Number, optional
-    radius_z : Number, optional
+        The output image where results are written into.
+    radius_x : Number, default: 0
+    radius_y : Number, default: 0
+    radius_z : Number, default: 0
+    device : Device, optional
+        The device where the operation should take place on.
 
     Returns
     -------
-    output_image
+    output_image : Image
+
+    References
+    ----------
+    .. [1] https://clij.github.io/clij2-docs/reference_minimumBox
     """
     from ._pyclesperanto import _MinimumBoxKernel_Call as op
 
@@ -243,9 +285,29 @@ def minimum_box(
 
 @plugin_function
 def copy(
-    input_image: Image, output_image: Image = None, device: Device = None
+    input_image: Image,
+    output_image: Image = None,
+    device: Device = None,
 ) -> Image:
-    """Copies an image."""
+    """Copies an image into a new image.
+
+    Parameters
+    ----------
+    input_image : Image
+        image to be copied
+    output_image : Image, optional
+        The output image where results are written into.
+    device : Device, optional
+        The device where the operation should take place on.
+
+    Returns
+    -------
+    output_image : Image
+
+    References
+    ----------
+    .. [1] https://clij.github.io/clij2-docs/reference_copy
+    """
     from ._pyclesperanto import _CopyKernel_Call as op
 
     op(device, src=input_image, dst=output_image)
@@ -264,12 +326,21 @@ def divide_images(
     Parameters
     ----------
     input_image1 : Image
+        numerator image
     input_image2 : Image
+        denominator image
     output_image : Image, optional
+        The output image where results are written into.
+    device : Device, optional
+        The device where the operation should take place on.
 
     Returns
     -------
-    output_image
+    output_image : Image
+
+    References
+    ----------
+    .. [1] https://clij.github.io/clij2-docs/reference_divideImages
     """
     from ._pyclesperanto import _DivideImagesKernel_Call as op
 
@@ -290,13 +361,22 @@ def gradient_x(
 ) -> Image:
     """Computes the gradient of an image along X direction.
 
-    Args:
-        input_image (Image): Image
-        output_image (Image, optional): Image
-        device (Device, optional): Device. Defaults to None.
+    Parameters
+    ----------
+    input_image : Image
+        Image to be filtered
+    output_image : Image, optional
+        The output image where results are written into.
+    device : Device, optional
+        The device where the operation should take place on.
 
-    Returns:
-        Image: Image
+    Returns
+    -------
+    output_image: Image
+
+    References
+    ----------
+    .. [1] https://clij.github.io/clij2-docs/reference_gradientX
     """
     from ._pyclesperanto import _GradientXKernel_Call as op
 
@@ -315,12 +395,23 @@ def gradient_z(
     device: Device = None,
 ) -> Image:
     """Computes the gradient of an image along Z direction.
-    Args:
-        input_image (Image): Image
-        output_image (Image, optional): Image
-        device (Device, optional): Device. Defaults to None.
-    Returns:
-        Image: Image
+
+    Parameters
+    ----------
+    input_image : Image
+        Image to be filtered
+    output_image : Image, optional
+        The output image where results are written into.
+    device : Device, optional
+        The device where the operation should take place on.
+
+    Returns
+    -------
+    output_image: Image
+
+    References
+    ----------
+    .. [1] https://clij.github.io/clij2-docs/reference_gradientZ
     """
     from ._pyclesperanto import _GradientZKernel_Call as op
 
@@ -334,15 +425,28 @@ def gradient_z(
 
 @plugin_function
 def gradient_y(
-    input_image: Image, output_image: Image = None, device: Device = None
+    input_image: Image,
+    output_image: Image = None,
+    device: Device = None,
 ) -> Image:
     """Computes the gradient of an image along Y direction.
-    Args:
-        input_image (Image): Image
-        output_image (Image, optional): Image
-        device (Device, optional): Device. Defaults to None.
-    Returns:
-        Image: Image
+
+    Parameters
+    ----------
+    input_image : Image
+        Image to be filtered
+    output_image : Image, optional
+        The output image where results are written into.
+    device : Device, optional
+        The device where the operation should take place on.
+
+    Returns
+    -------
+    output_image: Image
+
+    References
+    ----------
+    .. [1] https://clij.github.io/clij2-docs/reference_gradientY
     """
     from ._pyclesperanto import _GradientYKernel_Call as op
 
@@ -364,12 +468,21 @@ def greater(
     Parameters
     ----------
     input_image1 : Image
+        image to be compared
     input_image2 : Image
+        image to be compared
     output_image : Image, optional
+        The output image where results are written into.
+    device : Device, optional
+        The device where the operation should take place on.
 
     Returns
     -------
-    output_image
+    output_image : Image
+
+    References
+    ----------
+    .. [1] https://clij.github.io/clij2-docs/reference_greater
     """
     from ._pyclesperanto import _GreaterKernel_Call as op
 
@@ -396,12 +509,20 @@ def greater_or_equal_constant(
     Parameters
     ----------
     input_image : Image
+        image to be compared
     output_image : Image, optional
-    scalar : Number, optional
+        The output image where results are written into.
+    scalar : Number, default 0
+    device : Device, optional
+        The device where the operation should take place on.
 
     Returns
     -------
-    output_image
+    output_image : Image
+
+    References
+    ----------
+    .. [1] https://clij.github.io/clij2-docs/reference_greaterOrEqualConstant
     """
     from ._pyclesperanto import _GreaterOrEqualConstantKernel_Call as op
 
@@ -423,12 +544,20 @@ def greater_constant(
     Parameters
     ----------
     input_image : Image
+        image to be compared
     output_image : Image, optional
-    scalar : Number, optional
+        The output image where results are written into.
+    scalar : Number, default 0
+    device : Device, optional
+        The device where the operation should take place on.
 
     Returns
     -------
-    output_image
+    output_image : Image
+
+    References
+    ----------
+    .. [1] https://clij.github.io/clij2-docs/reference_greaterConstant
     """
     from ._pyclesperanto import _GreaterConstantKernel_Call as op
 
@@ -450,12 +579,21 @@ def greater_or_equal(
     Parameters
     ----------
     input_image1 : Image
+        image to be compared
     input_image2 : Image
+        image to be compared
     output_image : Image, optional
+        The output image where results are written into.
+    device : Device, optional
+        The device where the operation should take place on.
 
     Returns
     -------
-    output_image
+    output_image : Image
+
+    References
+    ----------
+    .. [1] https://clij.github.io/clij2-docs/reference_greaterOrEqual
     """
     from ._pyclesperanto import _GreaterOrEqualKernel_Call as op
 
@@ -465,7 +603,9 @@ def greater_or_equal(
 
 @plugin_function
 def binary_not(
-    input_image: Image, output_image: Image = None, device: Device = None
+    input_image: Image,
+    output_image: Image = None,
+    device: Device = None,
 ) -> Image:
     """Computes a binary image (containing pixel values 0 and 1) from an image
     X by negating its pixel values
@@ -481,10 +621,16 @@ def binary_not(
         The binary input image to be inverted.
     output_image : Image, optional
         The output image where results are written into.
+    device : Device, optional
+        The device where the operation should take place on.
 
     Returns
     -------
-    output_image
+    output_image : Image
+
+    References
+    ----------
+    .. [1] https://clij.github.io/clij2-docs/reference_binaryNot
     """
     from ._pyclesperanto import _BinaryNotKernel_Call as op
 
@@ -514,10 +660,16 @@ def binary_and(
         The second binary input image to be processed.
     output_image : Image, optional
         The output image where results are written into.
+    device : Device, optional
+        The device where the operation should take place on.
 
     Returns
     -------
-    output_image
+    output_image : Image
+
+    References
+    ----------
+    .. [1] https://clij.github.io/clij2-docs/reference_binaryAnd
     """
     from ._pyclesperanto import _BinaryAndKernel_Call as op
 
@@ -547,10 +699,16 @@ def binary_or(
         The second binary input image to be processed.
     output_image : Image, optional
         The output image where results are written into.
+    device : Device, optional
+        The device where the operation should take place on.
 
     Returns
     -------
-    output_image
+    output_image : Image
+
+    References
+    ----------
+    .. [1] https://clij.github.io/clij2-docs/reference_binaryOr
     """
     from ._pyclesperanto import _BinaryOrKernel_Call as op
 
@@ -582,10 +740,16 @@ def binary_xor(
         The second binary input image to be processed.
     output_image : Image, optional
         The output image where results are written into.
+    device : Device, optional
+        The device where the operation should take place on.
 
     Returns
     -------
-    output_image
+    output_image : Image
+
+    References
+    ----------
+    .. [1] https://clij.github.io/clij2-docs/reference_binaryXor
     """
     from ._pyclesperanto import _BinaryXorKernel_Call as op
 
@@ -610,10 +774,12 @@ def binary_subtract(
         The second binary input image to be processed.
     output_image : Image, optional
         The output image where results are written into.
+    device : Device, optional
+        The device where the operation should take place on.
 
     Returns
     -------
-    output_image
+    output_image : Image
     """
     from ._pyclesperanto import _BinarySubtractKernel_Call as op
 
@@ -623,7 +789,9 @@ def binary_subtract(
 
 @plugin_function
 def dilate_sphere(
-    input_image: Image, output_image: Image = None, device: Device = None
+    input_image: Image,
+    output_image: Image = None,
+    device: Device = None,
 ) -> Image:
     """Computes a binary image with pixel values 0 and 1 containing the binary
     dilation of a given input image.
@@ -636,11 +804,19 @@ def dilate_sphere(
     Parameters
     ----------
     input_image : Image
+        The input image to be processed.
     output_image : Image, optional
+        The output image where results are written into.
+    device : Device, optional
+        The device where the operation should take place on.
 
     Returns
     -------
-    output_image
+    output_image : Image
+
+    References
+    ----------
+    .. [1] https://clij.github.io/clij2-docs/reference_dilateSphere
     """
     from ._pyclesperanto import _DilateSphereKernel_Call as op
 
@@ -651,7 +827,7 @@ def dilate_sphere(
 @plugin_function
 def equal_constant(
     input_image: Image,
-    constant: float,
+    constant: float = 0,
     output_image: Image = None,
     device: Device = None,
 ) -> Image:
@@ -665,14 +841,20 @@ def equal_constant(
     ----------
     input_image : Image
         The input image to be processed.
-    constant : float
+    constant : float, default 0
         The constant value to be compared to.
     output_image : Image, optional
         The output image where results are written into.
+    device : Device, optional
+        The device where the operation should take place on.
 
     Returns
     -------
-    output_image
+    output_image : Image
+
+    References
+    ----------
+    .. [1] https://clij.github.io/clij2-docs/reference_equalConstant
     """
     from ._pyclesperanto import _EqualConstantKernel_Call as op
 
@@ -700,10 +882,16 @@ def equal(
         The second input image to be processed.
     output_image : Image, optional
         The output image where results are written into.
+    device : Device, optional
+        The device where the operation should take place on.
 
     Returns
     -------
-    output_image
+    output_image : Image
+
+    References
+    ----------
+    .. [1] https://clij.github.io/clij2-docs/reference_equal
     """
     from ._pyclesperanto import _EqualKernel_Call as op
 
@@ -713,7 +901,9 @@ def equal(
 
 @plugin_function
 def erode_sphere(
-    input_image: Image, output_image: Image = None, device: Device = None
+    input_image: Image,
+    output_image: Image = None,
+    device: Device = None,
 ) -> Image:
     """Computes a binary image with pixel values 0 and 1 containing the binary
     erosion of a given input image.
@@ -726,11 +916,19 @@ def erode_sphere(
     Parameters
     ----------
     input_image : Image
+        The input image to be processed.
     output_image : Image, optional
+        The output image where results are written into.
+    device : Device, optional
+        The device where the operation should take place on.
 
     Returns
     -------
-    output_image
+    output_image : Image
+
+    References
+    ----------
+    .. [1] https://clij.github.io/clij2-docs/reference_erodeSphere
     """
     from ._pyclesperanto import _ErodeSphereKernel_Call as op
 
@@ -740,20 +938,31 @@ def erode_sphere(
 
 @plugin_function
 def maximum_z_projection(
-    input_image: Image, output_image: Image = None, device: Device = None
+    input_image: Image,
+    output_image: Image = None,
+    device: Device = None,
 ) -> Image:
     """Determines the maximum intensity projection of an image along Z.
 
     Parameters
     ----------
-    input_image : Image 3D
+    input_image : Image
+        input image to be processed, must be 3d
+    output_image : Image, optional
+        The output image where results are written into, will be of n-1 dimensions
+    device : Device, optional
+        The device where the operation should take place on.
 
     Returns
     -------
-    Image 2D
+    output_image : Image of n-1 dimensions
+
+    References
+    ----------
+    .. [1] https://clij.github.io/clij2-docs/reference_maximumZProjection
     """
     shape = input_image.shape
-    output_image = create((shape[1], shape[2]))
+    output_image = create((shape[1], shape[2]), dtype=input_image.dtype)
     from ._pyclesperanto import _MaximumZProjectionKernel_Call as op
 
     op(device, src=input_image, dst=output_image)
@@ -762,20 +971,31 @@ def maximum_z_projection(
 
 @plugin_function
 def maximum_y_projection(
-    input_image: Image, output_image: Image = None, device: Device = None
+    input_image: Image,
+    output_image: Image = None,
+    device: Device = None,
 ) -> Image:
     """Determines the maximum intensity projection of an image along Y.
 
     Parameters
     ----------
-    input_image : Image 3D
+    input_image : Image
+        input image to be processed, must be 2d or 3d
+    output_image : Image, optional
+        The output image where results are written into, will be of n-1 d
+    device : Device, optional
+        The device where the operation should take place on.
 
     Returns
     -------
-    Image 2D
+    output_image : Image of n-1 dimensions
+
+    References
+    ----------
+    .. [1] https://clij.github.io/clij2-docs/reference_maximumYProjection
     """
     shape = input_image.shape
-    output_image = create((shape[0], shape[2]))
+    output_image = create((shape[0], shape[2]), dtype=input_image.dtype)
     from ._pyclesperanto import _MaximumYProjectionKernel_Call as op
 
     op(device, src=input_image, dst=output_image)
@@ -784,20 +1004,31 @@ def maximum_y_projection(
 
 @plugin_function
 def maximum_x_projection(
-    input_image: Image, output_image: Image = None, device: Device = None
+    input_image: Image,
+    output_image: Image = None,
+    device: Device = None,
 ) -> Image:
     """Determines the maximum intensity projection of an image along X.
 
     Parameters
     ----------
-    input_image : Image 3D
+    input_image : Image
+        Input image to be processed
+    output_image : Image, optional
+        The output image where results are written into, will be of n-1 d
+    device : Device, optional
+        The device where the operation should take place on.
 
     Returns
     -------
-    Image 2D
+    output_image : Image of n-1 dimensions
+
+    References
+    ----------
+    .. [1] https://clij.github.io/clij2-docs/reference_maximumXProjection
     """
     shape = input_image.shape
-    output_image = create((shape[1], shape[0]))
+    output_image = create((shape[1], shape[0]), dtype=input_image.dtype)
     from ._pyclesperanto import _MaximumXProjectionKernel_Call as op
 
     op(device, src=input_image, dst=output_image)
@@ -818,12 +1049,14 @@ def subtract_image_from_scalar(
     Parameters
     ----------
     input_image : Image
+        Image to be subtracted from the scalar
     output_image : Image, optional
-    scalar : Number, optional
+        The output image where results are written into.
+    scalar : Number, default 0
 
     Returns
     -------
-    output_image
+    output_image : Image
 
     References
     ----------
@@ -837,7 +1070,9 @@ def subtract_image_from_scalar(
 
 @plugin_function
 def sobel(
-    input_image: Image, output_image: Image = None, device: Device = None
+    input_image: Image,
+    output_image: Image = None,
+    device: Device = None,
 ) -> Image:
     """Convolve the image with the Sobel kernel.
 
@@ -846,11 +1081,15 @@ def sobel(
     Parameters
     ----------
     input_image : Image
+        The input image to be processed.
     output_image : Image, optional
+        The output image where results are written into.
+    device : Device, optional
+        The device where the operation should take place on.
 
     Returns
     -------
-    output_image
+    output_image : Image
 
     References
     ----------
@@ -864,20 +1103,31 @@ def sobel(
 
 @plugin_function
 def minimum_z_projection(
-    input_image: Image, output_image: Image = None, device: Device = None
+    input_image: Image,
+    output_image: Image = None,
+    device: Device = None,
 ) -> Image:
     """Determines the minimum intensity projection of an image along Z.
 
     Parameters
     ----------
-    input_image : Image 3D
+    input_image : Image
+        Input image to be processed, must be 3d
+    output_image : Image, optional
+        The output image where results are written into, will be of n-1 d
+    device : Device, optional
+        The device where the operation should take place on.
 
     Returns
     -------
-    Image 2D
+    output_image : Image 2D
+
+    References
+    ----------
+    .. [1] https://clij.github.io/clij2-docs/reference_minimumZProjection
     """
     shape = input_image.shape
-    output_image = create((shape[1], shape[2]))
+    output_image = create((shape[1], shape[2]), dtype=input_image.dtype)
     from ._pyclesperanto import _MinimumZProjectionKernel_Call as op
 
     op(device, src=input_image, dst=output_image)
@@ -886,20 +1136,31 @@ def minimum_z_projection(
 
 @plugin_function
 def minimum_y_projection(
-    input_image: Image, output_image: Image = None, device: Device = None
+    input_image: Image,
+    output_image: Image = None,
+    device: Device = None,
 ) -> Image:
     """Determines the minimum intensity projection of an image along Y.
 
     Parameters
     ----------
-    input_image : Image 3D
+    input_image : Image
+        Input image to be processed, must be 3d
+    output_image : Image, optional
+        The output image where results are written into, will be of n-1 d
+    device : Device, optional
+        The device where the operation should take place on.
 
     Returns
     -------
-    Image 2D
+    output_image : Image 2D
+
+    References
+    ----------
+    .. [1] https://clij.github.io/clij2-docs/reference_minimumYProjection
     """
     shape = input_image.shape
-    output_image = create((shape[0], shape[2]))
+    output_image = create((shape[0], shape[2]), dtype=input_image.dtype)
     from ._pyclesperanto import _MinimumYProjectionKernel_Call as op
 
     op(device, src=input_image, dst=output_image)
@@ -908,20 +1169,31 @@ def minimum_y_projection(
 
 @plugin_function
 def minimum_x_projection(
-    input_image: Image, output_image: Image = None, device: Device = None
+    input_image: Image,
+    output_image: Image = None,
+    device: Device = None,
 ) -> Image:
     """Determines the minimum intensity projection of an image along X.
 
     Parameters
     ----------
-    input_image : Image 3D
+    input_image : Image
+        Input image to be processed, must be 3d
+    output_image : Image, optional
+        The output image where results are written into, will be of n-1 d
+    device : Device, optional
+        The device where the operation should take place on.
 
     Returns
     -------
-    Image 2D
+    output_image : Image 2D
+
+    References
+    ----------
+    .. [1] https://clij.github.io/clij2-docs/reference_minimumXProjection
     """
     shape = input_image.shape
-    output_image = create((shape[1], shape[0]))
+    output_image = create((shape[1], shape[0]), dtype=input_image.dtype)
     from ._pyclesperanto import _MinimumXProjectionKernel_Call as op
 
     op(device, src=input_image, dst=output_image)
@@ -942,12 +1214,17 @@ def multiply_images(
     Parameters
     ----------
     input_image1 : Image
+        First input image to be processed.
     input_image2 : Image
+        Second input image to be processed.
     output_image : Image, optional
+        The output image where results are written into.
+    device : Device, optional
+        The device where the operation should take place on.
 
     Returns
     -------
-    output_image
+    output_image : Image
 
     References
     ----------
@@ -973,12 +1250,17 @@ def multiply_image_and_scalar(
     Parameters
     ----------
     input_image : Image
+        Input image to be processed.
     output_image : Image, optional
-    scalar : Number, optional
+        The output image where results are written into.
+    scalar : Number, default 0
+        The scalar to multiply with.
+    device : Device, optional
+        The device where the operation should take place on.
 
     Returns
     -------
-    output_image
+    output_image : Image
 
     References
     ----------
@@ -1004,12 +1286,17 @@ def not_equal_constant(
     Parameters
     ----------
     input_image : Image
+        Input image to be processed.
     output_image : Image, optional
-    constant : Number, optional
+        The output image where results are written into.
+    constant : Number, default 0
+        The constant to compare to.
+    device : Device, optional
+        The device where the operation should take place on.
 
     Returns
     -------
-    output_image
+    output_image : Image
 
     References
     ----------
@@ -1035,12 +1322,17 @@ def not_equal(
     Parameters
     ----------
     input_image1 : Image
+        First input image to be processed.
     input_image2 : Image
+        Second input image to be processed.
     output_image : Image, optional
+        The output image where results are written into.
+    device : Device, optional
+        The device where the operation should take place on.
 
     Returns
     -------
-    output_image
+    output_image : Image
 
     References
     ----------
@@ -1066,12 +1358,17 @@ def power(
     Parameters
     ----------
     input_image : Image
+        Image to be processed.
     output_image : Image, optional
-    exponent : Number, optional
+        The output image where results are written into.
+    exponent : Number, default 1
+        The exponent to apply.
+    device : Device, optional
+        The device where the operation should take place on.
 
     Returns
     -------
-    output_image
+    output_image : Image
 
     References
     ----------
@@ -1085,7 +1382,10 @@ def power(
 
 @plugin_function
 def power_images(
-    input_image1: Image, input_image2: Image, output_image: Image, device: Device = None
+    input_image1: Image,
+    input_image2: Image,
+    output_image: Image,
+    device: Device = None,
 ) -> Image:
     """Computes all pairs of pixels x and y value x to the power of y.
 
@@ -1094,12 +1394,17 @@ def power_images(
     Parameters
     ----------
     input_image1 : Image
+        First input image to be processed.
     input_image2 : Image
+        Second input image to be processed.
     output_image : Image, optional
+        The output image where results are written into.
+    device : Device, optional
+        The device where the operation should take place on.
 
     Returns
     -------
-    output_image
+    output_image : Image
 
     References
     ----------
@@ -1125,12 +1430,17 @@ def smaller_constant(
     Parameters
     ----------
     input_image : Image
+        Input image to be processed.
     output_image : Image, optional
-    constant : Number, optional
+        The output image where results are written into.
+    constant : Number, default 0
+        The constant to compare to.
+    device : Device, optional
+        The device where the operation should take place on.
 
     Returns
     -------
-    output_image
+    output_image : Image
 
     References
     ----------
@@ -1156,12 +1466,17 @@ def smaller(
     Parameters
     ----------
     input_image1 : Image
+        First input image to be processed.
     input_image2 : Image
+        Second input image to be processed.
     output_image : Image, optional
+        The output image where results are written into.
+    device : Device, optional
+        The device where the operation should take place on.
 
     Returns
     -------
-    output_image
+    output_image : Image
 
     References
     ----------
@@ -1187,12 +1502,17 @@ def smaller_or_equal_constant(
     Parameters
     ----------
     input_image : Image
+        Input image to be processed.
     output_image : Image, optional
+        The output image where results are written into.
     constant : Number, optional
+        The constant to compare to.
+    device : Device, optional
+        The device where the operation should take place on.
 
     Returns
     -------
-    output_image
+    output_image : Image
 
     References
     ----------
@@ -1218,12 +1538,17 @@ def smaller_or_equal(
     Parameters
     ----------
     input_image1 : Image
+        First input image to be processed.
     input_image2 : Image
+        Second input image to be processed.
     output_image : Image, optional
+        The output image where results are written into.
+    device : Device, optional
+        The device where the operation should take place on.
 
     Returns
     -------
-    output_image
+    output_image : Image
 
     References
     ----------
@@ -1237,20 +1562,31 @@ def smaller_or_equal(
 
 @plugin_function
 def sum_z_projection(
-    input_image: Image, output_image: Image = None, device: Device = None
+    input_image: Image,
+    output_image: Image = None,
+    device: Device = None,
 ) -> Image:
     """Determines the sum intensity projection of an image along Z.
 
     Parameters
     ----------
-    input_image : Image 3D
+    input_image : Image
+        Input image to be processed, must be 3d
+    output_image : Image, optional
+        The output image where results are written into, will be of n-1 d
+    device : Device, optional
+        The device where the operation should take place on.
 
     Returns
     -------
-    Image 2D
+    output_image : Image of n-1 d
+
+    References
+    ----------
+    .. [1] https://clij.github.io/clij2-docs/reference_sumZProjection
     """
     shape = input_image.shape
-    output_image = create((shape[1], shape[2]))
+    output_image = create((shape[1], shape[2]), dtype=input_image.dtype)
     from ._pyclesperanto import _SumZProjectionKernel_Call as op
 
     op(device, src=input_image, dst=output_image)
@@ -1259,20 +1595,31 @@ def sum_z_projection(
 
 @plugin_function
 def sum_y_projection(
-    input_image: Image, output_image: Image = None, device: Device = None
+    input_image: Image,
+    output_image: Image = None,
+    device: Device = None,
 ) -> Image:
     """Determines the sum intensity projection of an image along Y.
 
     Parameters
     ----------
-    input_image : Image 3D
+    input_image : Image
+        Input image to be processed, must be 2d or 3d
+    output_image : Image, optional
+        The output image where results are written into, will be of n-1 d
+    device : Device, optional
+        The device where the operation should take place on.
 
     Returns
     -------
-    Image 2D
+    output_image : Image of n-1 d
+
+    References
+    ----------
+    .. [1] https://clij.github.io/clij2-docs/reference_sumYProjection
     """
     shape = input_image.shape
-    output_image = create((shape[0], shape[2]))
+    output_image = create((shape[0], shape[2]), dtype=input_image.dtype)
     from ._pyclesperanto import _SumYProjectionKernel_Call as op
 
     op(device, src=input_image, dst=output_image)
@@ -1281,20 +1628,31 @@ def sum_y_projection(
 
 @plugin_function
 def sum_x_projection(
-    input_image: Image, output_image: Image = None, device: Device = None
+    input_image: Image,
+    output_image: Image = None,
+    device: Device = None,
 ) -> Image:
     """Determines the sum intensity projection of an image along X.
 
     Parameters
     ----------
-    input_image : Image 3D
+    input_image : Image
+        Input image to be processed
+    output_image : Image, optional
+        The output image where results are written into, will be of n-1 d
+    device : Device, optional
+        The device where the operation should take place on.
 
     Returns
     -------
-    Image 2D
+    output_image : Image of n-1 d
+
+    References
+    ----------
+    .. [1] https://clij.github.io/clij2-docs/reference_sumXProjection
     """
     shape = input_image.shape
-    output_image = create((shape[1], shape[0]))
+    output_image = create((shape[1], shape[0]), dtype=input_image.dtype)
     from ._pyclesperanto import _SumXProjectionKernel_Call as op
 
     op(device, src=input_image, dst=output_image)

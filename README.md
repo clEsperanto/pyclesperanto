@@ -143,7 +143,7 @@ Contribution are also very welcome. Please read our [community guidelines] befor
 If you liked our work, star the repository, share it with your friends, and use it to make cool stuff!
 
 [clEsperanto]: http://clesperanto.net/
-[OpenCL kernels]: https://github.com/clEsperanto/clij-opencl-kernels/tree/development/src/main/java/net/haesleinhuepf/clij/kernels
+[OpenCL kernels]: https://github.com/clEsperanto/clij-opencl-kernels/tree/clesperanto_kernels
 [CLIJ]: http://clij.github.io/
 [CLIc]: https://github.com/clEsperanto/CLIc_prototype
 [community guidelines]: https://clij.github.io/clij2-docs/community_guidelines

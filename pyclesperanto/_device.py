@@ -18,16 +18,47 @@ class Device(_cleProcessor):
 
     @property
     def name(self) -> str:
+        """name returns the name of the device
+
+        Returns
+        -------
+        str
+            device name
+        """
         return super().name
 
     @property
     def info(self) -> str:
+        """info returns a description of the device
+        
+        Returns
+        -------
+        str
+            device description
+        """
         return super().info
 
-    def select_device(self, name: str = "") -> None:
-        super().select_device(name)
+    def select_device(self, name: str = "", device_type: str = "all") -> None:
+        """select_device selects a device by name and type
+        
+        Parameters
+        ----------
+        name : str, default = ""
+            Name or subname of the device to be selected (e.g. "NVIDIA", "RTX", "Intel Iris", etc.)
+        device_type : str, default = "all"
+            Type of device to be selected (e.g. "all", "cpu", "gpu")
+        """
+        super().select_device(name, device_type)
 
     def wait_for_kernel_to_finish(self, flag: bool = True) -> None:
+        """wait_for_kernel_to_finish configures asyncronous execution of OpenCL kernels (False)
+
+        Configure clEsperanto to wait for the kernel to finish before returning control to the host.
+
+        Parameters
+        ----------
+        flag : bool, default = True
+        """
         super().wait_for_kernel_to_finish(flag)
 
 
@@ -45,7 +76,7 @@ def get_device() -> Device:
     return _current_device._instance or select_device()
 
 
-def select_device(name: str = "") -> Device:
+def select_device(name: str = "", device_type: str = "all") -> Device:
     """Select a device by name and return it
 
     Select device using its name or subname (e.g. "NVIDIA", "RTX", "Intel Iris", etc.)
@@ -55,6 +86,8 @@ def select_device(name: str = "") -> Device:
     ----------
     name : str, default = ""
         Name or subname of the device to be selected (e.g. "NVIDIA", "RTX", "Intel Iris", etc.)
+    device_type : str, default = "all"
+        Type of device to be selected (e.g. "all", "cpu", "gpu")
 
     Returns
     -------
@@ -62,7 +95,7 @@ def select_device(name: str = "") -> Device:
     """
     if not _current_device._instance:
         _current_device._instance = Device()
-    _current_device._instance.select_device(name)
+    _current_device._instance.select_device(name, device_type)
     return _current_device._instance
 
 

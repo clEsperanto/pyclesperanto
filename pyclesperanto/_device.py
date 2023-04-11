@@ -48,7 +48,7 @@ class Device(_cleProcessor):
         device_type : str, default = "all"
             Type of device to be selected (e.g. "all", "cpu", "gpu")
         """
-        super().select_device(name, device_type)
+        super().select_device(name=name, type=device_type)
 
     def wait_for_kernel_to_finish(self, flag: bool = True) -> None:
         """wait_for_kernel_to_finish configures asyncronous execution of OpenCL kernels (False)
@@ -59,7 +59,7 @@ class Device(_cleProcessor):
         ----------
         flag : bool, default = True
         """
-        super().wait_for_kernel_to_finish(flag)
+        super().wait_for_kernel_to_finish(flag=flag)
 
 
 class _current_device:
@@ -74,6 +74,12 @@ def get_device() -> Device:
     device : Device
     """
     return _current_device._instance or select_device()
+
+
+def new_device(name: str ="", device_type: str = "all") -> Device:
+    dev = Device()
+    dev.select_device(name, device_type)
+    return dev
 
 
 def select_device(name: str = "", device_type: str = "all") -> Device:
@@ -99,7 +105,7 @@ def select_device(name: str = "", device_type: str = "all") -> Device:
     return _current_device._instance
 
 
-def list_available_devices() -> list:
+def list_available_devices(device_type: str = "all") -> list:
     """Retrieve a list of names of available OpenCL-devices
 
     Will search system for available OpenCL compatible device and return a list of their names.
@@ -111,7 +117,7 @@ def list_available_devices() -> list:
     """
     from ._pyclesperanto import _ListAvailableDevices
 
-    return list(_ListAvailableDevices())
+    return list(_ListAvailableDevices(type=device_type))
 
 
 def set_wait_for_kernel_to_finish(flag: bool = True) -> None:
@@ -123,7 +129,7 @@ def set_wait_for_kernel_to_finish(flag: bool = True) -> None:
     ----------
     flag : bool, default = True
     """
-    get_device().wait_for_kernel_to_finish(flag)
+    get_device().wait_for_kernel_to_finish(flag=flag)
 
 
 def info() -> str:

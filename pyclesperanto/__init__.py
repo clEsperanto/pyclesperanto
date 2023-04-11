@@ -14,8 +14,10 @@ from ._image import (
     DataType,
 )
 from ._device import (
+    Device,
     get_device,
     select_device,
+    new_device,
     list_available_devices,
     set_wait_for_kernel_to_finish,
     info,

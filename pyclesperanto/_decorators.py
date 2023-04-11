@@ -12,7 +12,7 @@ from ._device import Device, get_device
 def plugin_function(
     function: Callable,
     output_creator: Callable = create_like,
-    device_selector: Callable = get_device,
+    # device_selector: Callable = get_device,
     categories: Optional[list] = None,
     priority: int = 0,
 ) -> Callable:
@@ -75,16 +75,22 @@ def plugin_function(
                 and value is None
             ):
                 sig2 = inspect.signature(output_creator)
+                # bound.arguments[key] = output_creator(
+                #     *bound.args[0 : len(sig2.parameters)]
+                # )
+                input_image_index = function.fullargspec.args.index("input_image")
                 bound.arguments[key] = output_creator(
-                    *bound.args[0 : len(sig2.parameters)]
+                    bound.args[input_image_index]
                 )
             if (
                 key in sig.parameters
                 and sig.parameters[key].annotation is Device
                 and value is None
             ):
-                sig2 = inspect.signature(device_selector)
-                bound.arguments[key] = device_selector()
+                input_image = bound.arguments["input_image"]
+                bound.arguments[key] = input_image.device
+                # sig2 = inspect.signature(device_selector)
+                # bound.arguments[key] = device_selector()
 
         # call the decorated function
         return function(*bound.args, **bound.kwargs)

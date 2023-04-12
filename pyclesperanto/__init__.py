@@ -8,10 +8,12 @@ from ._memory_operations import (
     pull,
     push,
 )
-from ._image import (
-    Image,
+from ._types import (
     MemoryType,
     DataType,
+)
+from ._image import (
+    Image,
 )
 from ._device import (
     Device,

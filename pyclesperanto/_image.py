@@ -4,13 +4,9 @@ from typing import Union
 import numpy as np
 
 from ._pyclesperanto import _cleImage
-from ._pyclesperanto import _cleMemType, _cleDataType
 from ._image_operators import ImageOperators
 from ._device import Device
-
-DataType = _cleDataType
-MemoryType = _cleMemType
-
+from ._types import MemoryType, DataType
 
 class cleImage(_cleImage, ImageOperators):
     """cleImage
@@ -23,26 +19,9 @@ class cleImage(_cleImage, ImageOperators):
         C++ OpenCL Image class running behind cleImage accessible using `super()`
     """
 
-    _data_type_dict = {  # type: ignore
-        DataType.uint8: np.uint8,
-        DataType.uint16: np.uint16,
-        DataType.uint32: np.uint32,
-        DataType.uint64: np.uint64,
-        DataType.int8: np.int8,
-        DataType.int16: np.int16,
-        DataType.int32: np.int32,
-        DataType.int64: np.int64,
-        DataType.float32: np.float32,
-    }
-
-    _memory_type_dict = {  # type: ignore
-        MemoryType.buffer: "buffer",
-        MemoryType.image: "image",
-    }
-
-    def __init__(self, image: _cleImage) -> None:
+    def __init__(self, image: _cleImage):
         super().__init__(image)
-
+    
     @property
     def device(self) -> Device:
         return super().GetDevice()
@@ -53,11 +32,11 @@ class cleImage(_cleImage, ImageOperators):
 
     @property
     def dtype(self) -> type:
-        return self._data_type_dict[super().GetDataType()]
+        return DataType(super().GetDataType()).type
 
     @property
     def mtype(self) -> MemoryType:
-        return super().GetMemoryType()
+        return MemoryType(super().GetMemoryType())
 
     @property
     def shape(self) -> tuple:
@@ -75,21 +54,22 @@ class cleImage(_cleImage, ImageOperators):
     @property
     def size(self) -> int:
         return super().Size()
+    
+    def get(self) -> np.ndarray:
+        from ._memory_operations import pull
+        return np.asarray(pull(self))
+    
+    def __array__(self, dtype=None) -> np.ndarray:
+        if dtype is None:
+            return self.get()
+        else:
+            return self.get().astype(dtype)
 
     def __str__(self) -> str:
-        return str(
-            "py::cle::Image("
-            + self._memory_type_dict[self.mtype]
-            + str(self.ndim)
-            + "d, shape="
-            + str(self.shape)
-            + ", dtype="
-            + str(np.dtype(self.dtype))
-            + ")"
-        )
+        return str(self.get())
 
     def __repr__(self) -> str:
-        return super().__repr__()
+        return f"cleImage({self.get()}, dtype={self.dtype}, mtype={self.mtype})"
 
     def __len__(self) -> int:
         return super().__len__()

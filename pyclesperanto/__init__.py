@@ -8,14 +8,18 @@ from ._memory_operations import (
     pull,
     push,
 )
-from ._image import (
-    Image,
+from ._types import (
     MemoryType,
     DataType,
 )
+from ._image import (
+    Image,
+)
 from ._device import (
+    Device,
     get_device,
     select_device,
+    new_device,
     list_available_devices,
     set_wait_for_kernel_to_finish,
     info,

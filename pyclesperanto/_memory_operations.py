@@ -13,7 +13,8 @@ from ._pyclesperanto import (
     _PullUint8,
 )
 from ._device import Device, get_device
-from ._image import Image, MemoryType
+from ._image import Image
+from ._types import MemoryType 
 from typing import Optional, Union
 
 
@@ -45,13 +46,11 @@ def create(
     """
     from ._image import cleImage
 
-    if mtype is None:
-        mtype = MemoryType.buffer
     if dtype is None:
         dtype = np.float32
     if device is None:
         device = get_device()
-    return cleImage(_Create(device, shape, dtype, mtype))
+    return cleImage(_Create(device, shape, np.dtype(dtype), MemoryType(mtype).type))
 
 
 def create_like(
@@ -112,11 +111,9 @@ def push(
     if isinstance(array, cleImage):
         return array
     else:
-        if mtype is None:
-            mtype = MemoryType.buffer
         if device is None:
             device = get_device()
-        return cleImage(_Push(device, np.asarray(array), mtype))
+        return cleImage(_Push(device, np.asarray(array), MemoryType(mtype).type))
 
 
 def pull(image: Image) -> Image:
@@ -138,17 +135,17 @@ def pull(image: Image) -> Image:
 
     # TODO: should this dict be moved in the cleImage class?
     pull_dict = {
-        np.float32: _PullFloat,
-        np.uint8: _PullUint8,
-        np.uint16: _PullUint16,
-        np.uint32: _PullUint32,
-        np.uint64: _PullUint64,
-        np.int8: _PullInt8,
-        np.int16: _PullInt16,
-        np.int32: _PullInt32,
-        np.int64: _PullInt64,
+        'float32': _PullFloat,
+        'uint8': _PullUint8,
+        'uint16': _PullUint16,
+        'uint32': _PullUint32,
+        'uint64': _PullUint64,
+        'int8': _PullInt8,
+        'int16': _PullInt16,
+        'int32': _PullInt32,
+        'int64': _PullInt64,
     }
     if isinstance(image, cleImage):
-        return pull_dict[image.dtype](image)
+        return pull_dict[image.dtype.name](image)
     else:
         return image

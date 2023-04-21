@@ -47,7 +47,6 @@ def execute(anchor: str, opencl_filename: str, kernel_name: str, parameters: dic
         parameters=cpp_parameter_map,
         # constants=cpp_constant_map,
     )
-    print("Done!")
 
 
 

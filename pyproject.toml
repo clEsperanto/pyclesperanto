@@ -43,4 +43,5 @@ skip = ["cp27-*", "cp36-*", "pp*", "*-win32"]
 
 [tool.cibuildwheel.macos]
 before-all = "bash {package}/scripts/build-opencl-macos.sh"
+environment = {MACOSX_DEPLOYMENT_TARGET = '10.14'}
 skip = ["cp27-*", "cp36-*", "pp*", "*_universal2"]

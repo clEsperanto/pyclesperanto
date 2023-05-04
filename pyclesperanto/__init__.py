@@ -26,6 +26,7 @@ from ._device import (
 )
 from ._functionalities import (
     imshow,
+    execute,
 )
 from ._tier1 import (
     add_image_and_scalar,

@@ -1,5 +1,53 @@
-from ._memory_operations import pull
+from os import path
 from typing import Optional, Union
+
+from ._memory_operations import pull
+from ._device import Device, get_device
+
+def execute(anchor: str, opencl_filename: str, kernel_name: str, parameters: dict, global_range: Optional[tuple] = None, device: Optional[Device] = None):
+    """Execute a custom OpenCL kernel.
+
+    Parameters
+    ----------
+    anchor : str
+        Path to the directory where the kernel file is located.
+    opencl_kernel_filename : str
+        Name of the OpenCL kernel file, e.g. "my_kernel.cl".
+    kernel_name : str
+        Name of the kernel function to be executed in the OpenCL kernel file.
+    parameters : dict
+        Dictionary of parameters to be passed to the kernel function, e.g. {"src": src, "dst": dst}.
+    global_range : tuple, optional
+        Global size of the kernel execution, by default None.
+    device : Device, optional
+        Device to be used for execution, by default None.
+    """
+    from ._pyclesperanto import _std_variant as std_variant
+    from ._pyclesperanto import _CustomKernel_Call as op
+
+    if global_range is None:
+        global_range = (0,0,0)
+    else:
+        if len(global_range) == 2:
+            global_range = (1, global_range[0], global_range[1])
+        if len(global_range) == 1:
+            global_range = (1, 1, global_range[0])
+
+    if device is None:
+        device = parameters['src'].device or parameters['src1'].device or get_device()
+
+    cpp_parameter_map = {key: std_variant(val) for key, val in parameters.items()} 
+    op(
+        device, 
+        file_name=str(path.join(anchor, opencl_filename)), 
+        kernel_name=kernel_name,
+        dx=global_range[2],
+        dy=global_range[1],
+        dz=global_range[0],
+        parameters=cpp_parameter_map,
+        # constants=cpp_constant_map,
+    )
+
 
 
 def imshow(

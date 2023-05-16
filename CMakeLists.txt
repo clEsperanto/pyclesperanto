@@ -40,7 +40,7 @@ option(BUILD_BENCHMARK  OFF)
 FetchContent_Declare(
   CLIc_lib 
   GIT_REPOSITORY https://github.com/clEsperanto/CLIc_prototype.git
-  GIT_TAG improve-custom-kernel-call #${CLIC_VERSION}
+  GIT_TAG master #${CLIC_VERSION}
 )
 FetchContent_MakeAvailable(CLIc_lib)
 

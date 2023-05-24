@@ -37,7 +37,7 @@ def add_image_and_scalar(
 
     from ._pyclesperanto import _AddImageAndScalarKernel_Call as op
 
-    op(device, src=input_image, dst=output_image, scalar=float(scalar))
+    op(device, src=input_image, dst=output_image, value=float(scalar))
     return output_image
 
 

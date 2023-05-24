@@ -10,7 +10,7 @@ def detect_maxima_box():
 
 
 def maximum_of_all_pixels():
-    cle.maximum_of_all_pixels(np.random.rand(10, 20))
+    cle.maximum_of_all_pixels(np.random.rand(20, 20))
 
 
 def minimum_of_all_pixels():
@@ -18,7 +18,7 @@ def minimum_of_all_pixels():
 
 
 def sum_of_all_pixels():
-    cle.sum_of_all_pixels(np.random.rand(20, 10))
+    cle.sum_of_all_pixels(np.random.rand(20, 20))
 
 
 def extend_labeling_via_voronoi():
@@ -26,4 +26,4 @@ def extend_labeling_via_voronoi():
 
 
 def top_hat_box():
-    cle.top_hat_box(np.random.rand(20, 10), radius_x = 2, radius_y = 2, radius_z = 1)
+    cle.top_hat_box(np.random.rand(10, 10), radius_x = 2, radius_y = 2, radius_z = 1)

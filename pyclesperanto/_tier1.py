@@ -85,8 +85,8 @@ def add_images_weighted(
         src1=input_image1,
         src2=input_image2,
         dst=output_image,
-        weight1=float(factor1),
-        weight2=float(factor2),
+        w1=float(factor1),
+        w2=float(factor2),
     )
     return output_image
 
@@ -499,7 +499,7 @@ def greater(
 def greater_or_equal_constant(
     input_image: Image,
     output_image: Image = None,
-    scalar: float = 0,
+    constant: float = 0,
     device: Device = None,
 ) -> Image:
     """Determines if an images A is greater or equal a given scalar b.
@@ -512,7 +512,7 @@ def greater_or_equal_constant(
         image to be compared
     output_image : Image, optional
         The output image where results are written into.
-    scalar : Number, default 0
+    constant : Number, default 0
     device : Device, optional
         The device where the operation should take place on.
 
@@ -526,7 +526,7 @@ def greater_or_equal_constant(
     """
     from ._pyclesperanto import _GreaterOrEqualConstantKernel_Call as op
 
-    op(device, src=input_image, dst=output_image, scalar=float(scalar))
+    op(device, src=input_image, dst=output_image, value=float(constant))
     return output_image
 
 
@@ -534,7 +534,7 @@ def greater_or_equal_constant(
 def greater_constant(
     input_image: Image,
     output_image: Image = None,
-    scalar: float = 0,
+    constant: float = 0,
     device: Device = None,
 ) -> Image:
     """Determines if an images A is greater a given scalar b.
@@ -547,7 +547,7 @@ def greater_constant(
         image to be compared
     output_image : Image, optional
         The output image where results are written into.
-    scalar : Number, default 0
+    constant : Number, default 0
     device : Device, optional
         The device where the operation should take place on.
 
@@ -561,7 +561,7 @@ def greater_constant(
     """
     from ._pyclesperanto import _GreaterConstantKernel_Call as op
 
-    op(device, src=input_image, dst=output_image, scalar=float(scalar))
+    op(device, src=input_image, dst=output_image, value=float(constant))
     return output_image
 
 
@@ -858,7 +858,7 @@ def equal_constant(
     """
     from ._pyclesperanto import _EqualConstantKernel_Call as op
 
-    op(device, src=input_image, dst=output_image, constant=constant)
+    op(device, src=input_image, dst=output_image, value=constant)
     return output_image
 
 
@@ -1268,7 +1268,7 @@ def multiply_image_and_scalar(
     """
     from ._pyclesperanto import _MultiplyImageAndScalarKernel_Call as op
 
-    op(device, src=input_image, dst=output_image, scalar=float(scalar))
+    op(device, src=input_image, dst=output_image, value=float(scalar))
     return output_image
 
 
@@ -1304,7 +1304,7 @@ def not_equal_constant(
     """
     from ._pyclesperanto import _NotEqualConstantKernel_Call as op
 
-    op(device, src=input_image, dst=output_image, constant=float(constant))
+    op(device, src=input_image, dst=output_image, value=float(constant))
     return output_image
 
 
@@ -1376,7 +1376,7 @@ def power(
     """
     from ._pyclesperanto import _PowerKernel_Call as op
 
-    op(device, src=input_image, dst=output_image, exponent=float(exponent))
+    op(device, src=input_image, dst=output_image, scalar=float(exponent))
     return output_image
 
 
@@ -1384,7 +1384,7 @@ def power(
 def power_images(
     input_image1: Image,
     input_image2: Image,
-    output_image: Image,
+    output_image: Image = None,
     device: Device = None,
 ) -> Image:
     """Computes all pairs of pixels x and y value x to the power of y.
@@ -1448,7 +1448,7 @@ def smaller_constant(
     """
     from ._pyclesperanto import _SmallerConstantKernel_Call as op
 
-    op(device, src=input_image, dst=output_image, constant=float(constant))
+    op(device, src=input_image, dst=output_image, value=float(constant))
     return output_image
 
 
@@ -1520,7 +1520,7 @@ def smaller_or_equal_constant(
     """
     from ._pyclesperanto import _SmallerOrEqualConstantKernel_Call as op
 
-    op(device, src=input_image, dst=output_image, constant=float(constant))
+    op(device, src=input_image, dst=output_image, value=float(constant))
     return output_image
 
 

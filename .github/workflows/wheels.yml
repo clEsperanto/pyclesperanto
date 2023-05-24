@@ -4,13 +4,10 @@ name: Build & Deploy
 on:
   push:
     branches: [main]
-    paths-ignore:
-      - '**.rst'
-      - '**.txt'
   pull_request:
     branches: [main]
   release:
-    types: [published]
+      types: [created]
 
 jobs:
   build_wheels:
@@ -55,7 +52,7 @@ jobs:
     # upload to PyPI on every tag starting with 'v'
     # if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')
     # upload to PyPI on release event
-    # if: github.event_name == 'release' && github.event.action == 'created'
+    if: github.event_name == 'release' && success()
     steps:
       - uses: actions/setup-python@v4
         with:

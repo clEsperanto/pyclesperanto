@@ -22,7 +22,7 @@ def sum_of_all_pixels():
 
 
 def extend_labeling_via_voronoi():
-    cle.extend_labeling_via_voronoi(np.random.rand(10, 10))
+    cle.extend_labeling_via_voronoi(np.random.rand(10, 10).astype(int))
 
 
 def top_hat_box():

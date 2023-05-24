@@ -1064,7 +1064,7 @@ def subtract_image_from_scalar(
     """
     from ._pyclesperanto import _SubtractImageFromScalarKernel_Call as op
 
-    op(device, src=input_image, dst=output_image, scalar=float(scalar))
+    op(device, src=input_image, dst=output_image, value=float(scalar))
     return output_image
 
 

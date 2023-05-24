@@ -61,6 +61,10 @@ def plugin_function(
         # https://docs.python.org/3/library/inspect.html#inspect.BoundArguments.apply_defaults
         bound.apply_defaults()
 
+        args_list = function.fullargspec.args
+        index = next((i for i, element in enumerate(args_list) if "input_image" in element), -1)
+        arg_name = args_list[index]
+
         # copy images to GPU, and create output array if necessary
         for key, value in bound.arguments.items():
             if (
@@ -74,11 +78,11 @@ def plugin_function(
                 and sig.parameters[key].annotation is Image
                 and value is None
             ):
-                sig2 = inspect.signature(output_creator)
+                # sig2 = inspect.signature(output_creator)
                 # bound.arguments[key] = output_creator(
                 #     *bound.args[0 : len(sig2.parameters)]
-                # )
-                input_image_index = function.fullargspec.args.index("input_image")
+                # )                
+                input_image_index = args_list.index(arg_name)
                 bound.arguments[key] = output_creator(
                     bound.args[input_image_index]
                 )
@@ -87,7 +91,7 @@ def plugin_function(
                 and sig.parameters[key].annotation is Device
                 and value is None
             ):
-                input_image = bound.arguments["input_image"]
+                input_image = bound.arguments[arg_name]
                 bound.arguments[key] = input_image.device
                 # sig2 = inspect.signature(device_selector)
                 # bound.arguments[key] = device_selector()

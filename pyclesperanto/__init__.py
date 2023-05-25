@@ -105,7 +105,7 @@ import os
 os.environ["PYCLESPERANTO_HOME"] = os.path.dirname(os.path.abspath(__file__))
 
 # redefine memory type for easy usage
-buffer = MemoryType.buffer
-image = MemoryType.image
+buffer = MemoryType.buffer()
+image = MemoryType.image()
 
 __common_alias__ = "cle"

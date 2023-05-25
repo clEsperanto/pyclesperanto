@@ -79,7 +79,7 @@ def create_like(
     if dtype is None:
         dtype = image.dtype
     if mtype is None:
-        mtype = image.mtype if isinstance(image, cleImage) else MemoryType.buffer
+        mtype = image.mtype if isinstance(image, cleImage) else MemoryType.buffer()
     if device is None:
         device = image.device if isinstance(image, cleImage) else get_device()
     return create(shape=tuple(image.shape), dtype=dtype, mtype=mtype, device=device)

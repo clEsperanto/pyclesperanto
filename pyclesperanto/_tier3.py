@@ -36,8 +36,8 @@ def histogram(input_image: Image, bins: int = 256, device: Device = None) -> Ima
         device,
         src=input_image,
         dst=output_image,
+        bin=int(bins),
         min_intensity=math.inf,
         max_intensity=math.inf,
-        bins=int(bins),
     )
     return output_image

@@ -89,6 +89,7 @@ from ._tier3 import (
 )
 from ._tier4 import (
     connected_components_labeling_box,
+    connected_components_labeling_box as label,
     threshold_otsu,
 )
 from ._tier5 import (

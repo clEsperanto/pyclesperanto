@@ -1,5 +1,5 @@
 # pyclesperanto version
-VERSION_CODE = (0, 6, 6)
+VERSION_CODE = (0, 6, 7)
 VERSION_STATUS = ""
 VERSION = ".".join(str(x) for x in VERSION_CODE) + VERSION_STATUS
 

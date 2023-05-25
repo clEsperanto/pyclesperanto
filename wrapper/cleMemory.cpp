@@ -67,7 +67,9 @@ auto Create(const std::shared_ptr<cle::Processor> &device, const pybind11::tuple
     }
     else
     {
-        throw std::runtime_error("Unsupported data type");
+        std::cerr << "Warning: Unknown data type. Using float32 as default." << std::endl;
+        return cle::Memory::AllocateMemory(device, c_shape, cle::DataType::FLOAT32, mtype);
+        // throw std::runtime_error("Unsupported data type");
     }
 }
 

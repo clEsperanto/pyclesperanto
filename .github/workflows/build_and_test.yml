@@ -51,6 +51,7 @@ jobs:
         shell: bash -l {0}
         run: |
           pip install . -vvv
+          pip install -e .
 
       - name: Tests
         shell: bash -l {0}

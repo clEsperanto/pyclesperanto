@@ -36,5 +36,5 @@ def masked_voronoi_labeling(
     """
     from ._pyclesperanto import _MaskedVoronoiLabelingKernel_Call as op
 
-    op(device, src=input_image, mask=mask_image, dst=output_image)
+    op(device, src=input_image, dst=output_image, mask=mask_image)
     return output_image

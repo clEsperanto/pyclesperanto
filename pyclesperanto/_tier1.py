@@ -786,6 +786,43 @@ def binary_subtract(
     op(device, src1=input_image1, src2=input_image2, dst=output_image)
     return output_image
 
+@plugin_function
+def detect_maxima(
+    input_image: Image,
+    output_image: Image = None,
+    device: Device = None,
+) -> Image:
+    """Detects local maxima in a given square/cubic neighborhood.
+
+    Pixels in the resulting image are set to 1 if there is no other pixel in a
+    given radius which has a
+    higher intensity, and to 0 otherwise.
+
+    Parameters
+    ----------
+    input_image : Image
+        The input image to be processed.
+    output_image : Image, optional
+        The output image where results are written into.
+    device : Device, optional
+        The device to be used for computation.
+
+    Returns
+    -------
+    output_image: Image
+
+    References
+    ----------
+    .. [1] https://clij.github.io/clij2-docs/reference_detectMaximaBox
+    """
+    from ._pyclesperanto import _DetectMaximaKernel_Call as op
+
+    op(
+        device,
+        src=input_image,
+        dst=output_image,
+    )
+    return output_image
 
 @plugin_function
 def dilate_sphere(

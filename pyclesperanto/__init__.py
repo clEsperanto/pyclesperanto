@@ -74,10 +74,10 @@ from ._tier1 import (
     sum_z_projection,
     sum_y_projection,
     sum_x_projection,
+    detect_maxima,
 )
 from ._tier2 import (
     difference_of_gaussian,
-    detect_maxima_box,
     maximum_of_all_pixels,
     minimum_of_all_pixels,
     sum_of_all_pixels,

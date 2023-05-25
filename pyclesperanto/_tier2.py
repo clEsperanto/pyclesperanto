@@ -66,58 +66,6 @@ def difference_of_gaussian(
     )
     return output_image
 
-
-@plugin_function
-def detect_maxima_box(
-    input_image: Image,
-    output_image: Image = None,
-    radius_x: int = 0,
-    radius_y: int = 0,
-    radius_z: int = 0,
-    device: Device = None,
-) -> Image:
-    """Detects local maxima in a given square/cubic neighborhood.
-
-    Pixels in the resulting image are set to 1 if there is no other pixel in a
-    given radius which has a
-    higher intensity, and to 0 otherwise.
-
-    Parameters
-    ----------
-    input_image : Image
-        The input image to be processed.
-    output_image : Image, optional
-        The output image where results are written into.
-    radius_x : int, default 0
-        Radius of the square/cubic neighborhood in x
-    radius_y : int, default 0
-        Radius of the square/cubic neighborhood in y
-    radius_z : int, default 0
-        Radius of the square/cubic neighborhood in z
-    device : Device, optional
-        The device to be used for computation.
-
-    Returns
-    -------
-    output_image: Image
-
-    References
-    ----------
-    .. [1] https://clij.github.io/clij2-docs/reference_detectMaximaBox
-    """
-    from ._pyclesperanto import _DetectMaximaBoxKernel_Call as op
-
-    op(
-        device,
-        src=input_image,
-        dst=output_image,
-        radius_x=int(radius_x),
-        radius_y=int(radius_y),
-        radius_z=int(radius_z),
-    )
-    return output_image
-
-
 @plugin_function
 def maximum_of_all_pixels(
     input_image: Image,

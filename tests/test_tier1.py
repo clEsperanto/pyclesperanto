@@ -1,13 +1,16 @@
 import pyclesperanto as cle
 import numpy as np
 
-data_3d = np.random.random((10,10,10))
+data_3d = np.random.random((3,7,10))
 
 def test_add_image_and_scalar():
     cle.add_image_and_scalar(input_image=data_3d, scalar=1)
 
 def test_add_images_weighted():
     cle.add_images_weighted(input_image1=data_3d,input_image2=data_3d, factor1=1, factor2=1)
+
+def test_detect_maxima():
+    cle.detect_maxima(input_image=data_3d)
 
 def test_gaussian_blur():
     cle.gaussian_blur(input_image=data_3d, sigma_x=1, sigma_y=1, sigma_z=1)

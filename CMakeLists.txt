@@ -28,10 +28,8 @@ if(Python3_Development.Embed_FOUND)
     message(STATUS "Python Developement Embed found")
 endif()
 
-if(NOT DEFINED OpenCL_LIBRARY)
-  find_package(OpenCL REQUIRED)
-endif()
-message(STATUS "OpenCL_LIBRARY: ${OpenCL_LIBRARY}")
+find_package(OpenCL REQUIRED)
+find_package(CUDAToolkit REQUIRED)
 
 ## fetch CLIc using CMake FetchContent
 include(FetchContent)
@@ -39,8 +37,8 @@ option(BUILD_TESTING  OFF)
 option(BUILD_BENCHMARK  OFF)
 FetchContent_Declare(
   CLIc_lib 
-  GIT_REPOSITORY https://github.com/clEsperanto/CLIc_prototype.git
-  GIT_TAG ${CLIC_VERSION}
+  GIT_REPOSITORY https://github.com/clEsperanto/MultiBackends.git
+  GIT_TAG fit-arch-to-clic
 )
 FetchContent_MakeAvailable(CLIc_lib)
 
@@ -62,7 +60,8 @@ file(GLOB_RECURSE WRAPPER_SOURCES_FILES ${WRAPPER_DIR}/*.cpp)
 find_package(pybind11 CONFIG REQUIRED)
 pybind11_add_module(${CY_PACKAGE_NAME} MODULE ${WRAPPER_SOURCES_FILES})
 
-target_link_libraries(${CY_PACKAGE_NAME} PRIVATE CLIc::CLIc ${OpenCL_LIBRARY})
+target_link_libraries(${CY_PACKAGE_NAME} PRIVATE CLIc::CLIc CUDA::cudart CUDA::cuda_driver CUDA::nvrtc CUDA::OpenCL)
+
 add_dependencies(${CY_PACKAGE_NAME} CLIc)
 target_include_directories(${CY_PACKAGE_NAME} PUBLIC "$<BUILD_INTERFACE:${WRAPPER_DIR}>")
 target_compile_features(${CY_PACKAGE_NAME} PRIVATE cxx_std_17)

@@ -43,9 +43,9 @@ auto wrapper_backend(pybind11::module_ &m) -> void
 
     py::class_<cle::BackendManager, std::shared_ptr<cle::BackendManager>>(m, "_BackendManager")
         .def_static(
-            "set_backend", [](bool cuda)
-            { cle::BackendManager::getInstance().setBackend(cuda); },
-            py::arg("cuda"))
+            "set_backend", [](const std::string &backend)
+            { cle::BackendManager::getInstance().setBackend(backend); },
+            py::arg("backend"))
         .def_static(
             "get_backend", []
             {

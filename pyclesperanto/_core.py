@@ -78,14 +78,12 @@ def select_backend(backend_type: str = "opencl") -> str:
 
     # enforce lowercase for backend_type
     backend_type = backend_type.lower()
-    if backend_type == "cuda":
-        BackendManager.set_backend(cuda=True)
-    elif backend_type == "opencl":
-        BackendManager.set_backend(cuda=False)
-    else:
+    # is backend_type is different than "cuda" or "opencl", raise an error
+    if backend_type not in ["cuda", "opencl"]:
         raise ValueError(
-            f"Backend type {backend_type} not supported. Supported backends are 'cuda' and 'opencl'."
+            f"Backend type '{backend_type}' not supported. Please use 'opencl' or 'cuda'."
         )
+    BackendManager.set_backend(backend=backend_type)
     # reset current device to default one
     select_device()
     return f"{BackendManager.get_backend()} selected."

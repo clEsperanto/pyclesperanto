@@ -1,4 +1,4 @@
-#include "pyclesperanto.hpp"
+#include "pycle_wrapper.hpp"
 
 #include "backend.hpp"
 #include "device.hpp"
@@ -10,7 +10,7 @@
 
 namespace py = pybind11;
 
-auto wrapper_backend(pybind11::module_ &m) -> void
+auto core_(pybind11::module_ &m) -> void
 {
     py::enum_<cle::Backend::Type>(m, "_BackendType")
         .value("OpenCL", cle::Backend::Type::OPENCL)

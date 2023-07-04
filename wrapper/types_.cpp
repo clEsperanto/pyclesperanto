@@ -7,7 +7,7 @@
 
 namespace py = pybind11;
 
-auto wrapper_types(py::module_ &m) -> void
+auto types_(py::module_ &m) -> void
 {
     py::enum_<cle::dType> dtype(m, "_DataType");
     dtype.value("float32", cle::dType::FLOAT);

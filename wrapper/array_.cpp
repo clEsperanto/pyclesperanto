@@ -1,5 +1,5 @@
 
-#include "pyclesperanto.hpp"
+#include "pycle_wrapper.hpp"
 
 #include "array.hpp"
 
@@ -30,7 +30,7 @@ void set(cle::Array &array, const py::array_t<T> &np_array)
      array.write(data);
 }
 
-auto wrapper_array(py::module_ &m) -> void
+auto array_(py::module_ &m) -> void
 {
      py::class_<cle::Array, std::shared_ptr<cle::Array>>(m, "_Array")
          .def(py::init<cle::Array const &>())

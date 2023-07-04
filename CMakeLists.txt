@@ -28,8 +28,8 @@ if(Python3_Development.Embed_FOUND)
     message(STATUS "Python Developement Embed found")
 endif()
 
-find_package(OpenCL REQUIRED)
-find_package(CUDAToolkit REQUIRED)
+find_package(OpenCL)
+find_package(CUDAToolkit)
 
 ## fetch CLIc using CMake FetchContent
 include(FetchContent)
@@ -60,7 +60,13 @@ file(GLOB_RECURSE WRAPPER_SOURCES_FILES ${WRAPPER_DIR}/*.cpp)
 find_package(pybind11 CONFIG REQUIRED)
 pybind11_add_module(${CY_PACKAGE_NAME} MODULE ${WRAPPER_SOURCES_FILES})
 
-target_link_libraries(${CY_PACKAGE_NAME} PRIVATE CLIc::CLIc CUDA::cudart CUDA::cuda_driver CUDA::nvrtc CUDA::OpenCL)
+target_link_libraries(${CY_PACKAGE_NAME} PRIVATE CLIc::CLIc)
+if(OpenCL_FOUND)
+target_link_libraries(${CY_PACKAGE_NAME} PRIVATE OpenCL::OpenCL)  
+endif(OpenCL_FOUND)
+if(CUDAToolkit_FOUND)
+  target_link_libraries(${CY_PACKAGE_NAME} PRIVATE CUDA::cudart CUDA::cuda_driver CUDA::nvrtc CUDA::OpenCL)
+endif()
 
 add_dependencies(${CY_PACKAGE_NAME} CLIc)
 target_include_directories(${CY_PACKAGE_NAME} PUBLIC "$<BUILD_INTERFACE:${WRAPPER_DIR}>")

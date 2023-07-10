@@ -22,55 +22,49 @@ _supported_numeric_types = tuple(cl_buffer_datatype_dict.keys())
 
 
 class Operators:
-    def abs(self):
-        from ._tier1 import absolute
+    def astype(self, dtype: type):
+        if dtype not in _supported_numeric_types:
+            raise ValueError(
+                "dtype "
+                + str(dtype)
+                + " not supported. Use one of "
+                + str(_supported_numeric_types)
+            )
+        if dtype == self.dtype:
+            return self
 
-        return absolute(self)
+        from ._tier1 import copy
+        from ._memory import create_like
 
-    # def astype(self, dtype: type):
-    #     if dtype not in _supported_numeric_types:
-    #         raise ValueError(
-    #             "dtype "
-    #             + str(dtype)
-    #             + " not supported. Use one of "
-    #             + str(_supported_numeric_types)
-    #         )
-    #     if dtype == self.dtype:
-    #         return self
+        result = create_like(self, dtype=dtype)
+        copy(self, output_image=result)
+        return result
 
-    #     from ._tier1 import copy
-    #     from ._memory_operations import create_like
+    def max(self, axis: Optional[int] = None, out=None):
+        from ._tier2 import maximum_of_all_pixels
+        from ._tier1 import maximum_x_projection
+        from ._tier1 import maximum_y_projection
+        from ._tier1 import maximum_z_projection
 
-    #     result = create_like(self, dtype=dtype)
-    #     copy(self, output_image=result)
-    #     return result
+        if axis == 0:
+            result = maximum_z_projection(self)
+        elif axis == 1:
+            result = maximum_y_projection(self)
+        elif axis == 2:
+            result = maximum_x_projection(self)
+        elif axis is None:
+            result = maximum_of_all_pixels(self)
+        else:
+            raise ValueError("Axis " + axis + " not supported")
+        if out is not None:
+            from ._memory import pull
+            from ._array import Image
 
-    # def max(self, axis: Optional[int] = None, out=None):
-
-    #     from ._tier2 import maximum_of_all_pixels
-    #     from ._tier1 import maximum_x_projection
-    #     from ._tier1 import maximum_y_projection
-    #     from ._tier1 import maximum_z_projection
-
-    #     if axis == 0:
-    #         result = maximum_z_projection(self)
-    #     elif axis == 1:
-    #         result = maximum_y_projection(self)
-    #     elif axis == 2:
-    #         result = maximum_x_projection(self)
-    #     elif axis is None:
-    #         result = maximum_of_all_pixels(self)
-    #     else:
-    #         raise ValueError("Axis " + axis + " not supported")
-    #     if out is not None:
-    #         from ._memory_operations import pull
-    #         from ._image import Image
-
-    #         if isinstance(out, Image):
-    #             np.copyto(out, pull(result).astype(out.dtype))
-    #         else:
-    #             out = result
-    #     return result
+            if isinstance(out, Image):
+                np.copyto(out, pull(result).astype(out.dtype))
+            else:
+                out = result
+        return result
 
     # def min(self, axis: Optional[int] = None, out=None):
 
@@ -121,160 +115,160 @@ class Operators:
     #             np.copyto(out, pull(result).astype(out.dtype))
     #     return result
 
-    # def __iadd__(x1, x2):
-    #     from ._tier1 import copy
+    def __iadd__(x1, x2):
+        from ._tier1 import copy
 
-    #     temp = copy(x1)
-    #     if isinstance(x2, _supported_numeric_types):
-    #         from ._tier1 import add_image_and_scalar
+        temp = copy(x1)
+        if isinstance(x2, _supported_numeric_types):
+            from ._tier1 import add_image_and_scalar
 
-    #         return add_image_and_scalar(temp, x1, scalar=x2)
-    #     else:
-    #         from ._tier1 import add_images_weighted
+            return add_image_and_scalar(temp, x1, scalar=x2)
+        else:
+            from ._tier1 import add_images_weighted
 
-    #         return add_images_weighted(temp, x2, x1)
+            return add_images_weighted(temp, x2, x1, factor0=1, factor1=1)
 
-    # def __sub__(x1, x2):
-    #     if isinstance(x2, _supported_numeric_types):
-    #         from ._tier1 import add_image_and_scalar
+    def __sub__(x1, x2):
+        if isinstance(x2, _supported_numeric_types):
+            from ._tier1 import add_image_and_scalar
 
-    #         return add_image_and_scalar(x1, scalar=-x2)
-    #     else:
-    #         from ._tier1 import add_images_weighted
+            return add_image_and_scalar(x1, scalar=-x2)
+        else:
+            from ._tier1 import add_images_weighted
 
-    #         return add_images_weighted(x1, x2, factor2=-1)
+            return add_images_weighted(x1, x2, factor0=1, factor1=-1)
 
-    # def __div__(x1, x2):
-    #     if isinstance(x2, _supported_numeric_types):
-    #         from ._tier1 import multiply_image_and_scalar
+    def __div__(x1, x2):
+        if isinstance(x2, _supported_numeric_types):
+            from ._tier1 import multiply_image_and_scalar
 
-    #         return multiply_image_and_scalar(x1, scalar=1.0 / x2)
-    #     else:
-    #         from ._tier1 import divide_images
+            return multiply_image_and_scalar(x1, scalar=1.0 / x2)
+        else:
+            from ._tier1 import divide_images
 
-    #         return divide_images(x1, x2)
+            return divide_images(x1, x2)
 
-    # def __truediv__(x1, x2):
-    #     return x1.__div__(x2)
+    def __truediv__(x1, x2):
+        return x1.__div__(x2)
 
-    # def __idiv__(x1, x2):
-    #     from ._tier1 import copy
+    def __idiv__(x1, x2):
+        from ._tier1 import copy
 
-    #     temp = copy(x1)
-    #     if isinstance(x2, _supported_numeric_types):
-    #         from ._tier1 import multiply_image_and_scalar
+        temp = copy(x1)
+        if isinstance(x2, _supported_numeric_types):
+            from ._tier1 import multiply_image_and_scalar
 
-    #         return multiply_image_and_scalar(temp, x1, scalar=1.0 / x2)
-    #     else:
-    #         from ._tier1 import divide_images
+            return multiply_image_and_scalar(temp, x1, scalar=1.0 / x2)
+        else:
+            from ._tier1 import divide_images
 
-    #         return divide_images(temp, x2, x1)
+            return divide_images(temp, x2, x1)
 
-    # def __itruediv__(x1, x2):
-    #     return x1.__idiv__(x2)
+    def __itruediv__(x1, x2):
+        return x1.__idiv__(x2)
 
-    # def __mul__(x1, x2):
-    #     if isinstance(x2, _supported_numeric_types):
-    #         from ._tier1 import multiply_image_and_scalar
+    def __mul__(x1, x2):
+        if isinstance(x2, _supported_numeric_types):
+            from ._tier1 import multiply_image_and_scalar
 
-    #         return multiply_image_and_scalar(x1, scalar=x2)
-    #     else:
-    #         from ._tier1 import multiply_images
+            return multiply_image_and_scalar(x1, scalar=x2)
+        else:
+            from ._tier1 import multiply_images
 
-    #         return multiply_images(x1, x2)
+            return multiply_images(x1, x2)
 
-    # def __imul__(x1, x2):
-    #     from ._tier1 import copy
+    def __imul__(x1, x2):
+        from ._tier1 import copy
 
-    #     temp = copy(x1)
-    #     if isinstance(x2, _supported_numeric_types):
-    #         from ._tier1 import multiply_image_and_scalar
+        temp = copy(x1)
+        if isinstance(x2, _supported_numeric_types):
+            from ._tier1 import multiply_image_and_scalar
 
-    #         return multiply_image_and_scalar(temp, x1, scalar=x2)
-    #     else:
-    #         from ._tier1 import multiply_images
+            return multiply_image_and_scalar(temp, x1, scalar=x2)
+        else:
+            from ._tier1 import multiply_images
 
-    #         return multiply_images(temp, x2, x1)
+            return multiply_images(temp, x2, x1)
 
-    # def __gt__(x1, x2):
-    #     if isinstance(x2, _supported_numeric_types):
-    #         from ._tier1 import greater_constant
+    def __gt__(x1, x2):
+        if isinstance(x2, _supported_numeric_types):
+            from ._tier1 import greater_constant
 
-    #         return greater_constant(x1, scalar=x2)
-    #     else:
-    #         from ._tier1 import greater
+            return greater_constant(x1, scalar=x2)
+        else:
+            from ._tier1 import greater
 
-    #         return greater(x1, x2)
+            return greater(x1, x2)
 
-    # def __ge__(x1, x2):
-    #     if isinstance(x2, _supported_numeric_types):
-    #         from ._tier1 import greater_or_equal_constant
+    def __ge__(x1, x2):
+        if isinstance(x2, _supported_numeric_types):
+            from ._tier1 import greater_or_equal_constant
 
-    #         return greater_or_equal_constant(x1, scalar=x2)
-    #     else:
-    #         from ._tier1 import greater_or_equal
+            return greater_or_equal_constant(x1, scalar=x2)
+        else:
+            from ._tier1 import greater_or_equal
 
-    #         return greater_or_equal(x1, x2)
+            return greater_or_equal(x1, x2)
 
-    # def __lt__(x1, x2):
-    #     if isinstance(x2, _supported_numeric_types):
-    #         from ._tier1 import smaller_constant
+    def __lt__(x1, x2):
+        if isinstance(x2, _supported_numeric_types):
+            from ._tier1 import smaller_constant
 
-    #         return smaller_constant(x1, scalar=x2)
-    #     else:
-    #         from ._tier1 import smaller
+            return smaller_constant(x1, scalar=x2)
+        else:
+            from ._tier1 import smaller
 
-    #         return smaller(x1, x2)
+            return smaller(x1, x2)
 
-    # def __le__(x1, x2):
-    #     if isinstance(x2, _supported_numeric_types):
-    #         from ._tier1 import smaller_or_equal_constant
+    def __le__(x1, x2):
+        if isinstance(x2, _supported_numeric_types):
+            from ._tier1 import smaller_or_equal_constant
 
-    #         return smaller_or_equal_constant(x1, scalar=x2)
-    #     else:
-    #         from ._tier1 import smaller_or_equal
+            return smaller_or_equal_constant(x1, scalar=x2)
+        else:
+            from ._tier1 import smaller_or_equal
 
-    #         return smaller_or_equal(x1, x2)
+            return smaller_or_equal(x1, x2)
 
-    # def __eq__(x1, x2):
-    #     if isinstance(x2, _supported_numeric_types):
-    #         from ._tier1 import equal_constant
+    def __eq__(x1, x2):
+        if isinstance(x2, _supported_numeric_types):
+            from ._tier1 import equal_constant
 
-    #         return equal_constant(x1, scalar=x2)
-    #     else:
-    #         from ._tier1 import equal
+            return equal_constant(x1, scalar=x2)
+        else:
+            from ._tier1 import equal
 
-    #         return equal(x1, x2)
+            return equal(x1, x2)
 
-    # def __ne__(x1, x2):
-    #     if isinstance(x2, _supported_numeric_types):
-    #         from ._tier1 import not_equal_constant
+    def __ne__(x1, x2):
+        if isinstance(x2, _supported_numeric_types):
+            from ._tier1 import not_equal_constant
 
-    #         return not_equal_constant(x1, scalar=x2)
-    #     else:
-    #         from ._tier1 import not_equal
+            return not_equal_constant(x1, scalar=x2)
+        else:
+            from ._tier1 import not_equal
 
-    #         return not_equal(x1, x2)
+            return not_equal(x1, x2)
 
-    # def __pow__(x1, x2):
-    #     if isinstance(x2, _supported_numeric_types):
-    #         from ._tier1 import power
+    def __pow__(x1, x2):
+        if isinstance(x2, _supported_numeric_types):
+            from ._tier1 import power
 
-    #         return power(x1, exponent=x2)
-    #     else:
-    #         from ._tier1 import power_images
+            return power(x1, exponent=x2)
+        else:
+            from ._tier1 import power_images
 
-    #         return power_images(x1, x2)
+            return power_images(x1, x2)
 
-    # def __ipow__(x1, x2):
-    #     from ._tier1 import copy
+    def __ipow__(x1, x2):
+        from ._tier1 import copy
 
-    #     temp = copy(x1)
-    #     if isinstance(x2, _supported_numeric_types):
-    #         from ._tier1 import power
+        temp = copy(x1)
+        if isinstance(x2, _supported_numeric_types):
+            from ._tier1 import power
 
-    #         return power(temp, x1, exponent=x2)
-    #     else:
-    #         from ._tier1 import power_images
+            return power(temp, x1, exponent=x2)
+        else:
+            from ._tier1 import power_images
 
-    #         return power_images(temp, x2, x1)
+            return power_images(temp, x2, x1)

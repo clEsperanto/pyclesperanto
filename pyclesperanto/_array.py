@@ -95,6 +95,7 @@ class Array(_Array, Operators):
         if array.shape != self.shape:
             raise ValueError(f"Array shape mismatch: {array.shape} != {self.shape}")
         super().set(array)
+        return self
 
     def get(self) -> np.ndarray:
         caster = {

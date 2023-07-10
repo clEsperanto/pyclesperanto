@@ -11,7 +11,7 @@ def create(
     dtype: Optional[type] = None,
     mtype: Optional[Union[str, MemoryType]] = None,
     device: Optional[Device] = None,
-) -> Array:
+) -> Image:
     return Array.create(shape, dtype, mtype, device)
 
 
@@ -19,7 +19,7 @@ def create_like(
     array: Image,
     mtype: Optional[Union[str, DataType]] = None,
     device: Optional[Device] = None,
-) -> Array:
+) -> Image:
     return create(array.shape, array.dtype, mtype, device)
 
 
@@ -28,9 +28,11 @@ def push(
     dtype: Optional[type] = None,
     mtype: Optional[Union[str, DataType]] = None,
     device: Optional[Device] = None,
-) -> Array:
+) -> Image:
     if isinstance(array, Array):
         return array
+    if dtype is None:
+        dtype = array.dtype
     return create(array.shape, dtype, mtype, device).set(array)
 
 

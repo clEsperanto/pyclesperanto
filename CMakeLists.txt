@@ -5,7 +5,7 @@ cmake_minimum_required(VERSION 3.20)
 # - package version is managed in file `version.py`
 project(pyClesperanto)
 
-# enforce release build type
+# enforce release build type if possible
 set(CMAKE_BUILD_TYPE Release)
 
 string(TOLOWER ${PROJECT_NAME} PY_PACKAGE_NAME)
@@ -28,8 +28,12 @@ if(Python3_Development.Embed_FOUND)
     message(STATUS "Python Developement Embed found")
 endif()
 
-find_package(OpenCL)
-find_package(CUDAToolkit)
+if(NOT DEFINED OpenCL_LIBRARY)
+  find_package(OpenCL)
+endif()
+if(NOT DEFINED CUDA_LIBRARY)
+  find_package(CUDAToolkit)
+endif()
 
 ## fetch CLIc using CMake FetchContent
 include(FetchContent)

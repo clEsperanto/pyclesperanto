@@ -1,16 +1,17 @@
 from os import path
 from typing import Optional, Union
 
+from ._array import Array
 from ._memory import pull
 from ._core import Device, get_device
 
 
 # def execute(
 #     anchor: str,
-#     opencl_filename: str,
+#     kernel_filepath: str,
 #     kernel_name: str,
 #     parameters: dict,
-#     global_range: Optional[tuple] = None,
+#     range: Optional[tuple] = None,
 #     device: Optional[Device] = None,
 # ):
 #     """Execute a custom OpenCL kernel.
@@ -25,36 +26,39 @@ from ._core import Device, get_device
 #         Name of the kernel function to be executed in the OpenCL kernel file.
 #     parameters : dict
 #         Dictionary of parameters to be passed to the kernel function, e.g. {"src": src, "dst": dst}.
-#     global_range : tuple, optional
+#     range : tuple, optional
 #         Global size of the kernel execution, by default None.
 #     device : Device, optional
 #         Device to be used for execution, by default None.
 #     """
 #     from ._pyclesperanto import _std_variant as std_variant
-#     from ._pyclesperanto import _CustomKernel_Call as op
+#     from ._pyclesperanto import _execute as op
 
-#     if global_range is None:
-#         global_range = (0, 0, 0)
+#     if range is None:
+#         range = (1, 1, 1)
 #     else:
-#         if len(global_range) == 2:
-#             global_range = (1, global_range[0], global_range[1])
-#         if len(global_range) == 1:
-#             global_range = (1, 1, global_range[0])
+#         if len(range) == 2:
+#             range = (1, range[0], range[1])
+#         if len(range) == 1:
+#             range = (1, 1, range[0])
 
 #     if device is None:
 #         device = parameters["src"].device or parameters["src1"].device or get_device()
 
-#     cpp_parameter_map = {key: std_variant(val) for key, val in parameters.items()}
-#     op(
-#         device,
-#         file_name=str(path.join(anchor, opencl_filename)),
-#         kernel_name=kernel_name,
-#         dx=global_range[2],
-#         dy=global_range[1],
-#         dz=global_range[0],
-#         parameters=cpp_parameter_map,
-#         # constants=cpp_constant_map,
-#     )
+#     kernel_source = open(path.join(anchor, kernel_filepath), "r").read()
+
+#     cpp_parameter_map = {
+#         key: std_variant(val.super) if isinstance(val, Array) else std_variant(val)
+#         for key, val in parameters.items()
+# }
+# op(
+#     device,
+#     kernel_name=kernel_name,
+#     kernel_source=kernel_source,
+#     parameters=cpp_parameter_map,
+#     range=range,
+#     # constants=cpp_constant_map,
+# )
 
 
 def imshow(

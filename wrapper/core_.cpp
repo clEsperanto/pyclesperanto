@@ -28,6 +28,11 @@ auto core_(pybind11::module_ &m) -> void
              {
             std::ostringstream oss;
             oss << device;
+            return oss.str(); })
+        .def("__repr__", [](const cle::Device &device)
+             {
+            std::ostringstream oss;
+            oss << device.getInfo();
             return oss.str(); });
 
     py::class_<cle::Backend, std::shared_ptr<cle::Backend>>(m, "_Backend")
@@ -36,6 +41,11 @@ auto core_(pybind11::module_ &m) -> void
         .def("getDevices", &cle::Backend::getDevices, py::return_value_policy::take_ownership)
         .def("getDevice", &cle::Backend::getDevice, py::return_value_policy::take_ownership, py::arg("name"), py::arg("type"))
         .def("__str__", [](const cle::Backend &Backend)
+             {
+        std::ostringstream oss;
+        oss << Backend;
+        return oss.str(); })
+        .def("__repr__", [](const cle::Backend &Backend)
              {
         std::ostringstream oss;
         oss << Backend;
@@ -54,6 +64,11 @@ auto core_(pybind11::module_ &m) -> void
         return &backend; },
             py::return_value_policy::reference)
         .def("__str__", [](const cle::BackendManager &backendManager)
+             {
+        std::ostringstream oss;
+        oss << backendManager;
+        return oss.str(); })
+        .def("__repr__", [](const cle::BackendManager &backendManager)
              {
         std::ostringstream oss;
         oss << backendManager;

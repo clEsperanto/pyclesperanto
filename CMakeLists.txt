@@ -69,7 +69,7 @@ if(OpenCL_FOUND)
 target_link_libraries(${CY_PACKAGE_NAME} PRIVATE OpenCL::OpenCL)  
 endif(OpenCL_FOUND)
 if(CUDAToolkit_FOUND)
-  target_link_libraries(${CY_PACKAGE_NAME} PRIVATE CUDA::cudart CUDA::cuda_driver CUDA::nvrtc CUDA::OpenCL)
+target_link_libraries(${CY_PACKAGE_NAME} PRIVATE CUDA::toolkit)
 endif()
 
 add_dependencies(${CY_PACKAGE_NAME} CLIc)

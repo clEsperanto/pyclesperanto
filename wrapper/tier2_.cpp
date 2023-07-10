@@ -15,9 +15,9 @@ m.def("_difference_of_gaussian", &cle::tier2::difference_of_gaussian_func, "Call
     py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("sigma1_x"), py::arg("sigma1_y"), py::arg("sigma1_z"), py::arg("sigma2_x"), py::arg("sigma2_y"), py::arg("sigma2_z"));
 
     
-m.def("_maximum_all_pixels", &cle::tier2::maximum_all_pixels_func, "Call maximum_all_pixels from C++.",
+m.def("_maximum_of_all_pixels", &cle::tier2::maximum_of_all_pixels_func, "Call maximum_of_all_pixels from C++.",
     py::return_value_policy::take_ownership,
-    py::arg("device"), py::arg("src"));
+    py::arg("device"), py::arg("src"), py::arg("dst"));
 
 
 }

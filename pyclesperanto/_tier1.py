@@ -27,8 +27,8 @@ def add_images_weighted(
     input_image0: Image,
 	input_image1: Image,
 	output_image: Image = None,
-	factor0: float = 1,
-	factor1: float = 1,
+	factor0: float = 0,
+	factor1: float = 0,
 	device: Device = None
 ) -> Image:
     from ._pyclesperanto import _add_images_weighted as op
@@ -47,7 +47,7 @@ def add_images_weighted(
 def add_image_and_scalar(
     input_image: Image,
 	output_image: Image = None,
-	scalar: float = 1,
+	scalar: float = 0,
 	device: Device = None
 ) -> Image:
     from ._pyclesperanto import _add_image_and_scalar as op
@@ -258,7 +258,7 @@ def equal(
 def equal_constant(
     input_image: Image,
 	output_image: Image = None,
-	scalar: float = 1,
+	scalar: float = 0,
 	device: Device = None
 ) -> Image:
     from ._pyclesperanto import _equal_constant as op
@@ -320,9 +320,9 @@ def exponential(
 def gaussian_blur(
     input_image: Image,
 	output_image: Image = None,
-	sigma_x: float = 1,
-	sigma_y: float = 1,
-	sigma_z: float = 1,
+	sigma_x: float = 0,
+	sigma_y: float = 0,
+	sigma_z: float = 0,
 	device: Device = None
 ) -> Image:
     from ._pyclesperanto import _gaussian_blur as op
@@ -403,7 +403,7 @@ def greater(
 def greater_constant(
     input_image: Image,
 	output_image: Image = None,
-	scalar: float = 1,
+	scalar: float = 0,
 	device: Device = None
 ) -> Image:
     from ._pyclesperanto import _greater_constant as op
@@ -437,7 +437,7 @@ def greater_or_equal(
 def greater_or_equal_constant(
     input_image: Image,
 	output_image: Image = None,
-	scalar: float = 1,
+	scalar: float = 0,
 	device: Device = None
 ) -> Image:
     from ._pyclesperanto import _greater_or_equal_constant as op
@@ -517,7 +517,7 @@ def mask_label(
     input_image0: Image,
 	input_image1: Image,
 	output_image: Image = None,
-	label: float = 1,
+	label: float = 0,
 	device: Device = None
 ) -> Image:
     from ._pyclesperanto import _mask_label as op
@@ -535,7 +535,7 @@ def mask_label(
 def maximum_image_and_scalar(
     input_image: Image,
 	output_image: Image = None,
-	scalar: float = 1,
+	scalar: float = 0,
 	device: Device = None
 ) -> Image:
     from ._pyclesperanto import _maximum_image_and_scalar as op
@@ -569,9 +569,9 @@ def maximum_images(
 def maximum_box(
     input_image: Image,
 	output_image: Image = None,
-	radius_x: int = 1,
-	radius_y: int = 1,
-	radius_z: int = 1,
+	radius_x: int = 0,
+	radius_y: int = 0,
+	radius_z: int = 0,
 	device: Device = None
 ) -> Image:
     from ._pyclesperanto import _maximum_box as op
@@ -635,9 +635,9 @@ def maximum_z_projection(
 def mean_box(
     input_image: Image,
 	output_image: Image = None,
-	radius_x: int = 1,
-	radius_y: int = 1,
-	radius_z: int = 1,
+	radius_x: int = 0,
+	radius_y: int = 0,
+	radius_z: int = 0,
 	device: Device = None
 ) -> Image:
     from ._pyclesperanto import _mean_box as op
@@ -656,9 +656,9 @@ def mean_box(
 def mean_sphere(
     input_image: Image,
 	output_image: Image = None,
-	radius_x: int = 1,
-	radius_y: int = 1,
-	radius_z: int = 1,
+	radius_x: int = 0,
+	radius_y: int = 0,
+	radius_z: int = 0,
 	device: Device = None
 ) -> Image:
     from ._pyclesperanto import _mean_sphere as op
@@ -722,9 +722,9 @@ def mean_z_projection(
 def minimum_box(
     input_image: Image,
 	output_image: Image = None,
-	radius_x: int = 1,
-	radius_y: int = 1,
-	radius_z: int = 1,
+	radius_x: int = 0,
+	radius_y: int = 0,
+	radius_z: int = 0,
 	device: Device = None
 ) -> Image:
     from ._pyclesperanto import _minimum_box as op
@@ -743,7 +743,7 @@ def minimum_box(
 def minimum_image_and_scalar(
     input_image: Image,
 	output_image: Image = None,
-	scalar: float = 1,
+	scalar: float = 0,
 	device: Device = None
 ) -> Image:
     from ._pyclesperanto import _minimum_image_and_scalar as op
@@ -822,7 +822,7 @@ def minimum_z_projection(
 def multiply_image_and_scalar(
     input_image: Image,
 	output_image: Image = None,
-	scalar: float = 1,
+	scalar: float = 0,
 	device: Device = None
 ) -> Image:
     from ._pyclesperanto import _multiply_image_and_scalar as op
@@ -941,7 +941,7 @@ def not_equal(
 def not_equal_constant(
     input_image: Image,
 	output_image: Image = None,
-	scalar: float = 1,
+	scalar: float = 0,
 	device: Device = None
 ) -> Image:
     from ._pyclesperanto import _not_equal_constant as op
@@ -992,7 +992,7 @@ def onlyzero_overwrite_maximum_diamond(
 def power(
     input_image: Image,
 	output_image: Image = None,
-	scalar: float = 1,
+	scalar: float = 0,
 	device: Device = None
 ) -> Image:
     from ._pyclesperanto import _power as op
@@ -1043,8 +1043,8 @@ def replace_intensities(
 def replace_intensity(
     input_image: Image,
 	output_image: Image = None,
-	scalar0: float = 1,
-	scalar1: float = 1,
+	scalar0: float = 0,
+	scalar1: float = 0,
 	device: Device = None
 ) -> Image:
     from ._pyclesperanto import _replace_intensity as op
@@ -1062,9 +1062,9 @@ def replace_intensity(
 def maximum_sphere(
     input_image: Image,
 	output_image: Image = None,
-	radius_x: int = 1,
-	radius_y: int = 1,
-	radius_z: int = 1,
+	radius_x: int = 0,
+	radius_y: int = 0,
+	radius_z: int = 0,
 	device: Device = None
 ) -> Image:
     from ._pyclesperanto import _maximum_sphere as op
@@ -1083,9 +1083,9 @@ def maximum_sphere(
 def minimum_sphere(
     input_image: Image,
 	output_image: Image = None,
-	radius_x: int = 1,
-	radius_y: int = 1,
-	radius_z: int = 1,
+	radius_x: int = 0,
+	radius_y: int = 0,
+	radius_z: int = 0,
 	device: Device = None
 ) -> Image:
     from ._pyclesperanto import _minimum_sphere as op
@@ -1103,7 +1103,7 @@ def minimum_sphere(
 @plugin_function
 def set(
     output_image: Image = None,
-	scalar: float = 1,
+	scalar: float = 0,
 	device: Device = None
 ) -> Image:
     from ._pyclesperanto import _set as op
@@ -1118,8 +1118,8 @@ def set(
 @plugin_function
 def set_column(
     output_image: Image = None,
-	column: int = 1,
-	value: float = 1,
+	column: int = 0,
+	value: float = 0,
 	device: Device = None
 ) -> Image:
     from ._pyclesperanto import _set_column as op
@@ -1135,8 +1135,8 @@ def set_column(
 @plugin_function
 def set_row(
     output_image: Image = None,
-	row: int = 1,
-	value: float = 1,
+	row: int = 0,
+	value: float = 0,
 	device: Device = None
 ) -> Image:
     from ._pyclesperanto import _set_row as op
@@ -1153,7 +1153,7 @@ def set_row(
 def set_nonzero_pixels_to_pixelindex(
     input_image: Image,
 	output_image: Image = None,
-	offset: int = 1,
+	offset: int = 0,
 	device: Device = None
 ) -> Image:
     from ._pyclesperanto import _set_nonzero_pixels_to_pixelindex as op
@@ -1187,7 +1187,7 @@ def smaller(
 def smaller_constant(
     input_image: Image,
 	output_image: Image = None,
-	scalar: float = 1,
+	scalar: float = 0,
 	device: Device = None
 ) -> Image:
     from ._pyclesperanto import _smaller_constant as op
@@ -1221,7 +1221,7 @@ def smaller_or_equal(
 def smaller_or_equal_constant(
     input_image: Image,
 	output_image: Image = None,
-	scalar: float = 1,
+	scalar: float = 0,
 	device: Device = None
 ) -> Image:
     from ._pyclesperanto import _smaller_or_equal_constant as op
@@ -1253,7 +1253,7 @@ def sobel(
 def subtract_image_from_scalar(
     input_image: Image,
 	output_image: Image = None,
-	scalar: float = 1,
+	scalar: float = 0,
 	device: Device = None
 ) -> Image:
     from ._pyclesperanto import _subtract_image_from_scalar as op

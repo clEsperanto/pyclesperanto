@@ -64,7 +64,19 @@ def list_available_devices(device_type: str = "all") -> list[str]:
     return list(BackendManager.get_backend().getDevicesList(type=device_type))
 
 
-def select_backend(backend_type: str = "opencl") -> str:
+def list_available_backends() -> list[str]:
+    """Retrieve a list of names of available backends
+
+    Will test system for available backends and return a list of their names.
+
+    Returns
+    -------
+    name list : list[str]
+    """
+    return list(BackendManager.get_backends_list())
+
+
+def select_backend(backend: str = "opencl") -> str:
     """select backend
 
     Select the backend used by pyclesperanto, OpenCL or CUDA.
@@ -77,13 +89,13 @@ def select_backend(backend_type: str = "opencl") -> str:
     """
 
     # enforce lowercase for backend_type
-    backend_type = backend_type.lower()
+    backend = backend.lower()
     # is backend_type is different than "cuda" or "opencl", raise an error
-    if backend_type not in ["cuda", "opencl"]:
+    if backend not in ["cuda", "opencl"]:
         raise ValueError(
-            f"Backend type '{backend_type}' not supported. Please use 'opencl' or 'cuda'."
+            f"Backend type '{backend}' not supported. Please use 'opencl' or 'cuda'."
         )
-    BackendManager.set_backend(backend=backend_type)
+    BackendManager.set_backend(backend=backend)
     # reset current device to default one
     select_device()
     return f"{BackendManager.get_backend()} selected."

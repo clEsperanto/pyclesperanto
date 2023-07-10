@@ -13,7 +13,19 @@ namespace py = pybind11;
 template <typename T>
 py::array_t<T> get(const cle::Array &array)
 {
-     py::array_t<T> np_array({array.depth(), array.height(), array.width()});
+     py::array_t<T> np_array;
+     switch (array.dim())
+     {
+     case 1:
+          np_array.resize({array.width()});
+          break;
+     case 2:
+          np_array.resize({array.height(), array.width()});
+          break;
+     case 3:
+          np_array.resize({array.depth(), array.height(), array.width()});
+          break;
+     }
      py::buffer_info info = np_array.request();
      void *data = info.ptr;
      size_t size = info.size * info.itemsize;

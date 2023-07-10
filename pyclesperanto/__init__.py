@@ -11,12 +11,14 @@ from ._core import (
     get_device,
     select_device,
     list_available_devices,
+    list_available_backends,
 )
 from ._array import Array, Image, is_image
-from ._memory import create, push, pull
+from ._memory import create, create_like, push, pull
+from ._functionalities import imshow
 
-from ._tier1 import absolute, add_images_weighted, gaussian_blur
-from ._tier2 import difference_of_gaussian
+from ._tier1 import *
+from ._tier2 import *
 
 # Generic Import
 import os

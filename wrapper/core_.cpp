@@ -42,6 +42,7 @@ auto core_(pybind11::module_ &m) -> void
         return oss.str(); });
 
     py::class_<cle::BackendManager, std::shared_ptr<cle::BackendManager>>(m, "_BackendManager")
+        .def_static("get_backends_list", &cle::BackendManager::getBackendsList)
         .def_static(
             "set_backend", [](const std::string &backend)
             { cle::BackendManager::getInstance().setBackend(backend); },

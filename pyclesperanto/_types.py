@@ -23,13 +23,10 @@ class DataType:
     def get_cle_dtype(cls, dtype):
         if isinstance(dtype, DataType):
             return dtype
-        elif isinstance(dtype, np.dtype):
-            if dtype.type in cls.np_dtype_mapping:
-                return cls.np_dtype_mapping[dtype.type]
-            else:
-                raise ValueError(
-                    "No matching dType found for the specified NumPy dtype."
-                )
+        elif isinstance(dtype, np.dtype) and dtype.type in cls.np_dtype_mapping:
+            return cls.np_dtype_mapping[dtype.type]
+        elif isinstance(dtype, type) and dtype in cls.np_dtype_mapping:
+            return cls.np_dtype_mapping[dtype]
         else:
             raise ValueError("Invalid value type. Expected dType or NumPy dtype.")
 

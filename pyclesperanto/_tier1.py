@@ -1153,6 +1153,7 @@ def set_row(
 def set_nonzero_pixels_to_pixelindex(
     input_image: Image,
 	output_image: Image = None,
+	offset: int = 1,
 	device: Device = None
 ) -> Image:
     from ._pyclesperanto import _set_nonzero_pixels_to_pixelindex as op
@@ -1160,7 +1161,8 @@ def set_nonzero_pixels_to_pixelindex(
     return op(
         device=device,
 		src=input_image,
-		dst=output_image
+		dst=output_image,
+		offset=int(offset)
     )
 
 

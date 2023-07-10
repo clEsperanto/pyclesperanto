@@ -352,7 +352,7 @@ m.def("_set_row", &cle::tier1::set_row_func, "Call set_row from C++.",
     
 m.def("_set_nonzero_pixels_to_pixelindex", &cle::tier1::set_nonzero_pixels_to_pixelindex_func, "Call set_nonzero_pixels_to_pixelindex from C++.",
     py::return_value_policy::take_ownership,
-    py::arg("device"), py::arg("src"), py::arg("dst"));
+    py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("offset"));
 
     
 m.def("_smaller", &cle::tier1::smaller_func, "Call smaller from C++.",

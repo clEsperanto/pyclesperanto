@@ -47,7 +47,7 @@ def select_device(device_name: str = "", device_type: str = "all") -> Device:
     return device
 
 
-def list_available_devices(device_type: str = "all") -> list[str]:
+def list_available_devices(device_type: str = "all") -> list:
     """Retrieve a list of names of available devices
 
     Will search system for backend available compatible device and return a list of their names.
@@ -65,7 +65,7 @@ def list_available_devices(device_type: str = "all") -> list[str]:
     return list(BackendManager.get_backend().getDevicesList(type=device_type))
 
 
-def list_available_backends() -> list[str]:
+def list_available_backends() -> list:
     """Retrieve a list of names of available backends
 
     Will test system for available backends and return a list of their names.

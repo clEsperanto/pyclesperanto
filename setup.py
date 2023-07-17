@@ -33,8 +33,8 @@ setup(
     long_description=readme,
     long_description_content_type="text/markdown",
     packages=["pyclesperanto"],
-    # package_data={"demos": ["demos/*.ipynb"]},
-    # exclude_package_data={"demos": ["demos/*.ipynb"]},
+    package_data={"demos": ["demos/*.ipynb"]},
+    exclude_package_data={"demos": ["demos/*.ipynb"]},
     cmake_install_dir="pyclesperanto",
     python_requires=">=3.7",
     install_requires=[

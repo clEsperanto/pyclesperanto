@@ -2,16 +2,16 @@
 from ._version import VERSION as __version__
 from ._version import CLIC_VERSION as __clic_version__
 
-try:
-    from . import _clesperanto as _cle
-except ImportError:
-    try:
-        from . import _ocl_clesperanto as _cle
-    except ImportError:
-        try:
-            from . import _cuda_clesperanto as _cle
-        except ImportError:
-            raise ImportError("Failed to import the backend")
+# try:
+from . import _clesperanto as _cle
+# except ImportError:
+#     try:
+# from . import _ocl_clesperanto as _cle
+    # except ImportError:
+    #     try:
+# from . import _cuda_clesperanto as _cle
+        # except ImportError:
+        #     raise ImportError("Failed to import the backend")
 
 from ._types import (
     MemoryType,

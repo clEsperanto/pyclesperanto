@@ -2,7 +2,7 @@
 #include "pycle_wrapper.hpp"
 
 // define a module. module name = file name = cmake target name
-PYBIND11_MODULE(_pyclesperanto, m)
+PYBIND11_MODULE(_clesperanto, m)
 {
   // Wrap clesperanto core functionality for operability
   types_(m);

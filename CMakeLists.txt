@@ -8,15 +8,8 @@ project(pyClesperanto)
 # enforce release build type if possible
 set(CMAKE_BUILD_TYPE Release)
 
-if(NOT DEFINED BUILD_OCL_BACKEND)
-  set(BUILD_OCL_BACKEND ON)
-endif()
-if(NOT DEFINED BUILD_CUDA_BACKEND)
-  set(BUILD_CUDA_BACKEND ON)
-endif()
-
 string(TOLOWER ${PROJECT_NAME} PY_PACKAGE_NAME)
-# set(CY_PACKAGE_NAME _${PY_PACKAGE_NAME})
+set(CY_PACKAGE_NAME _clesperanto)
 
 # Compilation tag for CLIc library linking for UNIX
 if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
@@ -35,27 +28,16 @@ if(Python3_Development.Embed_FOUND)
     message(STATUS "Python Developement Embed found")
 endif()
 
-# if (BUILD_OCL_BACKEND)
-#   if (DEFINED OpenCL_LIBRARIES AND DEFINED OpenCL_INCLUDE_DIRS)
-#       set(OpenCL_FOUND true)
-#   else()
-#       find_package(OpenCL REQUIRED)
-#   endif()
-# endif()
-# if (BUILD_CUDA_BACKEND)
-#   find_package(CUDAToolkit REQUIRED)
-# endif()
-
 ## fetch CLIc using CMake FetchContent
 include(FetchContent)
 option(BUILD_TESTING  OFF)
 option(BUILD_BENCHMARK  OFF)
 FetchContent_Declare(
-  CLIc_lib 
+  CLIc 
   GIT_REPOSITORY https://github.com/clEsperanto/CLIc_prototype.git
   GIT_TAG add-cuda-backend
 )
-FetchContent_MakeAvailable(CLIc_lib)
+FetchContent_MakeAvailable(CLIc)
 
 if(SKBUILD)
   # Scikit-Build does not add your site-packages to the search path
@@ -72,34 +54,17 @@ set(PACKAGE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/${PY_PACKAGE_NAME})
 set(WRAPPER_DIR ${CMAKE_CURRENT_SOURCE_DIR}/wrapper)
 file(GLOB_RECURSE WRAPPER_SOURCES_FILES ${WRAPPER_DIR}/*.cpp)
 
-# build cuda-ocl version
-include(${PROJECT_SOURCE_DIR}/scripts/pyclesperanto_all_build.cmake)
-# build pure ocl version
-include(${PROJECT_SOURCE_DIR}/scripts/pyclesperanto_ocl_build.cmake)
-# build pure cuda version
-include(${PROJECT_SOURCE_DIR}/scripts/pyclesperanto_cuda_build.cmake)
+find_package(pybind11 CONFIG REQUIRED)
+pybind11_add_module(${CY_PACKAGE_NAME} MODULE ${WRAPPER_SOURCES_FILES})
 
-# find_package(pybind11 CONFIG REQUIRED)
-# pybind11_add_module(${CY_PACKAGE_NAME} MODULE ${WRAPPER_SOURCES_FILES})
-# target_link_libraries(${CY_PACKAGE_NAME} PRIVATE CLIc::CLIc)
-# # if(BUILD_OCL_BACKEND AND OpenCL_FOUND)
-# #   target_link_libraries(${CY_PACKAGE_NAME} PRIVATE OpenCL::OpenCL)  
-# # endif(OpenCL_FOUND)
-# # if(BUILD_CUDA_BACKEND AND CUDAToolkit_FOUND)
-# #   target_link_libraries(${CY_PACKAGE_NAME} PRIVATE CUDA::cudart CUDA::cuda_driver CUDA::nvrtc CUDA::OpenCL) 
-# # endif()
-# add_dependencies(${CY_PACKAGE_NAME} CLIc)
-# target_include_directories(${CY_PACKAGE_NAME} PUBLIC "$<BUILD_INTERFACE:${WRAPPER_DIR}>")
-# target_compile_features(${CY_PACKAGE_NAME} PRIVATE cxx_std_17)
-# # Installing the extension module to the root of the package
-# install(TARGETS ${CY_PACKAGE_NAME} DESTINATION .)
-# if(APPLE)
-#     set_target_properties(
-#         ${CY_PACKAGE_NAME} PROPERTIES INSTALL_RPATH "@loader_path/${CMAKE_INSTALL_LIBDIR}")
-# else()
-#     set_target_properties(${CY_PACKAGE_NAME} PROPERTIES INSTALL_RPATH
-#         "$ORIGIN/${CMAKE_INSTALL_LIBDIR}")
-# endif()
+target_link_libraries(${CY_PACKAGE_NAME} PRIVATE CLIc::CLIc)
+add_dependencies(${CY_PACKAGE_NAME} CLIc)
+target_include_directories(${CY_PACKAGE_NAME} PRIVATE "$<BUILD_INTERFACE:${WRAPPER_DIR}>")
+target_compile_features(${CY_PACKAGE_NAME} PRIVATE cxx_std_17)
+set_target_properties(${CY_PACKAGE_NAME} PROPERTIES OUTPUT_NAME ${CY_PACKAGE_NAME})
+
+# Installing the extension module to the root of the package
+install(TARGETS ${CY_PACKAGE_NAME} DESTINATION .)
 
 if(APPLE)
     set_target_properties(
@@ -109,3 +74,11 @@ else()
         "$ORIGIN/${CMAKE_INSTALL_LIBDIR}:$ORIGIN/../lib:${CMAKE_PREFIX_PATH}/lib"
         INSTALL_RPATH_USE_LINK_PATH TRUE)
 endif()
+
+# if(APPLE)
+#     set_target_properties(
+#         ${CY_PACKAGE_NAME} PROPERTIES INSTALL_RPATH "@loader_path/${CMAKE_INSTALL_LIBDIR}")
+# else()
+#     set_target_properties(${CY_PACKAGE_NAME} PROPERTIES INSTALL_RPATH
+#         "$ORIGIN/${CMAKE_INSTALL_LIBDIR}")
+# endif()

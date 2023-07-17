@@ -33,22 +33,6 @@ setup(
     long_description=readme,
     long_description_content_type="text/markdown",
     packages=["pyclesperanto"],
-    package_data={
-        'pyclesperanto': [
-            'demos/*',
-            'docs/*',
-            'developer_docs/*',
-            'benchmarking/*'
-        ]
-    },
-    exclude_package_data={
-        'pyclesperanto': [
-            'demos/*',
-            'docs/*',
-            'developer_docs/*',
-            'benchmarking/*'
-        ]
-    },
     cmake_install_dir="pyclesperanto",
     python_requires=">=3.7",
     install_requires=[

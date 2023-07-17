@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from ._pyclesperanto import _DataType, _MemoryType
+from pyclesperanto.lib._pyclesperanto import _DataType, _MemoryType
 
 import numpy as np
 from typing import Union

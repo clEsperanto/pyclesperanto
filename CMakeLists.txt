@@ -7,6 +7,7 @@ project(pyClesperanto)
 
 # enforce release build type if possible
 set(CMAKE_BUILD_TYPE Release)
+set(CMAKE_CXX_STANDARD 17)
 
 string(TOLOWER ${PROJECT_NAME} PY_PACKAGE_NAME)
 set(CY_PACKAGE_NAME _${PY_PACKAGE_NAME})
@@ -27,9 +28,6 @@ endif()
 if(Python3_Development.Embed_FOUND)
     message(STATUS "Python Developement Embed found")
 endif()
-
-# find_package(OpenCL REQUIRED)
-# find_package(CUDAToolkit REQUIRED)
 
 ## fetch CLIc using CMake FetchContent
 include(FetchContent)
@@ -61,23 +59,40 @@ find_package(pybind11 CONFIG REQUIRED)
 pybind11_add_module(${CY_PACKAGE_NAME} MODULE ${WRAPPER_SOURCES_FILES})
 
 target_link_libraries(${CY_PACKAGE_NAME} PRIVATE CLIc::CLIc)
-# target_link_libraries(${CY_PACKAGE_NAME} PRIVATE OpenCL::OpenCL)
-# target_link_libraries(${CY_PACKAGE_NAME} PRIVATE CUDA::cudart CUDA::cuda_driver CUDA::nvrtc CUDA::OpenCL) 
 add_dependencies(${CY_PACKAGE_NAME} CLIc)
 target_include_directories(${CY_PACKAGE_NAME} PUBLIC "$<BUILD_INTERFACE:${WRAPPER_DIR}>")
-target_compile_features(${CY_PACKAGE_NAME} PRIVATE cxx_std_17)
-# set_target_properties(${CY_PACKAGE_NAME} PROPERTIES OUTPUT_NAME ${CY_PACKAGE_NAME})
 
-# Installing the extension module to the root of the package
-install(TARGETS ${CY_PACKAGE_NAME} DESTINATION .)
+# # Installing the extension module to the root of the package
+# install(TARGETS ${CY_PACKAGE_NAME} DESTINATION .)
 
+# if(APPLE)
+#     set_target_properties(
+#         ${CY_PACKAGE_NAME} PROPERTIES INSTALL_RPATH "@loader_path/${CMAKE_INSTALL_LIBDIR};${CMAKE_PREFIX_PATH}/lib" INSTALL_RPATH_USE_LINK_PATH TRUE)
+# else()
+#     set_target_properties(${CY_PACKAGE_NAME} PROPERTIES INSTALL_RPATH
+#         "$ORIGIN/${CMAKE_INSTALL_LIBDIR}:$ORIGIN/../lib:${CMAKE_PREFIX_PATH}/lib"
+#         INSTALL_RPATH_USE_LINK_PATH TRUE)
+# endif()
+
+# Set the install directory for the library
+set(LIB_INSTALL_DIR "lib")
+
+# Install the target to the appropriate location
+install(TARGETS ${CY_PACKAGE_NAME} DESTINATION ${LIB_INSTALL_DIR})
+
+# Configure the RPATH based on the platform
 if(APPLE)
     set_target_properties(
-        ${CY_PACKAGE_NAME} PROPERTIES INSTALL_RPATH "@loader_path/${CMAKE_INSTALL_LIBDIR};${CMAKE_PREFIX_PATH}/lib" INSTALL_RPATH_USE_LINK_PATH TRUE)
+        ${CY_PACKAGE_NAME} PROPERTIES
+        INSTALL_RPATH "@loader_path/${LIB_INSTALL_DIR};${CMAKE_PREFIX_PATH}/lib"
+        INSTALL_RPATH_USE_LINK_PATH TRUE
+    )
 else()
-    set_target_properties(${CY_PACKAGE_NAME} PROPERTIES INSTALL_RPATH
-        "$ORIGIN/${CMAKE_INSTALL_LIBDIR}:$ORIGIN/../lib:${CMAKE_PREFIX_PATH}/lib"
-        INSTALL_RPATH_USE_LINK_PATH TRUE)
+    set_target_properties(
+        ${CY_PACKAGE_NAME} PROPERTIES
+        INSTALL_RPATH "$ORIGIN/${LIB_INSTALL_DIR}:$ORIGIN/../lib:${CMAKE_PREFIX_PATH}/lib"
+        INSTALL_RPATH_USE_LINK_PATH TRUE
+    )
 endif()
 
 # if(APPLE)

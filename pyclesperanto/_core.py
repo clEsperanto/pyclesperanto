@@ -1,4 +1,4 @@
-from ._pyclesperanto import _Device, _BackendManager
+from pyclesperanto.lib._pyclesperanto import _Device, _BackendManager
 # from . import _cle
 
 

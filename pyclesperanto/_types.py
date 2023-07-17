@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from . import _cle
+from ._pyclesperanto import _DataType, _MemoryType
 
 import numpy as np
 from typing import Union
@@ -8,15 +8,15 @@ from typing import Union
 
 class DataType:
     np_dtype_mapping = {
-        np.float32: _cle._DataType.float32,
-        np.int64: _cle._DataType.int64,
-        np.int32: _cle._DataType.int32,
-        np.int16: _cle._DataType.int16,
-        np.int8: _cle._DataType.int8,
-        np.uint64: _cle._DataType.uint64,
-        np.uint32: _cle._DataType.uint32,
-        np.uint16: _cle._DataType.uint16,
-        np.uint8: _cle._DataType.uint8,
+        np.float32: _DataType.float32,
+        np.int64: _DataType.int64,
+        np.int32: _DataType.int32,
+        np.int16: _DataType.int16,
+        np.int8: _DataType.int8,
+        np.uint64: _DataType.uint64,
+        np.uint32: _DataType.uint32,
+        np.uint16: _DataType.uint16,
+        np.uint8: _DataType.uint8,
     }
 
     @classmethod
@@ -42,17 +42,17 @@ class DataType:
 
 class MemoryType:
     mtype_mapping = {  # type: ignore
-        _cle._MemoryType.buffer: "buffer",
-        _cle._MemoryType.image: "image",
+        _MemoryType.buffer: "buffer",
+        _MemoryType.image: "image",
     }
 
-    def __init__(self, mtype: Union[MemoryType, _cle._MemoryType] = None) -> None:
+    def __init__(self, mtype: Union[MemoryType, _MemoryType] = None) -> None:
         if mtype is None:
-            mtype = _cle._MemoryType.buffer
+            mtype = _MemoryType.buffer
         elif isinstance(mtype, MemoryType):
             self.type = mtype.type
             self.name = mtype.name
-        elif isinstance(mtype, _cle._MemoryType):
+        elif isinstance(mtype, _MemoryType):
             self.type = mtype
             self.name = self.mtype_mapping[mtype]
         else:
@@ -60,11 +60,11 @@ class MemoryType:
 
     @classmethod
     def buffer(cls):
-        return cls(_cle._MemoryType.buffer)
+        return cls(_MemoryType.buffer)
 
     @classmethod
     def image(cls):
-        return cls(_cle._MemoryType.image)
+        return cls(_MemoryType.image)
 
     def __str__(self):
         return self.name

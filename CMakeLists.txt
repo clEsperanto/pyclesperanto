@@ -9,7 +9,7 @@ project(pyClesperanto)
 set(CMAKE_BUILD_TYPE Release)
 
 string(TOLOWER ${PROJECT_NAME} PY_PACKAGE_NAME)
-set(CY_PACKAGE_NAME _clesperanto)
+set(CY_PACKAGE_NAME _${PY_PACKAGE_NAME})
 
 # Compilation tag for CLIc library linking for UNIX
 if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
@@ -27,6 +27,9 @@ endif()
 if(Python3_Development.Embed_FOUND)
     message(STATUS "Python Developement Embed found")
 endif()
+
+# find_package(OpenCL REQUIRED)
+# find_package(CUDAToolkit REQUIRED)
 
 ## fetch CLIc using CMake FetchContent
 include(FetchContent)
@@ -58,10 +61,12 @@ find_package(pybind11 CONFIG REQUIRED)
 pybind11_add_module(${CY_PACKAGE_NAME} MODULE ${WRAPPER_SOURCES_FILES})
 
 target_link_libraries(${CY_PACKAGE_NAME} PRIVATE CLIc::CLIc)
+# target_link_libraries(${CY_PACKAGE_NAME} PRIVATE OpenCL::OpenCL)
+# target_link_libraries(${CY_PACKAGE_NAME} PRIVATE CUDA::cudart CUDA::cuda_driver CUDA::nvrtc CUDA::OpenCL) 
 add_dependencies(${CY_PACKAGE_NAME} CLIc)
-target_include_directories(${CY_PACKAGE_NAME} PRIVATE "$<BUILD_INTERFACE:${WRAPPER_DIR}>")
+target_include_directories(${CY_PACKAGE_NAME} PUBLIC "$<BUILD_INTERFACE:${WRAPPER_DIR}>")
 target_compile_features(${CY_PACKAGE_NAME} PRIVATE cxx_std_17)
-set_target_properties(${CY_PACKAGE_NAME} PROPERTIES OUTPUT_NAME ${CY_PACKAGE_NAME})
+# set_target_properties(${CY_PACKAGE_NAME} PROPERTIES OUTPUT_NAME ${CY_PACKAGE_NAME})
 
 # Installing the extension module to the root of the package
 install(TARGETS ${CY_PACKAGE_NAME} DESTINATION .)

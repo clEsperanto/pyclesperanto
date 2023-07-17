@@ -1,11 +1,11 @@
-# from ._pyclesperanto import _Device, _BackendManager
-from . import _cle
+from ._pyclesperanto import _Device, _BackendManager
+# from . import _cle
 
 
 from typing import Optional
 
-Device = _cle._Device
-BackendManager = _cle._BackendManager
+Device = _Device
+BackendManager = _BackendManager
 
 
 class _current_device:
@@ -27,7 +27,7 @@ def select_device(device_name: str = "", device_type: str = "all") -> Device:
 
     Select device using its name or subname (e.g. "NVIDIA", "RTX", "Iris", etc.) and
     type (e.g. "all", "cpu", "gpu").
-    To retrieve a list of available devices, use `list_available_cle._devices()`
+    To retrieve a list of available devices, use `list_available_devices()`
 
     Parameters
     ----------
@@ -51,7 +51,7 @@ def list_available_devices(device_type: str = "all") -> list[str]:
     """Retrieve a list of names of available devices
 
     Will search system for backend available compatible device and return a list of their names.
-    Use 'select_cle._device' or 'get_cle._devices' to select devices.
+    Use 'select_device' or 'get_devices' to select devices.
 
     Parameters
     ----------

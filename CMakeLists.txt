@@ -63,28 +63,25 @@ add_dependencies(${CY_PACKAGE_NAME} CLIc)
 target_include_directories(${CY_PACKAGE_NAME} PUBLIC "$<BUILD_INTERFACE:${WRAPPER_DIR}>")
 
 # Set the install directory for the library
-set(LIB_INSTALL_DIR "lib")
+# set(LIB_INSTALL_DIR "lib64")
 
 # Install the target to the appropriate location
-install(TARGETS ${CY_PACKAGE_NAME} DESTINATION ${LIB_INSTALL_DIR})
+install(TARGETS ${CY_PACKAGE_NAME} DESTINATION .)
 
 # Configure the RPATH based on the platform
 if(APPLE)
-    set(CY_PACKAGE_RPATH "@loader_path;${CMAKE_CURRENT_SOURCE_DIR}/${PY_PACKAGE_NAME}/lib")
+    set(CY_PACKAGE_RPATH "@loader_path;@loader_path/${CMAKE_INSTALL_LIBDIR}") #${CMAKE_CURRENT_SOURCE_DIR}/${PY_PACKAGE_NAME}/lib:${CMAKE_CURRENT_SOURCE_DIR}/${PY_PACKAGE_NAME}/lib64")
 else()
-    set(CY_PACKAGE_RPATH "$ORIGIN;${CMAKE_CURRENT_SOURCE_DIR}/${PY_PACKAGE_NAME}/lib:${CMAKE_CURRENT_SOURCE_DIR}/${PY_PACKAGE_NAME}/lib64")
+    set(CY_PACKAGE_RPATH "$ORIGIN;$ORIGIN/${CMAKE_INSTALL_LIBDIR}") #${CMAKE_CURRENT_SOURCE_DIR}/${PY_PACKAGE_NAME}/lib:${CMAKE_CURRENT_SOURCE_DIR}/${PY_PACKAGE_NAME}/lib64")
 endif()
+
 
 set_target_properties(
     ${CY_PACKAGE_NAME} PROPERTIES
     INSTALL_RPATH "${CY_PACKAGE_RPATH}"
+    BUILD_WITH_INSTALL_RPATH TRUE
     INSTALL_RPATH_USE_LINK_PATH TRUE
 )
 
-# if(APPLE)
-#     set_target_properties(
-#         ${CY_PACKAGE_NAME} PROPERTIES INSTALL_RPATH "@loader_path/${CMAKE_INSTALL_LIBDIR}")
-# else()
-#     set_target_properties(${CY_PACKAGE_NAME} PROPERTIES INSTALL_RPATH
-#         "$ORIGIN/${CMAKE_INSTALL_LIBDIR}")
-# endif()
+message(STATUS "CY_PACKAGE_RPATH: ${CY_PACKAGE_RPATH}")
+message(STATUS "CMAKE_INSTALL_LIBDIR: ${CMAKE_INSTALL_LIBDIR}")

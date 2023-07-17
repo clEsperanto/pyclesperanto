@@ -15,7 +15,7 @@ def add_images(
     output_image: Image = None,
     device: Device = None,
 ) -> Image:
-    from pyclesperanto.lib._pyclesperanto import _add_images as op
+    from ._pyclesperanto import _add_images as op
     # op = _cle._add_images
 
     return op(device=device, src0=input_image0, src1=input_image1, dst=output_image)
@@ -30,7 +30,7 @@ def bottom_hat_box(
     radius_z: int = 0,
     device: Device = None,
 ) -> Image:
-    from pyclesperanto.lib._pyclesperanto import _bottom_hat_box as op
+    from ._pyclesperanto import _bottom_hat_box as op
     # op = _cle._bottom_hat_box
 
     return op(
@@ -52,7 +52,7 @@ def bottom_hat_sphere(
     radius_z: float = 0,
     device: Device = None,
 ) -> Image:
-    from pyclesperanto.lib._pyclesperanto import _bottom_hat_sphere as op
+    from ._pyclesperanto import _bottom_hat_sphere as op
     # op = _cle._bottom_hat_sphere
 
     return op(
@@ -73,7 +73,7 @@ def clip(
     max_intensity: float = 0,
     device: Device = None,
 ) -> Image:
-    from pyclesperanto.lib._pyclesperanto import _clip as op
+    from ._pyclesperanto import _clip as op
     # op = _cle._clip
 
     return op(
@@ -94,7 +94,7 @@ def closing_box(
     radius_z: int = 0,
     device: Device = None,
 ) -> Image:
-    from pyclesperanto.lib._pyclesperanto import _closing_box as op
+    from ._pyclesperanto import _closing_box as op
     # op = _cle._closing_box
 
     return op(
@@ -116,7 +116,7 @@ def closing_sphere(
     radius_z: float = 0,
     device: Device = None,
 ) -> Image:
-    from pyclesperanto.lib._pyclesperanto import _closing_sphere as op
+    from ._pyclesperanto import _closing_sphere as op
     # op = _cle._closing_sphere
 
     return op(
@@ -136,7 +136,7 @@ def combine_horizontally(
     output_image: Image = None,
     device: Device = None,
 ) -> Image:
-    from pyclesperanto.lib._pyclesperanto import _combine_horizontally as op
+    from ._pyclesperanto import _combine_horizontally as op
     # op = _cle._combine_horizontally
 
     return op(device=device, src0=input_image0, src1=input_image1, dst=output_image)
@@ -149,7 +149,7 @@ def combine_vertically(
     output_image: Image = None,
     device: Device = None,
 ) -> Image:
-    from pyclesperanto.lib._pyclesperanto import _combine_vertically as op
+    from ._pyclesperanto import _combine_vertically as op
     # op = _cle._combine_vertically
 
     return op(device=device, src0=input_image0, src1=input_image1, dst=output_image)
@@ -162,7 +162,7 @@ def concatenate_stacks(
     output_image: Image = None,
     device: Device = None,
 ) -> Image:
-    from pyclesperanto.lib._pyclesperanto import _concatenate_stacks as op
+    from ._pyclesperanto import _concatenate_stacks as op
     # op = _cle._concatenate_stacks
 
     return op(device=device, src0=input_image0, src1=input_image1, dst=output_image)
@@ -175,7 +175,7 @@ def crop_border(
     border_size: int = 0,
     device: Device = None,
 ) -> Image:
-    from pyclesperanto.lib._pyclesperanto import _crop_border as op
+    from ._pyclesperanto import _crop_border as op
     # op = _cle._crop_border
 
     return op(
@@ -187,7 +187,7 @@ def crop_border(
 def degrees_to_radians(
     input_image: Image, output_image: Image = None, device: Device = None
 ) -> Image:
-    from pyclesperanto.lib._pyclesperanto import _degrees_to_radians as op
+    from ._pyclesperanto import _degrees_to_radians as op
     # op = _cle._degrees_to_radians
 
     return op(device=device, src=input_image, dst=output_image)
@@ -205,7 +205,7 @@ def difference_of_gaussian(
     sigma2_z: float = 0,
     device: Device = None,
 ) -> Image:
-    from pyclesperanto.lib._pyclesperanto import _difference_of_gaussian as op
+    from ._pyclesperanto import _difference_of_gaussian as op
     # op = _cle._difference_of_gaussian
 
     return op(
@@ -228,7 +228,7 @@ def gamma_correction(
     gamma: float = 0,
     device: Device = None,
 ) -> Image:
-    from pyclesperanto.lib._pyclesperanto import _gamma_correction as op
+    from ._pyclesperanto import _gamma_correction as op
     # op = _cle._gamma_correction
 
     return op(device=device, src=input_image, dst=output_image, gamma=float(gamma))
@@ -238,7 +238,7 @@ def gamma_correction(
 def invert(
     input_image: Image, output_image: Image = None, device: Device = None
 ) -> Image:
-    from pyclesperanto.lib._pyclesperanto import _invert as op
+    from ._pyclesperanto import _invert as op
     # op = _cle._invert
 
     return op(device=device, src=input_image, dst=output_image)
@@ -248,7 +248,7 @@ def invert(
 def label_spots(
     input_image: Image, output_image: Image = None, device: Device = None
 ) -> Image:
-    from pyclesperanto.lib._pyclesperanto import _label_spots as op
+    from ._pyclesperanto import _label_spots as op
     # op = _cle._label_spots
 
     return op(device=device, src=input_image, dst=output_image)
@@ -258,7 +258,7 @@ def label_spots(
 def maximum_of_all_pixels(
     input_image: Image, output_image: Image = None, device: Device = None
 ) -> Image:
-    from pyclesperanto.lib._pyclesperanto import _maximum_of_all_pixels as op
+    from ._pyclesperanto import _maximum_of_all_pixels as op
     # op = _cle._maximum_of_all_pixels
 
     return op(device=device, src=input_image, dst=output_image)
@@ -268,7 +268,7 @@ def maximum_of_all_pixels(
 def minimum_of_all_pixels(
     input_image: Image, output_image: Image = None, device: Device = None
 ) -> Image:
-    from pyclesperanto.lib._pyclesperanto import _minimum_of_all_pixels as op
+    from ._pyclesperanto import _minimum_of_all_pixels as op
     # op = _cle._minimum_of_all_pixels
 
     return op(device=device, src=input_image, dst=output_image)
@@ -283,7 +283,7 @@ def opening_box(
     radius_z: int = 0,
     device: Device = None,
 ) -> Image:
-    from pyclesperanto.lib._pyclesperanto import _opening_box as op
+    from ._pyclesperanto import _opening_box as op
     # op = _cle._opening_box
 
     return op(
@@ -305,7 +305,7 @@ def opening_sphere(
     radius_z: float = 0,
     device: Device = None,
 ) -> Image:
-    from pyclesperanto.lib._pyclesperanto import _opening_sphere as op
+    from ._pyclesperanto import _opening_sphere as op
     # op = _cle._opening_sphere
 
     return op(
@@ -322,7 +322,7 @@ def opening_sphere(
 def radians_to_degrees(
     input_image: Image, output_image: Image = None, device: Device = None
 ) -> Image:
-    from pyclesperanto.lib._pyclesperanto import _radians_to_degrees as op
+    from ._pyclesperanto import _radians_to_degrees as op
     # op = _cle._radians_to_degrees
 
     return op(device=device, src=input_image, dst=output_image)
@@ -332,7 +332,7 @@ def radians_to_degrees(
 def square(
     input_image: Image, output_image: Image = None, device: Device = None
 ) -> Image:
-    from pyclesperanto.lib._pyclesperanto import _square as op
+    from ._pyclesperanto import _square as op
     # op = _cle._square
 
     return op(device=device, src=input_image, dst=output_image)
@@ -347,7 +347,7 @@ def standard_deviation_box(
     radius_z: int = 0,
     device: Device = None,
 ) -> Image:
-    from pyclesperanto.lib._pyclesperanto import _standard_deviation_box as op
+    from ._pyclesperanto import _standard_deviation_box as op
     # op = _cle._standard_deviation_box
 
     return op(
@@ -369,7 +369,7 @@ def standard_deviation_sphere(
     radius_z: float = 0,
     device: Device = None,
 ) -> Image:
-    from pyclesperanto.lib._pyclesperanto import _standard_deviation_sphere as op
+    from ._pyclesperanto import _standard_deviation_sphere as op
     # op = _cle._standard_deviation_sphere
 
     return op(
@@ -390,7 +390,7 @@ def sub_stack(
     end_z: int = 0,
     device: Device = None,
 ) -> Image:
-    from pyclesperanto.lib._pyclesperanto import _sub_stack as op
+    from ._pyclesperanto import _sub_stack as op
     # op = _cle._sub_stack
 
     return op(
@@ -409,7 +409,7 @@ def subtract_images(
     output_image: Image = None,
     device: Device = None,
 ) -> Image:
-    from pyclesperanto.lib._pyclesperanto import _subtract_images as op
+    from ._pyclesperanto import _subtract_images as op
     # op = _cle._subtract_images
 
     return op(device=device, src0=input_image0, src1=input_image1, dst=output_image)
@@ -419,7 +419,7 @@ def subtract_images(
 def sum_of_all_pixels(
     input_image: Image, output_image: Image = None, device: Device = None
 ) -> Image:
-    from pyclesperanto.lib._pyclesperanto import _sum_of_all_pixels as op
+    from ._pyclesperanto import _sum_of_all_pixels as op
     # op = _cle._sum_of_all_pixels
 
     return op(device=device, src=input_image, dst=output_image)
@@ -434,7 +434,7 @@ def top_hat_box(
     radius_z: int = 0,
     device: Device = None,
 ) -> Image:
-    from pyclesperanto.lib._pyclesperanto import _top_hat_box as op
+    from ._pyclesperanto import _top_hat_box as op
     # op = _cle._top_hat_box
 
     return op(
@@ -456,7 +456,7 @@ def top_hat_sphere(
     radius_z: float = 0,
     device: Device = None,
 ) -> Image:
-    from pyclesperanto.lib._pyclesperanto import _top_hat_sphere as op
+    from ._pyclesperanto import _top_hat_sphere as op
     # op = _cle._top_hat_sphere
 
     return op(

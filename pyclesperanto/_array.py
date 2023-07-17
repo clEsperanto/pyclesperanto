@@ -2,7 +2,7 @@ from __future__ import annotations
 
 # from . import _cle
 
-from pyclesperanto.lib._pyclesperanto import _Array
+from ._pyclesperanto import _Array
 
 from typing import Tuple, Union
 import numpy as np

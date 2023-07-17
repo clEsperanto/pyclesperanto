@@ -15,10 +15,8 @@ finally:
 
 exec(compile(version_file_contents, "pyclesperanto/_version.py", "exec"), ver_dic)
 
-conda_prefix = os.environ.get('CONDA_PREFIX')
-cmake_args_list = [
-    "-DCLIC_VERSION:String=" + ver_dic["CLIC_VERSION"]
-]
+conda_prefix = os.environ.get("CONDA_PREFIX")
+cmake_args_list = ["-DCLIC_VERSION:String=" + ver_dic["CLIC_VERSION"]]
 if conda_prefix:
     cmake_args_list.append("-DCMAKE_PREFIX_PATH:FILEPATH=" + conda_prefix)
 
@@ -35,6 +33,8 @@ setup(
     long_description=readme,
     long_description_content_type="text/markdown",
     packages=["pyclesperanto"],
+    # package_data={"demos": ["demos/*.ipynb"]},
+    # exclude_package_data={"demos": ["demos/*.ipynb"]},
     cmake_install_dir="pyclesperanto",
     python_requires=">=3.7",
     install_requires=[

@@ -72,12 +72,12 @@ set(PACKAGE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/${PY_PACKAGE_NAME})
 set(WRAPPER_DIR ${CMAKE_CURRENT_SOURCE_DIR}/wrapper)
 file(GLOB_RECURSE WRAPPER_SOURCES_FILES ${WRAPPER_DIR}/*.cpp)
 
-# build pure ocl version
-include(${PROJECT_SOURCE_DIR}/scripts/ocl_build.cmake)
-# build pure cuda version
-include(${PROJECT_SOURCE_DIR}/scripts/cuda_build.cmake)
 # build cuda-ocl version
-include(${PROJECT_SOURCE_DIR}/scripts/all_build.cmake)
+include(${PROJECT_SOURCE_DIR}/scripts/pyclesperanto_all_build.cmake)
+# build pure ocl version
+include(${PROJECT_SOURCE_DIR}/scripts/pyclesperanto_ocl_build.cmake)
+# build pure cuda version
+include(${PROJECT_SOURCE_DIR}/scripts/pyclesperanto_cuda_build.cmake)
 
 # find_package(pybind11 CONFIG REQUIRED)
 # pybind11_add_module(${CY_PACKAGE_NAME} MODULE ${WRAPPER_SOURCES_FILES})

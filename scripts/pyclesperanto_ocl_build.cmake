@@ -1,4 +1,4 @@
-message(STATUS "# Building OCL version --------")
+message(STATUS "Building OCL version --------")
 
 set(CY_OCL_PACKAGE_NAME _ocl_clesperanto)
 

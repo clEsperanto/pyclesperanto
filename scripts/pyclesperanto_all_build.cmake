@@ -1,4 +1,4 @@
-message(STATUS "# Building ALL version --------")
+message(STATUS "Building ALL version --------")
 
 set(CY_CUDA_PACKAGE_NAME _clesperanto)
 

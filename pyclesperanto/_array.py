@@ -1,6 +1,8 @@
 from __future__ import annotations
 
-from ._pyclesperanto import _Array
+from . import _cle
+
+# from ._pyclesperanto import _Array
 
 from typing import Tuple, Union
 import numpy as np
@@ -11,8 +13,8 @@ from ._core import Device, get_device
 from ._operators import Operators
 
 
-class Array(_Array, Operators):
-    def __init__(self, array: _Array) -> None:
+class Array(_cle._Array, Operators):
+    def __init__(self, array: _cle._Array) -> None:
         super().__init__(array)
 
     @classmethod

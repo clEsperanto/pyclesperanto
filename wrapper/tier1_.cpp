@@ -55,6 +55,11 @@ m.def("_binary_xor", &cle::tier1::binary_xor_func, "Call binary_xor from C++.",
     py::arg("device"), py::arg("src0"), py::arg("src1"), py::arg("dst"));
 
     
+m.def("_block_enumerate", &cle::tier1::block_enumerate_func, "Call block_enumerate from C++.",
+    py::return_value_policy::take_ownership,
+    py::arg("device"), py::arg("src0"), py::arg("src1"), py::arg("dst"), py::arg("blocksize"));
+
+    
 m.def("_convolve", &cle::tier1::convolve_func, "Call convolve from C++.",
     py::return_value_policy::take_ownership,
     py::arg("device"), py::arg("src0"), py::arg("src1"), py::arg("dst"));
@@ -78,6 +83,11 @@ m.def("_dilate_sphere", &cle::tier1::dilate_sphere_func, "Call dilate_sphere fro
 m.def("_divide_images", &cle::tier1::divide_images_func, "Call divide_images from C++.",
     py::return_value_policy::take_ownership,
     py::arg("device"), py::arg("src0"), py::arg("src1"), py::arg("dst"));
+
+    
+m.def("_divide_image_and_scalar", &cle::tier1::divide_image_and_scalar_func, "Call divide_image_and_scalar from C++.",
+    py::return_value_policy::take_ownership,
+    py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("scalar"));
 
     
 m.def("_equal", &cle::tier1::equal_func, "Call equal from C++.",
@@ -162,7 +172,7 @@ m.def("_logarithm", &cle::tier1::logarithm_func, "Call logarithm from C++.",
     
 m.def("_mask", &cle::tier1::mask_func, "Call mask from C++.",
     py::return_value_policy::take_ownership,
-    py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("mask"));
+    py::arg("device"), py::arg("src"), py::arg("mask"), py::arg("dst"));
 
     
 m.def("_mask_label", &cle::tier1::mask_label_func, "Call mask_label from C++.",
@@ -337,17 +347,17 @@ m.def("_minimum_sphere", &cle::tier1::minimum_sphere_func, "Call minimum_sphere 
     
 m.def("_set", &cle::tier1::set_func, "Call set from C++.",
     py::return_value_policy::take_ownership,
-    py::arg("device"), py::arg("dst"), py::arg("scalar"));
+    py::arg("device"), py::arg("src"), py::arg("scalar"));
 
     
 m.def("_set_column", &cle::tier1::set_column_func, "Call set_column from C++.",
     py::return_value_policy::take_ownership,
-    py::arg("device"), py::arg("dst"), py::arg("column"), py::arg("value"));
+    py::arg("device"), py::arg("src"), py::arg("column"), py::arg("value"));
 
     
 m.def("_set_row", &cle::tier1::set_row_func, "Call set_row from C++.",
     py::return_value_policy::take_ownership,
-    py::arg("device"), py::arg("dst"), py::arg("row"), py::arg("value"));
+    py::arg("device"), py::arg("src"), py::arg("row"), py::arg("value"));
 
     
 m.def("_set_nonzero_pixels_to_pixelindex", &cle::tier1::set_nonzero_pixels_to_pixelindex_func, "Call set_nonzero_pixels_to_pixelindex from C++.",
@@ -383,6 +393,11 @@ m.def("_sobel", &cle::tier1::sobel_func, "Call sobel from C++.",
 m.def("_subtract_image_from_scalar", &cle::tier1::subtract_image_from_scalar_func, "Call subtract_image_from_scalar from C++.",
     py::return_value_policy::take_ownership,
     py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("scalar"));
+
+    
+m.def("_sum_reduction_x", &cle::tier1::sum_reduction_x_func, "Call sum_reduction_x from C++.",
+    py::return_value_policy::take_ownership,
+    py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("blocksize"));
 
     
 m.def("_sum_x_projection", &cle::tier1::sum_x_projection_func, "Call sum_x_projection from C++.",

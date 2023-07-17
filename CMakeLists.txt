@@ -62,18 +62,6 @@ target_link_libraries(${CY_PACKAGE_NAME} PRIVATE CLIc::CLIc)
 add_dependencies(${CY_PACKAGE_NAME} CLIc)
 target_include_directories(${CY_PACKAGE_NAME} PUBLIC "$<BUILD_INTERFACE:${WRAPPER_DIR}>")
 
-# # Installing the extension module to the root of the package
-# install(TARGETS ${CY_PACKAGE_NAME} DESTINATION .)
-
-# if(APPLE)
-#     set_target_properties(
-#         ${CY_PACKAGE_NAME} PROPERTIES INSTALL_RPATH "@loader_path/${CMAKE_INSTALL_LIBDIR};${CMAKE_PREFIX_PATH}/lib" INSTALL_RPATH_USE_LINK_PATH TRUE)
-# else()
-#     set_target_properties(${CY_PACKAGE_NAME} PROPERTIES INSTALL_RPATH
-#         "$ORIGIN/${CMAKE_INSTALL_LIBDIR}:$ORIGIN/../lib:${CMAKE_PREFIX_PATH}/lib"
-#         INSTALL_RPATH_USE_LINK_PATH TRUE)
-# endif()
-
 # Set the install directory for the library
 set(LIB_INSTALL_DIR "lib")
 
@@ -82,18 +70,15 @@ install(TARGETS ${CY_PACKAGE_NAME} DESTINATION ${LIB_INSTALL_DIR})
 
 # Configure the RPATH based on the platform
 if(APPLE)
-    set_target_properties(
-        ${CY_PACKAGE_NAME} PROPERTIES
-        INSTALL_RPATH "@loader_path/${LIB_INSTALL_DIR};${CMAKE_PREFIX_PATH}/lib"
-        INSTALL_RPATH_USE_LINK_PATH TRUE
-    )
+    set(CY_PACKAGE_RPATH "@loader_path;${CMAKE_CURRENT_SOURCE_DIR}/${PY_PACKAGE_NAME}/lib")
 else()
-    set_target_properties(
-        ${CY_PACKAGE_NAME} PROPERTIES
-        INSTALL_RPATH "$ORIGIN/${LIB_INSTALL_DIR}:$ORIGIN/../lib:${CMAKE_PREFIX_PATH}/lib"
-        INSTALL_RPATH_USE_LINK_PATH TRUE
-    )
+    set(CY_PACKAGE_RPATH "$ORIGIN;${CMAKE_CURRENT_SOURCE_DIR}/${PY_PACKAGE_NAME}/lib")
 endif()
+set_target_properties(
+    ${CY_PACKAGE_NAME} PROPERTIES
+    INSTALL_RPATH "${CY_PACKAGE_RPATH}"
+    INSTALL_RPATH_USE_LINK_PATH TRUE
+)
 
 # if(APPLE)
 #     set_target_properties(

@@ -29,18 +29,6 @@ if(Python3_Development.Embed_FOUND)
     message(STATUS "Python Developement Embed found")
 endif()
 
-## fetch CLIc using CMake FetchContent
-include(FetchContent)
-option(BUILD_TESTING  OFF)
-option(BUILD_BENCHMARK  OFF)
-option(BUILD_SHARED_LIBS OFF)
-FetchContent_Declare(
-  CLIc 
-  GIT_REPOSITORY https://github.com/clEsperanto/CLIc_prototype.git
-  GIT_TAG add-cuda-backend
-)
-FetchContent_MakeAvailable(CLIc)
-
 if(SKBUILD)
   # Scikit-Build does not add your site-packages to the search path
   # automatically, so we need to add it _or_ the pybind11 specific directory
@@ -51,6 +39,17 @@ if(SKBUILD)
     OUTPUT_STRIP_TRAILING_WHITESPACE COMMAND_ECHO STDOUT)
   list(APPEND CMAKE_PREFIX_PATH "${_tmp_dir}")
 endif()
+
+## fetch CLIc using CMake FetchContent
+include(FetchContent)
+option(BUILD_TESTING  OFF)
+option(BUILD_BENCHMARK  OFF)
+FetchContent_Declare(
+  CLIc 
+  GIT_REPOSITORY https://github.com/clEsperanto/CLIc_prototype.git
+  GIT_TAG add-cuda-backend
+)
+FetchContent_MakeAvailable(CLIc)
 
 set(PACKAGE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/${PY_PACKAGE_NAME})
 set(WRAPPER_DIR ${CMAKE_CURRENT_SOURCE_DIR}/wrapper)
@@ -63,20 +62,14 @@ target_link_libraries(${CY_PACKAGE_NAME} PRIVATE CLIc::CLIc)
 add_dependencies(${CY_PACKAGE_NAME} CLIc)
 target_include_directories(${CY_PACKAGE_NAME} PUBLIC "$<BUILD_INTERFACE:${WRAPPER_DIR}>")
 
-# Set the install directory for the library
-# set(LIB_INSTALL_DIR "lib64")
-
 # Install the target to the appropriate location
 install(TARGETS ${CY_PACKAGE_NAME} DESTINATION .)
 
-message(STATUS "CMAKE_INSTALL_LIBDIR: ${CMAKE_INSTALL_LIBDIR}")
-message(STATUS "CMAKE_INSTALL_BINDIR: ${CMAKE_INSTALL_BINDIR}")
-
 # Configure the RPATH based on the platform
 if(APPLE)
-    set(CY_PACKAGE_RPATH "@loader_path;@loader_path/${CMAKE_INSTALL_LIBDIR};@loader_path/${CMAKE_INSTALL_BINDIR}") #${CMAKE_CURRENT_SOURCE_DIR}/${PY_PACKAGE_NAME}/lib:${CMAKE_CURRENT_SOURCE_DIR}/${PY_PACKAGE_NAME}/lib64")
+    set(CY_PACKAGE_RPATH "@loader_path;@loader_path/${CMAKE_INSTALL_LIBDIR};@loader_path/${CMAKE_INSTALL_BINDIR}") 
 else()
-    set(CY_PACKAGE_RPATH "$ORIGIN;$ORIGIN/${CMAKE_INSTALL_LIBDIR};$ORIGIN/${CMAKE_INSTALL_BINDIR}") #${CMAKE_CURRENT_SOURCE_DIR}/${PY_PACKAGE_NAME}/lib:${CMAKE_CURRENT_SOURCE_DIR}/${PY_PACKAGE_NAME}/lib64")
+    set(CY_PACKAGE_RPATH "$ORIGIN;$ORIGIN/${CMAKE_INSTALL_LIBDIR};$ORIGIN/${CMAKE_INSTALL_BINDIR}") 
 endif()
 
 set_target_properties(
@@ -85,11 +78,3 @@ set_target_properties(
     BUILD_WITH_INSTALL_RPATH TRUE
     INSTALL_RPATH_USE_LINK_PATH TRUE
 )
-
-if(WIN32)
-  set_target_properties(${CY_PACKAGE_NAME} PROPERTIES RUNTIME_OUTPUT_DIRECTORY "./${CMAKE_INSTALL_BINDIR}")
-  set_target_properties(${CY_PACKAGE_NAME} PROPERTIES LIBRARY_OUTPUT_DIRECTORY "./${CMAKE_INSTALL_LIBDIR}" )
-endif()
-
-message(STATUS "CY_PACKAGE_RPATH: ${CY_PACKAGE_RPATH}")
-message(STATUS "CMAKE_INSTALL_LIBDIR: ${CMAKE_INSTALL_LIBDIR}")

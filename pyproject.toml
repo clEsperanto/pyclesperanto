@@ -38,8 +38,8 @@ skip = ["cp27-*", "cp36-*", "pp*", "*-musllinux*", "*_i686"]
 
 [tool.cibuildwheel.windows]
 before-all = "bash {package}/scripts/build-opencl-windows.sh"
-# environment = {SKBUILD_CONFIGURE_OPTIONS = "-DOpenCL_LIBRARIES:FILEPATH='C:/Program Files/OpenCL-ICD-Loader/lib/OpenCL.lib' -DOpenCL_INCLUDE_DIRS:PATH='D:/a/pyclesperanto/pyclesperanto/OpenCL-Headers/install/include/' -DOpenCL_FOUND:BOOL=TRUE"}
-environment = {SKBUILD_CONFIGURE_OPTIONS = "-DCMAKE_PREFIX_PATH:PATH='D:/a/pyclesperanto/pyclesperanto/scripts/'"}
+environment = {SKBUILD_CONFIGURE_OPTIONS = "-DOpenCL_LIBRARIES:FILEPATH='C:/Program Files/OpenCL-ICD-Loader/lib/OpenCL.lib' -DOpenCL_INCLUDE_DIRS:PATH='C:/Program Files/OpenCL-ICD-Loader/include/'"}
+# environment = {SKBUILD_CONFIGURE_OPTIONS = "-DCMAKE_PREFIX_PATH:PATH='D:/a/pyclesperanto/pyclesperanto/scripts/'"}
 skip = ["cp27-*", "cp36-*", "pp*", "*-win32"]
 
 [tool.cibuildwheel.macos]

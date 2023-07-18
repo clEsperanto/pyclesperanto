@@ -41,6 +41,4 @@ os.environ["PYCLESPERANTO_HOME"] = os.path.dirname(os.path.abspath(__file__))
 buffer = MemoryType.buffer()
 image = MemoryType.image()
 
-# default backend is opencl
-__default_backend__ = select_backend(list_available_backends()[-1])
 __common_alias__ = "cle"

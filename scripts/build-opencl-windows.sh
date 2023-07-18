@@ -10,12 +10,12 @@ set -e
 
 # Clone and install OpenCL-Headers
 git clone --branch ${VERSION} https://github.com/KhronosGroup/OpenCL-Headers "${OPENCL_HEADERS_DIR}"
-cmake -D CMAKE_INSTALL_PREFIX="${INSTALL_PREFIX}/include" -S "${OPENCL_HEADERS_DIR}" -B "${OPENCL_HEADERS_DIR}/build"
+cmake -D CMAKE_INSTALL_PREFIX="${INSTALL_PREFIX}" -S "${OPENCL_HEADERS_DIR}" -B "${OPENCL_HEADERS_DIR}/build"
 cmake --build "${OPENCL_HEADERS_DIR}/build" --target install
 
 # Clone and install OpenCL-ICD-Loader
 git clone --branch ${VERSION} https://github.com/KhronosGroup/OpenCL-ICD-Loader "${OPENCL_ICD_LOADER_DIR}"
-cmake -D CMAKE_INSTALL_PREFIX="${INSTALL_PREFIX}/lib" -D OPENCL_ICD_LOADER_HEADERS_DIR="${INSTALL_PREFIX}/include" -S "${OPENCL_ICD_LOADER_DIR}" -B "${OPENCL_ICD_LOADER_DIR}/build"
+cmake -D CMAKE_INSTALL_PREFIX="${INSTALL_PREFIX}" -D OPENCL_ICD_LOADER_HEADERS_DIR="${INSTALL_PREFIX}/include" -S "${OPENCL_ICD_LOADER_DIR}" -B "${OPENCL_ICD_LOADER_DIR}/build"
 cmake --build "${OPENCL_ICD_LOADER_DIR}/build" --target install --config Release
 
 # Append license information to your project's LICENSE file

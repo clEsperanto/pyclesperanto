@@ -1,16 +1,13 @@
 from ._pyclesperanto import _Device, _BackendManager
 # from . import _cle
 
-
 from typing import Optional, List
 
 Device = _Device
 BackendManager = _BackendManager
 
-
 class _current_device:
     _instance: Optional[Device] = None
-
 
 def get_device() -> Device:
     """Return the current device instance

@@ -17,7 +17,6 @@ from ._types import (
     MemoryType,
     DataType,
 )
-
 from ._core import (
     select_backend,
     get_device,
@@ -38,8 +37,10 @@ import os
 # Supports for ocl-icd find shipped OpenCL ICDs, cf.
 os.environ["PYCLESPERANTO_HOME"] = os.path.dirname(os.path.abspath(__file__))
 
-# # redefine memory type for easy usage
-# buffer = MemoryType.buffer()
-# image = MemoryType.image()
+# redefine memory type for easy usage
+buffer = MemoryType.buffer()
+image = MemoryType.image()
 
+# default backend is opencl
+__default_backend__ = select_backend(list_available_backends()[-1])
 __common_alias__ = "cle"

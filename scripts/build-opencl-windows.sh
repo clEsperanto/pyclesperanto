@@ -17,6 +17,6 @@ git clone --branch ${VERSION} https://github.com/KhronosGroup/OpenCL-ICD-Loader 
 cmake -D CMAKE_INSTALL_PREFIX="${OPENCL_ICD_LOADER_DIR}/install" -D OPENCL_ICD_LOADER_HEADERS_DIR="${OPENCL_HEADERS_DIR}/install/include" -S "${OPENCL_ICD_LOADER_DIR}" -B "${OPENCL_ICD_LOADER_DIR}/build"
 cmake --build "${OPENCL_ICD_LOADER_DIR}/build" --target install --config Release
 
-
-echo "pyclesperanto wheel includes Khronos Group OpenCL-ICD-Loader which is licensed as below" >> ${SCRIPT_DIR}/../LICENSE
-cat ./OpenCL-ICD-Loader/LICENSE >> ${SCRIPT_DIR}/../LICENSE
+# Append license information to your project's LICENSE file
+echo "pyclesperanto wheel includes Khronos Group OpenCL-ICD-Loader which is licensed as below" >>"${SCRIPT_DIR}/../LICENSE"
+cat "${OPENCL_ICD_LOADER_DIR}/LICENSE" >>"${SCRIPT_DIR}/../LICENSE"

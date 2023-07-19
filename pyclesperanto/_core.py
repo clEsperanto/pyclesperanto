@@ -1,5 +1,4 @@
 from ._pyclesperanto import _Device, _BackendManager
-# from . import _cle
 
 from typing import Optional, List
 

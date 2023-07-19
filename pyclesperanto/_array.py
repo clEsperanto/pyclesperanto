@@ -1,7 +1,5 @@
 from __future__ import annotations
 
-# from . import _cle
-
 from ._pyclesperanto import _Array
 
 from typing import Tuple, Union

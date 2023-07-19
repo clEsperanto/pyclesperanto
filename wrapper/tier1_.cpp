@@ -70,6 +70,11 @@ m.def("_copy", &cle::tier1::copy_func, "Call copy from C++.",
     py::arg("device"), py::arg("src"), py::arg("dst"));
 
     
+m.def("_cubic_root", &cle::tier1::cubic_root_func, "Call cubic_root from C++.",
+    py::return_value_policy::take_ownership,
+    py::arg("device"), py::arg("src"), py::arg("dst"));
+
+    
 m.def("_dilate_box", &cle::tier1::dilate_box_func, "Call dilate_box from C++.",
     py::return_value_policy::take_ownership,
     py::arg("device"), py::arg("src"), py::arg("dst"));
@@ -113,6 +118,11 @@ m.def("_erode_sphere", &cle::tier1::erode_sphere_func, "Call erode_sphere from C
 m.def("_exponential", &cle::tier1::exponential_func, "Call exponential from C++.",
     py::return_value_policy::take_ownership,
     py::arg("device"), py::arg("src"), py::arg("dst"));
+
+    
+m.def("_flip", &cle::tier1::flip_func, "Call flip from C++.",
+    py::return_value_policy::take_ownership,
+    py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("flip_x"), py::arg("flip_y"), py::arg("flip_z"));
 
     
 m.def("_gaussian_blur", &cle::tier1::gaussian_blur_func, "Call gaussian_blur from C++.",
@@ -390,6 +400,11 @@ m.def("_sobel", &cle::tier1::sobel_func, "Call sobel from C++.",
     py::arg("device"), py::arg("src"), py::arg("dst"));
 
     
+m.def("_square_root", &cle::tier1::square_root_func, "Call square_root from C++.",
+    py::return_value_policy::take_ownership,
+    py::arg("device"), py::arg("src"), py::arg("dst"));
+
+    
 m.def("_subtract_image_from_scalar", &cle::tier1::subtract_image_from_scalar_func, "Call subtract_image_from_scalar from C++.",
     py::return_value_policy::take_ownership,
     py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("scalar"));
@@ -411,6 +426,21 @@ m.def("_sum_y_projection", &cle::tier1::sum_y_projection_func, "Call sum_y_proje
 
     
 m.def("_sum_z_projection", &cle::tier1::sum_z_projection_func, "Call sum_z_projection from C++.",
+    py::return_value_policy::take_ownership,
+    py::arg("device"), py::arg("src"), py::arg("dst"));
+
+    
+m.def("_transpose_xy", &cle::tier1::transpose_xy_func, "Call transpose_xy from C++.",
+    py::return_value_policy::take_ownership,
+    py::arg("device"), py::arg("src"), py::arg("dst"));
+
+    
+m.def("_transpose_xz", &cle::tier1::transpose_xz_func, "Call transpose_xz from C++.",
+    py::return_value_policy::take_ownership,
+    py::arg("device"), py::arg("src"), py::arg("dst"));
+
+    
+m.def("_transpose_yz", &cle::tier1::transpose_yz_func, "Call transpose_yz from C++.",
     py::return_value_policy::take_ownership,
     py::arg("device"), py::arg("src"), py::arg("dst"));
 

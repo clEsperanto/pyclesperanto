@@ -44,4 +44,10 @@ os.environ["PYCLESPERANTO_HOME"] = os.path.dirname(os.path.abspath(__file__))
 buffer = MemoryType.buffer()
 image = MemoryType.image()
 
+__backends__ = list_available_backends()
+if __backends__:
+    _ = select_backend(__backends__[-1])
+else:
+    print("No backends available, pyclesperanto is unlikely to run.")
+
 __common_alias__ = "cle"

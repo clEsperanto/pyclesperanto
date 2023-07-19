@@ -44,6 +44,7 @@ endif()
 include(FetchContent)
 option(BUILD_TESTING  OFF)
 option(BUILD_BENCHMARK  OFF)
+option(BUILD_SHARED_LIBS OFF)
 FetchContent_Declare(
   CLIc 
   GIT_REPOSITORY https://github.com/clEsperanto/CLIc_prototype.git

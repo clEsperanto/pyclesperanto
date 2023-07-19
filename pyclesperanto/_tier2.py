@@ -352,26 +352,6 @@ def squared_difference(
 
 
 @plugin_function
-def sub_stack(
-    input_image: Image,
-	output_image: Image = None,
-	start_z: int = 0,
-	end_z: int = 0,
-	device: Device = None
-) -> Image:
-    from ._pyclesperanto import _sub_stack as op
-    # op = _cle._sub_stack
-    
-    return op(
-        device=device,
-		src=input_image,
-		dst=output_image,
-		start_z=int(start_z),
-		end_z=int(end_z)
-    )
-
-
-@plugin_function
 def subtract_images(
     input_image0: Image,
 	input_image1: Image,

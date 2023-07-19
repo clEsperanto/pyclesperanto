@@ -30,6 +30,9 @@ from ._functionalities import imshow
 
 from ._tier1 import *
 from ._tier2 import *
+from ._tier3 import *
+from ._tier4 import *
+from ._tier5 import *
 
 # Generic Import
 import os

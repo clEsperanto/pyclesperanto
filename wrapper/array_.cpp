@@ -18,13 +18,13 @@ py::array_t<T, py::array::c_style> read(const cle::Array &array)
      switch (array.dim())
      {
      case 1:
-          np_array = py::array_t<T, py::array::c_style>({array.width()});
+          np_array = py::array_t<T, py::array::c_style>({static_cast<py::ssize_t>(array.width())});
           break;
      case 2:
-          np_array = py::array_t<T, py::array::c_style>({array.height(), array.width()});
+          np_array = py::array_t<T, py::array::c_style>({static_cast<py::ssize_t>(array.height()), static_cast<py::ssize_t>(array.width())});
           break;
      case 3:
-          np_array = py::array_t<T, py::array::c_style>({array.depth(), array.height(), array.width()});
+          np_array = py::array_t<T, py::array::c_style>({static_cast<py::ssize_t>(array.depth()), static_cast<py::ssize_t>(array.height()), static_cast<py::ssize_t>(array.width())});
           break;
      }
      py::buffer_info info = np_array.request();

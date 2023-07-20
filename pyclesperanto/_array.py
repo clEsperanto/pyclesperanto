@@ -1,121 +1,80 @@
 from __future__ import annotations
 
 from ._pyclesperanto import _Array
+from . import _operators
 
-from typing import Tuple, Union
+from typing import Union
 import numpy as np
 import warnings
 
-from ._types import DataType, MemoryType
-from ._core import Device, get_device
-from ._operators import Operators
+def __str__(self) -> str:
+    return self.get().__str__()
 
+def __repr__(self) -> str:
+    repr_str = self.get().__repr__()
+    extra_info = f"mtype={self.mtype}"
+    return repr_str[:-1] + f", {extra_info})"
 
-class Array(_Array, Operators):
-    def __init__(self, array: _Array) -> None:
-        super().__init__(array)
-
-    @classmethod
-    def create(
-        self,
-        shape: Tuple[int, ...],
-        dtype: type = None,
-        mtype: MemoryType = None,
-        device: Device = None,
-    ) -> Array:
-        if dtype is None:
-            dtype = np.float32
-        if mtype is None:
-            mtype = MemoryType.buffer()
-        if device is None:
-            device = get_device()
-
-        z, y, x = 1, 1, 1
-        if len(shape) == 3:
-            z, y, x = shape
-        if len(shape) == 2:
-            y, x = shape
-        if len(shape) == 1:
-            x = shape[0]
-        return Array(
-            super().create(x, y, z, DataType.get_cle_dtype(dtype), mtype.type, device)
+def set(self, array: np.ndarray) -> None:
+    if array.dtype != self.dtype:
+        warnings.warn(
+            f"Array dtype mismatch. Casting array to '{self.dtype.__name__}' before set().",
+            RuntimeWarning,
         )
+        array = array.astype(self.dtype)
+    if array.size != self.size:
+        raise ValueError(
+            f"Array size mismatch: {array.size} != {self.size} ({array.shape} != {self.shape})"
+        )
+    if array.ndim != self.ndim:
+        raise ValueError(
+            f"Array dimension mismatch: {array.ndim} != {self.ndim} ({array.shape} != {self.shape})"
+        )
+    if array.shape != self.shape:
+        raise ValueError(f"Array shape mismatch: {array.shape} != {self.shape}")
+    self._write(array)
+    return self
 
-    def __str__(self) -> str:
-        return self.get().__str__()
+def get(self) -> np.ndarray:
+    caster = {
+        "float32": self._read_float32,
+        "int8": self._read_int8,
+        "int16": self._read_int16,
+        "int32": self._read_int32,
+        "int64": self._read_int64,
+        "uint8": self._read_uint8,
+        "uint16": self._read_uint16,
+        "uint32": self._read_uint32,
+        "uint64": self._read_uint64,
+    }
+    return caster[self.dtype.name]()
 
-    def __repr__(self) -> str:
-        repr_str = self.get().__repr__()
-        extra_info = f"mtype={self.mtype.name}"
-        return repr_str[:-1] + f", {extra_info})"
+setattr(_Array, "set", set)
+setattr(_Array, "get", get)
+setattr(_Array, "__str__", __str__)
+setattr(_Array, "__repr__", __repr__)
+setattr(_Array,"astype",_operators.astype)
+setattr(_Array,"max",_operators.max)
+setattr(_Array,"min",_operators.min)
+setattr(_Array,"sum",_operators.sum)
+setattr(_Array,"__iadd__",_operators.__iadd__)
+setattr(_Array,"__sub__",_operators.__sub__)
+setattr(_Array,"__div__",_operators.__div__)
+setattr(_Array,"__truediv__",_operators.__truediv__)
+setattr(_Array,"__idiv__",_operators.__idiv__)
+setattr(_Array,"__itruediv__",_operators.__itruediv__)
+setattr(_Array,"__mul__",_operators.__mul__)
+setattr(_Array,"__imul__",_operators.__imul__)
+setattr(_Array,"__gt__",_operators.__gt__)
+setattr(_Array,"__ge__",_operators.__ge__)
+setattr(_Array,"__lt__",_operators.__lt__)
+setattr(_Array,"__le__",_operators.__le__)
+setattr(_Array,"__eq__",_operators.__eq__)
+setattr(_Array,"__ne__",_operators.__ne__)
+setattr(_Array,"__pow__",_operators.__pow__)
+setattr(_Array,"__ipow__",_operators.__ipow__)
 
-    @property
-    def itemsize(self) -> int:
-        return super().itemsize
-
-    @property
-    def size(self) -> int:
-        return super().size
-
-    @property
-    def ndim(self) -> int:
-        return super().ndim
-
-    @property
-    def shape(self) -> Tuple[int, ...]:
-        return super().shape
-
-    @property
-    def dtype(self) -> type:
-        return DataType.get_np_dtype(super().dtype)
-
-    @property
-    def mtype(self):
-        return MemoryType(super().mtype)
-
-    @property
-    def device(self) -> Device:
-        return super().device
-
-    def set(self, array: np.ndarray) -> None:
-        if array.dtype != self.dtype:
-            warnings.warn(
-                f"Array dtype mismatch. Casting array to '{self.dtype.__name__}' before set().",
-                RuntimeWarning,
-            )
-            array = array.astype(self.dtype)
-        if array.size != self.size:
-            raise ValueError(
-                f"Array size mismatch: {array.size} != {self.size} ({array.shape} != {self.shape})"
-            )
-        if array.ndim != self.ndim:
-            raise ValueError(
-                f"Array dimension mismatch: {array.ndim} != {self.ndim} ({array.shape} != {self.shape})"
-            )
-        if array.shape != self.shape:
-            raise ValueError(f"Array shape mismatch: {array.shape} != {self.shape}")
-        super().set(array)
-        return self
-
-    def get(self) -> np.ndarray:
-        caster = {
-            np.float32: super().get_float32(),
-            np.int8: super().get_int8(),
-            np.int16: super().get_int16(),
-            np.int32: super().get_int32(),
-            np.int64: super().get_int64(),
-            np.uint8: super().get_uint8(),
-            np.uint16: super().get_uint16(),
-            np.uint32: super().get_uint32(),
-            np.uint64: super().get_uint64(),
-        }
-        return caster[self.dtype]
-
-    def fill(self, value: float) -> None:
-        super().fill(value)
-
-
-Image = Union[np.ndarray, Array]
+Image = Union[np.ndarray, _Array]
 
 
 def is_image(any_array):
@@ -123,7 +82,7 @@ def is_image(any_array):
         isinstance(any_array, np.ndarray)
         or isinstance(any_array, tuple)
         or isinstance(any_array, list)
-        or isinstance(any_array, Array)
+        or isinstance(any_array, _Array)
         or str(type(any_array))
         in [
             "<class 'cupy._core.core.ndarray'>",

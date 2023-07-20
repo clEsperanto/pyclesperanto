@@ -3,9 +3,8 @@
 # Do not edit manually. Instead, edit the script and run it again.
 
 from ._core import Device
-from ._array import Image
+from ._array import Image, Array
 from ._decorators import plugin_function
-
 
 
 @plugin_function

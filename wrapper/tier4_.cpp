@@ -14,5 +14,10 @@ m.def("_relabel_sequential", &cle::tier4::relabel_sequential_func, "Call relabel
     py::return_value_policy::take_ownership,
     py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("blocksize"));
 
+    
+m.def("_threshold_otsu", &cle::tier4::threshold_otsu_func, "Call threshold_otsu from C++.",
+    py::return_value_policy::take_ownership,
+    py::arg("device"), py::arg("src"), py::arg("dst"));
+
 
 }

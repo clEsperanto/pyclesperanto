@@ -3,7 +3,7 @@
 # Do not edit manually. Instead, edit the script and run it again.
 
 from ._core import Device
-from ._array import Image
+from ._array import Image, Array
 from ._decorators import plugin_function
 
 
@@ -21,5 +21,20 @@ def relabel_sequential(
 		src=input_image,
 		dst=output_image,
 		blocksize=int(blocksize)
+    )
+
+
+@plugin_function
+def threshold_otsu(
+    input_image: Image,
+	output_image: Image = None,
+	device: Device = None
+) -> Image:
+    from ._pyclesperanto import _threshold_otsu as op
+    
+    return op(
+        device=device,
+		src=input_image,
+		dst=output_image
     )
 

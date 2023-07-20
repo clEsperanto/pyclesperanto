@@ -5,6 +5,7 @@ include .github/workflows/wheels.yml
 include .gitignore
 include CMakeLists.txt
 include LICENSE
+include MANIFEST.in
 include README.md
 include benchmarking/benchmark_basic_operations.ipynb
 include benchmarking/benchmark_gaussian.ipynb
@@ -47,16 +48,15 @@ include pyclesperanto/_memory.py
 include pyclesperanto/_operators.py
 include pyclesperanto/_tier1.py
 include pyclesperanto/_tier2.py
-include pyclesperanto/_types.py
+include pyclesperanto/_tier3.py
+include pyclesperanto/_tier4.py
+include pyclesperanto/_tier5.py
 include pyclesperanto/_version.py
 include pyproject.toml
 include scripts/build-opencl-linux.sh
 include scripts/build-opencl-macos.sh
 include scripts/build-opencl-windows.sh
-include scripts/pyclesperanto_all_build.cmake
 include scripts/pyclesperanto_autogen_tier_script.ipynb
-include scripts/pyclesperanto_cuda_build.cmake
-include scripts/pyclesperanto_ocl_build.cmake
 include setup.py
 include tests/test_core.py
 include tests/test_import.py
@@ -72,5 +72,8 @@ include wrapper/pycle_wrapper.cpp
 include wrapper/pycle_wrapper.hpp
 include wrapper/tier1_.cpp
 include wrapper/tier2_.cpp
+include wrapper/tier3_.cpp
+include wrapper/tier4_.cpp
+include wrapper/tier5_.cpp
 include wrapper/types_.cpp
 exclude MANIFEST.in

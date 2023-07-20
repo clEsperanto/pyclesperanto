@@ -3,7 +3,7 @@
 # Do not edit manually. Instead, edit the script and run it again.
 
 from ._core import Device
-from ._array import Image, Array
+from ._array import Image
 from ._decorators import plugin_function
 
 
@@ -15,7 +15,6 @@ def relabel_sequential(
 	device: Device = None
 ) -> Image:
     from ._pyclesperanto import _relabel_sequential as op
-    # op = _cle._relabel_sequential
     
     return op(
         device=device,

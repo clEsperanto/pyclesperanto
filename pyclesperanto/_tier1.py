@@ -3,7 +3,7 @@
 # Do not edit manually. Instead, edit the script and run it again.
 
 from ._core import Device
-from ._array import Image, Array
+from ._array import Image
 from ._decorators import plugin_function
 
 
@@ -14,7 +14,6 @@ def absolute(
 	device: Device = None
 ) -> Image:
     from ._pyclesperanto import _absolute as op
-    # op = _cle._absolute
     
     return op(
         device=device,
@@ -33,7 +32,6 @@ def add_images_weighted(
 	device: Device = None
 ) -> Image:
     from ._pyclesperanto import _add_images_weighted as op
-    # op = _cle._add_images_weighted
     
     return op(
         device=device,
@@ -53,7 +51,6 @@ def add_image_and_scalar(
 	device: Device = None
 ) -> Image:
     from ._pyclesperanto import _add_image_and_scalar as op
-    # op = _cle._add_image_and_scalar
     
     return op(
         device=device,
@@ -71,7 +68,6 @@ def binary_and(
 	device: Device = None
 ) -> Image:
     from ._pyclesperanto import _binary_and as op
-    # op = _cle._binary_and
     
     return op(
         device=device,
@@ -88,7 +84,6 @@ def binary_edge_detection(
 	device: Device = None
 ) -> Image:
     from ._pyclesperanto import _binary_edge_detection as op
-    # op = _cle._binary_edge_detection
     
     return op(
         device=device,
@@ -104,7 +99,6 @@ def binary_not(
 	device: Device = None
 ) -> Image:
     from ._pyclesperanto import _binary_not as op
-    # op = _cle._binary_not
     
     return op(
         device=device,
@@ -121,7 +115,6 @@ def binary_or(
 	device: Device = None
 ) -> Image:
     from ._pyclesperanto import _binary_or as op
-    # op = _cle._binary_or
     
     return op(
         device=device,
@@ -139,7 +132,6 @@ def binary_subtract(
 	device: Device = None
 ) -> Image:
     from ._pyclesperanto import _binary_subtract as op
-    # op = _cle._binary_subtract
     
     return op(
         device=device,
@@ -157,7 +149,6 @@ def binary_xor(
 	device: Device = None
 ) -> Image:
     from ._pyclesperanto import _binary_xor as op
-    # op = _cle._binary_xor
     
     return op(
         device=device,
@@ -176,7 +167,6 @@ def block_enumerate(
 	device: Device = None
 ) -> Image:
     from ._pyclesperanto import _block_enumerate as op
-    # op = _cle._block_enumerate
     
     return op(
         device=device,
@@ -195,7 +185,6 @@ def convolve(
 	device: Device = None
 ) -> Image:
     from ._pyclesperanto import _convolve as op
-    # op = _cle._convolve
     
     return op(
         device=device,
@@ -212,7 +201,6 @@ def copy(
 	device: Device = None
 ) -> Image:
     from ._pyclesperanto import _copy as op
-    # op = _cle._copy
     
     return op(
         device=device,
@@ -228,7 +216,6 @@ def cubic_root(
 	device: Device = None
 ) -> Image:
     from ._pyclesperanto import _cubic_root as op
-    # op = _cle._cubic_root
     
     return op(
         device=device,
@@ -244,7 +231,6 @@ def dilate_box(
 	device: Device = None
 ) -> Image:
     from ._pyclesperanto import _dilate_box as op
-    # op = _cle._dilate_box
     
     return op(
         device=device,
@@ -260,7 +246,6 @@ def dilate_sphere(
 	device: Device = None
 ) -> Image:
     from ._pyclesperanto import _dilate_sphere as op
-    # op = _cle._dilate_sphere
     
     return op(
         device=device,
@@ -277,7 +262,6 @@ def divide_images(
 	device: Device = None
 ) -> Image:
     from ._pyclesperanto import _divide_images as op
-    # op = _cle._divide_images
     
     return op(
         device=device,
@@ -295,7 +279,6 @@ def divide_image_and_scalar(
 	device: Device = None
 ) -> Image:
     from ._pyclesperanto import _divide_image_and_scalar as op
-    # op = _cle._divide_image_and_scalar
     
     return op(
         device=device,
@@ -313,7 +296,6 @@ def equal(
 	device: Device = None
 ) -> Image:
     from ._pyclesperanto import _equal as op
-    # op = _cle._equal
     
     return op(
         device=device,
@@ -331,7 +313,6 @@ def equal_constant(
 	device: Device = None
 ) -> Image:
     from ._pyclesperanto import _equal_constant as op
-    # op = _cle._equal_constant
     
     return op(
         device=device,
@@ -348,7 +329,6 @@ def erode_box(
 	device: Device = None
 ) -> Image:
     from ._pyclesperanto import _erode_box as op
-    # op = _cle._erode_box
     
     return op(
         device=device,
@@ -364,7 +344,6 @@ def erode_sphere(
 	device: Device = None
 ) -> Image:
     from ._pyclesperanto import _erode_sphere as op
-    # op = _cle._erode_sphere
     
     return op(
         device=device,
@@ -380,7 +359,6 @@ def exponential(
 	device: Device = None
 ) -> Image:
     from ._pyclesperanto import _exponential as op
-    # op = _cle._exponential
     
     return op(
         device=device,
@@ -399,7 +377,6 @@ def flip(
 	device: Device = None
 ) -> Image:
     from ._pyclesperanto import _flip as op
-    # op = _cle._flip
     
     return op(
         device=device,
@@ -421,7 +398,6 @@ def gaussian_blur(
 	device: Device = None
 ) -> Image:
     from ._pyclesperanto import _gaussian_blur as op
-    # op = _cle._gaussian_blur
     
     return op(
         device=device,
@@ -440,7 +416,6 @@ def gradient_x(
 	device: Device = None
 ) -> Image:
     from ._pyclesperanto import _gradient_x as op
-    # op = _cle._gradient_x
     
     return op(
         device=device,
@@ -456,7 +431,6 @@ def gradient_y(
 	device: Device = None
 ) -> Image:
     from ._pyclesperanto import _gradient_y as op
-    # op = _cle._gradient_y
     
     return op(
         device=device,
@@ -472,7 +446,6 @@ def gradient_z(
 	device: Device = None
 ) -> Image:
     from ._pyclesperanto import _gradient_z as op
-    # op = _cle._gradient_z
     
     return op(
         device=device,
@@ -489,7 +462,6 @@ def greater(
 	device: Device = None
 ) -> Image:
     from ._pyclesperanto import _greater as op
-    # op = _cle._greater
     
     return op(
         device=device,
@@ -507,7 +479,6 @@ def greater_constant(
 	device: Device = None
 ) -> Image:
     from ._pyclesperanto import _greater_constant as op
-    # op = _cle._greater_constant
     
     return op(
         device=device,
@@ -525,7 +496,6 @@ def greater_or_equal(
 	device: Device = None
 ) -> Image:
     from ._pyclesperanto import _greater_or_equal as op
-    # op = _cle._greater_or_equal
     
     return op(
         device=device,
@@ -543,7 +513,6 @@ def greater_or_equal_constant(
 	device: Device = None
 ) -> Image:
     from ._pyclesperanto import _greater_or_equal_constant as op
-    # op = _cle._greater_or_equal_constant
     
     return op(
         device=device,
@@ -560,7 +529,6 @@ def laplace_box(
 	device: Device = None
 ) -> Image:
     from ._pyclesperanto import _laplace_box as op
-    # op = _cle._laplace_box
     
     return op(
         device=device,
@@ -576,7 +544,6 @@ def laplace_diamond(
 	device: Device = None
 ) -> Image:
     from ._pyclesperanto import _laplace_diamond as op
-    # op = _cle._laplace_diamond
     
     return op(
         device=device,
@@ -592,7 +559,6 @@ def logarithm(
 	device: Device = None
 ) -> Image:
     from ._pyclesperanto import _logarithm as op
-    # op = _cle._logarithm
     
     return op(
         device=device,
@@ -609,7 +575,6 @@ def mask(
 	device: Device = None
 ) -> Image:
     from ._pyclesperanto import _mask as op
-    # op = _cle._mask
     
     return op(
         device=device,
@@ -628,7 +593,6 @@ def mask_label(
 	device: Device = None
 ) -> Image:
     from ._pyclesperanto import _mask_label as op
-    # op = _cle._mask_label
     
     return op(
         device=device,
@@ -647,7 +611,6 @@ def maximum_image_and_scalar(
 	device: Device = None
 ) -> Image:
     from ._pyclesperanto import _maximum_image_and_scalar as op
-    # op = _cle._maximum_image_and_scalar
     
     return op(
         device=device,
@@ -665,7 +628,6 @@ def maximum_images(
 	device: Device = None
 ) -> Image:
     from ._pyclesperanto import _maximum_images as op
-    # op = _cle._maximum_images
     
     return op(
         device=device,
@@ -685,7 +647,6 @@ def maximum_box(
 	device: Device = None
 ) -> Image:
     from ._pyclesperanto import _maximum_box as op
-    # op = _cle._maximum_box
     
     return op(
         device=device,
@@ -704,7 +665,6 @@ def maximum_x_projection(
 	device: Device = None
 ) -> Image:
     from ._pyclesperanto import _maximum_x_projection as op
-    # op = _cle._maximum_x_projection
     
     return op(
         device=device,
@@ -720,7 +680,6 @@ def maximum_y_projection(
 	device: Device = None
 ) -> Image:
     from ._pyclesperanto import _maximum_y_projection as op
-    # op = _cle._maximum_y_projection
     
     return op(
         device=device,
@@ -736,7 +695,6 @@ def maximum_z_projection(
 	device: Device = None
 ) -> Image:
     from ._pyclesperanto import _maximum_z_projection as op
-    # op = _cle._maximum_z_projection
     
     return op(
         device=device,
@@ -755,7 +713,6 @@ def mean_box(
 	device: Device = None
 ) -> Image:
     from ._pyclesperanto import _mean_box as op
-    # op = _cle._mean_box
     
     return op(
         device=device,
@@ -777,7 +734,6 @@ def mean_sphere(
 	device: Device = None
 ) -> Image:
     from ._pyclesperanto import _mean_sphere as op
-    # op = _cle._mean_sphere
     
     return op(
         device=device,
@@ -796,7 +752,6 @@ def mean_x_projection(
 	device: Device = None
 ) -> Image:
     from ._pyclesperanto import _mean_x_projection as op
-    # op = _cle._mean_x_projection
     
     return op(
         device=device,
@@ -812,7 +767,6 @@ def mean_y_projection(
 	device: Device = None
 ) -> Image:
     from ._pyclesperanto import _mean_y_projection as op
-    # op = _cle._mean_y_projection
     
     return op(
         device=device,
@@ -828,7 +782,6 @@ def mean_z_projection(
 	device: Device = None
 ) -> Image:
     from ._pyclesperanto import _mean_z_projection as op
-    # op = _cle._mean_z_projection
     
     return op(
         device=device,
@@ -847,7 +800,6 @@ def minimum_box(
 	device: Device = None
 ) -> Image:
     from ._pyclesperanto import _minimum_box as op
-    # op = _cle._minimum_box
     
     return op(
         device=device,
@@ -867,7 +819,6 @@ def minimum_image_and_scalar(
 	device: Device = None
 ) -> Image:
     from ._pyclesperanto import _minimum_image_and_scalar as op
-    # op = _cle._minimum_image_and_scalar
     
     return op(
         device=device,
@@ -885,7 +836,6 @@ def minimum_images(
 	device: Device = None
 ) -> Image:
     from ._pyclesperanto import _minimum_images as op
-    # op = _cle._minimum_images
     
     return op(
         device=device,
@@ -902,7 +852,6 @@ def minimum_x_projection(
 	device: Device = None
 ) -> Image:
     from ._pyclesperanto import _minimum_x_projection as op
-    # op = _cle._minimum_x_projection
     
     return op(
         device=device,
@@ -918,7 +867,6 @@ def minimum_y_projection(
 	device: Device = None
 ) -> Image:
     from ._pyclesperanto import _minimum_y_projection as op
-    # op = _cle._minimum_y_projection
     
     return op(
         device=device,
@@ -934,7 +882,6 @@ def minimum_z_projection(
 	device: Device = None
 ) -> Image:
     from ._pyclesperanto import _minimum_z_projection as op
-    # op = _cle._minimum_z_projection
     
     return op(
         device=device,
@@ -951,7 +898,6 @@ def multiply_image_and_scalar(
 	device: Device = None
 ) -> Image:
     from ._pyclesperanto import _multiply_image_and_scalar as op
-    # op = _cle._multiply_image_and_scalar
     
     return op(
         device=device,
@@ -969,7 +915,6 @@ def multiply_images(
 	device: Device = None
 ) -> Image:
     from ._pyclesperanto import _multiply_images as op
-    # op = _cle._multiply_images
     
     return op(
         device=device,
@@ -987,7 +932,6 @@ def nonzero_maximum_box(
 	device: Device = None
 ) -> Image:
     from ._pyclesperanto import _nonzero_maximum_box as op
-    # op = _cle._nonzero_maximum_box
     
     return op(
         device=device,
@@ -1005,7 +949,6 @@ def nonzero_maximum_diamond(
 	device: Device = None
 ) -> Image:
     from ._pyclesperanto import _nonzero_maximum_diamond as op
-    # op = _cle._nonzero_maximum_diamond
     
     return op(
         device=device,
@@ -1023,7 +966,6 @@ def nonzero_minimum_box(
 	device: Device = None
 ) -> Image:
     from ._pyclesperanto import _nonzero_minimum_box as op
-    # op = _cle._nonzero_minimum_box
     
     return op(
         device=device,
@@ -1041,7 +983,6 @@ def nonzero_minimum_diamond(
 	device: Device = None
 ) -> Image:
     from ._pyclesperanto import _nonzero_minimum_diamond as op
-    # op = _cle._nonzero_minimum_diamond
     
     return op(
         device=device,
@@ -1059,7 +1000,6 @@ def not_equal(
 	device: Device = None
 ) -> Image:
     from ._pyclesperanto import _not_equal as op
-    # op = _cle._not_equal
     
     return op(
         device=device,
@@ -1077,7 +1017,6 @@ def not_equal_constant(
 	device: Device = None
 ) -> Image:
     from ._pyclesperanto import _not_equal_constant as op
-    # op = _cle._not_equal_constant
     
     return op(
         device=device,
@@ -1095,7 +1034,6 @@ def onlyzero_overwrite_maximum_box(
 	device: Device = None
 ) -> Image:
     from ._pyclesperanto import _onlyzero_overwrite_maximum_box as op
-    # op = _cle._onlyzero_overwrite_maximum_box
     
     return op(
         device=device,
@@ -1113,7 +1051,6 @@ def onlyzero_overwrite_maximum_diamond(
 	device: Device = None
 ) -> Image:
     from ._pyclesperanto import _onlyzero_overwrite_maximum_diamond as op
-    # op = _cle._onlyzero_overwrite_maximum_diamond
     
     return op(
         device=device,
@@ -1131,7 +1068,6 @@ def power(
 	device: Device = None
 ) -> Image:
     from ._pyclesperanto import _power as op
-    # op = _cle._power
     
     return op(
         device=device,
@@ -1149,7 +1085,6 @@ def power_images(
 	device: Device = None
 ) -> Image:
     from ._pyclesperanto import _power_images as op
-    # op = _cle._power_images
     
     return op(
         device=device,
@@ -1167,7 +1102,6 @@ def replace_intensities(
 	device: Device = None
 ) -> Image:
     from ._pyclesperanto import _replace_intensities as op
-    # op = _cle._replace_intensities
     
     return op(
         device=device,
@@ -1186,7 +1120,6 @@ def replace_intensity(
 	device: Device = None
 ) -> Image:
     from ._pyclesperanto import _replace_intensity as op
-    # op = _cle._replace_intensity
     
     return op(
         device=device,
@@ -1207,7 +1140,6 @@ def maximum_sphere(
 	device: Device = None
 ) -> Image:
     from ._pyclesperanto import _maximum_sphere as op
-    # op = _cle._maximum_sphere
     
     return op(
         device=device,
@@ -1229,7 +1161,6 @@ def minimum_sphere(
 	device: Device = None
 ) -> Image:
     from ._pyclesperanto import _minimum_sphere as op
-    # op = _cle._minimum_sphere
     
     return op(
         device=device,
@@ -1248,7 +1179,6 @@ def set(
 	device: Device = None
 ) -> Image:
     from ._pyclesperanto import _set as op
-    # op = _cle._set
     
     return op(
         device=device,
@@ -1265,7 +1195,6 @@ def set_column(
 	device: Device = None
 ) -> Image:
     from ._pyclesperanto import _set_column as op
-    # op = _cle._set_column
     
     return op(
         device=device,
@@ -1283,7 +1212,6 @@ def set_row(
 	device: Device = None
 ) -> Image:
     from ._pyclesperanto import _set_row as op
-    # op = _cle._set_row
     
     return op(
         device=device,
@@ -1301,7 +1229,6 @@ def set_nonzero_pixels_to_pixelindex(
 	device: Device = None
 ) -> Image:
     from ._pyclesperanto import _set_nonzero_pixels_to_pixelindex as op
-    # op = _cle._set_nonzero_pixels_to_pixelindex
     
     return op(
         device=device,
@@ -1319,7 +1246,6 @@ def smaller(
 	device: Device = None
 ) -> Image:
     from ._pyclesperanto import _smaller as op
-    # op = _cle._smaller
     
     return op(
         device=device,
@@ -1337,7 +1263,6 @@ def smaller_constant(
 	device: Device = None
 ) -> Image:
     from ._pyclesperanto import _smaller_constant as op
-    # op = _cle._smaller_constant
     
     return op(
         device=device,
@@ -1355,7 +1280,6 @@ def smaller_or_equal(
 	device: Device = None
 ) -> Image:
     from ._pyclesperanto import _smaller_or_equal as op
-    # op = _cle._smaller_or_equal
     
     return op(
         device=device,
@@ -1373,7 +1297,6 @@ def smaller_or_equal_constant(
 	device: Device = None
 ) -> Image:
     from ._pyclesperanto import _smaller_or_equal_constant as op
-    # op = _cle._smaller_or_equal_constant
     
     return op(
         device=device,
@@ -1390,7 +1313,6 @@ def sobel(
 	device: Device = None
 ) -> Image:
     from ._pyclesperanto import _sobel as op
-    # op = _cle._sobel
     
     return op(
         device=device,
@@ -1406,7 +1328,6 @@ def square_root(
 	device: Device = None
 ) -> Image:
     from ._pyclesperanto import _square_root as op
-    # op = _cle._square_root
     
     return op(
         device=device,
@@ -1423,7 +1344,6 @@ def subtract_image_from_scalar(
 	device: Device = None
 ) -> Image:
     from ._pyclesperanto import _subtract_image_from_scalar as op
-    # op = _cle._subtract_image_from_scalar
     
     return op(
         device=device,
@@ -1441,7 +1361,6 @@ def sum_reduction_x(
 	device: Device = None
 ) -> Image:
     from ._pyclesperanto import _sum_reduction_x as op
-    # op = _cle._sum_reduction_x
     
     return op(
         device=device,
@@ -1458,7 +1377,6 @@ def sum_x_projection(
 	device: Device = None
 ) -> Image:
     from ._pyclesperanto import _sum_x_projection as op
-    # op = _cle._sum_x_projection
     
     return op(
         device=device,
@@ -1474,7 +1392,6 @@ def sum_y_projection(
 	device: Device = None
 ) -> Image:
     from ._pyclesperanto import _sum_y_projection as op
-    # op = _cle._sum_y_projection
     
     return op(
         device=device,
@@ -1490,7 +1407,6 @@ def sum_z_projection(
 	device: Device = None
 ) -> Image:
     from ._pyclesperanto import _sum_z_projection as op
-    # op = _cle._sum_z_projection
     
     return op(
         device=device,
@@ -1506,7 +1422,6 @@ def transpose_xy(
 	device: Device = None
 ) -> Image:
     from ._pyclesperanto import _transpose_xy as op
-    # op = _cle._transpose_xy
     
     return op(
         device=device,
@@ -1522,7 +1437,6 @@ def transpose_xz(
 	device: Device = None
 ) -> Image:
     from ._pyclesperanto import _transpose_xz as op
-    # op = _cle._transpose_xz
     
     return op(
         device=device,
@@ -1538,7 +1452,6 @@ def transpose_yz(
 	device: Device = None
 ) -> Image:
     from ._pyclesperanto import _transpose_yz as op
-    # op = _cle._transpose_yz
     
     return op(
         device=device,

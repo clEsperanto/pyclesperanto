@@ -3,7 +3,7 @@
 # Do not edit manually. Instead, edit the script and run it again.
 
 from ._core import Device
-from ._array import Image, Array
+from ._array import Image
 from ._decorators import plugin_function
 
 
@@ -15,7 +15,6 @@ def flag_existing_labels(
 	device: Device = None
 ) -> Image:
     from ._pyclesperanto import _flag_existing_labels as op
-    # op = _cle._flag_existing_labels
     
     return op(
         device=device,
@@ -32,7 +31,6 @@ def gamma_correction(
 	device: Device = None
 ) -> Image:
     from ._pyclesperanto import _gamma_correction as op
-    # op = _cle._gamma_correction
     
     return op(
         device=device,
@@ -48,7 +46,6 @@ def mean_of_all_pixels(
 	device: Device = None
 ) -> float:
     from ._pyclesperanto import _mean_of_all_pixels as op
-    # op = _cle._mean_of_all_pixels
     
     return op(
         device=device,

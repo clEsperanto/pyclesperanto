@@ -70,41 +70,41 @@ py::object get_np_dtype(const cle::Array::Pointer &array)
      }
 }
 
-cle::dType get_cle_dtype(const py::dtype &type)
+cle::dType get_cle_dtype(const py::object &type)
 {
-     if (type.is(py::dtype::of<float>()))
+     if (py::dtype::from_args(type).is(py::dtype("float32")))
      {
           return cle::dType::FLOAT;
      }
-     else if (type.is(py::dtype::of<int64_t>()))
+     else if (py::dtype::from_args(type).is(py::dtype("int64")))
      {
           return cle::dType::INT64;
      }
-     else if (type.is(py::dtype::of<int32_t>()))
+     else if (py::dtype::from_args(type).is(py::dtype("int32")))
      {
           return cle::dType::INT32;
      }
-     else if (type.is(py::dtype::of<int16_t>()))
+     else if (py::dtype::from_args(type).is(py::dtype("int16")))
      {
           return cle::dType::INT16;
      }
-     else if (type.is(py::dtype::of<int8_t>()))
+     else if (py::dtype::from_args(type).is(py::dtype("int8")))
      {
           return cle::dType::INT8;
      }
-     else if (type.is(py::dtype::of<uint64_t>()))
+     else if (py::dtype::from_args(type).is(py::dtype("uint64")))
      {
           return cle::dType::UINT64;
      }
-     else if (type.is(py::dtype::of<uint32_t>()))
+     else if (py::dtype::from_args(type).is(py::dtype("uint32")))
      {
           return cle::dType::UINT32;
      }
-     else if (type.is(py::dtype::of<uint16_t>()))
+     else if (py::dtype::from_args(type).is(py::dtype("uint16")))
      {
           return cle::dType::UINT16;
      }
-     else if (type.is(py::dtype::of<uint8_t>()))
+     else if (py::dtype::from_args(type).is(py::dtype("uint8")))
      {
           return cle::dType::UINT8;
      }
@@ -158,7 +158,7 @@ py::tuple get_np_shape(const cle::Array::Pointer &array)
      }
 }
 
-cle::Array::Pointer create_array(py::tuple shape, py::dtype dtype, std::string mtype, cle::Device::Pointer device)
+cle::Array::Pointer create_array(py::tuple shape, py::object dtype, std::string mtype, cle::Device::Pointer device)
 {
      size_t width(1), height(1), depth(1);
      switch (py::len(shape))

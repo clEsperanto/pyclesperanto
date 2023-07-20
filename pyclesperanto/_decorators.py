@@ -4,8 +4,8 @@ from toolz import curry
 import inspect
 
 from ._memory import push
-from ._array import Array, is_image, Image
-from ._core import Device, get_device
+from ._array import is_image, Image
+from ._core import Device
 
 
 @curry
@@ -84,9 +84,9 @@ def plugin_function(
         # call the decorated function
         result = function(*bound.args, **bound.kwargs)
 
-        # Cast the result as an Array if it is not already
-        if not isinstance(result, Array):
-            result = Array(result)
+        # # Cast the result as an Array if it is not already
+        # if not isinstance(result, _Array):
+        #     result = _Array(result)
 
         return result
 

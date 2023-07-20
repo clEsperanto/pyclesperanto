@@ -1,35 +1,98 @@
 from ._core import Device
-from ._array import Array, Image
-from ._types import DataType, MemoryType
+from ._array import _Array, Image
+from ._core import Device, get_device
 
 import numpy as np
-from typing import Union, Tuple, Optional
+from typing import Tuple, Optional
 
 
 def create(
     shape: Tuple[int, ...],
     dtype: Optional[type] = None,
-    mtype: Optional[Union[str, MemoryType]] = None,
+    mtype: Optional[str] = None,
     device: Optional[Device] = None,
 ) -> Image:
-    return Array.create(shape, dtype, mtype, device)
+    """ Create a new image on the device.
+
+    Parameters
+    ----------
+    shape : Tuple[int, ...]
+        Shape of the image in (z,y,x)
+    dtype : type, optional
+        Data type of the image (np.int8, np.float32, etc.), np.float32 by default if None
+    mtype : str, optional
+        Memory type of the image (buffer, image), buffer by default if None
+    device : Device, optional
+        Device on which the image is created, current device by default if None
+
+    Returns
+    -------
+    Image
+        Created an empty image on the device
+    """
+    if dtype is None:
+        dtype = np.float32
+    if mtype is None:
+        mtype = "buffer"
+    if device is None:
+        device = get_device()
+    return _Array.create(shape, dtype, mtype, device)
 
 
 def create_like(
     array: Image,
-    mtype: Optional[Union[str, DataType]] = None,
+    dtype: Optional[type] = None,
+    mtype: Optional[str] = None,
     device: Optional[Device] = None,
 ) -> Image:
+    """ Create a new image on the device with the same shape and dtype as the input image.
+
+    Parameters
+    ----------
+    array : Image
+        Input image
+    dtype : type, optional
+        Data type of the image (np.int8, np.float32, etc.), np.float32 by default if None
+    mtype : str, optional
+        Memory type of the image (buffer, image), buffer by default if None
+    device : Device, optional
+        Device on which the image is created, current device by default if None
+
+    Returns
+    -------
+    Image
+        Created an empty image on the device
+    """
+    if dtype is None:
+        dtype = array.dtype
     return create(array.shape, array.dtype, mtype, device)
 
 
 def push(
     array: Image,
     dtype: Optional[type] = None,
-    mtype: Optional[Union[str, DataType]] = None,
+    mtype: Optional[str] = None,
     device: Optional[Device] = None,
 ) -> Image:
-    if isinstance(array, Array):
+    """ Create a new image on the device and push the input image into it.
+
+    Parameters
+    ----------
+    array : Image
+        Input image
+    dtype : type, optional
+        Data type of the image (np.int8, np.float32, etc.), np.float32 by default if None
+    mtype : str, optional
+        Memory type of the image (buffer, image), buffer by default if None
+    device : Device, optional
+        Device on which the image is created, current device by default if None
+
+    Returns
+    -------
+    Image
+        Created image on the device with the input image data
+    """
+    if isinstance(array, _Array):
         return array
     if dtype is None:
         dtype = array.dtype
@@ -37,6 +100,18 @@ def push(
 
 
 def pull(array: Image) -> np.ndarray:
+    """ Pull the input image from the device to the host.
+
+    Parameters
+    ----------
+    array : Image
+        Input image
+
+    Returns
+    -------
+    np.ndarray
+        Image data
+    """
     if isinstance(array, np.ndarray):
         return array
     return array.get()

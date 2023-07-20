@@ -225,5 +225,17 @@ auto array_(py::module_ &m) -> void
          .def_property_readonly("dtype", [](const cle::Array::Pointer &array)
                                 { return get_np_dtype(array); })
          .def_property_readonly("shape", [](const cle::Array::Pointer &array)
-                                { return get_np_shape(array); });
+                                { return get_np_shape(array); })
+         .def("__len__", [](const cle::Array::Pointer &array)
+              {
+          switch (array->dim())
+          {
+          case 1:
+               return array->width();
+          case 2:
+               return array->height();
+          case 3:
+               return array->depth();
+               ;
+          } });
 }

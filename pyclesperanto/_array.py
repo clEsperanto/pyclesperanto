@@ -49,10 +49,23 @@ def get(self) -> np.ndarray:
     }
     return caster[self.dtype.name]()
 
+def __array__(self, dtype=None) -> np.ndarray:
+        if dtype is None:
+            return self.get()
+        else:
+            return self.get().astype(dtype)
+
+# missing operators:
+# __setitem__
+# __getitem__
+# __iter__
+# __array_interface__
+
 setattr(_Array, "set", set)
 setattr(_Array, "get", get)
 setattr(_Array, "__str__", __str__)
 setattr(_Array, "__repr__", __repr__)
+setattr(_Array, "__array__", __array__)
 setattr(_Array,"astype",_operators.astype)
 setattr(_Array,"max",_operators.max)
 setattr(_Array,"min",_operators.min)
@@ -75,7 +88,6 @@ setattr(_Array,"__pow__",_operators.__pow__)
 setattr(_Array,"__ipow__",_operators.__ipow__)
 
 Image = Union[np.ndarray, _Array]
-
 
 def is_image(any_array):
     return (

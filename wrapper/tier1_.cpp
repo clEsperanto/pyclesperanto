@@ -70,6 +70,26 @@ m.def("_copy", &cle::tier1::copy_func, "Call copy from C++.",
     py::arg("device"), py::arg("src"), py::arg("dst"));
 
     
+m.def("_copy_slice", &cle::tier1::copy_slice_func, "Call copy_slice from C++.",
+    py::return_value_policy::take_ownership,
+    py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("slice"));
+
+    
+m.def("_copy_horizontal_slice", &cle::tier1::copy_horizontal_slice_func, "Call copy_horizontal_slice from C++.",
+    py::return_value_policy::take_ownership,
+    py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("slice"));
+
+    
+m.def("_copy_vertical_slice", &cle::tier1::copy_vertical_slice_func, "Call copy_vertical_slice from C++.",
+    py::return_value_policy::take_ownership,
+    py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("slice"));
+
+    
+m.def("_crop", &cle::tier1::crop_func, "Call crop from C++.",
+    py::return_value_policy::take_ownership,
+    py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("start_x"), py::arg("start_y"), py::arg("start_z"), py::arg("witdh"), py::arg("height"), py::arg("depth"));
+
+    
 m.def("_cubic_root", &cle::tier1::cubic_root_func, "Call cubic_root from C++.",
     py::return_value_policy::take_ownership,
     py::arg("device"), py::arg("src"), py::arg("dst"));
@@ -275,6 +295,11 @@ m.def("_minimum_z_projection", &cle::tier1::minimum_z_projection_func, "Call min
     py::arg("device"), py::arg("src"), py::arg("dst"));
 
     
+m.def("_modulo_images", &cle::tier1::modulo_images_func, "Call modulo_images from C++.",
+    py::return_value_policy::take_ownership,
+    py::arg("device"), py::arg("src0"), py::arg("src1"), py::arg("dst"));
+
+    
 m.def("_multiply_image_and_scalar", &cle::tier1::multiply_image_and_scalar_func, "Call multiply_image_and_scalar from C++.",
     py::return_value_policy::take_ownership,
     py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("scalar"));
@@ -335,6 +360,11 @@ m.def("_power_images", &cle::tier1::power_images_func, "Call power_images from C
     py::arg("device"), py::arg("src0"), py::arg("src1"), py::arg("dst"));
 
     
+m.def("_range", &cle::tier1::range_func, "Call range from C++.",
+    py::return_value_policy::take_ownership,
+    py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("start_x"), py::arg("start_y"), py::arg("start_z"), py::arg("step_x"), py::arg("step_y"), py::arg("step_z"));
+
+    
 m.def("_replace_intensities", &cle::tier1::replace_intensities_func, "Call replace_intensities from C++.",
     py::return_value_policy::take_ownership,
     py::arg("device"), py::arg("src0"), py::arg("src1"), py::arg("dst"));
@@ -355,6 +385,11 @@ m.def("_minimum_sphere", &cle::tier1::minimum_sphere_func, "Call minimum_sphere 
     py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("radius_x"), py::arg("radius_y"), py::arg("radius_z"));
 
     
+m.def("_reciprocal", &cle::tier1::reciprocal_func, "Call reciprocal from C++.",
+    py::return_value_policy::take_ownership,
+    py::arg("device"), py::arg("src"), py::arg("dst"));
+
+    
 m.def("_set", &cle::tier1::set_func, "Call set from C++.",
     py::return_value_policy::take_ownership,
     py::arg("device"), py::arg("src"), py::arg("scalar"));
@@ -373,6 +408,11 @@ m.def("_set_row", &cle::tier1::set_row_func, "Call set_row from C++.",
 m.def("_set_nonzero_pixels_to_pixelindex", &cle::tier1::set_nonzero_pixels_to_pixelindex_func, "Call set_nonzero_pixels_to_pixelindex from C++.",
     py::return_value_policy::take_ownership,
     py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("offset"));
+
+    
+m.def("_sign", &cle::tier1::sign_func, "Call sign from C++.",
+    py::return_value_policy::take_ownership,
+    py::arg("device"), py::arg("src"), py::arg("dst"));
 
     
 m.def("_smaller", &cle::tier1::smaller_func, "Call smaller from C++.",
@@ -443,6 +483,16 @@ m.def("_transpose_xz", &cle::tier1::transpose_xz_func, "Call transpose_xz from C
 m.def("_transpose_yz", &cle::tier1::transpose_yz_func, "Call transpose_yz from C++.",
     py::return_value_policy::take_ownership,
     py::arg("device"), py::arg("src"), py::arg("dst"));
+
+    
+m.def("_variance_box", &cle::tier1::variance_box_func, "Call variance_box from C++.",
+    py::return_value_policy::take_ownership,
+    py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("radius_x"), py::arg("radius_y"), py::arg("radius_z"));
+
+    
+m.def("_variance_sphere", &cle::tier1::variance_sphere_func, "Call variance_sphere from C++.",
+    py::return_value_policy::take_ownership,
+    py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("radius_x"), py::arg("radius_y"), py::arg("radius_z"));
 
 
 }

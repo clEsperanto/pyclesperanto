@@ -15,7 +15,7 @@ def absolute_difference(
 	device: Device = None
 ) -> Image:
     from ._pyclesperanto import _absolute_difference as op
-    
+
     return op(
         device=device,
 		src0=input_image0,
@@ -32,7 +32,7 @@ def add_images(
 	device: Device = None
 ) -> Image:
     from ._pyclesperanto import _add_images as op
-    
+
     return op(
         device=device,
 		src0=input_image0,
@@ -51,7 +51,7 @@ def bottom_hat_box(
 	device: Device = None
 ) -> Image:
     from ._pyclesperanto import _bottom_hat_box as op
-    
+
     return op(
         device=device,
 		src=input_image,
@@ -72,7 +72,7 @@ def bottom_hat_sphere(
 	device: Device = None
 ) -> Image:
     from ._pyclesperanto import _bottom_hat_sphere as op
-    
+
     return op(
         device=device,
 		src=input_image,
@@ -92,7 +92,7 @@ def clip(
 	device: Device = None
 ) -> Image:
     from ._pyclesperanto import _clip as op
-    
+
     return op(
         device=device,
 		src=input_image,
@@ -112,7 +112,7 @@ def closing_box(
 	device: Device = None
 ) -> Image:
     from ._pyclesperanto import _closing_box as op
-    
+
     return op(
         device=device,
 		src=input_image,
@@ -133,7 +133,7 @@ def closing_sphere(
 	device: Device = None
 ) -> Image:
     from ._pyclesperanto import _closing_sphere as op
-    
+
     return op(
         device=device,
 		src=input_image,
@@ -151,7 +151,7 @@ def degrees_to_radians(
 	device: Device = None
 ) -> Image:
     from ._pyclesperanto import _degrees_to_radians as op
-    
+
     return op(
         device=device,
 		src=input_image,
@@ -172,7 +172,7 @@ def difference_of_gaussian(
 	device: Device = None
 ) -> Image:
     from ._pyclesperanto import _difference_of_gaussian as op
-    
+
     return op(
         device=device,
 		src=input_image,
@@ -193,7 +193,7 @@ def invert(
 	device: Device = None
 ) -> Image:
     from ._pyclesperanto import _invert as op
-    
+
     return op(
         device=device,
 		src=input_image,
@@ -208,7 +208,7 @@ def label_spots(
 	device: Device = None
 ) -> Image:
     from ._pyclesperanto import _label_spots as op
-    
+
     return op(
         device=device,
 		src=input_image,
@@ -222,7 +222,7 @@ def maximum_of_all_pixels(
 	device: Device = None
 ) -> float:
     from ._pyclesperanto import _maximum_of_all_pixels as op
-    
+
     return op(
         device=device,
 		src=input_image
@@ -235,7 +235,7 @@ def minimum_of_all_pixels(
 	device: Device = None
 ) -> float:
     from ._pyclesperanto import _minimum_of_all_pixels as op
-    
+
     return op(
         device=device,
 		src=input_image
@@ -252,7 +252,7 @@ def opening_box(
 	device: Device = None
 ) -> Image:
     from ._pyclesperanto import _opening_box as op
-    
+
     return op(
         device=device,
 		src=input_image,
@@ -273,7 +273,7 @@ def opening_sphere(
 	device: Device = None
 ) -> Image:
     from ._pyclesperanto import _opening_sphere as op
-    
+
     return op(
         device=device,
 		src=input_image,
@@ -291,7 +291,7 @@ def radians_to_degrees(
 	device: Device = None
 ) -> Image:
     from ._pyclesperanto import _radians_to_degrees as op
-    
+
     return op(
         device=device,
 		src=input_image,
@@ -306,7 +306,7 @@ def square(
 	device: Device = None
 ) -> Image:
     from ._pyclesperanto import _square as op
-    
+
     return op(
         device=device,
 		src=input_image,
@@ -322,7 +322,7 @@ def squared_difference(
 	device: Device = None
 ) -> Image:
     from ._pyclesperanto import _squared_difference as op
-    
+
     return op(
         device=device,
 		src0=input_image0,
@@ -339,7 +339,7 @@ def subtract_images(
 	device: Device = None
 ) -> Image:
     from ._pyclesperanto import _subtract_images as op
-    
+
     return op(
         device=device,
 		src0=input_image0,
@@ -354,7 +354,7 @@ def sum_of_all_pixels(
 	device: Device = None
 ) -> float:
     from ._pyclesperanto import _sum_of_all_pixels as op
-    
+
     return op(
         device=device,
 		src=input_image
@@ -371,7 +371,7 @@ def top_hat_box(
 	device: Device = None
 ) -> Image:
     from ._pyclesperanto import _top_hat_box as op
-    
+
     return op(
         device=device,
 		src=input_image,
@@ -392,7 +392,7 @@ def top_hat_sphere(
 	device: Device = None
 ) -> Image:
     from ._pyclesperanto import _top_hat_sphere as op
-    
+
     return op(
         device=device,
 		src=input_image,

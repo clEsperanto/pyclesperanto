@@ -14,7 +14,7 @@ def flag_existing_labels(
 	device: Device = None
 ) -> Image:
     from ._pyclesperanto import _flag_existing_labels as op
-    
+
     return op(
         device=device,
 		src=input_image,
@@ -30,7 +30,7 @@ def gamma_correction(
 	device: Device = None
 ) -> Image:
     from ._pyclesperanto import _gamma_correction as op
-    
+
     return op(
         device=device,
 		src=input_image,
@@ -45,7 +45,7 @@ def mean_of_all_pixels(
 	device: Device = None
 ) -> float:
     from ._pyclesperanto import _mean_of_all_pixels as op
-    
+
     return op(
         device=device,
 		src=input_image

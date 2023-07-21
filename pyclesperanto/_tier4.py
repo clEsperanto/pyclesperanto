@@ -8,6 +8,21 @@ from ._decorators import plugin_function
 
 
 @plugin_function
+def mean_squared_error(
+    input_image0: Image,
+	input_image1: Image,
+	device: Device = None
+) -> float:
+    from ._pyclesperanto import _mean_squared_error as op
+
+    return op(
+        device=device,
+		src0=input_image0,
+		src1=input_image1
+    )
+
+
+@plugin_function
 def relabel_sequential(
     input_image: Image,
 	output_image: Image = None,
@@ -15,7 +30,7 @@ def relabel_sequential(
 	device: Device = None
 ) -> Image:
     from ._pyclesperanto import _relabel_sequential as op
-    
+
     return op(
         device=device,
 		src=input_image,
@@ -31,7 +46,7 @@ def threshold_otsu(
 	device: Device = None
 ) -> Image:
     from ._pyclesperanto import _threshold_otsu as op
-    
+
     return op(
         device=device,
 		src=input_image,

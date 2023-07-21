@@ -1637,9 +1637,9 @@ def variance_box(
 def variance_sphere(
     input_image: Image,
 	output_image: Image = None,
-	radius_x: float = 0,
-	radius_y: float = 0,
-	radius_z: float = 0,
+	radius_x: int = 0,
+	radius_y: int = 0,
+	radius_z: int = 0,
 	device: Device = None
 ) -> Image:
     from ._pyclesperanto import _variance_sphere as op
@@ -1648,8 +1648,8 @@ def variance_sphere(
         device=device,
 		src=input_image,
 		dst=output_image,
-		radius_x=float(radius_x),
-		radius_y=float(radius_y),
-		radius_z=float(radius_z)
+		radius_x=int(radius_x),
+		radius_y=int(radius_y),
+		radius_z=int(radius_z)
     )
 

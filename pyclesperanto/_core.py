@@ -1,6 +1,7 @@
 from ._pyclesperanto import _Device, _BackendManager
 
 from typing import Optional, List
+import warnings
 
 Device = _Device
 BackendManager = _BackendManager
@@ -103,5 +104,6 @@ def default_initialisation():
     if backends:
         _ = select_backend(backends[-1])
     else:
-        raise RuntimeError("No backend available. Please install either OpenCL or CUDA on your system.")
+        warnings.warn("No backend available. Please install either OpenCL or CUDA on your system.", RuntimeWarning)
+        # raise RuntimeError("No backend available. Please install either OpenCL or CUDA on your system.")
     

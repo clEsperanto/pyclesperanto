@@ -1,3 +1,5 @@
+import warnings
+
 from ._core import Device
 from ._array import _Array, Image
 from ._core import Device, get_device
@@ -32,6 +34,9 @@ def create(
     """
     if dtype is None:
         dtype = np.float32
+    if dtype is [float, np.float64]:
+        dtype = np.float32
+        warnings.warn("Warning: float64 type is not a supported in GPUs. Casting data to float32 type.", UserWarning)
     if mtype is None:
         mtype = "buffer"
     if device is None:
@@ -65,6 +70,9 @@ def create_like(
     """
     if dtype is None:
         dtype = array.dtype
+    if dtype is [float, np.float64]:
+        dtype = np.float32
+        warnings.warn("Warning: float64 type is not a supported in GPUs. Casting data to float32 type.", UserWarning)
     return create(array.shape, array.dtype, mtype, device)
 
 
@@ -94,6 +102,8 @@ def push(
     """
     if isinstance(array, _Array):
         return array
+    if array.dtype == float:
+        array = array.astype(np.float32)
     if dtype is None:
         dtype = array.dtype
     return create(array.shape, dtype, mtype, device).set(array)

@@ -4,7 +4,7 @@ SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
 VERSION="v2022.01.04"
 OPENCL_HEADERS_DIR="${SCRIPT_DIR}/OpenCL-Headers"
 OPENCL_ICD_LOADER_DIR="${SCRIPT_DIR}/OpenCL-ICD-Loader"
-INSTALL_PREFIX="/~deps/opencl-icd-loader"
+INSTALL_PREFIX="/usr/local"
 
 set -e -x
 

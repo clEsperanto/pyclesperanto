@@ -96,3 +96,12 @@ def select_backend(backend: str = "opencl") -> str:
     # reset current device to default one
     select_device()
     return f"{BackendManager.get_backend()} selected."
+
+
+def default_initialisation():
+    backends = list_available_backends()
+    if backends:
+        _ = select_backend(backends[-1])
+    else:
+        raise RuntimeError("No backend available. Please install either OpenCL or CUDA on your system.")
+    

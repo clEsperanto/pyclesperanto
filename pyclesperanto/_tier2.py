@@ -145,6 +145,57 @@ def closing_sphere(
 
 
 @plugin_function
+def combine_horizontally(
+    input_image0: Image,
+	input_image1: Image,
+	output_image: Image = None,
+	device: Device = None
+) -> Image:
+    from ._pyclesperanto import _combine_horizontally as op
+
+    return op(
+        device=device,
+		src0=input_image0,
+		src1=input_image1,
+		dst=output_image
+    )
+
+
+@plugin_function
+def combine_vertically(
+    input_image0: Image,
+	input_image1: Image,
+	output_image: Image = None,
+	device: Device = None
+) -> Image:
+    from ._pyclesperanto import _combine_vertically as op
+
+    return op(
+        device=device,
+		src0=input_image0,
+		src1=input_image1,
+		dst=output_image
+    )
+
+
+@plugin_function
+def concatenate_stacks(
+    input_image0: Image,
+	input_image1: Image,
+	output_image: Image = None,
+	device: Device = None
+) -> Image:
+    from ._pyclesperanto import _concatenate_stacks as op
+
+    return op(
+        device=device,
+		src0=input_image0,
+		src1=input_image1,
+		dst=output_image
+    )
+
+
+@plugin_function
 def degrees_to_radians(
     input_image: Image,
 	output_image: Image = None,

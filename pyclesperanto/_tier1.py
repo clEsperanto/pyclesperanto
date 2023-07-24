@@ -303,6 +303,51 @@ def cubic_root(
 
 
 @plugin_function
+def detect_label_edges(
+    input_image: Image,
+	output_image: Image = None,
+	device: Device = None
+) -> Image:
+    from ._pyclesperanto import _detect_label_edges as op
+
+    return op(
+        device=device,
+		src=input_image,
+		dst=output_image
+    )
+
+
+@plugin_function
+def detect_maxima_box(
+    input_image: Image,
+	output_image: Image = None,
+	device: Device = None
+) -> Image:
+    from ._pyclesperanto import _detect_maxima_box as op
+
+    return op(
+        device=device,
+		src=input_image,
+		dst=output_image
+    )
+
+
+@plugin_function
+def detect_minima_box(
+    input_image: Image,
+	output_image: Image = None,
+	device: Device = None
+) -> Image:
+    from ._pyclesperanto import _detect_minima_box as op
+
+    return op(
+        device=device,
+		src=input_image,
+		dst=output_image
+    )
+
+
+@plugin_function
 def dilate_box(
     input_image: Image,
 	output_image: Image = None,
@@ -1122,6 +1167,27 @@ def not_equal_constant(
 
 
 @plugin_function
+def paste(
+    input_image: Image,
+	output_image: Image = None,
+	index_x: int = 0,
+	index_y: int = 0,
+	index_z: int = 0,
+	device: Device = None
+) -> Image:
+    from ._pyclesperanto import _paste as op
+
+    return op(
+        device=device,
+		src=input_image,
+		dst=output_image,
+		index_x=int(index_x),
+		index_y=int(index_y),
+		index_z=int(index_z)
+    )
+
+
+@plugin_function
 def onlyzero_overwrite_maximum_box(
     input_image: Image,
 	output_image0: Image = None,
@@ -1337,6 +1403,23 @@ def set_column(
         device=device,
 		src=input_image,
 		column=int(column),
+		value=float(value)
+    )
+
+
+@plugin_function
+def set_plane(
+    input_image: Image,
+	plane: int = 0,
+	value: float = 0,
+	device: Device = None
+) -> Image:
+    from ._pyclesperanto import _set_plane as op
+
+    return op(
+        device=device,
+		src=input_image,
+		plane=int(plane),
 		value=float(value)
     )
 
@@ -1651,5 +1734,20 @@ def variance_sphere(
 		radius_x=int(radius_x),
 		radius_y=int(radius_y),
 		radius_z=int(radius_z)
+    )
+
+
+@plugin_function
+def write_values_to_positions(
+    input_image: Image,
+	output_image: Image = None,
+	device: Device = None
+) -> Image:
+    from ._pyclesperanto import _write_values_to_positions as op
+
+    return op(
+        device=device,
+		src=input_image,
+		dst=output_image
     )
 

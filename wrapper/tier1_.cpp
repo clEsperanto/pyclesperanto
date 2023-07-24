@@ -95,6 +95,21 @@ m.def("_cubic_root", &cle::tier1::cubic_root_func, "Call cubic_root from C++.",
     py::arg("device"), py::arg("src"), py::arg("dst"));
 
     
+m.def("_detect_label_edges", &cle::tier1::detect_label_edges_func, "Call detect_label_edges from C++.",
+    py::return_value_policy::take_ownership,
+    py::arg("device"), py::arg("src"), py::arg("dst"));
+
+    
+m.def("_detect_maxima_box", &cle::tier1::detect_maxima_box_func, "Call detect_maxima_box from C++.",
+    py::return_value_policy::take_ownership,
+    py::arg("device"), py::arg("src"), py::arg("dst"));
+
+    
+m.def("_detect_minima_box", &cle::tier1::detect_minima_box_func, "Call detect_minima_box from C++.",
+    py::return_value_policy::take_ownership,
+    py::arg("device"), py::arg("src"), py::arg("dst"));
+
+    
 m.def("_dilate_box", &cle::tier1::dilate_box_func, "Call dilate_box from C++.",
     py::return_value_policy::take_ownership,
     py::arg("device"), py::arg("src"), py::arg("dst"));
@@ -340,6 +355,11 @@ m.def("_not_equal_constant", &cle::tier1::not_equal_constant_func, "Call not_equ
     py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("scalar"));
 
     
+m.def("_paste", &cle::tier1::paste_func, "Call paste from C++.",
+    py::return_value_policy::take_ownership,
+    py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("index_x"), py::arg("index_y"), py::arg("index_z"));
+
+    
 m.def("_onlyzero_overwrite_maximum_box", &cle::tier1::onlyzero_overwrite_maximum_box_func, "Call onlyzero_overwrite_maximum_box from C++.",
     py::return_value_policy::take_ownership,
     py::arg("device"), py::arg("src"), py::arg("dst0"), py::arg("dst1"));
@@ -398,6 +418,11 @@ m.def("_set", &cle::tier1::set_func, "Call set from C++.",
 m.def("_set_column", &cle::tier1::set_column_func, "Call set_column from C++.",
     py::return_value_policy::take_ownership,
     py::arg("device"), py::arg("src"), py::arg("column"), py::arg("value"));
+
+    
+m.def("_set_plane", &cle::tier1::set_plane_func, "Call set_plane from C++.",
+    py::return_value_policy::take_ownership,
+    py::arg("device"), py::arg("src"), py::arg("plane"), py::arg("value"));
 
     
 m.def("_set_row", &cle::tier1::set_row_func, "Call set_row from C++.",
@@ -493,6 +518,11 @@ m.def("_variance_box", &cle::tier1::variance_box_func, "Call variance_box from C
 m.def("_variance_sphere", &cle::tier1::variance_sphere_func, "Call variance_sphere from C++.",
     py::return_value_policy::take_ownership,
     py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("radius_x"), py::arg("radius_y"), py::arg("radius_z"));
+
+    
+m.def("_write_values_to_positions", &cle::tier1::write_values_to_positions_func, "Call write_values_to_positions from C++.",
+    py::return_value_policy::take_ownership,
+    py::arg("device"), py::arg("src"), py::arg("dst"));
 
 
 }

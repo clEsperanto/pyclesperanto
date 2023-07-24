@@ -45,6 +45,21 @@ m.def("_closing_sphere", &cle::tier2::closing_sphere_func, "Call closing_sphere 
     py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("radius_x"), py::arg("radius_y"), py::arg("radius_z"));
 
     
+m.def("_combine_horizontally", &cle::tier2::combine_horizontally_func, "Call combine_horizontally from C++.",
+    py::return_value_policy::take_ownership,
+    py::arg("device"), py::arg("src0"), py::arg("src1"), py::arg("dst"));
+
+    
+m.def("_combine_vertically", &cle::tier2::combine_vertically_func, "Call combine_vertically from C++.",
+    py::return_value_policy::take_ownership,
+    py::arg("device"), py::arg("src0"), py::arg("src1"), py::arg("dst"));
+
+    
+m.def("_concatenate_stacks", &cle::tier2::concatenate_stacks_func, "Call concatenate_stacks from C++.",
+    py::return_value_policy::take_ownership,
+    py::arg("device"), py::arg("src0"), py::arg("src1"), py::arg("dst"));
+
+    
 m.def("_degrees_to_radians", &cle::tier2::degrees_to_radians_func, "Call degrees_to_radians from C++.",
     py::return_value_policy::take_ownership,
     py::arg("device"), py::arg("src"), py::arg("dst"));

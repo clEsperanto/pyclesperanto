@@ -3,9 +3,9 @@ build-backend = "setuptools.build_meta"
 requires = [
   "setuptools",
   "wheel",
-  "scikit-build>=0.16.4",
+  "scikit-build>=0.17.0",
   "cmake>=3.20",
-  "pybind11>=2.10.3",
+  "pybind11>=2.11.0",
 ]
 
 [tool.pytest.ini_options]
@@ -22,10 +22,7 @@ test-command = "pytest {project}/tests/test_import.py"
 test-requires = ["numpy", "pytest", "pytest-cov", "pytest-benchmark"]
 
 [tool.cibuildwheel.linux]
-before-all = [
-  "yum install -y ruby",
-  "bash {package}/scripts/build-opencl-linux.sh",
-]
+before-all = ["bash {package}/scripts/build-opencl-linux.sh"]
 repair-wheel-command = "auditwheel show {wheel} && auditwheel repair --lib-sdir .libs -w {dest_dir} {wheel}"
 skip = ["cp27-*", "cp36-*", "pp*", "*-musllinux*", "*_i686"]
 
@@ -42,6 +39,5 @@ environment = {SKBUILD_CONFIGURE_OPTIONS = "-DOpenCL_LIBRARIES:FILEPATH='C:/Prog
 skip = ["cp27-*", "cp36-*", "pp*", "*-win32"]
 
 [tool.cibuildwheel.macos]
-# before-all = "bash {package}/scripts/build-opencl-macos.sh"
 environment = {MACOSX_DEPLOYMENT_TARGET = '10.14'}
 skip = ["cp27-*", "cp36-*", "pp*", "*_universal2"]

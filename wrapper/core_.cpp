@@ -24,6 +24,7 @@ auto core_(pybind11::module_ &m) -> void
         .def_property_readonly("name", &cle::Device::getName)
         .def_property_readonly("info", &cle::Device::getInfo)
         .def_property_readonly("type", &cle::Device::getType)
+        .def("set_wait_to_finish", &cle::Device::setWaitToFinish)
         .def("__str__", [](const cle::Device &device)
              {
             std::ostringstream oss;

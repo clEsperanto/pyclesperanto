@@ -99,6 +99,20 @@ def select_backend(backend: str = "opencl") -> str:
     return f"{BackendManager.get_backend()} selected."
 
 
+def wait_for_kernel_to_finish(flag: bool = True, device: Device = None):
+    """Wait for kernel to finish
+
+    Parameters
+    ----------
+    flag : bool, default = True
+        if True, wait for kernel to finish
+    """
+    if device is None:
+        get_device().set_wait_to_finish(flag)
+    else:
+        device.set_wait_to_finish(flag)
+
+
 def default_initialisation():
     backends = list_available_backends()
     if backends:

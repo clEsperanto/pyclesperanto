@@ -76,7 +76,8 @@ cle::dType get_cle_dtype(const py::object &type)
      {
           return cle::dType::FLOAT;
      }
-     else if (py::dtype::from_args(type).is(py::dtype("int64")))
+     else if (py::dtype::from_args(type).is(py::dtype("int64")) || 
+              py::dtype::from_args(type).is(py::dtype("int")))
      {
           return cle::dType::INT64;
      }

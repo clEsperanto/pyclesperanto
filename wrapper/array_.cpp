@@ -72,46 +72,47 @@ py::object get_np_dtype(const cle::Array::Pointer &array)
 
 cle::dType get_cle_dtype(const py::object &type)
 {
-     if (py::dtype::from_args(type).is(py::dtype("float32")))
+     py::dtype dt = py::dtype::from_args(type);
+
+     if (dt.equal(py::dtype("float32")))
      {
           return cle::dType::FLOAT;
      }
-     else if (py::dtype::from_args(type).is(py::dtype("int64")) || 
-              py::dtype::from_args(type).is(py::dtype("int")))
+     else if (dt.equal(py::dtype("int64")) || dt.equal(py::dtype("int")))
      {
           return cle::dType::INT64;
      }
-     else if (py::dtype::from_args(type).is(py::dtype("int32")))
+     else if (dt.equal(py::dtype("int32")))
      {
           return cle::dType::INT32;
      }
-     else if (py::dtype::from_args(type).is(py::dtype("int16")))
+     else if (dt.equal(py::dtype("int16")))
      {
           return cle::dType::INT16;
      }
-     else if (py::dtype::from_args(type).is(py::dtype("int8")))
+     else if (dt.equal(py::dtype("int8")))
      {
           return cle::dType::INT8;
      }
-     else if (py::dtype::from_args(type).is(py::dtype("uint64")))
+     else if (dt.equal(py::dtype("uint64")))
      {
           return cle::dType::UINT64;
      }
-     else if (py::dtype::from_args(type).is(py::dtype("uint32")))
+     else if (dt.equal(py::dtype("uint32")))
      {
           return cle::dType::UINT32;
      }
-     else if (py::dtype::from_args(type).is(py::dtype("uint16")))
+     else if (dt.equal(py::dtype("uint16")))
      {
           return cle::dType::UINT16;
      }
-     else if (py::dtype::from_args(type).is(py::dtype("uint8")))
+     else if (dt.equal(py::dtype("uint8")))
      {
           return cle::dType::UINT8;
      }
      else
      {
-          throw std::invalid_argument("Invalid dtype value");
+          throw std::invalid_argument("Invalid dtype value : " + dt.attr("name").cast<std::string>());
      }
 }
 

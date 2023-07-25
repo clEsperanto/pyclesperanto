@@ -238,6 +238,21 @@ def difference_of_gaussian(
 
 
 @plugin_function
+def extend_labeling_via_voronoi(
+    input_image: Image,
+	output_image: Image = None,
+	device: Device = None
+) -> Image:
+    from ._pyclesperanto import _extend_labeling_via_voronoi as op
+
+    return op(
+        device=device,
+		src=input_image,
+		dst=output_image
+    )
+
+
+@plugin_function
 def invert(
     input_image: Image,
 	output_image: Image = None,

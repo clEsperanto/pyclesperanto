@@ -70,6 +70,11 @@ m.def("_difference_of_gaussian", &cle::tier2::difference_of_gaussian_func, "Call
     py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("sigma1_x"), py::arg("sigma1_y"), py::arg("sigma1_z"), py::arg("sigma2_x"), py::arg("sigma2_y"), py::arg("sigma2_z"));
 
     
+m.def("_extend_labeling_via_voronoi", &cle::tier2::extend_labeling_via_voronoi_func, "Call extend_labeling_via_voronoi from C++.",
+    py::return_value_policy::take_ownership,
+    py::arg("device"), py::arg("src"), py::arg("dst"));
+
+    
 m.def("_invert", &cle::tier2::invert_func, "Call invert from C++.",
     py::return_value_policy::take_ownership,
     py::arg("device"), py::arg("src"), py::arg("dst"));

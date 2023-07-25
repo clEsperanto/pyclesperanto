@@ -59,7 +59,10 @@ def list_available_devices(device_type: str = "all") -> list:
     -------
     name list : list[str]
     """
-    return list(BackendManager.get_backend().getDevicesList(type=device_type))
+    dev_list = list(BackendManager.get_backend().getDevicesList(type=device_type)) 
+    if not dev_list:
+        warnings.warn("No device available. Please install either OpenCL or CUDA on your system.", RuntimeWarning)
+    return dev_list
 
 
 def list_available_backends() -> list:
@@ -71,7 +74,10 @@ def list_available_backends() -> list:
     -------
     name list : list[str]
     """
-    return list(BackendManager.get_backends_list())
+    back_list = list(BackendManager.get_backends_list())
+    if not back_list:
+        warnings.warn("No backend available. Please install either OpenCL or CUDA on your system.", RuntimeWarning)
+    return back_list
 
 
 def select_backend(backend: str = "opencl") -> str:
@@ -119,5 +125,4 @@ def default_initialisation():
         _ = select_backend(backends[-1])
     else:
         warnings.warn("No backend available. Please install either OpenCL or CUDA on your system.", RuntimeWarning)
-        # raise RuntimeError("No backend available. Please install either OpenCL or CUDA on your system.")
     

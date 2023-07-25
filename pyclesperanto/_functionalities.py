@@ -166,3 +166,4 @@ def imshow(
             plot.colorbar()
     if title is not None:
         plt.title(title)
+

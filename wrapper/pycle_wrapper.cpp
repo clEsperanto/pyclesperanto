@@ -14,4 +14,6 @@ PYBIND11_MODULE(_pyclesperanto, m)
   tier3_(m);
   tier4_(m);
   tier5_(m);
+  tier6_(m);
+  tier7_(m);
 }

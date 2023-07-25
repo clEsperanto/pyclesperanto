@@ -20,7 +20,6 @@ cl_buffer_datatype_dict = {
 
 _supported_numeric_types = tuple(cl_buffer_datatype_dict.keys())
 
-
 def astype(self, dtype: type):
     if dtype not in _supported_numeric_types:
         raise ValueError(

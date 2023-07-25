@@ -36,7 +36,7 @@ def astype(self, dtype: type):
     from ._memory import create_like
 
     result = create_like(self, dtype=dtype)
-    copy(self, output_image=result)
+    copy(input_image=self, output_image=result)
     return result
 
 def max(self, axis: Optional[int] = None, out=None):
@@ -271,5 +271,4 @@ def __ipow__(x1, x2):
         from ._tier1 import power_images
 
         return power_images(temp, x2, x1)
-    
-
+        

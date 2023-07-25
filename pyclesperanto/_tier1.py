@@ -267,7 +267,7 @@ def crop(
 	start_x: int = 0,
 	start_y: int = 0,
 	start_z: int = 0,
-	witdh: int = 0,
+	width: int = 0,
 	height: int = 0,
 	depth: int = 0,
 	device: Device = None
@@ -281,7 +281,7 @@ def crop(
 		start_x=int(start_x),
 		start_y=int(start_y),
 		start_z=int(start_z),
-		witdh=int(witdh),
+		width=int(width),
 		height=int(height),
 		depth=int(depth)
     )

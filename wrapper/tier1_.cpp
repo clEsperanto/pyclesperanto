@@ -87,7 +87,7 @@ m.def("_copy_vertical_slice", &cle::tier1::copy_vertical_slice_func, "Call copy_
     
 m.def("_crop", &cle::tier1::crop_func, "Call crop from C++.",
     py::return_value_policy::take_ownership,
-    py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("start_x"), py::arg("start_y"), py::arg("start_z"), py::arg("witdh"), py::arg("height"), py::arg("depth"));
+    py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("start_x"), py::arg("start_y"), py::arg("start_z"), py::arg("width"), py::arg("height"), py::arg("depth"));
 
     
 m.def("_cubic_root", &cle::tier1::cubic_root_func, "Call cubic_root from C++.",

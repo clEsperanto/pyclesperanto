@@ -40,6 +40,27 @@ def gamma_correction(
 
 
 @plugin_function
+def histogram(
+    input_image: Image,
+	output_image: Image = None,
+	nbins: int = 0,
+	min: float = 0,
+	max: float = 0,
+	device: Device = None
+) -> Image:
+    from ._pyclesperanto import _histogram as op
+
+    return op(
+        device=device,
+		src=input_image,
+		dst=output_image,
+		nbins=int(nbins),
+		min=float(min),
+		max=float(max)
+    )
+
+
+@plugin_function
 def mean_of_all_pixels(
     input_image: Image,
 	device: Device = None

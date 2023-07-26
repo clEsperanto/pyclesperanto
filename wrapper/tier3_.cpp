@@ -20,6 +20,11 @@ m.def("_gamma_correction", &cle::tier3::gamma_correction_func, "Call gamma_corre
     py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("gamma"));
 
     
+m.def("_histogram", &cle::tier3::histogram_func, "Call histogram from C++.",
+    py::return_value_policy::take_ownership,
+    py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("nbins"), py::arg("min"), py::arg("max"));
+
+    
 m.def("_mean_of_all_pixels", &cle::tier3::mean_of_all_pixels_func, "Call mean_of_all_pixels from C++.",
     py::return_value_policy::take_ownership,
     py::arg("device"), py::arg("src"));

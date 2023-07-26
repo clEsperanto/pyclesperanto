@@ -7,7 +7,6 @@ from ._core import Device, get_device
 import numpy as np
 from typing import Tuple, Optional
 
-
 def create(
     shape: Tuple[int, ...],
     dtype: Optional[type] = None,

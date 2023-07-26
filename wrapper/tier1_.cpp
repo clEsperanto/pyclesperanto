@@ -405,6 +405,11 @@ m.def("_minimum_sphere", &cle::tier1::minimum_sphere_func, "Call minimum_sphere 
     py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("radius_x"), py::arg("radius_y"), py::arg("radius_z"));
 
     
+m.def("_multiply_matrix", &cle::tier1::multiply_matrix_func, "Call multiply_matrix from C++.",
+    py::return_value_policy::take_ownership,
+    py::arg("device"), py::arg("src0"), py::arg("src1"), py::arg("dst"));
+
+    
 m.def("_reciprocal", &cle::tier1::reciprocal_func, "Call reciprocal from C++.",
     py::return_value_policy::take_ownership,
     py::arg("device"), py::arg("src"), py::arg("dst"));
@@ -423,6 +428,21 @@ m.def("_set_column", &cle::tier1::set_column_func, "Call set_column from C++.",
 m.def("_set_plane", &cle::tier1::set_plane_func, "Call set_plane from C++.",
     py::return_value_policy::take_ownership,
     py::arg("device"), py::arg("src"), py::arg("plane"), py::arg("value"));
+
+    
+m.def("_set_ramp_x", &cle::tier1::set_ramp_x_func, "Call set_ramp_x from C++.",
+    py::return_value_policy::take_ownership,
+    py::arg("device"), py::arg("src"));
+
+    
+m.def("_set_ramp_y", &cle::tier1::set_ramp_y_func, "Call set_ramp_y from C++.",
+    py::return_value_policy::take_ownership,
+    py::arg("device"), py::arg("src"));
+
+    
+m.def("_set_ramp_z", &cle::tier1::set_ramp_z_func, "Call set_ramp_z from C++.",
+    py::return_value_policy::take_ownership,
+    py::arg("device"), py::arg("src"));
 
     
 m.def("_set_row", &cle::tier1::set_row_func, "Call set_row from C++.",

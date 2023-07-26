@@ -1361,6 +1361,23 @@ def minimum_sphere(
 
 
 @plugin_function
+def multiply_matrix(
+    input_image0: Image,
+	input_image1: Image,
+	output_image: Image = None,
+	device: Device = None
+) -> Image:
+    from ._pyclesperanto import _multiply_matrix as op
+
+    return op(
+        device=device,
+		src0=input_image0,
+		src1=input_image1,
+		dst=output_image
+    )
+
+
+@plugin_function
 def reciprocal(
     input_image: Image,
 	output_image: Image = None,
@@ -1421,6 +1438,45 @@ def set_plane(
 		src=input_image,
 		plane=int(plane),
 		value=float(value)
+    )
+
+
+@plugin_function
+def set_ramp_x(
+    input_image: Image,
+	device: Device = None
+) -> Image:
+    from ._pyclesperanto import _set_ramp_x as op
+
+    return op(
+        device=device,
+		src=input_image
+    )
+
+
+@plugin_function
+def set_ramp_y(
+    input_image: Image,
+	device: Device = None
+) -> Image:
+    from ._pyclesperanto import _set_ramp_y as op
+
+    return op(
+        device=device,
+		src=input_image
+    )
+
+
+@plugin_function
+def set_ramp_z(
+    input_image: Image,
+	device: Device = None
+) -> Image:
+    from ._pyclesperanto import _set_ramp_z as op
+
+    return op(
+        device=device,
+		src=input_image
     )
 
 

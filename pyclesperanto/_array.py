@@ -86,6 +86,9 @@ setattr(_Array,"__eq__",_operators.__eq__)
 setattr(_Array,"__ne__",_operators.__ne__)
 setattr(_Array,"__pow__",_operators.__pow__)
 setattr(_Array,"__ipow__",_operators.__ipow__)
+setattr(_Array,"_plt_to_png",_operators._plt_to_png)
+setattr(_Array,"_png_to_html",_operators._png_to_html)
+setattr(_Array,"_repr_html_",_operators._repr_html_)
 
 Image = Union[np.ndarray, _Array]
 

@@ -5,7 +5,6 @@ from ._array import _Array, Image
 from ._memory import pull
 from ._core import Device, get_device
 
-
 # def execute(
 #     anchor: str,
 #     kernel_filepath: str,
@@ -122,21 +121,26 @@ def imshow(
 
     cmap = colormap
     if labels:
-        import matplotlib
-        import numpy as np
+        if not hasattr(imshow, "labels_cmap"):
+            from matplotlib.colors import ListedColormap
+            from numpy.random import MT19937
+            from numpy.random import RandomState, SeedSequence
 
-        # if not hasattr("labels_cmap"):
-        from numpy.random import MT19937
-        from numpy.random import RandomState, SeedSequence
+            rs = RandomState(MT19937(SeedSequence(3)))
+            lut = rs.rand(65537, 3)
+            lut[0, :] = 0
+            # these are the first four colours from matplotlib's default
+            lut[1] = [0.12156862745098039, 0.4666666666666667, 0.7058823529411765]
+            lut[2] = [1.0, 0.4980392156862745, 0.054901960784313725]
+            lut[3] = [0.17254901960784313, 0.6274509803921569, 0.17254901960784313]
+            lut[4] = [0.8392156862745098, 0.15294117647058825, 0.1568627450980392]
+            imshow.labels_cmap = ListedColormap(lut)
 
-        rs = RandomState(MT19937(SeedSequence(3)))
-        lut = rs.rand(65537, 3)
-        lut[0, :] = 0
-        labels_cmap = matplotlib.colors.ListedColormap(lut)
-        cmap = labels_cmap
-
+        cmap = imshow.labels_cmap
         if min_display_intensity is None:
             min_display_intensity = 0
+        if max_display_intensity is None:
+            max_display_intensity = 65536
 
     if plot is None:
         import matplotlib.pyplot as plt
@@ -167,3 +171,60 @@ def imshow(
     if title is not None:
         plt.title(title)
 
+
+def operations(must_have_categories : list = None, must_not_have_categories : list = None) -> dict:
+    """Retrieve a dictionary of operations, which can be filtered by annotated categories.
+
+    Parameters
+    ----------
+    must_have_categories : list of str, optional
+        if provided, the result will be filtered so that operations must contain all given categories.
+    must_not_have_categories : list of str, optional
+        if provided, the result will be filtered so that operations must not contain all given categories.
+
+    Returns
+    -------
+    dict of str : function
+    """
+    if isinstance(must_have_categories, str):
+        must_have_categories = [must_have_categories]
+    if isinstance(must_not_have_categories, str):
+        must_have_categories = [must_not_have_categories]
+
+    result = {}
+
+    from inspect import getmembers, isfunction
+    import pyclesperanto as cle
+
+    # retrieve all operations and cache the result for later reuse
+    if not hasattr(operations, "_all") or operations._all is None:
+        operations._all = getmembers(cle, isfunction)
+
+    # filter operations according to given constraints
+    for operation_name, operation in operations._all:
+        keep_it = True
+        if hasattr(operation, "categories") and operation.categories is not None:
+            if must_have_categories is not None:
+                if not all(item in operation.categories for item in must_have_categories):
+                    keep_it = False
+
+            if must_not_have_categories is not None:
+                if any(item in operation.categories for item in must_not_have_categories):
+                    keep_it = False
+        else:
+            if must_have_categories is not None:
+                keep_it = False
+        if (keep_it):
+            result[operation_name] = operation
+
+    return result
+
+
+def list_operations(search_term = None):
+    ops = operations(search_term)
+    for name in ops:
+        func = ops[name]
+        if hasattr(func, 'fullargspec'):
+            print(name + "(" + str(func.fullargspec.args).replace('[','').replace(']','').replace('\'','') + ")")
+        else:
+            print(name)

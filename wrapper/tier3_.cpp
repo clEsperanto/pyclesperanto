@@ -12,7 +12,7 @@ auto tier3_(py::module &m) -> void {
     
 m.def("_exclude_labels_on_edges", &cle::tier3::exclude_labels_on_edges_func, "Call exclude_labels_on_edges from C++.",
     py::return_value_policy::take_ownership,
-    py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("exclude_y"), py::arg("exclude_x"), py::arg("exclude_z"));
+    py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("exclude_x"), py::arg("exclude_y"), py::arg("exclude_z"));
 
     
 m.def("_flag_existing_labels", &cle::tier3::flag_existing_labels_func, "Call flag_existing_labels from C++.",

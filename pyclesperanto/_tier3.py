@@ -11,8 +11,8 @@ from ._decorators import plugin_function
 def exclude_labels_on_edges(
     input_image: Image,
 	output_image: Image = None,
-	exclude_y: bool = True,
 	exclude_x: bool = True,
+	exclude_y: bool = True,
 	exclude_z: bool = True,
 	device: Device = None
 ) -> Image:
@@ -22,8 +22,8 @@ def exclude_labels_on_edges(
         device=device,
 		src=input_image,
 		dst=output_image,
-		exclude_y=bool(exclude_y),
 		exclude_x=bool(exclude_x),
+		exclude_y=bool(exclude_y),
 		exclude_z=bool(exclude_z)
     )
 

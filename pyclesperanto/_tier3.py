@@ -8,6 +8,27 @@ from ._decorators import plugin_function
 
 
 @plugin_function
+def exclude_labels_on_edges(
+    input_image: Image,
+	output_image: Image = None,
+	exclude_y: bool = True,
+	exclude_x: bool = True,
+	exclude_z: bool = True,
+	device: Device = None
+) -> Image:
+    from ._pyclesperanto import _exclude_labels_on_edges as op
+
+    return op(
+        device=device,
+		src=input_image,
+		dst=output_image,
+		exclude_y=bool(exclude_y),
+		exclude_x=bool(exclude_x),
+		exclude_z=bool(exclude_z)
+    )
+
+
+@plugin_function
 def flag_existing_labels(
     input_image: Image,
 	output_image: Image = None,

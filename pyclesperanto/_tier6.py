@@ -23,3 +23,18 @@ def masked_voronoi_labeling(
 		dst=output_image
     )
 
+
+@plugin_function
+def voronoi_labeling(
+    input_image: Image,
+	output_image: Image = None,
+	device: Device = None
+) -> Image:
+    from ._pyclesperanto import _voronoi_labeling as op
+
+    return op(
+        device=device,
+		src=input_image,
+		dst=output_image
+    )
+

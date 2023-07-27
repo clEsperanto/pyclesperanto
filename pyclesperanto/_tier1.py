@@ -1014,6 +1014,48 @@ def minimum_z_projection(
 
 
 @plugin_function
+def mode_box(
+    input_image: Image,
+	output_image: Image = None,
+	radius_x: int = 0,
+	radius_y: int = 0,
+	radius_z: int = 0,
+	device: Device = None
+) -> Image:
+    from ._pyclesperanto import _mode_box as op
+
+    return op(
+        device=device,
+		src=input_image,
+		dst=output_image,
+		radius_x=int(radius_x),
+		radius_y=int(radius_y),
+		radius_z=int(radius_z)
+    )
+
+
+@plugin_function
+def mode_sphere(
+    input_image: Image,
+	output_image: Image = None,
+	radius_x: int = 0,
+	radius_y: int = 0,
+	radius_z: int = 0,
+	device: Device = None
+) -> Image:
+    from ._pyclesperanto import _mode_sphere as op
+
+    return op(
+        device=device,
+		src=input_image,
+		dst=output_image,
+		radius_x=int(radius_x),
+		radius_y=int(radius_y),
+		radius_z=int(radius_z)
+    )
+
+
+@plugin_function
 def modulo_images(
     input_image0: Image,
 	input_image1: Image,
@@ -1061,6 +1103,27 @@ def multiply_images(
 		src0=input_image0,
 		src1=input_image1,
 		dst=output_image
+    )
+
+
+@plugin_function
+def nan_to_num(
+    input_image: Image,
+	output_image: Image = None,
+	nan: float = 0,
+	posinf: float = 0,
+	neginf: float = 0,
+	device: Device = None
+) -> Image:
+    from ._pyclesperanto import _nan_to_num as op
+
+    return op(
+        device=device,
+		src=input_image,
+		dst=output_image,
+		nan=float(nan),
+		posinf=float(posinf),
+		neginf=float(neginf)
     )
 
 
@@ -1283,6 +1346,23 @@ def range(
 
 
 @plugin_function
+def read_intensities_from_positions(
+    input_image: Image,
+	list: Image = None,
+	output_image: Image = None,
+	device: Device = None
+) -> Image:
+    from ._pyclesperanto import _read_intensities_from_positions as op
+
+    return op(
+        device=device,
+		src=input_image,
+		list=list,
+		dst=output_image
+    )
+
+
+@plugin_function
 def replace_intensities(
     input_image0: Image,
 	input_image1: Image,
@@ -1425,6 +1505,21 @@ def set_column(
 
 
 @plugin_function
+def set_image_borders(
+    input_image: Image,
+	value: float = 0,
+	device: Device = None
+) -> Image:
+    from ._pyclesperanto import _set_image_borders as op
+
+    return op(
+        device=device,
+		src=input_image,
+		value=float(value)
+    )
+
+
+@plugin_function
 def set_plane(
     input_image: Image,
 	plane: int = 0,
@@ -1511,6 +1606,51 @@ def set_nonzero_pixels_to_pixelindex(
 		src=input_image,
 		dst=output_image,
 		offset=int(offset)
+    )
+
+
+@plugin_function
+def set_where_x_equals_y(
+    input_image: Image,
+	value: float = 0,
+	device: Device = None
+) -> Image:
+    from ._pyclesperanto import _set_where_x_equals_y as op
+
+    return op(
+        device=device,
+		src=input_image,
+		value=float(value)
+    )
+
+
+@plugin_function
+def set_where_x_greater_than_y(
+    input_image: Image,
+	value: float = 0,
+	device: Device = None
+) -> Image:
+    from ._pyclesperanto import _set_where_x_greater_than_y as op
+
+    return op(
+        device=device,
+		src=input_image,
+		value=float(value)
+    )
+
+
+@plugin_function
+def set_where_x_smaller_than_y(
+    input_image: Image,
+	value: float = 0,
+	device: Device = None
+) -> Image:
+    from ._pyclesperanto import _set_where_x_smaller_than_y as op
+
+    return op(
+        device=device,
+		src=input_image,
+		value=float(value)
     )
 
 
@@ -1743,6 +1883,21 @@ def transpose_yz(
 	device: Device = None
 ) -> Image:
     from ._pyclesperanto import _transpose_yz as op
+
+    return op(
+        device=device,
+		src=input_image,
+		dst=output_image
+    )
+
+
+@plugin_function
+def undefined_to_zero(
+    input_image: Image,
+	output_image: Image = None,
+	device: Device = None
+) -> Image:
+    from ._pyclesperanto import _undefined_to_zero as op
 
     return op(
         device=device,

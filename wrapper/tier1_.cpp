@@ -310,6 +310,16 @@ m.def("_minimum_z_projection", &cle::tier1::minimum_z_projection_func, "Call min
     py::arg("device"), py::arg("src"), py::arg("dst"));
 
     
+m.def("_mode_box", &cle::tier1::mode_box_func, "Call mode_box from C++.",
+    py::return_value_policy::take_ownership,
+    py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("radius_x"), py::arg("radius_y"), py::arg("radius_z"));
+
+    
+m.def("_mode_sphere", &cle::tier1::mode_sphere_func, "Call mode_sphere from C++.",
+    py::return_value_policy::take_ownership,
+    py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("radius_x"), py::arg("radius_y"), py::arg("radius_z"));
+
+    
 m.def("_modulo_images", &cle::tier1::modulo_images_func, "Call modulo_images from C++.",
     py::return_value_policy::take_ownership,
     py::arg("device"), py::arg("src0"), py::arg("src1"), py::arg("dst"));
@@ -323,6 +333,11 @@ m.def("_multiply_image_and_scalar", &cle::tier1::multiply_image_and_scalar_func,
 m.def("_multiply_images", &cle::tier1::multiply_images_func, "Call multiply_images from C++.",
     py::return_value_policy::take_ownership,
     py::arg("device"), py::arg("src0"), py::arg("src1"), py::arg("dst"));
+
+    
+m.def("_nan_to_num", &cle::tier1::nan_to_num_func, "Call nan_to_num from C++.",
+    py::return_value_policy::take_ownership,
+    py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("nan"), py::arg("posinf"), py::arg("neginf"));
 
     
 m.def("_nonzero_maximum_box", &cle::tier1::nonzero_maximum_box_func, "Call nonzero_maximum_box from C++.",
@@ -385,6 +400,11 @@ m.def("_range", &cle::tier1::range_func, "Call range from C++.",
     py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("start_x"), py::arg("start_y"), py::arg("start_z"), py::arg("step_x"), py::arg("step_y"), py::arg("step_z"));
 
     
+m.def("_read_intensities_from_positions", &cle::tier1::read_intensities_from_positions_func, "Call read_intensities_from_positions from C++.",
+    py::return_value_policy::take_ownership,
+    py::arg("device"), py::arg("src"), py::arg("list"), py::arg("dst"));
+
+    
 m.def("_replace_intensities", &cle::tier1::replace_intensities_func, "Call replace_intensities from C++.",
     py::return_value_policy::take_ownership,
     py::arg("device"), py::arg("src0"), py::arg("src1"), py::arg("dst"));
@@ -425,6 +445,11 @@ m.def("_set_column", &cle::tier1::set_column_func, "Call set_column from C++.",
     py::arg("device"), py::arg("src"), py::arg("column"), py::arg("value"));
 
     
+m.def("_set_image_borders", &cle::tier1::set_image_borders_func, "Call set_image_borders from C++.",
+    py::return_value_policy::take_ownership,
+    py::arg("device"), py::arg("src"), py::arg("value"));
+
+    
 m.def("_set_plane", &cle::tier1::set_plane_func, "Call set_plane from C++.",
     py::return_value_policy::take_ownership,
     py::arg("device"), py::arg("src"), py::arg("plane"), py::arg("value"));
@@ -453,6 +478,21 @@ m.def("_set_row", &cle::tier1::set_row_func, "Call set_row from C++.",
 m.def("_set_nonzero_pixels_to_pixelindex", &cle::tier1::set_nonzero_pixels_to_pixelindex_func, "Call set_nonzero_pixels_to_pixelindex from C++.",
     py::return_value_policy::take_ownership,
     py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("offset"));
+
+    
+m.def("_set_where_x_equals_y", &cle::tier1::set_where_x_equals_y_func, "Call set_where_x_equals_y from C++.",
+    py::return_value_policy::take_ownership,
+    py::arg("device"), py::arg("src"), py::arg("value"));
+
+    
+m.def("_set_where_x_greater_than_y", &cle::tier1::set_where_x_greater_than_y_func, "Call set_where_x_greater_than_y from C++.",
+    py::return_value_policy::take_ownership,
+    py::arg("device"), py::arg("src"), py::arg("value"));
+
+    
+m.def("_set_where_x_smaller_than_y", &cle::tier1::set_where_x_smaller_than_y_func, "Call set_where_x_smaller_than_y from C++.",
+    py::return_value_policy::take_ownership,
+    py::arg("device"), py::arg("src"), py::arg("value"));
 
     
 m.def("_sign", &cle::tier1::sign_func, "Call sign from C++.",
@@ -526,6 +566,11 @@ m.def("_transpose_xz", &cle::tier1::transpose_xz_func, "Call transpose_xz from C
 
     
 m.def("_transpose_yz", &cle::tier1::transpose_yz_func, "Call transpose_yz from C++.",
+    py::return_value_policy::take_ownership,
+    py::arg("device"), py::arg("src"), py::arg("dst"));
+
+    
+m.def("_undefined_to_zero", &cle::tier1::undefined_to_zero_func, "Call undefined_to_zero from C++.",
     py::return_value_policy::take_ownership,
     py::arg("device"), py::arg("src"), py::arg("dst"));
 

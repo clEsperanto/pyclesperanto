@@ -14,5 +14,10 @@ m.def("_masked_voronoi_labeling", &cle::tier6::masked_voronoi_labeling_func, "Ca
     py::return_value_policy::take_ownership,
     py::arg("device"), py::arg("src"), py::arg("mask"), py::arg("dst"));
 
+    
+m.def("_voronoi_labeling", &cle::tier6::voronoi_labeling_func, "Call voronoi_labeling from C++.",
+    py::return_value_policy::take_ownership,
+    py::arg("device"), py::arg("src"), py::arg("dst"));
+
 
 }

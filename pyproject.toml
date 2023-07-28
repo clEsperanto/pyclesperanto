@@ -1,12 +1,49 @@
 [build-system]
-build-backend = "setuptools.build_meta"
 requires = [
   "setuptools",
   "wheel",
-  "scikit-build>=0.17.0",
-  "cmake>=3.20",
-  "pybind11>=2.11.0",
+  "scikit-build-core>=0.4.7",
+  "pybind11",
 ]
+build-backend = "scikit_build_core.build"
+
+[tool.scikit-build]
+minimum-version = "0.4.7"
+cmake.minimum-version = "3.26.1"
+ninja.minimum-version = "1.11"
+ninja.make-fallback = false
+
+[project]
+name = "pyclesperanto"
+version = "0.7.1"
+description="GPU-accelerated image processing in python using OpenCL"
+readme = "README.md"
+authors = [
+  { name = "Stephane Rigaud", email = "stephane.rigaud@pasteur.fr" },
+]
+requires-python = ">=3.8"
+classifiers = [
+  "Development Status :: 2 - Pre-Alpha",
+  "Intended Audience :: Science/Research",
+  "Intended Audience :: Developers",
+  "Topic :: Software Development :: Libraries :: Python Modules",
+  "Topic :: Scientific/Engineering :: Image Processing",
+  "Topic :: Scientific/Engineering :: Information Analysis",
+  "Programming Language :: Python :: 3 :: Only",
+  "Operating System :: OS Independent",
+  "License :: OSI Approved :: BSD License",
+]
+
+dependencies = [
+  "numpy; python_version >='3.8'",
+  "toolz; python_version >='3.8'",
+  "matplotlib; python_version >='3.8'",
+]
+
+[project.urls]
+Documentation = "https://github.com/clEsperanto/pyclesperanto#README.md"
+Source = "https://github.com/clEsperanto/pyclesperanto/"
+Issues = "https://github.com/clEsperanto/pyclesperanto/issues"
 
 [tool.pytest.ini_options]
 addopts = "-ra -q"
@@ -25,13 +62,6 @@ test-requires = ["numpy", "pytest", "pytest-cov", "pytest-benchmark"]
 before-all = ["bash {package}/scripts/build-opencl-linux.sh"]
 repair-wheel-command = "auditwheel show {wheel} && auditwheel repair --lib-sdir .libs -w {dest_dir} {wheel}"
 skip = ["cp27-*", "cp36-*", "pp*", "*-musllinux*", "*_i686"]
-
-#[[tool.cibuildwheel.overrides]]
-#select = "*-musllinux*"
-#before-all = [
-#    "apk add ruby",
-#    "bash {package}/scripts/build-ocl.sh",
-#]
 
 [tool.cibuildwheel.windows]
 before-all = "bash {package}/scripts/build-opencl-windows.sh"

@@ -13,12 +13,7 @@ cmake.minimum-version = "3.26.1"
 ninja.minimum-version = "1.11"
 ninja.make-fallback = false
 cmake.args = [
-  "-DCMAKE_BUILD_TYPE=Release",
-  "-DCMAKE_INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX}",
-  "-DCMAKE_INSTALL_LIBDIR=${CMAKE_INSTALL_LIBDIR}",
-  "-DCMAKE_INSTALL_BINDIR=${CMAKE_INSTALL_BINDIR}",
-  "-DCMAKE_INSTALL_INCLUDEDIR=${CMAKE_INSTALL_INCLUDEDIR}",
-  "-DCMAKE
+  "-DCMAKE_PREFIX_PATH:PATH=$CONDA_PREFIX",
 ]
 
 [project]
@@ -73,7 +68,7 @@ skip = ["cp27-*", "cp36-*", "pp*", "*-musllinux*", "*_i686"]
 
 [tool.cibuildwheel.windows]
 before-all = "bash {package}/scripts/build-opencl-windows.sh"
-environment = {SKBUILD_CONFIGURE_OPTIONS = "-DOpenCL_LIBRARIES:FILEPATH='C:/Program Files/OpenCL-ICD-Loader/lib/OpenCL.lib' -DOpenCL_INCLUDE_DIRS:PATH='C:/Program Files/OpenCL-ICD-Loader/include/'"}
+environment = {SKBUILD_CMAKE_ARGS = "-DOpenCL_LIBRARIES:FILEPATH='C:/Program Files/OpenCL-ICD-Loader/lib/OpenCL.lib' -DOpenCL_INCLUDE_DIRS:PATH='C:/Program Files/OpenCL-ICD-Loader/include/'"}
 skip = ["cp27-*", "cp36-*", "pp*", "*-win32"]
 
 [tool.cibuildwheel.macos]

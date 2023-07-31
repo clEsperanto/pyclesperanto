@@ -55,7 +55,7 @@ jobs:
       - name: Compile
         shell: bash -l {0}
         run: |
-          pip install . -vvv
+          pip install . -vvv --config-settings=cmake.define.CMAKE_PREFIX_PATH=$CONDA_PREFIX
 
       - name: Tests
         shell: bash -l {0}

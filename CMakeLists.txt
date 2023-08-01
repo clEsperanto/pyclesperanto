@@ -11,6 +11,10 @@ project(
 # enforce release build type if possible
 set(CMAKE_BUILD_TYPE Release)
 set(CMAKE_CXX_STANDARD 17)
+# if(WIN32)
+#   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /d2FH4-")
+# endif(WIN32)
+
 
 string(TOLOWER ${SKBUILD_PROJECT_NAME} PY_PACKAGE_NAME)
 set(CY_PACKAGE_NAME _${PY_PACKAGE_NAME})

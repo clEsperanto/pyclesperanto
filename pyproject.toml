@@ -1,10 +1,5 @@
 [build-system]
-requires = [
-  "setuptools",
-  "wheel",
-  "scikit-build-core>=0.4.7",
-  "pybind11",
-]
+requires = ["setuptools", "wheel", "scikit-build-core>=0.4.7", "pybind11"]
 build-backend = "scikit_build_core.build"
 
 [tool.scikit-build]
@@ -13,15 +8,12 @@ cmake.minimum-version = "3.26.1"
 ninja.minimum-version = "1.11"
 ninja.make-fallback = false
 
-
 [project]
 name = "pyclesperanto"
 version = "0.7.1"
-description="GPU-accelerated image processing in python using OpenCL"
+description = "GPU-accelerated image processing in python using OpenCL"
 readme = "README.md"
-authors = [
-  { name = "Stephane Rigaud", email = "stephane.rigaud@pasteur.fr" },
-]
+authors = [{ name = "Stephane Rigaud", email = "stephane.rigaud@pasteur.fr" }]
 requires-python = ">=3.8"
 classifiers = [
   "Development Status :: 2 - Pre-Alpha",
@@ -34,7 +26,6 @@ classifiers = [
   "Operating System :: OS Independent",
   "License :: OSI Approved :: BSD License",
 ]
-
 dependencies = [
   "numpy; python_version >='3.8'",
   "toolz; python_version >='3.8'",
@@ -42,15 +33,14 @@ dependencies = [
 ]
 
 [project.urls]
-Documentation = "https://github.com/clEsperanto/pyclesperanto#README.md"
 Source = "https://github.com/clEsperanto/pyclesperanto/"
+Documentation = "https://clesperanto.github.io/pyclesperanto/"
 Issues = "https://github.com/clEsperanto/pyclesperanto/issues"
+Examples = "https://clesperanto.github.io/pyclesperanto/demos/"
 
 [tool.pytest.ini_options]
 addopts = "-ra -q"
-testpaths = [
-  "tests",
-]
+testpaths = ["tests"]
 
 [tool.cibuildwheel]
 build = ["cp38-*", "cp39-*", "cp310-*", "cp311-*"]
@@ -66,9 +56,9 @@ skip = ["cp27-*", "cp36-*", "pp*", "*-musllinux*", "*_i686"]
 
 [tool.cibuildwheel.windows]
 before-all = "bash {package}/scripts/build-opencl-windows.sh"
-environment = {SKBUILD_CMAKE_ARGS = "-DOpenCL_LIBRARIES:FILEPATH='C:/Program Files/OpenCL-ICD-Loader/lib/OpenCL.lib';-DOpenCL_INCLUDE_DIRS:PATH='C:/Program Files/OpenCL-ICD-Loader/include/'"}
+environment = { SKBUILD_CMAKE_ARGS = "-DOpenCL_LIBRARIES:FILEPATH='C:/Program Files/OpenCL-ICD-Loader/lib/OpenCL.lib';-DOpenCL_INCLUDE_DIRS:PATH='C:/Program Files/OpenCL-ICD-Loader/include/'" }
 skip = ["cp27-*", "cp36-*", "pp*", "*-win32"]
 
 [tool.cibuildwheel.macos]
-environment = {MACOSX_DEPLOYMENT_TARGET = '10.14'}
+environment = { MACOSX_DEPLOYMENT_TARGET = '10.14' }
 skip = ["cp27-*", "cp36-*", "pp*", "*_universal2"]

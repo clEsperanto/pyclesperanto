@@ -280,6 +280,16 @@ m.def("_mean_z_projection", &cle::tier1::mean_z_projection_func, "Call mean_z_pr
     py::arg("device"), py::arg("src"), py::arg("dst"));
 
     
+m.def("_median_box", &cle::tier1::median_box_func, "Call median_box from C++.",
+    py::return_value_policy::take_ownership,
+    py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("radius_x"), py::arg("radius_y"), py::arg("radius_z"));
+
+    
+m.def("_median_sphere", &cle::tier1::median_sphere_func, "Call median_sphere from C++.",
+    py::return_value_policy::take_ownership,
+    py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("radius_x"), py::arg("radius_y"), py::arg("radius_z"));
+
+    
 m.def("_minimum_box", &cle::tier1::minimum_box_func, "Call minimum_box from C++.",
     py::return_value_policy::take_ownership,
     py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("radius_x"), py::arg("radius_y"), py::arg("radius_z"));

@@ -914,6 +914,48 @@ def mean_z_projection(
 
 
 @plugin_function
+def median_box(
+    input_image: Image,
+	output_image: Image = None,
+	radius_x: int = 0,
+	radius_y: int = 0,
+	radius_z: int = 0,
+	device: Device = None
+) -> Image:
+    from ._pyclesperanto import _median_box as op
+
+    return op(
+        device=device,
+		src=input_image,
+		dst=output_image,
+		radius_x=int(radius_x),
+		radius_y=int(radius_y),
+		radius_z=int(radius_z)
+    )
+
+
+@plugin_function
+def median_sphere(
+    input_image: Image,
+	output_image: Image = None,
+	radius_x: int = 0,
+	radius_y: int = 0,
+	radius_z: int = 0,
+	device: Device = None
+) -> Image:
+    from ._pyclesperanto import _median_sphere as op
+
+    return op(
+        device=device,
+		src=input_image,
+		dst=output_image,
+		radius_x=int(radius_x),
+		radius_y=int(radius_y),
+		radius_z=int(radius_z)
+    )
+
+
+@plugin_function
 def minimum_box(
     input_image: Image,
 	output_image: Image = None,

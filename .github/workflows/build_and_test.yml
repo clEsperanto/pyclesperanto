@@ -44,9 +44,9 @@ jobs:
         shell: bash -l {0}
         run: pip install scikit-build pytest pytest-cov pytest-benchmark
 
-      - name: Install cuda
-        shell: bash -l {0}
-        run: conda install -y cudatoolkit 
+      # - name: Install cuda
+      #   shell: bash -l {0}
+      #   run: conda install -y cudatoolkit 
 
       - name: Install pocl
         shell: bash -l {0}
@@ -55,7 +55,7 @@ jobs:
       - name: Compile
         shell: bash -l {0}
         run: |
-          pip install . -vvv --config-settings=cmake.define.CMAKE_PREFIX_PATH=$CONDA_PATH
+          pip install . -vvv --config-settings=cmake.define.CMAKE_PREFIX_PATH=$CONDA_PREFIX
 
       - name: Tests
         shell: bash -l {0}

@@ -272,6 +272,41 @@ def __ipow__(x1, x2):
         return power_images(temp, x2, x1)
 
 
+def __iter__(self):
+    class MyIterator():
+        def __init__(self, image):
+            self.image = image
+            self._iter_index = 0
+
+        def __next__(self):
+            import numpy as np
+            from ._memory import create
+            from ._tier1 import copy_slice
+            if not hasattr(self, "_iter_index"):
+                self._iter_index = 0
+            if self._iter_index < self.image.shape[0]:
+                if len(self.image.shape) < 3:
+                    result = np.asarray(self.image)[self._iter_index]
+                elif len(self.image.shape) == 3:
+                    output = create(self.image.shape[1:])
+                    result = copy_slice(self.image, output, self._iter_index)
+                else:
+                    raise ValueError("Only 1D, 2D or 3D array are supported.")
+                self._iter_index = self._iter_index + 1
+                return result
+            else:
+                raise StopIteration
+    return MyIterator(self)
+
+
+def __getitem__(self, index):
+    raise NotImplementedError("Not implemented yet.")
+
+
+def __setitem__(self, index, value):
+    raise NotImplementedError("Not implemented yet.")
+
+
 # adapted from https://github.com/napari/napari/blob/d6bc683b019c4a3a3c6e936526e29bbd59cca2f4/napari/utils/notebook_display.py#L54-L73
 def _plt_to_png(self):
     """PNG representation of the image object for IPython.

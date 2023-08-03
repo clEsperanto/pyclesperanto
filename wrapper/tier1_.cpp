@@ -407,7 +407,7 @@ m.def("_power_images", &cle::tier1::power_images_func, "Call power_images from C
     
 m.def("_range", &cle::tier1::range_func, "Call range from C++.",
     py::return_value_policy::take_ownership,
-    py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("start_x"), py::arg("start_y"), py::arg("start_z"), py::arg("step_x"), py::arg("step_y"), py::arg("step_z"));
+    py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("start_x"), py::arg("stop_x"), py::arg("step_x"), py::arg("start_y"), py::arg("stop_y"), py::arg("step_y"), py::arg("start_z"), py::arg("stop_z"), py::arg("step_z"));
 
     
 m.def("_read_intensities_from_positions", &cle::tier1::read_intensities_from_positions_func, "Call read_intensities_from_positions from C++.",

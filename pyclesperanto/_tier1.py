@@ -1365,10 +1365,13 @@ def range(
     input_image: Image,
 	output_image: Image = None,
 	start_x: int = 0,
-	start_y: int = 0,
-	start_z: int = 0,
+	stop_x: int = 0,
 	step_x: int = 0,
+	start_y: int = 0,
+	stop_y: int = 0,
 	step_y: int = 0,
+	start_z: int = 0,
+	stop_z: int = 0,
 	step_z: int = 0,
 	device: Device = None
 ) -> Image:
@@ -1379,10 +1382,13 @@ def range(
 		src=input_image,
 		dst=output_image,
 		start_x=int(start_x),
-		start_y=int(start_y),
-		start_z=int(start_z),
+		stop_x=int(stop_x),
 		step_x=int(step_x),
+		start_y=int(start_y),
+		stop_y=int(stop_y),
 		step_y=int(step_y),
+		start_z=int(start_z),
+		stop_z=int(stop_z),
 		step_z=int(step_z)
     )
 

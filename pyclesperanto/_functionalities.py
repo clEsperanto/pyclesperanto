@@ -1,7 +1,7 @@
 from os import path
 from typing import Optional, Union
 
-from ._array import _Array, Image
+from ._array import Array, Image
 from ._memory import pull
 from ._core import Device, get_device
 

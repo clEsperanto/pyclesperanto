@@ -1,6 +1,6 @@
-from __future__ import annotations
+# from __future__ import annotations
 
-from ._pyclesperanto import _Array
+from ._pyclesperanto import _Array as Array
 from . import _operators
 
 from typing import Union
@@ -61,43 +61,43 @@ def __array__(self, dtype=None) -> np.ndarray:
 # __iter__
 # __array_interface__
 
-setattr(_Array, "set", set)
-setattr(_Array, "get", get)
-setattr(_Array, "__str__", __str__)
-setattr(_Array, "__repr__", __repr__)
-setattr(_Array, "__array__", __array__)
-setattr(_Array,"astype",_operators.astype)
-setattr(_Array,"max",_operators.max)
-setattr(_Array,"min",_operators.min)
-setattr(_Array,"sum",_operators.sum)
-setattr(_Array,"__iadd__",_operators.__iadd__)
-setattr(_Array,"__sub__",_operators.__sub__)
-setattr(_Array,"__div__",_operators.__div__)
-setattr(_Array,"__truediv__",_operators.__truediv__)
-setattr(_Array,"__idiv__",_operators.__idiv__)
-setattr(_Array,"__itruediv__",_operators.__itruediv__)
-setattr(_Array,"__mul__",_operators.__mul__)
-setattr(_Array,"__imul__",_operators.__imul__)
-setattr(_Array,"__gt__",_operators.__gt__)
-setattr(_Array,"__ge__",_operators.__ge__)
-setattr(_Array,"__lt__",_operators.__lt__)
-setattr(_Array,"__le__",_operators.__le__)
-setattr(_Array,"__eq__",_operators.__eq__)
-setattr(_Array,"__ne__",_operators.__ne__)
-setattr(_Array,"__pow__",_operators.__pow__)
-setattr(_Array,"__ipow__",_operators.__ipow__)
-setattr(_Array,"_plt_to_png",_operators._plt_to_png)
-setattr(_Array,"_png_to_html",_operators._png_to_html)
-setattr(_Array,"_repr_html_",_operators._repr_html_)
+setattr(Array, "set", set)
+setattr(Array, "get", get)
+setattr(Array, "__str__", __str__)
+setattr(Array, "__repr__", __repr__)
+setattr(Array, "__array__", __array__)
+setattr(Array,"astype",_operators.astype)
+setattr(Array,"max",_operators.max)
+setattr(Array,"min",_operators.min)
+setattr(Array,"sum",_operators.sum)
+setattr(Array,"__iadd__",_operators.__iadd__)
+setattr(Array,"__sub__",_operators.__sub__)
+setattr(Array,"__div__",_operators.__div__)
+setattr(Array,"__truediv__",_operators.__truediv__)
+setattr(Array,"__idiv__",_operators.__idiv__)
+setattr(Array,"__itruediv__",_operators.__itruediv__)
+setattr(Array,"__mul__",_operators.__mul__)
+setattr(Array,"__imul__",_operators.__imul__)
+setattr(Array,"__gt__",_operators.__gt__)
+setattr(Array,"__ge__",_operators.__ge__)
+setattr(Array,"__lt__",_operators.__lt__)
+setattr(Array,"__le__",_operators.__le__)
+setattr(Array,"__eq__",_operators.__eq__)
+setattr(Array,"__ne__",_operators.__ne__)
+setattr(Array,"__pow__",_operators.__pow__)
+setattr(Array,"__ipow__",_operators.__ipow__)
+setattr(Array,"_plt_to_png",_operators._plt_to_png)
+setattr(Array,"_png_to_html",_operators._png_to_html)
+setattr(Array,"_repr_html_",_operators._repr_html_)
 
-Image = Union[np.ndarray, _Array]
+Image = Union[np.ndarray, Array]
 
 def is_image(any_array):
     return (
         isinstance(any_array, np.ndarray)
         or isinstance(any_array, tuple)
         or isinstance(any_array, list)
-        or isinstance(any_array, _Array)
+        or isinstance(any_array, Array)
         or str(type(any_array))
         in [
             "<class 'cupy._core.core.ndarray'>",

@@ -6,6 +6,7 @@ from ._core import (
     list_available_devices,
     list_available_backends,
     default_initialisation,
+    Device,
 )
 from ._array import Image, is_image
 from ._memory import create, create_like, push, pull

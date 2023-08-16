@@ -1,10 +1,8 @@
-from ._pyclesperanto import _Device, _BackendManager
-
-from typing import Optional, List
+from typing import Optional
 import warnings
 
-Device = _Device
-BackendManager = _BackendManager
+from ._pyclesperanto import _Device as Device
+from ._pyclesperanto import _BackendManager as BackendManager
 
 class _current_device:
     _instance: Optional[Device] = None

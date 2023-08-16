@@ -302,7 +302,6 @@ def __iter__(self):
 def __getitem__(self, index):
     raise NotImplementedError("Not implemented yet.")
 
-
 def __setitem__(self, index, value):
     raise NotImplementedError("Not implemented yet.")
 

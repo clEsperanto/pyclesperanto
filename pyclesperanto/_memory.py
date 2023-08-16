@@ -1,7 +1,6 @@
 import warnings
 
-from ._core import Device
-from ._array import _Array, Image
+from ._array import Array, Image
 from ._core import Device, get_device
 
 import numpy as np
@@ -42,7 +41,7 @@ def create(
         mtype = "buffer"
     if device is None:
         device = get_device()
-    return _Array.create(shape, dtype, mtype, device)
+    return Array.create(shape, dtype, mtype, device)
 
 
 def create_like(
@@ -101,7 +100,7 @@ def push(
     Image
         Created image on the device with the input image data
     """
-    if isinstance(array, _Array):
+    if isinstance(array, Array):
         return array
     if array.dtype in [float, np.float64]:
         array = array.astype(np.float32)

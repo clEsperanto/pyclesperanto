@@ -13,7 +13,10 @@ name = "pyclesperanto"
 version = "0.7.0"
 description = "GPU-accelerated image processing in python using OpenCL"
 readme = "README.md"
-authors = [{ name = "Stephane Rigaud", email = "stephane.rigaud@pasteur.fr" }]
+authors = [
+  { name = "Stephane Rigaud", email = "stephane.rigaud@pasteur.fr" }, 
+  { name = "Robert Haase", email = "robert.haase@tu-dresden.de" },
+]
 requires-python = ">=3.8"
 classifiers = [
   "Development Status :: 2 - Pre-Alpha",

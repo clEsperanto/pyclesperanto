@@ -4,8 +4,10 @@ import warnings
 from ._pyclesperanto import _Device as Device
 from ._pyclesperanto import _BackendManager as BackendManager
 
+
 class _current_device:
     _instance: Optional[Device] = None
+
 
 def get_device() -> Device:
     """Return the current device instance
@@ -57,9 +59,12 @@ def list_available_devices(device_type: str = "all") -> list:
     -------
     name list : list[str]
     """
-    dev_list = list(BackendManager.get_backend().getDevicesList(type=device_type)) 
+    dev_list = list(BackendManager.get_backend().getDevicesList(type=device_type))
     if not dev_list:
-        warnings.warn("No device available. Please install either OpenCL or CUDA on your system.", RuntimeWarning)
+        warnings.warn(
+            "No device available. Please install either OpenCL or CUDA on your system.",
+            RuntimeWarning,
+        )
     return dev_list
 
 
@@ -74,7 +79,10 @@ def list_available_backends() -> list:
     """
     back_list = list(BackendManager.get_backends_list())
     if not back_list:
-        warnings.warn("No backend available. Please install either OpenCL or CUDA on your system.", RuntimeWarning)
+        warnings.warn(
+            "No backend available. Please install either OpenCL or CUDA on your system.",
+            RuntimeWarning,
+        )
     return back_list
 
 
@@ -122,5 +130,14 @@ def default_initialisation():
     if backends:
         _ = select_backend(backends[-1])
     else:
-        warnings.warn("No backend available. Please install either OpenCL or CUDA on your system.", RuntimeWarning)
-    
+        warnings.warn(
+            "No backend available. Please install either OpenCL or CUDA on your system.",
+            RuntimeWarning,
+        )
+
+
+def gpu_info():
+    device_list = list_available_devices("gpu")
+    for device_name in device_list:
+        print(select_device(device_name).info)
+        print("")

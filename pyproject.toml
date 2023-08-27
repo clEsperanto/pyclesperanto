@@ -1,18 +1,49 @@
 [build-system]
-build-backend = "setuptools.build_meta"
-requires = [
-  "setuptools",
-  "wheel",
-  "scikit-build>=0.16.4",
-  "cmake>=3.20",
-  "pybind11>=2.10.3",
+requires = ["setuptools", "wheel", "scikit-build-core>=0.4.7", "pybind11"]
+build-backend = "scikit_build_core.build"
+
+[tool.scikit-build]
+minimum-version = "0.4.7"
+cmake.minimum-version = "3.26.1"
+ninja.minimum-version = "1.11"
+ninja.make-fallback = false
+
+[project]
+name = "pyclesperanto"
+version = "0.7.0"
+description = "GPU-accelerated image processing in python using OpenCL"
+readme = "README.md"
+authors = [
+  { name = "Stephane Rigaud", email = "stephane.rigaud@pasteur.fr" }, 
+  { name = "Robert Haase", email = "robert.haase@tu-dresden.de" },
 ]
+requires-python = ">=3.8"
+classifiers = [
+  "Development Status :: 2 - Pre-Alpha",
+  "Intended Audience :: Science/Research",
+  "Intended Audience :: Developers",
+  "Topic :: Software Development :: Libraries :: Python Modules",
+  "Topic :: Scientific/Engineering :: Image Processing",
+  "Topic :: Scientific/Engineering :: Information Analysis",
+  "Programming Language :: Python :: 3 :: Only",
+  "Operating System :: OS Independent",
+  "License :: OSI Approved :: BSD License",
+]
+dependencies = [
+  "numpy; python_version >='3.8'",
+  "toolz; python_version >='3.8'",
+  "matplotlib; python_version >='3.8'",
+]
+
+[project.urls]
+Source = "https://github.com/clEsperanto/pyclesperanto/"
+Documentation = "https://clesperanto.github.io/pyclesperanto/"
+Issues = "https://github.com/clEsperanto/pyclesperanto/issues"
+Examples = "https://clesperanto.github.io/pyclesperanto/demos/"
 
 [tool.pytest.ini_options]
 addopts = "-ra -q"
-testpaths = [
-  "tests",
-]
+testpaths = ["tests"]
 
 [tool.cibuildwheel]
 build = ["cp38-*", "cp39-*", "cp310-*", "cp311-*"]
@@ -22,26 +53,15 @@ test-command = "pytest {project}/tests/test_import.py"
 test-requires = ["numpy", "pytest", "pytest-cov", "pytest-benchmark"]
 
 [tool.cibuildwheel.linux]
-before-all = [
-  "yum install -y ruby",
-  "bash {package}/scripts/build-opencl-linux.sh",
-]
+before-all = ["bash {package}/scripts/build-opencl-linux.sh"]
 repair-wheel-command = "auditwheel show {wheel} && auditwheel repair --lib-sdir .libs -w {dest_dir} {wheel}"
-skip = ["cp27-*", "cp36-*", "pp*", "*-musllinux*"]
-
-#[[tool.cibuildwheel.overrides]]
-#select = "*-musllinux*"
-#before-all = [
-#    "apk add ruby",
-#    "bash {package}/scripts/build-ocl.sh",
-#]
+skip = ["cp27-*", "pp*", "*-musllinux*", "*_i686"]
 
 [tool.cibuildwheel.windows]
 before-all = "bash {package}/scripts/build-opencl-windows.sh"
-environment = {SKBUILD_CONFIGURE_OPTIONS = "-DOpenCL_LIBRARY:FILEPATH='C:/Program Files/OpenCL-ICD-Loader/lib/OpenCL.lib' -DOpenCL_LIBRARIES:FILEPATH='C:/Program Files/OpenCL-ICD-Loader/lib/OpenCL.lib' -DOpenCL_FOUND:BOOL=TRUE"}
-skip = ["cp27-*", "cp36-*", "pp*", "*-win32"]
+environment = { SKBUILD_CMAKE_ARGS = "-DOpenCL_LIBRARIES:FILEPATH='C:/Program Files/OpenCL-ICD-Loader/lib/OpenCL.lib';-DOpenCL_INCLUDE_DIRS:PATH='C:/Program Files/OpenCL-ICD-Loader/include/'" }
+skip = ["cp27-*", "pp*", "*-win32"]
 
 [tool.cibuildwheel.macos]
-before-all = "bash {package}/scripts/build-opencl-macos.sh"
-environment = {MACOSX_DEPLOYMENT_TARGET = '10.14'}
-skip = ["cp27-*", "cp36-*", "pp*", "*_universal2"]
+environment = { MACOSX_DEPLOYMENT_TARGET = '10.14' }
+skip = ["cp27-*", "pp*", "*_universal2"]

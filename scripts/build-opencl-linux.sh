@@ -1,30 +1,23 @@
 #!/usr/bin/env bash
-SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+
+SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
+VERSION="v2022.01.04"
+OPENCL_HEADERS_DIR="${SCRIPT_DIR}/OpenCL-Headers"
+OPENCL_ICD_LOADER_DIR="${SCRIPT_DIR}/OpenCL-ICD-Loader"
+INSTALL_PREFIX="/usr/local"
 
 set -e -x
 
-mkdir -p ~/deps
-cd ~/deps
+# Clone and install OpenCL-Headers
+git clone --branch ${VERSION} https://github.com/KhronosGroup/OpenCL-Headers "${OPENCL_HEADERS_DIR}"
+cmake -D CMAKE_INSTALL_PREFIX="${INSTALL_PREFIX}" -S "${OPENCL_HEADERS_DIR}" -B "${OPENCL_HEADERS_DIR}/build"
+cmake --build "${OPENCL_HEADERS_DIR}/build" --target install
 
-git clone --branch v2.3.1 https://github.com/OCL-dev/ocl-icd
-cd ocl-icd
+# Clone and install OpenCL-ICD-Loader
+git clone --branch ${VERSION} https://github.com/KhronosGroup/OpenCL-ICD-Loader "${OPENCL_ICD_LOADER_DIR}"
+cmake -D CMAKE_INSTALL_PREFIX="${INSTALL_PREFIX}" -D OPENCL_ICD_LOADER_HEADERS_DIR="${INSTALL_PREFIX}/include" -S "${OPENCL_ICD_LOADER_DIR}" -B "${OPENCL_ICD_LOADER_DIR}/build"
+cmake --build "${OPENCL_ICD_LOADER_DIR}/build" --target install --config Release
 
-# set includes content in OpenCL folder instead of CL for consistancy
-curl -L -O https://raw.githubusercontent.com/conda-forge/ocl-icd-feedstock/e2c03e3ddb1ff86630ccf80dc7b87a81640025ea/recipe/install-headers.patch
-git apply install-headers.patch
-
-# Use PYOPENCL_HOME if define in OCL-ICD lib
-# see https://github.com/inducer/pyopencl/blob/2bb87e0f7d886dfb86523cf08b269cad0c0b79fc/pyopencl/__init__.py 
-# curl -L -O https://github.com/isuruf/ocl-icd/commit/3862386b51930f95d9ad1089f7157a98165d5a6b.patch
-curl -L -O https://github.com/StRigaud/ocl-icd/commit/83bbc51b8ac80354fe30bf9b081b83181f8b3f82.patch
-git apply 83bbc51b8ac80354fe30bf9b081b83181f8b3f82.patch
-
-autoreconf -i
-chmod +x configure
-./configure --prefix=/usr
-make -j4
-make install
-
-# Bundle license files
-echo "pyclesperanto wheel includes ocl-icd which is licensed as below" >> ${SCRIPT_DIR}/../LICENSE
-cat ~/deps/ocl-icd/COPYING >> ${SCRIPT_DIR}/../LICENSE 
+# Append license information to your project's LICENSE file
+echo "pyclesperanto wheel includes Khronos Group OpenCL-ICD-Loader which is licensed as below" >>"${SCRIPT_DIR}/../LICENSE"
+cat "${OPENCL_ICD_LOADER_DIR}/LICENSE" >>"${SCRIPT_DIR}/../LICENSE"

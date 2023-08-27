@@ -1,28 +1,35 @@
 API Documentation
 #################
 
-Device
+Core
 ======
 
-.. automodule:: pyclesperanto._device
+.. automodule:: pyclesperanto._core
     :members:
     :undoc-members:
 
 Memory management
 =================
 
-.. automodule:: pyclesperanto._memory_operations
+.. automodule:: pyclesperanto._memory
     :members:
     :undoc-members:
 
 Data structure
 ==============
 
-.. automodule:: pyclesperanto._image
+.. automodule:: pyclesperanto._array
     :members:
     :undoc-members:
 
-.. automodule:: pyclesperanto._image_operators
+.. automodule:: pyclesperanto._operators
+    :members:
+    :undoc-members:
+
+Functionalities
+==============
+
+.. automodule:: pyclesperanto._functionalities
     :members:
     :undoc-members:
 
@@ -33,34 +40,40 @@ Filters
    :members:
    :undoc-members:
    :imported-members: 
-   :exclude-members: Image, Device, create, push, pull, create_like, plugin_function
+   :exclude-members: Image, Device, _Array, plugin_function
 
 .. automodule:: pyclesperanto._tier2
     :members:
     :undoc-members:
     :imported-members:
-    :exclude-members: Image, Device, create, push, pull, create_like, plugin_function
+    :exclude-members: Image, Device, _Array, plugin_function
 
 .. automodule:: pyclesperanto._tier3
     :members:
     :undoc-members:
     :imported-members:
-    :exclude-members: Image, Device, create, push, pull, create_like, plugin_function
+    :exclude-members: Image, Device, _Array, plugin_function
 
 .. automodule:: pyclesperanto._tier4
     :members:
     :undoc-members:
     :imported-members:
-    :exclude-members: Image, Device, create, push, pull, create_like, plugin_function
+    :exclude-members: Image, Device, _Array, plugin_function
 
 .. automodule:: pyclesperanto._tier5
     :members:
     :undoc-members:
     :imported-members:
-    :exclude-members: Image, Device, create, push, pull, create_like, plugin_function
+    :exclude-members: Image, Device, _Array, plugin_function
 
 .. automodule:: pyclesperanto._tier6
     :members:
     :undoc-members:
     :imported-members:
-    :exclude-members: Image, Device, create, push, pull, create_like, plugin_function
+    :exclude-members: Image, Device, _Array, plugin_function
+
+.. automodule:: pyclesperanto._tier7
+    :members:
+    :undoc-members:
+    :imported-members:
+    :exclude-members: Image, Device, _Array, plugin_function

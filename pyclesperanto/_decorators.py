@@ -3,16 +3,14 @@ from functools import wraps
 from toolz import curry
 import inspect
 
-from ._memory_operations import create_like, push
-from ._image import Image, is_image
-from ._device import Device, get_device
+from ._memory import push
+from ._array import is_image, Image
+from ._core import Device
 
 
 @curry
 def plugin_function(
     function: Callable,
-    output_creator: Callable = create_like,
-    # device_selector: Callable = get_device,
     categories: Optional[list] = None,
     priority: int = 0,
 ) -> Callable:
@@ -62,7 +60,9 @@ def plugin_function(
         bound.apply_defaults()
 
         args_list = function.fullargspec.args
-        index = next((i for i, element in enumerate(args_list) if "input_image" in element), -1)
+        index = next(
+            (i for i, element in enumerate(args_list) if "input_image" in element), -1
+        )
         arg_name = args_list[index]
 
         # copy images to GPU, and create output array if necessary
@@ -75,29 +75,20 @@ def plugin_function(
                 bound.arguments[key] = push(value)
             if (
                 key in sig.parameters
-                and sig.parameters[key].annotation is Image
-                and value is None
-            ):
-                # sig2 = inspect.signature(output_creator)
-                # bound.arguments[key] = output_creator(
-                #     *bound.args[0 : len(sig2.parameters)]
-                # )                
-                input_image_index = args_list.index(arg_name)
-                bound.arguments[key] = output_creator(
-                    bound.args[input_image_index]
-                )
-            if (
-                key in sig.parameters
                 and sig.parameters[key].annotation is Device
                 and value is None
             ):
                 input_image = bound.arguments[arg_name]
                 bound.arguments[key] = input_image.device
-                # sig2 = inspect.signature(device_selector)
-                # bound.arguments[key] = device_selector()
 
         # call the decorated function
-        return function(*bound.args, **bound.kwargs)
+        result = function(*bound.args, **bound.kwargs)
+
+        # # Cast the result as an Array if it is not already
+        # if not isinstance(result, _Array):
+        #     result = _Array(result)
+
+        return result
 
     # this is necessary to obfuscate pyclesperanto's internal structure
     worker_function.__module__ = "pyclesperanto"

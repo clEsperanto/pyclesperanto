@@ -1,8 +1,6 @@
 # py-clesperanto
 [![Build & Deploy](https://github.com/clEsperanto/pyclesperanto/actions/workflows/wheels.yml/badge.svg)](https://github.com/clEsperanto/pyclesperanto/actions/workflows/wheels.yml)
-[![Tests](https://github.com/clEsperanto/pyclesperanto/actions/workflows/build_and_test.yml/badge.svg)](https://github.com/clEsperanto/pyclesperanto/actions/workflows/build_and_test.yml)
-[![codecov](https://codecov.io/gh/clesperanto/pyclesperanto/branch/main/graph/badge.svg)](https://codecov.io/gh/clesperanto/pyclesperanto)
-[![License](https://img.shields.io/pypi/l/pyclesperanto.svg?color=green)](https://github.com/clEsperanto/pyclesperanto/raw/main/LICENSE)
+[![Tests](https://github.com/clEsperanto/pyclesperanto/actions/workflows/build_and_test.yml/badge.svg)](https://github.com/clEsperanto/pyclesperanto/actions/workflows/build_and_test.yml) <!-- [![codecov](https://codecov.io/gh/clesperanto/pyclesperanto/branch/main/graph/badge.svg)](https://codecov.io/gh/clesperanto/pyclesperanto) --> [![License](https://img.shields.io/pypi/l/pyclesperanto.svg?color=green)](https://github.com/clEsperanto/pyclesperanto/raw/main/LICENSE)
 [![PyPI](https://img.shields.io/pypi/v/pyclesperanto.svg?color=green)](https://pypi.org/project/pyclesperanto)
 [![Python Version](https://img.shields.io/pypi/pyversions/pyclesperanto.svg?color=green)](https://python.org)
 [![Development Status](https://img.shields.io/pypi/status/pyclesperanto.svg)](https://en.wikipedia.org/wiki/Software_release_life_cycle#Alpha)
@@ -26,7 +24,6 @@ conda activate my_env
 ```
 ~~Install pyclesperanto package using __conda__:~~ __(WIP, please use pip instead)__
 ```
-conda install -c conda-forge pyclesperanto
 ```
 OR using __pip__:
 ```
@@ -45,7 +42,7 @@ from skimage.io import imread, imsave
 device = cle.select_device()
 print("Used GPU: ", device)
 
-image = imread("https://imagej.nih.gov/ij/images/blobs.gif")
+image = imread("https://samples.fiji.sc/blobs.png")
 
 # push image to device memory
 input_image = cle.push(image)

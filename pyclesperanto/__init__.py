@@ -1,12 +1,13 @@
 from ._core import (
+    gpu_info,
     select_backend,
-    get_device,
     select_device,
+    get_device,
+    set_wait_for_kernel_finish,
     list_available_devices,
     list_available_backends,
     default_initialisation,
     Device,
-    gpu_info,
 )
 from ._array import Image, is_image
 from ._memory import create, create_like, push, pull

@@ -30,7 +30,6 @@ requirements:
     - cmake
     - khronos-opencl-icd-loader      # [win or osx] 
     - ocl-icd      # [linux]
-    - osx >= 10.14      # [osx] 
   run:
     - python
     - numpy
@@ -38,6 +37,7 @@ requirements:
     - matplotlib
     - khronos-opencl-icd-loader      # [win or osx] 
     - ocl-icd      # [linux]
+    - __osx >={{ MACOSX_DEPLOYMENT_TARGET|default("10.9") }}  # [osx and x86_64]
 
 test:
   imports:

@@ -21,18 +21,22 @@ requirements:
   build:
     - python
     - {{ compiler('cxx') }}
+    - {{ compiler('m2w64_cxx') }}      # [win and vc<14]
   host:
     - python
+    - libpython      # [win and vc<14]
     - scikit-build-core
     - pybind11
     - cmake
-    - khronos-opencl-icd-loader 
+    - khronos-opencl-icd-loader      # [win or osx] 
+    - ocl-icd      # [linux]
   run:
     - python
     - numpy
     - toolz
     - matplotlib
-    - khronos-opencl-icd-loader 
+    - khronos-opencl-icd-loader      # [win or osx] 
+    - ocl-icd      # [linux]
 
 test:
   imports:

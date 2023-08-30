@@ -30,6 +30,7 @@ requirements:
     - cmake
     - khronos-opencl-icd-loader      # [win or osx] 
     - ocl-icd      # [linux]
+    - osx >= 10.14      # [osx] 
   run:
     - python
     - numpy

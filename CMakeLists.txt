@@ -37,7 +37,7 @@ option(BUILD_SHARED_LIBS OFF)
 FetchContent_Declare(
   CLIc 
   GIT_REPOSITORY https://github.com/clEsperanto/CLIc_prototype.git
-  GIT_TAG add-cuda-backend
+  GIT_TAG main
 )
 FetchContent_MakeAvailable(CLIc)
 

@@ -21,10 +21,10 @@ requirements:
   build:
     - python
     - {{ compiler('cxx') }}
-    - {{ compiler('m2w64_cxx') }}      # [win and vc<14]
+    # - {{ compiler('m2w64_cxx') }}      # [win and vc<14]
   host:
     - python
-    - libpython      # [win and vc<14]
+    # - libpython      # [win and vc<14]
     - scikit-build-core
     - pybind11
     - cmake
@@ -37,7 +37,6 @@ requirements:
     - matplotlib
     - khronos-opencl-icd-loader      # [win or osx] 
     - ocl-icd      # [linux]
-    # - __osx >={{ MACOSX_DEPLOYMENT_TARGET|default("10.9") }}  # [osx and x86_64]
 
 test:
   imports:

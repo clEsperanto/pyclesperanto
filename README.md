@@ -19,8 +19,8 @@ This package relies on the [CLIc] back-end for processing.
 Get a conda/python environment, e.b. via [mini-conda](https://docs.conda.io/en/latest/miniconda.html). If you never used python/conda environments before, please follow the instructions [here](https://biapol.github.io/blog/johannes_mueller/anaconda_getting_started/) first.
 
 ```shell
-conda create --name my_env python=3.10
-conda activate my_env
+mamba create --name my_env python=3.10
+mamba activate my_env
 ```
 ~~Install pyclesperanto package using __conda__:~~ __(WIP, please use pip instead)__
 ```

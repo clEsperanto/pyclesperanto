@@ -11,6 +11,7 @@ project(
 # enforce release build type if possible
 set(CMAKE_BUILD_TYPE Release)
 set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -D_LIBCPP_DISABLE_AVAILABILITY")
 # if(WIN32)
 #   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /d2FH4-")
 # endif(WIN32)
@@ -37,7 +38,7 @@ option(BUILD_SHARED_LIBS OFF)
 FetchContent_Declare(
   CLIc 
   GIT_REPOSITORY https://github.com/clEsperanto/CLIc_prototype.git
-  GIT_TAG add-cuda-backend
+  GIT_TAG master
 )
 FetchContent_MakeAvailable(CLIc)
 

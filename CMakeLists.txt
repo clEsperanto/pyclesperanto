@@ -38,7 +38,7 @@ option(BUILD_SHARED_LIBS OFF)
 FetchContent_Declare(
   CLIc 
   GIT_REPOSITORY https://github.com/clEsperanto/CLIc_prototype.git
-  GIT_TAG master
+  GIT_TAG 0.7.1
 )
 FetchContent_MakeAvailable(CLIc)
 

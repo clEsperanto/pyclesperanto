@@ -10,7 +10,7 @@ ninja.make-fallback = false
 
 [project]
 name = "pyclesperanto"
-version = "0.7.0"
+version = "0.7.1"
 description = "GPU-accelerated image processing in python using OpenCL"
 readme = "README.md"
 authors = [

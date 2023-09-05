@@ -1,12 +1,8 @@
-name: Tests
+name: Build
 
 on:
   push:
     branches: [ main ]
-    paths-ignore:
-      - '**.md'
-      - '**.rst'
-      - '**.txt'
   pull_request:
     branches: [ main ]
 
@@ -14,13 +10,13 @@ jobs:
 
   build:
 
-    name: ${{ matrix.platform }} ( ${{ matrix.python-version }})
+    name: ${{ matrix.platform }} (${{ matrix.python-version }})
     runs-on: ${{ matrix.platform }}
     strategy:
       fail-fast: false
       matrix:
         python-version: ["3.9"]
-        platform: [ubuntu-latest, macos-latest] #, windows-latest] 
+        platform: [ubuntu-latest, macos-latest, windows-latest] 
 
     # The setup-miniconda action needs this to activate miniconda
     defaults:
@@ -45,7 +41,12 @@ jobs:
         run: conda install -y pytest pytest-cov pytest-benchmark
 
       - name: Install OpenCL (pocl)
+        if: matrix.platform != 'windows-latest'
         run: conda install -y pocl 
+
+      - name: Install OpenCL (oclgrind)
+        if: matrix.platform == 'windows-latest'
+        run: conda install -y oclgrind
 
       - name: Build
         run: |

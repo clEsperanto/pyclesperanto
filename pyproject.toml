@@ -27,7 +27,7 @@ classifiers = [
 dependencies = [
   "numpy; python_version >='3.7'",
   "toolz; python_version >='3.7'",
-  "matplotlib-base; python_version >='3.7'",
+  "matplotlib; python_version >='3.7'",
 ]
 description = "GPU-accelerated image processing in python using OpenCL"
 name = "pyclesperanto"

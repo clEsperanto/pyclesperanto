@@ -18,16 +18,21 @@ jobs:
     runs-on: ${{ matrix.platform }}
     strategy:
       fail-fast: false
-      max-parallel: 3
       matrix:
-        python-version: ["3.10"]
+        python-version: ["3.9"]
         platform: [ubuntu-latest] #, windows-latest, macos-latest] 
 
+    # The setup-miniconda action needs this to activate miniconda
+    defaults:
+      run:
+        shell: "bash -l {0}"
+
     steps:
+
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Set up conda ${{ matrix.python-version }}
+      - name: Get conda - ${{ matrix.python-version }}
         uses: conda-incubator/setup-miniconda@v2.2.0
         with:
           miniconda-version: "latest"
@@ -36,29 +41,17 @@ jobs:
           python-version: ${{ matrix.python-version }}
           channels: conda-forge
 
-      - name: Conda info
-        shell: bash -l {0}
-        run: conda info
+      - name: Prepare
+        run: pip install -y pytest pytest-cov pytest-benchmark
 
-      - name: Install dependencies
-        shell: bash -l {0}
-        run: pip install scikit-build pytest pytest-cov pytest-benchmark
-
-      # - name: Install cuda
-      #   shell: bash -l {0}
-      #   run: conda install -y cudatoolkit 
-
-      - name: Install pocl
-        shell: bash -l {0}
+      - name: Install OpenCL (pocl)
         run: conda install -y pocl 
 
-      - name: Compile
-        shell: bash -l {0}
+      - name: Build
         run: |
           pip install . -vvv --config-settings=cmake.define.CMAKE_PREFIX_PATH=$CONDA_PREFIX
 
-      - name: Tests
-        shell: bash -l {0}
+      - name: Test
         run: |
           pytest -v --cov=./ --cov-report=xml
 

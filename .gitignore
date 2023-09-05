@@ -6,9 +6,6 @@ __pycache__/
 # C extensions
 *.so
 
-# version pycle
-_version.py
-
 # Mac OS X
 .DS_Store
 

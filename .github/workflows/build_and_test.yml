@@ -42,7 +42,7 @@ jobs:
           channels: conda-forge
 
       - name: Prepare
-        run: pip install -y pytest pytest-cov pytest-benchmark
+        run: conda install -y pytest pytest-cov pytest-benchmark
 
       - name: Install OpenCL (pocl)
         run: conda install -y pocl 

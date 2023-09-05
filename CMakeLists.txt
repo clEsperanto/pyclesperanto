@@ -2,40 +2,40 @@
 cmake_minimum_required(VERSION 3.20)
 
 # Set project name and version
-# - package version is managed in file `version.py`
 project(
   ${SKBUILD_PROJECT_NAME}
   VERSION ${SKBUILD_PROJECT_VERSION}
   LANGUAGES CXX)
-
-# enforce release build type if possible
-set(CMAKE_BUILD_TYPE Release)
-set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -D_LIBCPP_DISABLE_AVAILABILITY")
-
+ 
 string(TOLOWER ${PROJECT_NAME} PY_PACKAGE_NAME)
 set(CY_PACKAGE_NAME _${PY_PACKAGE_NAME})
 
-# Compilation tag for CLIc library linking for UNIX
-if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+
+# Set flags for build
+set(CMAKE_BUILD_TYPE Release)
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -D_LIBCPP_DISABLE_AVAILABILITY")
+if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU") # library linking for UNIX
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC")
   set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fPIC")
 endif()
 
-# find python dev library
+
 # look for python in virtual env or conda first before checking the system.
 set(Python_FIND_VIRTUALENV "FIRST")
 find_package(Python COMPONENTS Interpreter Development.Module REQUIRED)
 
-## fetch CLIc using CMake FetchContent
+## fetch CLIc from repo release
+set(CLIC_REPO_TAG 0.7.1)
+set(CLIC_REPO_URL https://github.com/clEsperanto/CLIc_prototype.git)
 include(FetchContent)
 option(BUILD_TESTING  OFF)
 option(BUILD_BENCHMARK  OFF)
 option(BUILD_SHARED_LIBS OFF)
 FetchContent_Declare(
   CLIc 
-  GIT_REPOSITORY https://github.com/clEsperanto/CLIc_prototype.git
-  GIT_TAG 0.7.1
+  GIT_REPOSITORY ${CLIC_REPO_URL}
+  GIT_TAG ${CLIC_REPO_TAG}
 )
 FetchContent_MakeAvailable(CLIc)
 

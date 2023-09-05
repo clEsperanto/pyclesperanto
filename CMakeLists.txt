@@ -10,6 +10,16 @@ project(
 string(TOLOWER ${PROJECT_NAME} PY_PACKAGE_NAME)
 set(CY_PACKAGE_NAME _${PY_PACKAGE_NAME})
 
+set(CLIC_REPO_TAG 0.7.1) # use master or branch name for dev
+set(CLIC_REPO_URL https://github.com/clEsperanto/CLIc_prototype.git)
+
+# Manage versioning
+set(PYCLE_VERSION_CODE "${PROJECT_VERSION_MAJOR},${PROJECT_VERSION_MINOR},${PROJECT_VERSION_PATCH}")
+string(REPLACE "." "," CLIC_VERSION_CODE "${CLIC_REPO_TAG}")
+configure_file(
+  ${CMAKE_CURRENT_SOURCE_DIR}/wrapper/_version.py.in
+  ${CMAKE_CURRENT_SOURCE_DIR}/${PY_PACKAGE_NAME}/_version.py
+  @ONLY)
 
 # Set flags for build
 set(CMAKE_BUILD_TYPE Release)
@@ -26,8 +36,6 @@ set(Python_FIND_VIRTUALENV "FIRST")
 find_package(Python COMPONENTS Interpreter Development.Module REQUIRED)
 
 ## fetch CLIc from repo release
-set(CLIC_REPO_TAG 0.7.1)
-set(CLIC_REPO_URL https://github.com/clEsperanto/CLIc_prototype.git)
 include(FetchContent)
 option(BUILD_TESTING  OFF)
 option(BUILD_BENCHMARK  OFF)

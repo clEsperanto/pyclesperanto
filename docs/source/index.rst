@@ -20,6 +20,3 @@ You will find here a first draft of the API for reference and documentation purp
     usage
     api
     genindex
-
-
-

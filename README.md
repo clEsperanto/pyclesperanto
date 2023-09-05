@@ -63,7 +63,7 @@ output_image = cle.pull(labeled)
 imsave("result.tif", output_image)
 ```
 
-## __Example gallery__ 
+## __Example gallery__
 
 <table border="0">
 
@@ -133,8 +133,8 @@ More usage and example can be found as notebooks in the [demos](./user_docs) fol
 
 # __Contributing and Feedback__
 
-clEsperanto is developed in the open because we believe in the [open source community]. 
-Feel free to drop feedback as [github issue] or via [image.sc forum].  
+clEsperanto is developed in the open because we believe in the [open source community].
+Feel free to drop feedback as [github issue] or via [image.sc forum].
 Contribution are also very welcome. Please read our [community guidelines] before you start and get in touch with us so that we can help you get started.
 If you liked our work, star the repository, share it with your friends, and use it to make cool stuff!
 

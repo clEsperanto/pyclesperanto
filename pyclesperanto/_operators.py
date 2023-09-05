@@ -370,8 +370,6 @@ def _repr_html_(self):
 
     # In case the image is 2D, 3D and larger than 100 pixels, turn on fancy view
     if len(self.shape) in (2, 3) and size_in_pixels >= 100:
-        import matplotlib.pyplot as plt
-
         imshow(self, labels=labels, continue_drawing=True, colorbar=not labels)
         image = self._png_to_html(self._plt_to_png())
     else:

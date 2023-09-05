@@ -39,7 +39,7 @@ Filters
 .. automodule:: pyclesperanto._tier1
    :members:
    :undoc-members:
-   :imported-members: 
+   :imported-members:
    :exclude-members: Image, Device, _Array, plugin_function
 
 .. automodule:: pyclesperanto._tier2

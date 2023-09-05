@@ -6,7 +6,7 @@
 package:
   name: {{ name|lower }}
   version: {{ version }}
-  
+
 source:
   # fn: {{ name }}-{{ version }}.tar.gz
   # url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
@@ -28,14 +28,14 @@ requirements:
     - scikit-build-core
     - pybind11
     - cmake
-    - khronos-opencl-icd-loader      # [win or osx] 
+    - khronos-opencl-icd-loader      # [win or osx]
     - ocl-icd      # [linux]
   run:
     - python
     - numpy
     - toolz
     - matplotlib
-    - khronos-opencl-icd-loader      # [win or osx] 
+    - khronos-opencl-icd-loader      # [win or osx]
     - ocl-icd      # [linux]
 
 test:
@@ -54,9 +54,9 @@ about:
     dev_url: https://github.com/clEsperanto/pyclesperanto/
     license: BSD-3-Clause
     license_file: LICENSE
-    summary: GPU-accelerated Image Processing library using OpenCL 
+    summary: GPU-accelerated Image Processing library using OpenCL
     description: |
-        pyclesperanto is the python package of clEsperanto - a multi-language framework for GPU-accelerated image processing. 
+        pyclesperanto is the python package of clEsperanto - a multi-language framework for GPU-accelerated image processing.
         clEsperanto uses OpenCL kernels from CLIJ. This package relies on the CLIc back-end for processing.
 extra:
     recipe-maintainers:

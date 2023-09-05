@@ -11,7 +11,7 @@ pyClesperanto is a GPU-accelerated image processing library for Python. The firs
 
 .. warning::
 
-    If an error is thrown at this stage, it is likely that the OpenCL driver is not installed or that you do not have a OpenCL compatible device. 
+    If an error is thrown at this stage, it is likely that the OpenCL driver is not installed or that you do not have a OpenCL compatible device.
     Please, check the installation of your OpenCL and driver.
 
 By default, the first device found will be automatically selected. You can know which device you currently working on, and you can select another one:
@@ -22,7 +22,7 @@ By default, the first device found will be automatically selected. You can know 
 
     cle.select_device("GTX")
 
-The device selection is done by name. You can pass a substring of the device name, and the first device that matches will be selected. 
+The device selection is done by name. You can pass a substring of the device name, and the first device that matches will be selected.
 
 Memory transfer
 ================
@@ -61,7 +61,7 @@ The ``push`` will create a memory space on the GPU like ``create`` but will also
     # push arr to the GPU
     gpu_image = cle.push(arr)
 
-The data pushed will keep the same data type as the array. Hence, if you push a ``uint8`` array, the data will be stored as ``uint8`` on the GPU. 
+The data pushed will keep the same data type as the array. Hence, if you push a ``uint8`` array, the data will be stored as ``uint8`` on the GPU.
 The array will then use 24 times less memory than if it was stored as ``float32``. This is a good practice to keep in mind when working with GPUs as their
 memory is limited.
 
@@ -75,9 +75,9 @@ Finally, the ``pull`` function will transfer the data from the GPU back to the h
     # pull gpu_image to the host
     arr = cle.pull(gpu_image)
 
-The data type of the array will be the same as the data type of the image on the GPU. 
+The data type of the array will be the same as the data type of the image on the GPU.
 
-.. note:: 
+.. note::
 
     Some operation done on the GPU image may change the data type if needed. For example, the ``gaussian_blur`` will return a ``float32`` image even if the input image is ``uint8``.
 

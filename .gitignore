@@ -9,7 +9,7 @@ __pycache__/
 # Mac OS X
 .DS_Store
 
-# IDE 
+# IDE
 .vscode
 
 # Distribution / packaging

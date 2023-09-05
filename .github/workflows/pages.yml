@@ -26,19 +26,19 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      
+
       - name: Set up Python environment
         uses: actions/setup-python@v4
         with:
           python-version: 3.8
-          
+
       - name: generat build folder
-        run: | 
+        run: |
           python -m pip install --upgrade pip
-          pip install sphinx nbsphinx sphinx_rtd_theme sphinx-autodoc-typehints sphinx_copybutton 
+          pip install sphinx nbsphinx sphinx_rtd_theme sphinx-autodoc-typehints sphinx_copybutton
           cd docs
           make clean && make html
-      
+
       - name: Setup Pages
         uses: actions/configure-pages@v3
       - name: Upload artifact

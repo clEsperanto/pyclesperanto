@@ -25,7 +25,7 @@ or via conda:
     It is advised to install pyClesperanto in a virtual environment. For example, you can create a new environment with conda:
 
     .. code-block:: bash
-            
+
         conda create --name myenv python='3.10' -c conda-forge
         conda activate myenv
 
@@ -33,7 +33,7 @@ or via conda:
 From source
 ====================
 
-Alternatively, you can also install the latest version from GitHub and build it from source on your system. 
+Alternatively, you can also install the latest version from GitHub and build it from source on your system.
 First start by cloning the repository:
 
 .. code-block:: bash
@@ -55,8 +55,8 @@ and install the package from the source:
     pip install .
 
 .. note::
-    
-    The ``-e`` flag is not supported yet. 
+
+    The ``-e`` flag is not supported yet.
 
 .. note::
 

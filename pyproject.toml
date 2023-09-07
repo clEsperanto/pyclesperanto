@@ -3,10 +3,26 @@ build-backend = "scikit_build_core.build"
 requires = ["setuptools", "wheel", "scikit-build-core>=0.4.7", "pybind11"]
 
 [tool.scikit-build]
-cmake.minimum-version = "3.26.1"
-minimum-version = "0.4.7"
-ninja.make-fallback = false
-ninja.minimum-version = "1.11"
+build-dir = "build/{wheel_tag}"
+
+[tool.scikit-build.ninja]
+make-fallback = false
+minimum-version = "1.11"
+
+[tool.scikit-build.cmake]
+build-type = "Release"
+minimum-version = "3.26.1"
+
+[tool.scikit-build.sdist]
+exclude = [
+  ".flake8",
+  ".git*",
+  "*.yaml",
+  "*.ipynb",
+  "*.yml",
+  "tests",
+  "docs",
+]
 
 [project]
 authors = [
@@ -15,14 +31,14 @@ authors = [
 ]
 classifiers = [
   "Development Status :: 2 - Pre-Alpha",
+  "Programming Language :: Python :: 3 :: Only",
+  "License :: OSI Approved :: BSD License",
+  "Operating System :: OS Independent",
   "Intended Audience :: Science/Research",
   "Intended Audience :: Developers",
   "Topic :: Software Development :: Libraries :: Python Modules",
   "Topic :: Scientific/Engineering :: Image Processing",
   "Topic :: Scientific/Engineering :: Information Analysis",
-  "Programming Language :: Python :: 3 :: Only",
-  "Operating System :: OS Independent",
-  "License :: OSI Approved :: BSD License",
 ]
 dependencies = [
   "numpy; python_version >='3.7'",
@@ -33,7 +49,7 @@ description = "GPU-accelerated image processing in python using OpenCL"
 name = "pyclesperanto"
 readme = "README.md"
 requires-python = ">=3.7"
-version = "0.7.1"
+version = "0.7.2"
 
 [project.urls]
 Documentation = "https://clesperanto.github.io/pyclesperanto/"

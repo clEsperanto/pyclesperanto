@@ -41,8 +41,12 @@ jobs:
         run: conda install -y pytest pytest-cov pytest-benchmark
 
       - name: Install OpenCL (pocl)
-        if: matrix.platform != 'windows-latest'
+        if: matrix.platform == 'ubuntu-latest'
         run: conda install -y pocl
+
+      - name: Install OpenCL (pocl)
+        if: matrix.platform == 'macos-latest'
+        run: conda install -y pocl ocl_icd_wrapper_apple
 
       - name: Install OpenCL (oclgrind)
         if: matrix.platform == 'windows-latest'

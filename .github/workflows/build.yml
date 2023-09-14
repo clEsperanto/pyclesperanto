@@ -41,12 +41,8 @@ jobs:
         run: conda install -y pytest pytest-cov pytest-benchmark
 
       - name: Install OpenCL (pocl)
-        if: matrix.platform == 'ubuntu-latest'
+        if: matrix.platform != 'windows-latest'
         run: conda install -y pocl
-
-      - name: Install OpenCL (pocl)
-        if: matrix.platform == 'macos-latest'
-        run: conda install -y pocl ocl_icd_wrapper_apple
 
       - name: Install OpenCL (oclgrind)
         if: matrix.platform == 'windows-latest'
@@ -57,10 +53,12 @@ jobs:
           pip install . -vvv --config-settings=cmake.define.CMAKE_PREFIX_PATH=$CONDA_PREFIX
 
       - name: Test
+        if: matrix.platform == 'ubuntu-latest'
         run: |
           pytest -v --cov=./ --cov-report=xml
 
       - name: Coverage
+        if: matrix.platform == 'ubuntu-latest'
         uses: codecov/codecov-action@v3
         with:
           token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos

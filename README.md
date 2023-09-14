@@ -1,5 +1,7 @@
 # py-clesperanto
-[![Build](https://github.com/clEsperanto/pyclesperanto/actions/workflows/build.yml/badge.svg)](https://github.com/clEsperanto/pyclesperanto/actions/workflows/build.yml)<!-- [![codecov](https://codecov.io/gh/clesperanto/pyclesperanto/branch/main/graph/badge.svg)](https://codecov.io/gh/clesperanto/pyclesperanto) --> [![License](https://img.shields.io/pypi/l/pyclesperanto.svg?color=green)](https://github.com/clEsperanto/pyclesperanto/raw/main/LICENSE)
+[![Build](https://github.com/clEsperanto/pyclesperanto/actions/workflows/build.yml/badge.svg)](https://github.com/clEsperanto/pyclesperanto/actions/workflows/build.yml)
+[![codecov](https://codecov.io/gh/clesperanto/pyclesperanto/branch/main/graph/badge.svg)](https://codecov.io/gh/clesperanto/pyclesperanto)
+[![License](https://img.shields.io/pypi/l/pyclesperanto.svg?color=green)](https://github.com/clEsperanto/pyclesperanto/raw/main/LICENSE)
 [![PyPI](https://img.shields.io/pypi/v/pyclesperanto.svg?color=green)](https://pypi.org/project/pyclesperanto)
 [![Python Version](https://img.shields.io/pypi/pyversions/pyclesperanto.svg?color=green)](https://python.org)
 [![Development Status](https://img.shields.io/pypi/status/pyclesperanto.svg)](https://en.wikipedia.org/wiki/Software_release_life_cycle#Alpha)
@@ -15,16 +17,22 @@ This package relies on the [CLIc] back-end for processing.
 
 ## __Installation__
 
-Get a conda/python environment, e.b. via [mini-conda](https://docs.conda.io/en/latest/miniconda.html). If you never used python/conda environments before, please follow the instructions [here](https://biapol.github.io/blog/johannes_mueller/anaconda_getting_started/) first.
+* Get a conda/python environment, e.g. via [__mamba-forge__](https://github.com/conda-forge/miniforge#mambaforge).
+* If you never used python/conda environments before, please follow [these instructions](https://biapol.github.io/blog/mara_lampert/getting_started_with_mambaforge_and_python/readme.html) first.
 
-```shell
-mamba create --name my_env python=3.10
-mamba activate my_env
 ```
-~~Install pyclesperanto package using __conda__:~~ __(WIP, please use pip instead)__
+conda create --name cle python=3.9
+conda activate cle
 ```
+
+* Install pyclesperanto-prototype using [__mamba / conda__](https://focalplane.biologists.com/2022/12/08/managing-scientific-python-environments-using-conda-mamba-and-friends/):
+
 ```
-OR using __pip__:
+mamba install -c conda-forge pyclesperanto
+```
+
+OR using pip:
+
 ```
 pip install pyclesperanto
 ```

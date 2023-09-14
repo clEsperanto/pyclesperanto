@@ -53,12 +53,15 @@ jobs:
           pip install . -vvv --config-settings=cmake.define.CMAKE_PREFIX_PATH=$CONDA_PREFIX
 
       - name: Test
+        if: matrix.platform == 'ubuntu-latest'
         run: |
-          pytest -v --cov=./ --cov-report=xml
+          mkdir coverage && cd coverage
+          pytest -v --cov=pyclesperanto ../tests/ --cov-report=xml
 
       - name: Coverage
+        if: matrix.platform == 'ubuntu-latest'
         uses: codecov/codecov-action@v3
         with:
           token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos
-          files: ./coverage.xml
+          files: ./coverage/coverage.xml
           fail_ci_if_error: true # optional (default = false)

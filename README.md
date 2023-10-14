@@ -146,6 +146,11 @@ Feel free to drop feedback as [github issue] or via [image.sc forum].
 Contribution are also very welcome. Please read our [community guidelines] before you start and get in touch with us so that we can help you get started.
 If you liked our work, star the repository, share it with your friends, and use it to make cool stuff!
 
+## Acknowledgements
+
+We acknowledge support by the Deutsche Forschungsgemeinschaft under Germany’s Excellence Strategy (EXC2068) Cluster of Excellence Physics of Life of TU Dresden.
+This project has been made possible in part by grant number 2021-237734 ([GPU-accelerating Fiji and friends using distributed CLIJ, NEUBIAS-style, EOSS4](https://chanzuckerberg.com/eoss/proposals/gpu-accelerating-fiji-and-friends-using-distributed-clij-neubias-style/)) from the Chan Zuckerberg Initiative DAF, an advised fund of the Silicon Valley Community Foundation.
+
 [clEsperanto]: http://clesperanto.net/
 [OpenCL kernels]: https://github.com/clEsperanto/clij-opencl-kernels/tree/clesperanto_kernels
 [CLIJ]: http://clij.github.io/

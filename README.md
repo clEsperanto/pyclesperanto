@@ -20,8 +20,8 @@ This package relies on the [CLIc] back-end for processing.
 * If you never used python/conda environments before, please follow [these instructions](https://biapol.github.io/blog/mara_lampert/getting_started_with_mambaforge_and_python/readme.html) first.
 
 ```
-conda create --name cle python=3.9
-conda activate cle
+mamba create --name cle python=3.9
+mamba activate cle
 ```
 
 * Install pyclesperanto-prototype using [__mamba / conda__](https://focalplane.biologists.com/2022/12/08/managing-scientific-python-environments-using-conda-mamba-and-friends/):

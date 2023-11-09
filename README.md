@@ -30,11 +30,32 @@ mamba activate cle
 mamba install -c conda-forge pyclesperanto
 ```
 
+Mac users may need to install this:
+```
+mamba install -c conda-forge ocl_icd_wrapper_apple
+```
+
+Linux users may need to install this:
+```
+mamba install -c conda-forge ocl-icd-system
+```
+
 OR using pip:
 
 ```
 pip install pyclesperanto
 ```
+
+## Troubleshooting: Graphics cards drivers
+
+In case error messages contain "ImportError: DLL load failed while importing cl: The specified procedure could not be found" [see also](https://github.com/clEsperanto/pyclesperanto_prototype/issues/55) or "clGetPlatformIDs failed: PLATFORM_NOT_FOUND_KHR", please install recent drivers for your graphics card and/or OpenCL device. Select the right driver source depending on your hardware from this list:
+
+* [AMD drivers](https://www.amd.com/en/support)
+* [NVidia drivers](https://www.nvidia.com/download/index.aspx)
+* [Intel GPU drivers](https://www.intel.com/content/www/us/en/download/726609/intel-arc-graphics-windows-dch-driver.html)
+* [Microsoft Windows OpenCL support](https://www.microsoft.com/en-us/p/opencl-and-opengl-compatibility-pack/9nqpsl29bfff)
+
+Linux user may have to install packages such as `intel-opencl-icd` or `rocm-opencl-runtime` depending on their GPU.
 
 ## __Code Example__
 

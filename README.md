@@ -30,6 +30,16 @@ mamba activate cle
 mamba install -c conda-forge pyclesperanto
 ```
 
+Mac users may need to install this:
+```
+mamba install -c conda-forge ocl_icd_wrapper_apple
+```
+
+Linux users may need to install this:
+```
+mamba install -c conda-forge ocl-icd-system
+```
+
 OR using pip:
 
 ```

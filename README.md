@@ -24,7 +24,7 @@ mamba create --name cle python=3.9
 mamba activate cle
 ```
 
-* Install pyclesperanto-prototype using [__mamba / conda__](https://focalplane.biologists.com/2022/12/08/managing-scientific-python-environments-using-conda-mamba-and-friends/):
+* Install pyclesperanto using [__mamba / conda__](https://focalplane.biologists.com/2022/12/08/managing-scientific-python-environments-using-conda-mamba-and-friends/):
 
 ```
 mamba install -c conda-forge pyclesperanto

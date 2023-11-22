@@ -37,10 +37,6 @@ def create(
         dtype = np.float32
     if dtype in [float, np.float64]:
         dtype = np.float32
-        warnings.warn(
-            "Warning: float64 type is not a supported in GPUs. Casting data to float32 type.",
-            UserWarning,
-        )
     if mtype is None:
         mtype = "buffer"
     if device is None:
@@ -76,10 +72,6 @@ def create_like(
         dtype = array.dtype
     if dtype in [float, np.float64]:
         dtype = np.float32
-        warnings.warn(
-            "Warning: float64 type is not a supported in GPUs. Casting data to float32 type.",
-            UserWarning,
-        )
     return create(array.shape, dtype, mtype, device)
 
 
@@ -109,6 +101,8 @@ def push(
     """
     if isinstance(array, Array):
         return array
+    if not isinstance(array, np.ndarray):
+        array = np.asarray(array)
     if array.dtype in [float, np.float64]:
         array = array.astype(np.float32)
     if dtype is None:

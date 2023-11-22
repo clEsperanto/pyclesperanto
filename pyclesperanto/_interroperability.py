@@ -14,6 +14,8 @@ from ._tier5 import connected_components_labeling as label
 # numpy operations aliases
 from ._memory import push as asarray
 
+from typing import Union
+
 
 def clip(a: Image, a_min: float, a_max: float, out: Image = None) -> Image:
     from ._tier2 import clip
@@ -57,7 +59,7 @@ def cbrt(x: Image, out: Image = None) -> Image:
     return cubic_root(input_image=x, output_image=out, device=x.device)
 
 
-def power(x1: Image, x2: [float | int | Image], out: Image = None) -> Image:
+def power(x1: Image, x2: Union[float, int, Image], out: Image = None) -> Image:
     x1 = asarray(x1)
     if out:
         out = asarray(out)

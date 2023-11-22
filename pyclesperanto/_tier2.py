@@ -134,39 +134,91 @@ def closing_sphere(
 
 
 @plugin_function
-def combine_horizontally(
+def concatenate_along_x(
     input_image0: Image,
     input_image1: Image,
     output_image: Image = None,
     device: Device = None,
 ) -> Image:
-    from ._pyclesperanto import _combine_horizontally as op
+    from ._pyclesperanto import _concatenate_along_x as op
 
     return op(device=device, src0=input_image0, src1=input_image1, dst=output_image)
 
 
 @plugin_function
-def combine_vertically(
+def concatenate_along_y(
     input_image0: Image,
     input_image1: Image,
     output_image: Image = None,
     device: Device = None,
 ) -> Image:
-    from ._pyclesperanto import _combine_vertically as op
+    from ._pyclesperanto import _concatenate_along_y as op
 
     return op(device=device, src0=input_image0, src1=input_image1, dst=output_image)
 
 
 @plugin_function
-def concatenate_stacks(
+def concatenate_along_z(
     input_image0: Image,
     input_image1: Image,
     output_image: Image = None,
     device: Device = None,
 ) -> Image:
-    from ._pyclesperanto import _concatenate_stacks as op
+    from ._pyclesperanto import _concatenate_along_z as op
 
     return op(device=device, src0=input_image0, src1=input_image1, dst=output_image)
+
+
+@plugin_function
+def count_touching_neighbors(
+    input_image: Image,
+    output_image: Image = None,
+    ignore_background: bool = True,
+    device: Device = None,
+) -> Image:
+    from ._pyclesperanto import _count_touching_neighbors as op
+
+    return op(
+        device=device,
+        src=input_image,
+        dst=output_image,
+        ignore_background=bool(ignore_background),
+    )
+
+
+@plugin_function
+def crop_border(
+    input_image: Image,
+    output_image: Image = None,
+    border_size: int = 0,
+    device: Device = None,
+) -> Image:
+    from ._pyclesperanto import _crop_border as op
+
+    return op(
+        device=device, src=input_image, dst=output_image, border_size=int(border_size)
+    )
+
+
+@plugin_function
+def divide_by_gaussian_background(
+    input_image: Image,
+    output_image: Image = None,
+    sigma_x: float = 0,
+    sigma_y: float = 0,
+    sigma_z: float = 0,
+    device: Device = None,
+) -> Image:
+    from ._pyclesperanto import _divide_by_gaussian_background as op
+
+    return op(
+        device=device,
+        src=input_image,
+        dst=output_image,
+        sigma_x=float(sigma_x),
+        sigma_y=float(sigma_y),
+        sigma_z=float(sigma_z),
+    )
 
 
 @plugin_function
@@ -233,6 +285,15 @@ def label_spots(
 
 
 @plugin_function
+def large_hessian_eigenvalue(
+    input_image: Image, output_image: Image = None, device: Device = None
+) -> Image:
+    from ._pyclesperanto import _large_hessian_eigenvalue as op
+
+    return op(device=device, src=input_image, dst=output_image)
+
+
+@plugin_function
 def maximum_of_all_pixels(input_image: Image, device: Device = None) -> float:
     from ._pyclesperanto import _maximum_of_all_pixels as op
 
@@ -244,6 +305,15 @@ def minimum_of_all_pixels(input_image: Image, device: Device = None) -> float:
     from ._pyclesperanto import _minimum_of_all_pixels as op
 
     return op(device=device, src=input_image)
+
+
+@plugin_function
+def minimum_of_masked_pixels(
+    input_image: Image, mask: Image = None, device: Device = None
+) -> float:
+    from ._pyclesperanto import _minimum_of_masked_pixels as op
+
+    return op(device=device, src=input_image, mask=mask)
 
 
 @plugin_function
@@ -298,6 +368,15 @@ def radians_to_degrees(
 
 
 @plugin_function
+def small_hessian_eigenvalue(
+    input_image: Image, output_image: Image = None, device: Device = None
+) -> Image:
+    from ._pyclesperanto import _small_hessian_eigenvalue as op
+
+    return op(device=device, src=input_image, dst=output_image)
+
+
+@plugin_function
 def square(
     input_image: Image, output_image: Image = None, device: Device = None
 ) -> Image:
@@ -316,6 +395,69 @@ def squared_difference(
     from ._pyclesperanto import _squared_difference as op
 
     return op(device=device, src0=input_image0, src1=input_image1, dst=output_image)
+
+
+@plugin_function
+def standard_deviation_box(
+    input_image: Image,
+    output_image: Image = None,
+    radius_x: int = 0,
+    radius_y: int = 0,
+    radius_z: int = 0,
+    device: Device = None,
+) -> Image:
+    from ._pyclesperanto import _standard_deviation_box as op
+
+    return op(
+        device=device,
+        src=input_image,
+        dst=output_image,
+        radius_x=int(radius_x),
+        radius_y=int(radius_y),
+        radius_z=int(radius_z),
+    )
+
+
+@plugin_function
+def standard_deviation_sphere(
+    input_image: Image,
+    output_image: Image = None,
+    radius_x: int = 0,
+    radius_y: int = 0,
+    radius_z: int = 0,
+    device: Device = None,
+) -> Image:
+    from ._pyclesperanto import _standard_deviation_sphere as op
+
+    return op(
+        device=device,
+        src=input_image,
+        dst=output_image,
+        radius_x=int(radius_x),
+        radius_y=int(radius_y),
+        radius_z=int(radius_z),
+    )
+
+
+@plugin_function
+def subtract_gaussian_background(
+    input_image: Image,
+    output_image: Image = None,
+    sigma_x: float = 0,
+    sigma_y: float = 0,
+    sigma_z: float = 0,
+    device: Device = None,
+) -> Image:
+    from ._pyclesperanto import _subtract_gaussian_background as op
+
+    return op(
+        device=device,
+        src=input_image,
+        dst=output_image,
+        sigma_x=float(sigma_x),
+        sigma_y=float(sigma_y),
+        sigma_z=float(sigma_z),
+    )
 
 
 @plugin_function

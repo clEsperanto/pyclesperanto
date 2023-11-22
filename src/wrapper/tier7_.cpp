@@ -10,6 +10,16 @@ namespace py = pybind11;
 auto tier7_(py::module &m) -> void {
 
 
+m.def("_closing_labels", &cle::tier7::closing_labels_func, "Call closing_labels from C++.",
+    py::return_value_policy::take_ownership,
+    py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("radius"));
+
+
+m.def("_opening_labels", &cle::tier7::opening_labels_func, "Call opening_labels from C++.",
+    py::return_value_policy::take_ownership,
+    py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("radius"));
+
+
 m.def("_voronoi_otsu_labeling", &cle::tier7::voronoi_otsu_labeling_func, "Call voronoi_otsu_labeling from C++.",
     py::return_value_policy::take_ownership,
     py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("spot_sigma"), py::arg("outline_sigma"));

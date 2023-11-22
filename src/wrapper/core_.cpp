@@ -28,13 +28,13 @@ auto core_(pybind11::module_ &m) -> void
         .def("__str__", [](const cle::Device &device)
              {
             std::ostringstream oss;
-            oss << device;
+            oss << &device;
             return oss.str(); })
         .def("__repr__", [](const cle::Device &device)
              {
-            std::ostringstream oss;
-            oss << device.getInfo();
-            return oss.str(); });
+        std::ostringstream oss;
+        oss << device.getInfo();
+        return oss.str(); });
 
     py::class_<cle::Backend, std::shared_ptr<cle::Backend>>(m, "_Backend")
         .def_property_readonly("type", &cle::Backend::getType)

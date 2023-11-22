@@ -7,6 +7,30 @@ from ._decorators import plugin_function
 
 
 @plugin_function
+def closing_labels(
+    input_image: Image,
+    output_image: Image = None,
+    radius: int = 0,
+    device: Device = None,
+) -> Image:
+    from ._pyclesperanto import _closing_labels as op
+
+    return op(device=device, src=input_image, dst=output_image, radius=int(radius))
+
+
+@plugin_function
+def opening_labels(
+    input_image: Image,
+    output_image: Image = None,
+    radius: int = 0,
+    device: Device = None,
+) -> Image:
+    from ._pyclesperanto import _opening_labels as op
+
+    return op(device=device, src=input_image, dst=output_image, radius=int(radius))
+
+
+@plugin_function
 def voronoi_otsu_labeling(
     input_image: Image,
     output_image: Image = None,

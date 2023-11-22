@@ -12,35 +12,116 @@
 namespace py = pybind11;
 
 template <typename T>
-py::array_t<T, py::array::c_style> read(const cle::Array &array)
+py::array_t<T, py::array::c_style> read_region(const cle::Array &array, const py::object &origin_obj = py::none(), const py::object &region_obj = py::none())
 {
+     std::array<size_t, 3> origin_ = {0, 0, 0};
+     std::array<size_t, 3> region_ = {static_cast<size_t>(array.width()), static_cast<size_t>(array.height()), static_cast<size_t>(array.depth())};
+
+     // test if origin and region are not None
+     if (!origin_obj.is_none() && !region_obj.is_none())
+     {
+          py::tuple origin, region;
+          origin = origin_obj.cast<py::tuple>();
+          region = region_obj.cast<py::tuple>();
+          origin_ = {origin[2].cast<size_t>(), origin[1].cast<size_t>(), origin[0].cast<size_t>()};
+          region_ = {region[2].cast<size_t>(), region[1].cast<size_t>(), region[0].cast<size_t>()};
+     }
+
      py::array_t<T, py::array::c_style> np_array;
      switch (array.dim())
      {
      case 1:
-          np_array = py::array_t<T, py::array::c_style>({static_cast<py::ssize_t>(array.width())});
+          np_array = py::array_t<T, py::array::c_style>({static_cast<py::ssize_t>(region_[0])});
           break;
      case 2:
-          np_array = py::array_t<T, py::array::c_style>({static_cast<py::ssize_t>(array.height()), static_cast<py::ssize_t>(array.width())});
+          np_array = py::array_t<T, py::array::c_style>({static_cast<py::ssize_t>(region_[1]), static_cast<py::ssize_t>(region_[0])});
           break;
      case 3:
-          np_array = py::array_t<T, py::array::c_style>({static_cast<py::ssize_t>(array.depth()), static_cast<py::ssize_t>(array.height()), static_cast<py::ssize_t>(array.width())});
+          np_array = py::array_t<T, py::array::c_style>({static_cast<py::ssize_t>(region_[2]), static_cast<py::ssize_t>(region_[1]), static_cast<py::ssize_t>(region_[0])});
           break;
      }
      py::buffer_info info = np_array.request();
      void *data = info.ptr;
      size_t size = info.size * info.itemsize;
-     array.read(data);
+     array.read(data, region_, origin_);
      return np_array;
 }
 
+// template <typename T>
+// py::array_t<T, py::array::c_style> read(const cle::Array &array)
+// {
+//      py::array_t<T, py::array::c_style> np_array;
+//      switch (array.dim())
+//      {
+//      case 1:
+//           np_array = py::array_t<T, py::array::c_style>({static_cast<py::ssize_t>(array.width())});
+//           break;
+//      case 2:
+//           np_array = py::array_t<T, py::array::c_style>({static_cast<py::ssize_t>(array.height()), static_cast<py::ssize_t>(array.width())});
+//           break;
+//      case 3:
+//           np_array = py::array_t<T, py::array::c_style>({static_cast<py::ssize_t>(array.depth()), static_cast<py::ssize_t>(array.height()), static_cast<py::ssize_t>(array.width())});
+//           break;
+//      }
+//      py::buffer_info info = np_array.request();
+//      void *data = info.ptr;
+//      size_t size = info.size * info.itemsize;
+//      array.read(data);
+//      return np_array;
+// }
+
 template <typename T>
-void write(cle::Array &array, const py::array_t<T, py::array::c_style> &np_array)
+void write_region(cle::Array &array, const py::array_t<T, py::array::c_style> &value, const py::object &origin_obj = py::none(), const py::object &region_obj = py::none())
 {
-     py::buffer_info info = np_array.request();
+     std::array<size_t, 3> origin_ = {0, 0, 0};
+     std::array<size_t, 3> region_ = {static_cast<size_t>(array.width()), static_cast<size_t>(array.height()), static_cast<size_t>(array.depth())};
+
+     // test if origin and region are not None
+     if (!origin_obj.is_none() && !region_obj.is_none())
+     {
+          py::tuple origin, region;
+          origin = origin_obj.cast<py::tuple>();
+          region = region_obj.cast<py::tuple>();
+          origin_ = {origin[2].cast<size_t>(), origin[1].cast<size_t>(), origin[0].cast<size_t>()};
+          region_ = {region[2].cast<size_t>(), region[1].cast<size_t>(), region[0].cast<size_t>()};
+     }
+
+     py::buffer_info info = value.request();
      const void *data = info.ptr;
      size_t size = info.size * info.itemsize;
-     array.write(data);
+     array.write(data, region_, origin_);
+}
+
+// template <typename T>
+// void write(cle::Array &array, const py::array_t<T, py::array::c_style> &value)
+// {
+//      py::buffer_info info = value.request();
+//      const void *data = info.ptr;
+//      size_t size = info.size * info.itemsize;
+//      array.write(data);
+// }
+
+void copy_region(const cle::Array &array, const cle::Array::Pointer &dst,
+                 const py::object &src_origin_obj = py::none(),
+                 const py::object &dst_origin_obj = py::none(),
+                 const py::object &region_obj = py::none())
+{
+     std::array<size_t, 3> src_origin_ = {0, 0, 0};
+     std::array<size_t, 3> dst_origin_ = {0, 0, 0};
+     std::array<size_t, 3> region_ = {static_cast<size_t>(array.width()), static_cast<size_t>(array.height()), static_cast<size_t>(array.depth())};
+
+     // test if origin and region are not None
+     if (!src_origin_obj.is_none() && !dst_origin_obj.is_none() && !region_obj.is_none())
+     {
+          py::tuple src_origin, dst_origin, region;
+          src_origin = src_origin_obj.cast<py::tuple>();
+          dst_origin = dst_origin_obj.cast<py::tuple>();
+          region = region_obj.cast<py::tuple>();
+          src_origin_ = {src_origin[2].cast<size_t>(), src_origin[1].cast<size_t>(), src_origin[0].cast<size_t>()};
+          dst_origin_ = {dst_origin[2].cast<size_t>(), dst_origin[1].cast<size_t>(), dst_origin[0].cast<size_t>()};
+          region_ = {region[2].cast<size_t>(), region[1].cast<size_t>(), region[0].cast<size_t>()};
+     }
+     array.copy(dst, region_, src_origin_, dst_origin_);
 }
 
 py::object get_np_dtype(const cle::Array::Pointer &array)
@@ -192,34 +273,34 @@ auto array_(py::module_ &m) -> void
          //                 py::overload_cast<const size_t &, const size_t &, const size_t &, const cle::dType &, const cle::mType &, const cle::Device::Pointer &>(&cle::Array::create), py::return_value_policy::take_ownership, py::arg("width"), py::arg("height"), py::arg("depth"), py::arg("dtype"), py::arg("mtype"), py::arg("device"))
          .def_static("create", &create_array, py::arg("shape"), py::arg("dtype"), py::arg("mtype"), py::arg("device"))
 
-         .def("_write", &write<float>)
-         .def("_write", &write<int8_t>)
-         .def("_write", &write<int16_t>)
-         .def("_write", &write<int32_t>)
-         .def("_write", &write<int64_t>)
-         .def("_write", &write<uint8_t>)
-         .def("_write", &write<uint16_t>)
-         .def("_write", &write<uint32_t>)
-         .def("_write", &write<uint64_t>)
+         .def("_write", &write_region<float>, py::arg("value"), py::arg("origin") = py::none(), py::arg("region") = py::none())
+         .def("_write", &write_region<int8_t>, py::arg("value"), py::arg("origin") = py::none(), py::arg("region") = py::none())
+         .def("_write", &write_region<int16_t>, py::arg("value"), py::arg("origin") = py::none(), py::arg("region") = py::none())
+         .def("_write", &write_region<int32_t>, py::arg("value"), py::arg("origin") = py::none(), py::arg("region") = py::none())
+         .def("_write", &write_region<int64_t>, py::arg("value"), py::arg("origin") = py::none(), py::arg("region") = py::none())
+         .def("_write", &write_region<uint8_t>, py::arg("value"), py::arg("origin") = py::none(), py::arg("region") = py::none())
+         .def("_write", &write_region<uint16_t>, py::arg("value"), py::arg("origin") = py::none(), py::arg("region") = py::none())
+         .def("_write", &write_region<uint32_t>, py::arg("value"), py::arg("origin") = py::none(), py::arg("region") = py::none())
+         .def("_write", &write_region<uint64_t>, py::arg("value"), py::arg("origin") = py::none(), py::arg("region") = py::none())
 
-         .def("_read_float32", &read<float>)
-         .def("_read_int8", &read<int8_t>)
-         .def("_read_int16", &read<int16_t>)
-         .def("_read_int32", &read<int32_t>)
-         .def("_read_int64", &read<int64_t>)
-         .def("_read_uint8", &read<uint8_t>)
-         .def("_read_uint16", &read<uint16_t>)
-         .def("_read_uint32", &read<uint32_t>)
-         .def("_read_uint64", &read<uint64_t>)
+         .def("_read_float32", &read_region<float>, py::arg("origin") = py::none(), py::arg("region") = py::none())
+         .def("_read_int8", &read_region<int8_t>, py::arg("origin") = py::none(), py::arg("region") = py::none())
+         .def("_read_int16", &read_region<int16_t>, py::arg("origin") = py::none(), py::arg("region") = py::none())
+         .def("_read_int32", &read_region<int32_t>, py::arg("origin") = py::none(), py::arg("region") = py::none())
+         .def("_read_int64", &read_region<int64_t>, py::arg("origin") = py::none(), py::arg("region") = py::none())
+         .def("_read_uint8", &read_region<uint8_t>, py::arg("origin") = py::none(), py::arg("region") = py::none())
+         .def("_read_uint16", &read_region<uint16_t>, py::arg("origin") = py::none(), py::arg("region") = py::none())
+         .def("_read_uint32", &read_region<uint32_t>, py::arg("origin") = py::none(), py::arg("region") = py::none())
+         .def("_read_uint64", &read_region<uint64_t>, py::arg("origin") = py::none(), py::arg("region") = py::none())
 
-         .def("copy", &cle::Array::copy, py::arg("dst"))
+         .def("copy", &copy_region, py::arg("dst"), py::arg("src_origin") = py::none(), py::arg("dst_origin") = py::none(), py::arg("region") = py::none())
          .def("fill", &cle::Array::fill, py::arg("value"))
 
          .def_property_readonly("width", &cle::Array::width)
          .def_property_readonly("height", &cle::Array::height)
          .def_property_readonly("depth", &cle::Array::depth)
-         .def_property_readonly("size", &cle::Array::nbElements)
-         .def_property_readonly("itemsize", &cle::Array::bytesPerElements)
+         .def_property_readonly("size", &cle::Array::size)
+         .def_property_readonly("itemsize", &cle::Array::itemSize)
          .def_property_readonly("device", &cle::Array::device)
          .def_property_readonly("ndim", &cle::Array::dim)
          .def_property_readonly("mtype", [](const cle::Array::Pointer &array)

@@ -7,6 +7,37 @@ from ._decorators import plugin_function
 
 
 @plugin_function
+def dilate_labels(
+    input_image: Image,
+    output_image: Image = None,
+    radius: int = 0,
+    device: Device = None,
+) -> Image:
+    from ._pyclesperanto import _dilate_labels as op
+
+    return op(device=device, src=input_image, dst=output_image, radius=int(radius))
+
+
+@plugin_function
+def erode_labels(
+    input_image: Image,
+    output_image: Image = None,
+    radius: int = 0,
+    relabel: bool = True,
+    device: Device = None,
+) -> Image:
+    from ._pyclesperanto import _erode_labels as op
+
+    return op(
+        device=device,
+        src=input_image,
+        dst=output_image,
+        radius=int(radius),
+        relabel=bool(relabel),
+    )
+
+
+@plugin_function
 def masked_voronoi_labeling(
     input_image: Image,
     mask: Image = None,

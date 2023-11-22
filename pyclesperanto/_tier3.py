@@ -7,6 +7,32 @@ from ._decorators import plugin_function
 
 
 @plugin_function
+def bounding_box(input_image: Image, device: Device = None) -> list:
+    from ._pyclesperanto import _bounding_box as op
+
+    return op(device=device, src=input_image)
+
+
+@plugin_function
+def center_of_mass(input_image: Image, device: Device = None) -> list:
+    from ._pyclesperanto import _center_of_mass as op
+
+    return op(device=device, src=input_image)
+
+
+@plugin_function
+def exclude_labels(
+    input_image: Image,
+    list: Image = None,
+    output_image: Image = None,
+    device: Device = None,
+) -> Image:
+    from ._pyclesperanto import _exclude_labels as op
+
+    return op(device=device, src=input_image, list=list, dst=output_image)
+
+
+@plugin_function
 def exclude_labels_on_edges(
     input_image: Image,
     output_image: Image = None,
@@ -49,6 +75,27 @@ def gamma_correction(
 
 
 @plugin_function
+def generate_binary_overlap_matrix(
+    input_image0: Image,
+    input_image1: Image,
+    output_image: Image = None,
+    device: Device = None,
+) -> Image:
+    from ._pyclesperanto import _generate_binary_overlap_matrix as op
+
+    return op(device=device, src0=input_image0, src1=input_image1, dst=output_image)
+
+
+@plugin_function
+def generate_touch_matrix(
+    input_image: Image, output_image: Image = None, device: Device = None
+) -> Image:
+    from ._pyclesperanto import _generate_touch_matrix as op
+
+    return op(device=device, src=input_image, dst=output_image)
+
+
+@plugin_function
 def histogram(
     input_image: Image,
     output_image: Image = None,
@@ -67,6 +114,24 @@ def histogram(
         min=float(min),
         max=float(max),
     )
+
+
+@plugin_function
+def jaccard_index(
+    input_image1: Image, input_image2: Image, device: Device = None
+) -> float:
+    from ._pyclesperanto import _jaccard_index as op
+
+    return op(device=device, src1=input_image1, src2=input_image2)
+
+
+@plugin_function
+def labelled_spots_to_pointlist(
+    input_image: Image, output_image: Image = None, device: Device = None
+) -> Image:
+    from ._pyclesperanto import _labelled_spots_to_pointlist as op
+
+    return op(device=device, src=input_image, dst=output_image)
 
 
 @plugin_function

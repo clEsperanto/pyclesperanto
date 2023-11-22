@@ -165,6 +165,11 @@ m.def("_gaussian_blur", &cle::tier1::gaussian_blur_func, "Call gaussian_blur fro
     py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("sigma_x"), py::arg("sigma_y"), py::arg("sigma_z"));
 
 
+m.def("_generate_distance_matrix", &cle::tier1::generate_distance_matrix_func, "Call generate_distance_matrix from C++.",
+    py::return_value_policy::take_ownership,
+    py::arg("device"), py::arg("src0"), py::arg("src1"), py::arg("dst"));
+
+
 m.def("_gradient_x", &cle::tier1::gradient_x_func, "Call gradient_x from C++.",
     py::return_value_policy::take_ownership,
     py::arg("device"), py::arg("src"), py::arg("dst"));
@@ -200,6 +205,11 @@ m.def("_greater_or_equal_constant", &cle::tier1::greater_or_equal_constant_func,
     py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("scalar"));
 
 
+m.def("_hessian_eigenvalues", &cle::tier1::hessian_eigenvalues_func, "Call hessian_eigenvalues from C++.",
+    py::return_value_policy::take_ownership,
+    py::arg("device"), py::arg("src"), py::arg("small_eigenvalue"), py::arg("middle_eigenvalue"), py::arg("large_eigenvalue"));
+
+
 m.def("_laplace_box", &cle::tier1::laplace_box_func, "Call laplace_box from C++.",
     py::return_value_policy::take_ownership,
     py::arg("device"), py::arg("src"), py::arg("dst"));
@@ -208,6 +218,11 @@ m.def("_laplace_box", &cle::tier1::laplace_box_func, "Call laplace_box from C++.
 m.def("_laplace_diamond", &cle::tier1::laplace_diamond_func, "Call laplace_diamond from C++.",
     py::return_value_policy::take_ownership,
     py::arg("device"), py::arg("src"), py::arg("dst"));
+
+
+m.def("_local_cross_correlation", &cle::tier1::local_cross_correlation_func, "Call local_cross_correlation from C++.",
+    py::return_value_policy::take_ownership,
+    py::arg("device"), py::arg("src0"), py::arg("src1"), py::arg("dst"));
 
 
 m.def("_logarithm", &cle::tier1::logarithm_func, "Call logarithm from C++.",
@@ -320,6 +335,11 @@ m.def("_minimum_z_projection", &cle::tier1::minimum_z_projection_func, "Call min
     py::arg("device"), py::arg("src"), py::arg("dst"));
 
 
+m.def("_minimum_of_masked_pixels_reduction", &cle::tier1::minimum_of_masked_pixels_reduction_func, "Call minimum_of_masked_pixels_reduction from C++.",
+    py::return_value_policy::take_ownership,
+    py::arg("device"), py::arg("src"), py::arg("mask"), py::arg("reduced_src"), py::arg("reduced_mask"));
+
+
 m.def("_mode_box", &cle::tier1::mode_box_func, "Call mode_box from C++.",
     py::return_value_policy::take_ownership,
     py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("radius_x"), py::arg("radius_y"), py::arg("radius_z"));
@@ -333,6 +353,11 @@ m.def("_mode_sphere", &cle::tier1::mode_sphere_func, "Call mode_sphere from C++.
 m.def("_modulo_images", &cle::tier1::modulo_images_func, "Call modulo_images from C++.",
     py::return_value_policy::take_ownership,
     py::arg("device"), py::arg("src0"), py::arg("src1"), py::arg("dst"));
+
+
+m.def("_multiply_image_and_coordinate", &cle::tier1::multiply_image_and_coordinate_func, "Call multiply_image_and_coordinate from C++.",
+    py::return_value_policy::take_ownership,
+    py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("dimension"));
 
 
 m.def("_multiply_image_and_scalar", &cle::tier1::multiply_image_and_scalar_func, "Call multiply_image_and_scalar from C++.",
@@ -410,17 +435,17 @@ m.def("_range", &cle::tier1::range_func, "Call range from C++.",
     py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("start_x"), py::arg("stop_x"), py::arg("step_x"), py::arg("start_y"), py::arg("stop_y"), py::arg("step_y"), py::arg("start_z"), py::arg("stop_z"), py::arg("step_z"));
 
 
-m.def("_read_intensities_from_positions", &cle::tier1::read_intensities_from_positions_func, "Call read_intensities_from_positions from C++.",
+m.def("_read_values_from_coordinates", &cle::tier1::read_values_from_coordinates_func, "Call read_values_from_coordinates from C++.",
     py::return_value_policy::take_ownership,
     py::arg("device"), py::arg("src"), py::arg("list"), py::arg("dst"));
 
 
-m.def("_replace_intensities", &cle::tier1::replace_intensities_func, "Call replace_intensities from C++.",
+m.def("_replace_values", &cle::tier1::replace_values_func, "Call replace_values from C++.",
     py::return_value_policy::take_ownership,
     py::arg("device"), py::arg("src0"), py::arg("src1"), py::arg("dst"));
 
 
-m.def("_replace_intensity", &cle::tier1::replace_intensity_func, "Call replace_intensity from C++.",
+m.def("_replace_value", &cle::tier1::replace_value_func, "Call replace_value from C++.",
     py::return_value_policy::take_ownership,
     py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("scalar0"), py::arg("scalar1"));
 
@@ -540,6 +565,11 @@ m.def("_square_root", &cle::tier1::square_root_func, "Call square_root from C++.
     py::arg("device"), py::arg("src"), py::arg("dst"));
 
 
+m.def("_std_z_projection", &cle::tier1::std_z_projection_func, "Call std_z_projection from C++.",
+    py::return_value_policy::take_ownership,
+    py::arg("device"), py::arg("src"), py::arg("dst"));
+
+
 m.def("_subtract_image_from_scalar", &cle::tier1::subtract_image_from_scalar_func, "Call subtract_image_from_scalar from C++.",
     py::return_value_policy::take_ownership,
     py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("scalar"));
@@ -595,7 +625,7 @@ m.def("_variance_sphere", &cle::tier1::variance_sphere_func, "Call variance_sphe
     py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("radius_x"), py::arg("radius_y"), py::arg("radius_z"));
 
 
-m.def("_write_values_to_positions", &cle::tier1::write_values_to_positions_func, "Call write_values_to_positions from C++.",
+m.def("_write_values_to_coordinates", &cle::tier1::write_values_to_coordinates_func, "Call write_values_to_coordinates from C++.",
     py::return_value_policy::take_ownership,
     py::arg("device"), py::arg("src"), py::arg("dst"));
 

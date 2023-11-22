@@ -10,6 +10,21 @@ namespace py = pybind11;
 auto tier3_(py::module &m) -> void {
 
 
+m.def("_bounding_box", &cle::tier3::bounding_box_func, "Call bounding_box from C++.",
+    py::return_value_policy::take_ownership,
+    py::arg("device"), py::arg("src"));
+
+
+m.def("_center_of_mass", &cle::tier3::center_of_mass_func, "Call center_of_mass from C++.",
+    py::return_value_policy::take_ownership,
+    py::arg("device"), py::arg("src"));
+
+
+m.def("_exclude_labels", &cle::tier3::exclude_labels_func, "Call exclude_labels from C++.",
+    py::return_value_policy::take_ownership,
+    py::arg("device"), py::arg("src"), py::arg("list"), py::arg("dst"));
+
+
 m.def("_exclude_labels_on_edges", &cle::tier3::exclude_labels_on_edges_func, "Call exclude_labels_on_edges from C++.",
     py::return_value_policy::take_ownership,
     py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("exclude_x"), py::arg("exclude_y"), py::arg("exclude_z"));
@@ -25,9 +40,29 @@ m.def("_gamma_correction", &cle::tier3::gamma_correction_func, "Call gamma_corre
     py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("gamma"));
 
 
+m.def("_generate_binary_overlap_matrix", &cle::tier3::generate_binary_overlap_matrix_func, "Call generate_binary_overlap_matrix from C++.",
+    py::return_value_policy::take_ownership,
+    py::arg("device"), py::arg("src0"), py::arg("src1"), py::arg("dst"));
+
+
+m.def("_generate_touch_matrix", &cle::tier3::generate_touch_matrix_func, "Call generate_touch_matrix from C++.",
+    py::return_value_policy::take_ownership,
+    py::arg("device"), py::arg("src"), py::arg("dst"));
+
+
 m.def("_histogram", &cle::tier3::histogram_func, "Call histogram from C++.",
     py::return_value_policy::take_ownership,
     py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("nbins"), py::arg("min"), py::arg("max"));
+
+
+m.def("_jaccard_index", &cle::tier3::jaccard_index_func, "Call jaccard_index from C++.",
+    py::return_value_policy::take_ownership,
+    py::arg("device"), py::arg("src1"), py::arg("src2"));
+
+
+m.def("_labelled_spots_to_pointlist", &cle::tier3::labelled_spots_to_pointlist_func, "Call labelled_spots_to_pointlist from C++.",
+    py::return_value_policy::take_ownership,
+    py::arg("device"), py::arg("src"), py::arg("dst"));
 
 
 m.def("_mean_of_all_pixels", &cle::tier3::mean_of_all_pixels_func, "Call mean_of_all_pixels from C++.",

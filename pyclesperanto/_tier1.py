@@ -389,6 +389,18 @@ def gaussian_blur(
 
 
 @plugin_function
+def generate_distance_matrix(
+    input_image0: Image,
+    input_image1: Image,
+    output_image: Image = None,
+    device: Device = None,
+) -> Image:
+    from ._pyclesperanto import _generate_distance_matrix as op
+
+    return op(device=device, src0=input_image0, src1=input_image1, dst=output_image)
+
+
+@plugin_function
 def gradient_x(
     input_image: Image, output_image: Image = None, device: Device = None
 ) -> Image:
@@ -464,6 +476,25 @@ def greater_or_equal_constant(
 
 
 @plugin_function
+def hessian_eigenvalues(
+    input_image: Image,
+    small_eigenvalue: Image = None,
+    middle_eigenvalue: Image = None,
+    large_eigenvalue: Image = None,
+    device: Device = None,
+) -> list:
+    from ._pyclesperanto import _hessian_eigenvalues as op
+
+    return op(
+        device=device,
+        src=input_image,
+        small_eigenvalue=small_eigenvalue,
+        middle_eigenvalue=middle_eigenvalue,
+        large_eigenvalue=large_eigenvalue,
+    )
+
+
+@plugin_function
 def laplace_box(
     input_image: Image, output_image: Image = None, device: Device = None
 ) -> Image:
@@ -479,6 +510,18 @@ def laplace_diamond(
     from ._pyclesperanto import _laplace_diamond as op
 
     return op(device=device, src=input_image, dst=output_image)
+
+
+@plugin_function
+def local_cross_correlation(
+    input_image0: Image,
+    input_image1: Image,
+    output_image: Image = None,
+    device: Device = None,
+) -> Image:
+    from ._pyclesperanto import _local_cross_correlation as op
+
+    return op(device=device, src0=input_image0, src1=input_image1, dst=output_image)
 
 
 @plugin_function
@@ -777,6 +820,25 @@ def minimum_z_projection(
 
 
 @plugin_function
+def minimum_of_masked_pixels_reduction(
+    input_image: Image,
+    mask: Image,
+    reduced_input_image: Image,
+    reduced_mask: Image = None,
+    device: Device = None,
+) -> Image:
+    from ._pyclesperanto import _minimum_of_masked_pixels_reduction as op
+
+    return op(
+        device=device,
+        src=input_image,
+        mask=mask,
+        reduced_src=reduced_input_image,
+        reduced_mask=reduced_mask,
+    )
+
+
+@plugin_function
 def mode_box(
     input_image: Image,
     output_image: Image = None,
@@ -828,6 +890,20 @@ def modulo_images(
     from ._pyclesperanto import _modulo_images as op
 
     return op(device=device, src0=input_image0, src1=input_image1, dst=output_image)
+
+
+@plugin_function
+def multiply_image_and_coordinate(
+    input_image: Image,
+    output_image: Image = None,
+    dimension: int = 0,
+    device: Device = None,
+) -> Image:
+    from ._pyclesperanto import _multiply_image_and_coordinate as op
+
+    return op(
+        device=device, src=input_image, dst=output_image, dimension=int(dimension)
+    )
 
 
 @plugin_function
@@ -1050,38 +1126,38 @@ def range(
 
 
 @plugin_function
-def read_intensities_from_positions(
+def read_values_from_coordinates(
     input_image: Image,
     list: Image = None,
     output_image: Image = None,
     device: Device = None,
 ) -> Image:
-    from ._pyclesperanto import _read_intensities_from_positions as op
+    from ._pyclesperanto import _read_values_from_coordinates as op
 
     return op(device=device, src=input_image, list=list, dst=output_image)
 
 
 @plugin_function
-def replace_intensities(
+def replace_values(
     input_image0: Image,
     input_image1: Image,
     output_image: Image = None,
     device: Device = None,
 ) -> Image:
-    from ._pyclesperanto import _replace_intensities as op
+    from ._pyclesperanto import _replace_values as op
 
     return op(device=device, src0=input_image0, src1=input_image1, dst=output_image)
 
 
 @plugin_function
-def replace_intensity(
+def replace_value(
     input_image: Image,
     output_image: Image = None,
     scalar0: float = 0,
     scalar1: float = 0,
     device: Device = None,
 ) -> Image:
-    from ._pyclesperanto import _replace_intensity as op
+    from ._pyclesperanto import _replace_value as op
 
     return op(
         device=device,
@@ -1096,9 +1172,9 @@ def replace_intensity(
 def maximum_sphere(
     input_image: Image,
     output_image: Image = None,
-    radius_x: int = 0,
-    radius_y: int = 0,
-    radius_z: int = 0,
+    radius_x: float = 0,
+    radius_y: float = 0,
+    radius_z: float = 0,
     device: Device = None,
 ) -> Image:
     from ._pyclesperanto import _maximum_sphere as op
@@ -1107,9 +1183,9 @@ def maximum_sphere(
         device=device,
         src=input_image,
         dst=output_image,
-        radius_x=int(radius_x),
-        radius_y=int(radius_y),
-        radius_z=int(radius_z),
+        radius_x=float(radius_x),
+        radius_y=float(radius_y),
+        radius_z=float(radius_z),
     )
 
 
@@ -1117,9 +1193,9 @@ def maximum_sphere(
 def minimum_sphere(
     input_image: Image,
     output_image: Image = None,
-    radius_x: int = 0,
-    radius_y: int = 0,
-    radius_z: int = 0,
+    radius_x: float = 0,
+    radius_y: float = 0,
+    radius_z: float = 0,
     device: Device = None,
 ) -> Image:
     from ._pyclesperanto import _minimum_sphere as op
@@ -1128,9 +1204,9 @@ def minimum_sphere(
         device=device,
         src=input_image,
         dst=output_image,
-        radius_x=int(radius_x),
-        radius_y=int(radius_y),
-        radius_z=int(radius_z),
+        radius_x=float(radius_x),
+        radius_y=float(radius_y),
+        radius_z=float(radius_z),
     )
 
 
@@ -1334,6 +1410,15 @@ def square_root(
 
 
 @plugin_function
+def std_z_projection(
+    input_image: Image, output_image: Image = None, device: Device = None
+) -> Image:
+    from ._pyclesperanto import _std_z_projection as op
+
+    return op(device=device, src=input_image, dst=output_image)
+
+
+@plugin_function
 def subtract_image_from_scalar(
     input_image: Image,
     output_image: Image = None,
@@ -1465,9 +1550,9 @@ def variance_sphere(
 
 
 @plugin_function
-def write_values_to_positions(
+def write_values_to_coordinates(
     input_image: Image, output_image: Image = None, device: Device = None
 ) -> Image:
-    from ._pyclesperanto import _write_values_to_positions as op
+    from ._pyclesperanto import _write_values_to_coordinates as op
 
     return op(device=device, src=input_image, dst=output_image)

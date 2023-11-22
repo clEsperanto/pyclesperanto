@@ -15,9 +15,9 @@ m.def("_combine_labels", &cle::tier5::combine_labels_func, "Call combine_labels 
     py::arg("device"), py::arg("src0"), py::arg("src1"), py::arg("dst"));
 
 
-m.def("_connected_components_labeling_box", &cle::tier5::connected_components_labeling_box_func, "Call connected_components_labeling_box from C++.",
+m.def("_connected_components_labeling", &cle::tier5::connected_components_labeling_func, "Call connected_components_labeling from C++.",
     py::return_value_policy::take_ownership,
-    py::arg("device"), py::arg("src"), py::arg("dst"));
+    py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("connectivity"));
 
 
 }

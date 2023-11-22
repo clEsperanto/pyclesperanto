@@ -19,9 +19,14 @@ def combine_labels(
 
 
 @plugin_function
-def connected_components_labeling_box(
-    input_image: Image, output_image: Image = None, device: Device = None
+def connected_components_labeling(
+    input_image: Image,
+    output_image: Image = None,
+    connectivity: str = "",
+    device: Device = None,
 ) -> Image:
-    from ._pyclesperanto import _connected_components_labeling_box as op
+    from ._pyclesperanto import _connected_components_labeling as op
 
-    return op(device=device, src=input_image, dst=output_image)
+    return op(
+        device=device, src=input_image, dst=output_image, connectivity=connectivity
+    )

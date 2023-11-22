@@ -1,4 +1,6 @@
 import numpy as np
+import numbers
+
 from typing import Optional
 
 cl_buffer_datatype_dict = {
@@ -320,12 +322,174 @@ def __iter__(self):
     return MyIterator(self)
 
 
-def __getitem__(self, index):
-    raise NotImplementedError("Not implemented yet.")
+def __getitem__(self, key):
+    shape = [1, 1, 1]
+    shape[-len(self.shape) :] = self.shape
+
+    i = [0, 0, 0]
+    j = [0, 0, 0]
+    k = [1, 1, 1]
+    j[-len(self.shape) :] = self.shape
+
+    if isinstance(key, tuple):
+        index_dimensionality = np.minimum(len(key), self.ndim)
+        for x in range(index_dimensionality):
+            index = key[x]
+            if index is Ellipsis:
+                i[x] = 0
+                j[x] = self.shape[x]
+                k[x] = 1
+            elif isinstance(index, slice):
+                i[x] = index.start if index.start is not None else 0
+                j[x] = index.stop if index.stop is not None else self.shape[x]
+                k[x] = index.step if index.step is not None else 1
+            elif isinstance(index, int):
+                i[x] = index
+                j[x] = index + 1
+                k[x] = 1
+    elif isinstance(key, slice):
+        i[0] = key.start if key.start is not None else 0
+        j[0] = key.stop if key.stop is not None else self.shape[0]
+        k[0] = key.step if key.step is not None else 1
+    else:
+        i[0] = key
+        j[0] = key + 1
+        k[0] = 1
+
+    for x in range(len(i)):
+        if abs(i[x]) > shape[x]:
+            raise IndexError(
+                f"Index {i[x]} is out of bounds for axis {x} with size {shape[x]}"
+            )
+        if k[x] > 0:
+            if abs(j[x]) > shape[x]:
+                raise IndexError(
+                    f"Index {j[x]} is out of bounds for axis {x} with size {shape[x]}"
+                )
+        else:
+            if abs(j[x]) > shape[x] - 1:
+                raise IndexError(
+                    f"Index {j[x]} is out of bounds for axis {x} with size {shape[x]}"
+                )
+
+    i = [i if i >= 0 else i + shape[x] for x, i in enumerate(i)]
+    j = [j if j >= 0 else j + shape[x] for x, j in enumerate(j)]
+    if any([steps > 1 for steps in k]):
+        raise NotImplementedError("Steps in slicing is not supported yet")
+        # from ._tier1 import range as gpu_range
+        # result = gpu_range(
+        #     self,
+        #     start_x=i[0],
+        #     stop_x=j[0],
+        #     step_x=k[0],
+        #     start_y=i[1],
+        #     stop_y=j[1],
+        #     step_y=k[1],
+        #     start_z=i[2],
+        #     stop_z=j[2],
+        #     step_z=k[2],
+        # )
+    else:
+        region = [abs(stop - start) for start, stop in zip(i, j)]
+        if np.prod(region) > 1:
+            from ._memory import create
+
+            result = create(
+                region,
+                dtype=self.dtype,
+                mtype=self.mtype,
+                device=self.device,
+            )
+            self.copy(result, i, (0, 0, 0), region)
+        else:
+            print(f"{i} {j} {region}")
+            result = self.get(i, region)
+    return result
 
 
-def __setitem__(self, index, value):
-    raise NotImplementedError("Not implemented yet.")
+def __setitem__(self, key, value):
+    from ._array import Image
+
+    if not isinstance(value, Image):
+        value = np.array(value)
+
+    shape = [1, 1, 1]
+    shape[-len(self.shape) :] = self.shape
+
+    i = [0, 0, 0]
+    j = [0, 0, 0]
+    k = [1, 1, 1]
+    j[-len(self.shape) :] = self.shape
+
+    if isinstance(key, tuple):
+        index_dimensionality = np.minimum(len(key), self.ndim)
+        for x in range(index_dimensionality):
+            index = key[x]
+            if index is Ellipsis:
+                i[x] = 0
+                j[x] = self.shape[x]
+                k[x] = 1
+            elif isinstance(index, slice):
+                i[x] = index.start if index.start is not None else 0
+                j[x] = index.stop if index.stop is not None else self.shape[x]
+                k[x] = index.step if index.step is not None else 1
+            elif isinstance(index, int):
+                i[x] = index
+                j[x] = index + 1
+                k[x] = 1
+    elif isinstance(key, slice):
+        i[0] = key.start if key.start is not None else 0
+        j[0] = key.stop if key.stop is not None else self.shape[0]
+        k[0] = key.step if key.step is not None else 1
+    else:
+        i[0] = key
+        j[0] = key + 1
+        k[0] = 1
+
+    i = [i if i >= 0 else i + shape[x] for x, i in enumerate(i)]
+    j = [j if j >= 0 else j + shape[x] for x, j in enumerate(j)]
+    if any([steps > 1 for steps in k]):
+        raise NotImplementedError("Steps in slicing is not supported yet")
+        # from ._tier1 import range as gpu_range
+        # result = gpu_range(
+        #     self,
+        #     start_x=i[0],
+        #     stop_x=j[0],
+        #     step_x=k[0],
+        #     start_y=i[1],
+        #     stop_y=j[1],
+        #     step_y=k[1],
+        #     start_z=i[2],
+        #     stop_z=j[2],
+        #     step_z=k[2],
+        # )
+    else:
+        region = [(stop - start) for start, stop in zip(i, j)]
+        from ._array import Array
+
+        if isinstance(value, Array):
+            if value.size != np.prod(region):
+                raise ValueError(
+                    f"Input size mismatch the indexed region: {value.size} != {np.prod(region)} ({value.shape} != {region})"
+                )
+
+            print(f"copy {self.shape} {i} <- {value.shape} {region}")
+            if self.dtype == value.dtype:
+                self.copy(value, i, (0, 0, 0), region)
+            else:
+                from ._tier1 import paste
+
+                paste(value, self, index_x=i[2], index_y=i[1], index_z=i[0])
+        else:
+            if value.size != np.prod(region):
+                if value.size == 1:
+                    value = np.repeat(value, np.prod(region))
+                    value = value.reshape(region)
+                else:
+                    raise ValueError(
+                        f"Input size mismatch the indexed region: {value.size} != {np.prod(region)} ({value.shape} != {region})"
+                    )
+            self.set(value, i, region)
 
 
 # adapted from https://github.com/napari/napari/blob/d6bc683b019c4a3a3c6e936526e29bbd59cca2f4/napari/utils/notebook_display.py#L54-L73
@@ -373,13 +537,7 @@ def _repr_html_(self):
         imshow(self, labels=labels, continue_drawing=True, colorbar=not labels)
         image = self._png_to_html(self._plt_to_png())
     else:
-        return (
-            "<pre>cle.array("
-            + str(np.asarray(self))
-            + ", dtype="
-            + str(self.dtype)
-            + ")</pre>"
-        )
+        return "<pre>" + repr(self) + "</pre>"
 
     units = ["B", "kB", "MB", "GB", "TB", "PB"]
     unit_index = 0

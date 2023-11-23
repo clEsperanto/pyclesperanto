@@ -323,58 +323,58 @@ def __iter__(self):
 
 
 def __getitem__(self, key):
-    shape = [1, 1, 1]
-    shape[-len(self.shape) :] = self.shape
-
-    i = [0, 0, 0]
-    j = [0, 0, 0]
-    k = [1, 1, 1]
-    j[-len(self.shape) :] = self.shape
-
+    # get indexing and slicing from key and store it into a 2d list
+    slices = [[0, self.shape[x], 1] for x in range(self.ndim)]
     if isinstance(key, tuple):
         index_dimensionality = np.minimum(len(key), self.ndim)
         for x in range(index_dimensionality):
             index = key[x]
             if index is Ellipsis:
-                i[x] = 0
-                j[x] = self.shape[x]
-                k[x] = 1
+                slices[x] = [0, self.shape[x], 1]
             elif isinstance(index, slice):
-                i[x] = index.start if index.start is not None else 0
-                j[x] = index.stop if index.stop is not None else self.shape[x]
-                k[x] = index.step if index.step is not None else 1
+                slices[x] = [index.start, index.stop, index.step if index.step else 1]
             elif isinstance(index, int):
-                i[x] = index
-                j[x] = index + 1
-                k[x] = 1
+                slices[x] = [index, None, 1]
     elif isinstance(key, slice):
-        i[0] = key.start if key.start is not None else 0
-        j[0] = key.stop if key.stop is not None else self.shape[0]
-        k[0] = key.step if key.step is not None else 1
+        slices[0] = [key.start, key.stop, key.step if key.step else 1]
     else:
-        i[0] = key
-        j[0] = key + 1
-        k[0] = 1
+        slices[0] = [key, None, 1]
 
-    for x in range(len(i)):
-        if abs(i[x]) > shape[x]:
+    # check key values to respect shape boundaries
+    for dim, index in enumerate(slices):
+        if index[0] and abs(index[0]) > self.shape[dim]:
             raise IndexError(
-                f"Index {i[x]} is out of bounds for axis {x} with size {shape[x]}"
+                f"Index {index[0]} is out of bounds for axis {dim} with size {self.shape[dim]}"
             )
-        if k[x] > 0:
-            if abs(j[x]) > shape[x]:
+        if index[2] > 0:
+            if index[1] and abs(index[1]) > self.shape[dim]:
                 raise IndexError(
-                    f"Index {j[x]} is out of bounds for axis {x} with size {shape[x]}"
+                    f"Index stop {index[1]} is out of bounds for axis {dim} with size {self.shape[dim]}"
+                )
+        elif index[1] and index[2] < 0:
+            if abs(index[0]) > self.shape[dim] - 1:
+                raise IndexError(
+                    f"Index stop {index[1]} is out of bounds for axis {dim} with size {self.shape[dim]}"
                 )
         else:
-            if abs(j[x]) > shape[x] - 1:
-                raise IndexError(
-                    f"Index {j[x]} is out of bounds for axis {x} with size {shape[x]}"
-                )
+            raise IndexError(
+                f"Index step {index[2]} cannot be equal to {0} for axis {dim}"
+            )
 
-    i = [i if i >= 0 else i + shape[x] for x, i in enumerate(i)]
-    j = [j if j >= 0 else j + shape[x] for x, j in enumerate(j)]
-    if any([steps > 1 for steps in k]):
+    # update values in slices according some rules
+    for dim, index in enumerate(slices):
+        if index[0] and index[0] < 0:
+            slices[dim][0] = self.shape[dim] + index[0]
+        if index[1] and index[1] < 0:
+            slices[dim][1] = self.shape[dim] + index[1]
+        if index[0] is None and index[1] is None:
+            slices[dim] = [0, self.shape[dim], 1]
+        if index[1] is None and index[0] is not None:
+            slices[dim][1] = slices[dim][0] + 1
+        if index[2] is None:
+            slices[dim][2] = 1
+
+    if any([abs(index[2]) != 1 for index in slices]):
         raise NotImplementedError("Steps in slicing is not supported yet")
         # from ._tier1 import range as gpu_range
         # result = gpu_range(
@@ -390,8 +390,14 @@ def __getitem__(self, key):
         #     step_z=k[2],
         # )
     else:
-        region = [abs(stop - start) for start, stop in zip(i, j)]
+        # we deal with reading a mem block,  we build a region and origin from the slices
+        origin = [0, 0, 0]
+        region = [1, 1, 1]
+        origin = [index[0] for index in slices]
+        region = [abs(index[1] - index[0]) for index in slices]
+
         if np.prod(region) > 1:
+            # result is a sub-buffer
             from ._memory import create
 
             result = create(
@@ -400,10 +406,24 @@ def __getitem__(self, key):
                 mtype=self.mtype,
                 device=self.device,
             )
-            self.copy(result, i, (0, 0, 0), region)
+            self.copy(result, origin, (0, 0, 0), region)
+
+            # if steps are negative, we need to flip the result
+            flip_bool = [index[2] < 0 for index in slices]
+            if any(flip_bool):
+                from ._tier1 import flip
+
+                flip(
+                    input_image=result,
+                    output_image=result,
+                    flip_x=flip_bool[2],
+                    flip_y=flip_bool[1],
+                    flip_z=flip_bool[0],
+                )
+
         else:
-            print(f"{i} {j} {region}")
-            result = self.get(i, region)
+            # result is a scalar
+            result = self.get(origin, region)
     return result
 
 
@@ -413,42 +433,58 @@ def __setitem__(self, key, value):
     if not isinstance(value, Image):
         value = np.array(value)
 
-    shape = [1, 1, 1]
-    shape[-len(self.shape) :] = self.shape
-
-    i = [0, 0, 0]
-    j = [0, 0, 0]
-    k = [1, 1, 1]
-    j[-len(self.shape) :] = self.shape
-
+    # get indexing and slicing from key and store it into a 2d list
+    slices = [[0, self.shape[x], 1] for x in range(self.ndim)]
     if isinstance(key, tuple):
         index_dimensionality = np.minimum(len(key), self.ndim)
         for x in range(index_dimensionality):
             index = key[x]
             if index is Ellipsis:
-                i[x] = 0
-                j[x] = self.shape[x]
-                k[x] = 1
+                slices[x] = [0, self.shape[x], 1]
             elif isinstance(index, slice):
-                i[x] = index.start if index.start is not None else 0
-                j[x] = index.stop if index.stop is not None else self.shape[x]
-                k[x] = index.step if index.step is not None else 1
+                slices[x] = [index.start, index.stop, index.step if index.step else 1]
             elif isinstance(index, int):
-                i[x] = index
-                j[x] = index + 1
-                k[x] = 1
+                slices[x] = [index, None, 1]
     elif isinstance(key, slice):
-        i[0] = key.start if key.start is not None else 0
-        j[0] = key.stop if key.stop is not None else self.shape[0]
-        k[0] = key.step if key.step is not None else 1
+        slices[0] = [key.start, key.stop, key.step if key.step else 1]
     else:
-        i[0] = key
-        j[0] = key + 1
-        k[0] = 1
+        slices[0] = [key, None, 1]
 
-    i = [i if i >= 0 else i + shape[x] for x, i in enumerate(i)]
-    j = [j if j >= 0 else j + shape[x] for x, j in enumerate(j)]
-    if any([steps > 1 for steps in k]):
+    # check key values to respect shape boundaries
+    for dim, index in enumerate(slices):
+        if index[0] and abs(index[0]) > self.shape[dim]:
+            raise IndexError(
+                f"Index {index[0]} is out of bounds for axis {dim} with size {self.shape[dim]}"
+            )
+        if index[2] > 0:
+            if index[1] and abs(index[1]) > self.shape[dim]:
+                raise IndexError(
+                    f"Index stop {index[1]} is out of bounds for axis {dim} with size {self.shape[dim]}"
+                )
+        elif index[1] and index[2] < 0:
+            if abs(index[0]) > self.shape[dim] - 1:
+                raise IndexError(
+                    f"Index stop {index[1]} is out of bounds for axis {dim} with size {self.shape[dim]}"
+                )
+        else:
+            raise IndexError(
+                f"Index step {index[2]} cannot be equal to {0} for axis {dim}"
+            )
+
+    # update values in slices according some rules
+    for dim, index in enumerate(slices):
+        if index[0] and index[0] < 0:
+            slices[dim][0] = self.shape[dim] + index[0]
+        if index[1] and index[1] < 0:
+            slices[dim][1] = self.shape[dim] + index[1]
+        if index[0] is None and index[1] is None:
+            slices[dim] = [0, self.shape[dim], 1]
+        if index[1] is None and index[0] is not None:
+            slices[dim][1] = slices[dim][0] + 1
+        if index[2] is None:
+            slices[dim][2] = 1
+
+    if any([abs(index[2]) != 1 for index in slices]):
         raise NotImplementedError("Steps in slicing is not supported yet")
         # from ._tier1 import range as gpu_range
         # result = gpu_range(
@@ -464,22 +500,31 @@ def __setitem__(self, key, value):
         #     step_z=k[2],
         # )
     else:
-        region = [(stop - start) for start, stop in zip(i, j)]
+        # we deal with writing a mem block, we build a region and origin from the slices
+        origin = [0, 0, 0]
+        region = [1, 1, 1]
+        origin = [index[0] for index in slices]
+        region = [abs(index[1] - index[0]) for index in slices]
+
         from ._array import Array
 
         if isinstance(value, Array):
+            # we copy from device to device and size matches
             if value.size != np.prod(region):
                 raise ValueError(
                     f"Input size mismatch the indexed region: {value.size} != {np.prod(region)} ({value.shape} != {region})"
                 )
 
-            print(f"copy {self.shape} {i} <- {value.shape} {region}")
+            # if they are the same type we copy
             if self.dtype == value.dtype:
-                self.copy(value, i, (0, 0, 0), region)
+                self.copy(value, origin, (0, 0, 0), region)
             else:
+                # otherwise we copy with cast
                 from ._tier1 import paste
 
-                paste(value, self, index_x=i[2], index_y=i[1], index_z=i[0])
+                paste(
+                    value, self, index_x=origin[2], index_y=origin[1], index_z=origin[0]
+                )
         else:
             if value.size != np.prod(region):
                 if value.size == 1:
@@ -489,7 +534,8 @@ def __setitem__(self, key, value):
                     raise ValueError(
                         f"Input size mismatch the indexed region: {value.size} != {np.prod(region)} ({value.shape} != {region})"
                     )
-            self.set(value, i, region)
+            # we write from host to device
+            self.set(value, origin, region)
 
 
 # adapted from https://github.com/napari/napari/blob/d6bc683b019c4a3a3c6e936526e29bbd59cca2f4/napari/utils/notebook_display.py#L54-L73

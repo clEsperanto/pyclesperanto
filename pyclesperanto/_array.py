@@ -23,18 +23,9 @@ def set(self, array: np.ndarray, origin: tuple = None, region: tuple = None) -> 
     if not isinstance(array, np.ndarray):
         array = np.array(array)
     if array.dtype != self.dtype:
-        # warnings.warn(
-        #     f"Array dtype mismatch. Casting array to '{self.dtype.name}' before set().",
-        #     RuntimeWarning,
-        # )
         array = array.astype(self.dtype)
 
-    if origin is None and region is None:
-        origin = [0, 0, 0]
-        region = [1, 1, 1]
-        region[-len(self.shape) :] = self.shape
-
-    if array.size != np.prod(region):
+    if region and array.size != np.prod(region):
         raise ValueError(
             f"Value size mismatch the targeted region: {array.size} != {np.prod(region)} ({array.shape} != {tuple(np.squeeze(region))})"
         )

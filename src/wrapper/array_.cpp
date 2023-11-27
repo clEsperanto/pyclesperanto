@@ -11,20 +11,38 @@
 
 namespace py = pybind11;
 
+// function that takes a py tuple or list, invert it, and store it in a std::array of size 3
+// if the tuple or list is smaller than 3, the remaining values are set to 0
+// if the tuple or list is bigger than 3, the remaining values are ignored
+auto invert_tuple(py::tuple tuple, std::array<size_t, 3> *res_array) -> void
+{
+     // Check if pointer is null
+     if (!res_array)
+     {
+          throw std::invalid_argument("Null Pointer passed to function");
+     }
+
+     size_t dim = std::min(static_cast<size_t>(3), static_cast<size_t>(py::len(tuple)));
+
+     for (size_t i = 0; i < dim; ++i)
+     {
+          (*res_array)[dim - i - 1] = tuple[i].cast<size_t>();
+     }
+}
+
 template <typename T>
 py::array_t<T, py::array::c_style> read_region(const cle::Array &array, const py::object &origin_obj = py::none(), const py::object &region_obj = py::none())
 {
      std::array<size_t, 3> origin_ = {0, 0, 0};
      std::array<size_t, 3> region_ = {static_cast<size_t>(array.width()), static_cast<size_t>(array.height()), static_cast<size_t>(array.depth())};
 
-     // test if origin and region are not None
-     if (!origin_obj.is_none() && !region_obj.is_none())
+     if (!origin_obj.is_none())
      {
-          py::tuple origin, region;
-          origin = origin_obj.cast<py::tuple>();
-          region = region_obj.cast<py::tuple>();
-          origin_ = {origin[2].cast<size_t>(), origin[1].cast<size_t>(), origin[0].cast<size_t>()};
-          region_ = {region[2].cast<size_t>(), region[1].cast<size_t>(), region[0].cast<size_t>()};
+          invert_tuple(origin_obj.cast<py::tuple>(), &origin_);
+     }
+     if (!region_obj.is_none())
+     {
+          invert_tuple(region_obj.cast<py::tuple>(), &region_);
      }
 
      py::array_t<T, py::array::c_style> np_array;
@@ -40,6 +58,7 @@ py::array_t<T, py::array::c_style> read_region(const cle::Array &array, const py
           np_array = py::array_t<T, py::array::c_style>({static_cast<py::ssize_t>(region_[2]), static_cast<py::ssize_t>(region_[1]), static_cast<py::ssize_t>(region_[0])});
           break;
      }
+
      py::buffer_info info = np_array.request();
      void *data = info.ptr;
      size_t size = info.size * info.itemsize;
@@ -76,14 +95,13 @@ void write_region(cle::Array &array, const py::array_t<T, py::array::c_style> &v
      std::array<size_t, 3> origin_ = {0, 0, 0};
      std::array<size_t, 3> region_ = {static_cast<size_t>(array.width()), static_cast<size_t>(array.height()), static_cast<size_t>(array.depth())};
 
-     // test if origin and region are not None
-     if (!origin_obj.is_none() && !region_obj.is_none())
+     if (!origin_obj.is_none())
      {
-          py::tuple origin, region;
-          origin = origin_obj.cast<py::tuple>();
-          region = region_obj.cast<py::tuple>();
-          origin_ = {origin[2].cast<size_t>(), origin[1].cast<size_t>(), origin[0].cast<size_t>()};
-          region_ = {region[2].cast<size_t>(), region[1].cast<size_t>(), region[0].cast<size_t>()};
+          invert_tuple(origin_obj.cast<py::tuple>(), &origin_);
+     }
+     if (!region_obj.is_none())
+     {
+          invert_tuple(region_obj.cast<py::tuple>(), &region_);
      }
 
      py::buffer_info info = value.request();
@@ -108,18 +126,19 @@ void copy_region(const cle::Array &array, const cle::Array::Pointer &dst,
 {
      std::array<size_t, 3> src_origin_ = {0, 0, 0};
      std::array<size_t, 3> dst_origin_ = {0, 0, 0};
-     std::array<size_t, 3> region_ = {static_cast<size_t>(array.width()), static_cast<size_t>(array.height()), static_cast<size_t>(array.depth())};
+     std::array<size_t, 3> region_ = {static_cast<size_t>(dst->width()), static_cast<size_t>(dst->height()), static_cast<size_t>(dst->depth())};
 
-     // test if origin and region are not None
-     if (!src_origin_obj.is_none() && !dst_origin_obj.is_none() && !region_obj.is_none())
+     if (!src_origin_obj.is_none())
      {
-          py::tuple src_origin, dst_origin, region;
-          src_origin = src_origin_obj.cast<py::tuple>();
-          dst_origin = dst_origin_obj.cast<py::tuple>();
-          region = region_obj.cast<py::tuple>();
-          src_origin_ = {src_origin[2].cast<size_t>(), src_origin[1].cast<size_t>(), src_origin[0].cast<size_t>()};
-          dst_origin_ = {dst_origin[2].cast<size_t>(), dst_origin[1].cast<size_t>(), dst_origin[0].cast<size_t>()};
-          region_ = {region[2].cast<size_t>(), region[1].cast<size_t>(), region[0].cast<size_t>()};
+          invert_tuple(src_origin_obj.cast<py::tuple>(), &src_origin_);
+     }
+     if (!dst_origin_obj.is_none())
+     {
+          invert_tuple(dst_origin_obj.cast<py::tuple>(), &dst_origin_);
+     }
+     if (!region_obj.is_none())
+     {
+          invert_tuple(region_obj.cast<py::tuple>(), &region_);
      }
      array.copy(dst, region_, src_origin_, dst_origin_);
 }
@@ -243,25 +262,10 @@ py::tuple get_np_shape(const cle::Array::Pointer &array)
 
 cle::Array::Pointer create_array(py::tuple shape, py::object dtype, std::string mtype, cle::Device::Pointer device)
 {
-     size_t width(1), height(1), depth(1);
-     switch (py::len(shape))
-     {
-     case 1:
-          width = shape[0].cast<size_t>();
-          break;
-     case 2:
-          height = shape[0].cast<size_t>();
-          width = shape[1].cast<size_t>();
-          break;
-     case 3:
-          depth = shape[0].cast<size_t>();
-          height = shape[1].cast<size_t>();
-          width = shape[2].cast<size_t>();
-          break;
-     default:
-          throw std::invalid_argument("Invalid dimension value");
-     }
-     auto array = cle::Array::create(width, height, depth, get_cle_dtype(dtype), get_cle_mtype(mtype), device);
+     std::array<size_t, 3> c_shape = {1, 1, 1};
+     invert_tuple(shape, &c_shape);
+
+     auto array = cle::Array::create(c_shape[0], c_shape[1], c_shape[2], get_cle_dtype(dtype), get_cle_mtype(mtype), device);
      return array;
 }
 

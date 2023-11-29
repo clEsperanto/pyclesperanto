@@ -384,6 +384,7 @@ def __getitem__(self, key):
         # we define the sub-region origin and region size
         origin = [index[0] for index in key]
         region = [abs(index[1] - index[0]) for index in key]
+        transpose = [x == 1 for x in region]
 
         # if region size equal to 1, we are returning a scalar
         if np.prod(region) == 1:
@@ -392,21 +393,24 @@ def __getitem__(self, key):
             # we are returning a buffer that we first need to create
             from ._memory import create
 
-            new_shape = [
-                np.minimum(self.shape[x], region[x])
-                for x in range(len(self.shape))
-                if self.shape[x] > 1 and region[x] > 1
-            ]
             result = create(
-                new_shape, dtype=self.dtype, mtype=self.mtype, device=self.device
-            )
-
-            print(
-                f"self: {self.shape} - result: {result.shape} , origin: {origin}, region: {region}"
+                region, dtype=self.dtype, mtype=self.mtype, device=self.device
             )
 
             # we copy sub-region inside our new buffer to return
             self.copy(result, origin, (0, 0, 0), region)
+
+            # if new_shape different than tmp.shape, we need to reshape
+            if any(transpose):
+                from ._tier1 import transpose_xy, transpose_yz, transpose_xz
+
+                if transpose[2]:
+                    # x is empty we move it to the end
+                    result = transpose_xy(result)
+                    result = transpose_yz(result)
+                if transpose[1]:
+                    # the y is empty, we exchange axis z and y
+                    result = transpose_yz(result)
 
             # if an axis step was negative, we flip along this axis
             flip_bool = [index[2] < 0 for index in key]
@@ -420,124 +424,6 @@ def __getitem__(self, key):
                     flip_z=flip_bool[0],
                 )
     return result
-
-
-# def __getitem__(self, key):
-#     # get indexing and slicing from key and store it into a 2d list
-#     slices = [[0, self.shape[x], 1] for x in range(self.ndim)]
-#     if isinstance(key, tuple):
-#         index_dimensionality = np.minimum(len(key), self.ndim)
-#         for x in range(index_dimensionality):
-#             index = key[x]
-#             if index is Ellipsis:
-#                 slices[x] = [0, self.shape[x], 1]
-#             elif isinstance(index, slice):
-#                 slices[x] = [
-#                     index.start if index.start else 0,
-#                     index.stop if index.stop else self.shape[x],
-#                     index.step if index.step else 1,
-#                 ]
-#             elif isinstance(index, int):
-#                 slices[x] = [index, None, 1]
-#     elif isinstance(key, slice):
-#         slices[0] = [
-#             key.start if key.start else 0,
-#             key.stop if key.stop else self.shape[0],
-#             key.step if key.step else 1,
-#         ]
-#     else:
-#         slices[0] = [key, None, 1]
-
-#     # check key values to respect shape boundaries
-#     for dim, index in enumerate(slices):
-#         if index[0] and abs(index[0]) > self.shape[dim]:
-#             raise IndexError(
-#                 f"Index {index[0]} is out of bounds for axis {dim} with size {self.shape[dim]}"
-#             )
-#         if index[2] > 0:
-#             if index[1] and abs(index[1]) > self.shape[dim]:
-#                 raise IndexError(
-#                     f"Index stop {index[1]} is out of bounds for axis {dim} with size {self.shape[dim]}"
-#                 )
-#         elif index[1] and index[2] < 0:
-#             if abs(index[0]) > self.shape[dim] - 1:
-#                 raise IndexError(
-#                     f"Index stop {index[1]} is out of bounds for axis {dim} with size {self.shape[dim]}"
-#                 )
-#         else:
-#             raise IndexError(
-#                 f"Index step {index[2]} cannot be equal to {0} for axis {dim}"
-#             )
-
-#     # update values in slices according some rules
-#     for dim, index in enumerate(slices):
-#         if index[0] and index[0] < 0:
-#             slices[dim][0] = self.shape[dim] + index[0]
-#         if index[1] and index[1] < 0:
-#             slices[dim][1] = self.shape[dim] + index[1]
-#         if index[0] is None and index[1] is None:
-#             slices[dim] = [0, self.shape[dim], 1]
-#         if index[1] is None and index[0] is not None:
-#             slices[dim][1] = slices[dim][0] + 1
-#         if index[2] is None:
-#             slices[dim][2] = 1
-
-#     if any([abs(index[2]) != 1 for index in slices]):
-#         # raise NotImplementedError("Steps in slicing is not supported yet")
-#         from ._tier1 import range as gpu_range
-
-#         result = gpu_range(
-#             self,
-#             start_x=slices[2][0],
-#             stop_x=slices[2][0],
-#             step_x=slices[2][0],
-#             start_y=slices[1][1],
-#             stop_y=slices[1][1],
-#             step_y=slices[1][1],
-#             start_z=slices[0][2],
-#             stop_z=slices[0][2],
-#             step_z=slices[0][2],
-#         )
-#     else:
-#         # we deal with reading a mem block,  we build a region and origin from the slices
-#         origin = [0, 0, 0]
-#         region = [1, 1, 1]
-#         origin[-len(slices) :] = [index[0] for index in slices]
-#         region[-len(slices) :] = [abs(index[1] - index[0]) for index in slices]
-
-#         print(f"origin: {origin}, region: {region}")
-
-#         if np.prod(region) > 1:
-#             # result is a sub-buffer
-#             from ._memory import create
-
-#             result = create(
-#                 region,
-#                 dtype=self.dtype,
-#                 mtype=self.mtype,
-#                 device=self.device,
-#             )
-#             print(f"result: {result.shape}")
-
-#             self.copy(result, origin, (0, 0, 0), region)
-
-#             # if steps are negative, we need to flip the result
-#             flip_bool = [index[2] < 0 for index in slices]
-#             if any(flip_bool):
-#                 from ._tier1 import flip
-
-#                 flip(
-#                     input_image=result,
-#                     output_image=result,
-#                     flip_x=flip_bool[2],
-#                     flip_y=flip_bool[1],
-#                     flip_z=flip_bool[0],
-#                 )
-
-#         else:
-#             # result is a scalar
-#             result = self.get(origin, region)
-#     return result
 
 
 def __setitem__(self, key, value):
@@ -615,112 +501,6 @@ def __setitem__(self, key, value):
                 )
             # we write from host to device, if shape matches
             self.set(value, origin, region)
-
-
-# def __setitem__(self, key, value):
-#     from ._array import Image
-
-#     if not isinstance(value, Image):
-#         value = np.array(value)
-
-#     # get indexing and slicing from key and store it into a 2d list
-#     slices = [[0, self.shape[x], 1] for x in range(self.ndim)]
-#     if isinstance(key, tuple):
-#         index_dimensionality = np.minimum(len(key), self.ndim)
-#         for x in range(index_dimensionality):
-#             index = key[x]
-#             if index is Ellipsis:
-#                 slices[x] = [0, self.shape[x], 1]
-#             elif isinstance(index, slice):
-#                 slices[x] = [
-#                     index.start if index.start else 0,
-#                     index.stop if index.stop else self.shape[x],
-#                     index.step if index.step else 1,
-#                 ]
-#             elif isinstance(index, int):
-#                 slices[x] = [index, None, 1]
-#     elif isinstance(key, slice):
-#         slices[0] = [
-#             key.start if key.start else 0,
-#             key.stop if key.stop else self.shape[0],
-#             key.step if key.step else 1,
-#         ]
-#     else:
-#         slices[0] = [key, None, 1]
-
-#     # check key values to respect shape boundaries
-#     for dim, index in enumerate(slices):
-#         if index[0] and abs(index[0]) > self.shape[dim]:
-#             raise IndexError(
-#                 f"Index {index[0]} is out of bounds for axis {dim} with size {self.shape[dim]}"
-#             )
-#         if index[2] > 0:
-#             if index[1] and abs(index[1]) > self.shape[dim]:
-#                 raise IndexError(
-#                     f"Index stop {index[1]} is out of bounds for axis {dim} with size {self.shape[dim]}"
-#                 )
-#         elif index[1] and index[2] < 0:
-#             if abs(index[0]) > self.shape[dim] - 1:
-#                 raise IndexError(
-#                     f"Index stop {index[1]} is out of bounds for axis {dim} with size {self.shape[dim]}"
-#                 )
-#         else:
-#             raise IndexError(
-#                 f"Index step {index[2]} cannot be equal to {0} for axis {dim}"
-#             )
-
-#     # update values in slices according some rules
-#     for dim, index in enumerate(slices):
-#         if index[0] and index[0] < 0:
-#             slices[dim][0] = self.shape[dim] + index[0]
-#         if index[1] and index[1] < 0:
-#             slices[dim][1] = self.shape[dim] + index[1]
-#         if index[0] is None and index[1] is None:
-#             slices[dim] = [0, self.shape[dim], 1]
-#         if index[1] is None and index[0] is not None:
-#             slices[dim][1] = slices[dim][0] + 1
-#         if index[2] is None:
-#             slices[dim][2] = 1
-
-#     if any([abs(index[2]) != 1 for index in slices]):
-#         raise NotImplementedError("Steps in slicing is not supported yet")
-#     else:
-#         # we deal with writing a mem block, we build a region and origin from the slices
-#         origin = [0, 0, 0]
-#         region = [1, 1, 1]
-#         origin[-len(slices) :] = [index[0] for index in slices]
-#         region[-len(slices) :] = [abs(index[1] - index[0]) for index in slices]
-
-#         from ._array import Array
-
-#         if isinstance(value, Array):
-#             # we copy from device to device and size matches
-#             if value.size != np.prod(region):
-#                 raise ValueError(
-#                     f"Input size mismatch the indexed region: {value.size} != {np.prod(region)} ({value.shape} != {region})"
-#                 )
-
-#             # if they are the same type we copy
-#             if self.dtype == value.dtype:
-#                 self.copy(value, origin, (0, 0, 0), region)
-#             else:
-#                 # otherwise we copy with cast
-#                 from ._tier1 import paste
-
-#                 paste(
-#                     value, self, index_x=origin[2], index_y=origin[1], index_z=origin[0]
-#                 )
-#         else:
-#             if value.size != np.prod(region):
-#                 if value.size == 1:
-#                     value = np.repeat(value, np.prod(region))
-#                     value = value.reshape(region)
-#                 else:
-#                     raise ValueError(
-#                         f"Input size mismatch the indexed region: {value.size} != {np.prod(region)} ({value.shape} != {region})"
-#                     )
-#             # we write from host to device
-#             self.set(value, origin, region)
 
 
 # adapted from https://github.com/napari/napari/blob/d6bc683b019c4a3a3c6e936526e29bbd59cca2f4/napari/utils/notebook_display.py#L54-L73

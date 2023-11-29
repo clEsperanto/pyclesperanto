@@ -109,17 +109,17 @@ def test_range7():
     assert len(crop.shape) == 2
 
 
-# def test_range8():
-#     import numpy as np
-#     import pyclesperanto as cle
+def test_range8():
+    import numpy as np
+    import pyclesperanto as cle
 
-#     image = cle.push(np.random.random((10, 20, 30)))
+    image = cle.push(np.random.random((10, 20, 30)))
 
-#     crop = image[:, :, 5]
+    crop = image[:, :, 5]
 
-#     assert crop.shape[0] == 10
-#     assert crop.shape[1] == 20
-#     assert len(crop.shape) == 2
+    assert crop.shape[0] == 10
+    assert crop.shape[1] == 20
+    assert len(crop.shape) == 2
 
 
 def test_range9():
@@ -167,20 +167,20 @@ def test_range_against_numpy_2():
     assert np.allclose(reference, result, 0.0001)
 
 
-# def test_range_against_numpy_3():
-#     import numpy as np
-#     import pyclesperanto as cle
+def test_range_against_numpy_3():
+    import numpy as np
+    import pyclesperanto as cle
 
-#     input = np.random.random((2, 3, 4))
-#     input_gpu = cle.push(input)
+    input = np.random.random((2, 3, 4))
+    input_gpu = cle.push(input)
 
-#     reference = input[:, :, 1]
-#     result = input_gpu[:, :, 1]
+    reference = input[:, :, 1]
+    result = input_gpu[:, :, 1]
 
-#     print(reference)
-#     print(result)
+    print(reference)
+    print(result)
 
-#     assert np.allclose(reference, result, 0.0001)
+    assert np.allclose(reference, result, 0.0001)
 
 
 def test_range_against_numpy_4():
@@ -359,52 +359,52 @@ def test_range_against_numpy_15():
     assert np.allclose(reference, result, 0.0001)
 
 
-# def test_range_against_numpy_16():
-#     import numpy as np
-#     import pyclesperanto as cle
+def test_range_against_numpy_16():
+    import numpy as np
+    import pyclesperanto as cle
 
-#     input = np.random.random((10, 20, 30))
-#     input_gpu = cle.push(input)
+    input = np.random.random((10, 20, 30))
+    input_gpu = cle.push(input)
 
-#     reference = input[:, :, np.int32(5)]
-#     result = input_gpu[:, :, np.int32(5)]
+    reference = input[:, :, np.int32(5)]
+    result = input_gpu[:, :, np.int32(5)]
 
-#     print(reference)
-#     print(result)
+    print(reference)
+    print(result)
 
-#     assert np.allclose(reference, result, 0.0001)
-
-
-# def test_type_1():
-#     import numpy as np
-#     import pyclesperanto as cle
-
-#     input = np.random.random((10, 20, 30)).astype(np.uint16)
-#     input_gpu = cle.push(input).astype(np.uint16)
-
-#     reference = input[:, :, np.int32(5)]
-#     result = input_gpu[:, :, np.int32(5)]
-
-#     print(reference)
-#     print(result)
-
-#     assert reference.dtype == result.dtype
+    assert np.allclose(reference, result, 0.0001)
 
 
-# def test_types_2():
-#     import numpy as np
-#     import pyclesperanto as cle
+def test_type_1():
+    import numpy as np
+    import pyclesperanto as cle
 
-#     input = np.random.random((10, 20, 30)).astype(np.uint16)
-#     input_gpu = cle.push(input).astype(np.uint16)
+    input = np.random.random((10, 20, 30)).astype(np.uint16)
+    input_gpu = cle.push(input).astype(np.uint16)
 
-#     reference = input[:, :, np.int64(5)]
-#     result = input_gpu[:, :, np.int64(5)]
+    reference = input[:, :, np.int32(5)]
+    result = input_gpu[:, :, np.int32(5)]
 
-#     print(reference)
-#     print(result)
+    print(reference)
+    print(result)
 
-#     assert np.allclose(reference, result, 0.0001)
+    assert reference.dtype == result.dtype
+
+
+def test_types_2():
+    import numpy as np
+    import pyclesperanto as cle
+
+    input = np.random.random((10, 20, 30)).astype(np.uint16)
+    input_gpu = cle.push(input).astype(np.uint16)
+
+    reference = input[:, :, np.int64(5)]
+    result = input_gpu[:, :, np.int64(5)]
+
+    print(reference)
+    print(result)
+
+    assert np.allclose(reference, result, 0.0001)
 
 
 # def test_negative_step_2d():

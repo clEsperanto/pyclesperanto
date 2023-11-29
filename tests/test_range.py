@@ -407,59 +407,59 @@ def test_types_2():
     assert np.allclose(reference, result, 0.0001)
 
 
-# def test_negative_step_2d():
-#     import pyclesperanto as cle
-#     import numpy as np
+def test_negative_step_2d():
+    import pyclesperanto as cle
+    import numpy as np
 
-#     numbers = np.reshape(np.asarray([[i] for i in range(0, 20)]), (2, 10))
+    numbers = np.reshape(np.asarray([[i] for i in range(0, 20)]), (2, 10))
 
-#     cle_numbers = cle.asarray(numbers)
+    cle_numbers = cle.asarray(numbers)
 
-#     assert cle.array_equal(numbers[::-1], cle_numbers[::-1])
-#     assert cle.array_equal(numbers[1::-1], cle_numbers[1::-1])
-#     assert cle.array_equal(numbers[:5:-1], cle_numbers[:5:-1])
-#     assert cle.array_equal(numbers[5:1:-1], cle_numbers[5:1:-1])
-#     assert cle.array_equal(numbers[100:], cle_numbers[100:])
-#     assert cle.array_equal(numbers[100::-1], cle_numbers[100::-1])
-#     assert cle.array_equal(numbers[100:-50:-1], cle_numbers[100:-50:-1])
+    assert cle.array_equal(numbers[::-1], cle_numbers[::-1])
+    # assert cle.array_equal(numbers[1::-1], cle_numbers[1::-1])
+    # assert cle.array_equal(numbers[:5:-1], cle_numbers[:5:-1])
+    # assert cle.array_equal(numbers[5:1:-1], cle_numbers[5:1:-1])
+    # assert cle.array_equal(numbers[100:], cle_numbers[100:])
+    # assert cle.array_equal(numbers[100::-1], cle_numbers[100::-1])
+    # assert cle.array_equal(numbers[100:-50:-1], cle_numbers[100:-50:-1])
 
-#     assert cle.array_equal(numbers[::, ::-1], cle_numbers[::, ::-1])
-#     assert cle.array_equal(numbers[::, 1::-1], cle_numbers[::, 1::-1])
-#     assert cle.array_equal(numbers[::, :5:-1], cle_numbers[::, :5:-1])
-#     assert cle.array_equal(numbers[::, 5:1:-1], cle_numbers[::, 5:1:-1])
-#     assert cle.array_equal(numbers[::, 100:], cle_numbers[::, 100:])
-#     assert cle.array_equal(numbers[::, 100::-1], cle_numbers[::, 100::-1])
-#     assert cle.array_equal(numbers[::, 100:-50:-1], cle_numbers[::, 100:-50:-1])
+    assert cle.array_equal(numbers[::, ::-1], cle_numbers[::, ::-1])
+    # assert cle.array_equal(numbers[::, 1::-1], cle_numbers[::, 1::-1])
+    # assert cle.array_equal(numbers[::, :5:-1], cle_numbers[::, :5:-1])
+    # assert cle.array_equal(numbers[::, 5:1:-1], cle_numbers[::, 5:1:-1])
+    # assert cle.array_equal(numbers[::, 100:], cle_numbers[::, 100:])
+    # assert cle.array_equal(numbers[::, 100::-1], cle_numbers[::, 100::-1])
+    # assert cle.array_equal(numbers[::, 100:-50:-1], cle_numbers[::, 100:-50:-1])
 
 
-# def test_negative_step_3d():
-#     import pyclesperanto as cle
-#     import numpy as np
+def test_negative_step_3d():
+    import pyclesperanto as cle
+    import numpy as np
 
-#     numbers = np.reshape(np.asarray([[i] for i in range(0, 60)]), (3, 4, 5))
+    numbers = np.reshape(np.asarray([[i] for i in range(0, 60)]), (3, 4, 5))
 
-#     cle_numbers = cle.asarray(numbers)
+    cle_numbers = cle.asarray(numbers)
 
-#     assert cle.array_equal(numbers[::-1], cle_numbers[::-1])
-#     assert cle.array_equal(numbers[1::-1], cle_numbers[1::-1])
-#     assert cle.array_equal(numbers[:5:-1], cle_numbers[:5:-1])
-#     assert cle.array_equal(numbers[5:1:-1], cle_numbers[5:1:-1])
-#     assert cle.array_equal(numbers[100:], cle_numbers[100:])
-#     assert cle.array_equal(numbers[100::-1], cle_numbers[100::-1])
-#     assert cle.array_equal(numbers[100:-50:-1], cle_numbers[100:-50:-1])
+    assert cle.array_equal(numbers[::-1], cle_numbers[::-1])
+    # assert cle.array_equal(numbers[1::-1], cle_numbers[1::-1])
+    # assert cle.array_equal(numbers[:5:-1], cle_numbers[:5:-1])
+    # assert cle.array_equal(numbers[5:1:-1], cle_numbers[5:1:-1])
+    # assert cle.array_equal(numbers[100:], cle_numbers[100:])
+    # assert cle.array_equal(numbers[100::-1], cle_numbers[100::-1])
+    # assert cle.array_equal(numbers[100:-50:-1], cle_numbers[100:-50:-1])
 
-#     assert cle.array_equal(numbers[::, ::-1], cle_numbers[::, ::-1])
-#     assert cle.array_equal(numbers[::, 1::-1], cle_numbers[::, 1::-1])
-#     assert cle.array_equal(numbers[::, :5:-1], cle_numbers[::, :5:-1])
-#     assert cle.array_equal(numbers[::, 5:1:-1], cle_numbers[::, 5:1:-1])
-#     assert cle.array_equal(numbers[::, 100:], cle_numbers[::, 100:])
-#     assert cle.array_equal(numbers[::, 100::-1], cle_numbers[::, 100::-1])
-#     assert cle.array_equal(numbers[::, 100:-50:-1], cle_numbers[::, 100:-50:-1])
+    assert cle.array_equal(numbers[::, ::-1], cle_numbers[::, ::-1])
+    # assert cle.array_equal(numbers[::, 1::-1], cle_numbers[::, 1::-1])
+    # assert cle.array_equal(numbers[::, :5:-1], cle_numbers[::, :5:-1])
+    # assert cle.array_equal(numbers[::, 5:1:-1], cle_numbers[::, 5:1:-1])
+    # assert cle.array_equal(numbers[::, 100:], cle_numbers[::, 100:])
+    # assert cle.array_equal(numbers[::, 100::-1], cle_numbers[::, 100::-1])
+    # assert cle.array_equal(numbers[::, 100:-50:-1], cle_numbers[::, 100:-50:-1])
 
-#     assert cle.array_equal(numbers[::, ::, ::-1], cle_numbers[::, ::, ::-1])
-#     assert cle.array_equal(numbers[::, ::, 1::-1], cle_numbers[::, ::, 1::-1])
-#     assert cle.array_equal(numbers[::, ::, :5:-1], cle_numbers[::, ::, :5:-1])
-#     assert cle.array_equal(numbers[::, ::, 5:1:-1], cle_numbers[::, ::, 5:1:-1])
-#     assert cle.array_equal(numbers[::, ::, 100:], cle_numbers[::, ::, 100:])
-#     assert cle.array_equal(numbers[::, ::, 100::-1], cle_numbers[::, ::, 100::-1])
-#     assert cle.array_equal(numbers[::, ::, 100:-50:-1], cle_numbers[::, ::, 100:-50:-1])
+    assert cle.array_equal(numbers[::, ::, ::-1], cle_numbers[::, ::, ::-1])
+    # assert cle.array_equal(numbers[::, ::, 1::-1], cle_numbers[::, ::, 1::-1])
+    # assert cle.array_equal(numbers[::, ::, :5:-1], cle_numbers[::, ::, :5:-1])
+    # assert cle.array_equal(numbers[::, ::, 5:1:-1], cle_numbers[::, ::, 5:1:-1])
+    # assert cle.array_equal(numbers[::, ::, 100:], cle_numbers[::, ::, 100:])
+    # assert cle.array_equal(numbers[::, ::, 100::-1], cle_numbers[::, ::, 100::-1])
+    # assert cle.array_equal(numbers[::, ::, 100:-50:-1], cle_numbers[::, ::, 100:-50:-1])

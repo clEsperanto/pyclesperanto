@@ -384,7 +384,13 @@ def __getitem__(self, key):
         # we define the sub-region origin and region size
         origin = [index[0] for index in key]
         region = [abs(index[1] - index[0]) for index in key]
-        transpose = [x == 1 for x in region]
+
+        transpose = [False, False, False]
+        transpose[-len(key) :] = [x == 1 for x in region]
+
+        for idx in range(len(origin)):
+            if origin[idx] + region[idx] > self.shape[idx]:
+                return np.empty(tuple(region), dtype=self.dtype)
 
         # if region size equal to 1, we are returning a scalar
         if np.prod(region) == 1:
@@ -398,7 +404,7 @@ def __getitem__(self, key):
             )
 
             # we copy sub-region inside our new buffer to return
-            self.copy(result, origin, (0, 0, 0), region)
+            self.copy(result, origin, [0] * len(region), region)
 
             # if new_shape different than tmp.shape, we need to reshape
             if any(transpose):
@@ -413,7 +419,8 @@ def __getitem__(self, key):
                     result = transpose_yz(result)
 
             # if an axis step was negative, we flip along this axis
-            flip_bool = [index[2] < 0 for index in key]
+            flip_bool = [False, False, False]
+            flip_bool[-len(key) :] = [index[2] < 0 for index in key]
             if any(flip_bool):
                 from ._tier1 import flip
 

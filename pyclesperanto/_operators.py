@@ -3,6 +3,9 @@ import numbers
 
 from typing import Optional
 
+from ._array import Array, Image
+from ._memory import create, push, create_like, pull
+
 cl_buffer_datatype_dict = {
     bool: "bool",
     np.uint8: "uchar",
@@ -35,7 +38,6 @@ def astype(self, dtype: type):
         return self
 
     from ._tier1 import copy
-    from ._memory import create_like
 
     result = create_like(self, dtype=dtype)
     copy(input_image=self, output_image=result)
@@ -59,9 +61,6 @@ def max(self, axis: Optional[int] = None, out=None):
     else:
         raise ValueError("Axis " + axis + " not supported")
     if out is not None:
-        from ._memory import pull
-        from ._array import Image
-
         if isinstance(out, Image):
             np.copyto(out, pull(result).astype(out.dtype))
         else:
@@ -86,9 +85,6 @@ def min(self, axis: Optional[int] = None, out=None):
     else:
         raise ValueError("Axis " + axis + " not supported")
     if out is not None:
-        from ._memory import pull
-        from ._array import Image
-
         if isinstance(out, Image):
             np.copyto(out, pull(result).astype(out.dtype))
     return result
@@ -111,9 +107,6 @@ def sum(self, axis: Optional[int] = None, out=None):
     else:
         raise ValueError("Axis " + axis + " not supported")
     if out is not None:
-        from ._memory import pull
-        from ._array import Image
-
         if isinstance(out, Image):
             np.copyto(out, pull(result).astype(out.dtype))
     return result
@@ -322,6 +315,46 @@ def __iter__(self):
     return MyIterator(self)
 
 
+def correct_range(start, stop, step, size):
+    # set in case not set (passed None)
+    if step is None:
+        step = 1
+    if start is None:
+        if step >= 0:
+            start = 0
+        else:
+            start = size - 1
+
+    if stop is None:
+        if step >= 0:
+            stop = size
+        else:
+            stop = -1
+
+    # Check if ranges make sense
+    if start >= size:
+        if step >= 0:
+            start = size
+        else:
+            start = size - 1
+    if start < -size + 1:
+        start = -size + 1
+    if stop > size:
+        stop = size
+    if stop < -size:
+        if start > 0:
+            stop = 0 - 1
+        else:
+            stop = -size
+
+    if start < 0:
+        start = size - start
+    if (start > stop and step > 0) or (start < stop and step < 0):
+        stop = start
+
+    return start, stop, step
+
+
 def __getitem__(self, key):
     # enforce key to be iterable tuple
     if not isinstance(key, tuple):
@@ -332,104 +365,83 @@ def __getitem__(self, key):
         key = tuple(slice(None, None, None) if x is Ellipsis else x for x in key)
 
     # define default index as slices(0, shape, 1), and iterate over keys and replace when relevant
-    index = [[0, x, 1] for x in self.shape]
+    index = [[0, x, None] for x in self.shape]
     for x in range(len(key)):
         if isinstance(key[x], slice):
-            start = key[x].start if key[x].start else 0
-            stop = key[x].stop if key[x].stop else self.shape[x]
-            step = key[x].step if key[x].step else 1
-            start = self.shape[x] + start if start < 0 else start
-            stop = self.shape[x] + stop if stop < 0 else stop
+            start = key[x].start
+            stop = key[x].stop
+            step = key[x].step
             index[x] = [start, stop, step]
         elif np.issubdtype(type(key[x]), np.integer):
             start = key[x]
-            stop = key[x] + 1
-            if key[x] < 0:
-                start = self.shape[x] + key[x]
-                stop = start - 1
-            index[x] = [start, stop, 1]
+            stop = key[x] + 1 if key[x] > 0 else key[x] - 1
+            step = None
+            index[x] = [start, stop, step]
     key = index
 
-    # step is not equal to 1, we are dealing with a range operation
-    if any([abs(index[2]) != 1 for index in key]):
+    # manage start stop step for the various cases possible
+    range_x = correct_range(key[-1][0], key[-1][1], key[-1][2], self.shape[-1])
+    range_y = (
+        correct_range(key[-2][0], key[-2][1], key[-2][2], self.shape[-2])
+        if len(self.shape) > 1
+        else [0, 1, 1]
+    )
+    range_z = (
+        correct_range(key[-3][0], key[-3][1], key[-3][2], self.shape[-3])
+        if len(self.shape) > 2
+        else [0, 1, 1]
+    )
+    origin = [range_z[0], range_y[0], range_x[0]]
+    region = [
+        range_z[1] - range_z[0],
+        range_y[1] - range_y[0],
+        range_x[1] - range_x[0],
+    ]
+    region = [abs(x) for x in region]
+    use_range = any([(index[2] != 1 and index[2]) for index in key])
+
+    # we are dealing with a single pixel operation
+    if np.prod(region) == 1:
+        result = self.get(origin, region)
+
+    # a specific step was provided, we are dealing with a range operation
+    if use_range:
         from ._tier1 import range as gpu_range
 
-        x_range = [0, 0, 0]
-        y_range = [0, 0, 0]
-        z_range = [0, 0, 0]
-        if len(key) == 1:
-            x_range = key[0]
-        elif len(key) == 2:
-            x_range = key[1]
-            y_range = key[0]
-        elif len(key) == 3:
-            x_range = key[2]
-            y_range = key[1]
-            z_range = key[0]
         result = gpu_range(
             self,
-            start_x=x_range[0],
-            stop_x=x_range[1],
-            step_x=x_range[2],
-            start_y=y_range[0],
-            stop_y=y_range[1],
-            step_y=y_range[2],
-            start_z=z_range[0],
-            stop_z=z_range[1],
-            step_z=z_range[2],
+            start_x=range_x[0],
+            stop_x=range_x[1],
+            step_x=range_x[2],
+            start_y=range_y[0],
+            stop_y=range_y[1],
+            step_y=range_y[2],
+            start_z=range_z[0],
+            stop_z=range_z[1],
+            step_z=range_z[2],
         )
-    else:
-        # all steps equal to 1, we are dealing with a sub-region operation
-
-        # we define the sub-region origin and region size
-        origin = [index[0] for index in key]
-        region = [abs(index[1] - index[0]) for index in key]
-
-        transpose = [False, False, False]
-        transpose[-len(key) :] = [x == 1 for x in region]
-
-        for idx in range(len(origin)):
-            if origin[idx] + region[idx] > self.shape[idx]:
-                return np.empty(tuple(region), dtype=self.dtype)
-
-        # if region size equal to 1, we are returning a scalar
-        if np.prod(region) == 1:
-            result = self.get(origin, region)
-        else:
-            # we are returning a buffer that we first need to create
-            from ._memory import create
-
+    else:  # we are dealing with a sub-region operation
+        try:
+            # we copy sub-region inside a new buffer to return
             result = create(
                 region, dtype=self.dtype, mtype=self.mtype, device=self.device
             )
-
-            # we copy sub-region inside our new buffer to return
             self.copy(result, origin, [0] * len(region), region)
+        except Exception:
+            # if we fail to copy, we rely on numpy to do the job
+            result = push(self.get().__getitem__(key))
 
-            # if new_shape different than tmp.shape, we need to reshape
-            if any(transpose):
-                from ._tier1 import transpose_xy, transpose_yz, transpose_xz
+    # if result is an Array, and one of the dimension is equal to 1
+    if isinstance(result, Array) and any([x == 1 for x in result.shape]):
+        from ._tier1 import transpose_xy, transpose_yz
 
-                if transpose[2]:
-                    # x is empty we move it to the end
-                    result = transpose_xy(result)
-                    result = transpose_yz(result)
-                if transpose[1]:
-                    # the y is empty, we exchange axis z and y
-                    result = transpose_yz(result)
+        transpose = [x == 1 for x in region]
+        if transpose[2]:  # x is empty
+            result = transpose_xy(result)
+            result = transpose_yz(result)
+        if transpose[1]:  # y is empty
+            result = transpose_yz(result)
 
-            # if an axis step was negative, we flip along this axis
-            flip_bool = [False, False, False]
-            flip_bool[-len(key) :] = [index[2] < 0 for index in key]
-            if any(flip_bool):
-                from ._tier1 import flip
-
-                result = flip(
-                    input_image=result,
-                    flip_x=flip_bool[2],
-                    flip_y=flip_bool[1],
-                    flip_z=flip_bool[0],
-                )
     return result
 
 

@@ -103,6 +103,8 @@ def test_range7():
     image = cle.push(np.random.random((10, 20, 30)))
 
     crop = image[5, :]
+    print(crop.shape)
+    print(crop)
 
     assert crop.shape[0] == 20
     assert crop.shape[1] == 30
@@ -416,20 +418,20 @@ def test_negative_step_2d():
     cle_numbers = cle.asarray(numbers)
 
     assert cle.array_equal(numbers[::-1], cle_numbers[::-1])
-    # assert cle.array_equal(numbers[1::-1], cle_numbers[1::-1])
+    assert cle.array_equal(numbers[1::-1], cle_numbers[1::-1])
     # assert cle.array_equal(numbers[:5:-1], cle_numbers[:5:-1])
     # assert cle.array_equal(numbers[5:1:-1], cle_numbers[5:1:-1])
     # assert cle.array_equal(numbers[100:], cle_numbers[100:])
-    # assert cle.array_equal(numbers[100::-1], cle_numbers[100::-1])
-    # assert cle.array_equal(numbers[100:-50:-1], cle_numbers[100:-50:-1])
+    assert cle.array_equal(numbers[100::-1], cle_numbers[100::-1])
+    assert cle.array_equal(numbers[100:-50:-1], cle_numbers[100:-50:-1])
 
     assert cle.array_equal(numbers[::, ::-1], cle_numbers[::, ::-1])
-    # assert cle.array_equal(numbers[::, 1::-1], cle_numbers[::, 1::-1])
+    assert cle.array_equal(numbers[::, 1::-1], cle_numbers[::, 1::-1])
     # assert cle.array_equal(numbers[::, :5:-1], cle_numbers[::, :5:-1])
     # assert cle.array_equal(numbers[::, 5:1:-1], cle_numbers[::, 5:1:-1])
     # assert cle.array_equal(numbers[::, 100:], cle_numbers[::, 100:])
-    # assert cle.array_equal(numbers[::, 100::-1], cle_numbers[::, 100::-1])
-    # assert cle.array_equal(numbers[::, 100:-50:-1], cle_numbers[::, 100:-50:-1])
+    assert cle.array_equal(numbers[::, 100::-1], cle_numbers[::, 100::-1])
+    assert cle.array_equal(numbers[::, 100:-50:-1], cle_numbers[::, 100:-50:-1])
 
 
 def test_negative_step_3d():
@@ -441,25 +443,25 @@ def test_negative_step_3d():
     cle_numbers = cle.asarray(numbers)
 
     assert cle.array_equal(numbers[::-1], cle_numbers[::-1])
-    # assert cle.array_equal(numbers[1::-1], cle_numbers[1::-1])
+    assert cle.array_equal(numbers[1::-1], cle_numbers[1::-1])
     # assert cle.array_equal(numbers[:5:-1], cle_numbers[:5:-1])
     # assert cle.array_equal(numbers[5:1:-1], cle_numbers[5:1:-1])
     # assert cle.array_equal(numbers[100:], cle_numbers[100:])
-    # assert cle.array_equal(numbers[100::-1], cle_numbers[100::-1])
-    # assert cle.array_equal(numbers[100:-50:-1], cle_numbers[100:-50:-1])
+    assert cle.array_equal(numbers[100::-1], cle_numbers[100::-1])
+    assert cle.array_equal(numbers[100:-50:-1], cle_numbers[100:-50:-1])
 
     assert cle.array_equal(numbers[::, ::-1], cle_numbers[::, ::-1])
-    # assert cle.array_equal(numbers[::, 1::-1], cle_numbers[::, 1::-1])
+    assert cle.array_equal(numbers[::, 1::-1], cle_numbers[::, 1::-1])
     # assert cle.array_equal(numbers[::, :5:-1], cle_numbers[::, :5:-1])
     # assert cle.array_equal(numbers[::, 5:1:-1], cle_numbers[::, 5:1:-1])
     # assert cle.array_equal(numbers[::, 100:], cle_numbers[::, 100:])
-    # assert cle.array_equal(numbers[::, 100::-1], cle_numbers[::, 100::-1])
-    # assert cle.array_equal(numbers[::, 100:-50:-1], cle_numbers[::, 100:-50:-1])
+    assert cle.array_equal(numbers[::, 100::-1], cle_numbers[::, 100::-1])
+    assert cle.array_equal(numbers[::, 100:-50:-1], cle_numbers[::, 100:-50:-1])
 
     assert cle.array_equal(numbers[::, ::, ::-1], cle_numbers[::, ::, ::-1])
-    # assert cle.array_equal(numbers[::, ::, 1::-1], cle_numbers[::, ::, 1::-1])
+    assert cle.array_equal(numbers[::, ::, 1::-1], cle_numbers[::, ::, 1::-1])
     # assert cle.array_equal(numbers[::, ::, :5:-1], cle_numbers[::, ::, :5:-1])
     # assert cle.array_equal(numbers[::, ::, 5:1:-1], cle_numbers[::, ::, 5:1:-1])
     # assert cle.array_equal(numbers[::, ::, 100:], cle_numbers[::, ::, 100:])
-    # assert cle.array_equal(numbers[::, ::, 100::-1], cle_numbers[::, ::, 100::-1])
-    # assert cle.array_equal(numbers[::, ::, 100:-50:-1], cle_numbers[::, ::, 100:-50:-1])
+    assert cle.array_equal(numbers[::, ::, 100::-1], cle_numbers[::, ::, 100::-1])
+    assert cle.array_equal(numbers[::, ::, 100:-50:-1], cle_numbers[::, ::, 100:-50:-1])

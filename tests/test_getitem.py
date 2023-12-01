@@ -1,7 +1,8 @@
-def test_range1():
-    import numpy as np
-    import pyclesperanto as cle
+import numpy as np
+import pyclesperanto as cle
 
+
+def test_range1():
     image = cle.push(np.asarray([[0, 1, 2], [2, 3, 4], [5, 6, 7]]))
 
     reference = cle.push(np.asarray([[3, 4], [6, 7]]))
@@ -15,9 +16,6 @@ def test_range1():
 
 
 def test_range2():
-    import numpy as np
-    import pyclesperanto as cle
-
     image = cle.push(np.asarray([[0, 1, 2], [2, 3, 4], [5, 6, 7]]))
 
     reference = cle.push(np.asarray([[0, 1], [2, 3]]))
@@ -31,9 +29,6 @@ def test_range2():
 
 
 def test_range3():
-    import numpy as np
-    import pyclesperanto as cle
-
     image = cle.push(
         np.asarray(
             [[[0, 1, 2], [2, 3, 4], [5, 6, 7]], [[0, 1, 2], [2, 3, 4], [5, 6, 7]]]
@@ -51,9 +46,6 @@ def test_range3():
 
 
 def test_range4():
-    import numpy as np
-    import pyclesperanto as cle
-
     image = cle.push(
         np.asarray(
             [[[0, 1, 2], [2, 3, 4], [5, 6, 7]], [[0, 1, 2], [2, 3, 4], [5, 6, 7]]]
@@ -71,9 +63,6 @@ def test_range4():
 
 
 def test_range5():
-    import numpy as np
-    import pyclesperanto as cle
-
     image = cle.push(np.random.random((10, 20, 30)))
 
     crop = image[:5]
@@ -84,9 +73,6 @@ def test_range5():
 
 
 def test_range6():
-    import numpy as np
-    import pyclesperanto as cle
-
     image = cle.push(np.random.random((10, 20, 30)))
 
     crop = image[5]
@@ -97,9 +83,6 @@ def test_range6():
 
 
 def test_range7():
-    import numpy as np
-    import pyclesperanto as cle
-
     image = cle.push(np.random.random((10, 20, 30)))
 
     crop = image[5, :]
@@ -112,9 +95,6 @@ def test_range7():
 
 
 def test_range8():
-    import numpy as np
-    import pyclesperanto as cle
-
     image = cle.push(np.random.random((10, 20, 30)))
 
     crop = image[:, :, 5]
@@ -125,9 +105,6 @@ def test_range8():
 
 
 def test_range9():
-    import numpy as np
-    import pyclesperanto as cle
-
     image = cle.push(np.random.random((10, 20, 30)))
 
     crop = image[:, 5]
@@ -138,9 +115,6 @@ def test_range9():
 
 
 def test_range_against_numpy_1():
-    import numpy as np
-    import pyclesperanto as cle
-
     input = np.random.random((2, 3, 4))
     input_gpu = cle.push(input)
 
@@ -154,9 +128,6 @@ def test_range_against_numpy_1():
 
 
 def test_range_against_numpy_2():
-    import numpy as np
-    import pyclesperanto as cle
-
     input = np.random.random((2, 3, 4))
     input_gpu = cle.push(input)
 
@@ -170,9 +141,6 @@ def test_range_against_numpy_2():
 
 
 def test_range_against_numpy_3():
-    import numpy as np
-    import pyclesperanto as cle
-
     input = np.random.random((2, 3, 4))
     input_gpu = cle.push(input)
 
@@ -186,9 +154,6 @@ def test_range_against_numpy_3():
 
 
 def test_range_against_numpy_4():
-    import numpy as np
-    import pyclesperanto as cle
-
     input = np.random.random((2, 3, 4))
     input_gpu = cle.push(input)
 
@@ -202,9 +167,6 @@ def test_range_against_numpy_4():
 
 
 def test_range_against_numpy_5():
-    import numpy as np
-    import pyclesperanto as cle
-
     input = np.random.random((2, 3, 4))
     input_gpu = cle.push(input)
 
@@ -218,9 +180,6 @@ def test_range_against_numpy_5():
 
 
 def test_range_against_numpy_6():
-    import numpy as np
-    import pyclesperanto as cle
-
     input = np.random.random((10, 20, 30))
     input_gpu = cle.push(input)
 
@@ -234,9 +193,6 @@ def test_range_against_numpy_6():
 
 
 def test_range_against_numpy_7():
-    import numpy as np
-    import pyclesperanto as cle
-
     input = np.random.random((10, 20, 30))
     input_gpu = cle.push(input)
 
@@ -250,9 +206,6 @@ def test_range_against_numpy_7():
 
 
 def test_range_against_numpy_8():
-    import numpy as np
-    import pyclesperanto as cle
-
     input = np.random.random((10, 20, 30))
     input_gpu = cle.push(input)
 
@@ -266,9 +219,6 @@ def test_range_against_numpy_8():
 
 
 def test_range_against_numpy_9():
-    import numpy as np
-    import pyclesperanto as cle
-
     input = np.random.random((10, 20, 30))
     input_gpu = cle.push(input)
 
@@ -282,9 +232,6 @@ def test_range_against_numpy_9():
 
 
 def test_range_against_numpy_10():
-    import numpy as np
-    import pyclesperanto as cle
-
     input = np.random.random((10, 20, 30))
     input_gpu = cle.push(input)
 
@@ -298,9 +245,6 @@ def test_range_against_numpy_10():
 
 
 def test_range_against_numpy_11():
-    import numpy as np
-    import pyclesperanto as cle
-
     input = np.random.random((10, 20, 30))
     input_gpu = cle.push(input)
 
@@ -314,9 +258,6 @@ def test_range_against_numpy_11():
 
 
 def test_range_against_numpy_12():
-    import numpy as np
-    import pyclesperanto as cle
-
     input = np.random.random((10, 20, 30))
     input_gpu = cle.push(input)
 
@@ -330,9 +271,6 @@ def test_range_against_numpy_12():
 
 
 def test_range_against_numpy_14():
-    import numpy as np
-    import pyclesperanto as cle
-
     input = np.random.random((10, 20, 30))
     input_gpu = cle.push(input)
 
@@ -346,9 +284,6 @@ def test_range_against_numpy_14():
 
 
 def test_range_against_numpy_15():
-    import numpy as np
-    import pyclesperanto as cle
-
     input = np.random.random((10, 20, 30))
     input_gpu = cle.push(input)
 
@@ -362,9 +297,6 @@ def test_range_against_numpy_15():
 
 
 def test_range_against_numpy_16():
-    import numpy as np
-    import pyclesperanto as cle
-
     input = np.random.random((10, 20, 30))
     input_gpu = cle.push(input)
 
@@ -378,9 +310,6 @@ def test_range_against_numpy_16():
 
 
 def test_type_1():
-    import numpy as np
-    import pyclesperanto as cle
-
     input = np.random.random((10, 20, 30)).astype(np.uint16)
     input_gpu = cle.push(input).astype(np.uint16)
 
@@ -394,9 +323,6 @@ def test_type_1():
 
 
 def test_types_2():
-    import numpy as np
-    import pyclesperanto as cle
-
     input = np.random.random((10, 20, 30)).astype(np.uint16)
     input_gpu = cle.push(input).astype(np.uint16)
 

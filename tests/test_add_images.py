@@ -9,6 +9,7 @@ def test_add_images_weighted_missing_params():
     reference = np.asarray([5, 7, 9])
     output = cle.add_images_weighted(input1, input2, None, 1, 1)
     result = cle.pull(output)
+
     assert np.array_equal(result, reference)
 
 

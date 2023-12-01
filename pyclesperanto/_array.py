@@ -18,28 +18,22 @@ def __repr__(self) -> str:
     return repr_str[:-1] + f", {extra_info})"
 
 
-def set(self, array: np.ndarray) -> None:
+def set(self, array: np.ndarray, origin: tuple = None, region: tuple = None) -> None:
+    # for cast array to numpy array
+    if not isinstance(array, np.ndarray):
+        array = np.array(array)
     if array.dtype != self.dtype:
-        warnings.warn(
-            f"Array dtype mismatch. Casting array to '{self.dtype.__name__}' before set().",
-            RuntimeWarning,
-        )
         array = array.astype(self.dtype)
-    if array.size != self.size:
+
+    if region and array.size != np.prod(region):
         raise ValueError(
-            f"Array size mismatch: {array.size} != {self.size} ({array.shape} != {self.shape})"
+            f"Value size mismatch the targeted region: {array.size} != {np.prod(region)} ({array.shape} != {tuple(np.squeeze(region))})"
         )
-    if array.ndim != self.ndim:
-        raise ValueError(
-            f"Array dimension mismatch: {array.ndim} != {self.ndim} ({array.shape} != {self.shape})"
-        )
-    if array.shape != self.shape:
-        raise ValueError(f"Array shape mismatch: {array.shape} != {self.shape}")
-    self._write(array)
+    self._write(array, origin, region)
     return self
 
 
-def get(self) -> np.ndarray:
+def get(self, origin: tuple = None, region: tuple = None) -> np.ndarray:
     caster = {
         "float32": self._read_float32,
         "int8": self._read_int8,
@@ -51,7 +45,7 @@ def get(self) -> np.ndarray:
         "uint32": self._read_uint32,
         "uint64": self._read_uint64,
     }
-    return caster[self.dtype.name]()
+    return caster[self.dtype.name](origin, region)
 
 
 def __array__(self, dtype=None) -> np.ndarray:
@@ -62,8 +56,6 @@ def __array__(self, dtype=None) -> np.ndarray:
 
 
 # missing operators:
-# __setitem__
-# __getitem__
 # __iter__
 # __array_interface__
 
@@ -96,19 +88,24 @@ setattr(Array, "_plt_to_png", _operators._plt_to_png)
 setattr(Array, "_png_to_html", _operators._png_to_html)
 setattr(Array, "_repr_html_", _operators._repr_html_)
 
+setattr(Array, "__setitem__", _operators.__setitem__)
+setattr(Array, "__getitem__", _operators.__getitem__)
+
 Image = Union[np.ndarray, Array]
 
 
-def is_image(any_array):
+def is_image(object):
     return (
-        isinstance(any_array, np.ndarray)
-        or isinstance(any_array, tuple)
-        or isinstance(any_array, list)
-        or isinstance(any_array, Array)
-        or str(type(any_array))
+        isinstance(object, np.ndarray)
+        or isinstance(object, tuple)
+        or isinstance(object, list)
+        or isinstance(object, Array)
+        or str(type(object))
         in [
             "<class 'cupy._core.core.ndarray'>",
             "<class 'dask.array.core.Array'>",
             "<class 'xarray.core.dataarray.DataArray'>",
+            "<class 'resource_backed_dask_array.ResourceBackedDaskArray'>",
+            "<class 'torch.Tensor'>",
         ]
     )

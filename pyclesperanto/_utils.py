@@ -1,5 +1,4 @@
 def _correct_range(start, stop, step, size):
-    print(start, stop, step)
     # set in case not set (passed None)
     if step is None:
         step = 1
@@ -36,8 +35,6 @@ def _correct_range(start, stop, step, size):
     if (start > stop and step > 0) or (start < stop and step < 0):
         # swap start and stop
         start, stop = stop, start
-
-    print(start, stop, step)
 
     return start, stop, step
 

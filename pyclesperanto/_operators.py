@@ -380,11 +380,9 @@ def __getitem__(self, key):
 
 
 def __setitem__(self, key, value):
-    if not isinstance(value, Union[Array, np.ndarray]):
+    if not isinstance(value, (Array, np.ndarray)):
         value = np.array(value)
     key = _clean_index(key)
-    print(f"value type: {type(value)}")
-    print(f"value dtype: {value.dtype}")
     # check if the dtype of the value is a numeric type such as float, int etc
     if value.dtype not in _supported_numeric_types:
         raise ValueError(
@@ -402,8 +400,6 @@ def __setitem__(self, key, value):
             index[x] = [key[x], key[x] + 1 if key[x] > 0 else key[x] - 1, None]
     key = index
 
-    print(f"key: {key}")
-
     # manage range for (x,y,z), with nothing that we deal with a z,y,x order
     use_range, range_x, range_y, range_z = _compute_range(key, self.shape)
     origin = [range_z[0], range_y[0], range_x[0]]
@@ -413,11 +409,6 @@ def __setitem__(self, key, value):
         range_x[1] - range_x[0],
     ]
     region = [abs(x) for x in region]
-
-    print(f"origin: {origin}, region: {region}")
-    print(
-        f"use_range: {use_range}, range_x: {range_x}, range_y: {range_y}, range_z: {range_z}"
-    )
 
     stride_region = [
         abs(region[0] / range_z[2]),

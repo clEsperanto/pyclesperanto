@@ -1,10 +1,9 @@
 import numpy as np
-import numbers
+from typing import Optional, Union
 
-from typing import Optional
+from ._array import Array
 
-from ._array import Array, Image
-from ._memory import create, push, create_like, pull
+from ._utils import _compute_range, _clean_index
 
 cl_buffer_datatype_dict = {
     bool: "bool",
@@ -38,6 +37,7 @@ def astype(self, dtype: type):
         return self
 
     from ._tier1 import copy
+    from ._memory import create_like
 
     result = create_like(self, dtype=dtype)
     copy(input_image=self, output_image=result)
@@ -61,8 +61,8 @@ def max(self, axis: Optional[int] = None, out=None):
     else:
         raise ValueError("Axis " + axis + " not supported")
     if out is not None:
-        if isinstance(out, Image):
-            np.copyto(out, pull(result).astype(out.dtype))
+        if isinstance(out, Union[Array, np.ndarray]):
+            np.copyto(out, result.get().astype(out.dtype))
         else:
             out = result
     return result
@@ -85,8 +85,8 @@ def min(self, axis: Optional[int] = None, out=None):
     else:
         raise ValueError("Axis " + axis + " not supported")
     if out is not None:
-        if isinstance(out, Image):
-            np.copyto(out, pull(result).astype(out.dtype))
+        if isinstance(out, Union[Array, np.ndarray]):
+            np.copyto(out, result.get().astype(out.dtype))
     return result
 
 
@@ -107,8 +107,8 @@ def sum(self, axis: Optional[int] = None, out=None):
     else:
         raise ValueError("Axis " + axis + " not supported")
     if out is not None:
-        if isinstance(out, Image):
-            np.copyto(out, pull(result).astype(out.dtype))
+        if isinstance(out, Union[Array, np.ndarray]):
+            np.copyto(out, result.get().astype(out.dtype))
     return result
 
 
@@ -315,82 +315,18 @@ def __iter__(self):
     return MyIterator(self)
 
 
-def correct_range(start, stop, step, size):
-    # set in case not set (passed None)
-    if step is None:
-        step = 1
-    if start is None:
-        if step >= 0:
-            start = 0
-        else:
-            start = size - 1
-
-    if stop is None:
-        if step >= 0:
-            stop = size
-        else:
-            stop = -1
-
-    # Check if ranges make sense
-    if start >= size:
-        if step >= 0:
-            start = size
-        else:
-            start = size - 1
-    if start < -size + 1:
-        start = -size + 1
-    if stop > size:
-        stop = size
-    if stop < -size:
-        if start > 0:
-            stop = 0 - 1
-        else:
-            stop = -size
-
-    if start < 0:
-        start = size - start
-    if (start > stop and step > 0) or (start < stop and step < 0):
-        stop = start
-
-    return start, stop, step
-
-
 def __getitem__(self, key):
-    # enforce key to be iterable tuple
-    if not isinstance(key, tuple):
-        key = (key,)
-
-    # replace Elipsis by emplty slices if any
-    if any(x is Ellipsis for x in key):
-        key = tuple(slice(None, None, None) if x is Ellipsis else x for x in key)
-
-    # define default index as slices(0, shape, 1), and iterate over keys and replace when relevant
-    index = [[0, x, None] for x in self.shape]
+    result = None
+    key = _clean_index(key)
+    index = [[0, x, 1] for x in self.shape]
     for x in range(len(key)):
         if isinstance(key[x], slice):
-            start = key[x].start
-            stop = key[x].stop
-            step = key[x].step
-            index[x] = [start, stop, step]
+            index[x] = [key[x].start, key[x].stop, key[x].step]
         elif np.issubdtype(type(key[x]), np.integer):
-            start = key[x]
-            stop = key[x] + 1 if key[x] > 0 else key[x] - 1
-            step = None
-            index[x] = [start, stop, step]
+            index[x] = [key[x], key[x] + 1 if key[x] > 0 else key[x] - 1, None]
     key = index
-
-    # manage start stop step for the various cases possible
-    range_x = correct_range(key[-1][0], key[-1][1], key[-1][2], self.shape[-1])
-    range_y = (
-        correct_range(key[-2][0], key[-2][1], key[-2][2], self.shape[-2])
-        if len(self.shape) > 1
-        else [0, 1, 1]
-    )
-    range_z = (
-        correct_range(key[-3][0], key[-3][1], key[-3][2], self.shape[-3])
-        if len(self.shape) > 2
-        else [0, 1, 1]
-    )
+    # manage range for (x,y,z), with nothing that we deal with a z,y,x order
+    use_range, range_x, range_y, range_z = _compute_range(key, self.shape)
     origin = [range_z[0], range_y[0], range_x[0]]
     region = [
         range_z[1] - range_z[0],
@@ -398,14 +334,11 @@ def __getitem__(self, key):
         range_x[1] - range_x[0],
     ]
     region = [abs(x) for x in region]
-    use_range = any([(index[2] != 1 and index[2]) for index in key])
-
     # we are dealing with a single pixel operation
     if np.prod(region) == 1:
         result = self.get(origin, region)
-
     # a specific step was provided, we are dealing with a range operation
-    if use_range:
+    if use_range and result is None:
         from ._tier1 import range as gpu_range
 
         result = gpu_range(
@@ -421,6 +354,8 @@ def __getitem__(self, key):
             step_z=range_z[2],
         )
     else:  # we are dealing with a sub-region operation
+        from ._memory import create
+
         try:
             # we copy sub-region inside a new buffer to return
             result = create(
@@ -429,8 +364,7 @@ def __getitem__(self, key):
             self.copy(result, origin, [0] * len(region), region)
         except Exception:
             # if we fail to copy, we rely on numpy to do the job
-            result = push(self.get().__getitem__(key))
-
+            result = self.set(self.get().__getitem__(key))
     # if result is an Array, and one of the dimension is equal to 1
     if isinstance(result, Array) and any([x == 1 for x in result.shape]):
         from ._tier1 import transpose_xy, transpose_yz
@@ -446,56 +380,79 @@ def __getitem__(self, key):
 
 
 def __setitem__(self, key, value):
-    from ._array import Image, Array
-
-    if not isinstance(value, Image):
+    if not isinstance(value, Union[Array, np.ndarray]):
         value = np.array(value)
-
-        # enforce key to be iterable tuple
-    if not isinstance(key, tuple):
-        key = (key,)
-
-    # replace Elipsis by emplty slices if any
-    if any(x is Ellipsis for x in key):
-        key = tuple(slice(None, None, None) if x is Ellipsis else x for x in key)
-
+    key = _clean_index(key)
+    print(f"value type: {type(value)}")
+    print(f"value dtype: {value.dtype}")
+    # check if the dtype of the value is a numeric type such as float, int etc
+    if value.dtype not in _supported_numeric_types:
+        raise ValueError(
+            "dtype "
+            + str(value.dtype)
+            + " not supported. Use one of "
+            + str(_supported_numeric_types)
+        )
     # define default index as slices(0, shape, 1), and iterate over keys and replace when relevant
     index = [[0, x, 1] for x in self.shape]
     for x in range(len(key)):
         if isinstance(key[x], slice):
-            start = key[x].start if key[x].start else 0
-            stop = key[x].stop if key[x].stop else self.shape[x]
-            step = key[x].step if key[x].step else 1
-            start = self.shape[x] + start if start < 0 else start
-            stop = self.shape[x] + stop if stop < 0 else stop
-            index[x] = [start, stop, step]
+            index[x] = [key[x].start, key[x].stop, key[x].step]
         elif np.issubdtype(type(key[x]), np.integer):
-            start = key[x]
-            stop = key[x] + 1
-            if key[x] < 0:
-                start = self.shape[x] + key[x]
-                stop = start - 1
-            index[x] = [start, stop, 1]
+            index[x] = [key[x], key[x] + 1 if key[x] > 0 else key[x] - 1, None]
     key = index
 
-    if any([abs(index[2]) != 1 for index in key]):
-        raise NotImplementedError("Steps in slicing is not supported yet")
+    print(f"key: {key}")
+
+    # manage range for (x,y,z), with nothing that we deal with a z,y,x order
+    use_range, range_x, range_y, range_z = _compute_range(key, self.shape)
+    origin = [range_z[0], range_y[0], range_x[0]]
+    region = [
+        range_z[1] - range_z[0],
+        range_y[1] - range_y[0],
+        range_x[1] - range_x[0],
+    ]
+    region = [abs(x) for x in region]
+
+    print(f"origin: {origin}, region: {region}")
+    print(
+        f"use_range: {use_range}, range_x: {range_x}, range_y: {range_y}, range_z: {range_z}"
+    )
+
+    stride_region = [
+        abs(region[0] / range_z[2]),
+        abs(region[1] / range_y[2]),
+        abs(region[2] / range_x[2]),
+    ]
+
+    if value.size == 1:
+        value = np.repeat(value, np.prod(region))
+        value = value.reshape(region)
+        self.set(value, origin, region)
+        return
+    if value.size != np.prod(stride_region):
+        raise IndexError(
+            f"Input value mismatch the indexed region: {value.size} != {np.prod(stride_region)} ({value.shape} != {region})"
+        )
+    if use_range:
+        from ._tier1 import range as gpu_range
+
+        gpu_range(
+            value,
+            self,
+            start_x=range_x[0],
+            stop_x=range_x[1],
+            step_x=range_x[2],
+            start_y=range_y[0],
+            stop_y=range_y[1],
+            step_y=range_y[2],
+            start_z=range_z[0],
+            stop_z=range_z[1],
+            step_z=range_z[2],
+        )
     else:
-        # all steps equal to 1, we are dealing with a sub-region operation
-
-        # we define the sub-region origin and region size
-        origin = [index[0] for index in key]
-        region = [abs(index[1] - index[0]) for index in key]
-
         if isinstance(value, Array):
-            # we copy from device to device and size matches
-            if value.size != np.prod(region):
-                raise ValueError(
-                    f"Input dimensions mismatch the indexed region: {value.size} != {np.prod(region)} ({value.shape} != {region})"
-                )
-
             if self.dtype == value.dtype:
-                # if dtype are the same we can copy
                 self.copy(value, origin, (0, 0, 0), region)
             else:
                 # otherwise we copy with cast using paste
@@ -509,16 +466,6 @@ def __setitem__(self, key, value):
                     index_z=origin[-3] if len(origin) > 2 else 0,
                 )
         else:
-            # we copy from host to device
-            if value.size == 1:
-                # value is a scalar, we repeat it to match the region size before writing
-                value = np.repeat(value, np.prod(region))
-                value = value.reshape(region)
-            if value.size != np.prod(region):
-                raise ValueError(
-                    f"Input size mismatch the indexed region: {value.size} != {np.prod(region)} ({value.shape} != {region})"
-                )
-            # we write from host to device, if shape matches
             self.set(value, origin, region)
 
 

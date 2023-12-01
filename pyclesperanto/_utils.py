@@ -1,3 +1,25 @@
+import numpy as np
+
+cl_buffer_datatype_dict = {
+    bool: "bool",
+    np.uint8: "uchar",
+    np.uint16: "ushort",
+    np.uint32: "uint",
+    np.uint64: "ulong",
+    np.int8: "char",
+    np.int16: "short",
+    np.int32: "int",
+    np.int64: "long",
+    np.float32: "float",
+    np.complex64: "cfloat_t",
+    int: "int",
+    float: "float",
+    np.float64: "float",
+}
+
+_supported_numeric_types = tuple(cl_buffer_datatype_dict.keys())
+
+
 def _correct_range(start, stop, step, size):
     # set in case not set (passed None)
     if step is None:
@@ -63,3 +85,10 @@ def _clean_index(index):
     if any(x is Ellipsis for x in index):
         index = tuple(slice(None, None, None) if x is Ellipsis else x for x in index)
     return index
+
+
+def assert_supported_dtype(dtype):
+    # make sure it works for e.g. np.float32 and np.dtype(np.float32)
+    dtype = getattr(dtype, "type", dtype)
+    if dtype not in cl_buffer_datatype_dict:
+        raise TypeError("dtype %s not supported " % dtype)

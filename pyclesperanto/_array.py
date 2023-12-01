@@ -1,7 +1,9 @@
 # from __future__ import annotations
 
 from ._pyclesperanto import _Array as Array
+from ._core import Device, get_device
 from . import _operators
+from ._utils import assert_supported_dtype
 
 from typing import Union
 import numpy as np
@@ -55,9 +57,65 @@ def __array__(self, dtype=None) -> np.ndarray:
         return self.get().astype(dtype)
 
 
+def to_device(cls, arr, *args, **kwargs):
+    if isinstance(arr, Array):
+        return arr
+    mtype = kwargs.get("mtype", "buffer")
+    device = kwargs.get("device", get_device())
+    return cls.create(arr.shape, arr.dtype, mtype, device).set(arr)
+
+
+def from_array(cls, arr, *args, **kwargs):
+    assert_supported_dtype(arr.dtype)
+    return cls.to_device(arr, *args, **kwargs)
+
+
+def empty(cls, shape, dtype=np.float32, *args, **kwargs):
+    assert_supported_dtype(dtype)
+    mtype = kwargs.get("mtype", "buffer")
+    device = kwargs.get("device", get_device())
+    return cls.create(shape, dtype, mtype, device)
+
+
+def empty_like(cls, arr):
+    assert_supported_dtype(arr.dtype)
+    return Array.create(arr.shape, arr.dtype, arr.mtype, arr.device)
+
+
+def zeros(cls, shape, dtype=np.float32, *args, **kwargs):
+    assert_supported_dtype(dtype)
+    new_array = cls.empty(shape, dtype, *args, **kwargs)
+    new_array.fill(0)
+    return new_array
+
+
+def zeros_like(cls, arr):
+    assert_supported_dtype(arr.dtype)
+    return cls.zeros(arr.shape, arr.dtype, mtype=arr.mtype, device=arr.device)
+
+
+def T(self):
+    from ._tier1 import transpose_xy, transpose_xz
+
+    if len(self.shape) == 2:
+        return transpose_xy(self)
+    elif len(self.shape) == 3:
+        return transpose_xz(self)
+    else:
+        raise ValueError("Only 2D and 3D arrays supported.")
+
+
 # missing operators:
-# __iter__
 # __array_interface__
+# __array_ufunc__
+
+setattr(Array, "T", property(T))
+
+setattr(Array, "from_array", classmethod(from_array))
+setattr(Array, "empty", classmethod(empty))
+setattr(Array, "empty_like", classmethod(empty_like))
+setattr(Array, "zeros", classmethod(zeros))
+setattr(Array, "zeros_like", classmethod(zeros_like))
 
 setattr(Array, "set", set)
 setattr(Array, "get", get)
@@ -87,9 +145,10 @@ setattr(Array, "__ipow__", _operators.__ipow__)
 setattr(Array, "_plt_to_png", _operators._plt_to_png)
 setattr(Array, "_png_to_html", _operators._png_to_html)
 setattr(Array, "_repr_html_", _operators._repr_html_)
-
+setattr(Array, "__iter__", _operators.__iter__)
 setattr(Array, "__setitem__", _operators.__setitem__)
 setattr(Array, "__getitem__", _operators.__getitem__)
+
 
 Image = Union[np.ndarray, Array]
 

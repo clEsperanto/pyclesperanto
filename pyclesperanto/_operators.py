@@ -4,6 +4,7 @@ from typing import Optional, Union
 from ._array import Array
 
 from ._utils import _compute_range, _clean_index
+from ._utils import assert_supported_dtype
 
 cl_buffer_datatype_dict = {
     bool: "bool",
@@ -378,13 +379,7 @@ def __setitem__(self, key, value):
         value = np.array(value)
     key = _clean_index(key)
     # check if the dtype of the value is a numeric type such as float, int etc
-    if value.dtype not in _supported_numeric_types:
-        raise ValueError(
-            "dtype "
-            + str(value.dtype)
-            + " not supported. Use one of "
-            + str(_supported_numeric_types)
-        )
+    assert_supported_dtype(value.dtype)
     # define default index as slices(0, shape, 1), and iterate over keys and replace when relevant
     index = [[0, x, 1] for x in self.shape]
     for x in range(len(key)):

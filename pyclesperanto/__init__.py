@@ -9,7 +9,7 @@ from ._core import (
     default_initialisation,
     Device,
 )
-from ._array import Image, is_image
+from ._array import Array, Image, is_image
 from ._memory import create, create_like, push, pull
 from ._functionalities import imshow, list_operations
 

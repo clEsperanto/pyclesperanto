@@ -119,16 +119,15 @@ def test_exclude_labels_on_edges_3d():
 def test_exclude_labels_on_edges_blobs():
     import pyclesperanto as cle
 
-    from skimage.io import imread, imsave
+    from skimage.io import imread
 
     # initialize GPU
-    cle.select_device("GTX")
+    cle.select_device("TX")
     print("Used GPU: " + cle.get_device().name)
 
     # load data
-    root = Path(cle.__file__).parent
-    filename = str(root / ".." / "data" / "blobs.tif")
-    image = imread(filename)
+    filename = "https://samples.fiji.sc/blobs.png"
+    image = np.squeeze(imread(filename))
     print("Loaded image size: " + str(image.shape))
 
     # push image to GPU memory
@@ -138,7 +137,7 @@ def test_exclude_labels_on_edges_blobs():
     # process the image
     blurred = cle.gaussian_blur(image, sigma_x=1, sigma_y=1)
     binary = cle.threshold_otsu(blurred)
-    labeled = cle.connected_components_labeling_box(binary)
+    labeled = cle.connected_components_labeling(binary)
 
     wo_edges = cle.exclude_labels_on_edges(labeled)
 
@@ -161,9 +160,8 @@ def test_exclude_labels_on_edges_blobs_2():
     print("Used GPU: " + cle.get_device().name)
 
     # load data
-    root = Path(cle.__file__).parent
-    filename = str(root / ".." / "data" / "blobs.tif")
-    image = imread(filename)
+    filename = "https://samples.fiji.sc/blobs.png"
+    image = np.squeeze(imread(filename))
     print("Loaded image size: " + str(image.shape))
 
     # push image to GPU memory
@@ -173,9 +171,9 @@ def test_exclude_labels_on_edges_blobs_2():
     # process the image
     blurred = cle.gaussian_blur(image, sigma_x=1, sigma_y=1)
     binary = cle.threshold_otsu(blurred)
-    labeled = cle.connected_components_labeling_box(binary)
+    labeled = cle.connected_components_labeling(binary)
 
-    wo_edges = cle.exclude_labels_on_edges(labeled, exclude_in_y=False)
+    wo_edges = cle.exclude_labels_on_edges(labeled, exclude_y=False)
 
     # The maxmium intensity in a label image corresponds to the number of objects
     num_labels = cle.maximum_of_all_pixels(wo_edges)
@@ -185,7 +183,7 @@ def test_exclude_labels_on_edges_blobs_2():
 
     assert num_labels == 52
 
-    wo_edges = cle.exclude_labels_on_edges(labeled, exclude_in_x=False)
+    wo_edges = cle.exclude_labels_on_edges(labeled, exclude_x=False)
 
     # The maxmium intensity in a label image corresponds to the number of objects
     num_labels = cle.maximum_of_all_pixels(wo_edges)

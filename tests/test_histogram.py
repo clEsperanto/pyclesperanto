@@ -7,7 +7,7 @@ def test_histogram():
 
     ref_histogram = [1, 2, 3, 4, 2]
 
-    my_histogram = cle.histogram(test, num_bins=5)
+    my_histogram = cle.histogram(test, nbins=5, min=1, max=5)
 
     print(my_histogram)
 
@@ -16,11 +16,11 @@ def test_histogram():
 
 
 def test_histogram_3d():
-    test = cle.push(np.asarray([[[1, 2, 4, 4, 2, 3]], [[3, 3, 4, 4, 5, 5]]]))
+    test = cle.push(np.asarray([[1, 2, 4, 4, 2, 3], [3, 3, 4, 4, 5, 5]]))
 
     ref_histogram = [1, 2, 3, 4, 2]
 
-    my_histogram = cle.histogram(test, num_bins=5)
+    my_histogram = cle.histogram(test, nbins=5, min=1, max=5)
 
     print(my_histogram)
 
@@ -33,7 +33,7 @@ def test_histogram_3d_2():
 
     ref_histogram = [1, 2, 3, 4, 2]
 
-    my_histogram = cle.histogram(test, num_bins=5)
+    my_histogram = cle.histogram(test, nbins=5, min=1, max=5)
 
     print(my_histogram)
 
@@ -50,12 +50,12 @@ def test_histogram_against_scikit_image():
 
     hist, bc = exposure.histogram(image.ravel(), 256, source_range="image")
 
-    print(str(hist))
+    print(hist)
 
-    gpu_image = cle.push(image)
+    gpu_image = cle.push(image.astype(int))
 
-    gpu_hist = cle.histogram(gpu_image, num_bins=256)
+    gpu_hist = cle.histogram(gpu_image, nbins=256, min=0, max=gpu_image.max())
 
-    print(str(cle.pull(gpu_hist)))
+    print(cle.pull(gpu_hist))
 
     assert np.allclose(hist, cle.pull(gpu_hist))

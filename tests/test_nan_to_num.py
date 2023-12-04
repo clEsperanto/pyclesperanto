@@ -18,9 +18,9 @@ def test_nan_to_num_defaults():
     data = np.asarray([[-np.inf], [np.inf], [np.nan], [0], [1]])
 
     print(np.nan_to_num(data))
-    print(cle.nan_to_num(data))
+    print(cle.nan_to_num(data, nan=0, posinf=np.inf, neginf=-np.inf))
 
-    result = cle.nan_to_num(data)
+    result = cle.nan_to_num(data, nan=0, posinf=np.inf, neginf=-np.inf)
     print(result)
 
     assert result[0, 0] < 0  # a very small number

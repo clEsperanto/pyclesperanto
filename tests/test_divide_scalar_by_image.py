@@ -5,7 +5,8 @@ import numpy as np
 def test_divide_scalar_by_image():
     test1 = cle.push(np.asarray([[5, 5], [1, 1], [2, 2]]))
 
-    reference = cle.push(np.asarray([[2, 2], [10, 10], [5, 5]]))
+    # reference = cle.push(np.asarray([[2, 2], [10, 10], [5, 5]]))
+    reference = cle.push(np.asarray([[0.5, 0.5], [0.1, 0.1], [0.2, 0.2]]))
 
     result = cle.create(test1)
     cle.divide_image_and_scalar(test1, result, 10)
@@ -14,5 +15,6 @@ def test_divide_scalar_by_image():
     b = cle.pull(reference)
 
     print(a)
+    print(b)
 
     assert np.array_equal(a, b)

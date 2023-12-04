@@ -23,7 +23,7 @@ def test_mode_sphere_2d():
         ]
     )
 
-    result = cle.mode_sphere(image)
+    result = cle.mode_sphere(image, None, 1, 1, 1)
 
     assert cle.array_equal(result, reference)
 
@@ -57,6 +57,6 @@ def test_mode_sphere_3d():
         ]
     )
 
-    result = cle.mode_sphere(image)
+    result = cle.mode_sphere(image, None, 1, 1, 1)
 
     assert cle.array_equal(result, reference)

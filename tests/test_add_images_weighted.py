@@ -7,7 +7,7 @@ def test_add_images_weighted_missing_parameters():
     input2 = np.asarray([4, 5, 6])
 
     reference = np.asarray([5, 7, 9])
-    output = cle.add_images_weighted(input1, input2)
+    output = cle.add_images_weighted(input1, input2, None, 1, 1)
     result = cle.pull(output)
 
     print(result)

@@ -59,22 +59,22 @@ def cbrt(x: Image, out: Image = None) -> Image:
     return cubic_root(input_image=x, output_image=out, device=x.device)
 
 
-def power(x1: Image, x2: Union[float, int, Image], out: Image = None) -> Image:
-    x1 = asarray(x1)
-    if out:
-        out = asarray(out)
+# def power(x1: Image, x2: Union[float, int, Image], out: Image = None) -> Image:
+#     x1 = asarray(x1)
+#     if out:
+#         out = asarray(out)
 
-    if x2 is Image:
-        from ._tier1 import power_images
+#     if x2 is Image:
+#         from ._tier1 import power_images
 
-        x2 = asarray(x2)
-        return power_images(
-            input_image0=x1, input_image1=x2, output_image=out, device=x1.device
-        )
-    else:
-        from ._tier1 import power
+#         x2 = asarray(x2)
+#         return power_images(
+#             input_image0=x1, input_image1=x2, output_image=out, device=x1.device
+#         )
+#     else:
+#         from ._tier1 import power
 
-        return power(input_image=x1, scalar=x2, output_image=out, device=x1.device)
+#         return power(input_image=x1, scalar=x2, output_image=out, device=x1.device)
 
 
 def fabs(x: Image, out: Image = None) -> Image:

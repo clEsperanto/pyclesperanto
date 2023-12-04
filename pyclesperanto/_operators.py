@@ -294,14 +294,10 @@ def __iter__(self):
             self._iter_index = 0
 
         def __next__(self):
-            import numpy as np
-            from ._memory import create
-            from ._tier1 import copy_slice
-
             if not hasattr(self, "_iter_index"):
                 self._iter_index = 0
             if self._iter_index < self.image.shape[0]:
-                result = self.image.shape[self._iter_index]
+                result = self.image[self._iter_index]
                 self._iter_index = self._iter_index + 1
                 return result
             else:
@@ -318,8 +314,9 @@ def __getitem__(self, key):
         if isinstance(key[x], slice):
             index[x] = [key[x].start, key[x].stop, key[x].step]
         elif np.issubdtype(type(key[x]), np.integer):
-            index[x] = [key[x], key[x] + 1 if key[x] > 0 else key[x] - 1, None]
+            index[x] = [key[x], key[x] + 1 if key[x] >= 0 else key[x] - 1, None]
     key = index
+
     # manage range for (x,y,z), with nothing that we deal with a z,y,x order
     use_range, range_x, range_y, range_z = _compute_range(key, self.shape)
     origin = [range_z[0], range_y[0], range_x[0]]
@@ -348,7 +345,9 @@ def __getitem__(self, key):
             stop_z=range_z[1],
             step_z=range_z[2],
         )
-    else:  # we are dealing with a sub-region operation
+
+    if result is None:
+        # we are dealing with a sub-region operation
         from ._memory import create
 
         try:

@@ -31,8 +31,7 @@ def create(
     Image
         Created an empty image on the device
     """
-    if not isinstance(shape, tuple):
-        shape = tuple(shape)
+    shape = shape.shape if isinstance(shape, (np.ndarray, Array)) else tuple(shape)
     if dtype is None:
         dtype = np.float32
     if dtype in [float, np.float64]:
@@ -123,6 +122,6 @@ def pull(array: Image) -> np.ndarray:
     np.ndarray
         Image data
     """
-    if isinstance(array, np.ndarray):
-        return array
-    return array.get()
+    if isinstance(array, Array):
+        return array.get()
+    return array

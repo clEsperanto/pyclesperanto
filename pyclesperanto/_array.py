@@ -10,6 +10,10 @@ import numpy as np
 import warnings
 
 
+def _prepare_array(arr) -> np.ndarray:
+    return np.require(arr, None, "C")
+
+
 def __str__(self) -> str:
     return self.get().__str__()
 
@@ -31,7 +35,7 @@ def set(self, array: np.ndarray, origin: tuple = None, region: tuple = None) -> 
         raise ValueError(
             f"Value size mismatch the targeted region: {array.size} != {np.prod(region)} ({array.shape} != {tuple(np.squeeze(region))})"
         )
-    self._write(array, origin, region)
+    self._write(_prepare_array(array), origin, region)
     return self
 
 

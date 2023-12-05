@@ -32,6 +32,7 @@ def create(
         Created an empty image on the device
     """
     shape = shape.shape if isinstance(shape, (np.ndarray, Array)) else tuple(shape)
+    dtype = shape.dtype if isinstance(shape, (np.ndarray, Array)) else dtype
     if dtype is None:
         dtype = np.float32
     if dtype in [float, np.float64]:

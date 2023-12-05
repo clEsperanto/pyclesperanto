@@ -14,7 +14,7 @@ def test_undefined_to_zero():
                 [0, 1, 1, 0, 0],
                 [0, 0, 0, 0, 0],
             ]
-        )
+        ).astype(float)
     )
 
     test2 = cle.push(
@@ -26,7 +26,7 @@ def test_undefined_to_zero():
                 [0, 0, 1, 1, 0],
                 [0, 0, 0, 0, 0],
             ]
-        )
+        ).astype(float)
     )
 
     reference = cle.push(
@@ -38,7 +38,7 @@ def test_undefined_to_zero():
                 [0, 0, 1, 0, 0],
                 [0, 0, 0, 0, 0],
             ]
-        )
+        ).astype(float)
     )
 
     divided = cle.divide_images(test1, test2)

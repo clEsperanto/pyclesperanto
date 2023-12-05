@@ -174,7 +174,7 @@ cle::dType get_cle_dtype(const py::object &type)
 {
      py::dtype dt = py::dtype::from_args(type);
 
-     if (dt.equal(py::dtype("float32")))
+     if (dt.equal(py::dtype("float32")) || dt.equal(py::dtype("float")) || dt.equal(py::dtype("float64")))
      {
           return cle::dType::FLOAT;
      }
@@ -272,9 +272,6 @@ cle::Array::Pointer create_array(py::tuple shape, py::object dtype, std::string 
 auto array_(py::module_ &m) -> void
 {
      py::class_<cle::Array, std::shared_ptr<cle::Array>>(m, "_Array")
-         //     .def(py::init<cle::Array const &>())
-         //     .def_static("create",
-         //                 py::overload_cast<const size_t &, const size_t &, const size_t &, const cle::dType &, const cle::mType &, const cle::Device::Pointer &>(&cle::Array::create), py::return_value_policy::take_ownership, py::arg("width"), py::arg("height"), py::arg("depth"), py::arg("dtype"), py::arg("mtype"), py::arg("device"))
          .def_static("create", &create_array, py::arg("shape"), py::arg("dtype"), py::arg("mtype"), py::arg("device"))
 
          .def("_write", &write_region<float>, py::arg("value"), py::arg("origin") = py::none(), py::arg("region") = py::none())

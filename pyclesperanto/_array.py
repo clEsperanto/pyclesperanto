@@ -74,11 +74,12 @@ def from_array(cls, arr, *args, **kwargs):
     return cls.to_device(arr, *args, **kwargs)
 
 
-def empty(cls, shape, dtype=np.float32, *args, **kwargs):
+def empty(cls, shape, dtype=float, *args, **kwargs):
     assert_supported_dtype(dtype)
     mtype = kwargs.get("mtype", "buffer")
     device = kwargs.get("device", get_device())
-    return cls.create(shape, dtype, mtype, device)
+
+    return cls.create(shape=shape, dtype=dtype, mtype=mtype, device=device)
 
 
 def empty_like(cls, arr):
@@ -88,14 +89,16 @@ def empty_like(cls, arr):
 
 def zeros(cls, shape, dtype=np.float32, *args, **kwargs):
     assert_supported_dtype(dtype)
-    new_array = cls.empty(shape, dtype, *args, **kwargs)
+    new_array = cls.empty(shape=shape, dtype=dtype, *args, **kwargs)
     new_array.fill(0)
     return new_array
 
 
 def zeros_like(cls, arr):
     assert_supported_dtype(arr.dtype)
-    return cls.zeros(arr.shape, arr.dtype, mtype=arr.mtype, device=arr.device)
+    return cls.zeros(
+        shape=arr.shape, dtype=arr.dtype, mtype=arr.mtype, device=arr.device
+    )
 
 
 def T(self):

@@ -8,7 +8,7 @@ from typing import Tuple, Optional
 
 
 def create(
-    shape: Tuple[int, ...],
+    dim,
     dtype: Optional[type] = None,
     mtype: Optional[str] = None,
     device: Optional[Device] = None,
@@ -31,17 +31,20 @@ def create(
     Image
         Created an empty image on the device
     """
-    shape = shape.shape if isinstance(shape, (np.ndarray, Array)) else tuple(shape)
-    dtype = shape.dtype if isinstance(shape, (np.ndarray, Array)) else dtype
-    if dtype is None:
-        dtype = np.float32
-    if dtype in [float, np.float64]:
-        dtype = np.float32
-    if mtype is None:
-        mtype = "buffer"
-    if device is None:
-        device = get_device()
-    return Array.create(shape, dtype, mtype, device)
+    if isinstance(dim, Array):
+        device = device if device else dim.device
+        mtype = mtype if mtype else dim.mtype
+    if isinstance(dim, (np.ndarray, Array)):
+        dtype = dtype if dtype else dim.dtype
+        dim = dim.shape
+    else:
+        dim = tuple(dim)
+
+    device = device if device else get_device()
+    dtype = dtype if dtype else float
+    mtype = mtype if mtype else "buffer"
+
+    return Array.empty(dim, dtype=dtype, mtype=mtype, device=device)
 
 
 def create_like(
@@ -68,10 +71,6 @@ def create_like(
     Image
         Created an empty image on the device
     """
-    if dtype is None:
-        dtype = array.dtype
-    if dtype in [float, np.float64]:
-        dtype = np.float32
     return create(array.shape, dtype, mtype, device)
 
 
@@ -101,12 +100,11 @@ def push(
     """
     if isinstance(array, Array):
         return array
+
     if not isinstance(array, np.ndarray):
         array = np.asarray(array)
-    if array.dtype in [float, np.float64]:
-        array = array.astype(np.float32)
-    if dtype is None:
-        dtype = array.dtype
+
+    dtype = dtype if dtype else array.dtype
     return create(array.shape, dtype, mtype, device).set(array)
 
 

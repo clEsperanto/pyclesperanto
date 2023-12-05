@@ -113,6 +113,25 @@ def sum(self, axis: Optional[int] = None, out=None):
     return result
 
 
+def __pos__(x1):
+    return x1.__mul__(1)
+
+
+def __neg__(x1):
+    return x1.__mul__(-1)
+
+
+def __add__(x1, x2):
+    if isinstance(x2, _supported_numeric_types):
+        from ._tier1 import add_image_and_scalar
+
+        return add_image_and_scalar(x1, scalar=x2)
+    else:
+        from ._tier1 import add_images_weighted
+
+        return add_images_weighted(x1, x2, factor0=1, factor1=1)
+
+
 def __iadd__(x1, x2):
     from ._tier1 import copy
 
@@ -120,11 +139,12 @@ def __iadd__(x1, x2):
     if isinstance(x2, _supported_numeric_types):
         from ._tier1 import add_image_and_scalar
 
-        return add_image_and_scalar(temp, x1, scalar=x2)
+        add_image_and_scalar(temp, output_image=x1, scalar=x2)
     else:
         from ._tier1 import add_images_weighted
 
-        return add_images_weighted(temp, x2, x1, factor0=1, factor1=1)
+        add_images_weighted(temp, x2, output_image=x1, factor0=1, factor1=1)
+    return x1
 
 
 def __sub__(x1, x2):
@@ -266,7 +286,7 @@ def __pow__(x1, x2):
     if isinstance(x2, _supported_numeric_types):
         from ._tier1 import power
 
-        return power(x1, exponent=x2)
+        return power(x1, scalar=x2)
     else:
         from ._tier1 import power_images
 
@@ -280,7 +300,7 @@ def __ipow__(x1, x2):
     if isinstance(x2, _supported_numeric_types):
         from ._tier1 import power
 
-        return power(temp, x1, exponent=x2)
+        return power(temp, x1, scalar=x2)
     else:
         from ._tier1 import power_images
 

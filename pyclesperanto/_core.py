@@ -137,7 +137,8 @@ def default_initialisation():
 
 
 def gpu_info():
-    device_list = list_available_devices("gpu")
+    device_list = list_available_devices()
+    info = []
     for device_name in device_list:
-        print(select_device(device_name).info)
-        print("")
+        info.append(select_device(device_name).info)
+    return info

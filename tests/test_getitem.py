@@ -1,6 +1,8 @@
 import numpy as np
 import pyclesperanto as cle
 
+cle.select_device("TX")
+
 
 def test_range1():
     image = cle.push(np.asarray([[0, 1, 2], [2, 3, 4], [5, 6, 7]]))
@@ -336,9 +338,6 @@ def test_types_2():
 
 
 def test_negative_step_2d():
-    import pyclesperanto as cle
-    import numpy as np
-
     numbers = np.reshape(np.asarray([[i] for i in range(0, 20)]), (2, 10))
 
     cle_numbers = cle.asarray(numbers)
@@ -361,9 +360,6 @@ def test_negative_step_2d():
 
 
 def test_negative_step_3d():
-    import pyclesperanto as cle
-    import numpy as np
-
     numbers = np.reshape(np.asarray([[i] for i in range(0, 60)]), (3, 4, 5))
 
     cle_numbers = cle.asarray(numbers)

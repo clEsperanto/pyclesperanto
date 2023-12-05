@@ -1,7 +1,10 @@
-def test_t_2d():
-    import pyclesperanto as cle
-    import numpy as np
+import pyclesperanto as cle
+import numpy as np
 
+cle.select_device("TX")
+
+
+def test_t_2d():
     image = np.random.random((3, 2))
 
     cle_image = cle.asarray(image)
@@ -10,9 +13,6 @@ def test_t_2d():
 
 
 def test_t_3d():
-    import pyclesperanto as cle
-    import numpy as np
-
     image = np.random.random((3, 2, 5))
 
     cle_image = cle.asarray(image)

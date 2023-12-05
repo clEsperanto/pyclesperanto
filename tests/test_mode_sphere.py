@@ -1,6 +1,9 @@
-def test_mode_sphere_2d():
-    import pyclesperanto as cle
+import pyclesperanto as cle
 
+cle.select_device("TX")
+
+
+def test_mode_sphere_2d():
     image = cle.asarray(
         [
             [0, 0, 0, 1, 1, 1],
@@ -29,8 +32,6 @@ def test_mode_sphere_2d():
 
 
 def test_mode_sphere_3d():
-    import pyclesperanto as cle
-
     image = cle.asarray(
         [
             [

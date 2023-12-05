@@ -1,7 +1,8 @@
-from pathlib import Path
-
 import pyclesperanto as cle
 import numpy as np
+from skimage.io import imread
+
+cle.select_device("TX")
 
 
 def test_exclude_labels_on_edges_2d():
@@ -117,10 +118,6 @@ def test_exclude_labels_on_edges_3d():
 
 
 def test_exclude_labels_on_edges_blobs():
-    import pyclesperanto as cle
-
-    from skimage.io import imread
-
     # initialize GPU
     cle.select_device("TX")
     print("Used GPU: " + cle.get_device().name)
@@ -151,10 +148,6 @@ def test_exclude_labels_on_edges_blobs():
 
 
 def test_exclude_labels_on_edges_blobs_2():
-    import pyclesperanto as cle
-
-    from skimage.io import imread, imsave
-
     # initialize GPU
     cle.select_device("GTX")
     print("Used GPU: " + cle.get_device().name)

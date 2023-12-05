@@ -1,5 +1,8 @@
 import pyclesperanto as cle
+
 import numpy as np
+
+cle.select_device("TX")
 
 input1 = np.asarray([1, 2, 3])
 input2 = np.asarray([4, 5, 6])

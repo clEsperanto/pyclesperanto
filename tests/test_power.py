@@ -1,5 +1,8 @@
 import pyclesperanto as cle
+
 import numpy as np
+
+cle.select_device("TX")
 
 
 def test_power():
@@ -27,8 +30,7 @@ def test_power():
         )
     )
 
-    result = cle.create(test1)
-    cle.power(test1, result, 2)
+    result = cle.power(test1, 2)
 
     print(result)
 

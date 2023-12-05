@@ -1,5 +1,8 @@
 import pyclesperanto as cle
+
 import numpy as np
+
+cle.select_device("TX")
 
 
 def test_maximum_of_all_pixels():

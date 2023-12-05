@@ -1,6 +1,8 @@
 import numpy as np
 import pyclesperanto as cle
 
+cle.select_device("TX")
+
 
 def test_setitem_single_value():
     image = cle.create([10, 20, 30])

@@ -1,6 +1,8 @@
+import pytest
 import numpy as np
 import pyclesperanto as cle
-import pytest
+
+cle.select_device("TX")
 
 
 # @pytest.mark.skip(reason="Fails on github CI but passes locally")

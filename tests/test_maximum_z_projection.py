@@ -1,6 +1,8 @@
 import pyclesperanto as cle
 import numpy as np
 
+cle.select_device("TX")
+
 test1 = cle.push(
     np.asarray(
         [

@@ -1,9 +1,12 @@
-def test_dask_compatibility():
-    import pytest
+import pyclesperanto as cle
+import numpy as np
+import pytest
 
+cle.select_device("TX")
+
+
+def test_dask_compatibility():
     array = pytest.importorskip("dask.array")
-    import pyclesperanto as cle
-    import numpy as np
 
     np_arr = np.random.random((100, 100))
     da_arr = array.from_array(np_arr)

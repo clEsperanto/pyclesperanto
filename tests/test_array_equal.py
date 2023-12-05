@@ -1,7 +1,7 @@
 import pyclesperanto as cle
-
-
 import numpy as np
+
+cle.select_device("TX")
 
 
 def test_array_equal():

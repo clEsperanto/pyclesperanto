@@ -1,8 +1,10 @@
+import numpy as np
+import pyclesperanto as cle
+
+cle.select_device("TX")
+
+
 def test_setitem_3d():
-    import pyclesperanto as cle
-
-    import numpy as np
-
     data = np.asarray([[[1.0, 2.0, 3.0], [1.0, 2.0, 3.0]]]).astype(np.float32)
     ref = np.asarray([[[4.0, 2.0, 3.0], [4.0, 4.0, 3.0]]]).astype(np.float32)
 
@@ -16,10 +18,6 @@ def test_setitem_3d():
 
 
 def test_setitem_2d():
-    import pyclesperanto as cle
-
-    import numpy as np
-
     data = np.asarray([[1.0, 2.0, 3.0], [1.0, 2.0, 3.0]]).astype(np.float32)
     ref = np.asarray([[4.0, 2.0, 3.0], [4.0, 4.0, 3.0]]).astype(np.float32)
 

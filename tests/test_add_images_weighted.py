@@ -1,5 +1,8 @@
 import pyclesperanto as cle
+
 import numpy as np
+
+cle.select_device("TX")
 
 
 def test_add_images_weighted_missing_parameters():

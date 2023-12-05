@@ -65,7 +65,7 @@ build = ["cp37-*", "cp38-*", "cp39-*", "cp310-*", "cp311-*"]
 build-frontend = "build"
 build-verbosity = 1
 test-command = "pytest {project}/tests/test_import.py"
-test-requires = ["pytest", "pytest-cov", "pytest-benchmark"]
+test-requires = ["pytest", "pytest-cov", "pytest-benchmark", "scikit-image"]
 
 [tool.cibuildwheel.linux]
 before-all = ["bash {package}/scripts/build-opencl-linux.sh"]

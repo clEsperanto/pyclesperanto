@@ -38,7 +38,7 @@ jobs:
           channels: conda-forge
 
       - name: Prepare
-        run: conda install -y pytest pytest-cov pytest-benchmark
+        run: conda install -y pytest pytest-cov pytest-benchmark scikit-image
 
       - name: Install OpenCL (pocl)
         if: matrix.platform != 'windows-latest'

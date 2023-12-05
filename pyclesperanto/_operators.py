@@ -62,7 +62,7 @@ def max(self, axis: Optional[int] = None, out=None):
     else:
         raise ValueError("Axis " + axis + " not supported")
     if out is not None:
-        if isinstance(out, Union[Array, np.ndarray]):
+        if isinstance(out, (Array, np.ndarray)):
             np.copyto(out, result.get().astype(out.dtype))
         else:
             out = result
@@ -86,7 +86,7 @@ def min(self, axis: Optional[int] = None, out=None):
     else:
         raise ValueError("Axis " + axis + " not supported")
     if out is not None:
-        if isinstance(out, Union[Array, np.ndarray]):
+        if isinstance(out, (Array, np.ndarray)):
             np.copyto(out, result.get().astype(out.dtype))
     return result
 
@@ -108,7 +108,7 @@ def sum(self, axis: Optional[int] = None, out=None):
     else:
         raise ValueError("Axis " + axis + " not supported")
     if out is not None:
-        if isinstance(out, Union[Array, np.ndarray]):
+        if isinstance(out, (Array, np.ndarray)):
             np.copyto(out, result.get().astype(out.dtype))
     return result
 

@@ -15,7 +15,7 @@ def test_gamma_correction():
                 [0, 30, 0, 10, 0],
                 [0, 0, 0, 0, 0],
             ]
-        )
+        ).astype(float)
     )
 
     result = cle.create(test, dtype=float)

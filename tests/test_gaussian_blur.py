@@ -18,7 +18,7 @@ def test_gaussian_blur():
         )
     )
 
-    result = cle.create(test)
+    result = cle.create(test, dtype=float)
     cle.gaussian_blur(test, result, 1, 1, 0)
 
     print(result)

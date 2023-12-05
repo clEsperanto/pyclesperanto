@@ -18,7 +18,7 @@ def test_difference_of_gaussian():
         )
     )
 
-    result = cle.create(test)
+    result = cle.create(test, dtype=float)
     cle.difference_of_gaussian(test, result, 1, 1, 0, 2, 2, 0)
 
     print(result)

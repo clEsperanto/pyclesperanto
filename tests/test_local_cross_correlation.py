@@ -20,7 +20,7 @@ def test_local_cross_correlation():
         )
     )
 
-    test2 = cle.create(test)
+    test2 = cle.create(test, dtype=float)
     cle.local_cross_correlation(test, test1, test2)
 
     print(test2)

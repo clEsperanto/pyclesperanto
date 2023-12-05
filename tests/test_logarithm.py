@@ -10,7 +10,7 @@ def test_logarithm():
 
     reference = cle.push(np.asarray([[0, 2.3026], [6.9078, 4.6052]]))
 
-    result = cle.create(test1)
+    result = cle.create(test1, dtype=float)
     cle.logarithm(test1, result)
 
     a = cle.pull(result)

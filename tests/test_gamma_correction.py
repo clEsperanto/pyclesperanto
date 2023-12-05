@@ -18,7 +18,7 @@ def test_gamma_correction():
         )
     )
 
-    result = cle.create(test)
+    result = cle.create(test, dtype=float)
     cle.gamma_correction(test, result, 0.5)
 
     a = cle.pull(result)

@@ -17,7 +17,7 @@ def test_multiply_matrix(shape, benchmark, target):
             gpu_a = cle.push(a_np)
             gpu_b = cle.push(b_np)
             # allocate memory for result on GPU
-            gpu_c = cle.create((shape, shape))
+            gpu_c = cle.create((shape, shape), dtype=float)
             cle.multiply_matrix(gpu_a, gpu_b, gpu_c)
             _ = gpu_c.get()
         else:

@@ -30,11 +30,12 @@ def test_exponential():
         )
     )
 
-    result = cle.create(test)
+    result = cle.create(test, dtype=float)
     cle.exponential(test, result)
 
     print(result)
 
     a = cle.pull(result)
     b = cle.pull(reference)
+
     assert np.allclose(a, b, atol=0.00001)

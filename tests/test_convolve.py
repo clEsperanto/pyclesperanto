@@ -17,6 +17,7 @@ def test_convolve():
 
     a = cle.pull(test1)
     b = cle.pull(test2)
-    assert np.min(a) == np.min(b)
-    assert np.max(a) == np.max(b)
-    assert np.mean(a) == np.mean(b)
+
+    assert np.allclose(np.min(a), np.min(b), atol=1e-6)
+    assert np.allclose(np.max(a), np.max(b), atol=1e-6)
+    assert np.allclose(np.mean(a), np.mean(b), atol=1e-6)

@@ -60,6 +60,7 @@ reference = cle.push(
 
 def test_maximum_z_projection():
     result = cle.create(reference)
+
     cle.maximum_z_projection(test1, result)
 
     a = cle.pull(result)

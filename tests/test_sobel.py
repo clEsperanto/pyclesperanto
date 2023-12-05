@@ -30,7 +30,7 @@ def test_sobel():
         )
     )
 
-    result = cle.create(test1)
+    result = cle.create(test1, dtype=float)
     cle.sobel(test1, result)
     a = cle.pull(result)
     print(a)

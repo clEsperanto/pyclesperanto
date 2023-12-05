@@ -56,7 +56,7 @@ jobs:
         if: matrix.platform == 'ubuntu-latest'
         run: |
           mkdir coverage && cd coverage
-          pytest -v --cov=pyclesperanto ../tests/ --cov-report=xml
+          pytest --cov=pyclesperanto ../tests/ --cov-report=xml
 
       - name: Coverage
         if: matrix.platform == 'ubuntu-latest'

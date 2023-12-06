@@ -1,5 +1,4 @@
 import pyclesperanto as cle
-
 import numpy as np
 
 cle.select_device("TX")

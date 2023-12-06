@@ -7,7 +7,6 @@ from ._utils import assert_supported_dtype
 
 from typing import Union
 import numpy as np
-import warnings
 
 
 def _prepare_array(arr) -> np.ndarray:
@@ -25,9 +24,9 @@ def __repr__(self) -> str:
 
 
 def set(self, array: np.ndarray, origin: tuple = None, region: tuple = None) -> None:
-    # for cast array to numpy array
-    if not isinstance(array, np.ndarray):
+    if not isinstance(array, (np.ndarray, Array)):
         array = np.array(array)
+
     if array.dtype != self.dtype:
         array = array.astype(self.dtype)
 
@@ -109,7 +108,7 @@ def T(self):
     elif len(self.shape) == 3:
         return transpose_xz(self)
     else:
-        raise ValueError("Only 2D and 3D arrays supported.")
+        return self
 
 
 # missing operators:

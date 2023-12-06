@@ -66,29 +66,6 @@ py::array_t<T, py::array::c_style> read_region(const cle::Array &array, const py
      return np_array;
 }
 
-// template <typename T>
-// py::array_t<T, py::array::c_style> read(const cle::Array &array)
-// {
-//      py::array_t<T, py::array::c_style> np_array;
-//      switch (array.dim())
-//      {
-//      case 1:
-//           np_array = py::array_t<T, py::array::c_style>({static_cast<py::ssize_t>(array.width())});
-//           break;
-//      case 2:
-//           np_array = py::array_t<T, py::array::c_style>({static_cast<py::ssize_t>(array.height()), static_cast<py::ssize_t>(array.width())});
-//           break;
-//      case 3:
-//           np_array = py::array_t<T, py::array::c_style>({static_cast<py::ssize_t>(array.depth()), static_cast<py::ssize_t>(array.height()), static_cast<py::ssize_t>(array.width())});
-//           break;
-//      }
-//      py::buffer_info info = np_array.request();
-//      void *data = info.ptr;
-//      size_t size = info.size * info.itemsize;
-//      array.read(data);
-//      return np_array;
-// }
-
 template <typename T>
 void write_region(cle::Array &array, const py::array_t<T, py::array::c_style> &value, const py::object &origin_obj = py::none(), const py::object &region_obj = py::none())
 {
@@ -109,15 +86,6 @@ void write_region(cle::Array &array, const py::array_t<T, py::array::c_style> &v
      size_t size = info.size * info.itemsize;
      array.write(data, region_, origin_);
 }
-
-// template <typename T>
-// void write(cle::Array &array, const py::array_t<T, py::array::c_style> &value)
-// {
-//      py::buffer_info info = value.request();
-//      const void *data = info.ptr;
-//      size_t size = info.size * info.itemsize;
-//      array.write(data);
-// }
 
 void copy_region(const cle::Array &array, const cle::Array::Pointer &dst,
                  const py::object &src_origin_obj = py::none(),

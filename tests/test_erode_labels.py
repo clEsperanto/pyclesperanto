@@ -31,7 +31,7 @@ def test_erode_labels_2d():
             ]
         )
     )
-    gpu_output = cle.erode_labels(gpu_input, radius=1)
+    gpu_output = cle.erode_labels(gpu_input, radius=1, relabel=False)
 
     a = cle.pull(gpu_output)
     b = cle.pull(gpu_reference)
@@ -62,7 +62,7 @@ def test_erode_labels_2d_1():
     for r in range(5):
         print("r", r)
         gpu_reference = cle.minimum_box(gpu_input, radius_x=r, radius_y=r)
-        gpu_output = cle.erode_labels(gpu_input, radius=r)
+        gpu_output = cle.erode_labels(gpu_input, radius=r, relabel=False)
 
         print(gpu_output)
         print(gpu_reference)
@@ -165,7 +165,7 @@ def test_erode_labels_3d():
         )
     )
 
-    gpu_output = cle.erode_labels(gpu_input, radius=1)
+    gpu_output = cle.erode_labels(gpu_input, radius=1, relabel=False)
 
     a = cle.pull(gpu_output)
     b = cle.pull(gpu_reference)

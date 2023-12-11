@@ -46,7 +46,7 @@ py::array_t<T, py::array::c_style> read_region(const cle::Array &array, const py
      }
 
      py::array_t<T, py::array::c_style> np_array;
-     switch (array.dim())
+     switch (array.dimension())
      {
      case 1:
           np_array = py::array_t<T, py::array::c_style>({static_cast<py::ssize_t>(region_[0])});
@@ -140,47 +140,47 @@ py::object get_np_dtype(const cle::Array::Pointer &array)
 
 cle::dType get_cle_dtype(const py::object &type)
 {
-     py::dtype dt = py::dtype::from_args(type);
+     py::dtype np_type = py::dtype::from_args(type);
 
-     if (dt.equal(py::dtype("float32")) || dt.equal(py::dtype("float")) || dt.equal(py::dtype("float64")))
+     if (np_type.equal(py::dtype("float32")) || np_type.equal(py::dtype("float")) || np_type.equal(py::dtype("float64")))
      {
           return cle::dType::FLOAT;
      }
-     else if (dt.equal(py::dtype("int64")) || dt.equal(py::dtype("int")))
+     else if (np_type.equal(py::dtype("int64")) || np_type.equal(py::dtype("int")))
      {
           return cle::dType::INT64;
      }
-     else if (dt.equal(py::dtype("int32")))
+     else if (np_type.equal(py::dtype("int32")))
      {
           return cle::dType::INT32;
      }
-     else if (dt.equal(py::dtype("int16")))
+     else if (np_type.equal(py::dtype("int16")))
      {
           return cle::dType::INT16;
      }
-     else if (dt.equal(py::dtype("int8")))
+     else if (np_type.equal(py::dtype("int8")))
      {
           return cle::dType::INT8;
      }
-     else if (dt.equal(py::dtype("uint64")))
+     else if (np_type.equal(py::dtype("uint64")))
      {
           return cle::dType::UINT64;
      }
-     else if (dt.equal(py::dtype("uint32")))
+     else if (np_type.equal(py::dtype("uint32")))
      {
           return cle::dType::UINT32;
      }
-     else if (dt.equal(py::dtype("uint16")))
+     else if (np_type.equal(py::dtype("uint16")))
      {
           return cle::dType::UINT16;
      }
-     else if (dt.equal(py::dtype("uint8")))
+     else if (np_type.equal(py::dtype("uint8")))
      {
           return cle::dType::UINT8;
      }
      else
      {
-          throw std::invalid_argument("Invalid dtype value : " + dt.attr("name").cast<std::string>());
+          throw std::invalid_argument("Invalid dtype value : " + np_type.attr("name").cast<std::string>());
      }
 }
 
@@ -215,7 +215,7 @@ cle::mType get_cle_mtype(const std::string &mtype)
 
 py::tuple get_np_shape(const cle::Array::Pointer &array)
 {
-     switch (array->dim())
+     switch (array->dimension())
      {
      case 1:
           return py::make_tuple(array->width());
@@ -233,7 +233,9 @@ cle::Array::Pointer create_array(py::tuple shape, py::object dtype, std::string 
      std::array<size_t, 3> c_shape = {1, 1, 1};
      invert_tuple(shape, &c_shape);
 
-     auto array = cle::Array::create(c_shape[0], c_shape[1], c_shape[2], get_cle_dtype(dtype), get_cle_mtype(mtype), device);
+     auto dimension = py::len(shape);
+
+     auto array = cle::Array::create(c_shape[0], c_shape[1], c_shape[2], dimension, get_cle_dtype(dtype), get_cle_mtype(mtype), device);
      return array;
 }
 
@@ -271,7 +273,7 @@ auto array_(py::module_ &m) -> void
          .def_property_readonly("size", &cle::Array::size)
          .def_property_readonly("itemsize", &cle::Array::itemSize)
          .def_property_readonly("device", &cle::Array::device)
-         .def_property_readonly("ndim", &cle::Array::dim)
+         .def_property_readonly("ndim", &cle::Array::dimension)
          .def_property_readonly("mtype", [](const cle::Array::Pointer &array)
                                 { return get_str_mtype(array); })
          .def_property_readonly("dtype", [](const cle::Array::Pointer &array)
@@ -280,7 +282,7 @@ auto array_(py::module_ &m) -> void
                                 { return get_np_shape(array); })
          .def("__len__", [](const cle::Array::Pointer &array)
               {
-          switch (array->dim())
+          switch (array->dimension())
           {
           case 1:
                return array->width();

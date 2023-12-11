@@ -31,9 +31,14 @@ def set(self, array: np.ndarray, origin: tuple = None, region: tuple = None) -> 
         array = array.astype(self.dtype)
 
     if region and array.size != np.prod(region):
-        raise ValueError(
+        raise IndexError(
             f"Value size mismatch the targeted region: {array.size} != {np.prod(region)} ({array.shape} != {tuple(np.squeeze(region))})"
         )
+    elif not region and self.size != array.size:
+        raise IndexError(
+            f"Value size mismatch the targeted region: {self.size} != {array.size} ({self.shape} != {array.shape})"
+        )
+
     self._write(_prepare_array(array), origin, region)
     return self
 
@@ -128,10 +133,10 @@ setattr(Array, "get", get)
 setattr(Array, "__str__", __str__)
 setattr(Array, "__repr__", __repr__)
 setattr(Array, "__array__", __array__)
-setattr(Array, "astype", _operators.astype)
-setattr(Array, "max", _operators.max)
-setattr(Array, "min", _operators.min)
-setattr(Array, "sum", _operators.sum)
+setattr(Array, "astype", _operators._astype)
+setattr(Array, "max", _operators._max)
+setattr(Array, "min", _operators._min)
+setattr(Array, "sum", _operators._sum)
 setattr(Array, "__pos__", _operators.__pos__)
 setattr(Array, "__neg__", _operators.__neg__)
 setattr(Array, "__add__", _operators.__add__)
@@ -151,9 +156,9 @@ setattr(Array, "__eq__", _operators.__eq__)
 setattr(Array, "__ne__", _operators.__ne__)
 setattr(Array, "__pow__", _operators.__pow__)
 setattr(Array, "__ipow__", _operators.__ipow__)
-setattr(Array, "_plt_to_png", _operators._plt_to_png)
-setattr(Array, "_png_to_html", _operators._png_to_html)
-setattr(Array, "_repr_html_", _operators._repr_html_)
+setattr(Array, "_plt_to_png", _operators.__plt_to_png__)
+setattr(Array, "_png_to_html", _operators.__png_to_html__)
+setattr(Array, "_repr_html_", _operators.__repr_html__)
 setattr(Array, "__iter__", _operators.__iter__)
 setattr(Array, "__setitem__", _operators.__setitem__)
 setattr(Array, "__getitem__", _operators.__getitem__)

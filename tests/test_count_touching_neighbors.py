@@ -17,7 +17,7 @@ def test_count_touching_neighbors():
         )
     )
 
-    reference = cle.push(np.asarray([[0, 1, 4, 1, 1, 1]]))
+    reference = cle.push(np.asarray([0, 1, 4, 1, 1, 1]))
 
     touch_matrix = cle.generate_touch_matrix(labels)
 
@@ -45,7 +45,7 @@ def test_count_touching_neighbors_not_ignoring_background():
         )
     )
 
-    reference = cle.push(np.asarray([[5, 2, 5, 2, 2, 2]]))
+    reference = cle.push(np.asarray([5, 2, 5, 2, 2, 2]))
 
     touch_matrix = cle.generate_touch_matrix(labels)
 

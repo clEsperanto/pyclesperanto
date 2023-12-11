@@ -3,7 +3,7 @@ from typing import Optional, Union
 
 from ._array import Array
 
-from ._utils import _compute_range, _clean_index
+from ._utils import _compute_range, _process_ellipsis_into_slice, _trim_index_to_shape
 from ._utils import assert_supported_dtype
 
 cl_buffer_datatype_dict = {
@@ -26,7 +26,7 @@ cl_buffer_datatype_dict = {
 _supported_numeric_types = tuple(cl_buffer_datatype_dict.keys())
 
 
-def astype(self, dtype: type):
+def _astype(self, dtype: type):
     if dtype not in _supported_numeric_types:
         raise ValueError(
             "dtype "
@@ -45,7 +45,7 @@ def astype(self, dtype: type):
     return result
 
 
-def max(self, axis: Optional[int] = None, out=None):
+def _max(self, axis: Optional[int] = None, out=None):
     from ._tier2 import maximum_of_all_pixels
     from ._tier1 import maximum_x_projection
     from ._tier1 import maximum_y_projection
@@ -69,7 +69,7 @@ def max(self, axis: Optional[int] = None, out=None):
     return result
 
 
-def min(self, axis: Optional[int] = None, out=None):
+def _min(self, axis: Optional[int] = None, out=None):
     from ._tier2 import minimum_of_all_pixels
     from ._tier1 import minimum_x_projection
     from ._tier1 import minimum_y_projection
@@ -91,7 +91,7 @@ def min(self, axis: Optional[int] = None, out=None):
     return result
 
 
-def sum(self, axis: Optional[int] = None, out=None):
+def _sum(self, axis: Optional[int] = None, out=None):
     from ._tier2 import sum_of_all_pixels
     from ._tier1 import sum_x_projection
     from ._tier1 import sum_y_projection
@@ -326,114 +326,171 @@ def __iter__(self):
     return MyIterator(self)
 
 
-def __getitem__(self, key):
-    result = None
-    key = _clean_index(key)
-    index = [[0, x, 1] for x in self.shape]
-    for x in range(len(key)):
-        if isinstance(key[x], slice):
-            index[x] = [key[x].start, key[x].stop, key[x].step]
-        elif np.issubdtype(type(key[x]), np.integer):
-            index[x] = [key[x], key[x] + 1 if key[x] >= 0 else key[x] - 1, None]
-    key = index
+def __getitem__(self, index):
+    if not isinstance(index, tuple):
+        index = (index,)
+
+    if len(index) > self.ndim:
+        raise IndexError(
+            f"too many indices for array: array is {self.ndim}-dimensional, but {len(index)} were indexed"
+        )
+
+    dst_dim = sum(1 for i in index if not isinstance(i, (int, float)))
+
+    #     key[0], (tuple, list, np.ndarray)
+    # ):
+    #     if len(key) == len(self.shape):
+    #         if len(key[0]) > 0:
+    #             # switch xy in 2D / xz in 3D, because clesperanto expects an X-Y-Z array;
+    #             # see also https://github.com/clEsperanto/pyclesperanto_prototype/issues/49
+    #             key = list(key)
+    #             key[0], key[-1] = key[-1], key[0]
+
+    #             # send coordinates to GPU
+    #             from ._memory import push
+
+    #             coordinates = push(np.asarray(key))
+    #             # read values from positions
+    #             from ._tier1 import read_values_from_coordinates
+
+    #             return read_values_from_coordinates(self, coordinates)
+    #         else:
+    #             return []
+
+    index = _process_ellipsis_into_slice(index, self.shape)
+    index = _trim_index_to_shape(index, self.shape)
+    slice_list = [[0, x, 1] for x in self.shape]
+    for x in range(len(index)):
+        if isinstance(index[x], slice):
+            slice_list[x] = [index[x].start, index[x].stop, index[x].step]
+        elif np.issubdtype(type(index[x]), np.integer):
+            slice_list[x] = [
+                index[x],
+                index[x] + 1 if index[x] >= 0 else index[x] - 1,
+                None,
+            ]
 
     # manage range for (x,y,z), with nothing that we deal with a z,y,x order
-    use_range, range_x, range_y, range_z = _compute_range(key, self.shape)
+    _, range_x, range_y, range_z = _compute_range(slice_list, self.shape)
     origin = [range_z[0], range_y[0], range_x[0]]
     region = [
         range_z[1] - range_z[0],
         range_y[1] - range_y[0],
         range_x[1] - range_x[0],
     ]
-    region = [abs(x) for x in region]
+    region = [abs(x) if x != 0 else 1 for x in region]
+    steps = [range_z[2], range_y[2], range_x[2]]
+
+    trimmed_region = [int(abs(x / s)) for x, s in zip(region, steps) if x > 1]
+    dst_shape = [1] * dst_dim
+    dst_shape[-len(trimmed_region) :] = trimmed_region
+
     # we are dealing with a single pixel operation
     if np.prod(region) == 1:
-        result = self.get(origin, region)
+        # TODO: return a float or return a buffer of one?
+        return self.get(origin, region)
+
+    print(
+        f"region {region}, origin {origin}, range_x {range_x}, range_y {range_y}, range_z {range_z}"
+    )
+
     # a specific step was provided, we are dealing with a range operation
-    if use_range and result is None:
-        from ._tier1 import range as gpu_range
+    from ._tier1 import range as gpu_range
 
-        result = gpu_range(
-            self,
-            start_x=range_x[0],
-            stop_x=range_x[1],
-            step_x=range_x[2],
-            start_y=range_y[0],
-            stop_y=range_y[1],
-            step_y=range_y[2],
-            start_z=range_z[0],
-            stop_z=range_z[1],
-            step_z=range_z[2],
-        )
+    result = gpu_range(
+        self,
+        start_x=range_x[0],
+        stop_x=range_x[1],
+        step_x=range_x[2],
+        start_y=range_y[0],
+        stop_y=range_y[1],
+        step_y=range_y[2],
+        start_z=range_z[0],
+        stop_z=range_z[1],
+        step_z=range_z[2],
+    )
 
-    if result is None:
-        # we are dealing with a sub-region operation
+    print(f"results shape {result.shape}, dst_shape {dst_shape}")
+
+    # if result is an Array, and one of the dimension is equal to 1
+    if result.shape != tuple(dst_shape):
+        from ._tier1 import transpose_xy, transpose_yz
         from ._memory import create
 
-        try:
-            # we copy sub-region inside a new buffer to return
-            result = create(
-                region, dtype=self.dtype, mtype=self.mtype, device=self.device
-            )
-            self.copy(result, origin, [0] * len(region), region)
-        except Exception:
-            # if we fail to copy, we rely on numpy to do the job
-            result = self.set(self.get().__getitem__(key))
-    # if result is an Array, and one of the dimension is equal to 1
-    if isinstance(result, Array) and any([x == 1 for x in result.shape]):
-        from ._tier1 import transpose_xy, transpose_yz
+        tmp = create(
+            dst_shape,
+            dtype=self.dtype,
+            mtype=self.mtype,
+            device=self.device,
+        )
 
         transpose = [x == 1 for x in region]
         if transpose[2]:  # x is empty
             result = transpose_xy(result)
-            result = transpose_yz(result)
-        if transpose[1]:  # y is empty
-            result = transpose_yz(result)
+            transpose_yz(result, tmp)
+        elif transpose[1]:  # y is empty
+            transpose_yz(result, tmp)
+        else:
+            result.copy(tmp)
+
+        result = tmp
 
     return result
 
 
-def __setitem__(self, key, value):
+def __setitem__(self, index, value):
     if not isinstance(value, (Array, np.ndarray)):
         value = np.array(value)
-    key = _clean_index(key)
-    # check if the dtype of the value is a numeric type such as float, int etc
-    assert_supported_dtype(value.dtype)
-    # define default index as slices(0, shape, 1), and iterate over keys and replace when relevant
-    index = [[0, x, 1] for x in self.shape]
-    for x in range(len(key)):
-        if isinstance(key[x], slice):
-            index[x] = [key[x].start, key[x].stop, key[x].step]
-        elif np.issubdtype(type(key[x]), np.integer):
-            index[x] = [key[x], key[x] + 1 if key[x] > 0 else key[x] - 1, None]
-    key = index
+
+    if not isinstance(index, tuple):
+        index = (index,)
+
+    dst_dim = sum(1 for i in index if not isinstance(i, (int, float)))
+
+    index = _process_ellipsis_into_slice(index, self.shape)
+    index = _trim_index_to_shape(index, self.shape)
+    slice_list = [[0, x, 1] for x in self.shape]
+    for x in range(len(index)):
+        if isinstance(index[x], slice):
+            slice_list[x] = [index[x].start, index[x].stop, index[x].step]
+        elif np.issubdtype(type(index[x]), np.integer):
+            slice_list[x] = [
+                index[x],
+                index[x] + 1 if index[x] >= 0 else index[x] - 1,
+                None,
+            ]
 
     # manage range for (x,y,z), with nothing that we deal with a z,y,x order
-    use_range, range_x, range_y, range_z = _compute_range(key, self.shape)
+    _, range_x, range_y, range_z = _compute_range(slice_list, self.shape)
     origin = [range_z[0], range_y[0], range_x[0]]
     region = [
         range_z[1] - range_z[0],
         range_y[1] - range_y[0],
         range_x[1] - range_x[0],
     ]
-    region = [abs(x) for x in region]
+    region = [abs(x) if x != 0 else 1 for x in region]
+    steps = [range_z[2], range_y[2], range_x[2]]
 
-    stride_region = [
-        abs(region[0] / range_z[2]),
-        abs(region[1] / range_y[2]),
-        abs(region[2] / range_x[2]),
-    ]
+    trimmed_region = [int(abs(x / s)) for x, s in zip(region, steps) if x > 1]
+    dst_shape = [1] * dst_dim
+    dst_shape[-len(trimmed_region) :] = trimmed_region
+
+    print(
+        f"region {region}, origin {origin}, range_x {range_x}, range_y {range_y}, range_z {range_z}"
+    )
 
     if value.size == 1:
-        value = np.repeat(value, np.prod(region))
-        value = value.reshape(region)
+        if np.prod(region) > 1:
+            value = np.repeat(value, np.prod(region))
+            value = value.reshape(region)
+
+        print(f"__single_value {value}, reshaped to the region {region}")
+
         self.set(value, origin, region)
         return
-    if value.size != np.prod(stride_region):
-        raise IndexError(
-            f"Input value mismatch the indexed region: {value.size} != {np.prod(stride_region)} ({value.shape} != {region})"
-        )
-    if use_range:
+
+    if any([x != 1 for x in steps]):
+        # TODO: not sure it work properly
         from ._tier1 import range as gpu_range
 
         gpu_range(
@@ -449,27 +506,34 @@ def __setitem__(self, key, value):
             stop_z=range_z[1],
             step_z=range_z[2],
         )
-    else:
-        if isinstance(value, Array):
-            if self.dtype == value.dtype:
-                self.copy(value, origin, (0, 0, 0), region)
-            else:
-                # otherwise we copy with cast using paste
-                from ._tier1 import paste
 
-                paste(
-                    value,
-                    self,
-                    index_x=origin[-1] if len(origin) > 0 else 0,
-                    index_y=origin[-2] if len(origin) > 1 else 0,
-                    index_z=origin[-3] if len(origin) > 2 else 0,
-                )
+        print(f"__range_value {value.shape}, copied into self {self.shape}")
+        return
+
+    if isinstance(value, Array):
+        if self.dtype == value.dtype:
+            print("__direct copy")
+            self.copy(value, origin, (0, 0, 0), region)
         else:
-            self.set(value, origin, region)
+            # otherwise we copy with cast using paste
+            from ._tier1 import paste
+
+            print("__direct paste for casting")
+
+            paste(
+                value,
+                self,
+                index_x=origin[-1] if len(origin) > 0 else 0,
+                index_y=origin[-2] if len(origin) > 1 else 0,
+                index_z=origin[-3] if len(origin) > 2 else 0,
+            )
+    else:
+        print("__host to device write")
+        self.set(value, origin, region)
 
 
 # adapted from https://github.com/napari/napari/blob/d6bc683b019c4a3a3c6e936526e29bbd59cca2f4/napari/utils/notebook_display.py#L54-L73
-def _plt_to_png(self):
+def __plt_to_png__(self):
     """PNG representation of the image object for IPython.
     Returns
     -------
@@ -486,14 +550,14 @@ def _plt_to_png(self):
     return png
 
 
-def _png_to_html(self, png):
+def __png_to_html__(self, png):
     import base64
 
     url = "data:image/png;base64," + base64.b64encode(png).decode("utf-8")
     return f'<img src="{url}"></img>'
 
 
-def _repr_html_(self):
+def __repr_html__(self):
     """HTML representation of the image object for IPython.
     Returns
     -------

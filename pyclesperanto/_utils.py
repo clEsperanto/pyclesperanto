@@ -79,11 +79,18 @@ def _compute_range(key, shape):
     return use_range, range_x, range_y, range_z
 
 
-def _clean_index(index):
-    if not isinstance(index, tuple):
-        index = (index,)
-    if any(x is Ellipsis for x in index):
-        index = tuple(slice(None, None, None) if x is Ellipsis else x for x in index)
+def _process_ellipsis_into_slice(index, shape):
+    if Ellipsis in index:
+        ellipsis_index = index.index(Ellipsis)
+        num_slices = len(shape) - (len(index) - 1)
+        slices = (slice(None, None, None),) * num_slices
+        index = index[:ellipsis_index] + slices + index[ellipsis_index + 1 :]
+    return index
+
+
+def _trim_index_to_shape(index, shape):
+    if len(index) > len(shape):
+        index = index[-len(shape) :]
     return index
 
 

@@ -27,7 +27,7 @@ def test_setitem_invalid_value():
 
     try:
         image[5, 10, 15] = invalid_value
-    except TypeError:
+    except ValueError:
         pass
     else:
         assert False, "Expected TypeError to be raised"

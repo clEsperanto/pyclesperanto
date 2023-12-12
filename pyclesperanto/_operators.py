@@ -327,6 +327,34 @@ def __iter__(self):
 
 
 def __getitem__(self, index):
+    print(f"__getitem__ index: {index}")
+
+    if (
+        isinstance(index, (tuple, list, np.ndarray))
+        and index[0] is not None
+        and isinstance(index[0], (tuple, list, np.ndarray))
+    ):
+        if len(index) == len(self.shape):
+            if len(index[0]) > 0:
+                # switch xy in 2D / xz in 3D, because clesperanto expects an X-Y-Z array;
+                # see also https://github.com/clEsperanto/pyclesperanto_prototype/issues/49
+                index = list(index)
+                index[0], index[-1] = index[-1], index[0]
+
+                # send coordinates to GPU
+                from ._memory import push
+
+                coordinates = push(np.asarray(index))
+
+                print(f"coordinate list {coordinates}")
+
+                # read values from positions
+                from ._tier1 import read_values_from_coordinates
+
+                return read_values_from_coordinates(self, coordinates)
+            else:
+                return []
+
     if not isinstance(index, tuple):
         index = (index,)
 
@@ -336,26 +364,6 @@ def __getitem__(self, index):
         )
 
     dst_dim = sum(1 for i in index if not isinstance(i, (int, float)))
-
-    #     key[0], (tuple, list, np.ndarray)
-    # ):
-    #     if len(key) == len(self.shape):
-    #         if len(key[0]) > 0:
-    #             # switch xy in 2D / xz in 3D, because clesperanto expects an X-Y-Z array;
-    #             # see also https://github.com/clEsperanto/pyclesperanto_prototype/issues/49
-    #             key = list(key)
-    #             key[0], key[-1] = key[-1], key[0]
-
-    #             # send coordinates to GPU
-    #             from ._memory import push
-
-    #             coordinates = push(np.asarray(key))
-    #             # read values from positions
-    #             from ._tier1 import read_values_from_coordinates
-
-    #             return read_values_from_coordinates(self, coordinates)
-    #         else:
-    #             return []
 
     index = _process_ellipsis_into_slice(index, self.shape)
     index = _trim_index_to_shape(index, self.shape)
@@ -439,6 +447,52 @@ def __getitem__(self, index):
 
 
 def __setitem__(self, index, value):
+    if (
+        isinstance(index, (tuple, np.ndarray))
+        and index[0] is not None
+        and isinstance(index[0], (tuple, list, np.ndarray))
+    ):
+        if len(index) == len(self.shape):
+            if len(index[0]) > 0:
+                # switch xy in 2D / xz in 3D, because clesperanto expects an X-Y-Z array;
+                # see also https://github.com/clEsperanto/pyclesperanto_prototype/issues/49
+                index = list(index)
+                index[0], index[-1] = index[-1], index[0]
+
+                # send coordinates to GPU
+                from ._memory import push
+
+                coordinates = push(np.asarray(index))
+
+                print(f"coordinate list \n{coordinates}")
+
+                num_coordinates = coordinates.shape[-1]
+                if isinstance(value, (int, float)):
+                    # make an array containing new values for every pixel
+                    number = value
+
+                    from ._memory import create
+
+                    value_shape = [1] * len(self.shape)
+                    value_shape[-1] = num_coordinates
+                    value = create(value_shape)
+                    value.fill(number)
+
+                    # from ._tier1 import set
+
+                    # set(value, number)
+                    print(f"value \n{value}")
+
+                # overwrite pixels
+                from ._tier1 import write_values_to_coordinates
+                from ._tier2 import concatenate_along_y
+
+                values_and_positions = concatenate_along_y(coordinates, value)
+                print(f"values_and_positions list \n{values_and_positions}")
+
+                write_values_to_coordinates(values_and_positions, self)
+            return
+
     if not isinstance(value, (Array, np.ndarray)):
         value = np.array(value)
 

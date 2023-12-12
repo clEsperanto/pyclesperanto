@@ -3,7 +3,7 @@
 from ._pyclesperanto import _Array as Array
 from ._core import Device, get_device
 from . import _operators
-from ._utils import assert_supported_dtype
+from ._utils import _assert_supported_dtype
 
 from typing import Union
 import numpy as np
@@ -74,12 +74,12 @@ def to_device(cls, arr, *args, **kwargs):
 
 
 def from_array(cls, arr, *args, **kwargs):
-    assert_supported_dtype(arr.dtype)
+    _assert_supported_dtype(arr.dtype)
     return cls.to_device(arr, *args, **kwargs)
 
 
 def empty(cls, shape, dtype=float, *args, **kwargs):
-    assert_supported_dtype(dtype)
+    _assert_supported_dtype(dtype)
     mtype = kwargs.get("mtype", "buffer")
     device = kwargs.get("device", get_device())
 
@@ -87,19 +87,19 @@ def empty(cls, shape, dtype=float, *args, **kwargs):
 
 
 def empty_like(cls, arr):
-    assert_supported_dtype(arr.dtype)
+    _assert_supported_dtype(arr.dtype)
     return Array.create(arr.shape, arr.dtype, arr.mtype, arr.device)
 
 
 def zeros(cls, shape, dtype=np.float32, *args, **kwargs):
-    assert_supported_dtype(dtype)
+    _assert_supported_dtype(dtype)
     new_array = cls.empty(shape=shape, dtype=dtype, *args, **kwargs)
     new_array.fill(0)
     return new_array
 
 
 def zeros_like(cls, arr):
-    assert_supported_dtype(arr.dtype)
+    _assert_supported_dtype(arr.dtype)
     return cls.zeros(
         shape=arr.shape, dtype=arr.dtype, mtype=arr.mtype, device=arr.device
     )

@@ -4,7 +4,7 @@ from typing import Optional, Union
 from ._array import Array
 
 from ._utils import _compute_range, _process_ellipsis_into_slice, _trim_index_to_shape
-from ._utils import assert_supported_dtype
+from ._utils import _assert_supported_dtype
 
 cl_buffer_datatype_dict = {
     bool: "bool",

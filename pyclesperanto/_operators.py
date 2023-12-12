@@ -327,8 +327,6 @@ def __iter__(self):
 
 
 def __getitem__(self, index):
-    print(f"__getitem__ index: {index}")
-
     if (
         isinstance(index, (tuple, list, np.ndarray))
         and index[0] is not None
@@ -345,8 +343,6 @@ def __getitem__(self, index):
                 from ._memory import push
 
                 coordinates = push(np.asarray(index))
-
-                print(f"coordinate list {coordinates}")
 
                 # read values from positions
                 from ._tier1 import read_values_from_coordinates
@@ -398,10 +394,6 @@ def __getitem__(self, index):
         # TODO: return a float or return a buffer of one?
         return self.get(origin, region)
 
-    print(
-        f"region {region}, origin {origin}, range_x {range_x}, range_y {range_y}, range_z {range_z}"
-    )
-
     # a specific step was provided, we are dealing with a range operation
     from ._tier1 import range as gpu_range
 
@@ -417,8 +409,6 @@ def __getitem__(self, index):
         stop_z=range_z[1],
         step_z=range_z[2],
     )
-
-    print(f"results shape {result.shape}, dst_shape {dst_shape}")
 
     # if result is an Array, and one of the dimension is equal to 1
     if result.shape != tuple(dst_shape):
@@ -464,8 +454,6 @@ def __setitem__(self, index, value):
 
                 coordinates = push(np.asarray(index))
 
-                print(f"coordinate list \n{coordinates}")
-
                 num_coordinates = coordinates.shape[-1]
                 if isinstance(value, (int, float)):
                     # make an array containing new values for every pixel
@@ -478,18 +466,11 @@ def __setitem__(self, index, value):
                     value = create(value_shape)
                     value.fill(number)
 
-                    # from ._tier1 import set
-
-                    # set(value, number)
-                    print(f"value \n{value}")
-
                 # overwrite pixels
                 from ._tier1 import write_values_to_coordinates
                 from ._tier2 import concatenate_along_y
 
                 values_and_positions = concatenate_along_y(coordinates, value)
-                print(f"values_and_positions list \n{values_and_positions}")
-
                 write_values_to_coordinates(values_and_positions, self)
             return
 
@@ -529,16 +510,10 @@ def __setitem__(self, index, value):
     dst_shape = [1] * dst_dim
     dst_shape[-len(trimmed_region) :] = trimmed_region
 
-    print(
-        f"region {region}, origin {origin}, range_x {range_x}, range_y {range_y}, range_z {range_z}"
-    )
-
     if value.size == 1:
         if np.prod(region) > 1:
             value = np.repeat(value, np.prod(region))
             value = value.reshape(region)
-
-        print(f"__single_value {value}, reshaped to the region {region}")
 
         self.set(value, origin, region)
         return
@@ -560,19 +535,14 @@ def __setitem__(self, index, value):
             stop_z=range_z[1],
             step_z=range_z[2],
         )
-
-        print(f"__range_value {value.shape}, copied into self {self.shape}")
         return
 
     if isinstance(value, Array):
         if self.dtype == value.dtype:
-            print("__direct copy")
             self.copy(value, origin, (0, 0, 0), region)
         else:
             # otherwise we copy with cast using paste
             from ._tier1 import paste
-
-            print("__direct paste for casting")
 
             paste(
                 value,
@@ -582,7 +552,6 @@ def __setitem__(self, index, value):
                 index_z=origin[-3] if len(origin) > 2 else 0,
             )
     else:
-        print("__host to device write")
         self.set(value, origin, region)
 
 

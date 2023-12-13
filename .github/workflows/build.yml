@@ -48,6 +48,7 @@ jobs:
 
   test:
     needs: build
+    if: success()
     name: Test (${{ matrix.platform }} - ${{ matrix.python-version }})
     runs-on: ${{ matrix.platform }}
     strategy:
@@ -71,6 +72,7 @@ jobs:
 
   coverage:
     needs: test
+    if: success()
     name: Coverage
     runs-on: ubuntu-latest
     steps:

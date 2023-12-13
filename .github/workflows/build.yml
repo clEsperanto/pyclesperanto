@@ -22,6 +22,10 @@ jobs:
         shell: "bash -l {0}"
 
     steps:
+      - name: Checkout
+        id: checkout
+        uses: actions/checkout@v4
+
       - name: Get Date
         id: get-date
         run: echo "today=$(/bin/date -u '+%Y%m%d')" >> $GITHUB_OUTPUT
@@ -35,10 +39,6 @@ jobs:
             conda-${{ matrix.platform }}--${{ steps.get-date.outputs.today }}-${{ hashFiles('**/pyproject.toml') }}-${{ env.CACHE_NUMBER }}
         env:
           CACHE_NUMBER: 0
-
-      - name: Checkout
-        id: checkout
-        uses: actions/checkout@v4
 
       - name: Get conda - ${{ matrix.python-version }}
         id: get-conda

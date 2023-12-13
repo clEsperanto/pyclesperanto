@@ -94,8 +94,7 @@ def _trim_index_to_shape(index, shape):
     return index
 
 
-def _assert_supported_dtype(dtype):
-    # make sure it works for e.g. np.float32 and np.dtype(np.float32)
-    dtype = getattr(dtype, "type", dtype)
-    if dtype not in cl_buffer_datatype_dict:
-        raise TypeError("dtype %s not supported " % dtype)
+def _assert_supported_dtype(x):
+    x_type = getattr(x, "type", x)
+    if x_type not in _supported_numeric_types:
+        raise TypeError("dtype %s not supported " % x_type)

@@ -52,6 +52,45 @@ jobs:
 
       - name: Dependencies
         id: install-dependencies
+        run: |
+          mamba install -y pytest pytest-cov pytest-benchmark scikit-image
+        if: steps.cache-conda.outputs.cache-hit != 'true'
+
+      - name: Install OpenCL (pocl)
+        id: install-pocl
+        if: matrix.platform != 'windows-latest' && steps.cache-conda.outputs.cache-hit != 'true'
+        run: |
+          mamba install -y pocl
+
+      - name: Install OpenCL (oclgrind)
+        id: install-oclgrind
+        if: matrix.platform == 'windows-latest' && steps.cache-conda.outputs.cache-hit != 'true'
+        run: |
+          mamba install -y oclgrind
+
+      - name: Build
+        id: build
+        run: |
+          pip install . -vvv --config-settings=cmake.define.CMAKE_PREFIX_PATH=$CONDA_PREFIX
+
+      - name: Test
+        id: test
+        if: matrix.platform == 'ubuntu-latest'
+        run: |
+          mkdir coverage && cd coverage
+          pytest --cov=pyclesperanto ../tests/ --cov-report=xml
+
+      - name: Coverage
+        id: coverage
+        if: matrix.platform == 'ubuntu-latest'
+        uses: codecov/codecov-action@v3
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos
+          files: ./coverage/coverage.xml
+          fail_ci_if_error: true # optional (default = false)
+
+      - name: Dependencies
+        id: install-dependencies
         run: mamba install -y pytest pytest-cov pytest-benchmark scikit-image
 
       - name: Install OpenCL (pocl)

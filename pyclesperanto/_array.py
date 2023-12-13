@@ -116,6 +116,14 @@ def T(self):
         return self
 
 
+def __array_ufunc__(self, ufunc, method, *inputs, **kwargs):
+    if method == "__call__":
+        func = getattr(Array, f"__{ufunc.__name__}__", None)
+        if func is not None:
+            return func(*[Array.to_device(i) for i in inputs], **kwargs)
+    return NotImplemented
+
+
 # missing operators:
 # __array_interface__
 # __array_ufunc__
@@ -130,6 +138,8 @@ setattr(Array, "zeros_like", classmethod(zeros_like))
 
 setattr(Array, "set", set)
 setattr(Array, "get", get)
+setattr(Array, "__array_ufunc__", __array_ufunc__)
+
 setattr(Array, "__str__", __str__)
 setattr(Array, "__repr__", __repr__)
 setattr(Array, "__array__", __array__)

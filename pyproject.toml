@@ -29,8 +29,9 @@ authors = [
   {name = "Robert Haase", email = "robert.haase@tu-dresden.de"},
 ]
 classifiers = [
-  "Development Status :: 2 - Pre-Alpha",
-  "Programming Language :: Python :: 3 :: Only",
+  "Development Status :: 2 - Alpha",
+  "Programming Language :: C++",
+  "Programming Language :: Python :: 3",
   "License :: OSI Approved :: BSD License",
   "Operating System :: OS Independent",
   "Intended Audience :: Science/Research",
@@ -48,7 +49,7 @@ description = "GPU-accelerated image processing in python using OpenCL"
 name = "pyclesperanto"
 readme = "README.md"
 requires-python = ">=3.7"
-version = "0.7.3"
+version = "0.8.0"
 
 [project.urls]
 Documentation = "https://clesperanto.github.io/pyclesperanto/"
@@ -61,7 +62,7 @@ addopts = "-ra -q"
 testpaths = ["tests"]
 
 [tool.cibuildwheel]
-build = ["cp37-*", "cp38-*", "cp39-*", "cp310-*", "cp311-*"]
+build = ["cp37-*", "cp38-*", "cp39-*", "cp310-*", "cp311-*", "cp312-*"]
 build-frontend = "build"
 build-verbosity = 1
 test-command = "pytest {project}/tests/test_import.py"

@@ -9,25 +9,19 @@ on:
 jobs:
 
   build:
-
-    name: ${{ matrix.platform }} (${{ matrix.python-version }})
+    name: Build (${{ matrix.platform }} - ${{ matrix.python-version }})
     runs-on: ${{ matrix.platform }}
     strategy:
       fail-fast: false
       matrix:
         python-version: ["3.9"]
         platform: [ubuntu-latest, macos-latest, windows-latest]
-
-    # The setup-miniconda action needs this to activate miniconda
     defaults:
       run:
         shell: "bash -l {0}"
-
     steps:
-
       - name: Checkout
         uses: actions/checkout@v4
-
       - name: Get conda - ${{ matrix.python-version }}
         uses: conda-incubator/setup-miniconda@v2.2.0
         with:
@@ -36,32 +30,129 @@ jobs:
           activate-environment: test
           python-version: ${{ matrix.python-version }}
           channels: conda-forge
-
       - name: Prepare
         run: conda install -y pytest pytest-cov pytest-benchmark scikit-image
-
       - name: Install OpenCL (pocl)
         if: matrix.platform != 'windows-latest'
         run: conda install -y pocl
-
       - name: Install OpenCL (oclgrind)
         if: matrix.platform == 'windows-latest'
         run: conda install -y oclgrind
-
       - name: Build
-        run: |
-          pip install . -vvv --config-settings=cmake.define.CMAKE_PREFIX_PATH=$CONDA_PREFIX
+        run: pip install . -vvv --config-settings=cmake.define.CMAKE_PREFIX_PATH=$CONDA_PREFIX
+      - name: Cache environment
+        uses: actions/cache@v2
+        with:
+          path: $CONDA_PREFIX
+          key: ${{ runner.os }}-conda-${{ hashFiles('**/setup.py') }}
 
+  test:
+    needs: build
+    name: Test (${{ matrix.platform }} - ${{ matrix.python-version }})
+    runs-on: ${{ matrix.platform }}
+    strategy:
+      matrix:
+        python-version: ["3.9"]
+        platform: [ubuntu-latest, macos-latest, windows-latest]
+    defaults:
+      run:
+        shell: "bash -l {0}"
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Restore cache
+        uses: actions/cache@v2
+        with:
+          path: $CONDA_PREFIX
+          key: ${{ runner.os }}-conda-${{ hashFiles('**/setup.py') }}
       - name: Test
         if: matrix.platform == 'ubuntu-latest'
-        run: |
-          mkdir coverage && cd coverage
-          pytest --cov=pyclesperanto ../tests/ --cov-report=xml
+        run: mkdir coverage && cd coverage && pytest --cov=pyclesperanto ../tests/
 
+  coverage:
+    needs: test
+    name: Coverage
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Restore cache
+        uses: actions/cache@v2
+        with:
+          path: $CONDA_PREFIX
+          key: ${{ runner.os }}-conda-${{ hashFiles('**/setup.py') }}
       - name: Coverage
-        if: matrix.platform == 'ubuntu-latest'
         uses: codecov/codecov-action@v3
         with:
           token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos
           files: ./coverage/coverage.xml
           fail_ci_if_error: true # optional (default = false)
+
+
+# name: Build
+
+# on:
+#   push:
+#     branches: [ main ]
+#   pull_request:
+#     branches: [ main ]
+
+# jobs:
+
+#   build:
+
+#     name: ${{ matrix.platform }} (${{ matrix.python-version }})
+#     runs-on: ${{ matrix.platform }}
+#     strategy:
+#       fail-fast: false
+#       matrix:
+#         python-version: ["3.9"]
+#         platform: [ubuntu-latest, macos-latest, windows-latest]
+
+#     # The setup-miniconda action needs this to activate miniconda
+#     defaults:
+#       run:
+#         shell: "bash -l {0}"
+
+#     steps:
+
+#       - name: Checkout
+#         uses: actions/checkout@v4
+
+#       - name: Get conda - ${{ matrix.python-version }}
+#         uses: conda-incubator/setup-miniconda@v2.2.0
+#         with:
+#           miniconda-version: "latest"
+#           auto-update-conda: true
+#           activate-environment: test
+#           python-version: ${{ matrix.python-version }}
+#           channels: conda-forge
+
+#       - name: Prepare
+#         run: conda install -y pytest pytest-cov pytest-benchmark scikit-image
+
+#       - name: Install OpenCL (pocl)
+#         if: matrix.platform != 'windows-latest'
+#         run: conda install -y pocl
+
+#       - name: Install OpenCL (oclgrind)
+#         if: matrix.platform == 'windows-latest'
+#         run: conda install -y oclgrind
+
+#       - name: Build
+#         run: |
+#           pip install . -vvv --config-settings=cmake.define.CMAKE_PREFIX_PATH=$CONDA_PREFIX
+
+#       - name: Test
+#         if: matrix.platform == 'ubuntu-latest'
+#         run: |
+#           mkdir coverage && cd coverage
+#           pytest --cov=pyclesperanto ../tests/ --cov-report=xml
+
+#       - name: Coverage
+#         if: matrix.platform == 'ubuntu-latest'
+#         uses: codecov/codecov-action@v3
+#         with:
+#           token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos
+#           files: ./coverage/coverage.xml
+#           fail_ci_if_error: true # optional (default = false)

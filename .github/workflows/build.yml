@@ -26,20 +26,6 @@ jobs:
         id: checkout
         uses: actions/checkout@v4
 
-      - name: Get Date
-        id: get-date
-        run: echo "today=$(/bin/date -u '+%Y%m%d')" >> $GITHUB_OUTPUT
-
-      - name: Cache conda
-        id: cache-conda
-        uses: actions/cache@v3
-        with:
-          path: ${{ env.CONDA }}/envs
-          key:
-            conda-${{ matrix.platform }}--${{ steps.get-date.outputs.today }}-${{ hashFiles('**/pyproject.toml') }}-${{ env.CACHE_NUMBER }}
-        env:
-          CACHE_NUMBER: 0
-
       - name: Get conda - ${{ matrix.python-version }}
         id: get-conda
         uses: conda-incubator/setup-miniconda@v3
@@ -54,17 +40,16 @@ jobs:
         id: install-dependencies
         run: |
           mamba install -y pytest pytest-cov pytest-benchmark scikit-image
-        if: steps.cache-conda.outputs.cache-hit != 'true'
 
       - name: Install OpenCL (pocl)
         id: install-pocl
-        if: matrix.platform != 'windows-latest' && steps.cache-conda.outputs.cache-hit != 'true'
+        if: matrix.platform != 'windows-latest'
         run: |
           mamba install -y pocl
 
       - name: Install OpenCL (oclgrind)
         id: install-oclgrind
-        if: matrix.platform == 'windows-latest' && steps.cache-conda.outputs.cache-hit != 'true'
+        if: matrix.platform == 'windows-latest'
         run: |
           mamba install -y oclgrind
 

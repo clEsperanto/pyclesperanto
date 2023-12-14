@@ -15,6 +15,11 @@ m.def("_mean_squared_error", &cle::tier4::mean_squared_error_func, "Call mean_sq
     py::arg("device"), py::arg("src0"), py::arg("src1"));
 
 
+m.def("_spots_to_pointlist", &cle::tier4::spots_to_pointlist_func, "Call spots_to_pointlist from C++.",
+    py::return_value_policy::take_ownership,
+    py::arg("device"), py::arg("src"), py::arg("dst"));
+
+
 m.def("_relabel_sequential", &cle::tier4::relabel_sequential_func, "Call relabel_sequential from C++.",
     py::return_value_policy::take_ownership,
     py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("blocksize"));

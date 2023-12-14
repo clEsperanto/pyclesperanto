@@ -16,6 +16,15 @@ def mean_squared_error(
 
 
 @plugin_function
+def spots_to_pointlist(
+    input_image: Image, output_image: Image = None, device: Device = None
+) -> Image:
+    from ._pyclesperanto import _spots_to_pointlist as op
+
+    return op(device=device, src=input_image, dst=output_image)
+
+
+@plugin_function
 def relabel_sequential(
     input_image: Image,
     output_image: Image = None,

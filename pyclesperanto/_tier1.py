@@ -535,10 +535,7 @@ def logarithm(
 
 @plugin_function
 def mask(
-    input_image: Image,
-    mask: Image = None,
-    output_image: Image = None,
-    device: Device = None,
+    input_image: Image, mask: Image, output_image: Image = None, device: Device = None
 ) -> Image:
     from ._pyclesperanto import _mask as op
 
@@ -824,7 +821,7 @@ def minimum_of_masked_pixels_reduction(
     input_image: Image,
     mask: Image,
     reduced_input_image: Image,
-    reduced_mask: Image = None,
+    reduced_mask: Image,
     device: Device = None,
 ) -> Image:
     from ._pyclesperanto import _minimum_of_masked_pixels_reduction as op
@@ -893,13 +890,13 @@ def modulo_images(
 
 
 @plugin_function
-def multiply_image_and_coordinate(
+def multiply_image_and_position(
     input_image: Image,
     output_image: Image = None,
     dimension: int = 0,
     device: Device = None,
 ) -> Image:
-    from ._pyclesperanto import _multiply_image_and_coordinate as op
+    from ._pyclesperanto import _multiply_image_and_position as op
 
     return op(
         device=device, src=input_image, dst=output_image, dimension=int(dimension)
@@ -1126,13 +1123,13 @@ def range(
 
 
 @plugin_function
-def read_values_from_coordinates(
+def read_values_from_positions(
     input_image: Image,
     list: Image = None,
     output_image: Image = None,
     device: Device = None,
 ) -> Image:
-    from ._pyclesperanto import _read_values_from_coordinates as op
+    from ._pyclesperanto import _read_values_from_positions as op
 
     return op(device=device, src=input_image, list=list, dst=output_image)
 
@@ -1550,9 +1547,63 @@ def variance_sphere(
 
 
 @plugin_function
-def write_values_to_coordinates(
+def write_values_to_positions(
     input_image: Image, output_image: Image = None, device: Device = None
 ) -> Image:
-    from ._pyclesperanto import _write_values_to_coordinates as op
+    from ._pyclesperanto import _write_values_to_positions as op
+
+    return op(device=device, src=input_image, dst=output_image)
+
+
+@plugin_function
+def x_position_of_maximum_x_projection(
+    input_image: Image, output_image: Image = None, device: Device = None
+) -> Image:
+    from ._pyclesperanto import _x_position_of_maximum_x_projection as op
+
+    return op(device=device, src=input_image, dst=output_image)
+
+
+@plugin_function
+def x_position_of_minimum_x_projection(
+    input_image: Image, output_image: Image = None, device: Device = None
+) -> Image:
+    from ._pyclesperanto import _x_position_of_minimum_x_projection as op
+
+    return op(device=device, src=input_image, dst=output_image)
+
+
+@plugin_function
+def y_position_of_maximum_y_projection(
+    input_image: Image, output_image: Image = None, device: Device = None
+) -> Image:
+    from ._pyclesperanto import _y_position_of_maximum_y_projection as op
+
+    return op(device=device, src=input_image, dst=output_image)
+
+
+@plugin_function
+def y_position_of_minimum_y_projection(
+    input_image: Image, output_image: Image = None, device: Device = None
+) -> Image:
+    from ._pyclesperanto import _y_position_of_minimum_y_projection as op
+
+    return op(device=device, src=input_image, dst=output_image)
+
+
+@plugin_function
+def z_position_of_maximum_z_projection(
+    input_image: Image, output_image: Image = None, device: Device = None
+) -> Image:
+    from ._pyclesperanto import _z_position_of_maximum_z_projection as op
+
+    return op(device=device, src=input_image, dst=output_image)
+
+
+@plugin_function
+def z_position_of_minimum_z_projection(
+    input_image: Image, output_image: Image = None, device: Device = None
+) -> Image:
+    from ._pyclesperanto import _z_position_of_minimum_z_projection as op
 
     return op(device=device, src=input_image, dst=output_image)

@@ -135,8 +135,8 @@ def labelled_spots_to_pointlist(
 
 
 @plugin_function
-def maximum_coordinate(input_image: Image, device: Device = None) -> list:
-    from ._pyclesperanto import _maximum_coordinate as op
+def maximum_position(input_image: Image, device: Device = None) -> list:
+    from ._pyclesperanto import _maximum_position as op
 
     return op(device=device, src=input_image)
 
@@ -149,7 +149,7 @@ def mean_of_all_pixels(input_image: Image, device: Device = None) -> float:
 
 
 @plugin_function
-def minimum_coordinate(input_image: Image, device: Device = None) -> list:
-    from ._pyclesperanto import _minimum_coordinate as op
+def minimum_position(input_image: Image, device: Device = None) -> list:
+    from ._pyclesperanto import _minimum_position as op
 
     return op(device=device, src=input_image)

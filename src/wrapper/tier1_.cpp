@@ -355,7 +355,7 @@ m.def("_modulo_images", &cle::tier1::modulo_images_func, "Call modulo_images fro
     py::arg("device"), py::arg("src0"), py::arg("src1"), py::arg("dst"));
 
 
-m.def("_multiply_image_and_coordinate", &cle::tier1::multiply_image_and_coordinate_func, "Call multiply_image_and_coordinate from C++.",
+m.def("_multiply_image_and_position", &cle::tier1::multiply_image_and_position_func, "Call multiply_image_and_position from C++.",
     py::return_value_policy::take_ownership,
     py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("dimension"));
 
@@ -435,7 +435,7 @@ m.def("_range", &cle::tier1::range_func, "Call range from C++.",
     py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("start_x"), py::arg("stop_x"), py::arg("step_x"), py::arg("start_y"), py::arg("stop_y"), py::arg("step_y"), py::arg("start_z"), py::arg("stop_z"), py::arg("step_z"));
 
 
-m.def("_read_values_from_coordinates", &cle::tier1::read_values_from_coordinates_func, "Call read_values_from_coordinates from C++.",
+m.def("_read_values_from_positions", &cle::tier1::read_values_from_positions_func, "Call read_values_from_positions from C++.",
     py::return_value_policy::take_ownership,
     py::arg("device"), py::arg("src"), py::arg("list"), py::arg("dst"));
 
@@ -625,7 +625,37 @@ m.def("_variance_sphere", &cle::tier1::variance_sphere_func, "Call variance_sphe
     py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("radius_x"), py::arg("radius_y"), py::arg("radius_z"));
 
 
-m.def("_write_values_to_coordinates", &cle::tier1::write_values_to_coordinates_func, "Call write_values_to_coordinates from C++.",
+m.def("_write_values_to_positions", &cle::tier1::write_values_to_positions_func, "Call write_values_to_positions from C++.",
+    py::return_value_policy::take_ownership,
+    py::arg("device"), py::arg("src"), py::arg("dst"));
+
+
+m.def("_x_position_of_maximum_x_projection", &cle::tier1::x_position_of_maximum_x_projection_func, "Call x_position_of_maximum_x_projection from C++.",
+    py::return_value_policy::take_ownership,
+    py::arg("device"), py::arg("src"), py::arg("dst"));
+
+
+m.def("_x_position_of_minimum_x_projection", &cle::tier1::x_position_of_minimum_x_projection_func, "Call x_position_of_minimum_x_projection from C++.",
+    py::return_value_policy::take_ownership,
+    py::arg("device"), py::arg("src"), py::arg("dst"));
+
+
+m.def("_y_position_of_maximum_y_projection", &cle::tier1::y_position_of_maximum_y_projection_func, "Call y_position_of_maximum_y_projection from C++.",
+    py::return_value_policy::take_ownership,
+    py::arg("device"), py::arg("src"), py::arg("dst"));
+
+
+m.def("_y_position_of_minimum_y_projection", &cle::tier1::y_position_of_minimum_y_projection_func, "Call y_position_of_minimum_y_projection from C++.",
+    py::return_value_policy::take_ownership,
+    py::arg("device"), py::arg("src"), py::arg("dst"));
+
+
+m.def("_z_position_of_maximum_z_projection", &cle::tier1::z_position_of_maximum_z_projection_func, "Call z_position_of_maximum_z_projection from C++.",
+    py::return_value_policy::take_ownership,
+    py::arg("device"), py::arg("src"), py::arg("dst"));
+
+
+m.def("_z_position_of_minimum_z_projection", &cle::tier1::z_position_of_minimum_z_projection_func, "Call z_position_of_minimum_z_projection from C++.",
     py::return_value_policy::take_ownership,
     py::arg("device"), py::arg("src"), py::arg("dst"));
 

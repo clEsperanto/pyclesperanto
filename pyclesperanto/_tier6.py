@@ -39,10 +39,7 @@ def erode_labels(
 
 @plugin_function
 def masked_voronoi_labeling(
-    input_image: Image,
-    mask: Image = None,
-    output_image: Image = None,
-    device: Device = None,
+    input_image: Image, mask: Image, output_image: Image = None, device: Device = None
 ) -> Image:
     from ._pyclesperanto import _masked_voronoi_labeling as op
 

@@ -65,7 +65,7 @@ m.def("_labelled_spots_to_pointlist", &cle::tier3::labelled_spots_to_pointlist_f
     py::arg("device"), py::arg("src"), py::arg("dst"));
 
 
-m.def("_maximum_coordinate", &cle::tier3::maximum_coordinate_func, "Call maximum_coordinate from C++.",
+m.def("_maximum_position", &cle::tier3::maximum_position_func, "Call maximum_position from C++.",
     py::return_value_policy::take_ownership,
     py::arg("device"), py::arg("src"));
 
@@ -75,7 +75,7 @@ m.def("_mean_of_all_pixels", &cle::tier3::mean_of_all_pixels_func, "Call mean_of
     py::arg("device"), py::arg("src"));
 
 
-m.def("_minimum_coordinate", &cle::tier3::minimum_coordinate_func, "Call minimum_coordinate from C++.",
+m.def("_minimum_position", &cle::tier3::minimum_position_func, "Call minimum_position from C++.",
     py::return_value_policy::take_ownership,
     py::arg("device"), py::arg("src"));
 

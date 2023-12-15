@@ -309,7 +309,7 @@ def minimum_of_all_pixels(input_image: Image, device: Device = None) -> float:
 
 @plugin_function
 def minimum_of_masked_pixels(
-    input_image: Image, mask: Image = None, device: Device = None
+    input_image: Image, mask: Image, device: Device = None
 ) -> float:
     from ._pyclesperanto import _minimum_of_masked_pixels as op
 

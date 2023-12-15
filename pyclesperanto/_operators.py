@@ -339,15 +339,15 @@ def __getitem__(self, index):
                 index = list(index)
                 index[0], index[-1] = index[-1], index[0]
 
-                # send coordinates to GPU
+                # send positions to GPU
                 from ._memory import push
 
-                coordinates = push(np.asarray(index))
+                positions = push(np.asarray(index))
 
                 # read values from positions
-                from ._tier1 import read_values_from_coordinates
+                from ._tier1 import read_values_from_positions
 
-                return read_values_from_coordinates(self, coordinates)
+                return read_values_from_positions(self, positions)
             else:
                 return []
 
@@ -449,12 +449,12 @@ def __setitem__(self, index, value):
                 index = list(index)
                 index[0], index[-1] = index[-1], index[0]
 
-                # send coordinates to GPU
+                # send positions to GPU
                 from ._memory import push
 
-                coordinates = push(np.asarray(index))
+                positions = push(np.asarray(index))
 
-                num_coordinates = coordinates.shape[-1]
+                num_positions = positions.shape[-1]
                 if isinstance(value, (int, float)):
                     # make an array containing new values for every pixel
                     number = value
@@ -462,16 +462,16 @@ def __setitem__(self, index, value):
                     from ._memory import create
 
                     value_shape = [1] * len(self.shape)
-                    value_shape[-1] = num_coordinates
+                    value_shape[-1] = num_positions
                     value = create(value_shape)
                     value.fill(number)
 
                 # overwrite pixels
-                from ._tier1 import write_values_to_coordinates
+                from ._tier1 import write_values_to_positions
                 from ._tier2 import concatenate_along_y
 
-                values_and_positions = concatenate_along_y(coordinates, value)
-                write_values_to_coordinates(values_and_positions, self)
+                values_and_positions = concatenate_along_y(positions, value)
+                write_values_to_positions(values_and_positions, self)
             return
 
     if not isinstance(value, (Array, np.ndarray)):

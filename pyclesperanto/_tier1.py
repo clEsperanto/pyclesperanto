@@ -2921,8 +2921,8 @@ def nan_to_num(
     input_image: Image,
     output_image: Image = None,
     nan: float = 0,
-    posinf: float = np.nan_to_num(np.inf),
-    neginf: float = np.nan_to_num(-np.inf),
+    posinf: float = numpy.inf,
+    neginf: float = -numpy.inf,
     device: Device = None
 ) -> Image:
     """Copies all pixels instead those which are not a number (NaN), or

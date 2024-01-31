@@ -3427,6 +3427,66 @@ def power_images(
 
 
 @plugin_function
+def range(
+    input_image: Image,
+    output_image: Image = None,
+    start_x: int = None,
+    stop_x: int = None,
+    step_x: int = None,
+    start_y: int = None,
+    stop_y: int = None,
+    step_y: int = None,
+    start_z: int = None,
+    stop_z: int = None,
+    step_z: int = None,
+    device: Device = None
+) -> Image:
+    """Crops an image according to a defined range and step size.
+
+    Parameters
+    ----------
+    input_image: Image
+        First input image to process.
+    output_image: Image = None
+        Output result image.
+    start_x: int = None
+    stop_x: int = None
+    step_x: int = None
+    start_y: int = None
+    stop_y: int = None
+    step_y: int = None
+    start_z: int = None
+    stop_z: int = None
+    step_z: int = None
+    device: Device = None
+        Device to perform the operation on.
+
+    Returns
+    -------
+    Image
+    
+    """
+
+    from ._pyclesperanto import _range as op
+
+    return op(
+        device=device,
+        src=input_image,
+        dst=output_image,
+        start_x=int(start_x),
+        stop_x=int(stop_x),
+        step_x=int(step_x),
+        start_y=int(start_y),
+        stop_y=int(stop_y),
+        step_y=int(step_y),
+        start_z=int(start_z),
+        stop_z=int(stop_z),
+        step_z=int(step_z)
+    )
+
+
+
+@plugin_function
 def read_values_from_positions(
     input_image: Image,
     list: Image,

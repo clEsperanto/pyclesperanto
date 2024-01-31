@@ -20,7 +20,7 @@ def get_device() -> Device:
 
 
 def select_device(device_name: str = "", device_type: str = "all") -> Device:
-    """Select a device by name and type, and return it
+    """Select a device by 'name' and 'type', and store it as the current device
 
     Select device using its name or subname (e.g. "NVIDIA", "RTX", "Iris", etc.) and
     type (e.g. "all", "cpu", "gpu").
@@ -47,8 +47,10 @@ def select_device(device_name: str = "", device_type: str = "all") -> Device:
 def list_available_devices(device_type: str = "all") -> list:
     """Retrieve a list of names of available devices
 
-    Will search system for backend available compatible device and return a list of their names.
-    Use 'select_device' or 'get_devices' to select devices.
+    Will search the system for backend compatible device available and return a list of their names.
+    This will NOT set the device! 
+    Use 'select_device' to select devices.
+    Use 'get_device' to retrieve the current device.
 
     Parameters
     ----------
@@ -71,7 +73,7 @@ def list_available_devices(device_type: str = "all") -> list:
 def list_available_backends() -> list:
     """Retrieve a list of names of available backends
 
-    Will test system for available backends and return a list of their names.
+    Will test system for available backends installed and return a list of their names.
 
     Returns
     -------
@@ -114,10 +116,16 @@ def select_backend(backend: str = "opencl") -> str:
 def wait_for_kernel_to_finish(flag: bool = True, device: Device = None):
     """Wait for kernel to finish
 
+    Enforce the system to wait for the kernel to finish before continuing. Introducing a 
+    slowdown in the workflow. This is useful for debugging purposes, benchmarking and
+    profiling, as well as for complex workflows where the order of operations is important.
+
     Parameters
     ----------
     flag : bool, default = True
         if True, wait for kernel to finish
+    device : Device, default = None
+        the device to set the flag. If None, set it to the current device
     """
     if device is None:
         get_device().set_wait_to_finish(flag)
@@ -126,6 +134,7 @@ def wait_for_kernel_to_finish(flag: bool = True, device: Device = None):
 
 
 def default_initialisation():
+    """Set default backend and device"""
     backends = list_available_backends()
     if backends:
         _ = select_backend(backends[-1])

@@ -11,7 +11,7 @@ from ._core import Device
 @curry
 def plugin_function(
     function: Callable,
-    categories: Optional[list] = None,
+    category: Optional[list] = None,
     priority: int = 0,
 ) -> Callable:
     """Function decorator to ensure correct types and values of all parameters.
@@ -31,7 +31,7 @@ def plugin_function(
         images.
     device_selector : callable, optional
         A function to select a device. By default, we use the current device instance.
-    categories : list of str, optional
+    category : list of str, optional
         A list of category names the function is associated with
     priority : int, optional
         can be used in lists of multiple operations to differentiate multiple operations that fulfill the same purpose
@@ -45,7 +45,7 @@ def plugin_function(
     """
 
     function.fullargspec = inspect.getfullargspec(function)
-    function.categories = categories
+    function.category = category
     function.priority = priority
 
     @wraps(function)

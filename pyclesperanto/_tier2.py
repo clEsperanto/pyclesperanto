@@ -6,6 +6,7 @@
 from ._core import Device
 from ._array import Image
 from ._decorators import plugin_function
+import numpy as np
 
 
 @plugin_function

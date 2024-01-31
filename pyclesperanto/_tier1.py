@@ -6,6 +6,7 @@
 from ._core import Device
 from ._array import Image
 from ._decorators import plugin_function
+import numpy as np
 
 
 @plugin_function
@@ -2921,8 +2922,8 @@ def nan_to_num(
     input_image: Image,
     output_image: Image = None,
     nan: float = 0,
-    posinf: float = numpy.inf,
-    neginf: float = -numpy.inf,
+    posinf: float = np.nan_to_num(np.inf),
+    neginf: float = np.nan_to_num(-np.inf),
     device: Device = None
 ) -> Image:
     """Copies all pixels instead those which are not a number (NaN), or

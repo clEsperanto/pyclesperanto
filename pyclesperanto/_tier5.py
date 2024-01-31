@@ -9,7 +9,7 @@ from ._decorators import plugin_function
 import numpy as np
 
 
-@plugin_function
+@plugin_function(category=['combine'])
 def array_equal(
     input_image0: Image,
     input_image1: Image,
@@ -45,7 +45,7 @@ def array_equal(
 
 
 
-@plugin_function
+@plugin_function(category=['label processing', 'combine labels', 'in assistant', 'bia-bob-suggestion'])
 def combine_labels(
     input_image0: Image,
     input_image1: Image,
@@ -84,7 +84,7 @@ def combine_labels(
 
 
 
-@plugin_function
+@plugin_function(category=['label', 'in assistant', 'bia-bob-suggestion'], priority=1)
 def connected_components_labeling(
     input_image: Image,
     output_image: Image = None,

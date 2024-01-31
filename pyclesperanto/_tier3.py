@@ -117,7 +117,7 @@ def exclude_labels(
 
 
 
-@plugin_function
+@plugin_function(category=['label processing', 'in assistant', 'bia-bob-suggestion'], priority=1)
 def exclude_labels_on_edges(
     input_image: Image,
     output_image: Image = None,
@@ -200,7 +200,7 @@ def flag_existing_labels(
 
 
 
-@plugin_function
+@plugin_function(category=['filter', 'in assistant'])
 def gamma_correction(
     input_image: Image,
     output_image: Image = None,
@@ -279,7 +279,7 @@ def generate_binary_overlap_matrix(
 
 
 
-@plugin_function
+@plugin_function(category=['bia-bob-suggestion'])
 def generate_touch_matrix(
     input_image: Image,
     output_image: Image = None,
@@ -413,7 +413,7 @@ def jaccard_index(
 
 
 
-@plugin_function
+@plugin_function(category=['bia-bob-suggestion'])
 def labelled_spots_to_pointlist(
     input_image: Image,
     output_image: Image = None,

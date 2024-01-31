@@ -9,7 +9,7 @@ from ._decorators import plugin_function
 import numpy as np
 
 
-@plugin_function
+@plugin_function(category=['combine', 'in assistant', 'bia-bob-suggestion'])
 def absolute_difference(
     input_image0: Image,
     input_image1: Image,
@@ -50,7 +50,7 @@ def absolute_difference(
 
 
 
-@plugin_function
+@plugin_function(category=['combine', 'in assistant'], priority=-1)
 def add_images(
     input_image0: Image,
     input_image1: Image,
@@ -91,7 +91,7 @@ def add_images(
 
 
 
-@plugin_function
+@plugin_function(category=['filter', 'background removal', 'in assistant'], priority=-1)
 def bottom_hat_box(
     input_image: Image,
     output_image: Image = None,
@@ -139,7 +139,7 @@ def bottom_hat_box(
 
 
 
-@plugin_function
+@plugin_function(category=['filter', 'background removal', 'in assistant', 'bia-bob-suggestion'], priority=-1)
 def bottom_hat_sphere(
     input_image: Image,
     output_image: Image = None,
@@ -187,7 +187,7 @@ def bottom_hat_sphere(
 
 
 
-@plugin_function
+@plugin_function(category=['combine', 'in assistant'], priority=-1)
 def clip(
     input_image: Image,
     output_image: Image = None,
@@ -230,7 +230,7 @@ def clip(
 
 
 
-@plugin_function
+@plugin_function(category=['filter', 'in assistant'])
 def closing_box(
     input_image: Image,
     output_image: Image = None,
@@ -271,7 +271,7 @@ def closing_box(
 
 
 
-@plugin_function
+@plugin_function(category=['filter', 'in assistant', 'bia-bob-suggestion'])
 def closing_sphere(
     input_image: Image,
     output_image: Image = None,
@@ -312,7 +312,7 @@ def closing_sphere(
 
 
 
-@plugin_function
+@plugin_function(category=['combine', 'transform', 'in assistant', 'bia-bob-suggestion'])
 def concatenate_along_x(
     input_image0: Image,
     input_image1: Image,
@@ -349,7 +349,7 @@ def concatenate_along_x(
 
 
 
-@plugin_function
+@plugin_function(category=['combine', 'transform', 'in assistant', 'bia-bob-suggestion'])
 def concatenate_along_y(
     input_image0: Image,
     input_image1: Image,
@@ -386,7 +386,7 @@ def concatenate_along_y(
 
 
 
-@plugin_function
+@plugin_function(category=['combine', 'transform', 'in assistant', 'bia-bob-suggestion'])
 def concatenate_along_z(
     input_image0: Image,
     input_image1: Image,
@@ -423,7 +423,7 @@ def concatenate_along_z(
 
 
 
-@plugin_function
+@plugin_function(category=['bia-bob-suggestion'])
 def count_touching_neighbors(
     input_image: Image,
     output_image: Image = None,
@@ -498,7 +498,7 @@ def crop_border(
 
 
 
-@plugin_function
+@plugin_function(category=['filter', 'background removal', 'in assistant', 'bia-bob-suggestion'])
 def divide_by_gaussian_background(
     input_image: Image,
     output_image: Image = None,
@@ -572,7 +572,7 @@ def degrees_to_radians(
 
 
 
-@plugin_function
+@plugin_function(category=['filter', 'background removal', 'bia-bob-suggestion'])
 def difference_of_gaussian(
     input_image: Image,
     output_image: Image = None,
@@ -635,7 +635,7 @@ def difference_of_gaussian(
 
 
 
-@plugin_function
+@plugin_function(category=['label processing', 'in assistant', 'bia-bob-suggestion'])
 def extend_labeling_via_voronoi(
     input_image: Image,
     output_image: Image = None,
@@ -670,7 +670,7 @@ def extend_labeling_via_voronoi(
 
 
 
-@plugin_function
+@plugin_function(category=['filter'])
 def invert(
     input_image: Image,
     output_image: Image = None,
@@ -706,7 +706,7 @@ def invert(
 
 
 
-@plugin_function
+@plugin_function(category=['label', 'in assistant', 'bia-bob-suggestion'])
 def label_spots(
     input_image: Image,
     output_image: Image = None,
@@ -742,7 +742,7 @@ def label_spots(
 
 
 
-@plugin_function
+@plugin_function(category=['filter', 'in assistant'], priority=-1)
 def large_hessian_eigenvalue(
     input_image: Image,
     output_image: Image = None,
@@ -872,7 +872,7 @@ def minimum_of_masked_pixels(
 
 
 
-@plugin_function
+@plugin_function(category=['filter', 'in assistant'])
 def opening_box(
     input_image: Image,
     output_image: Image = None,
@@ -913,7 +913,7 @@ def opening_box(
 
 
 
-@plugin_function
+@plugin_function(category=['filter', 'in assistant', 'bia-bob-suggestion'])
 def opening_sphere(
     input_image: Image,
     output_image: Image = None,
@@ -985,7 +985,7 @@ def radians_to_degrees(
 
 
 
-@plugin_function
+@plugin_function(category=['filter', 'in assistant'], priority=-1)
 def small_hessian_eigenvalue(
     input_image: Image,
     output_image: Image = None,
@@ -1016,7 +1016,7 @@ def small_hessian_eigenvalue(
 
 
 
-@plugin_function
+@plugin_function(category=['filter'])
 def square(
     input_image: Image,
     output_image: Image = None,
@@ -1051,7 +1051,7 @@ def square(
 
 
 
-@plugin_function
+@plugin_function(category=['combine', 'in assistant', 'bia-bob-suggestion'])
 def squared_difference(
     input_image0: Image,
     input_image1: Image,
@@ -1088,7 +1088,7 @@ def squared_difference(
 
 
 
-@plugin_function
+@plugin_function(category=['filter', 'edge detection', 'in assistant'])
 def standard_deviation_box(
     input_image: Image,
     output_image: Image = None,
@@ -1133,7 +1133,7 @@ def standard_deviation_box(
 
 
 
-@plugin_function
+@plugin_function(category=['filter', 'edge detection', 'in assistant', 'bia-bob-suggestion'])
 def standard_deviation_sphere(
     input_image: Image,
     output_image: Image = None,
@@ -1178,7 +1178,7 @@ def standard_deviation_sphere(
 
 
 
-@plugin_function
+@plugin_function(category=['filter', 'background removal', 'in assistant', 'bia-bob-suggestion'])
 def subtract_gaussian_background(
     input_image: Image,
     output_image: Image = None,
@@ -1222,7 +1222,7 @@ def subtract_gaussian_background(
 
 
 
-@plugin_function
+@plugin_function(category=['combine', 'in assistant'], priority=-1)
 def subtract_images(
     input_image0: Image,
     input_image1: Image,
@@ -1291,7 +1291,7 @@ def sum_of_all_pixels(
 
 
 
-@plugin_function
+@plugin_function(category=['filter', 'background removal', 'in assistant'], priority=1)
 def top_hat_box(
     input_image: Image,
     output_image: Image = None,
@@ -1339,7 +1339,7 @@ def top_hat_box(
 
 
 
-@plugin_function
+@plugin_function(category=['filter', 'background removal', 'in assistant', 'bia-bob-suggestion'])
 def top_hat_sphere(
     input_image: Image,
     output_image: Image = None,

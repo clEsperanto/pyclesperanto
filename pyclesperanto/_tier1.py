@@ -9,7 +9,7 @@ from ._decorators import plugin_function
 import numpy as np
 
 
-@plugin_function
+@plugin_function(category=['filter', 'in assistant', 'bia-bob-suggestion'])
 def absolute(
     input_image: Image,
     output_image: Image = None,
@@ -46,7 +46,7 @@ def absolute(
 
 
 
-@plugin_function
+@plugin_function(category=['combine', 'in assistant'])
 def add_images_weighted(
     input_image0: Image,
     input_image1: Image,
@@ -95,7 +95,7 @@ def add_images_weighted(
 
 
 
-@plugin_function
+@plugin_function(category=['filter', 'in assistant'])
 def add_image_and_scalar(
     input_image: Image,
     output_image: Image = None,
@@ -136,7 +136,7 @@ def add_image_and_scalar(
 
 
 
-@plugin_function
+@plugin_function(category=['combine', 'binary processing', 'in assistant', 'combine labels', 'label processing', 'bia-bob-suggestion'], priority=1)
 def binary_and(
     input_image0: Image,
     input_image1: Image,
@@ -179,7 +179,7 @@ def binary_and(
 
 
 
-@plugin_function
+@plugin_function(category=['binary processing', 'label processing', 'in assistant', 'bia-bob-suggestion'])
 def binary_edge_detection(
     input_image: Image,
     output_image: Image = None,
@@ -216,7 +216,7 @@ def binary_edge_detection(
 
 
 
-@plugin_function
+@plugin_function(category=['binary processing', 'filter', 'label processing', 'in assistant', 'bia-bob-suggestion'])
 def binary_not(
     input_image: Image,
     output_image: Image = None,
@@ -254,7 +254,7 @@ def binary_not(
 
 
 
-@plugin_function
+@plugin_function(category=['combine', 'binary processing', 'in assistant', 'combine labels', 'label processing', 'bia-bob-suggestion'])
 def binary_or(
     input_image0: Image,
     input_image1: Image,
@@ -297,7 +297,7 @@ def binary_or(
 
 
 
-@plugin_function
+@plugin_function(category=['combine', 'binary processing', 'in assistant', 'combine labels', 'label processing', 'bia-bob-suggestion'])
 def binary_subtract(
     input_image0: Image,
     input_image1: Image,
@@ -337,7 +337,7 @@ def binary_subtract(
 
 
 
-@plugin_function
+@plugin_function(category=['combine', 'binary processing', 'in assistant', 'combine labels', 'label processing', 'bia-bob-suggestion'])
 def binary_xor(
     input_image0: Image,
     input_image1: Image,
@@ -426,7 +426,7 @@ def block_enumerate(
 
 
 
-@plugin_function
+@plugin_function(category=['filter', 'combine', 'in assistant'])
 def convolve(
     input_image0: Image,
     input_image1: Image,
@@ -684,7 +684,7 @@ def crop(
 
 
 
-@plugin_function
+@plugin_function(category=['filter', 'in assistant'], priority=-1)
 def cubic_root(
     input_image: Image,
     output_image: Image = None,
@@ -717,7 +717,7 @@ def cubic_root(
 
 
 
-@plugin_function
+@plugin_function(category=['binarize', 'label processing', 'in assistant', 'bia-bob-suggestion'])
 def detect_label_edges(
     input_image: Image,
     output_image: Image = None,
@@ -754,7 +754,7 @@ def detect_label_edges(
 
 
 
-@plugin_function
+@plugin_function(category=['binarize', 'in assistant'])
 def detect_maxima_box(
     input_image: Image = 0,
     output_image: Image = 0,
@@ -790,7 +790,7 @@ def detect_maxima_box(
 
 
 
-@plugin_function
+@plugin_function(category=['binarize', 'in assistant'])
 def detect_minima_box(
     input_image: Image = 0,
     output_image: Image = 0,
@@ -826,7 +826,7 @@ def detect_minima_box(
 
 
 
-@plugin_function
+@plugin_function(category=['binary processing'])
 def dilate_box(
     input_image: Image,
     output_image: Image = None,
@@ -867,7 +867,7 @@ def dilate_box(
 
 
 
-@plugin_function
+@plugin_function(category=['binary processing', 'bia-bob-suggestion'])
 def dilate_sphere(
     input_image: Image,
     output_image: Image = None,
@@ -906,7 +906,7 @@ def dilate_sphere(
 
 
 
-@plugin_function
+@plugin_function(category=['combine', 'in assistant'], priority=-1)
 def divide_images(
     input_image0: Image,
     input_image1: Image,
@@ -946,7 +946,7 @@ def divide_images(
 
 
 
-@plugin_function
+@plugin_function(category=['filter', 'in assistant'])
 def divide_scalar_by_image(
     input_image: Image,
     output_image: Image = None,
@@ -982,7 +982,7 @@ def divide_scalar_by_image(
 
 
 
-@plugin_function
+@plugin_function(category=['combine', 'binarize', 'in assistant'])
 def equal(
     input_image0: Image,
     input_image1: Image,
@@ -1023,7 +1023,7 @@ def equal(
 
 
 
-@plugin_function
+@plugin_function(category=['binarize', 'in assistant'])
 def equal_constant(
     input_image: Image,
     output_image: Image = None,
@@ -1064,7 +1064,7 @@ def equal_constant(
 
 
 
-@plugin_function
+@plugin_function(category=['binary processing'])
 def erode_box(
     input_image: Image,
     output_image: Image = None,
@@ -1105,7 +1105,7 @@ def erode_box(
 
 
 
-@plugin_function
+@plugin_function(category=['binary processing', 'bia-bob-suggestion'])
 def erode_sphere(
     input_image: Image,
     output_image: Image = None,
@@ -1144,7 +1144,7 @@ def erode_sphere(
 
 
 
-@plugin_function
+@plugin_function(category=['filter', 'in assistant'], priority=-1)
 def exponential(
     input_image: Image,
     output_image: Image = None,
@@ -1226,7 +1226,7 @@ def flip(
 
 
 
-@plugin_function
+@plugin_function(category=['filter', 'denoise', 'in assistant', 'bia-bob-suggestion'], priority=1)
 def gaussian_blur(
     input_image: Image,
     output_image: Image = None,
@@ -1273,7 +1273,7 @@ def gaussian_blur(
 
 
 
-@plugin_function
+@plugin_function(category=['bia-bob-suggestion'])
 def generate_distance_matrix(
     input_image0: Image,
     input_image1: Image,
@@ -1321,7 +1321,7 @@ def generate_distance_matrix(
 
 
 
-@plugin_function
+@plugin_function(category=['filter', 'edge detection', 'in assistant'])
 def gradient_x(
     input_image: Image,
     output_image: Image = None,
@@ -1359,7 +1359,7 @@ def gradient_x(
 
 
 
-@plugin_function
+@plugin_function(category=['filter', 'edge detection', 'in assistant'])
 def gradient_y(
     input_image: Image,
     output_image: Image = None,
@@ -1397,7 +1397,7 @@ def gradient_y(
 
 
 
-@plugin_function
+@plugin_function(category=['filter', 'edge detection', 'in assistant'])
 def gradient_z(
     input_image: Image,
     output_image: Image = None,
@@ -1435,7 +1435,7 @@ def gradient_z(
 
 
 
-@plugin_function
+@plugin_function(category=['combine', 'binarize', 'in assistant'])
 def greater(
     input_image0: Image,
     input_image1: Image,
@@ -1476,7 +1476,7 @@ def greater(
 
 
 
-@plugin_function
+@plugin_function(category=['binarize', 'in assistant'])
 def greater_constant(
     input_image: Image,
     output_image: Image = None,
@@ -1516,7 +1516,7 @@ def greater_constant(
 
 
 
-@plugin_function
+@plugin_function(category=['combine', 'binarize', 'in assistant'])
 def greater_or_equal(
     input_image0: Image,
     input_image1: Image,
@@ -1557,7 +1557,7 @@ def greater_or_equal(
 
 
 
-@plugin_function
+@plugin_function(category=['binarize', 'in assistant'])
 def greater_or_equal_constant(
     input_image: Image,
     output_image: Image = None,
@@ -1643,7 +1643,7 @@ def hessian_eigenvalues(
 
 
 
-@plugin_function
+@plugin_function(category=['filter', 'edge detection', 'in assistant', 'bia-bob-suggestion'])
 def laplace_box(
     input_image: Image,
     output_image: Image = None,
@@ -1679,7 +1679,7 @@ def laplace_box(
 
 
 
-@plugin_function
+@plugin_function(category=['filter', 'edge detection', 'bia-bob-suggestion'])
 def laplace_diamond(
     input_image: Image,
     output_image: Image = None,
@@ -1715,7 +1715,7 @@ def laplace_diamond(
 
 
 
-@plugin_function
+@plugin_function(category=['filter', 'combine', 'in assistant'])
 def local_cross_correlation(
     input_image0: Image,
     input_image1: Image,
@@ -1752,7 +1752,7 @@ def local_cross_correlation(
 
 
 
-@plugin_function
+@plugin_function(category=['filter', 'in assistant'], priority=-1)
 def logarithm(
     input_image: Image,
     output_image: Image = None,
@@ -1789,7 +1789,7 @@ def logarithm(
 
 
 
-@plugin_function
+@plugin_function(category=['bia-bob-suggestion'])
 def mask(
     input_image: Image,
     mask: Image,
@@ -1831,7 +1831,7 @@ def mask(
 
 
 
-@plugin_function
+@plugin_function(category=['bia-bob-suggestion'])
 def mask_label(
     input_image0: Image,
     input_image1: Image,
@@ -1877,7 +1877,7 @@ def mask_label(
 
 
 
-@plugin_function
+@plugin_function(category=['filter', 'in assistant', 'bia-bob-suggestion'])
 def maximum_image_and_scalar(
     input_image: Image,
     output_image: Image = None,
@@ -1917,7 +1917,7 @@ def maximum_image_and_scalar(
 
 
 
-@plugin_function
+@plugin_function(category=['combine', 'in assistant', 'bia-bob-suggestion'])
 def maximum_images(
     input_image0: Image,
     input_image1: Image,
@@ -1958,7 +1958,7 @@ def maximum_images(
 
 
 
-@plugin_function
+@plugin_function(category=['filter', 'in assistant'])
 def maximum_box(
     input_image: Image,
     output_image: Image = None,
@@ -2007,7 +2007,7 @@ def maximum_box(
 
 
 
-@plugin_function
+@plugin_function(category=['projection'])
 def maximum_x_projection(
     input_image: Image,
     output_image: Image = None,
@@ -2043,7 +2043,7 @@ def maximum_x_projection(
 
 
 
-@plugin_function
+@plugin_function(category=['projection'])
 def maximum_y_projection(
     input_image: Image,
     output_image: Image = None,
@@ -2079,7 +2079,7 @@ def maximum_y_projection(
 
 
 
-@plugin_function
+@plugin_function(category=['projection', 'in assistant', 'bia-bob-suggestion'])
 def maximum_z_projection(
     input_image: Image,
     output_image: Image = None,
@@ -2115,7 +2115,7 @@ def maximum_z_projection(
 
 
 
-@plugin_function
+@plugin_function(category=['filter', 'denoise', 'in assistant'])
 def mean_box(
     input_image: Image,
     output_image: Image = None,
@@ -2164,7 +2164,7 @@ def mean_box(
 
 
 
-@plugin_function
+@plugin_function(category=['filter', 'denoise', 'in assistant', 'bia-bob-suggestion'])
 def mean_sphere(
     input_image: Image,
     output_image: Image = None,
@@ -2213,7 +2213,7 @@ def mean_sphere(
 
 
 
-@plugin_function
+@plugin_function(category=['projection'])
 def mean_x_projection(
     input_image: Image,
     output_image: Image = None,
@@ -2249,7 +2249,7 @@ def mean_x_projection(
 
 
 
-@plugin_function
+@plugin_function(category=['projection'])
 def mean_y_projection(
     input_image: Image,
     output_image: Image = None,
@@ -2285,7 +2285,7 @@ def mean_y_projection(
 
 
 
-@plugin_function
+@plugin_function(category=['projection', 'in assistant', 'bia-bob-suggestion'])
 def mean_z_projection(
     input_image: Image,
     output_image: Image = None,
@@ -2321,7 +2321,7 @@ def mean_z_projection(
 
 
 
-@plugin_function
+@plugin_function(category=['filter', 'denoise', 'in assistant'])
 def median_box(
     input_image: Image,
     output_image: Image = None,
@@ -2371,7 +2371,7 @@ def median_box(
 
 
 
-@plugin_function
+@plugin_function(category=['filter', 'denoise', 'in assistant'])
 def median_sphere(
     input_image: Image,
     output_image: Image = None,
@@ -2421,7 +2421,7 @@ def median_sphere(
 
 
 
-@plugin_function
+@plugin_function(category=['filter', 'in assistant'])
 def minimum_box(
     input_image: Image,
     output_image: Image = None,
@@ -2470,7 +2470,7 @@ def minimum_box(
 
 
 
-@plugin_function
+@plugin_function(category=['filter', 'in assistant'])
 def minimum_image_and_scalar(
     input_image: Image,
     output_image: Image = None,
@@ -2510,7 +2510,7 @@ def minimum_image_and_scalar(
 
 
 
-@plugin_function
+@plugin_function(category=['combine', 'in assistant'])
 def minimum_images(
     input_image0: Image,
     input_image1: Image,
@@ -2551,7 +2551,7 @@ def minimum_images(
 
 
 
-@plugin_function
+@plugin_function(category=['projection'])
 def minimum_x_projection(
     input_image: Image,
     output_image: Image = None,
@@ -2587,7 +2587,7 @@ def minimum_x_projection(
 
 
 
-@plugin_function
+@plugin_function(category=['projection'])
 def minimum_y_projection(
     input_image: Image,
     output_image: Image = None,
@@ -2623,7 +2623,7 @@ def minimum_y_projection(
 
 
 
-@plugin_function
+@plugin_function(category=['projection', 'in assistant', 'bia-bob-suggestion'])
 def minimum_z_projection(
     input_image: Image,
     output_image: Image = None,
@@ -2659,7 +2659,7 @@ def minimum_z_projection(
 
 
 
-@plugin_function
+@plugin_function(category=['label processing', 'in assistant'])
 def mode_box(
     input_image: Image,
     output_image: Image = None,
@@ -2708,7 +2708,7 @@ def mode_box(
 
 
 
-@plugin_function
+@plugin_function(category=['label processing', 'in assistant', 'bia-bob-suggestion'])
 def mode_sphere(
     input_image: Image,
     output_image: Image = None,
@@ -2757,7 +2757,7 @@ def mode_sphere(
 
 
 
-@plugin_function
+@plugin_function(category=['combine', 'bia-bob-suggestion'])
 def modulo_images(
     input_image0: Image,
     input_image1: Image,
@@ -2835,7 +2835,7 @@ def multiply_image_and_position(
 
 
 
-@plugin_function
+@plugin_function(category=['filter', 'in assistant'])
 def multiply_image_and_scalar(
     input_image: Image,
     output_image: Image = None,
@@ -2876,7 +2876,7 @@ def multiply_image_and_scalar(
 
 
 
-@plugin_function
+@plugin_function(category=['combine', 'in assistant'])
 def multiply_images(
     input_image0: Image,
     input_image1: Image,
@@ -3141,7 +3141,7 @@ def nonzero_minimum_diamond(
 
 
 
-@plugin_function
+@plugin_function(category=['combine', 'binarize', 'in assistant'])
 def not_equal(
     input_image0: Image,
     input_image1: Image,
@@ -3182,7 +3182,7 @@ def not_equal(
 
 
 
-@plugin_function
+@plugin_function(category=['binarize', 'in assistant'])
 def not_equal_constant(
     input_image: Image,
     output_image: Image = None,
@@ -3223,7 +3223,7 @@ def not_equal_constant(
 
 
 
-@plugin_function
+@plugin_function(category=['combine', 'in assistant'])
 def paste(
     input_image: Image,
     output_image: Image = None,
@@ -3346,7 +3346,7 @@ def onlyzero_overwrite_maximum_diamond(
 
 
 
-@plugin_function
+@plugin_function(category=['filter', 'in assistant'], priority=-1)
 def power(
     input_image: Image,
     output_image: Image = None,
@@ -3386,7 +3386,7 @@ def power(
 
 
 
-@plugin_function
+@plugin_function(category=['combine', 'in assistant'], priority=-1)
 def power_images(
     input_image0: Image,
     input_image1: Image,
@@ -3426,7 +3426,7 @@ def power_images(
 
 
 
-@plugin_function
+@plugin_function(category=['transform', 'in assistant'])
 def range(
     input_image: Image,
     output_image: Image = None,
@@ -3486,7 +3486,7 @@ def range(
 
 
 
-@plugin_function
+@plugin_function(category=['bia-bob-suggestion'])
 def read_values_from_positions(
     input_image: Image,
     list: Image,
@@ -3523,7 +3523,7 @@ def read_values_from_positions(
 
 
 
-@plugin_function
+@plugin_function(category=['bia-bob-suggestion'])
 def replace_values(
     input_image0: Image,
     input_image1: Image,
@@ -3605,7 +3605,7 @@ def replace_value(
 
 
 
-@plugin_function
+@plugin_function(category=['filter', 'in assistant', 'bia-bob-suggestion'])
 def maximum_sphere(
     input_image: Image,
     output_image: Image = None,
@@ -3654,7 +3654,7 @@ def maximum_sphere(
 
 
 
-@plugin_function
+@plugin_function(category=['filter', 'in assistant', 'bia-bob-suggestion'])
 def minimum_sphere(
     input_image: Image,
     output_image: Image = None,
@@ -3744,7 +3744,7 @@ def multiply_matrix(
 
 
 
-@plugin_function
+@plugin_function(category=['filter', 'in assistant'])
 def reciprocal(
     input_image: Image,
     output_image: Image = None,
@@ -4243,7 +4243,7 @@ def sign(
 
 
 
-@plugin_function
+@plugin_function(category=['combine', 'binarize', 'in assistant'])
 def smaller(
     input_image0: Image,
     input_image1: Image,
@@ -4284,7 +4284,7 @@ def smaller(
 
 
 
-@plugin_function
+@plugin_function(category=['binarize', 'in assistant'])
 def smaller_constant(
     input_image: Image,
     output_image: Image = None,
@@ -4324,7 +4324,7 @@ def smaller_constant(
 
 
 
-@plugin_function
+@plugin_function(category=['combine', 'binarize', 'in assistant'])
 def smaller_or_equal(
     input_image0: Image,
     input_image1: Image,
@@ -4365,7 +4365,7 @@ def smaller_or_equal(
 
 
 
-@plugin_function
+@plugin_function(category=['binarize', 'in assistant'])
 def smaller_or_equal_constant(
     input_image: Image,
     output_image: Image = None,
@@ -4405,7 +4405,7 @@ def smaller_or_equal_constant(
 
 
 
-@plugin_function
+@plugin_function(category=['filter', 'edge detection', 'in assistant', 'bia-bob-suggestion'])
 def sobel(
     input_image: Image,
     output_image: Image = None,
@@ -4442,7 +4442,7 @@ def sobel(
 
 
 
-@plugin_function
+@plugin_function(category=['filter', 'in assistant'], priority=-1)
 def square_root(
     input_image: Image,
     output_image: Image = None,
@@ -4475,7 +4475,7 @@ def square_root(
 
 
 
-@plugin_function
+@plugin_function(category=['projection', 'in assistant', 'bia-bob-suggestion'])
 def std_z_projection(
     input_image: Image,
     output_image: Image = None,
@@ -4512,7 +4512,7 @@ def std_z_projection(
 
 
 
-@plugin_function
+@plugin_function(category=['filter', 'in assistant'])
 def subtract_image_from_scalar(
     input_image: Image,
     output_image: Image = None,
@@ -4589,7 +4589,7 @@ def sum_reduction_x(
 
 
 
-@plugin_function
+@plugin_function(category=['projection'])
 def sum_x_projection(
     input_image: Image,
     output_image: Image = None,
@@ -4625,7 +4625,7 @@ def sum_x_projection(
 
 
 
-@plugin_function
+@plugin_function(category=['projection'])
 def sum_y_projection(
     input_image: Image,
     output_image: Image = None,
@@ -4661,7 +4661,7 @@ def sum_y_projection(
 
 
 
-@plugin_function
+@plugin_function(category=['projection', 'in assistant', 'bia-bob-suggestion'])
 def sum_z_projection(
     input_image: Image,
     output_image: Image = None,
@@ -4697,7 +4697,7 @@ def sum_z_projection(
 
 
 
-@plugin_function
+@plugin_function(category=['transform'])
 def transpose_xy(
     input_image: Image,
     output_image: Image = None,
@@ -4733,7 +4733,7 @@ def transpose_xy(
 
 
 
-@plugin_function
+@plugin_function(category=['transform'])
 def transpose_xz(
     input_image: Image,
     output_image: Image = None,
@@ -4769,7 +4769,7 @@ def transpose_xz(
 
 
 
-@plugin_function
+@plugin_function(category=['transform'])
 def transpose_yz(
     input_image: Image,
     output_image: Image = None,
@@ -4842,7 +4842,7 @@ def undefined_to_zero(
 
 
 
-@plugin_function
+@plugin_function(category=['filter', 'edge detection', 'in assistant'])
 def variance_box(
     input_image: Image,
     output_image: Image = None,
@@ -4892,7 +4892,7 @@ def variance_box(
 
 
 
-@plugin_function
+@plugin_function(category=['filter', 'edge detection', 'in assistant', 'bia-bob-suggestion'])
 def variance_sphere(
     input_image: Image,
     output_image: Image = None,
@@ -4980,7 +4980,7 @@ def write_values_to_positions(
 
 
 
-@plugin_function
+@plugin_function(category=['projection', 'in assistant'])
 def x_position_of_maximum_x_projection(
     input_image: Image,
     output_image: Image = None,
@@ -5015,7 +5015,7 @@ def x_position_of_maximum_x_projection(
 
 
 
-@plugin_function
+@plugin_function(category=['projection', 'in assistant'])
 def x_position_of_minimum_x_projection(
     input_image: Image,
     output_image: Image = None,
@@ -5050,7 +5050,7 @@ def x_position_of_minimum_x_projection(
 
 
 
-@plugin_function
+@plugin_function(category=['projection', 'in assistant'])
 def y_position_of_maximum_y_projection(
     input_image: Image,
     output_image: Image = None,
@@ -5085,7 +5085,7 @@ def y_position_of_maximum_y_projection(
 
 
 
-@plugin_function
+@plugin_function(category=['projection', 'in assistant'])
 def y_position_of_minimum_y_projection(
     input_image: Image,
     output_image: Image = None,
@@ -5120,7 +5120,7 @@ def y_position_of_minimum_y_projection(
 
 
 
-@plugin_function
+@plugin_function(category=['projection', 'in assistant'])
 def z_position_of_maximum_z_projection(
     input_image: Image,
     output_image: Image = None,
@@ -5155,7 +5155,7 @@ def z_position_of_maximum_z_projection(
 
 
 
-@plugin_function
+@plugin_function(category=['projection', 'in assistant'])
 def z_position_of_minimum_z_projection(
     input_image: Image,
     output_image: Image = None,

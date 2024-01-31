@@ -9,7 +9,7 @@ from ._decorators import plugin_function
 import numpy as np
 
 
-@plugin_function
+@plugin_function(category=['transform', 'in assistant', 'bia-bob-suggestion'])
 def rigid_transform(
     input_image: Image,
     output_image: Image = None,
@@ -77,7 +77,7 @@ def rigid_transform(
 
 
 
-@plugin_function
+@plugin_function(category=['transform', 'in assistant'])
 def rotate(
     input_image: Image,
     output_image: Image = None,
@@ -133,7 +133,7 @@ def rotate(
 
 
 
-@plugin_function
+@plugin_function(category=['transform', 'in assistant'])
 def scale(
     input_image: Image,
     output_image: Image = None,
@@ -189,7 +189,7 @@ def scale(
 
 
 
-@plugin_function
+@plugin_function(category=['transform', 'in assistant'])
 def translate(
     input_image: Image,
     output_image: Image = None,
@@ -238,7 +238,7 @@ def translate(
 
 
 
-@plugin_function
+@plugin_function(category=['label processing', 'in assistant', 'bia-bob-suggestion'])
 def closing_labels(
     input_image: Image,
     output_image: Image = None,
@@ -276,7 +276,7 @@ def closing_labels(
 
 
 
-@plugin_function
+@plugin_function(category=['label processing', 'in assistant', 'bia-bob-suggestion'])
 def opening_labels(
     input_image: Image,
     output_image: Image = None,
@@ -314,7 +314,7 @@ def opening_labels(
 
 
 
-@plugin_function
+@plugin_function(category=['label', 'in assistant', 'bia-bob-suggestion'], priority=1)
 def voronoi_otsu_labeling(
     input_image: Image,
     output_image: Image = None,

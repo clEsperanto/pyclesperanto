@@ -9,7 +9,7 @@ from ._decorators import plugin_function
 import numpy as np
 
 
-@plugin_function
+@plugin_function(category=['in assistant', 'combine', 'bia-bob-suggestion'])
 def mean_squared_error(
     input_image0: Image,
     input_image1: Image,
@@ -80,7 +80,7 @@ def spots_to_pointlist(
 
 
 
-@plugin_function
+@plugin_function(category=['label processing', 'in assistant', 'bia-bob-suggestion'])
 def relabel_sequential(
     input_image: Image,
     output_image: Image = None,
@@ -121,7 +121,7 @@ def relabel_sequential(
 
 
 
-@plugin_function
+@plugin_function(category=['binarize', 'in assistant', 'bia-bob-suggestion'], priority=1)
 def threshold_otsu(
     input_image: Image,
     output_image: Image = None,

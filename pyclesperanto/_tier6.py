@@ -9,7 +9,7 @@ from ._decorators import plugin_function
 import numpy as np
 
 
-@plugin_function
+@plugin_function(category=['label processing', 'in assistant', 'bia-bob-suggestion'])
 def dilate_labels(
     input_image: Image,
     output_image: Image = None,
@@ -47,7 +47,7 @@ def dilate_labels(
 
 
 
-@plugin_function
+@plugin_function(category=['label processing', 'in assistant'])
 def erode_labels(
     input_image: Image,
     output_image: Image = None,
@@ -89,7 +89,7 @@ def erode_labels(
 
 
 
-@plugin_function
+@plugin_function(category=['label', 'bia-bob-suggestion'])
 def masked_voronoi_labeling(
     input_image: Image,
     mask: Image,
@@ -128,7 +128,7 @@ def masked_voronoi_labeling(
 
 
 
-@plugin_function
+@plugin_function(category=['label', 'in assistant', 'bia-bob-suggestion'])
 def voronoi_labeling(
     input_image: Image,
     output_image: Image = None,

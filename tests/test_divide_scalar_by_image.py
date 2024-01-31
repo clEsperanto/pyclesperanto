@@ -11,7 +11,7 @@ def test_divide_scalar_by_image():
     reference = cle.push(np.asarray([[0.5, 0.5], [0.1, 0.1], [0.2, 0.2]]))
 
     result = cle.create(test1, dtype=float)
-    cle.divide_image_and_scalar(test1, result, 10)
+    cle.divide_scalar_by_image(test1, result, 10)
 
     a = cle.pull(result)
     b = cle.pull(reference)

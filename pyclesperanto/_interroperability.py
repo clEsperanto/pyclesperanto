@@ -1,5 +1,15 @@
-from ._array import Image
+# This file is for code interroperability with other libraries. It is not expected to follow major
+# conventions of pyclesperanto, instead it should be as simple as possible to use in order to make
+# it easy to use pyclesperanto in other libraries and frameworks.
+#
+# The following code and behaviour is expected:
+# Import aliases
+# Function aliases or re-implementations
+# Deprecated functions
+# Deprecated aliases
+#
 
+from ._array import Image
 
 # pyclesperanto_prototype aliases
 from ._core import list_available_devices as available_device_names

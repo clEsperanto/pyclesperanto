@@ -27,6 +27,7 @@ _supported_numeric_types = tuple(cl_buffer_datatype_dict.keys())
 
 
 def _astype(self, dtype: type):
+    """Convert the Array to a different data type."""
     if dtype not in _supported_numeric_types:
         raise ValueError(
             "dtype "
@@ -46,6 +47,7 @@ def _astype(self, dtype: type):
 
 
 def _max(self, axis: Optional[int] = None, out=None):
+    """Return the maximum value in the Array, or along an axis if specified."""
     from ._tier2 import maximum_of_all_pixels
     from ._tier1 import maximum_x_projection
     from ._tier1 import maximum_y_projection
@@ -70,6 +72,7 @@ def _max(self, axis: Optional[int] = None, out=None):
 
 
 def _min(self, axis: Optional[int] = None, out=None):
+    """Return the minimum value in the Array, or along an axis if specified."""
     from ._tier2 import minimum_of_all_pixels
     from ._tier1 import minimum_x_projection
     from ._tier1 import minimum_y_projection
@@ -92,6 +95,7 @@ def _min(self, axis: Optional[int] = None, out=None):
 
 
 def _sum(self, axis: Optional[int] = None, out=None):
+    """Return the sum of the Array, or along an axis if specified."""
     from ._tier2 import sum_of_all_pixels
     from ._tier1 import sum_x_projection
     from ._tier1 import sum_y_projection
@@ -114,14 +118,17 @@ def _sum(self, axis: Optional[int] = None, out=None):
 
 
 def __pos__(x1):
+    """Unary plus, propagates the sign of the argument."""
     return x1.__mul__(1)
 
 
 def __neg__(x1):
+    """Unary minus, returns an array with the negative of the elements of the argument."""
     return x1.__mul__(-1)
 
 
 def __add__(x1, x2):
+    """Addition of two arrays."""
     if isinstance(x2, _supported_numeric_types):
         from ._tier1 import add_image_and_scalar
 
@@ -133,6 +140,7 @@ def __add__(x1, x2):
 
 
 def __iadd__(x1, x2):
+    """Addition of two arrays."""
     from ._tier1 import copy
 
     temp = copy(x1)
@@ -148,6 +156,7 @@ def __iadd__(x1, x2):
 
 
 def __sub__(x1, x2):
+    """Subtraction of two arrays."""
     if isinstance(x2, _supported_numeric_types):
         from ._tier1 import add_image_and_scalar
 
@@ -159,6 +168,7 @@ def __sub__(x1, x2):
 
 
 def __div__(x1, x2):
+    """Division of two arrays."""
     if isinstance(x2, _supported_numeric_types):
         from ._tier1 import multiply_image_and_scalar
 
@@ -170,10 +180,12 @@ def __div__(x1, x2):
 
 
 def __truediv__(x1, x2):
+    """Division of two arrays."""
     return x1.__div__(x2)
 
 
 def __idiv__(x1, x2):
+    """Division of two arrays."""
     from ._tier1 import copy
 
     temp = copy(x1)
@@ -188,10 +200,12 @@ def __idiv__(x1, x2):
 
 
 def __itruediv__(x1, x2):
+    """Division of two arrays."""
     return x1.__idiv__(x2)
 
 
 def __mul__(x1, x2):
+    """Multiplication of two arrays."""
     if isinstance(x2, _supported_numeric_types):
         from ._tier1 import multiply_image_and_scalar
 
@@ -203,6 +217,7 @@ def __mul__(x1, x2):
 
 
 def __imul__(x1, x2):
+    """Multiplication of two arrays."""
     from ._tier1 import copy
 
     temp = copy(x1)
@@ -217,6 +232,7 @@ def __imul__(x1, x2):
 
 
 def __gt__(x1, x2):
+    """Greater than comparison of two arrays."""
     if isinstance(x2, _supported_numeric_types):
         from ._tier1 import greater_constant
 
@@ -228,6 +244,7 @@ def __gt__(x1, x2):
 
 
 def __ge__(x1, x2):
+    """Greater than or equal comparison of two arrays."""
     if isinstance(x2, _supported_numeric_types):
         from ._tier1 import greater_or_equal_constant
 
@@ -239,6 +256,7 @@ def __ge__(x1, x2):
 
 
 def __lt__(x1, x2):
+    """Less than comparison of two arrays."""
     if isinstance(x2, _supported_numeric_types):
         from ._tier1 import smaller_constant
 
@@ -250,6 +268,7 @@ def __lt__(x1, x2):
 
 
 def __le__(x1, x2):
+    """Less than or equal comparison of two arrays."""
     if isinstance(x2, _supported_numeric_types):
         from ._tier1 import smaller_or_equal_constant
 
@@ -261,6 +280,7 @@ def __le__(x1, x2):
 
 
 def __eq__(x1, x2):
+    """Equal comparison of two arrays."""
     if isinstance(x2, _supported_numeric_types):
         from ._tier1 import equal_constant
 
@@ -272,6 +292,7 @@ def __eq__(x1, x2):
 
 
 def __ne__(x1, x2):
+    """Not equal comparison of two arrays."""
     if isinstance(x2, _supported_numeric_types):
         from ._tier1 import not_equal_constant
 
@@ -283,6 +304,7 @@ def __ne__(x1, x2):
 
 
 def __pow__(x1, x2):
+    """Power function of two arrays."""
     if isinstance(x2, _supported_numeric_types):
         from ._tier1 import power
 
@@ -294,6 +316,7 @@ def __pow__(x1, x2):
 
 
 def __ipow__(x1, x2):
+    """Power function of two arrays."""
     from ._tier1 import copy
 
     temp = copy(x1)
@@ -308,6 +331,7 @@ def __ipow__(x1, x2):
 
 
 def __iter__(self):
+    """Iterate over the first dimension of the array."""
     class MyIterator:
         def __init__(self, image):
             self.image = image
@@ -327,6 +351,7 @@ def __iter__(self):
 
 
 def __getitem__(self, index):
+    """Get a pixel value or a region of interest from the Array."""
     if (
         isinstance(index, (tuple, list, np.ndarray))
         and index[0] is not None
@@ -437,6 +462,7 @@ def __getitem__(self, index):
 
 
 def __setitem__(self, index, value):
+    """Set a pixel value or a region of interest in the Array."""
     if (
         isinstance(index, (tuple, np.ndarray))
         and index[0] is not None

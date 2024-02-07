@@ -478,9 +478,9 @@ def copy(
     Parameters
     ----------
     input_image: Image
-        Input image to process.
+        Input image to copy.
     output_image: Image = None
-        Output result image.
+        Output copy image.
     device: Device = None
         Device to perform the operation on.
 
@@ -520,9 +520,9 @@ def copy_slice(
     Parameters
     ----------
     input_image: Image
-        Input image to process.
+        Input image to copy from.
     output_image: Image = None
-        Output result image.
+        Output copy image slice.
     slice: int = 0
     device: Device = None
         Device to perform the operation on.
@@ -561,9 +561,9 @@ def copy_horizontal_slice(
     Parameters
     ----------
     input_image: Image
-        Input image to process.
+        Input image to copy from.
     output_image: Image = None
-        Output result image.
+        Output copy image slice.
     slice: int = 0
     device: Device = None
         Device to perform the operation on.
@@ -602,9 +602,9 @@ def copy_vertical_slice(
     Parameters
     ----------
     input_image: Image
-        Input image to process.
+        Input image to copy from.
     output_image: Image = None
-        Output result image.
+        Output copy image slice.
     slice: int = 0
     device: Device = None
         Device to perform the operation on.
@@ -651,11 +651,17 @@ def crop(
     output_image: Image = None
         Output result image.
     start_x: int = 0
+        Starting index coordicante x.
     start_y: int = 0
+        Starting index coordicante y.
     start_z: int = 0
+        Starting index coordicante z.
     width: int = 1
+        Width size of the region to crop.
     height: int = 1
+        Height size of the region to crop.
     depth: int = 1
+        Depth size of the region to crop.
     device: Device = None
         Device to perform the operation on.
 
@@ -767,7 +773,9 @@ def detect_maxima_box(
     Parameters
     ----------
     input_image: Image = 0
+        Input image to process.
     output_image: Image = 0
+        Output result image.
     device: Device = None
         Device to perform the operation on.
 
@@ -803,7 +811,9 @@ def detect_minima_box(
     Parameters
     ----------
     input_image: Image = 0
+        Input image to process.
     output_image: Image = 0
+        Output result image.
     device: Device = None
         Device to perform the operation on.
 
@@ -842,9 +852,9 @@ def dilate_box(
     Parameters
     ----------
     input_image: Image
-        Input image to process.
+        Input image to process. Input image to process.
     output_image: Image = None
-        Output result image.
+        Output result image. Output result image.
     device: Device = None
         Device to perform the operation on.
 
@@ -881,9 +891,9 @@ def dilate_sphere(
     Parameters
     ----------
     input_image: Image
-        Input image to process.
+        Input image to process. Input image to process.
     output_image: Image = None
-        Output result image.
+        Output result image. Output result image.
     device: Device = None
         Device to perform the operation on.
 
@@ -1199,8 +1209,11 @@ def flip(
     output_image: Image = None
         Output result image.
     flip_x: bool = True
+        Flip along the x axis if true.
     flip_y: bool = True
+        Flip along the y axis if true.
     flip_z: bool = True
+        Flip along the z axis if true.
     device: Device = None
         Device to perform the operation on.
 
@@ -1246,8 +1259,11 @@ def gaussian_blur(
     output_image: Image = None
         Output result image.
     sigma_x: float = 0
+        Sigma value along the x axis.
     sigma_y: float = 0
+        Sigma value along the y axis.
     sigma_z: float = 0
+        Sigma value along the z axis.
     device: Device = None
         Device to perform the operation on.
 
@@ -1574,6 +1590,7 @@ def greater_or_equal_constant(
     output_image: Image = None
         Output result image.
     scalar: float = 0
+        Scalar value used in the comparison.
     device: Device = None
         Device to perform the operation on.
 
@@ -1620,8 +1637,11 @@ def hessian_eigenvalues(
     input_image: Image
         Input image to process.
     small_eigenvalue: Image = None
+        Output result image.
     middle_eigenvalue: Image = None
+        Output result image, null if input is 2D.
     large_eigenvalue: Image = None
+        Output result image.
     device: Device = None
         Device to perform the operation on.
 
@@ -1806,6 +1826,7 @@ def mask(
     input_image: Image
         Input image to process.
     mask: Image
+        Mask image to apply.
     output_image: Image = None
         Output result image.
     device: Device = None
@@ -1847,12 +1868,13 @@ def mask_label(
     Parameters
     ----------
     input_image0: Image
-        First input image to process.
+        Input Intensity image.
     input_image1: Image
-        Second input image to process.
+        Input Label image.
     output_image: Image = None
         Output result image.
     label: float = 1
+        Label value to use.
     device: Device = None
         Device to perform the operation on.
 
@@ -1894,6 +1916,7 @@ def maximum_image_and_scalar(
     output_image: Image = None
         Output result image.
     scalar: float = 0
+        Scalar value used in the comparison.
     device: Device = None
         Device to perform the operation on.
 
@@ -2487,6 +2510,7 @@ def minimum_image_and_scalar(
     output_image: Image = None
         Output result image.
     scalar: float = 0
+        Scalar value used in the comparison.
     device: Device = None
         Device to perform the operation on.
 
@@ -3241,8 +3265,11 @@ def paste(
     output_image: Image = None
         Output result image.
     index_x: int = 0
+        Origin pixel coodinate in x to paste.
     index_y: int = 0
+        Origin pixel coodinate in y to paste.
     index_z: int = 0
+        Origin pixel coodinate in z to paste.
     device: Device = None
         Device to perform the operation on.
 
@@ -3283,7 +3310,9 @@ def onlyzero_overwrite_maximum_box(
     input_image: Image
         Input image to process.
     output_image0: Image
+        Output flag value, 0 or 1.
     output_image1: Image = None
+        Output image.
     device: Device = None
         Device to perform the operation on.
 
@@ -3322,7 +3351,9 @@ def onlyzero_overwrite_maximum_diamond(
     input_image: Image
         Input image to process.
     output_image0: Image
+        Output flag value, 0 or 1.
     output_image1: Image = None
+        Output image.
     device: Device = None
         Device to perform the operation on.
 
@@ -3363,6 +3394,7 @@ def power(
     output_image: Image = None
         Output result image.
     scalar: float = 1
+        Power value.
     device: Device = None
         Device to perform the operation on.
 
@@ -3450,14 +3482,23 @@ def range(
     output_image: Image = None
         Output result image.
     start_x: int = None
+        Range starting value in x
     stop_x: int = None
+        Range stop value in x
     step_x: int = None
+        Range step value in x
     start_y: int = None
+        Range starting value in y
     stop_y: int = None
+        Range stop value in y
     step_y: int = None
+        Range step value in y
     start_z: int = None
+        Range starting value in z
     stop_z: int = None
+        Range stop value in z
     step_z: int = None
+        Range step value in z
     device: Device = None
         Device to perform the operation on.
 
@@ -3494,15 +3535,17 @@ def read_values_from_positions(
     device: Device = None
 ) -> Image:
     """Go to positions in a given image specified by a pointlist and read intensities
-    of those pixels. The intensities are stored in a new vector.
+    of those pixels. The intensities are stored in a new vector. The positions are
+    passed as a (x,y,z) coordinate per column.
 
     Parameters
     ----------
     input_image: Image
         Input image to process.
     list: Image
+        List of coordinate, as a 2D matrix.
     output_image: Image = None
-        Output result image.
+        Output vector image of intensities.
     device: Device = None
         Device to perform the operation on.
 
@@ -3530,14 +3573,16 @@ def replace_values(
     output_image: Image = None,
     device: Device = None
 ) -> Image:
-    """Replaces integer intensities specified in a vector image.
+    """Replaces integer intensities specified in a vector image. The values are passed
+    as a vector of values. The vector index represents the old intensity and the
+    value at that position represents the new intensity.s
 
     Parameters
     ----------
     input_image0: Image
-        First input image to process.
+        Input image to process.
     input_image1: Image
-        Second input image to process.
+        List of intensities to replace, as a vector of values.
     output_image: Image = None
         Output result image.
     device: Device = None
@@ -3580,7 +3625,9 @@ def replace_value(
     output_image: Image = None
         Output result image.
     scalar0: float = 0
+        Old value.
     scalar1: float = 1
+        New value.
     device: Device = None
         Device to perform the operation on.
 
@@ -3795,6 +3842,7 @@ def set(
     input_image: Image
         Input image to process.
     scalar: float = 0
+        Value to set.
     device: Device = None
         Device to perform the operation on.
 
@@ -3831,7 +3879,9 @@ def set_column(
     input_image: Image
         Input image to process.
     column: int = 0
+        Column index.
     value: float = 0
+        Value to set.
     device: Device = None
         Device to perform the operation on.
 
@@ -3868,6 +3918,7 @@ def set_image_borders(
     input_image: Image
         Input image to process.
     value: float = 0
+        Value to set.
     device: Device = None
         Device to perform the operation on.
 
@@ -3904,7 +3955,9 @@ def set_plane(
     input_image: Image
         Input image to process.
     plane: int = 0
+        Plane index.
     value: float = 0
+        Value to set.
     device: Device = None
         Device to perform the operation on.
 
@@ -4076,7 +4129,9 @@ def set_nonzero_pixels_to_pixelindex(
     input_image: Image
         Input image to process.
     output_image: Image = None
+        Output image.
     offset: int = 1
+        Offset value to start the indexing.
     device: Device = None
         Device to perform the operation on.
 
@@ -4112,6 +4167,7 @@ def set_where_x_equals_y(
     input_image: Image
         Input image to process.
     value: float = 0
+        Value to set.
     device: Device = None
         Device to perform the operation on.
 
@@ -4149,6 +4205,7 @@ def set_where_x_greater_than_y(
     input_image: Image
         Input image to process.
     value: float = 0
+        Value to set.
     device: Device = None
         Device to perform the operation on.
 
@@ -4186,6 +4243,7 @@ def set_where_x_smaller_than_y(
     input_image: Image
         Input image to process.
     value: float = 0
+        Value to set.
     device: Device = None
         Device to perform the operation on.
 
@@ -4301,6 +4359,7 @@ def smaller_constant(
     output_image: Image = None
         Output result image.
     scalar: float = 0
+        Scalar used in the comparison.
     device: Device = None
         Device to perform the operation on.
 
@@ -4382,6 +4441,7 @@ def smaller_or_equal_constant(
     output_image: Image = None
         Output result image.
     scalar: float = 0
+        Scalar used in the comparison.
     device: Device = None
         Device to perform the operation on.
 
@@ -4528,6 +4588,7 @@ def subtract_image_from_scalar(
     output_image: Image = None
         Output result image.
     scalar: float = 0
+        Scalar used in the subtraction.
     device: Device = None
         Device to perform the operation on.
 
@@ -4569,6 +4630,7 @@ def sum_reduction_x(
     output_image: Image = None
         Output result image.
     blocksize: int = 256
+        Blocksize value.
     device: Device = None
         Device to perform the operation on.
 

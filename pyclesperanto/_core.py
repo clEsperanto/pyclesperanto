@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Optional, Union
 import warnings
 
 from ._pyclesperanto import _Device as Device
@@ -19,17 +19,21 @@ def get_device() -> Device:
     return _current_device._instance or select_device()
 
 
-def select_device(device_name: str = "", device_type: str = "all") -> Device:
-    """Select a device by 'name' and 'type', and store it as the current device
+def select_device(device_id: Union[str, int] = "", device_type: str = "all") -> Device:
+    """Select a device by 'name' or 'index' and by 'type', and store it as the current device
 
-    Select device using its name or subname (e.g. "NVIDIA", "RTX", "Iris", etc.) and
-    type (e.g. "all", "cpu", "gpu").
+    If selecting the device by string, the function compares the device name and substring.
+    (e.g. "NVIDIA", "RTX", "Iris", etc. will match the device name "NVIDIA RTX 2080" or "Intel Iris Pro")
+    If selecting the device by index, the function will select the device at the given index in the list 
+    of available devices. (e.g. 0, 1, 2, etc. will select the first, second, third, etc. device in the list)
+    If device_id is an empty string, the function will select the first available device.
+    The device_type enables selecting the type of device to be selected (e.g. "all", "cpu", "gpu")
     To retrieve a list of available devices, use `list_available_devices()`
 
     Parameters
     ----------
-    device_name : str, default = ""
-        Name or subname of the device to be selected (e.g. "NVIDIA", "RTX", "Intel Iris", etc.)
+    device_id : Union[str, int], default = ""
+        Substring of device name or device index.
     device_type : str, default = "all"
         Type of device to be selected (e.g. "all", "cpu", "gpu")
 
@@ -37,7 +41,14 @@ def select_device(device_name: str = "", device_type: str = "all") -> Device:
     -------
     device : Device
     """
-    device = BackendManager.get_backend().getDevice(device_name, device_type)
+    if isinstance(device_id, str):
+        device = BackendManager.get_backend().getDeviceFromName(device_id, device_type)
+    elif isinstance(device_id, int):
+        device = BackendManager.get_backend().getDeviceFromIndex(device_id, device_type)
+    else:
+        raise ValueError(
+            f"'{device_id}' is not a supported device_id. Please use either a string or an integer."
+        )
     if _current_device._instance and device == _current_device._instance:
         return _current_device._instance
     _current_device._instance = device

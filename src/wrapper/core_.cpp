@@ -40,7 +40,8 @@ auto core_(pybind11::module_ &m) -> void
         .def_property_readonly("type", &cle::Backend::getType)
         .def("getDevicesList", &cle::Backend::getDevicesList, py::arg("type"))
         .def("getDevices", &cle::Backend::getDevices, py::return_value_policy::take_ownership)
-        .def("getDevice", &cle::Backend::getDevice, py::return_value_policy::take_ownership, py::arg("name"), py::arg("type"))
+        .def("getDeviceFromName", &cle::Backend::getDevice, py::return_value_policy::take_ownership, py::arg("name"), py::arg("type"))
+        .def("getDeviceFromIndex", &cle::Backend::getDeviceFromIndex, py::return_value_policy::take_ownership, py::arg("index"), py::arg("type"))
         .def("__str__", [](const cle::Backend &Backend)
              {
         std::ostringstream oss;

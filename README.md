@@ -182,7 +182,7 @@ This project has been made possible in part by grant number 2021-237734 ([GPU-ac
 [clEsperanto]: http://clesperanto.net/
 [OpenCL kernels]: https://github.com/clEsperanto/clij-opencl-kernels/tree/clesperanto_kernels
 [CLIJ]: http://clij.github.io/
-[CLIc]: https://github.com/clEsperanto/CLIc_prototype
+[CLIc]: https://github.com/clEsperanto/CLIc
 [community guidelines]: https://clij.github.io/clij2-docs/community_guidelines
 [github issue]: https://github.com/clEsperanto/pyclesperanto/issues
 [image.sc forum]: https://forum.image.sc/

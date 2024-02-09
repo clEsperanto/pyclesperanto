@@ -27,7 +27,7 @@ Data structure
     :undoc-members:
 
 Functionalities
-==============
+===============
 
 .. automodule:: pyclesperanto._functionalities
     :members:
@@ -40,8 +40,8 @@ tier1
 ------
 
 .. automodule:: pyclesperanto._tier1
-   :members:
-   :undoc-members:
+    :members:
+    :undoc-members:
 
 tier2
 ------
@@ -77,7 +77,6 @@ tier6
 .. automodule:: pyclesperanto._tier6
     :members:
     :undoc-members:
-    :imported-members:
 
 tier7
 ------
@@ -87,4 +86,5 @@ tier7
     :undoc-members:
 
     .. :imported-members:
+
     .. :exclude-members: Image, Device, _Array, plugin_function

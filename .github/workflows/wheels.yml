@@ -4,10 +4,14 @@ name: Deploy
 on:
   push:
     branches: [main]
+    paths-ignore:
+      - 'docs/**'
   pull_request:
     branches: [main]
+    paths-ignore:
+      - 'docs/**'
   release:
-      types: [created]
+    types: [created]
 
 jobs:
   build_wheels:

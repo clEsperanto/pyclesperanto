@@ -14,6 +14,10 @@ pyclesperanto is the python package of [clEsperanto] - a multi-language framewor
 It relies on a familly of [OpenCL kernels] originated from [CLIJ].
 This package is developped in python and C++ wrapped using [PyBind11], and uses the C++ [CLIc] library as a processing backend.
 
+### Reference and examples
+
+An API reference and package documentation can be found [here](https://clesperanto.github.io/pyclesperanto/), and several demonstration notebook on how to use the library and major functionnality are available in the [demos folder](https://github.com/clEsperanto/pyclesperanto/tree/main/demos)
+
 ## __Installation__
 
 * Get a conda/python environment, e.g. via [__mamba-forge__](https://github.com/conda-forge/miniforge#mambaforge).

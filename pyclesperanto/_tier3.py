@@ -32,7 +32,7 @@ def bounding_box(
     
     References
     ----------
-    [1] https://clij.github.io/clij2docs/reference_boundingBox
+    [1] https://clij.github.io/clij2-docs/reference_boundingBox
     """
 
     from ._pyclesperanto import _bounding_box as op
@@ -64,7 +64,7 @@ def center_of_mass(
     
     References
     ----------
-    [1] https://clij.github.io/clij2docs/reference_centerOfMass
+    [1] https://clij.github.io/clij2-docs/reference_centerOfMass
     """
 
     from ._pyclesperanto import _center_of_mass as op
@@ -103,7 +103,7 @@ def exclude_labels(
     
     References
     ----------
-    [1] https://clij.github.io/clij2docs/reference_excludeLabels
+    [1] https://clij.github.io/clij2-docs/reference_excludeLabels
     """
 
     from ._pyclesperanto import _exclude_labels as op
@@ -148,7 +148,7 @@ def exclude_labels_on_edges(
     
     References
     ----------
-    [1] https://clij.github.io/clij2docs/reference_excludeLabelsOnEdges
+    [1] https://clij.github.io/clij2-docs/reference_excludeLabelsOnEdges
     """
 
     from ._pyclesperanto import _exclude_labels_on_edges as op
@@ -225,7 +225,7 @@ def gamma_correction(
     
     References
     ----------
-    [1] https://clij.github.io/clij2docs/reference_gammaCorrection
+    [1] https://clij.github.io/clij2-docs/reference_gammaCorrection
     """
 
     from ._pyclesperanto import _gamma_correction as op
@@ -265,7 +265,7 @@ def generate_binary_overlap_matrix(
     
     References
     ----------
-    [1] https://clij.github.io/clij2docs/reference_generateBinaryOverlapMatrix
+    [1] https://clij.github.io/clij2-docs/reference_generateBinaryOverlapMatrix
     """
 
     from ._pyclesperanto import _generate_binary_overlap_matrix as op
@@ -304,7 +304,7 @@ def generate_touch_matrix(
     
     References
     ----------
-    [1] https://clij.github.io/clij2docs/reference_generateTouchMatrix
+    [1] https://clij.github.io/clij2-docs/reference_generateTouchMatrix
     """
 
     from ._pyclesperanto import _generate_touch_matrix as op
@@ -359,7 +359,7 @@ def histogram(
     
     References
     ----------
-    [1] https://clij.github.io/clij2docs/reference_histogram
+    [1] https://clij.github.io/clij2-docs/reference_histogram
     """
 
     from ._pyclesperanto import _histogram as op
@@ -400,7 +400,7 @@ def jaccard_index(
     
     References
     ----------
-    [1] https://clij.github.io/clij2docs/reference_jaccardIndex
+    [1] https://clij.github.io/clij2-docs/reference_jaccardIndex
     """
 
     from ._pyclesperanto import _jaccard_index as op
@@ -438,7 +438,7 @@ def labelled_spots_to_pointlist(
     
     References
     ----------
-    [1] https://clij.github.io/clij2docs/reference_labelledSpotsToPointList
+    [1] https://clij.github.io/clij2-docs/reference_labelledSpotsToPointList
     """
 
     from ._pyclesperanto import _labelled_spots_to_pointlist as op
@@ -500,7 +500,7 @@ def mean_of_all_pixels(
     
     References
     ----------
-    [1] https://clij.github.io/clij2docs/reference_meanOfAllPixels
+    [1] https://clij.github.io/clij2-docs/reference_meanOfAllPixels
     """
 
     from ._pyclesperanto import _mean_of_all_pixels as op

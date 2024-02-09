@@ -36,7 +36,7 @@ def absolute_difference(
     
     References
     ----------
-    [1] https://clij.github.io/clij2docs/reference_absoluteDifference
+    [1] https://clij.github.io/clij2-docs/reference_absoluteDifference
     """
 
     from ._pyclesperanto import _absolute_difference as op
@@ -77,7 +77,7 @@ def add_images(
     
     References
     ----------
-    [1] https://clij.github.io/clij2docs/reference_addImages
+    [1] https://clij.github.io/clij2-docs/reference_addImages
     """
 
     from ._pyclesperanto import _add_images as op
@@ -123,7 +123,7 @@ def bottom_hat_box(
     
     References
     ----------
-    [1] https://clij.github.io/clij2docs/reference_bottomHatBox
+    [1] https://clij.github.io/clij2-docs/reference_bottomHatBox
     """
 
     from ._pyclesperanto import _bottom_hat_box as op
@@ -171,7 +171,7 @@ def bottom_hat_sphere(
     
     References
     ----------
-    [1] https://clij.github.io/clij2docs/reference_bottomHatSphere
+    [1] https://clij.github.io/clij2-docs/reference_bottomHatSphere
     """
 
     from ._pyclesperanto import _bottom_hat_sphere as op
@@ -449,7 +449,7 @@ def count_touching_neighbors(
     
     References
     ----------
-    [1] https://clij.github.io/clij2docs/reference_countTouchingNeighbors
+    [1] https://clij.github.io/clij2-docs/reference_countTouchingNeighbors
     """
 
     from ._pyclesperanto import _count_touching_neighbors as op
@@ -525,7 +525,7 @@ def divide_by_gaussian_background(
     
     References
     ----------
-    [1] https://clij.github.io/clij2docs/reference_divideByGaussianBackground
+    [1] https://clij.github.io/clij2-docs/reference_divideByGaussianBackground
     """
 
     from ._pyclesperanto import _divide_by_gaussian_background as op
@@ -616,7 +616,7 @@ def difference_of_gaussian(
     
     References
     ----------
-    [1] https://clij.github.io/clij2docs/reference_differenceOfGaussian3D
+    [1] https://clij.github.io/clij2-docs/reference_differenceOfGaussian3D
     """
 
     from ._pyclesperanto import _difference_of_gaussian as op
@@ -657,7 +657,7 @@ def extend_labeling_via_voronoi(
     
     References
     ----------
-    [1] https://clij.github.io/clij2docs/reference_extendLabelingViaVoronoi
+    [1] https://clij.github.io/clij2-docs/reference_extendLabelingViaVoronoi
     """
 
     from ._pyclesperanto import _extend_labeling_via_voronoi as op
@@ -693,7 +693,7 @@ def invert(
     
     References
     ----------
-    [1] https://clij.github.io/clij2docs/reference_invert
+    [1] https://clij.github.io/clij2-docs/reference_invert
     """
 
     from ._pyclesperanto import _invert as op
@@ -729,7 +729,7 @@ def label_spots(
     
     References
     ----------
-    [1] https://clij.github.io/clij2docs/reference_labelSpots
+    [1] https://clij.github.io/clij2-docs/reference_labelSpots
     """
 
     from ._pyclesperanto import _label_spots as op
@@ -793,7 +793,7 @@ def maximum_of_all_pixels(
     
     References
     ----------
-    [1] https://clij.github.io/clij2docs/reference_maximumOfAllPixels
+    [1] https://clij.github.io/clij2-docs/reference_maximumOfAllPixels
     """
 
     from ._pyclesperanto import _maximum_of_all_pixels as op
@@ -825,7 +825,7 @@ def minimum_of_all_pixels(
     
     References
     ----------
-    [1] https://clij.github.io/clij2docs/reference_minimumOfAllPixels
+    [1] https://clij.github.io/clij2-docs/reference_minimumOfAllPixels
     """
 
     from ._pyclesperanto import _minimum_of_all_pixels as op
@@ -859,7 +859,7 @@ def minimum_of_masked_pixels(
     
     References
     ----------
-    [1] https://clij.github.io/clij2docs/reference_minimumOfMaskedPixels
+    [1] https://clij.github.io/clij2-docs/reference_minimumOfMaskedPixels
     """
 
     from ._pyclesperanto import _minimum_of_masked_pixels as op
@@ -1074,7 +1074,7 @@ def squared_difference(
     
     References
     ----------
-    [1] https://clij.github.io/clij2docs/reference_squaredDifference
+    [1] https://clij.github.io/clij2-docs/reference_squaredDifference
     """
 
     from ._pyclesperanto import _squared_difference as op
@@ -1117,7 +1117,7 @@ def standard_deviation_box(
     
     References
     ----------
-    [1] https://clij.github.io/clij2docs/reference_standardDeviationBox
+    [1] https://clij.github.io/clij2-docs/reference_standardDeviationBox
     """
 
     from ._pyclesperanto import _standard_deviation_box as op
@@ -1162,7 +1162,7 @@ def standard_deviation_sphere(
     
     References
     ----------
-    [1] https://clij.github.io/clij2docs/reference_standardDeviationSphere
+    [1] https://clij.github.io/clij2-docs/reference_standardDeviationSphere
     """
 
     from ._pyclesperanto import _standard_deviation_sphere as op
@@ -1206,7 +1206,7 @@ def subtract_gaussian_background(
     
     References
     ----------
-    [1] https://clij.github.io/clij2docs/reference_subtractGaussianBackground
+    [1] https://clij.github.io/clij2-docs/reference_subtractGaussianBackground
     """
 
     from ._pyclesperanto import _subtract_gaussian_background as op
@@ -1245,7 +1245,7 @@ def subtract_images(
     
     References
     ----------
-    [1] https://clij.github.io/clij2docs/reference_subtractImages
+    [1] https://clij.github.io/clij2-docs/reference_subtractImages
     """
 
     from ._pyclesperanto import _subtract_images as op
@@ -1279,7 +1279,7 @@ def sum_of_all_pixels(
     
     References
     ----------
-    [1] https://clij.github.io/clij2docs/reference_sumOfAllPixels
+    [1] https://clij.github.io/clij2-docs/reference_sumOfAllPixels
     """
 
     from ._pyclesperanto import _sum_of_all_pixels as op
@@ -1323,7 +1323,7 @@ def top_hat_box(
     
     References
     ----------
-    [1] https://clij.github.io/clij2docs/reference_topHatBox
+    [1] https://clij.github.io/clij2-docs/reference_topHatBox
     """
 
     from ._pyclesperanto import _top_hat_box as op
@@ -1371,7 +1371,7 @@ def top_hat_sphere(
     
     References
     ----------
-    [1] https://clij.github.io/clij2docs/reference_topHatSphere
+    [1] https://clij.github.io/clij2-docs/reference_topHatSphere
     """
 
     from ._pyclesperanto import _top_hat_sphere as op

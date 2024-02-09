@@ -31,7 +31,7 @@ def mean_squared_error(
     
     References
     ----------
-    [1] https://clij.github.io/clij2docs/reference_meanSquaredError
+    [1] https://clij.github.io/clij2-docs/reference_meanSquaredError
     """
 
     from ._pyclesperanto import _mean_squared_error as op
@@ -67,7 +67,7 @@ def spots_to_pointlist(
     
     References
     ----------
-    [1] https://clij.github.io/clij2docs/reference_spotsToPointList
+    [1] https://clij.github.io/clij2-docs/reference_spotsToPointList
     """
 
     from ._pyclesperanto import _spots_to_pointlist as op
@@ -107,7 +107,7 @@ def relabel_sequential(
     
     References
     ----------
-    [1] https://clij.github.io/clij2docs/reference_closeIndexGapsInLabelMap
+    [1] https://clij.github.io/clij2-docs/reference_closeIndexGapsInLabelMap
     """
 
     from ._pyclesperanto import _relabel_sequential as op

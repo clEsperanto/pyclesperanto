@@ -348,7 +348,7 @@ def voronoi_otsu_labeling(
     
     References
     ----------
-    [1] https://clij.github.io/clij2docs/reference_voronoiOtsuLabeling
+    [1] https://clij.github.io/clij2-docs/reference_voronoiOtsuLabeling
 	[2] https://ieeexplore.ieee.org/document/4310076
 	[3] https://en.wikipedia.org/wiki/Voronoi_diagram
     """

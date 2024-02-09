@@ -114,7 +114,7 @@ def masked_voronoi_labeling(
     
     References
     ----------
-    [1] https://clij.github.io/clij2docs/reference_maskedVoronoiLabeling
+    [1] https://clij.github.io/clij2-docs/reference_maskedVoronoiLabeling
     """
 
     from ._pyclesperanto import _masked_voronoi_labeling as op
@@ -151,7 +151,7 @@ def voronoi_labeling(
     
     References
     ----------
-    [1] https://clij.github.io/clij2docs/reference_voronoiLabeling
+    [1] https://clij.github.io/clij2-docs/reference_voronoiLabeling
     """
 
     from ._pyclesperanto import _voronoi_labeling as op

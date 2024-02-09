@@ -33,7 +33,7 @@ def absolute(
     
     References
     ----------
-    [1] https://clij.github.io/clij2docs/reference_absolute
+    [1] https://clij.github.io/clij2-docs/reference_absolute
     """
 
     from ._pyclesperanto import _absolute as op
@@ -79,7 +79,7 @@ def add_images_weighted(
     
     References
     ----------
-    [1] https://clij.github.io/clij2docs/reference_addImagesWeighted
+    [1] https://clij.github.io/clij2-docs/reference_addImagesWeighted
     """
 
     from ._pyclesperanto import _add_images_weighted as op
@@ -122,7 +122,7 @@ def add_image_and_scalar(
     
     References
     ----------
-    [1] https://clij.github.io/clij2docs/reference_addImageAndScalar
+    [1] https://clij.github.io/clij2-docs/reference_addImageAndScalar
     """
 
     from ._pyclesperanto import _add_image_and_scalar as op
@@ -165,7 +165,7 @@ def binary_and(
     
     References
     ----------
-    [1] https://clij.github.io/clij2docs/reference_binaryAnd
+    [1] https://clij.github.io/clij2-docs/reference_binaryAnd
     """
 
     from ._pyclesperanto import _binary_and as op
@@ -203,7 +203,7 @@ def binary_edge_detection(
     
     References
     ----------
-    [1] https://clij.github.io/clij2docs/reference_binaryEdgeDetection
+    [1] https://clij.github.io/clij2-docs/reference_binaryEdgeDetection
     """
 
     from ._pyclesperanto import _binary_edge_detection as op
@@ -241,7 +241,7 @@ def binary_not(
     
     References
     ----------
-    [1] https://clij.github.io/clij2docs/reference_binaryNot
+    [1] https://clij.github.io/clij2-docs/reference_binaryNot
     """
 
     from ._pyclesperanto import _binary_not as op
@@ -283,7 +283,7 @@ def binary_or(
     
     References
     ----------
-    [1] https://clij.github.io/clij2docs/reference_binaryOr
+    [1] https://clij.github.io/clij2-docs/reference_binaryOr
     """
 
     from ._pyclesperanto import _binary_or as op
@@ -323,7 +323,7 @@ def binary_subtract(
     
     References
     ----------
-    [1] https://clij.github.io/clij2docs/reference_binarySubtract
+    [1] https://clij.github.io/clij2-docs/reference_binarySubtract
     """
 
     from ._pyclesperanto import _binary_subtract as op
@@ -366,7 +366,7 @@ def binary_xor(
     
     References
     ----------
-    [1] https://clij.github.io/clij2docs/reference_binaryXOr
+    [1] https://clij.github.io/clij2-docs/reference_binaryXOr
     """
 
     from ._pyclesperanto import _binary_xor as op
@@ -453,7 +453,7 @@ def convolve(
     
     References
     ----------
-    [1] https://clij.github.io/clij2docs/reference_convolve
+    [1] https://clij.github.io/clij2-docs/reference_convolve
     """
 
     from ._pyclesperanto import _convolve as op
@@ -490,7 +490,7 @@ def copy(
     
     References
     ----------
-    [1] https://clij.github.io/clij2docs/reference_copy
+    [1] https://clij.github.io/clij2-docs/reference_copy
     """
 
     from ._pyclesperanto import _copy as op
@@ -533,7 +533,7 @@ def copy_slice(
     
     References
     ----------
-    [1] https://clij.github.io/clij2docs/reference_copySlice
+    [1] https://clij.github.io/clij2-docs/reference_copySlice
     """
 
     from ._pyclesperanto import _copy_slice as op
@@ -574,7 +574,7 @@ def copy_horizontal_slice(
     
     References
     ----------
-    [1] https://clij.github.io/clij2docs/reference_copySlice
+    [1] https://clij.github.io/clij2-docs/reference_copySlice
     """
 
     from ._pyclesperanto import _copy_horizontal_slice as op
@@ -615,7 +615,7 @@ def copy_vertical_slice(
     
     References
     ----------
-    [1] https://clij.github.io/clij2docs/reference_copySlice
+    [1] https://clij.github.io/clij2-docs/reference_copySlice
     """
 
     from ._pyclesperanto import _copy_vertical_slice as op
@@ -671,7 +671,7 @@ def crop(
     
     References
     ----------
-    [1] https://clij.github.io/clij2docs/reference_crop3D
+    [1] https://clij.github.io/clij2-docs/reference_crop3D
     """
 
     from ._pyclesperanto import _crop as op
@@ -747,7 +747,7 @@ def detect_label_edges(
     
     References
     ----------
-    [1] https://clij.github.io/clij2docs/reference_detectLabelEdges
+    [1] https://clij.github.io/clij2-docs/reference_detectLabelEdges
     """
 
     from ._pyclesperanto import _detect_label_edges as op
@@ -785,7 +785,7 @@ def detect_maxima_box(
     
     References
     ----------
-    [1] https://clij.github.io/clij2docs/reference_detectMaximaBox
+    [1] https://clij.github.io/clij2-docs/reference_detectMaximaBox
     """
 
     from ._pyclesperanto import _detect_maxima_box as op
@@ -823,7 +823,7 @@ def detect_minima_box(
     
     References
     ----------
-    [1] https://clij.github.io/clij2docs/reference_detectMaximaBox
+    [1] https://clij.github.io/clij2-docs/reference_detectMaximaBox
     """
 
     from ._pyclesperanto import _detect_minima_box as op
@@ -864,7 +864,7 @@ def dilate_box(
     
     References
     ----------
-    [1] https://clij.github.io/clij2docs/reference_dilateBox
+    [1] https://clij.github.io/clij2-docs/reference_dilateBox
     """
 
     from ._pyclesperanto import _dilate_box as op
@@ -903,7 +903,7 @@ def dilate_sphere(
     
     References
     ----------
-    [1] https://clij.github.io/clij2docs/reference_dilateSphere
+    [1] https://clij.github.io/clij2-docs/reference_dilateSphere
     """
 
     from ._pyclesperanto import _dilate_sphere as op
@@ -942,7 +942,7 @@ def divide_images(
     
     References
     ----------
-    [1] https://clij.github.io/clij2docs/reference_divideImages
+    [1] https://clij.github.io/clij2-docs/reference_divideImages
     """
 
     from ._pyclesperanto import _divide_images as op
@@ -1019,7 +1019,7 @@ def equal(
     
     References
     ----------
-    [1] https://clij.github.io/clij2docs/reference_equal
+    [1] https://clij.github.io/clij2-docs/reference_equal
     """
 
     from ._pyclesperanto import _equal as op
@@ -1060,7 +1060,7 @@ def equal_constant(
     
     References
     ----------
-    [1] https://clij.github.io/clij2docs/reference_equalConstant
+    [1] https://clij.github.io/clij2-docs/reference_equalConstant
     """
 
     from ._pyclesperanto import _equal_constant as op
@@ -1102,7 +1102,7 @@ def erode_box(
     
     References
     ----------
-    [1] https://clij.github.io/clij2docs/reference_erodeBox
+    [1] https://clij.github.io/clij2-docs/reference_erodeBox
     """
 
     from ._pyclesperanto import _erode_box as op
@@ -1141,7 +1141,7 @@ def erode_sphere(
     
     References
     ----------
-    [1] https://clij.github.io/clij2docs/reference_erodeSphere
+    [1] https://clij.github.io/clij2-docs/reference_erodeSphere
     """
 
     from ._pyclesperanto import _erode_sphere as op
@@ -1178,7 +1178,7 @@ def exponential(
     
     References
     ----------
-    [1] https://clij.github.io/clij2docs/reference_exponential
+    [1] https://clij.github.io/clij2-docs/reference_exponential
     """
 
     from ._pyclesperanto import _exponential as op
@@ -1223,7 +1223,7 @@ def flip(
     
     References
     ----------
-    [1] https://clij.github.io/clij2docs/reference_flip3D
+    [1] https://clij.github.io/clij2-docs/reference_flip3D
     """
 
     from ._pyclesperanto import _flip as op
@@ -1273,7 +1273,7 @@ def gaussian_blur(
     
     References
     ----------
-    [1] https://clij.github.io/clij2docs/reference_gaussianBlur3D
+    [1] https://clij.github.io/clij2-docs/reference_gaussianBlur3D
     """
 
     from ._pyclesperanto import _gaussian_blur as op
@@ -1323,7 +1323,7 @@ def generate_distance_matrix(
     
     References
     ----------
-    [1] https://clij.github.io/clij2docs/reference_generateDistanceMatrix
+    [1] https://clij.github.io/clij2-docs/reference_generateDistanceMatrix
     """
 
     from ._pyclesperanto import _generate_distance_matrix as op
@@ -1362,7 +1362,7 @@ def gradient_x(
     
     References
     ----------
-    [1] https://clij.github.io/clij2docs/reference_gradientX
+    [1] https://clij.github.io/clij2-docs/reference_gradientX
     """
 
     from ._pyclesperanto import _gradient_x as op
@@ -1400,7 +1400,7 @@ def gradient_y(
     
     References
     ----------
-    [1] https://clij.github.io/clij2docs/reference_gradientY
+    [1] https://clij.github.io/clij2-docs/reference_gradientY
     """
 
     from ._pyclesperanto import _gradient_y as op
@@ -1438,7 +1438,7 @@ def gradient_z(
     
     References
     ----------
-    [1] https://clij.github.io/clij2docs/reference_gradientZ
+    [1] https://clij.github.io/clij2-docs/reference_gradientZ
     """
 
     from ._pyclesperanto import _gradient_z as op
@@ -1478,7 +1478,7 @@ def greater(
     
     References
     ----------
-    [1] https://clij.github.io/clij2docs/reference_greater
+    [1] https://clij.github.io/clij2-docs/reference_greater
     """
 
     from ._pyclesperanto import _greater as op
@@ -1518,7 +1518,7 @@ def greater_constant(
     
     References
     ----------
-    [1] https://clij.github.io/clij2docs/reference_greaterConstant
+    [1] https://clij.github.io/clij2-docs/reference_greaterConstant
     """
 
     from ._pyclesperanto import _greater_constant as op
@@ -1559,7 +1559,7 @@ def greater_or_equal(
     
     References
     ----------
-    [1] https://clij.github.io/clij2docs/reference_greaterOrEqual
+    [1] https://clij.github.io/clij2-docs/reference_greaterOrEqual
     """
 
     from ._pyclesperanto import _greater_or_equal as op
@@ -1600,7 +1600,7 @@ def greater_or_equal_constant(
     
     References
     ----------
-    [1] https://clij.github.io/clij2docs/reference_greaterOrEqualConstant
+    [1] https://clij.github.io/clij2-docs/reference_greaterOrEqualConstant
     """
 
     from ._pyclesperanto import _greater_or_equal_constant as op
@@ -1686,7 +1686,7 @@ def laplace_box(
     
     References
     ----------
-    [1] https://clij.github.io/clij2docs/reference_laplaceBox
+    [1] https://clij.github.io/clij2-docs/reference_laplaceBox
     """
 
     from ._pyclesperanto import _laplace_box as op
@@ -1722,7 +1722,7 @@ def laplace_diamond(
     
     References
     ----------
-    [1] https://clij.github.io/clij2docs/reference_laplaceDiamond
+    [1] https://clij.github.io/clij2-docs/reference_laplaceDiamond
     """
 
     from ._pyclesperanto import _laplace_diamond as op
@@ -1796,7 +1796,7 @@ def logarithm(
     
     References
     ----------
-    [1] https://clij.github.io/clij2docs/reference_logarithm
+    [1] https://clij.github.io/clij2-docs/reference_logarithm
     """
 
     from ._pyclesperanto import _logarithm as op
@@ -1838,7 +1838,7 @@ def mask(
     
     References
     ----------
-    [1] https://clij.github.io/clij2docs/reference_mask
+    [1] https://clij.github.io/clij2-docs/reference_mask
     """
 
     from ._pyclesperanto import _mask as op
@@ -1884,7 +1884,7 @@ def mask_label(
     
     References
     ----------
-    [1] https://clij.github.io/clij2docs/reference_maskLabel
+    [1] https://clij.github.io/clij2-docs/reference_maskLabel
     """
 
     from ._pyclesperanto import _mask_label as op
@@ -1926,7 +1926,7 @@ def maximum_image_and_scalar(
     
     References
     ----------
-    [1] https://clij.github.io/clij2docs/reference_maximumImageAndScalar
+    [1] https://clij.github.io/clij2-docs/reference_maximumImageAndScalar
     """
 
     from ._pyclesperanto import _maximum_image_and_scalar as op
@@ -1967,7 +1967,7 @@ def maximum_images(
     
     References
     ----------
-    [1] https://clij.github.io/clij2docs/reference_maximumImages
+    [1] https://clij.github.io/clij2-docs/reference_maximumImages
     """
 
     from ._pyclesperanto import _maximum_images as op
@@ -2014,7 +2014,7 @@ def maximum_box(
     
     References
     ----------
-    [1] https://clij.github.io/clij2docs/reference_maximum3DBox
+    [1] https://clij.github.io/clij2-docs/reference_maximum3DBox
     """
 
     from ._pyclesperanto import _maximum_box as op
@@ -2053,7 +2053,7 @@ def maximum_x_projection(
     
     References
     ----------
-    [1] https://clij.github.io/clij2docs/reference_maximumXProjection
+    [1] https://clij.github.io/clij2-docs/reference_maximumXProjection
     """
 
     from ._pyclesperanto import _maximum_x_projection as op
@@ -2089,7 +2089,7 @@ def maximum_y_projection(
     
     References
     ----------
-    [1] https://clij.github.io/clij2docs/reference_maximumYProjection
+    [1] https://clij.github.io/clij2-docs/reference_maximumYProjection
     """
 
     from ._pyclesperanto import _maximum_y_projection as op
@@ -2125,7 +2125,7 @@ def maximum_z_projection(
     
     References
     ----------
-    [1] https://clij.github.io/clij2docs/reference_maximumZProjection
+    [1] https://clij.github.io/clij2-docs/reference_maximumZProjection
     """
 
     from ._pyclesperanto import _maximum_z_projection as op
@@ -2171,7 +2171,7 @@ def mean_box(
     
     References
     ----------
-    [1] https://clij.github.io/clij2docs/reference_mean3DBox
+    [1] https://clij.github.io/clij2-docs/reference_mean3DBox
     """
 
     from ._pyclesperanto import _mean_box as op
@@ -2220,7 +2220,7 @@ def mean_sphere(
     
     References
     ----------
-    [1] https://clij.github.io/clij2docs/reference_mean3DSphere
+    [1] https://clij.github.io/clij2-docs/reference_mean3DSphere
     """
 
     from ._pyclesperanto import _mean_sphere as op
@@ -2259,7 +2259,7 @@ def mean_x_projection(
     
     References
     ----------
-    [1] https://clij.github.io/clij2docs/reference_meanXProjection
+    [1] https://clij.github.io/clij2-docs/reference_meanXProjection
     """
 
     from ._pyclesperanto import _mean_x_projection as op
@@ -2295,7 +2295,7 @@ def mean_y_projection(
     
     References
     ----------
-    [1] https://clij.github.io/clij2docs/reference_meanYProjection
+    [1] https://clij.github.io/clij2-docs/reference_meanYProjection
     """
 
     from ._pyclesperanto import _mean_y_projection as op
@@ -2331,7 +2331,7 @@ def mean_z_projection(
     
     References
     ----------
-    [1] https://clij.github.io/clij2docs/reference_meanZProjection
+    [1] https://clij.github.io/clij2-docs/reference_meanZProjection
     """
 
     from ._pyclesperanto import _mean_z_projection as op
@@ -2378,7 +2378,7 @@ def median_box(
     
     References
     ----------
-    [1] https://clij.github.io/clij2docs/reference_median3DBox
+    [1] https://clij.github.io/clij2-docs/reference_median3DBox
     """
 
     from ._pyclesperanto import _median_box as op
@@ -2428,7 +2428,7 @@ def median_sphere(
     
     References
     ----------
-    [1] https://clij.github.io/clij2docs/reference_median3DSphere
+    [1] https://clij.github.io/clij2-docs/reference_median3DSphere
     """
 
     from ._pyclesperanto import _median_sphere as op
@@ -2477,7 +2477,7 @@ def minimum_box(
     
     References
     ----------
-    [1] https://clij.github.io/clij2docs/reference_minimum3DBox
+    [1] https://clij.github.io/clij2-docs/reference_minimum3DBox
     """
 
     from ._pyclesperanto import _minimum_box as op
@@ -2520,7 +2520,7 @@ def minimum_image_and_scalar(
     
     References
     ----------
-    [1] https://clij.github.io/clij2docs/reference_minimumImageAndScalar
+    [1] https://clij.github.io/clij2-docs/reference_minimumImageAndScalar
     """
 
     from ._pyclesperanto import _minimum_image_and_scalar as op
@@ -2561,7 +2561,7 @@ def minimum_images(
     
     References
     ----------
-    [1] https://clij.github.io/clij2docs/reference_minimumImages
+    [1] https://clij.github.io/clij2-docs/reference_minimumImages
     """
 
     from ._pyclesperanto import _minimum_images as op
@@ -2598,7 +2598,7 @@ def minimum_x_projection(
     
     References
     ----------
-    [1] https://clij.github.io/clij2docs/reference_minimumXProjection
+    [1] https://clij.github.io/clij2-docs/reference_minimumXProjection
     """
 
     from ._pyclesperanto import _minimum_x_projection as op
@@ -2634,7 +2634,7 @@ def minimum_y_projection(
     
     References
     ----------
-    [1] https://clij.github.io/clij2docs/reference_minimumYProjection
+    [1] https://clij.github.io/clij2-docs/reference_minimumYProjection
     """
 
     from ._pyclesperanto import _minimum_y_projection as op
@@ -2670,7 +2670,7 @@ def minimum_z_projection(
     
     References
     ----------
-    [1] https://clij.github.io/clij2docs/reference_minimumZProjection
+    [1] https://clij.github.io/clij2-docs/reference_minimumZProjection
     """
 
     from ._pyclesperanto import _minimum_z_projection as op
@@ -2886,7 +2886,7 @@ def multiply_image_and_scalar(
     
     References
     ----------
-    [1] https://clij.github.io/clij2docs/reference_multiplyImageAndScalar
+    [1] https://clij.github.io/clij2-docs/reference_multiplyImageAndScalar
     """
 
     from ._pyclesperanto import _multiply_image_and_scalar as op
@@ -2927,7 +2927,7 @@ def multiply_images(
     
     References
     ----------
-    [1] https://clij.github.io/clij2docs/reference_multiplyImages
+    [1] https://clij.github.io/clij2-docs/reference_multiplyImages
     """
 
     from ._pyclesperanto import _multiply_images as op
@@ -3022,7 +3022,7 @@ def nonzero_maximum_box(
     
     References
     ----------
-    [1] https://clij.github.io/clij2docs/reference_nonzeroMaximumBox
+    [1] https://clij.github.io/clij2-docs/reference_nonzeroMaximumBox
     """
 
     from ._pyclesperanto import _nonzero_maximum_box as op
@@ -3065,7 +3065,7 @@ def nonzero_maximum_diamond(
     
     References
     ----------
-    [1] https://clij.github.io/clij2docs/reference_nonzeroMaximumDiamond
+    [1] https://clij.github.io/clij2-docs/reference_nonzeroMaximumDiamond
     """
 
     from ._pyclesperanto import _nonzero_maximum_diamond as op
@@ -3108,7 +3108,7 @@ def nonzero_minimum_box(
     
     References
     ----------
-    [1] https://clij.github.io/clij2docs/reference_nonzeroMinimumBox
+    [1] https://clij.github.io/clij2-docs/reference_nonzeroMinimumBox
     """
 
     from ._pyclesperanto import _nonzero_minimum_box as op
@@ -3151,7 +3151,7 @@ def nonzero_minimum_diamond(
     
     References
     ----------
-    [1] https://clij.github.io/clij2docs/reference_nonzeroMinimumDiamond
+    [1] https://clij.github.io/clij2-docs/reference_nonzeroMinimumDiamond
     """
 
     from ._pyclesperanto import _nonzero_minimum_diamond as op
@@ -3192,7 +3192,7 @@ def not_equal(
     
     References
     ----------
-    [1] https://clij.github.io/clij2docs/reference_notEqual
+    [1] https://clij.github.io/clij2-docs/reference_notEqual
     """
 
     from ._pyclesperanto import _not_equal as op
@@ -3233,7 +3233,7 @@ def not_equal_constant(
     
     References
     ----------
-    [1] https://clij.github.io/clij2docs/reference_notEqualConstant
+    [1] https://clij.github.io/clij2-docs/reference_notEqualConstant
     """
 
     from ._pyclesperanto import _not_equal_constant as op
@@ -3279,7 +3279,7 @@ def paste(
     
     References
     ----------
-    [1] https://clij.github.io/clij2docs/reference_paste3D
+    [1] https://clij.github.io/clij2-docs/reference_paste3D
     """
 
     from ._pyclesperanto import _paste as op
@@ -3322,7 +3322,7 @@ def onlyzero_overwrite_maximum_box(
     
     References
     ----------
-    [1] https://clij.github.io/clij2docs/reference_onlyzeroOverwriteMaximumBox
+    [1] https://clij.github.io/clij2-docs/reference_onlyzeroOverwriteMaximumBox
     """
 
     from ._pyclesperanto import _onlyzero_overwrite_maximum_box as op
@@ -3363,7 +3363,7 @@ def onlyzero_overwrite_maximum_diamond(
     
     References
     ----------
-    [1] https://clij.github.io/clij2docs/reference_onlyzeroOverwriteMaximumDiamond
+    [1] https://clij.github.io/clij2-docs/reference_onlyzeroOverwriteMaximumDiamond
     """
 
     from ._pyclesperanto import _onlyzero_overwrite_maximum_diamond as op
@@ -3404,7 +3404,7 @@ def power(
     
     References
     ----------
-    [1] https://clij.github.io/clij2docs/reference_power
+    [1] https://clij.github.io/clij2-docs/reference_power
     """
 
     from ._pyclesperanto import _power as op
@@ -3444,7 +3444,7 @@ def power_images(
     
     References
     ----------
-    [1] https://clij.github.io/clij2docs/reference_powerImages
+    [1] https://clij.github.io/clij2-docs/reference_powerImages
     """
 
     from ._pyclesperanto import _power_images as op
@@ -3685,7 +3685,7 @@ def maximum_sphere(
     
     References
     ----------
-    [1] https://clij.github.io/clij2docs/reference_maximum3DSphere
+    [1] https://clij.github.io/clij2-docs/reference_maximum3DSphere
     """
 
     from ._pyclesperanto import _maximum_sphere as op
@@ -3734,7 +3734,7 @@ def minimum_sphere(
     
     References
     ----------
-    [1] https://clij.github.io/clij2docs/reference_minimum3DSphere
+    [1] https://clij.github.io/clij2-docs/reference_minimum3DSphere
     """
 
     from ._pyclesperanto import _minimum_sphere as op
@@ -3777,7 +3777,7 @@ def multiply_matrix(
     
     References
     ----------
-    [1] https://clij.github.io/clij2docs/reference_multiplyMatrix
+    [1] https://clij.github.io/clij2-docs/reference_multiplyMatrix
     """
 
     from ._pyclesperanto import _multiply_matrix as op
@@ -3852,7 +3852,7 @@ def set(
     
     References
     ----------
-    [1] https://clij.github.io/clij2docs/reference_set
+    [1] https://clij.github.io/clij2-docs/reference_set
     """
 
     from ._pyclesperanto import _set as op
@@ -3891,7 +3891,7 @@ def set_column(
     
     References
     ----------
-    [1] https://clij.github.io/clij2docs/reference_setColumn
+    [1] https://clij.github.io/clij2-docs/reference_setColumn
     """
 
     from ._pyclesperanto import _set_column as op
@@ -3928,7 +3928,7 @@ def set_image_borders(
     
     References
     ----------
-    [1] https://clij.github.io/clij2docs/reference_setImageBorders
+    [1] https://clij.github.io/clij2-docs/reference_setImageBorders
     """
 
     from ._pyclesperanto import _set_image_borders as op
@@ -3967,7 +3967,7 @@ def set_plane(
     
     References
     ----------
-    [1] https://clij.github.io/clij2docs/reference_setPlane
+    [1] https://clij.github.io/clij2-docs/reference_setPlane
     """
 
     from ._pyclesperanto import _set_plane as op
@@ -4001,7 +4001,7 @@ def set_ramp_x(
     
     References
     ----------
-    [1] https://clij.github.io/clij2docs/reference_setRampX
+    [1] https://clij.github.io/clij2-docs/reference_setRampX
     """
 
     from ._pyclesperanto import _set_ramp_x as op
@@ -4033,7 +4033,7 @@ def set_ramp_y(
     
     References
     ----------
-    [1] https://clij.github.io/clij2docs/reference_setRampY
+    [1] https://clij.github.io/clij2-docs/reference_setRampY
     """
 
     from ._pyclesperanto import _set_ramp_y as op
@@ -4065,7 +4065,7 @@ def set_ramp_z(
     
     References
     ----------
-    [1] https://clij.github.io/clij2docs/reference_setRampZ
+    [1] https://clij.github.io/clij2-docs/reference_setRampZ
     """
 
     from ._pyclesperanto import _set_ramp_z as op
@@ -4101,7 +4101,7 @@ def set_row(
     
     References
     ----------
-    [1] https://clij.github.io/clij2docs/reference_setRow
+    [1] https://clij.github.io/clij2-docs/reference_setRow
     """
 
     from ._pyclesperanto import _set_row as op
@@ -4177,7 +4177,7 @@ def set_where_x_equals_y(
     
     References
     ----------
-    [1] https://clij.github.io/clij2docs/reference_setWhereXequalsY
+    [1] https://clij.github.io/clij2-docs/reference_setWhereXequalsY
     """
 
     from ._pyclesperanto import _set_where_x_equals_y as op
@@ -4215,7 +4215,7 @@ def set_where_x_greater_than_y(
     
     References
     ----------
-    [1] https://clij.github.io/clij2docs/reference_setWhereXgreaterThanY
+    [1] https://clij.github.io/clij2-docs/reference_setWhereXgreaterThanY
     """
 
     from ._pyclesperanto import _set_where_x_greater_than_y as op
@@ -4253,7 +4253,7 @@ def set_where_x_smaller_than_y(
     
     References
     ----------
-    [1] https://clij.github.io/clij2docs/reference_setWhereXsmallerThanY
+    [1] https://clij.github.io/clij2-docs/reference_setWhereXsmallerThanY
     """
 
     from ._pyclesperanto import _set_where_x_smaller_than_y as op
@@ -4328,7 +4328,7 @@ def smaller(
     
     References
     ----------
-    [1] https://clij.github.io/clij2docs/reference_smaller
+    [1] https://clij.github.io/clij2-docs/reference_smaller
     """
 
     from ._pyclesperanto import _smaller as op
@@ -4369,7 +4369,7 @@ def smaller_constant(
     
     References
     ----------
-    [1] https://clij.github.io/clij2docs/reference_smallerConstant
+    [1] https://clij.github.io/clij2-docs/reference_smallerConstant
     """
 
     from ._pyclesperanto import _smaller_constant as op
@@ -4410,7 +4410,7 @@ def smaller_or_equal(
     
     References
     ----------
-    [1] https://clij.github.io/clij2docs/reference_smallerOrEqual
+    [1] https://clij.github.io/clij2-docs/reference_smallerOrEqual
     """
 
     from ._pyclesperanto import _smaller_or_equal as op
@@ -4451,7 +4451,7 @@ def smaller_or_equal_constant(
     
     References
     ----------
-    [1] https://clij.github.io/clij2docs/reference_smallerOrEqualConstant
+    [1] https://clij.github.io/clij2-docs/reference_smallerOrEqualConstant
     """
 
     from ._pyclesperanto import _smaller_or_equal_constant as op
@@ -4489,7 +4489,7 @@ def sobel(
     
     References
     ----------
-    [1] https://clij.github.io/clij2docs/reference_sobel
+    [1] https://clij.github.io/clij2-docs/reference_sobel
     """
 
     from ._pyclesperanto import _sobel as op
@@ -4598,7 +4598,7 @@ def subtract_image_from_scalar(
     
     References
     ----------
-    [1] https://clij.github.io/clij2docs/reference_subtractImageFromScalar
+    [1] https://clij.github.io/clij2-docs/reference_subtractImageFromScalar
     """
 
     from ._pyclesperanto import _subtract_image_from_scalar as op
@@ -4674,7 +4674,7 @@ def sum_x_projection(
     
     References
     ----------
-    [1] https://clij.github.io/clij2docs/reference_sumXProjection
+    [1] https://clij.github.io/clij2-docs/reference_sumXProjection
     """
 
     from ._pyclesperanto import _sum_x_projection as op
@@ -4710,7 +4710,7 @@ def sum_y_projection(
     
     References
     ----------
-    [1] https://clij.github.io/clij2docs/reference_sumYProjection
+    [1] https://clij.github.io/clij2-docs/reference_sumYProjection
     """
 
     from ._pyclesperanto import _sum_y_projection as op
@@ -4746,7 +4746,7 @@ def sum_z_projection(
     
     References
     ----------
-    [1] https://clij.github.io/clij2docs/reference_sumZProjection
+    [1] https://clij.github.io/clij2-docs/reference_sumZProjection
     """
 
     from ._pyclesperanto import _sum_z_projection as op
@@ -4782,7 +4782,7 @@ def transpose_xy(
     
     References
     ----------
-    [1] https://clij.github.io/clij2docs/reference_transposeXY
+    [1] https://clij.github.io/clij2-docs/reference_transposeXY
     """
 
     from ._pyclesperanto import _transpose_xy as op
@@ -4818,7 +4818,7 @@ def transpose_xz(
     
     References
     ----------
-    [1] https://clij.github.io/clij2docs/reference_transposeXZ
+    [1] https://clij.github.io/clij2-docs/reference_transposeXZ
     """
 
     from ._pyclesperanto import _transpose_xz as op
@@ -4854,7 +4854,7 @@ def transpose_yz(
     
     References
     ----------
-    [1] https://clij.github.io/clij2docs/reference_transposeYZ
+    [1] https://clij.github.io/clij2-docs/reference_transposeYZ
     """
 
     from ._pyclesperanto import _transpose_yz as op
@@ -4891,7 +4891,7 @@ def undefined_to_zero(
     
     References
     ----------
-    [1] https://clij.github.io/clij2docs/reference_undefinedToZero
+    [1] https://clij.github.io/clij2-docs/reference_undefinedToZero
     """
 
     from ._pyclesperanto import _undefined_to_zero as op
@@ -4938,7 +4938,7 @@ def variance_box(
     
     References
     ----------
-    [1] https://clij.github.io/clij2docs/reference_varianceBox
+    [1] https://clij.github.io/clij2-docs/reference_varianceBox
     """
 
     from ._pyclesperanto import _variance_box as op
@@ -4988,7 +4988,7 @@ def variance_sphere(
     
     References
     ----------
-    [1] https://clij.github.io/clij2docs/reference_varianceSphere
+    [1] https://clij.github.io/clij2-docs/reference_varianceSphere
     """
 
     from ._pyclesperanto import _variance_sphere as op
@@ -5029,7 +5029,7 @@ def write_values_to_positions(
     
     References
     ----------
-    [1] https://clij.github.io/clij2docs/reference_writeValuesToPositions
+    [1] https://clij.github.io/clij2-docs/reference_writeValuesToPositions
     """
 
     from ._pyclesperanto import _write_values_to_positions as op

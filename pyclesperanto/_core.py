@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Optional, Union
 import warnings
 
 from ._pyclesperanto import _Device as Device
@@ -19,17 +19,21 @@ def get_device() -> Device:
     return _current_device._instance or select_device()
 
 
-def select_device(device_name: str = "", device_type: str = "all") -> Device:
-    """Select a device by name and type, and return it
+def select_device(device_id: Union[str, int] = "", device_type: str = "all") -> Device:
+    """Select a device by 'name' or 'index' and by 'type', and store it as the current device
 
-    Select device using its name or subname (e.g. "NVIDIA", "RTX", "Iris", etc.) and
-    type (e.g. "all", "cpu", "gpu").
+    If selecting the device by string, the function compares the device name and substring.
+    (e.g. "NVIDIA", "RTX", "Iris", etc. will match the device name "NVIDIA RTX 2080" or "Intel Iris Pro")
+    If selecting the device by index, the function will select the device at the given index in the list 
+    of available devices. (e.g. 0, 1, 2, etc. will select the first, second, third, etc. device in the list)
+    If device_id is an empty string, the function will select the first available device.
+    The device_type enables selecting the type of device to be selected (e.g. "all", "cpu", "gpu")
     To retrieve a list of available devices, use `list_available_devices()`
 
     Parameters
     ----------
-    device_name : str, default = ""
-        Name or subname of the device to be selected (e.g. "NVIDIA", "RTX", "Intel Iris", etc.)
+    device_id : Union[str, int], default = ""
+        Substring of device name or device index.
     device_type : str, default = "all"
         Type of device to be selected (e.g. "all", "cpu", "gpu")
 
@@ -37,7 +41,14 @@ def select_device(device_name: str = "", device_type: str = "all") -> Device:
     -------
     device : Device
     """
-    device = BackendManager.get_backend().getDevice(device_name, device_type)
+    if isinstance(device_id, str):
+        device = BackendManager.get_backend().getDeviceFromName(device_id, device_type)
+    elif isinstance(device_id, int):
+        device = BackendManager.get_backend().getDeviceFromIndex(device_id, device_type)
+    else:
+        raise ValueError(
+            f"'{device_id}' is not a supported device_id. Please use either a string or an integer."
+        )
     if _current_device._instance and device == _current_device._instance:
         return _current_device._instance
     _current_device._instance = device
@@ -47,8 +58,10 @@ def select_device(device_name: str = "", device_type: str = "all") -> Device:
 def list_available_devices(device_type: str = "all") -> list:
     """Retrieve a list of names of available devices
 
-    Will search system for backend available compatible device and return a list of their names.
-    Use 'select_device' or 'get_devices' to select devices.
+    Will search the system for backend compatible device available and return a list of their names.
+    This will NOT set the device! 
+    Use 'select_device' to select devices.
+    Use 'get_device' to retrieve the current device.
 
     Parameters
     ----------
@@ -71,7 +84,7 @@ def list_available_devices(device_type: str = "all") -> list:
 def list_available_backends() -> list:
     """Retrieve a list of names of available backends
 
-    Will test system for available backends and return a list of their names.
+    Will test system for available backends installed and return a list of their names.
 
     Returns
     -------
@@ -114,10 +127,16 @@ def select_backend(backend: str = "opencl") -> str:
 def wait_for_kernel_to_finish(flag: bool = True, device: Device = None):
     """Wait for kernel to finish
 
+    Enforce the system to wait for the kernel to finish before continuing. Introducing a 
+    slowdown in the workflow. This is useful for debugging purposes, benchmarking and
+    profiling, as well as for complex workflows where the order of operations is important.
+
     Parameters
     ----------
     flag : bool, default = True
         if True, wait for kernel to finish
+    device : Device, default = None
+        the device to set the flag. If None, set it to the current device
     """
     if device is None:
         get_device().set_wait_to_finish(flag)
@@ -126,6 +145,7 @@ def wait_for_kernel_to_finish(flag: bool = True, device: Device = None):
 
 
 def default_initialisation():
+    """Set default backend and device"""
     backends = list_available_backends()
     if backends:
         _ = select_backend(backends[-1])
@@ -137,7 +157,8 @@ def default_initialisation():
 
 
 def gpu_info():
-    device_list = list_available_devices("gpu")
+    device_list = list_available_devices()
+    info = []
     for device_name in device_list:
-        print(select_device(device_name).info)
-        print("")
+        info.append(select_device(device_name).info)
+    return info

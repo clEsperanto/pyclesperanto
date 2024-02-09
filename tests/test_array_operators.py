@@ -1,6 +1,8 @@
 import pyclesperanto as cle
 import numpy as np
 
+cle.select_device("TX")
+
 arr1 = cle.push(np.asarray([1, 2, 3, 4, 5]))
 arr2 = cle.push(np.asarray([[1, 2, 3, 4, 5], [6, 7, 8, 9, 10]]))
 arr3 = cle.push(

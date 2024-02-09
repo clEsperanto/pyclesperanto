@@ -1,6 +1,8 @@
 import pyclesperanto as cle
 import numpy as np
 
+cle.select_device("TX")
+
 input1 = np.asarray([1, 2, 3])
 input2 = np.asarray([4, 5, 6])
 
@@ -9,6 +11,7 @@ def test_add_images_weighted_missing_params():
     reference = np.asarray([5, 7, 9])
     output = cle.add_images_weighted(input1, input2, None, 1, 1)
     result = cle.pull(output)
+
     assert np.array_equal(result, reference)
 
 

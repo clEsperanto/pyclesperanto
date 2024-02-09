@@ -18,18 +18,24 @@ By default, the first device found will be automatically selected. You can know 
 
 .. code-block:: python
 
-    print(cle.info())
+    # Query the current device
+    print(cle.get_device())
 
-    cle.select_device("GTX")
+    # Select a device by name, substring, or index
+    cle.select_device("NVIDIA RTX 4090") # full name
+    cle.select_device("TX") # substring
+    cle.select_device(0) # device index
 
 The device selection is done by name. You can pass a substring of the device name, and the first device that matches will be selected.
+If multiple devices have the same name, it is also possible to select the device by its index in the list of available devices.
 
 Memory transfer
 ================
 
-It is a good practice to consider the GPU as another computer. It has its own memory, and you need to transfer data to it before processing it.
-As well as transfer it back to your computer when you are done so that you can read the results. In pyclesperanto this is managed by the functions ``push``, ``pull``, and ``create``.
-``push`` and ``pull`` are used to transfer data from the host to the GPU and vice versa. ``create`` is used to create an empty space on the GPU which will be then use, for example to store a result.
+It is a good practice to consider the GPU as another computer. Its memory is separated from your computer (host) memory, hence you need to transfer your data to the device memory in order to process it.
+Going both ways, you will need to transfer it back to your computer (host) memory when you are done running GPU operations so that you can read the results. In pyclesperanto this is managed by the 
+functions ``push``, ``pull``, and ``create``. ``push`` and ``pull`` are used to transfer data from the host to the GPU and vice versa. ``create`` is used to allocate an empty space on the GPU which will be 
+then use, for example to store a result.
 
 
 Create
@@ -50,6 +56,14 @@ By default, this will create a 32-bit float space. You can specify the type of t
     # create an empty image on the GPU of size 100x100
     gpu_image = cle.create((100, 100), dtype=np.uint8)
 
+It is also possible to use an other image as a template to create the new image. This will copy the size and the data type of the template image.
+
+.. code-block:: python
+
+    # create an empty image on the GPU with the same size and data type as the template image
+    gpu_image = cle.create_like(template_image)
+
+
 Push
 --------
 
@@ -62,8 +76,12 @@ The ``push`` will create a memory space on the GPU like ``create`` but will also
     gpu_image = cle.push(arr)
 
 The data pushed will keep the same data type as the array. Hence, if you push a ``uint8`` array, the data will be stored as ``uint8`` on the GPU.
-The array will then use 24 times less memory than if it was stored as ``float32``. This is a good practice to keep in mind when working with GPUs as their
-memory is limited.
+The array will then use 4 times less memory than if it was stored as ``float32``. This is a good practice to keep in mind when working with GPUs as their
+memory is limited. 
+
+.. warning::
+    Python natively manage only 2 type of scalar, ``float`` and ``int``, correspondint to ``float64``, also known as ``double`` and ``int64``. However, ``double`` type
+    is not fully supported by GPU devices, hence if used in pyclesperanto, it will be converted to ``float32``.
 
 Pull
 --------

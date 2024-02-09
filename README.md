@@ -11,44 +11,49 @@
 [![GitHub forks](https://img.shields.io/github/forks/clEsperanto/pyclesperanto?style=social)](https://github.com/clEsperanto/pyclesperanto)
 
 pyclesperanto is the python package of [clEsperanto] - a multi-language framework for GPU-accelerated image processing.
-clEsperanto uses [OpenCL kernels] from [CLIJ].
-This package relies on the [CLIc] back-end for processing.
+It relies on a familly of [OpenCL kernels] originated from [CLIJ].
+This package is developped in python and C++ wrapped using [PyBind11], and uses the C++ [CLIc] library as a processing backend.
+
+### Reference and examples
+
+An API reference and package documentation can be found [here](https://clesperanto.github.io/pyclesperanto/), and several demonstration notebook on how to use the library and major functionnality are available in the [demos folder](https://github.com/clEsperanto/pyclesperanto/tree/main/demos)
 
 ## __Installation__
 
 * Get a conda/python environment, e.g. via [__mamba-forge__](https://github.com/conda-forge/miniforge#mambaforge).
-* If you never used python/conda environments before, please follow [these instructions](https://biapol.github.io/blog/mara_lampert/getting_started_with_mambaforge_and_python/readme.html) first.
+    * If you never used python/conda environments before, please follow [these instructions](https://biapol.github.io/blog/mara_lampert/getting_started_with_mambaforge_and_python/readme.html) first.
+* Create a new environment and activate it:
 
 ```
-mamba create --name cle python=3.9
+mamba create --name cle
 mamba activate cle
 ```
 
 * Install pyclesperanto using [__mamba / conda__](https://focalplane.biologists.com/2022/12/08/managing-scientific-python-environments-using-conda-mamba-and-friends/):
 
 ```
-mamba install -c conda-forge pyclesperanto
+mamba install pyclesperanto
 ```
 
-Mac users may need to install this:
+__MacOS__ users may need to install the following package:
 ```
-mamba install -c conda-forge ocl_icd_wrapper_apple
-```
-
-Linux users may need to install this:
-```
-mamba install -c conda-forge ocl-icd-system
+mamba install ocl_icd_wrapper_apple
 ```
 
-OR using pip:
-
+__Linux__ users may need to install the following package:
 ```
-pip install pyclesperanto
+mamba install ocl-icd-system
 ```
 
 ## Troubleshooting: Graphics cards drivers
 
-In case error messages contain "ImportError: DLL load failed while importing cl: The specified procedure could not be found" [see also](https://github.com/clEsperanto/pyclesperanto_prototype/issues/55) or "clGetPlatformIDs failed: PLATFORM_NOT_FOUND_KHR", please install recent drivers for your graphics card and/or OpenCL device. Select the right driver source depending on your hardware from this list:
+In case you encounter one of the following error messages:
+* `"ImportError: DLL load failed while importing cl: The specified procedure could not be found"` [see also](https://github.com/clEsperanto/pyclesperanto_prototype/issues/55)
+* `"clGetPlatformIDs failed: PLATFORM_NOT_FOUND_KHR"`
+* `"No backend available. Please install either OpenCL or CUDA on your system."`
+* `"No device available. Please install either OpenCL or CUDA on your system."`
+
+please install recent drivers for your graphics card and/or OpenCL device. Select the right driver source depending on your hardware from this list:
 
 * [AMD drivers](https://www.amd.com/en/support)
 * [NVidia drivers](https://www.nvidia.com/download/index.aspx)
@@ -91,7 +96,7 @@ output_image = cle.pull(labeled)
 imsave("result.tif", output_image)
 ```
 
-## __Example gallery__
+## __Examples & Demos gallery__
 
 <table border="0">
 
@@ -171,10 +176,12 @@ If you liked our work, star the repository, share it with your friends, and use 
 We acknowledge support by the Deutsche Forschungsgemeinschaft under Germany’s Excellence Strategy (EXC2068) Cluster of Excellence Physics of Life of TU Dresden.
 This project has been made possible in part by grant number 2021-237734 ([GPU-accelerating Fiji and friends using distributed CLIJ, NEUBIAS-style, EOSS4](https://chanzuckerberg.com/eoss/proposals/gpu-accelerating-fiji-and-friends-using-distributed-clij-neubias-style/)) from the Chan Zuckerberg Initiative DAF, an advised fund of the Silicon Valley Community Foundation.
 
+
 [clEsperanto]: http://clesperanto.net/
 [OpenCL kernels]: https://github.com/clEsperanto/clij-opencl-kernels/tree/clesperanto_kernels
 [CLIJ]: http://clij.github.io/
-[CLIc]: https://github.com/clEsperanto/CLIc_prototype
+[CLIc]: https://github.com/clEsperanto/CLIc
 [community guidelines]: https://clij.github.io/clij2-docs/community_guidelines
 [github issue]: https://github.com/clEsperanto/pyclesperanto/issues
 [image.sc forum]: https://forum.image.sc/
+[PyBind11]: https://github.com/pybind

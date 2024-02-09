@@ -1,5 +1,10 @@
 import numpy as np
-from typing import Optional
+from typing import Optional, Union
+
+from ._array import Array
+
+from ._utils import _compute_range, _process_ellipsis_into_slice, _trim_index_to_shape
+from ._utils import _assert_supported_dtype
 
 cl_buffer_datatype_dict = {
     bool: "bool",
@@ -21,7 +26,8 @@ cl_buffer_datatype_dict = {
 _supported_numeric_types = tuple(cl_buffer_datatype_dict.keys())
 
 
-def astype(self, dtype: type):
+def _astype(self, dtype: type):
+    """Convert the Array to a different data type."""
     if dtype not in _supported_numeric_types:
         raise ValueError(
             "dtype "
@@ -40,7 +46,8 @@ def astype(self, dtype: type):
     return result
 
 
-def max(self, axis: Optional[int] = None, out=None):
+def _max(self, axis: Optional[int] = None, out=None):
+    """Return the maximum value in the Array, or along an axis if specified."""
     from ._tier2 import maximum_of_all_pixels
     from ._tier1 import maximum_x_projection
     from ._tier1 import maximum_y_projection
@@ -57,17 +64,15 @@ def max(self, axis: Optional[int] = None, out=None):
     else:
         raise ValueError("Axis " + axis + " not supported")
     if out is not None:
-        from ._memory import pull
-        from ._array import Image
-
-        if isinstance(out, Image):
-            np.copyto(out, pull(result).astype(out.dtype))
+        if isinstance(out, (Array, np.ndarray)):
+            np.copyto(out, result.get().astype(out.dtype))
         else:
             out = result
     return result
 
 
-def min(self, axis: Optional[int] = None, out=None):
+def _min(self, axis: Optional[int] = None, out=None):
+    """Return the minimum value in the Array, or along an axis if specified."""
     from ._tier2 import minimum_of_all_pixels
     from ._tier1 import minimum_x_projection
     from ._tier1 import minimum_y_projection
@@ -84,15 +89,13 @@ def min(self, axis: Optional[int] = None, out=None):
     else:
         raise ValueError("Axis " + axis + " not supported")
     if out is not None:
-        from ._memory import pull
-        from ._array import Image
-
-        if isinstance(out, Image):
-            np.copyto(out, pull(result).astype(out.dtype))
+        if isinstance(out, (Array, np.ndarray)):
+            np.copyto(out, result.get().astype(out.dtype))
     return result
 
 
-def sum(self, axis: Optional[int] = None, out=None):
+def _sum(self, axis: Optional[int] = None, out=None):
+    """Return the sum of the Array, or along an axis if specified."""
     from ._tier2 import sum_of_all_pixels
     from ._tier1 import sum_x_projection
     from ._tier1 import sum_y_projection
@@ -109,29 +112,51 @@ def sum(self, axis: Optional[int] = None, out=None):
     else:
         raise ValueError("Axis " + axis + " not supported")
     if out is not None:
-        from ._memory import pull
-        from ._array import Image
-
-        if isinstance(out, Image):
-            np.copyto(out, pull(result).astype(out.dtype))
+        if isinstance(out, (Array, np.ndarray)):
+            np.copyto(out, result.get().astype(out.dtype))
     return result
 
 
+def __pos__(x1):
+    """Unary plus, propagates the sign of the argument."""
+    return x1.__mul__(1)
+
+
+def __neg__(x1):
+    """Unary minus, returns an array with the negative of the elements of the argument."""
+    return x1.__mul__(-1)
+
+
+def __add__(x1, x2):
+    """Addition of two arrays."""
+    if isinstance(x2, _supported_numeric_types):
+        from ._tier1 import add_image_and_scalar
+
+        return add_image_and_scalar(x1, scalar=x2)
+    else:
+        from ._tier1 import add_images_weighted
+
+        return add_images_weighted(x1, x2, factor0=1, factor1=1)
+
+
 def __iadd__(x1, x2):
+    """Addition of two arrays."""
     from ._tier1 import copy
 
     temp = copy(x1)
     if isinstance(x2, _supported_numeric_types):
         from ._tier1 import add_image_and_scalar
 
-        return add_image_and_scalar(temp, x1, scalar=x2)
+        add_image_and_scalar(temp, output_image=x1, scalar=x2)
     else:
         from ._tier1 import add_images_weighted
 
-        return add_images_weighted(temp, x2, x1, factor0=1, factor1=1)
+        add_images_weighted(temp, x2, output_image=x1, factor0=1, factor1=1)
+    return x1
 
 
 def __sub__(x1, x2):
+    """Subtraction of two arrays."""
     if isinstance(x2, _supported_numeric_types):
         from ._tier1 import add_image_and_scalar
 
@@ -143,6 +168,7 @@ def __sub__(x1, x2):
 
 
 def __div__(x1, x2):
+    """Division of two arrays."""
     if isinstance(x2, _supported_numeric_types):
         from ._tier1 import multiply_image_and_scalar
 
@@ -154,10 +180,12 @@ def __div__(x1, x2):
 
 
 def __truediv__(x1, x2):
+    """Division of two arrays."""
     return x1.__div__(x2)
 
 
 def __idiv__(x1, x2):
+    """Division of two arrays."""
     from ._tier1 import copy
 
     temp = copy(x1)
@@ -172,10 +200,12 @@ def __idiv__(x1, x2):
 
 
 def __itruediv__(x1, x2):
+    """Division of two arrays."""
     return x1.__idiv__(x2)
 
 
 def __mul__(x1, x2):
+    """Multiplication of two arrays."""
     if isinstance(x2, _supported_numeric_types):
         from ._tier1 import multiply_image_and_scalar
 
@@ -187,6 +217,7 @@ def __mul__(x1, x2):
 
 
 def __imul__(x1, x2):
+    """Multiplication of two arrays."""
     from ._tier1 import copy
 
     temp = copy(x1)
@@ -201,6 +232,7 @@ def __imul__(x1, x2):
 
 
 def __gt__(x1, x2):
+    """Greater than comparison of two arrays."""
     if isinstance(x2, _supported_numeric_types):
         from ._tier1 import greater_constant
 
@@ -212,6 +244,7 @@ def __gt__(x1, x2):
 
 
 def __ge__(x1, x2):
+    """Greater than or equal comparison of two arrays."""
     if isinstance(x2, _supported_numeric_types):
         from ._tier1 import greater_or_equal_constant
 
@@ -223,6 +256,7 @@ def __ge__(x1, x2):
 
 
 def __lt__(x1, x2):
+    """Less than comparison of two arrays."""
     if isinstance(x2, _supported_numeric_types):
         from ._tier1 import smaller_constant
 
@@ -234,6 +268,7 @@ def __lt__(x1, x2):
 
 
 def __le__(x1, x2):
+    """Less than or equal comparison of two arrays."""
     if isinstance(x2, _supported_numeric_types):
         from ._tier1 import smaller_or_equal_constant
 
@@ -245,6 +280,7 @@ def __le__(x1, x2):
 
 
 def __eq__(x1, x2):
+    """Equal comparison of two arrays."""
     if isinstance(x2, _supported_numeric_types):
         from ._tier1 import equal_constant
 
@@ -256,6 +292,7 @@ def __eq__(x1, x2):
 
 
 def __ne__(x1, x2):
+    """Not equal comparison of two arrays."""
     if isinstance(x2, _supported_numeric_types):
         from ._tier1 import not_equal_constant
 
@@ -267,10 +304,11 @@ def __ne__(x1, x2):
 
 
 def __pow__(x1, x2):
+    """Power function of two arrays."""
     if isinstance(x2, _supported_numeric_types):
         from ._tier1 import power
 
-        return power(x1, exponent=x2)
+        return power(x1, scalar=x2)
     else:
         from ._tier1 import power_images
 
@@ -278,13 +316,14 @@ def __pow__(x1, x2):
 
 
 def __ipow__(x1, x2):
+    """Power function of two arrays."""
     from ._tier1 import copy
 
     temp = copy(x1)
     if isinstance(x2, _supported_numeric_types):
         from ._tier1 import power
 
-        return power(temp, x1, exponent=x2)
+        return power(temp, x1, scalar=x2)
     else:
         from ._tier1 import power_images
 
@@ -292,26 +331,17 @@ def __ipow__(x1, x2):
 
 
 def __iter__(self):
+    """Iterate over the first dimension of the array."""
     class MyIterator:
         def __init__(self, image):
             self.image = image
             self._iter_index = 0
 
         def __next__(self):
-            import numpy as np
-            from ._memory import create
-            from ._tier1 import copy_slice
-
             if not hasattr(self, "_iter_index"):
                 self._iter_index = 0
             if self._iter_index < self.image.shape[0]:
-                if len(self.image.shape) < 3:
-                    result = np.asarray(self.image)[self._iter_index]
-                elif len(self.image.shape) == 3:
-                    output = create(self.image.shape[1:])
-                    result = copy_slice(self.image, output, self._iter_index)
-                else:
-                    raise ValueError("Only 1D, 2D or 3D array are supported.")
+                result = self.image[self._iter_index]
                 self._iter_index = self._iter_index + 1
                 return result
             else:
@@ -321,15 +351,238 @@ def __iter__(self):
 
 
 def __getitem__(self, index):
-    raise NotImplementedError("Not implemented yet.")
+    """Get a pixel value or a region of interest from the Array."""
+    if (
+        isinstance(index, (tuple, list, np.ndarray))
+        and index[0] is not None
+        and isinstance(index[0], (tuple, list, np.ndarray))
+    ):
+        if len(index) == len(self.shape):
+            if len(index[0]) > 0:
+                # switch xy in 2D / xz in 3D, because clesperanto expects an X-Y-Z array;
+                # see also https://github.com/clEsperanto/pyclesperanto_prototype/issues/49
+                index = list(index)
+                index[0], index[-1] = index[-1], index[0]
+
+                # send positions to GPU
+                from ._memory import push
+
+                positions = push(np.asarray(index))
+
+                # read values from positions
+                from ._tier1 import read_values_from_positions
+
+                return read_values_from_positions(self, positions)
+            else:
+                return []
+
+    if not isinstance(index, tuple):
+        index = (index,)
+
+    if len(index) > self.ndim:
+        raise IndexError(
+            f"too many indices for array: array is {self.ndim}-dimensional, but {len(index)} were indexed"
+        )
+
+    dst_dim = sum(1 for i in index if not isinstance(i, (int, float)))
+
+    index = _process_ellipsis_into_slice(index, self.shape)
+    index = _trim_index_to_shape(index, self.shape)
+    slice_list = [[0, x, 1] for x in self.shape]
+    for x in range(len(index)):
+        if isinstance(index[x], slice):
+            slice_list[x] = [index[x].start, index[x].stop, index[x].step]
+        elif np.issubdtype(type(index[x]), np.integer):
+            slice_list[x] = [
+                index[x],
+                index[x] + 1 if index[x] >= 0 else index[x] - 1,
+                None,
+            ]
+
+    # manage range for (x,y,z), with nothing that we deal with a z,y,x order
+    _, range_x, range_y, range_z = _compute_range(slice_list, self.shape)
+    origin = [range_z[0], range_y[0], range_x[0]]
+    region = [
+        range_z[1] - range_z[0],
+        range_y[1] - range_y[0],
+        range_x[1] - range_x[0],
+    ]
+    region = [abs(x) if x != 0 else 1 for x in region]
+    steps = [range_z[2], range_y[2], range_x[2]]
+
+    trimmed_region = [int(abs(x / s)) for x, s in zip(region, steps) if x > 1]
+    dst_shape = [1] * dst_dim
+    dst_shape[-len(trimmed_region) :] = trimmed_region
+
+    # we are dealing with a single pixel operation
+    if np.prod(region) == 1:
+        # TODO: return a float or return a buffer of one?
+        return self.get(origin, region)
+
+    # a specific step was provided, we are dealing with a range operation
+    from ._tier1 import range as gpu_range
+
+    result = gpu_range(
+        self,
+        start_x=range_x[0],
+        stop_x=range_x[1],
+        step_x=range_x[2],
+        start_y=range_y[0],
+        stop_y=range_y[1],
+        step_y=range_y[2],
+        start_z=range_z[0],
+        stop_z=range_z[1],
+        step_z=range_z[2],
+    )
+
+    # if result is an Array, and one of the dimension is equal to 1
+    if result.shape != tuple(dst_shape):
+        from ._tier1 import transpose_xy, transpose_yz
+        from ._memory import create
+
+        tmp = create(
+            dst_shape,
+            dtype=self.dtype,
+            mtype=self.mtype,
+            device=self.device,
+        )
+
+        transpose = [x == 1 for x in region]
+        if transpose[2]:  # x is empty
+            result = transpose_xy(result)
+            transpose_yz(result, tmp)
+        elif transpose[1]:  # y is empty
+            transpose_yz(result, tmp)
+        else:
+            result.copy(tmp)
+
+        result = tmp
+
+    return result
 
 
 def __setitem__(self, index, value):
-    raise NotImplementedError("Not implemented yet.")
+    """Set a pixel value or a region of interest in the Array."""
+    if (
+        isinstance(index, (tuple, np.ndarray))
+        and index[0] is not None
+        and isinstance(index[0], (tuple, list, np.ndarray))
+    ):
+        if len(index) == len(self.shape):
+            if len(index[0]) > 0:
+                # switch xy in 2D / xz in 3D, because clesperanto expects an X-Y-Z array;
+                # see also https://github.com/clEsperanto/pyclesperanto_prototype/issues/49
+                index = list(index)
+                index[0], index[-1] = index[-1], index[0]
+
+                # send positions to GPU
+                from ._memory import push
+
+                positions = push(np.asarray(index))
+
+                num_positions = positions.shape[-1]
+                if isinstance(value, (int, float)):
+                    # make an array containing new values for every pixel
+                    number = value
+
+                    from ._memory import create
+
+                    value_shape = [1] * len(self.shape)
+                    value_shape[-1] = num_positions
+                    value = create(value_shape)
+                    value.fill(number)
+
+                # overwrite pixels
+                from ._tier1 import write_values_to_positions
+                from ._tier2 import concatenate_along_y
+
+                values_and_positions = concatenate_along_y(positions, value)
+                write_values_to_positions(values_and_positions, self)
+            return
+
+    if not isinstance(value, (Array, np.ndarray)):
+        value = np.array(value)
+
+    if not isinstance(index, tuple):
+        index = (index,)
+
+    dst_dim = sum(1 for i in index if not isinstance(i, (int, float)))
+
+    index = _process_ellipsis_into_slice(index, self.shape)
+    index = _trim_index_to_shape(index, self.shape)
+    slice_list = [[0, x, 1] for x in self.shape]
+    for x in range(len(index)):
+        if isinstance(index[x], slice):
+            slice_list[x] = [index[x].start, index[x].stop, index[x].step]
+        elif np.issubdtype(type(index[x]), np.integer):
+            slice_list[x] = [
+                index[x],
+                index[x] + 1 if index[x] >= 0 else index[x] - 1,
+                None,
+            ]
+
+    # manage range for (x,y,z), with nothing that we deal with a z,y,x order
+    _, range_x, range_y, range_z = _compute_range(slice_list, self.shape)
+    origin = [range_z[0], range_y[0], range_x[0]]
+    region = [
+        range_z[1] - range_z[0],
+        range_y[1] - range_y[0],
+        range_x[1] - range_x[0],
+    ]
+    region = [abs(x) if x != 0 else 1 for x in region]
+    steps = [range_z[2], range_y[2], range_x[2]]
+
+    trimmed_region = [int(abs(x / s)) for x, s in zip(region, steps) if x > 1]
+    dst_shape = [1] * dst_dim
+    dst_shape[-len(trimmed_region) :] = trimmed_region
+
+    if value.size == 1:
+        if np.prod(region) > 1:
+            value = np.repeat(value, np.prod(region))
+            value = value.reshape(region)
+
+        self.set(value, origin, region)
+        return
+
+    if any([x != 1 for x in steps]):
+        # TODO: not sure it work properly
+        from ._tier1 import range as gpu_range
+
+        gpu_range(
+            value,
+            self,
+            start_x=range_x[0],
+            stop_x=range_x[1],
+            step_x=range_x[2],
+            start_y=range_y[0],
+            stop_y=range_y[1],
+            step_y=range_y[2],
+            start_z=range_z[0],
+            stop_z=range_z[1],
+            step_z=range_z[2],
+        )
+        return
+
+    if isinstance(value, Array):
+        if self.dtype == value.dtype:
+            self.copy(value, origin, (0, 0, 0), region)
+        else:
+            # otherwise we copy with cast using paste
+            from ._tier1 import paste
+
+            paste(
+                value,
+                self,
+                index_x=origin[-1] if len(origin) > 0 else 0,
+                index_y=origin[-2] if len(origin) > 1 else 0,
+                index_z=origin[-3] if len(origin) > 2 else 0,
+            )
+    else:
+        self.set(value, origin, region)
 
 
 # adapted from https://github.com/napari/napari/blob/d6bc683b019c4a3a3c6e936526e29bbd59cca2f4/napari/utils/notebook_display.py#L54-L73
-def _plt_to_png(self):
+def __plt_to_png__(self):
     """PNG representation of the image object for IPython.
     Returns
     -------
@@ -346,14 +599,14 @@ def _plt_to_png(self):
     return png
 
 
-def _png_to_html(self, png):
+def __png_to_html__(self, png):
     import base64
 
     url = "data:image/png;base64," + base64.b64encode(png).decode("utf-8")
     return f'<img src="{url}"></img>'
 
 
-def _repr_html_(self):
+def __repr_html__(self):
     """HTML representation of the image object for IPython.
     Returns
     -------
@@ -373,13 +626,7 @@ def _repr_html_(self):
         imshow(self, labels=labels, continue_drawing=True, colorbar=not labels)
         image = self._png_to_html(self._plt_to_png())
     else:
-        return (
-            "<pre>cle.array("
-            + str(np.asarray(self))
-            + ", dtype="
-            + str(self.dtype)
-            + ")</pre>"
-        )
+        return "<pre>" + repr(self) + "</pre>"
 
     units = ["B", "kB", "MB", "GB", "TB", "PB"]
     unit_index = 0

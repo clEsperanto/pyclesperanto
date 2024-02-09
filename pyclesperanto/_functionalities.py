@@ -73,7 +73,8 @@ def imshow(
     alpha: Optional[float] = None,
     continue_drawing: Optional[bool] = False,
 ):
-    """Visualize an image, e.g. in Jupyter notebooks.
+    """Visualize an image, e.g. in Jupyter notebooks using matplotlib.   
+
     Parameters
     ----------
     image: np.ndarray

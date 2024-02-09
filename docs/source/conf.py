@@ -14,7 +14,7 @@ sys.path.insert(0, os.path.abspath("../../"))
 project = "pyclesperanto"
 copyright = "2023, Stephane Rigaud"
 author = "Stephane Rigaud"
-release = "0.6.5"
+release = "0.8.0"
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration

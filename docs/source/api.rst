@@ -36,38 +36,55 @@ Functionalities
 Filters
 =======
 
+tier1
+------
+
 .. automodule:: pyclesperanto._tier1
    :members:
    :undoc-members:
-   :imported-members:
+
+tier2
+------
 
 .. automodule:: pyclesperanto._tier2
     :members:
     :undoc-members:
-    :imported-members:
+
+tier3
+------
 
 .. automodule:: pyclesperanto._tier3
     :members:
     :undoc-members:
-    :imported-members:
+
+tier4
+------  
 
 .. automodule:: pyclesperanto._tier4
     :members:
     :undoc-members:
-    :imported-members:
+
+tier5
+------
 
 .. automodule:: pyclesperanto._tier5
     :members:
     :undoc-members:
-    :imported-members:
+
+tier6
+------
 
 .. automodule:: pyclesperanto._tier6
     :members:
     :undoc-members:
     :imported-members:
 
+tier7
+------
+
 .. automodule:: pyclesperanto._tier7
     :members:
     :undoc-members:
-    :imported-members:
+
+    .. :imported-members:
     .. :exclude-members: Image, Device, _Array, plugin_function

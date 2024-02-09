@@ -76,4 +76,9 @@ and install the package from the source:
     The ``-e`` flag is not supported yet.
 
 
-pyClesperanto should now be installed in your virtual environment as a package along with all its dependencies.
+pyClesperanto should now be installed in your virtual environment as a package along with all its dependencies. You can now start using it in your Python scripts and test modifications to the source code.
+However, any modification of the source code will require you to re-install the package with `pip` to take effect.
+
+.. warning::
+
+    If using an install from source, do not import the package from the source directory as it will not work properly.    

@@ -21,30 +21,24 @@ This package is developped in python and C++ wrapped using [PyBind11], and uses 
 * Create a new environment and activate it:
 
 ```
-mamba create --name cle python=3.9
+mamba create --name cle
 mamba activate cle
 ```
 
 * Install pyclesperanto using [__mamba / conda__](https://focalplane.biologists.com/2022/12/08/managing-scientific-python-environments-using-conda-mamba-and-friends/):
 
 ```
-mamba install -c conda-forge pyclesperanto
+mamba install pyclesperanto
 ```
 
 __MacOS__ users may need to install the following package:
 ```
-mamba install -c conda-forge ocl_icd_wrapper_apple
+mamba install ocl_icd_wrapper_apple
 ```
 
 __Linux__ users may need to install the following package:
 ```
-mamba install -c conda-forge ocl-icd-system
-```
-
-OR using pip:
-
-```
-pip install pyclesperanto
+mamba install ocl-icd-system
 ```
 
 ## Troubleshooting: Graphics cards drivers

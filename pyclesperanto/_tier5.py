@@ -30,8 +30,8 @@ def array_equal(
     -------
     bool
     
-    Links
-    -----
+    References
+    ----------
     [1] https://numpy.org/doc/stable/reference/generated/numpy.array_equal.html
     """
 
@@ -109,8 +109,8 @@ def connected_components_labeling(
     -------
     Image
     
-    Links
-    -----
+    References
+    ----------
     [1] https://clij.github.io/clij2-docs/reference_connectedComponentsLabelingBox
     """
 

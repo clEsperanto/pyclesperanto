@@ -31,8 +31,8 @@ def absolute(
     -------
     Image
     
-    Links
-    -----
+    References
+    ----------
     [1] https://clij.github.io/clij2docs/reference_absolute
     """
 
@@ -77,8 +77,8 @@ def add_images_weighted(
     -------
     Image
     
-    Links
-    -----
+    References
+    ----------
     [1] https://clij.github.io/clij2docs/reference_addImagesWeighted
     """
 
@@ -120,8 +120,8 @@ def add_image_and_scalar(
     -------
     Image
     
-    Links
-    -----
+    References
+    ----------
     [1] https://clij.github.io/clij2docs/reference_addImageAndScalar
     """
 
@@ -163,8 +163,8 @@ def binary_and(
     -------
     Image
     
-    Links
-    -----
+    References
+    ----------
     [1] https://clij.github.io/clij2docs/reference_binaryAnd
     """
 
@@ -201,8 +201,8 @@ def binary_edge_detection(
     -------
     Image
     
-    Links
-    -----
+    References
+    ----------
     [1] https://clij.github.io/clij2docs/reference_binaryEdgeDetection
     """
 
@@ -239,8 +239,8 @@ def binary_not(
     -------
     Image
     
-    Links
-    -----
+    References
+    ----------
     [1] https://clij.github.io/clij2docs/reference_binaryNot
     """
 
@@ -281,8 +281,8 @@ def binary_or(
     -------
     Image
     
-    Links
-    -----
+    References
+    ----------
     [1] https://clij.github.io/clij2docs/reference_binaryOr
     """
 
@@ -321,8 +321,8 @@ def binary_subtract(
     -------
     Image
     
-    Links
-    -----
+    References
+    ----------
     [1] https://clij.github.io/clij2docs/reference_binarySubtract
     """
 
@@ -364,8 +364,8 @@ def binary_xor(
     -------
     Image
     
-    Links
-    -----
+    References
+    ----------
     [1] https://clij.github.io/clij2docs/reference_binaryXOr
     """
 
@@ -451,8 +451,8 @@ def convolve(
     -------
     Image
     
-    Links
-    -----
+    References
+    ----------
     [1] https://clij.github.io/clij2docs/reference_convolve
     """
 
@@ -488,8 +488,8 @@ def copy(
     -------
     Image
     
-    Links
-    -----
+    References
+    ----------
     [1] https://clij.github.io/clij2docs/reference_copy
     """
 
@@ -531,8 +531,8 @@ def copy_slice(
     -------
     Image
     
-    Links
-    -----
+    References
+    ----------
     [1] https://clij.github.io/clij2docs/reference_copySlice
     """
 
@@ -572,8 +572,8 @@ def copy_horizontal_slice(
     -------
     Image
     
-    Links
-    -----
+    References
+    ----------
     [1] https://clij.github.io/clij2docs/reference_copySlice
     """
 
@@ -613,8 +613,8 @@ def copy_vertical_slice(
     -------
     Image
     
-    Links
-    -----
+    References
+    ----------
     [1] https://clij.github.io/clij2docs/reference_copySlice
     """
 
@@ -669,8 +669,8 @@ def crop(
     -------
     Image
     
-    Links
-    -----
+    References
+    ----------
     [1] https://clij.github.io/clij2docs/reference_crop3D
     """
 
@@ -745,8 +745,8 @@ def detect_label_edges(
     -------
     Image
     
-    Links
-    -----
+    References
+    ----------
     [1] https://clij.github.io/clij2docs/reference_detectLabelEdges
     """
 
@@ -783,8 +783,8 @@ def detect_maxima_box(
     -------
     Image
     
-    Links
-    -----
+    References
+    ----------
     [1] https://clij.github.io/clij2docs/reference_detectMaximaBox
     """
 
@@ -821,8 +821,8 @@ def detect_minima_box(
     -------
     Image
     
-    Links
-    -----
+    References
+    ----------
     [1] https://clij.github.io/clij2docs/reference_detectMaximaBox
     """
 
@@ -862,8 +862,8 @@ def dilate_box(
     -------
     Image
     
-    Links
-    -----
+    References
+    ----------
     [1] https://clij.github.io/clij2docs/reference_dilateBox
     """
 
@@ -901,8 +901,8 @@ def dilate_sphere(
     -------
     Image
     
-    Links
-    -----
+    References
+    ----------
     [1] https://clij.github.io/clij2docs/reference_dilateSphere
     """
 
@@ -940,8 +940,8 @@ def divide_images(
     -------
     Image
     
-    Links
-    -----
+    References
+    ----------
     [1] https://clij.github.io/clij2docs/reference_divideImages
     """
 
@@ -1017,8 +1017,8 @@ def equal(
     -------
     Image
     
-    Links
-    -----
+    References
+    ----------
     [1] https://clij.github.io/clij2docs/reference_equal
     """
 
@@ -1058,8 +1058,8 @@ def equal_constant(
     -------
     Image
     
-    Links
-    -----
+    References
+    ----------
     [1] https://clij.github.io/clij2docs/reference_equalConstant
     """
 
@@ -1100,8 +1100,8 @@ def erode_box(
     -------
     Image
     
-    Links
-    -----
+    References
+    ----------
     [1] https://clij.github.io/clij2docs/reference_erodeBox
     """
 
@@ -1139,8 +1139,8 @@ def erode_sphere(
     -------
     Image
     
-    Links
-    -----
+    References
+    ----------
     [1] https://clij.github.io/clij2docs/reference_erodeSphere
     """
 
@@ -1176,8 +1176,8 @@ def exponential(
     -------
     Image
     
-    Links
-    -----
+    References
+    ----------
     [1] https://clij.github.io/clij2docs/reference_exponential
     """
 
@@ -1221,8 +1221,8 @@ def flip(
     -------
     Image
     
-    Links
-    -----
+    References
+    ----------
     [1] https://clij.github.io/clij2docs/reference_flip3D
     """
 
@@ -1271,8 +1271,8 @@ def gaussian_blur(
     -------
     Image
     
-    Links
-    -----
+    References
+    ----------
     [1] https://clij.github.io/clij2docs/reference_gaussianBlur3D
     """
 
@@ -1321,8 +1321,8 @@ def generate_distance_matrix(
     -------
     Image
     
-    Links
-    -----
+    References
+    ----------
     [1] https://clij.github.io/clij2docs/reference_generateDistanceMatrix
     """
 
@@ -1360,8 +1360,8 @@ def gradient_x(
     -------
     Image
     
-    Links
-    -----
+    References
+    ----------
     [1] https://clij.github.io/clij2docs/reference_gradientX
     """
 
@@ -1398,8 +1398,8 @@ def gradient_y(
     -------
     Image
     
-    Links
-    -----
+    References
+    ----------
     [1] https://clij.github.io/clij2docs/reference_gradientY
     """
 
@@ -1436,8 +1436,8 @@ def gradient_z(
     -------
     Image
     
-    Links
-    -----
+    References
+    ----------
     [1] https://clij.github.io/clij2docs/reference_gradientZ
     """
 
@@ -1476,8 +1476,8 @@ def greater(
     -------
     Image
     
-    Links
-    -----
+    References
+    ----------
     [1] https://clij.github.io/clij2docs/reference_greater
     """
 
@@ -1516,8 +1516,8 @@ def greater_constant(
     -------
     Image
     
-    Links
-    -----
+    References
+    ----------
     [1] https://clij.github.io/clij2docs/reference_greaterConstant
     """
 
@@ -1557,8 +1557,8 @@ def greater_or_equal(
     -------
     Image
     
-    Links
-    -----
+    References
+    ----------
     [1] https://clij.github.io/clij2docs/reference_greaterOrEqual
     """
 
@@ -1598,8 +1598,8 @@ def greater_or_equal_constant(
     -------
     Image
     
-    Links
-    -----
+    References
+    ----------
     [1] https://clij.github.io/clij2docs/reference_greaterOrEqualConstant
     """
 
@@ -1684,8 +1684,8 @@ def laplace_box(
     -------
     Image
     
-    Links
-    -----
+    References
+    ----------
     [1] https://clij.github.io/clij2docs/reference_laplaceBox
     """
 
@@ -1720,8 +1720,8 @@ def laplace_diamond(
     -------
     Image
     
-    Links
-    -----
+    References
+    ----------
     [1] https://clij.github.io/clij2docs/reference_laplaceDiamond
     """
 
@@ -1794,8 +1794,8 @@ def logarithm(
     -------
     Image
     
-    Links
-    -----
+    References
+    ----------
     [1] https://clij.github.io/clij2docs/reference_logarithm
     """
 
@@ -1836,8 +1836,8 @@ def mask(
     -------
     Image
     
-    Links
-    -----
+    References
+    ----------
     [1] https://clij.github.io/clij2docs/reference_mask
     """
 
@@ -1882,8 +1882,8 @@ def mask_label(
     -------
     Image
     
-    Links
-    -----
+    References
+    ----------
     [1] https://clij.github.io/clij2docs/reference_maskLabel
     """
 
@@ -1924,8 +1924,8 @@ def maximum_image_and_scalar(
     -------
     Image
     
-    Links
-    -----
+    References
+    ----------
     [1] https://clij.github.io/clij2docs/reference_maximumImageAndScalar
     """
 
@@ -1965,8 +1965,8 @@ def maximum_images(
     -------
     Image
     
-    Links
-    -----
+    References
+    ----------
     [1] https://clij.github.io/clij2docs/reference_maximumImages
     """
 
@@ -2012,8 +2012,8 @@ def maximum_box(
     -------
     Image
     
-    Links
-    -----
+    References
+    ----------
     [1] https://clij.github.io/clij2docs/reference_maximum3DBox
     """
 
@@ -2051,8 +2051,8 @@ def maximum_x_projection(
     -------
     Image
     
-    Links
-    -----
+    References
+    ----------
     [1] https://clij.github.io/clij2docs/reference_maximumXProjection
     """
 
@@ -2087,8 +2087,8 @@ def maximum_y_projection(
     -------
     Image
     
-    Links
-    -----
+    References
+    ----------
     [1] https://clij.github.io/clij2docs/reference_maximumYProjection
     """
 
@@ -2123,8 +2123,8 @@ def maximum_z_projection(
     -------
     Image
     
-    Links
-    -----
+    References
+    ----------
     [1] https://clij.github.io/clij2docs/reference_maximumZProjection
     """
 
@@ -2169,8 +2169,8 @@ def mean_box(
     -------
     Image
     
-    Links
-    -----
+    References
+    ----------
     [1] https://clij.github.io/clij2docs/reference_mean3DBox
     """
 
@@ -2218,8 +2218,8 @@ def mean_sphere(
     -------
     Image
     
-    Links
-    -----
+    References
+    ----------
     [1] https://clij.github.io/clij2docs/reference_mean3DSphere
     """
 
@@ -2257,8 +2257,8 @@ def mean_x_projection(
     -------
     Image
     
-    Links
-    -----
+    References
+    ----------
     [1] https://clij.github.io/clij2docs/reference_meanXProjection
     """
 
@@ -2293,8 +2293,8 @@ def mean_y_projection(
     -------
     Image
     
-    Links
-    -----
+    References
+    ----------
     [1] https://clij.github.io/clij2docs/reference_meanYProjection
     """
 
@@ -2329,8 +2329,8 @@ def mean_z_projection(
     -------
     Image
     
-    Links
-    -----
+    References
+    ----------
     [1] https://clij.github.io/clij2docs/reference_meanZProjection
     """
 
@@ -2376,8 +2376,8 @@ def median_box(
     -------
     Image
     
-    Links
-    -----
+    References
+    ----------
     [1] https://clij.github.io/clij2docs/reference_median3DBox
     """
 
@@ -2426,8 +2426,8 @@ def median_sphere(
     -------
     Image
     
-    Links
-    -----
+    References
+    ----------
     [1] https://clij.github.io/clij2docs/reference_median3DSphere
     """
 
@@ -2475,8 +2475,8 @@ def minimum_box(
     -------
     Image
     
-    Links
-    -----
+    References
+    ----------
     [1] https://clij.github.io/clij2docs/reference_minimum3DBox
     """
 
@@ -2518,8 +2518,8 @@ def minimum_image_and_scalar(
     -------
     Image
     
-    Links
-    -----
+    References
+    ----------
     [1] https://clij.github.io/clij2docs/reference_minimumImageAndScalar
     """
 
@@ -2559,8 +2559,8 @@ def minimum_images(
     -------
     Image
     
-    Links
-    -----
+    References
+    ----------
     [1] https://clij.github.io/clij2docs/reference_minimumImages
     """
 
@@ -2596,8 +2596,8 @@ def minimum_x_projection(
     -------
     Image
     
-    Links
-    -----
+    References
+    ----------
     [1] https://clij.github.io/clij2docs/reference_minimumXProjection
     """
 
@@ -2632,8 +2632,8 @@ def minimum_y_projection(
     -------
     Image
     
-    Links
-    -----
+    References
+    ----------
     [1] https://clij.github.io/clij2docs/reference_minimumYProjection
     """
 
@@ -2668,8 +2668,8 @@ def minimum_z_projection(
     -------
     Image
     
-    Links
-    -----
+    References
+    ----------
     [1] https://clij.github.io/clij2docs/reference_minimumZProjection
     """
 
@@ -2843,8 +2843,8 @@ def multiply_image_and_position(
     -------
     Image
     
-    Links
-    -----
+    References
+    ----------
     [1] https://clij.github.io/clij2-docs/reference_multiplyImageAndCoordinate
     """
 
@@ -2884,8 +2884,8 @@ def multiply_image_and_scalar(
     -------
     Image
     
-    Links
-    -----
+    References
+    ----------
     [1] https://clij.github.io/clij2docs/reference_multiplyImageAndScalar
     """
 
@@ -2925,8 +2925,8 @@ def multiply_images(
     -------
     Image
     
-    Links
-    -----
+    References
+    ----------
     [1] https://clij.github.io/clij2docs/reference_multiplyImages
     """
 
@@ -2946,8 +2946,8 @@ def nan_to_num(
     input_image: Image,
     output_image: Image = None,
     nan: float = 0,
-    posinf: float = np.nan_to_num(np.inf),
-    neginf: float = np.nan_to_num(-np.inf),
+    posinf: float = np.nan_to_num(float('inf')),
+    neginf: float = np.nan_to_num(float('-inf')),
     device: Device = None
 ) -> Image:
     """Copies all pixels instead those which are not a number (NaN), or
@@ -2964,9 +2964,9 @@ def nan_to_num(
         The output image where results are written into.
     nan: float = 0
         Value to replace
-    posinf: float = np.nan_to_num(np.inf)
+    posinf: float = np.nan_to_num(float('inf'))
         Value to replace +inf with.
-    neginf: float = np.nan_to_num(-np.inf)
+    neginf: float = np.nan_to_num(float('-inf'))
         Value to replace -inf with.
     device: Device = None
         Device to perform the operation on.
@@ -2975,8 +2975,8 @@ def nan_to_num(
     -------
     Image
     
-    Links
-    -----
+    References
+    ----------
     [1] https://numpy.org/doc/stable/reference/generated/numpy.nan_to_num.html
     """
 
@@ -3020,8 +3020,8 @@ def nonzero_maximum_box(
     -------
     Image
     
-    Links
-    -----
+    References
+    ----------
     [1] https://clij.github.io/clij2docs/reference_nonzeroMaximumBox
     """
 
@@ -3063,8 +3063,8 @@ def nonzero_maximum_diamond(
     -------
     Image
     
-    Links
-    -----
+    References
+    ----------
     [1] https://clij.github.io/clij2docs/reference_nonzeroMaximumDiamond
     """
 
@@ -3106,8 +3106,8 @@ def nonzero_minimum_box(
     -------
     Image
     
-    Links
-    -----
+    References
+    ----------
     [1] https://clij.github.io/clij2docs/reference_nonzeroMinimumBox
     """
 
@@ -3149,8 +3149,8 @@ def nonzero_minimum_diamond(
     -------
     Image
     
-    Links
-    -----
+    References
+    ----------
     [1] https://clij.github.io/clij2docs/reference_nonzeroMinimumDiamond
     """
 
@@ -3190,8 +3190,8 @@ def not_equal(
     -------
     Image
     
-    Links
-    -----
+    References
+    ----------
     [1] https://clij.github.io/clij2docs/reference_notEqual
     """
 
@@ -3231,8 +3231,8 @@ def not_equal_constant(
     -------
     Image
     
-    Links
-    -----
+    References
+    ----------
     [1] https://clij.github.io/clij2docs/reference_notEqualConstant
     """
 
@@ -3277,8 +3277,8 @@ def paste(
     -------
     Image
     
-    Links
-    -----
+    References
+    ----------
     [1] https://clij.github.io/clij2docs/reference_paste3D
     """
 
@@ -3320,8 +3320,8 @@ def onlyzero_overwrite_maximum_box(
     -------
     Image
     
-    Links
-    -----
+    References
+    ----------
     [1] https://clij.github.io/clij2docs/reference_onlyzeroOverwriteMaximumBox
     """
 
@@ -3361,8 +3361,8 @@ def onlyzero_overwrite_maximum_diamond(
     -------
     Image
     
-    Links
-    -----
+    References
+    ----------
     [1] https://clij.github.io/clij2docs/reference_onlyzeroOverwriteMaximumDiamond
     """
 
@@ -3402,8 +3402,8 @@ def power(
     -------
     Image
     
-    Links
-    -----
+    References
+    ----------
     [1] https://clij.github.io/clij2docs/reference_power
     """
 
@@ -3442,8 +3442,8 @@ def power_images(
     -------
     Image
     
-    Links
-    -----
+    References
+    ----------
     [1] https://clij.github.io/clij2docs/reference_powerImages
     """
 
@@ -3592,8 +3592,8 @@ def replace_values(
     -------
     Image
     
-    Links
-    -----
+    References
+    ----------
     [1] https://clij.github.io/clij2-docs/reference_replaceIntensities
     """
 
@@ -3635,8 +3635,8 @@ def replace_value(
     -------
     Image
     
-    Links
-    -----
+    References
+    ----------
     [1] https://clij.github.io/clij2-docs/reference_replaceIntensity
     """
 
@@ -3683,8 +3683,8 @@ def maximum_sphere(
     -------
     Image
     
-    Links
-    -----
+    References
+    ----------
     [1] https://clij.github.io/clij2docs/reference_maximum3DSphere
     """
 
@@ -3732,8 +3732,8 @@ def minimum_sphere(
     -------
     Image
     
-    Links
-    -----
+    References
+    ----------
     [1] https://clij.github.io/clij2docs/reference_minimum3DSphere
     """
 
@@ -3775,8 +3775,8 @@ def multiply_matrix(
     -------
     Image
     
-    Links
-    -----
+    References
+    ----------
     [1] https://clij.github.io/clij2docs/reference_multiplyMatrix
     """
 
@@ -3813,8 +3813,8 @@ def reciprocal(
     -------
     Image
     
-    Links
-    -----
+    References
+    ----------
     [1] https://numpy.org/doc/stable/reference/generated/numpy.reciprocal.html
     """
 
@@ -3850,8 +3850,8 @@ def set(
     -------
     Image
     
-    Links
-    -----
+    References
+    ----------
     [1] https://clij.github.io/clij2docs/reference_set
     """
 
@@ -3889,8 +3889,8 @@ def set_column(
     -------
     Image
     
-    Links
-    -----
+    References
+    ----------
     [1] https://clij.github.io/clij2docs/reference_setColumn
     """
 
@@ -3926,8 +3926,8 @@ def set_image_borders(
     -------
     Image
     
-    Links
-    -----
+    References
+    ----------
     [1] https://clij.github.io/clij2docs/reference_setImageBorders
     """
 
@@ -3965,8 +3965,8 @@ def set_plane(
     -------
     Image
     
-    Links
-    -----
+    References
+    ----------
     [1] https://clij.github.io/clij2docs/reference_setPlane
     """
 
@@ -3999,8 +3999,8 @@ def set_ramp_x(
     -------
     Image
     
-    Links
-    -----
+    References
+    ----------
     [1] https://clij.github.io/clij2docs/reference_setRampX
     """
 
@@ -4031,8 +4031,8 @@ def set_ramp_y(
     -------
     Image
     
-    Links
-    -----
+    References
+    ----------
     [1] https://clij.github.io/clij2docs/reference_setRampY
     """
 
@@ -4063,8 +4063,8 @@ def set_ramp_z(
     -------
     Image
     
-    Links
-    -----
+    References
+    ----------
     [1] https://clij.github.io/clij2docs/reference_setRampZ
     """
 
@@ -4099,8 +4099,8 @@ def set_row(
     -------
     Image
     
-    Links
-    -----
+    References
+    ----------
     [1] https://clij.github.io/clij2docs/reference_setRow
     """
 
@@ -4175,8 +4175,8 @@ def set_where_x_equals_y(
     -------
     Image
     
-    Links
-    -----
+    References
+    ----------
     [1] https://clij.github.io/clij2docs/reference_setWhereXequalsY
     """
 
@@ -4213,8 +4213,8 @@ def set_where_x_greater_than_y(
     -------
     Image
     
-    Links
-    -----
+    References
+    ----------
     [1] https://clij.github.io/clij2docs/reference_setWhereXgreaterThanY
     """
 
@@ -4251,8 +4251,8 @@ def set_where_x_smaller_than_y(
     -------
     Image
     
-    Links
-    -----
+    References
+    ----------
     [1] https://clij.github.io/clij2docs/reference_setWhereXsmallerThanY
     """
 
@@ -4326,8 +4326,8 @@ def smaller(
     -------
     Image
     
-    Links
-    -----
+    References
+    ----------
     [1] https://clij.github.io/clij2docs/reference_smaller
     """
 
@@ -4367,8 +4367,8 @@ def smaller_constant(
     -------
     Image
     
-    Links
-    -----
+    References
+    ----------
     [1] https://clij.github.io/clij2docs/reference_smallerConstant
     """
 
@@ -4408,8 +4408,8 @@ def smaller_or_equal(
     -------
     Image
     
-    Links
-    -----
+    References
+    ----------
     [1] https://clij.github.io/clij2docs/reference_smallerOrEqual
     """
 
@@ -4449,8 +4449,8 @@ def smaller_or_equal_constant(
     -------
     Image
     
-    Links
-    -----
+    References
+    ----------
     [1] https://clij.github.io/clij2docs/reference_smallerOrEqualConstant
     """
 
@@ -4487,8 +4487,8 @@ def sobel(
     -------
     Image
     
-    Links
-    -----
+    References
+    ----------
     [1] https://clij.github.io/clij2docs/reference_sobel
     """
 
@@ -4557,8 +4557,8 @@ def std_z_projection(
     -------
     Image
     
-    Links
-    -----
+    References
+    ----------
     [1] https://clij.github.io/clij2-docs/reference_standardDeviationZProjection
     """
 
@@ -4596,8 +4596,8 @@ def subtract_image_from_scalar(
     -------
     Image
     
-    Links
-    -----
+    References
+    ----------
     [1] https://clij.github.io/clij2docs/reference_subtractImageFromScalar
     """
 
@@ -4672,8 +4672,8 @@ def sum_x_projection(
     -------
     Image
     
-    Links
-    -----
+    References
+    ----------
     [1] https://clij.github.io/clij2docs/reference_sumXProjection
     """
 
@@ -4708,8 +4708,8 @@ def sum_y_projection(
     -------
     Image
     
-    Links
-    -----
+    References
+    ----------
     [1] https://clij.github.io/clij2docs/reference_sumYProjection
     """
 
@@ -4744,8 +4744,8 @@ def sum_z_projection(
     -------
     Image
     
-    Links
-    -----
+    References
+    ----------
     [1] https://clij.github.io/clij2docs/reference_sumZProjection
     """
 
@@ -4780,8 +4780,8 @@ def transpose_xy(
     -------
     Image
     
-    Links
-    -----
+    References
+    ----------
     [1] https://clij.github.io/clij2docs/reference_transposeXY
     """
 
@@ -4816,8 +4816,8 @@ def transpose_xz(
     -------
     Image
     
-    Links
-    -----
+    References
+    ----------
     [1] https://clij.github.io/clij2docs/reference_transposeXZ
     """
 
@@ -4852,8 +4852,8 @@ def transpose_yz(
     -------
     Image
     
-    Links
-    -----
+    References
+    ----------
     [1] https://clij.github.io/clij2docs/reference_transposeYZ
     """
 
@@ -4889,8 +4889,8 @@ def undefined_to_zero(
     -------
     Image
     
-    Links
-    -----
+    References
+    ----------
     [1] https://clij.github.io/clij2docs/reference_undefinedToZero
     """
 
@@ -4936,8 +4936,8 @@ def variance_box(
     -------
     Image
     
-    Links
-    -----
+    References
+    ----------
     [1] https://clij.github.io/clij2docs/reference_varianceBox
     """
 
@@ -4986,8 +4986,8 @@ def variance_sphere(
     -------
     Image
     
-    Links
-    -----
+    References
+    ----------
     [1] https://clij.github.io/clij2docs/reference_varianceSphere
     """
 
@@ -5027,8 +5027,8 @@ def write_values_to_positions(
     -------
     Image
     
-    Links
-    -----
+    References
+    ----------
     [1] https://clij.github.io/clij2docs/reference_writeValuesToPositions
     """
 

@@ -30,8 +30,8 @@ def bounding_box(
     -------
     list
     
-    Links
-    -----
+    References
+    ----------
     [1] https://clij.github.io/clij2docs/reference_boundingBox
     """
 
@@ -62,8 +62,8 @@ def center_of_mass(
     -------
     list
     
-    Links
-    -----
+    References
+    ----------
     [1] https://clij.github.io/clij2docs/reference_centerOfMass
     """
 
@@ -101,8 +101,8 @@ def exclude_labels(
     -------
     Image
     
-    Links
-    -----
+    References
+    ----------
     [1] https://clij.github.io/clij2docs/reference_excludeLabels
     """
 
@@ -146,8 +146,8 @@ def exclude_labels_on_edges(
     -------
     Image
     
-    Links
-    -----
+    References
+    ----------
     [1] https://clij.github.io/clij2docs/reference_excludeLabelsOnEdges
     """
 
@@ -223,8 +223,8 @@ def gamma_correction(
     -------
     Image
     
-    Links
-    -----
+    References
+    ----------
     [1] https://clij.github.io/clij2docs/reference_gammaCorrection
     """
 
@@ -263,8 +263,8 @@ def generate_binary_overlap_matrix(
     -------
     Image
     
-    Links
-    -----
+    References
+    ----------
     [1] https://clij.github.io/clij2docs/reference_generateBinaryOverlapMatrix
     """
 
@@ -302,8 +302,8 @@ def generate_touch_matrix(
     -------
     Image
     
-    Links
-    -----
+    References
+    ----------
     [1] https://clij.github.io/clij2docs/reference_generateTouchMatrix
     """
 
@@ -357,8 +357,8 @@ def histogram(
     -------
     Image
     
-    Links
-    -----
+    References
+    ----------
     [1] https://clij.github.io/clij2docs/reference_histogram
     """
 
@@ -398,8 +398,8 @@ def jaccard_index(
     -------
     float
     
-    Links
-    -----
+    References
+    ----------
     [1] https://clij.github.io/clij2docs/reference_jaccardIndex
     """
 
@@ -436,8 +436,8 @@ def labelled_spots_to_pointlist(
     -------
     Image
     
-    Links
-    -----
+    References
+    ----------
     [1] https://clij.github.io/clij2docs/reference_labelledSpotsToPointList
     """
 
@@ -498,8 +498,8 @@ def mean_of_all_pixels(
     -------
     float
     
-    Links
-    -----
+    References
+    ----------
     [1] https://clij.github.io/clij2docs/reference_meanOfAllPixels
     """
 

@@ -112,8 +112,8 @@ def masked_voronoi_labeling(
     -------
     Image
     
-    Links
-    -----
+    References
+    ----------
     [1] https://clij.github.io/clij2docs/reference_maskedVoronoiLabeling
     """
 
@@ -149,8 +149,8 @@ def voronoi_labeling(
     -------
     Image
     
-    Links
-    -----
+    References
+    ----------
     [1] https://clij.github.io/clij2docs/reference_voronoiLabeling
     """
 

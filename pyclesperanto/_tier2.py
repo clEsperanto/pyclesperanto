@@ -34,8 +34,8 @@ def absolute_difference(
     -------
     Image
     
-    Links
-    -----
+    References
+    ----------
     [1] https://clij.github.io/clij2docs/reference_absoluteDifference
     """
 
@@ -75,8 +75,8 @@ def add_images(
     -------
     Image
     
-    Links
-    -----
+    References
+    ----------
     [1] https://clij.github.io/clij2docs/reference_addImages
     """
 
@@ -121,8 +121,8 @@ def bottom_hat_box(
     -------
     Image
     
-    Links
-    -----
+    References
+    ----------
     [1] https://clij.github.io/clij2docs/reference_bottomHatBox
     """
 
@@ -169,8 +169,8 @@ def bottom_hat_sphere(
     -------
     Image
     
-    Links
-    -----
+    References
+    ----------
     [1] https://clij.github.io/clij2docs/reference_bottomHatSphere
     """
 
@@ -213,8 +213,8 @@ def clip(
     -------
     Image
     
-    Links
-    -----
+    References
+    ----------
     [1] https://numpy.org/doc/stable/reference/generated/numpy.clip.html
     """
 
@@ -333,8 +333,8 @@ def concatenate_along_x(
     -------
     Image
     
-    Links
-    -----
+    References
+    ----------
     [1] https://clij.github.io/clij2-docs/reference_combineHorizontally
     """
 
@@ -370,8 +370,8 @@ def concatenate_along_y(
     -------
     Image
     
-    Links
-    -----
+    References
+    ----------
     [1] https://clij.github.io/clij2-docs/reference_combineVertically
     """
 
@@ -407,8 +407,8 @@ def concatenate_along_z(
     -------
     Image
     
-    Links
-    -----
+    References
+    ----------
     [1] https://clij.github.io/clij2-docs/reference_concatenateStacks
     """
 
@@ -447,8 +447,8 @@ def count_touching_neighbors(
     -------
     Image
     
-    Links
-    -----
+    References
+    ----------
     [1] https://clij.github.io/clij2docs/reference_countTouchingNeighbors
     """
 
@@ -523,8 +523,8 @@ def divide_by_gaussian_background(
     -------
     Image
     
-    Links
-    -----
+    References
+    ----------
     [1] https://clij.github.io/clij2docs/reference_divideByGaussianBackground
     """
 
@@ -614,8 +614,8 @@ def difference_of_gaussian(
     -------
     Image
     
-    Links
-    -----
+    References
+    ----------
     [1] https://clij.github.io/clij2docs/reference_differenceOfGaussian3D
     """
 
@@ -655,8 +655,8 @@ def extend_labeling_via_voronoi(
     -------
     Image
     
-    Links
-    -----
+    References
+    ----------
     [1] https://clij.github.io/clij2docs/reference_extendLabelingViaVoronoi
     """
 
@@ -691,8 +691,8 @@ def invert(
     -------
     Image
     
-    Links
-    -----
+    References
+    ----------
     [1] https://clij.github.io/clij2docs/reference_invert
     """
 
@@ -727,8 +727,8 @@ def label_spots(
     -------
     Image
     
-    Links
-    -----
+    References
+    ----------
     [1] https://clij.github.io/clij2docs/reference_labelSpots
     """
 
@@ -791,8 +791,8 @@ def maximum_of_all_pixels(
     -------
     float
     
-    Links
-    -----
+    References
+    ----------
     [1] https://clij.github.io/clij2docs/reference_maximumOfAllPixels
     """
 
@@ -823,8 +823,8 @@ def minimum_of_all_pixels(
     -------
     float
     
-    Links
-    -----
+    References
+    ----------
     [1] https://clij.github.io/clij2docs/reference_minimumOfAllPixels
     """
 
@@ -857,8 +857,8 @@ def minimum_of_masked_pixels(
     -------
     float
     
-    Links
-    -----
+    References
+    ----------
     [1] https://clij.github.io/clij2docs/reference_minimumOfMaskedPixels
     """
 
@@ -1036,8 +1036,8 @@ def square(
     -------
     Image
     
-    Links
-    -----
+    References
+    ----------
     [1] https://numpy.org/doc/stable/reference/generated/numpy.square.html
     """
 
@@ -1072,8 +1072,8 @@ def squared_difference(
     -------
     Image
     
-    Links
-    -----
+    References
+    ----------
     [1] https://clij.github.io/clij2docs/reference_squaredDifference
     """
 
@@ -1115,8 +1115,8 @@ def standard_deviation_box(
     -------
     Image
     
-    Links
-    -----
+    References
+    ----------
     [1] https://clij.github.io/clij2docs/reference_standardDeviationBox
     """
 
@@ -1160,8 +1160,8 @@ def standard_deviation_sphere(
     -------
     Image
     
-    Links
-    -----
+    References
+    ----------
     [1] https://clij.github.io/clij2docs/reference_standardDeviationSphere
     """
 
@@ -1204,8 +1204,8 @@ def subtract_gaussian_background(
     -------
     Image
     
-    Links
-    -----
+    References
+    ----------
     [1] https://clij.github.io/clij2docs/reference_subtractGaussianBackground
     """
 
@@ -1243,8 +1243,8 @@ def subtract_images(
     -------
     Image
     
-    Links
-    -----
+    References
+    ----------
     [1] https://clij.github.io/clij2docs/reference_subtractImages
     """
 
@@ -1277,8 +1277,8 @@ def sum_of_all_pixels(
     -------
     float
     
-    Links
-    -----
+    References
+    ----------
     [1] https://clij.github.io/clij2docs/reference_sumOfAllPixels
     """
 
@@ -1321,8 +1321,8 @@ def top_hat_box(
     -------
     Image
     
-    Links
-    -----
+    References
+    ----------
     [1] https://clij.github.io/clij2docs/reference_topHatBox
     """
 
@@ -1369,8 +1369,8 @@ def top_hat_sphere(
     -------
     Image
     
-    Links
-    -----
+    References
+    ----------
     [1] https://clij.github.io/clij2docs/reference_topHatSphere
     """
 

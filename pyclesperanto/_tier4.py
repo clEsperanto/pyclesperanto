@@ -29,8 +29,8 @@ def mean_squared_error(
     -------
     float
     
-    Links
-    -----
+    References
+    ----------
     [1] https://clij.github.io/clij2docs/reference_meanSquaredError
     """
 
@@ -65,8 +65,8 @@ def spots_to_pointlist(
     -------
     Image
     
-    Links
-    -----
+    References
+    ----------
     [1] https://clij.github.io/clij2docs/reference_spotsToPointList
     """
 
@@ -105,8 +105,8 @@ def relabel_sequential(
     -------
     Image
     
-    Links
-    -----
+    References
+    ----------
     [1] https://clij.github.io/clij2docs/reference_closeIndexGapsInLabelMap
     """
 
@@ -141,8 +141,8 @@ def threshold_otsu(
     -------
     Image
     
-    Links
-    -----
+    References
+    ----------
     [1] https://clij.github.io/clij2-docs/reference_thresholdOtsu
 	[2] https://scikit-image.org/docs/dev/api/skimage.filters.html#skimage.filters.threshold_otsu
 	[3] https://ieeexplore.ieee.org/document/4310076

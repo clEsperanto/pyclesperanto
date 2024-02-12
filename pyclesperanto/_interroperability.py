@@ -74,7 +74,7 @@ def power(x1: Image, x2: Union[float, int, Image], out: Image = None) -> Image:
     if out:
         out = asarray(out)
 
-    if x2 is Image:
+    if isinstance(x2, Image):
         from ._tier1 import power_images
 
         x2 = asarray(x2)

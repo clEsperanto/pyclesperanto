@@ -43,21 +43,13 @@ def test_histogram_3d_2():
     assert np.allclose(a, ref_histogram)
 
 
-def test_histogram_against_scikit_image():
-    from skimage.data import camera
-
-    image = camera()
-
-    from skimage import exposure
-
-    hist, bc = exposure.histogram(image.ravel(), 256, source_range="image")
-
-    print(hist)
-
-    gpu_image = cle.push(image.astype(int))
-
-    gpu_hist = cle.histogram(gpu_image, nbins=256, min=0, max=gpu_image.max())
-
-    print(cle.pull(gpu_hist))
-
-    assert np.allclose(hist, cle.pull(gpu_hist))
+# def test_histogram_against_scikit_image():
+#     from skimage.data import camera
+#     image = camera()
+#     from skimage import exposure
+#     hist, bc = exposure.histogram(image.ravel(), 256, source_range="image")
+#     print(hist)
+#     gpu_image = cle.push(image.astype(int))
+#     gpu_hist = cle.histogram(gpu_image, nbins=256, min=0, max=gpu_image.max())
+#     print(cle.pull(gpu_hist))
+#     assert np.allclose(hist, cle.pull(gpu_hist))

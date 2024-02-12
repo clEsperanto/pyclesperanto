@@ -21,15 +21,15 @@ def test_power():
         np.asarray(
             [
                 [0, 0, 0, 0, 0],
-                [0, 1, 4, 9, 0],
-                [0, 4, 9, 16, 0],
-                [0, 16, 16, 25, 0],
+                [0, 1, 8, 27, 0],
+                [0, 8, 27, 64, 0],
+                [0, 64, 64, 125, 0],
                 [0, 0, 0, 0, 0],
             ]
         )
     )
 
-    result = cle.power(test1, 2)
+    result = cle.power(test1, 3)
 
     print(result)
 

@@ -23,7 +23,7 @@ option(BUILD_SHARED_LIBS OFF)
 
 
 ## CLIc dependency
-set(CLIC_REPO_TAG 0.8.0) # branch name for dev
+set(CLIC_REPO_TAG 0.8.1) # branch name for dev
 set(CLIC_REPO_URL https://github.com/clEsperanto/CLIc.git)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/src/clic EXCLUDE_FROM_ALL)
 

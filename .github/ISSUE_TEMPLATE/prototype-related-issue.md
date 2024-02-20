@@ -2,7 +2,7 @@
 name: Prototype related issue
 about: Transitionning from Prototype to Final
 title: "[PROTOTYPE]"
-labels: switch
+labels: prototype
 assignees: ''
 
 ---

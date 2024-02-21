@@ -1,7 +1,7 @@
 ---
 name: Prototype related issue
 about: Transitionning from Prototype to Final
-title: "[PROTOTYPE]"
+title: "[Prototype]"
 labels: prototype
 assignees: ''
 

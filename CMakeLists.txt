@@ -21,6 +21,10 @@ option(BUILD_TESTING  OFF)
 option(BUILD_BENCHMARK  OFF)
 option(BUILD_SHARED_LIBS OFF)
 
+IF (CYGWIN)
+    SET (CMAKE_FIND_LIBRARY_SUFFIXES .lib)
+ENDIF (CYGWIN)
+
 
 ## CLIc dependency
 set(CLIC_REPO_TAG 0.8.1) # branch name for dev

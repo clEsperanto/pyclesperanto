@@ -28,11 +28,12 @@ jobs:
 
       - name: Get conda - ${{ matrix.python-version }}
         id: get-conda
-        uses: conda-incubator/setup-miniconda@v3
+        uses: conda-incubator/setup-miniconda@v3.0.2
         with:
           python-version: ${{ matrix.python-version }}
           miniforge-variant: Mambaforge
           miniforge-version: latest
+          channels: conda-forge
           activate-environment: test
           use-mamba: true
 

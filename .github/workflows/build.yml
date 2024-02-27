@@ -53,7 +53,7 @@ jobs:
         if: matrix.platform == 'windows-latest'
         run: |
           mamba install -y  intel-opencl-rt khronos-opencl-icd-loader oclgrind 
-          echo %PATH%
+          echo $PATH
 
       - name: Build
         id: build

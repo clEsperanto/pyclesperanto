@@ -51,7 +51,7 @@ jobs:
         id: install-oclgrind
         if: matrix.platform == 'windows-latest'
         run: |
-          mamba install -y oclgrind
+          mamba install -y khronos-opencl-icd-loader oclgrind 
 
       - name: Build
         id: build

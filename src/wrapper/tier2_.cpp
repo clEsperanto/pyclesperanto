@@ -80,6 +80,16 @@ m.def("_degrees_to_radians", &cle::tier2::degrees_to_radians_func, "Call degrees
     py::arg("device"), py::arg("src"), py::arg("dst"));
 
 	
+m.def("_detect_maxima_box", &cle::tier2::detect_maxima_box_func, "Call detect_maxima_box from C++.",
+    py::return_value_policy::take_ownership,
+    py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("radius_x"), py::arg("radius_y"), py::arg("radius_z"));
+
+	
+m.def("_detect_minima_box", &cle::tier2::detect_minima_box_func, "Call detect_minima_box from C++.",
+    py::return_value_policy::take_ownership,
+    py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("radius_x"), py::arg("radius_y"), py::arg("radius_z"));
+
+	
 m.def("_difference_of_gaussian", &cle::tier2::difference_of_gaussian_func, "Call difference_of_gaussian from C++.",
     py::return_value_policy::take_ownership,
     py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("sigma1_x"), py::arg("sigma1_y"), py::arg("sigma1_z"), py::arg("sigma2_x"), py::arg("sigma2_y"), py::arg("sigma2_z"));
@@ -131,6 +141,11 @@ m.def("_opening_sphere", &cle::tier2::opening_sphere_func, "Call opening_sphere 
 
 	
 m.def("_radians_to_degrees", &cle::tier2::radians_to_degrees_func, "Call radians_to_degrees from C++.",
+    py::return_value_policy::take_ownership,
+    py::arg("device"), py::arg("src"), py::arg("dst"));
+
+	
+m.def("_reduce_labels_to_label_edges_func", &cle::tier2::reduce_labels_to_label_edges_func_func, "Call reduce_labels_to_label_edges_func from C++.",
     py::return_value_policy::take_ownership,
     py::arg("device"), py::arg("src"), py::arg("dst"));
 

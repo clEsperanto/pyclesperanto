@@ -100,16 +100,6 @@ m.def("_detect_label_edges", &cle::tier1::detect_label_edges_func, "Call detect_
     py::arg("device"), py::arg("src"), py::arg("dst"));
 
 	
-m.def("_detect_maxima_box", &cle::tier1::detect_maxima_box_func, "Call detect_maxima_box from C++.",
-    py::return_value_policy::take_ownership,
-    py::arg("device"), py::arg("src"), py::arg("dst"));
-
-	
-m.def("_detect_minima_box", &cle::tier1::detect_minima_box_func, "Call detect_minima_box from C++.",
-    py::return_value_policy::take_ownership,
-    py::arg("device"), py::arg("src"), py::arg("dst"));
-
-	
 m.def("_dilate_box", &cle::tier1::dilate_box_func, "Call dilate_box from C++.",
     py::return_value_policy::take_ownership,
     py::arg("device"), py::arg("src"), py::arg("dst"));

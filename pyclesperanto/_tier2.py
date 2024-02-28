@@ -572,6 +572,106 @@ def degrees_to_radians(
 
 
 
+@plugin_function(category=['binarize', 'in assistant'])
+def detect_maxima_box(
+    input_image: Image = 0,
+    output_image: Image = 0,
+    radius_x: int = 0,
+    radius_y: int = 0,
+    radius_z: int = 0,
+    device: Device = None
+) -> Image:
+    """Detects local maxima in a given square/cubic neighborhood. Pixels in the
+    resulting image are set to 1 if there is no other pixel in a given radius which
+    has a higher intensity, and to 0 otherwise.
+
+    Parameters
+    ----------
+    input_image: Image = 0
+        Input image to process.
+    output_image: Image = 0
+        Output result image.
+    radius_x: int = 0
+        Radius of the region in X.
+    radius_y: int = 0
+        Radius of the region in Y.
+    radius_z: int = 0
+        Radius of the region in Z.
+    device: Device = None
+        Device to perform the operation on.
+
+    Returns
+    -------
+    Image
+    
+    References
+    ----------
+    [1] https://clij.github.io/clij2-docs/reference_detectMaximaBox
+    """
+
+    from ._pyclesperanto import _detect_maxima_box as op
+
+    return op(
+        device=device,
+        src=input_image,
+        dst=output_image,
+        radius_x=int(radius_x),
+        radius_y=int(radius_y),
+        radius_z=int(radius_z)
+    )
+
+
+
+@plugin_function(category=['binarize', 'in assistant'])
+def detect_minima_box(
+    input_image: Image = 0,
+    output_image: Image = 0,
+    radius_x: int = 0,
+    radius_y: int = 0,
+    radius_z: int = 0,
+    device: Device = None
+) -> Image:
+    """Detects local maxima in a given square/cubic neighborhood. Pixels in the
+    resulting image are set to 1 if there is no other pixel in a given radius which
+    has a lower intensity, and to 0 otherwise.
+
+    Parameters
+    ----------
+    input_image: Image = 0
+        Input image to process.
+    output_image: Image = 0
+        Output result image.
+    radius_x: int = 0
+        Radius of the region in X.
+    radius_y: int = 0
+        Radius of the region in Y.
+    radius_z: int = 0
+        Radius of the region in Z.
+    device: Device = None
+        Device to perform the operation on.
+
+    Returns
+    -------
+    Image
+    
+    References
+    ----------
+    [1] https://clij.github.io/clij2-docs/reference_detectMaximaBox
+    """
+
+    from ._pyclesperanto import _detect_minima_box as op
+
+    return op(
+        device=device,
+        src=input_image,
+        dst=output_image,
+        radius_x=int(radius_x),
+        radius_y=int(radius_y),
+        radius_z=int(radius_z)
+    )
+
+
+
 @plugin_function(category=['filter', 'background removal', 'bia-bob-suggestion'])
 def difference_of_gaussian(
     input_image: Image,
@@ -976,6 +1076,41 @@ def radians_to_degrees(
     """
 
     from ._pyclesperanto import _radians_to_degrees as op
+
+    return op(
+        device=device,
+        src=input_image,
+        dst=output_image
+    )
+
+
+
+@plugin_function(category=['label processing', 'in assistant', 'bia-bob-suggestion'])
+def reduce_labels_to_label_edges(
+    input_image: Image,
+    output_image: Image = None,
+    device: Device = None
+) -> Image:
+    """Takes a label map and reduces all labels to their edges. Label IDs stay and
+    background will be zero.
+
+    Parameters
+    ----------
+    input_image: Image
+    output_image: Image = None
+    device: Device = None
+        Device to perform the operation on.
+
+    Returns
+    -------
+    Image
+    
+    References
+    ----------
+    [1] https://clij.github.io/clij2-docs/reference_reduceLabelsToLabelEdges
+    """
+
+    from ._pyclesperanto import _reduce_labels_to_label_edges as op
 
     return op(
         device=device,

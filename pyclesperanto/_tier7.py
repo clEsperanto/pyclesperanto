@@ -9,6 +9,59 @@ from ._decorators import plugin_function
 import numpy as np
 
 
+@plugin_function(category=['label', 'in assistant', 'bia-bob-suggestion'])
+def eroded_otsu_labeling(
+    input_image: Image,
+    output_image: Image = None,
+    number_of_erosions: int = 5,
+    outline_sigma: float = 2,
+    device: Device = None
+) -> Image:
+    """Segments and labels an image using blurring, Otsu-thresholding, binary erosion
+    and  masked Voronoi-labeling.  After bluring and Otsu-thresholding the image,
+    iterative binary erosion is applied.  Objects in the eroded image are labeled
+    and the labels are extended to fit again into  the initial binary image using
+    masked-Voronoi labeling.  This function is similar to voronoi_otsu_labeling. It
+    is intended to deal better in  case labels of objects swapping into each other
+    if objects are dense. Like when using  Voronoi-Otsu-labeling, small objects may
+    disappear when applying this operation.  This function is inspired by a similar
+    implementation in Java by Jan Brocher (Biovoxxel) [0] [1]
+
+    Parameters
+    ----------
+    input_image: Image
+        Image to be transformed
+    output_image: Image = None
+        Output image
+    number_of_erosions: int = 5
+        Number of iteration of erosion
+    outline_sigma: float = 2
+        Gaussian blur sigma applied before Otsu thresholding
+    device: Device = None
+        Device to perform the operation on.
+
+    Returns
+    -------
+    Image
+    
+    References
+    ----------
+    [1] [0] https://github.com/biovoxxel/bv3dbox (BV_LabelSplitter.java#L83)
+	[2] [1] https://zenodo.org/badge/latestdoi/434949702
+    """
+
+    from ._pyclesperanto import _eroded_otsu_labeling as op
+
+    return op(
+        device=device,
+        src=input_image,
+        dst=output_image,
+        number_of_erosions=int(number_of_erosions),
+        outline_sigma=float(outline_sigma)
+    )
+
+
+
 @plugin_function(category=['transform', 'in assistant', 'bia-bob-suggestion'])
 def rigid_transform(
     input_image: Image,
@@ -31,24 +84,27 @@ def rigid_transform(
     Parameters
     ----------
     input_image: Image
-        target image
+        Image to be transformed
     output_image: Image = None
-        translation along x axis in pixels
+        Output image
     translate_x: float = 0
-        translation along y axis in pixels
+        Translation along x axis in pixels
     translate_y: float = 0
-        translation along z axis in pixels
+        Translation along y axis in pixels
     translate_z: float = 0
-        rotation around x axis in radians
+        Translation along z axis in pixels
     angle_x: float = 0
-        rotation around y axis in radians
+        Rotation around x axis in radians
     angle_y: float = 0
-        rotation around z axis in radians
+        Rotation around y axis in radians
     angle_z: float = 0
+        Rotation around z axis in radians
     centered: bool = True
+        If true, rotate image around center, else around the origin
     interpolate: bool = False
-    resize: bool = False
         If true, bi/trilinear interpolation will be applied, if hardware allows.
+    resize: bool = False
+        Automatically determines the size of the output depending on the rotation angles.
     device: Device = None
         Device to perform the operation on.
 
@@ -96,18 +152,21 @@ def rotate(
     Parameters
     ----------
     input_image: Image
-        target image
+        Image to be rotated
     output_image: Image = None
-        rotation around x axis in degrees
+        Output image
     angle_x: float = 0
-        rotation around y axis in degrees
+        Rotation around x axis in degrees
     angle_y: float = 0
-        rotation around z axis in degrees
+        Rotation around y axis in degrees
     angle_z: float = 0
+        Rotation around z axis in degrees
     centered: bool = True
+        If true, rotate image around center, else around the origin
     interpolate: bool = False
+        If true, bi/trilinear interpolation will be applied, if hardware allows.
     resize: bool = False
-        If true, bi/trilinear interpolation will be applied, if hardware supports it.
+        Automatically determines the size of the output depending on the rotation angles.
     device: Device = None
         Device to perform the operation on.
 
@@ -150,20 +209,21 @@ def scale(
     Parameters
     ----------
     input_image: Image
-        target image
+        Image to be scaleded
     output_image: Image = None
-        scaling along x
+        Output image
     factor_x: float = 1
-        scaling along y
+        Scaling along x
     factor_y: float = 1
-        scaling along z
+        Scaling along y
     factor_z: float = 1
-        If true, the image will be scaled to the center of the image.
+        Scaling along z
     centered: bool = True
-        If true, bi/trilinear interplation will be applied.
+        If true, the image will be scaled to the center of the image.
     interpolate: bool = False
-        Automatically determines output size image.
+        If true, bi/trilinear interplation will be applied.
     resize: bool = False
+        Automatically determines output size image.
     device: Device = None
         Device to perform the operation on.
 
@@ -204,15 +264,15 @@ def translate(
     Parameters
     ----------
     input_image: Image
-        image to be translated
+        Image to be translated
     output_image: Image = None
-        target image
+        Output image
     translate_x: float = 0
-        translation along x axis in pixels
+        Translation along x axis in pixels
     translate_y: float = 0
-        translation along y axis in pixels
+        Translation along y axis in pixels
     translate_z: float = 0
-        translation along z axis in pixels
+        Translation along z axis in pixels
     interpolate: bool = False
         If true, bi/trilinear interplation will be applied.
     device: Device = None
@@ -254,8 +314,11 @@ def closing_labels(
     Parameters
     ----------
     input_image: Image
+        Input label image
     output_image: Image = None
+        Output label image
     radius: int = 0
+        Radius size for the closing
     device: Device = None
         Device to perform the operation on.
 
@@ -292,8 +355,11 @@ def opening_labels(
     Parameters
     ----------
     input_image: Image
+        Input label image
     output_image: Image = None
+        Output label image
     radius: int = 0
+        Radius size for the opening
     device: Device = None
         Device to perform the operation on.
 
@@ -336,9 +402,9 @@ def voronoi_otsu_labeling(
     output_image: Image = None
         Output image
     spot_sigma: float = 2
-        controls how close detected cells can be
+        Controls how close detected cells can be
     outline_sigma: float = 2
-        controls how precise segmented objects are outlined.
+        Controls how precise segmented objects are outlined.
     device: Device = None
         Device to perform the operation on.
 

@@ -21,7 +21,9 @@ auto core_(pybind11::module_ &m) -> void
         .value("CUDA", cle::Device::Type::CUDA);
 
     py::class_<cle::Device, std::shared_ptr<cle::Device>>(m, "_Device")
-        .def_property_readonly("name", &cle::Device::getName)
+        // .def_property_readonly("name", &cle::Device::getName, py::arg("lowercase"))
+        .def_property_readonly("name", [](const cle::Device &device)
+                               { return device.getName(false); })
         .def_property_readonly("info", &cle::Device::getInfo)
         .def_property_readonly("type", &cle::Device::getType)
         .def("set_wait_to_finish", &cle::Device::setWaitToFinish)

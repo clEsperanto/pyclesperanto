@@ -89,6 +89,51 @@ def erode_labels(
 
 
 
+@plugin_function(category=['label', 'in assistant', 'bia-bob-suggestion'])
+def gauss_otsu_labeling(
+    input_image0: Image,
+    output_image: Image = None,
+    outline_sigma: float = 0,
+    device: Device = None
+) -> Image:
+    """Labels objects directly from grey-value images.  The outline_sigma parameter
+    allows tuning the segmentation result. Under the hood,  this filter applies a
+    Gaussian blur, Otsu-thresholding [1] and connected component labeling [2]. The
+    thresholded binary image is flooded using the Voronoi tesselation approach
+    starting from the found local maxima.
+
+    Parameters
+    ----------
+    input_image0: Image
+        intensity image to add labels
+    output_image: Image = None
+        Output label image.
+    outline_sigma: float = 0
+        Gaussian blur sigma along all axes
+    device: Device = None
+        Device to perform the operation on.
+
+    Returns
+    -------
+    Image
+    
+    References
+    ----------
+    [1] https://ieeexplore.ieee.org/document/4310076
+	[2] https://en.wikipedia.org/wiki/Connected-component_labeling
+    """
+
+    from ._pyclesperanto import _gauss_otsu_labeling as op
+
+    return op(
+        device=device,
+        src0=input_image0,
+        dst=output_image,
+        outline_sigma=float(outline_sigma)
+    )
+
+
+
 @plugin_function(category=['label', 'bia-bob-suggestion'])
 def masked_voronoi_labeling(
     input_image: Image,

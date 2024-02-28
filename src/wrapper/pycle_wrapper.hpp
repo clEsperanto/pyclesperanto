@@ -17,5 +17,6 @@ auto tier4_(pybind11::module_ &module) -> void;
 auto tier5_(pybind11::module_ &module) -> void;
 auto tier6_(pybind11::module_ &module) -> void;
 auto tier7_(pybind11::module_ &module) -> void;
+auto tier8_(pybind11::module_ &module) -> void;
 
 #endif // __WRAPPER_PYCLESPERANTO_HPP

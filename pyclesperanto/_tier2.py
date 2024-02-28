@@ -1086,7 +1086,7 @@ def radians_to_degrees(
 
 
 @plugin_function(category=['label processing', 'in assistant', 'bia-bob-suggestion'])
-def reduce_labels_to_label_edges_func(
+def reduce_labels_to_label_edges(
     input_image: Image,
     output_image: Image = None,
     device: Device = None
@@ -1110,7 +1110,7 @@ def reduce_labels_to_label_edges_func(
     [1] https://clij.github.io/clij2-docs/reference_reduceLabelsToLabelEdges
     """
 
-    from ._pyclesperanto import _reduce_labels_to_label_edges_func as op
+    from ._pyclesperanto import _reduce_labels_to_label_edges as op
 
     return op(
         device=device,

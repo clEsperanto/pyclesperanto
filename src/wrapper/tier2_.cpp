@@ -145,7 +145,7 @@ m.def("_radians_to_degrees", &cle::tier2::radians_to_degrees_func, "Call radians
     py::arg("device"), py::arg("src"), py::arg("dst"));
 
 	
-m.def("_reduce_labels_to_label_edges_func", &cle::tier2::reduce_labels_to_label_edges_func_func, "Call reduce_labels_to_label_edges_func from C++.",
+m.def("_reduce_labels_to_label_edges", &cle::tier2::reduce_labels_to_label_edges_func, "Call reduce_labels_to_label_edges from C++.",
     py::return_value_policy::take_ownership,
     py::arg("device"), py::arg("src"), py::arg("dst"));
 

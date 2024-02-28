@@ -9,6 +9,59 @@ from ._decorators import plugin_function
 import numpy as np
 
 
+@plugin_function(category=['label', 'in assistant', 'bia-bob-suggestion'])
+def eroded_otsu_labeling(
+    input_image: Image,
+    output_image: Image = None,
+    number_of_erosions: int = 5,
+    outline_sigma: float = 2,
+    device: Device = None
+) -> Image:
+    """Segments and labels an image using blurring, Otsu-thresholding, binary erosion
+    and  masked Voronoi-labeling.  After bluring and Otsu-thresholding the image,
+    iterative binary erosion is applied.  Objects in the eroded image are labeled
+    and the labels are extended to fit again into  the initial binary image using
+    masked-Voronoi labeling.  This function is similar to voronoi_otsu_labeling. It
+    is intended to deal better in  case labels of objects swapping into each other
+    if objects are dense. Like when using  Voronoi-Otsu-labeling, small objects may
+    disappear when applying this operation.  This function is inspired by a similar
+    implementation in Java by Jan Brocher (Biovoxxel) [0] [1]
+
+    Parameters
+    ----------
+    input_image: Image
+        Image to be transformed
+    output_image: Image = None
+        Output image
+    number_of_erosions: int = 5
+        Number of iteration of erosion
+    outline_sigma: float = 2
+        Gaussian blur sigma applied before Otsu thresholding
+    device: Device = None
+        Device to perform the operation on.
+
+    Returns
+    -------
+    Image
+    
+    References
+    ----------
+    [1] [0] https://github.com/biovoxxel/bv3dbox (BV_LabelSplitter.java#L83)
+	[2] [1] https://zenodo.org/badge/latestdoi/434949702
+    """
+
+    from ._pyclesperanto import _eroded_otsu_labeling as op
+
+    return op(
+        device=device,
+        src=input_image,
+        dst=output_image,
+        number_of_erosions=int(number_of_erosions),
+        outline_sigma=float(outline_sigma)
+    )
+
+
+
 @plugin_function(category=['transform', 'in assistant', 'bia-bob-suggestion'])
 def rigid_transform(
     input_image: Image,

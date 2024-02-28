@@ -20,6 +20,11 @@ m.def("_erode_labels", &cle::tier6::erode_labels_func, "Call erode_labels from C
     py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("radius"), py::arg("relabel"));
 
 	
+m.def("_gauss_otsu_labeling", &cle::tier6::gauss_otsu_labeling_func, "Call gauss_otsu_labeling from C++.",
+    py::return_value_policy::take_ownership,
+    py::arg("device"), py::arg("src0"), py::arg("dst"), py::arg("outline_sigma"));
+
+	
 m.def("_masked_voronoi_labeling", &cle::tier6::masked_voronoi_labeling_func, "Call masked_voronoi_labeling from C++.",
     py::return_value_policy::take_ownership,
     py::arg("device"), py::arg("src"), py::arg("mask"), py::arg("dst"));

@@ -19,7 +19,7 @@ exclude = [".flake8", ".git*", "*.yaml", "*.ipynb", "*.yml", "docs"]
 [project]
 authors = [
   { name = "Stephane Rigaud", email = "stephane.rigaud@pasteur.fr" },
-  { name = "Robert Haase", email = "robert.haase@tu-dresden.de" },
+  { name = "Robert Haase", email = "robert.haase@uni-leipzig.de" },
 ]
 classifiers = [
   "Development Status :: 3 - Alpha",

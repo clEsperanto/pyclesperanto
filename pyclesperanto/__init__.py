@@ -20,6 +20,7 @@ from ._tier4 import *
 from ._tier5 import *
 from ._tier6 import *
 from ._tier7 import *
+from ._tier8 import *
 from ._interroperability import *
 
 from ._version import VERSION as __version__

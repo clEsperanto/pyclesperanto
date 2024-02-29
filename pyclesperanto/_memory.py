@@ -87,7 +87,10 @@ def push(
     array : Image
         Input image
     dtype : type, optional
-        Data type of the image (np.int8, np.float32, etc.), np.float32 by default if None
+        If provided, the input image is cast to the given dtype before being
+        pushed to the device. Examples are `np.int8`, `np.float32`, etc.
+        By default, no casting is performed and the dtype of the pushed
+        image will match the dtype of the input image.
     mtype : str, optional
         Memory type of the image (buffer, image), buffer by default if None
     device : Device, optional

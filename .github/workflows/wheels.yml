@@ -58,7 +58,7 @@ jobs:
     # upload to PyPI on release event
     if: github.event_name == 'release' && success()
     steps:
-      - uses: actions/setup-python@v4
+      - uses: actions/setup-python@v5
         with:
           python-version: "3.x"
 

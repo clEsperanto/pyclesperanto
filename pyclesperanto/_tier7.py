@@ -9,6 +9,54 @@ from ._decorators import plugin_function
 import numpy as np
 
 
+@plugin_function
+def affine_transform(
+    input_image: Image,
+    output_image: Image = None,
+    transform_matrix: list = None,
+    interpolate: bool = False,
+    resize: bool = False,
+    device: Device = None
+) -> Image:
+    """Apply an affine transformation matrix to an array and return the result.  The
+    transformation matrix must be 3x3 or 4x4 stored as a 1D array.  The matrix
+    should be row-major, i.e. the first 3 elements are the first row of the matrix.
+    If no matrix is given, the identity matrix will be used.
+
+    Parameters
+    ----------
+    input_image: Image
+        Input Array to be transformed.
+    output_image: Image = None
+        Output Array.
+    transform_matrix: list = None
+        Affine transformation matrix (3x3 or 4x4).
+    interpolate: bool = False
+        If true, bi/trilinear interpolation will be applied, if hardware allows.
+    resize: bool = False
+        Automatically determines the size of the output depending on the rotation angles.
+    device: Device = None
+        Device to perform the operation on.
+
+    Returns
+    -------
+    Image
+    
+    """
+
+    from ._pyclesperanto import _affine_transform as op
+
+    return op(
+        device=device,
+        src=input_image,
+        dst=output_image,
+        transform_matrix=transform_matrix,
+        interpolate=bool(interpolate),
+        resize=bool(resize)
+    )
+
+
+
 @plugin_function(category=['label', 'in assistant', 'bia-bob-suggestion'])
 def eroded_otsu_labeling(
     input_image: Image,
@@ -30,13 +78,13 @@ def eroded_otsu_labeling(
     Parameters
     ----------
     input_image: Image
-        Image to be transformed
+        Input Array to be transformed.
     output_image: Image = None
-        Output image
+        Output Array.
     number_of_erosions: int = 5
-        Number of iteration of erosion
+        Number of iteration of erosion.
     outline_sigma: float = 2
-        Gaussian blur sigma applied before Otsu thresholding
+        Gaussian blur sigma applied before Otsu thresholding.
     device: Device = None
         Device to perform the operation on.
 
@@ -46,8 +94,8 @@ def eroded_otsu_labeling(
     
     References
     ----------
-    [1] [0] https://github.com/biovoxxel/bv3dbox (BV_LabelSplitter.java#L83)
-	[2] [1] https://zenodo.org/badge/latestdoi/434949702
+    [1] https://github.com/biovoxxel/bv3dbox (BV_LabelSplitter.java#L83)
+	[2] https://zenodo.org/badge/latestdoi/434949702
     """
 
     from ._pyclesperanto import _eroded_otsu_labeling as op
@@ -84,23 +132,23 @@ def rigid_transform(
     Parameters
     ----------
     input_image: Image
-        Image to be transformed
+        Input Array to be transformed.
     output_image: Image = None
-        Output image
+        Output Array.
     translate_x: float = 0
-        Translation along x axis in pixels
+        Translation along x axis in pixels.
     translate_y: float = 0
-        Translation along y axis in pixels
+        Translation along y axis in pixels.
     translate_z: float = 0
-        Translation along z axis in pixels
+        Translation along z axis in pixels.
     angle_x: float = 0
-        Rotation around x axis in radians
+        Rotation around x axis in radians.
     angle_y: float = 0
-        Rotation around y axis in radians
+        Rotation around y axis in radians.
     angle_z: float = 0
-        Rotation around z axis in radians
+        Rotation around z axis in radians.
     centered: bool = True
-        If true, rotate image around center, else around the origin
+        If true, rotate image around center, else around the origin.
     interpolate: bool = False
         If true, bi/trilinear interpolation will be applied, if hardware allows.
     resize: bool = False
@@ -152,17 +200,17 @@ def rotate(
     Parameters
     ----------
     input_image: Image
-        Image to be rotated
+        Input Array to be rotated.
     output_image: Image = None
-        Output image
+        Output Array.
     angle_x: float = 0
-        Rotation around x axis in degrees
+        Rotation around x axis in degrees.
     angle_y: float = 0
-        Rotation around y axis in degrees
+        Rotation around y axis in degrees.
     angle_z: float = 0
-        Rotation around z axis in degrees
+        Rotation around z axis in degrees.
     centered: bool = True
-        If true, rotate image around center, else around the origin
+        If true, rotate image around center, else around the origin.
     interpolate: bool = False
         If true, bi/trilinear interpolation will be applied, if hardware allows.
     resize: bool = False
@@ -209,15 +257,15 @@ def scale(
     Parameters
     ----------
     input_image: Image
-        Image to be scaleded
+        Input Array to be scaleded.
     output_image: Image = None
-        Output image
+        Output Array.
     factor_x: float = 1
-        Scaling along x
+        Scaling along x axis.
     factor_y: float = 1
-        Scaling along y
+        Scaling along y axis.
     factor_z: float = 1
-        Scaling along z
+        Scaling along z axis.
     centered: bool = True
         If true, the image will be scaled to the center of the image.
     interpolate: bool = False
@@ -264,15 +312,15 @@ def translate(
     Parameters
     ----------
     input_image: Image
-        Image to be translated
+        Input Array to be translated.
     output_image: Image = None
-        Output image
+        Output Array.
     translate_x: float = 0
-        Translation along x axis in pixels
+        Translation along x axis in pixels.
     translate_y: float = 0
-        Translation along y axis in pixels
+        Translation along y axis in pixels.
     translate_z: float = 0
-        Translation along z axis in pixels
+        Translation along z axis in pixels.
     interpolate: bool = False
         If true, bi/trilinear interplation will be applied.
     device: Device = None
@@ -314,11 +362,11 @@ def closing_labels(
     Parameters
     ----------
     input_image: Image
-        Input label image
+        Input label Array.
     output_image: Image = None
-        Output label image
+        Output label Array.
     radius: int = 0
-        Radius size for the closing
+        Radius size for the closing.
     device: Device = None
         Device to perform the operation on.
 
@@ -329,6 +377,43 @@ def closing_labels(
     """
 
     from ._pyclesperanto import _closing_labels as op
+
+    return op(
+        device=device,
+        src=input_image,
+        dst=output_image,
+        radius=int(radius)
+    )
+
+
+
+@plugin_function
+def erode_connected_labels(
+    input_image: Image,
+    output_image: Image = None,
+    radius: int = 1,
+    device: Device = None
+) -> Image:
+    """Erodes labels to a smaller size. Note: Depending on the label image and the
+    radius,  labels may disappear and labels may split into multiple islands. Thus,
+    overlapping labels of input and output may  not have the same identifier.
+
+    Parameters
+    ----------
+    input_image: Image
+        result
+    output_image: Image = None
+    radius: int = 1
+    device: Device = None
+        Device to perform the operation on.
+
+    Returns
+    -------
+    Image
+    
+    """
+
+    from ._pyclesperanto import _erode_connected_labels as op
 
     return op(
         device=device,
@@ -355,11 +440,11 @@ def opening_labels(
     Parameters
     ----------
     input_image: Image
-        Input label image
+        Input label Array.
     output_image: Image = None
-        Output label image
+        Output label Array.
     radius: int = 0
-        Radius size for the opening
+        Radius size for the opening.
     device: Device = None
         Device to perform the operation on.
 
@@ -380,7 +465,7 @@ def opening_labels(
 
 
 
-@plugin_function(category=['label', 'in assistant', 'bia-bob-suggestion'], priority=1)
+@plugin_function(category=['label', 'in assistant', 'bia-bob-suggestion'])
 def voronoi_otsu_labeling(
     input_image: Image,
     output_image: Image = None,
@@ -398,11 +483,11 @@ def voronoi_otsu_labeling(
     Parameters
     ----------
     input_image: Image
-        Input greyvalue image
+        Input intensity Array.
     output_image: Image = None
-        Output image
+        Output label Array.
     spot_sigma: float = 2
-        Controls how close detected cells can be
+        Controls how close detected cells can be.
     outline_sigma: float = 2
         Controls how precise segmented objects are outlined.
     device: Device = None

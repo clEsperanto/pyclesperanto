@@ -84,7 +84,7 @@ def combine_labels(
 
 
 
-@plugin_function(category=['label', 'in assistant', 'bia-bob-suggestion'], priority=1)
+@plugin_function(category=['label', 'in assistant', 'bia-bob-suggestion'])
 def connected_components_labeling(
     input_image: Image,
     output_image: Image = None,

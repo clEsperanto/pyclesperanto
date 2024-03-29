@@ -9,6 +9,42 @@ from ._decorators import plugin_function
 import numpy as np
 
 
+@plugin_function
+def label_bounding_box(
+    input_image: Image,
+    label_id: int,
+    device: Device = None
+) -> list:
+    """Determines the bounding box of the specified label from a label image. The
+    positions are returned in  an array of 6 values as follows: minX, minY, minZ,
+    maxX, maxY, maxZ.
+
+    Parameters
+    ----------
+    input_image: Image
+    label_id: int
+    device: Device = None
+        Device to perform the operation on.
+
+    Returns
+    -------
+    list
+    
+    References
+    ----------
+    [1] https://clij.github.io/clij2-docs/reference_boundingBox
+    """
+
+    from ._pyclesperanto import _label_bounding_box as op
+
+    return op(
+        device=device,
+        src=input_image,
+        label_id=int(label_id)
+    )
+
+
+
 @plugin_function(category=['in assistant', 'combine', 'bia-bob-suggestion'])
 def mean_squared_error(
     input_image0: Image,
@@ -121,7 +157,7 @@ def relabel_sequential(
 
 
 
-@plugin_function(category=['binarize', 'in assistant', 'bia-bob-suggestion'], priority=1)
+@plugin_function(category=['binarize', 'in assistant', 'bia-bob-suggestion'])
 def threshold_otsu(
     input_image: Image,
     output_image: Image = None,

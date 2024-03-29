@@ -14,5 +14,10 @@ m.def("_smooth_labels", &cle::tier8::smooth_labels_func, "Call smooth_labels fro
     py::return_value_policy::take_ownership,
     py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("radius"));
 
+	
+m.def("_smooth_connected_labels", &cle::tier8::smooth_connected_labels_func, "Call smooth_connected_labels from C++.",
+    py::return_value_policy::take_ownership,
+    py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("radius"));
+
 
 }

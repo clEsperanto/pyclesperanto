@@ -10,6 +10,11 @@ namespace py = pybind11;
 auto tier4_(py::module &m) -> void {
 
     
+m.def("_label_bounding_box", &cle::tier4::label_bounding_box_func, "Call label_bounding_box from C++.",
+    py::return_value_policy::take_ownership,
+    py::arg("device"), py::arg("src"), py::arg("label_id"));
+
+	
 m.def("_mean_squared_error", &cle::tier4::mean_squared_error_func, "Call mean_squared_error from C++.",
     py::return_value_policy::take_ownership,
     py::arg("device"), py::arg("src0"), py::arg("src1"));

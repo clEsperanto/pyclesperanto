@@ -14,11 +14,9 @@ def bounding_box(
     input_image: Image,
     device: Device = None
 ) -> list:
-    """Determines the bounding box of all nonzero pixels in a binary image. If called
-    from macro, the positions will be stored in a new row of ImageJs Results table
-    in the columns 'BoundingBoxX', 'BoundingBoxY', 'BoundingBoxZ',
-    'BoundingBoxWidth', 'BoundingBoxHeight' 'BoundingBoxDepth'.In case of 2D images
-    Z and depth will be zero.
+    """Determines the bounding box of all nonzero pixels in a binary image. The
+    positions are returned in  an array of 6 values as follows: minX, minY, minZ,
+    maxX, maxY, maxZ.
 
     Parameters
     ----------
@@ -117,7 +115,7 @@ def exclude_labels(
 
 
 
-@plugin_function(category=['label processing', 'in assistant', 'bia-bob-suggestion'], priority=1)
+@plugin_function(category=['label processing', 'in assistant', 'bia-bob-suggestion'])
 def exclude_labels_on_edges(
     input_image: Image,
     output_image: Image = None,

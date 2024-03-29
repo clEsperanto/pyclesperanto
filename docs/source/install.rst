@@ -31,20 +31,20 @@ or via conda:
 
     .. code-block:: bash
 
-        mamba install ocl-icd-system
+        mamba install -c conda-forge ocl-icd-system
 
     .. code-block:: bash
 
-        mamba install ocl_icd_wrapper_apple
+        mamba install -c conda-forge ocl_icd_wrapper_apple
 
 
 In case of error messages such as ``"No OpenCL platform found", you may need to install the OpenCL drivers for your system."`` or ``"clGetPlatformIDs failed: PLATFORM_NOT_FOUND_KHR"``,
 you may need to install more recent drivers for your GPU. Or you maybe missing some specific libraries. We advise you to check the Troubleshooting section of the documentation, and if
-you still have issues, to contact us for help on the `image.sc forum <https://forum.image.sc/>` or creating an issue on the `github repository <https://github.com/clEsperanto/pyclesperanto>`.
+you still have issues, to contact us for help on the `image.sc forum <https://forum.image.sc/>`__ or creating an issue on the `github repository <https://github.com/clEsperanto/pyclesperanto>`__.
 
 
 From source
-====================
+===========
 
 Alternatively, you can also install the latest version from GitHub and build it from source on your system.
 First start by cloning the repository:

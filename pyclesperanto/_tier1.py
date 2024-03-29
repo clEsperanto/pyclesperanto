@@ -136,7 +136,7 @@ def add_image_and_scalar(
 
 
 
-@plugin_function(category=['combine', 'binary processing', 'in assistant', 'combine labels', 'label processing', 'bia-bob-suggestion'], priority=1)
+@plugin_function(category=['combine', 'binary processing', 'in assistant', 'combine labels', 'label processing', 'bia-bob-suggestion'])
 def binary_and(
     input_image0: Image,
     input_image1: Image,
@@ -390,11 +390,11 @@ def block_enumerate(
 ) -> Image:
     """Enumerates pixels with value 1 in a onedimensional image For example handing
     over the image [0, 1, 1, 0, 1, 0, 1, 1] would be processed to an image [0, 1, 2,
-    0, 3, 0, 4, 5] This functionality is important in connected component labeling.
-    Processing is accelerated by paralellization in blocks. Therefore, handing over
-    precomputed block sums is neccessary (see also sum_reduction_x). In the above
-    example, with blocksize 4, that would be the sum array: [2, 3] Note that the
-    block size when calling this function and sum_reduction must be identical
+    0, 3, 0, 4, 5] This functionality is important in connected component neccessary
+    (see also sum_reduction_x). In the above example, with blocksize 4, that would
+    be the sum array: [2, 3] labeling. Processing is accelerated by paralellization
+    in blocks. Therefore, handing over precomputed block sums is Note that the block
+    size when calling this function and sum_reduction must be identical
 
     Parameters
     ----------
@@ -690,7 +690,7 @@ def crop(
 
 
 
-@plugin_function(category=['filter', 'in assistant'], priority=-1)
+@plugin_function(category=['filter', 'in assistant'])
 def cubic_root(
     input_image: Image,
     output_image: Image = None,
@@ -840,7 +840,7 @@ def dilate_sphere(
 
 
 
-@plugin_function(category=['combine', 'in assistant'], priority=-1)
+@plugin_function(category=['combine', 'in assistant'])
 def divide_images(
     input_image0: Image,
     input_image1: Image,
@@ -1078,7 +1078,7 @@ def erode_sphere(
 
 
 
-@plugin_function(category=['filter', 'in assistant'], priority=-1)
+@plugin_function(category=['filter', 'in assistant'])
 def exponential(
     input_image: Image,
     output_image: Image = None,
@@ -1163,7 +1163,7 @@ def flip(
 
 
 
-@plugin_function(category=['filter', 'denoise', 'in assistant', 'bia-bob-suggestion'], priority=1)
+@plugin_function(category=['filter', 'denoise', 'in assistant', 'bia-bob-suggestion'])
 def gaussian_blur(
     input_image: Image,
     output_image: Image = None,
@@ -1225,10 +1225,10 @@ def generate_distance_matrix(
     points and d: dimensionality) and builds up a matrix containing the distances
     between these points. Convention: Given two point lists with dimensionality n *
     d and m * d, the distance matrix will be of size(n + 1) * (m + 1). The first row
-    and column contain zeros. They represent the distance of the objects to a
-    theoretical background object. In that way, distance matrices are of the same
-    size as touch matrices (see generateTouchMatrix). Thus, one can threshold a
-    distance matrix to generate a touch matrix out of it for drawing meshes.
+    and column contain zeros. They represent the distance of the (see
+    generateTouchMatrix). Thus, one can threshold a distance matrix to generate a
+    touch matrix out of it for drawing objects to a theoretical background object.
+    In that way, distance matrices are of the same size as touch matrices meshes.
 
     Parameters
     ----------
@@ -1696,7 +1696,7 @@ def local_cross_correlation(
 
 
 
-@plugin_function(category=['filter', 'in assistant'], priority=-1)
+@plugin_function(category=['filter', 'in assistant'])
 def logarithm(
     input_image: Image,
     output_image: Image = None,
@@ -3301,7 +3301,7 @@ def onlyzero_overwrite_maximum_diamond(
 
 
 
-@plugin_function(category=['filter', 'in assistant'], priority=-1)
+@plugin_function(category=['filter', 'in assistant'])
 def power(
     input_image: Image,
     output_image: Image = None,
@@ -3342,7 +3342,7 @@ def power(
 
 
 
-@plugin_function(category=['combine', 'in assistant'], priority=-1)
+@plugin_function(category=['combine', 'in assistant'])
 def power_images(
     input_image0: Image,
     input_image1: Image,
@@ -4426,7 +4426,7 @@ def sobel(
 
 
 
-@plugin_function(category=['filter', 'in assistant'], priority=-1)
+@plugin_function(category=['filter', 'in assistant'])
 def square_root(
     input_image: Image,
     output_image: Image = None,

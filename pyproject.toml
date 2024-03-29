@@ -1,6 +1,6 @@
 [build-system]
 build-backend = "scikit_build_core.build"
-requires = ["setuptools", "wheel", "scikit-build-core>=0.4.7", "pybind11"]
+requires = ["setuptools", "wheel", "scikit-build-core>=0.8.2", "pybind11"]
 
 [tool.scikit-build]
 build-dir = "build/{wheel_tag}"
@@ -42,7 +42,7 @@ description = "GPU-accelerated image processing in python using OpenCL"
 name = "pyclesperanto"
 readme = "README.md"
 requires-python = ">=3.7"
-version = "0.8.2"
+version = "0.9.0"
 
 [project.urls]
 Documentation = "https://clesperanto.github.io/pyclesperanto/"

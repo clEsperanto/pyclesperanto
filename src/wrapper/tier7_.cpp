@@ -10,6 +10,11 @@ namespace py = pybind11;
 auto tier7_(py::module &m) -> void {
 
     
+m.def("_affine_transform", &cle::tier7::affine_transform_func, "Call affine_transform from C++.",
+    py::return_value_policy::take_ownership,
+    py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("transform_matrix"), py::arg("interpolate"), py::arg("resize"));
+
+	
 m.def("_eroded_otsu_labeling", &cle::tier7::eroded_otsu_labeling_func, "Call eroded_otsu_labeling from C++.",
     py::return_value_policy::take_ownership,
     py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("number_of_erosions"), py::arg("outline_sigma"));
@@ -36,6 +41,11 @@ m.def("_translate", &cle::tier7::translate_func, "Call translate from C++.",
 
 	
 m.def("_closing_labels", &cle::tier7::closing_labels_func, "Call closing_labels from C++.",
+    py::return_value_policy::take_ownership,
+    py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("radius"));
+
+	
+m.def("_erode_connected_labels", &cle::tier7::erode_connected_labels_func, "Call erode_connected_labels from C++.",
     py::return_value_policy::take_ownership,
     py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("radius"));
 

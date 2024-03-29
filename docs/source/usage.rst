@@ -1,5 +1,5 @@
 Usage
-########
+#####
 
 pyClesperanto is a GPU-accelerated image processing library for Python. The first step is to import the library and to see what OpenCL devices are available:
 
@@ -30,7 +30,7 @@ The device selection is done by name. You can pass a substring of the device nam
 If multiple devices have the same name, it is also possible to select the device by its index in the list of available devices.
 
 Memory transfer
-================
+===============
 
 It is a good practice to consider the GPU as another computer. Its memory is separated from your computer (host) memory, hence you need to transfer your data to the device memory in order to process it.
 Going both ways, you will need to transfer it back to your computer (host) memory when you are done running GPU operations so that you can read the results. In pyclesperanto this is managed by the 
@@ -65,7 +65,7 @@ It is also possible to use an other image as a template to create the new image.
 
 
 Push
---------
+----
 
 The ``push`` will create a memory space on the GPU like ``create`` but will also fill it with a data array from the host. For compatibility with the python ecosystem, the data array is expected to be a numpy array.
 
@@ -84,7 +84,7 @@ memory is limited.
     is not fully supported by GPU devices, hence if used in pyclesperanto, it will be converted to ``float32``.
 
 Pull
---------
+----
 
 Finally, the ``pull`` function will transfer the data from the GPU back to the host. It will be returned has a numpy array.
 

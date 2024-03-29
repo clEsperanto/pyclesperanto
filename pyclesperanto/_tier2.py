@@ -50,7 +50,7 @@ def absolute_difference(
 
 
 
-@plugin_function(category=['combine', 'in assistant'], priority=-1)
+@plugin_function(category=['combine', 'in assistant'])
 def add_images(
     input_image0: Image,
     input_image1: Image,
@@ -91,7 +91,7 @@ def add_images(
 
 
 
-@plugin_function(category=['filter', 'background removal', 'in assistant'], priority=-1)
+@plugin_function(category=['filter', 'background removal', 'in assistant'])
 def bottom_hat_box(
     input_image: Image,
     output_image: Image = None,
@@ -139,7 +139,7 @@ def bottom_hat_box(
 
 
 
-@plugin_function(category=['filter', 'background removal', 'in assistant', 'bia-bob-suggestion'], priority=-1)
+@plugin_function(category=['filter', 'background removal', 'in assistant', 'bia-bob-suggestion'])
 def bottom_hat_sphere(
     input_image: Image,
     output_image: Image = None,
@@ -187,7 +187,7 @@ def bottom_hat_sphere(
 
 
 
-@plugin_function(category=['combine', 'in assistant'], priority=-1)
+@plugin_function(category=['combine', 'in assistant'])
 def clip(
     input_image: Image,
     output_image: Image = None,
@@ -201,7 +201,9 @@ def clip(
     Parameters
     ----------
     input_image: Image
+        Input image to process.
     output_image: Image = None
+        Output result image.
     min_intensity: float = None
         new, lower limit of the intensity range
     max_intensity: float = None
@@ -245,10 +247,15 @@ def closing_box(
     Parameters
     ----------
     input_image: Image
+        Input image to process.
     output_image: Image = None
+        Output result image.
     radius_x: int = 0
+        Radius along the x axis.
     radius_y: int = 0
+        Radius along the y axis.
     radius_z: int = 0
+        Radius along the z axis.
     device: Device = None
         Device to perform the operation on.
 
@@ -275,9 +282,9 @@ def closing_box(
 def closing_sphere(
     input_image: Image,
     output_image: Image = None,
-    radius_x: float = 1,
-    radius_y: float = 1,
-    radius_z: float = 0,
+    radius_x: int = 1,
+    radius_y: int = 1,
+    radius_z: int = 0,
     device: Device = None
 ) -> Image:
     """Closing operator, sphereshaped Applies morphological closing to intensity images
@@ -286,10 +293,15 @@ def closing_sphere(
     Parameters
     ----------
     input_image: Image
+        Input image to process.
     output_image: Image = None
-    radius_x: float = 1
-    radius_y: float = 1
-    radius_z: float = 0
+        Output result image.
+    radius_x: int = 1
+        Radius along the x axis.
+    radius_y: int = 1
+        Radius along the y axis.
+    radius_z: int = 0
+        Radius along the z axis.
     device: Device = None
         Device to perform the operation on.
 
@@ -305,9 +317,9 @@ def closing_sphere(
         device=device,
         src=input_image,
         dst=output_image,
-        radius_x=float(radius_x),
-        radius_y=float(radius_y),
-        radius_z=float(radius_z)
+        radius_x=int(radius_x),
+        radius_y=int(radius_y),
+        radius_z=int(radius_z)
     )
 
 
@@ -324,8 +336,11 @@ def concatenate_along_x(
     Parameters
     ----------
     input_image0: Image
+        First input image.
     input_image1: Image
+        Second input image.
     output_image: Image = None
+        Output result image.
     device: Device = None
         Device to perform the operation on.
 
@@ -361,8 +376,11 @@ def concatenate_along_y(
     Parameters
     ----------
     input_image0: Image
+        First input image.
     input_image1: Image
+        Second input image.
     output_image: Image = None
+        Output result image.
     device: Device = None
         Device to perform the operation on.
 
@@ -398,8 +416,11 @@ def concatenate_along_z(
     Parameters
     ----------
     input_image0: Image
+        First input image.
     input_image1: Image
+        Second input image.
     output_image: Image = None
+        Output result image.
     device: Device = None
         Device to perform the operation on.
 
@@ -438,7 +459,9 @@ def count_touching_neighbors(
     Parameters
     ----------
     input_image: Image
+        Input image to process.
     output_image: Image = None
+        Output result image.
     ignore_background: bool = True
     device: Device = None
         Device to perform the operation on.
@@ -476,8 +499,11 @@ def crop_border(
     Parameters
     ----------
     input_image: Image
+        Input image to process.
     output_image: Image = None
+        Output result image.
     border_size: int = 1
+        Border size to crop.
     device: Device = None
         Device to perform the operation on.
 
@@ -512,10 +538,15 @@ def divide_by_gaussian_background(
     Parameters
     ----------
     input_image: Image
+        Input image to process.
     output_image: Image = None
+        Output result image.
     sigma_x: float = 2
+        Gaussian sigma value along x.
     sigma_y: float = 2
+        Gaussian sigma value along y.
     sigma_z: float = 2
+        Gaussian sigma value along z.
     device: Device = None
         Device to perform the operation on.
 
@@ -552,7 +583,9 @@ def degrees_to_radians(
     Parameters
     ----------
     input_image: Image
+        Input image to process.
     output_image: Image = None
+        Output result image.
     device: Device = None
         Device to perform the operation on.
 
@@ -574,8 +607,8 @@ def degrees_to_radians(
 
 @plugin_function(category=['binarize', 'in assistant'])
 def detect_maxima_box(
-    input_image: Image = 0,
-    output_image: Image = 0,
+    input_image: Image,
+    output_image: Image = None,
     radius_x: int = 0,
     radius_y: int = 0,
     radius_z: int = 0,
@@ -587,16 +620,16 @@ def detect_maxima_box(
 
     Parameters
     ----------
-    input_image: Image = 0
+    input_image: Image
         Input image to process.
-    output_image: Image = 0
+    output_image: Image = None
         Output result image.
     radius_x: int = 0
-        Radius of the region in X.
+        Radius along the x axis.
     radius_y: int = 0
-        Radius of the region in Y.
+        Radius along the y axis.
     radius_z: int = 0
-        Radius of the region in Z.
+        Radius along the z axis.
     device: Device = None
         Device to perform the operation on.
 
@@ -624,8 +657,8 @@ def detect_maxima_box(
 
 @plugin_function(category=['binarize', 'in assistant'])
 def detect_minima_box(
-    input_image: Image = 0,
-    output_image: Image = 0,
+    input_image: Image,
+    output_image: Image = None,
     radius_x: int = 0,
     radius_y: int = 0,
     radius_z: int = 0,
@@ -637,16 +670,16 @@ def detect_minima_box(
 
     Parameters
     ----------
-    input_image: Image = 0
+    input_image: Image
         Input image to process.
-    output_image: Image = 0
+    output_image: Image = None
         Output result image.
     radius_x: int = 0
-        Radius of the region in X.
+        Radius along the x axis.
     radius_y: int = 0
-        Radius of the region in Y.
+        Radius along the y axis.
     radius_z: int = 0
-        Radius of the region in Z.
+        Radius along the z axis.
     device: Device = None
         Device to perform the operation on.
 
@@ -747,7 +780,9 @@ def extend_labeling_via_voronoi(
     Parameters
     ----------
     input_image: Image
+        Input image to process.
     output_image: Image = None
+        Output result image.
     device: Device = None
         Device to perform the operation on.
 
@@ -783,7 +818,9 @@ def invert(
     Parameters
     ----------
     input_image: Image
+        Input image to process.
     output_image: Image = None
+        Output result image.
     device: Device = None
         Device to perform the operation on.
 
@@ -819,7 +856,9 @@ def label_spots(
     Parameters
     ----------
     input_image: Image
+        Input image to process.
     output_image: Image = None
+        Output result image.
     device: Device = None
         Device to perform the operation on.
 
@@ -842,7 +881,7 @@ def label_spots(
 
 
 
-@plugin_function(category=['filter', 'in assistant'], priority=-1)
+@plugin_function(category=['filter', 'in assistant'])
 def large_hessian_eigenvalue(
     input_image: Image,
     output_image: Image = None,
@@ -853,7 +892,9 @@ def large_hessian_eigenvalue(
     Parameters
     ----------
     input_image: Image
+        Input image to process.
     output_image: Image = None
+        Output result image.
     device: Device = None
         Device to perform the operation on.
 
@@ -875,7 +916,7 @@ def large_hessian_eigenvalue(
 
 @plugin_function
 def maximum_of_all_pixels(
-    input_image: Image = None,
+    input_image: Image,
     device: Device = None
 ) -> float:
     """Determines the maximum of all pixels in a given image. It will be stored in a
@@ -883,7 +924,8 @@ def maximum_of_all_pixels(
 
     Parameters
     ----------
-    input_image: Image = None
+    input_image: Image
+        Input image to process.
     device: Device = None
         Device to perform the operation on.
 
@@ -907,7 +949,7 @@ def maximum_of_all_pixels(
 
 @plugin_function
 def minimum_of_all_pixels(
-    input_image: Image = None,
+    input_image: Image,
     device: Device = None
 ) -> float:
     """Determines the minimum of all pixels in a given image. It will be stored in a
@@ -915,7 +957,8 @@ def minimum_of_all_pixels(
 
     Parameters
     ----------
-    input_image: Image = None
+    input_image: Image
+        Input image to process.
     device: Device = None
         Device to perform the operation on.
 
@@ -939,8 +982,8 @@ def minimum_of_all_pixels(
 
 @plugin_function
 def minimum_of_masked_pixels(
-    input_image: Image = None,
-    mask: Image = 1,
+    input_image: Image,
+    mask: Image,
     device: Device = None
 ) -> float:
     """Determines the minimum intensity in a masked image. But only in pixels which
@@ -948,8 +991,10 @@ def minimum_of_masked_pixels(
 
     Parameters
     ----------
-    input_image: Image = None
-    mask: Image = 1
+    input_image: Image
+        Input image to process.
+    mask: Image
+        Input
     device: Device = None
         Device to perform the operation on.
 
@@ -987,10 +1032,15 @@ def opening_box(
     Parameters
     ----------
     input_image: Image
+        Input image to process.
     output_image: Image = None
+        Output result image.
     radius_x: int = 0
+        Radius along the x axis.
     radius_y: int = 0
+        Radius along the y axis.
     radius_z: int = 0
+        Radius along the z axis.
     device: Device = None
         Device to perform the operation on.
 
@@ -1028,10 +1078,15 @@ def opening_sphere(
     Parameters
     ----------
     input_image: Image
+        Input image to process.
     output_image: Image = None
+        Output result image.
     radius_x: float = 1
+        Radius along the x axis.
     radius_y: float = 1
+        Radius along the y axis.
     radius_z: float = 0
+        Radius along the z axis.
     device: Device = None
         Device to perform the operation on.
 
@@ -1065,7 +1120,9 @@ def radians_to_degrees(
     Parameters
     ----------
     input_image: Image
+        Input image to process.
     output_image: Image = None
+        Output result image.
     device: Device = None
         Device to perform the operation on.
 
@@ -1097,7 +1154,9 @@ def reduce_labels_to_label_edges(
     Parameters
     ----------
     input_image: Image
+        Input image to process.
     output_image: Image = None
+        Output result image.
     device: Device = None
         Device to perform the operation on.
 
@@ -1120,7 +1179,7 @@ def reduce_labels_to_label_edges(
 
 
 
-@plugin_function(category=['filter', 'in assistant'], priority=-1)
+@plugin_function(category=['filter', 'in assistant'])
 def small_hessian_eigenvalue(
     input_image: Image,
     output_image: Image = None,
@@ -1131,7 +1190,9 @@ def small_hessian_eigenvalue(
     Parameters
     ----------
     input_image: Image
+        Input image to process.
     output_image: Image = None
+        Output result image.
     device: Device = None
         Device to perform the operation on.
 
@@ -1163,7 +1224,9 @@ def square(
     Parameters
     ----------
     input_image: Image
+        Input image to process.
     output_image: Image = None
+        Output result image.
     device: Device = None
         Device to perform the operation on.
 
@@ -1198,8 +1261,11 @@ def squared_difference(
     Parameters
     ----------
     input_image0: Image
+        First input image.
     input_image1: Image
+        Second input image.
     output_image: Image = None
+        Output result image.
     device: Device = None
         Device to perform the operation on.
 
@@ -1239,10 +1305,15 @@ def standard_deviation_box(
     Parameters
     ----------
     input_image: Image
+        Input image to process.
     output_image: Image = None
+        Output result image.
     radius_x: int = 1
+        Radius along the x axis.
     radius_y: int = 1
+        Radius along the y axis.
     radius_z: int = 1
+        Radius along the z axis.
     device: Device = None
         Device to perform the operation on.
 
@@ -1284,10 +1355,15 @@ def standard_deviation_sphere(
     Parameters
     ----------
     input_image: Image
+        Input image to process.
     output_image: Image = None
+        Output result image.
     radius_x: int = 1
+        Radius along the x axis.
     radius_y: int = 1
+        Radius along the y axis.
     radius_z: int = 1
+        Radius along the z axis.
     device: Device = None
         Device to perform the operation on.
 
@@ -1328,10 +1404,15 @@ def subtract_gaussian_background(
     Parameters
     ----------
     input_image: Image
+        Input image to process.
     output_image: Image = None
+        Output result image.
     sigma_x: float = 2
+        Radius along the x axis.
     sigma_y: float = 2
+        Radius along the y axis.
     sigma_z: float = 2
+        Radius along the z axis.
     device: Device = None
         Device to perform the operation on.
 
@@ -1357,7 +1438,7 @@ def subtract_gaussian_background(
 
 
 
-@plugin_function(category=['combine', 'in assistant'], priority=-1)
+@plugin_function(category=['combine', 'in assistant'])
 def subtract_images(
     input_image0: Image,
     input_image1: Image,
@@ -1369,8 +1450,11 @@ def subtract_images(
     Parameters
     ----------
     input_image0: Image
+        First input image.
     input_image1: Image
+        Second input image.
     output_image: Image = None
+        Output result image.
     device: Device = None
         Device to perform the operation on.
 
@@ -1405,6 +1489,7 @@ def sum_of_all_pixels(
     Parameters
     ----------
     input_image: Image = None
+        Input image to process.
     device: Device = None
         Device to perform the operation on.
 
@@ -1426,7 +1511,7 @@ def sum_of_all_pixels(
 
 
 
-@plugin_function(category=['filter', 'background removal', 'in assistant'], priority=1)
+@plugin_function(category=['filter', 'background removal', 'in assistant'])
 def top_hat_box(
     input_image: Image,
     output_image: Image = None,

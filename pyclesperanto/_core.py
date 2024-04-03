@@ -3,6 +3,7 @@ import warnings
 
 from ._pyclesperanto import _Device as Device
 from ._pyclesperanto import _BackendManager as BackendManager
+from ._pyclesperanto import _execute
 
 
 class _current_device:
@@ -154,6 +155,39 @@ def default_initialisation():
             "No backend available. Please install either OpenCL or CUDA on your system.",
             RuntimeWarning,
         )
+
+def execute(device: Device, kernel_name: str, kernel_code: str, parameters: dict, range: tuple = (1, 1, 1), constants: dict = {}):
+    """Execute a kernel
+
+    Execute a kernel on the device with the given parameters and range.
+
+    Parameters
+    ----------
+    device : Device
+        the device to execute the kernel on
+    kernel_name : str
+        the name of the kernel
+    kernel_code : str
+        the source code of the kernel
+    parameters : dict
+        the parameters of the kernel. 
+        the order of the parameters must match the order of the kernel arguments, and the keys must match the kernel argument names
+    range : tuple, default = (1, 1, 1)
+        the range of the kernel, (z, y, x). Default is (1, 1, 1)
+    constants : dict, default = {}
+        the constants of the kernel
+    """
+
+    import numpy as np
+
+    # test if range is a tuple
+    if not isinstance(range, tuple):
+        if isinstance(range, list) or isinstance(range, np.ndarray):
+            range = tuple(range)
+        else:
+            range = (range,)
+            
+    _execute(device, kernel_name, kernel_code, parameters, range, constants)       
 
 
 def gpu_info():

@@ -156,7 +156,7 @@ def default_initialisation():
             RuntimeWarning,
         )
 
-def execute(device: Device, kernel_name: str, kernel_code: str, parameters: dict, range: tuple = (1, 1, 1), constants: dict = {}):
+def execute(device: Device, kernel_name: str, kernel_source: str, parameters: dict, range: tuple = (1, 1, 1), constants: dict = {}):
     """Execute a kernel
 
     Execute a kernel on the device with the given parameters and range.

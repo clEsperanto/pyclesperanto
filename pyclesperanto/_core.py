@@ -187,7 +187,7 @@ def execute(device: Device, kernel_name: str, kernel_source: str, parameters: di
         else:
             range = (range,)
             
-    _execute(device, kernel_name, kernel_code, parameters, range, constants)       
+    _execute(device, kernel_name, kernel_source, parameters, range, constants)       
 
 
 def gpu_info():

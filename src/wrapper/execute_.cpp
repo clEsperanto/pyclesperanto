@@ -13,7 +13,7 @@
 
 namespace py = pybind11;
 
-auto py_execute(const cle::Device::Pointer &device, const std::string &kernel_name, const std::string &kernel_code, const py::dict &parameters, const py::tuple &range, const py::dict &constants) -> void
+auto py_execute(const cle::Device::Pointer &device, const std::string &kernel_name, const std::string &kernel_source, const py::dict &parameters, const py::tuple &range, const py::dict &constants) -> void
 {
      cle::RangeArray global_range = {1, 1, 1};
      switch (range.size())
@@ -36,7 +36,7 @@ auto py_execute(const cle::Device::Pointer &device, const std::string &kernel_na
      }
 
      // manage kernel name and code
-     const cle::KernelInfo kernel_info = {kernel_name, kernel_code};
+     const cle::KernelInfo kernel_info = {kernel_name, kernel_source};
 
      // convert py::dict paramter to vector<pair<string, array>>
      cle::ParameterList clic_parameters;
@@ -80,5 +80,5 @@ auto py_execute(const cle::Device::Pointer &device, const std::string &kernel_na
 auto execute_(py::module_ &m) -> void
 {
      m.def("_execute", &py_execute, "Call execute function from C++.",
-           py::arg("device"), py::arg("kernel_name"), py::arg("kernel_code"), py::arg("parameters"), py::arg("range"), py::arg("constants"));
+           py::arg("device"), py::arg("kernel_name"), py::arg("kernel_source"), py::arg("parameters"), py::arg("range"), py::arg("constants"));
 }

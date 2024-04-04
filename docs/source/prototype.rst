@@ -29,5 +29,18 @@ This was discussed in the `issue #140 <https://github.com/clEsperanto/pyclespera
     gpu_image = cle.push(image)
 
 
+erode_labels
+------------
+
+``erode_labels`` arguments ``relabeled_island`` was renamed to ``relabel`` for more sense.
+This was discussed in the `issue #141 <https://github.com/clEsperanto/pyclesperanto/issues/141>`__.
+
+.. code-block:: python
+
+    import pyclesperanto as cle
+
+    gpu_output = cle.erode_labels(gpu_input, radius=1, relabel=False)
+
+
 
 

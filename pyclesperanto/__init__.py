@@ -1,5 +1,6 @@
 from ._core import (
     gpu_info,
+    execute,
     select_backend,
     select_device,
     get_device,

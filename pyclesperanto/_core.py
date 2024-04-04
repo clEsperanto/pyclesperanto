@@ -1,8 +1,11 @@
 from typing import Optional, Union
+from pathlib import Path
+import numpy as np
 import warnings
 
 from ._pyclesperanto import _Device as Device
 from ._pyclesperanto import _BackendManager as BackendManager
+from ._pyclesperanto import _execute
 
 
 class _current_device:
@@ -154,6 +157,63 @@ def default_initialisation():
             "No backend available. Please install either OpenCL or CUDA on your system.",
             RuntimeWarning,
         )
+
+
+def execute(anchor = '__file__', kernel_source: str = '', kernel_name: str = '', global_size: tuple = (1, 1, 1), parameters: dict = {}, constants: dict = {}, device: Device = None):
+    """Execute a kernel from a file or a string
+
+    Call, build, and execute a kernel compatible with CLIj framework.
+    The kernel can be called from a file or a string.
+
+    Parameters
+    ----------
+    anchor : str, default = '__file__'
+        Enter __file__ when calling this method and the corresponding open.cl
+        file lies in the same folder as the python file calling it.
+        Ignored if kernel_source is a string.
+    kernel_source : str 
+        Filename of the open.cl file to be called or string containing the open.cl source code
+    kernel_name : str
+        Kernel method inside the open.cl file to be called
+        most clij/clesperanto kernel functions have the same name as the file they are in
+    global_size : tuple (z,y,x), default = (1, 1, 1)
+        Global_size according to OpenCL definition (usually shape of the destination image).
+    parameters : dict(str, [Array, float, int])
+        Dictionary containing parameters. Take care: They must be of the
+        right type and in the right order as specified in the open.cl file.
+    constants: dict(str, int), optional
+        Dictionary with names/values which will be added to the define
+        statements. They are necessary, e.g. to create arrays of a given
+        maximum size in OpenCL as variable array lengths are not supported.
+    device : Device, default = None
+        The device to execute the kernel on. If None, use the current device
+    """
+
+    # load the kernel file
+    def load_file(anchor, filename):
+        """Load the opencl kernel file as a string"""
+        if anchor is None:
+            kernel = Path(filename).read_text()
+        else:
+            kernel = (Path(anchor).parent / filename).read_text()
+        return kernel  
+    
+    # test if kernel_source ends with .cl or .cu
+    if kernel_source.endswith('.cl') or kernel_source.endswith('.cu'):
+        kernel_source = load_file(anchor, kernel_source)
+
+    # manage the device if not given
+    if not device:
+        device = get_device()
+
+    # manage global range
+    if not isinstance(global_size, tuple):
+        if isinstance(global_size, list) or isinstance(global_size, np.ndarray):
+            global_size = tuple(global_size)
+        else:
+            global_size = (global_size,)
+            
+    _execute(device, kernel_name, kernel_source, parameters, global_size, constants)           
 
 
 def gpu_info():

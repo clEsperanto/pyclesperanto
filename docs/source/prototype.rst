@@ -42,5 +42,17 @@ This was discussed in the `issue #141 <https://github.com/clEsperanto/pyclespera
     gpu_output = cle.erode_labels(gpu_input, radius=1, relabel=False)
 
 
+connected_components_labeling_box
+----------------------------------
 
+``connected_components_labeling_box`` was renamed to ``connected_components_labeling`` and now as a parameter ``connectivity``.
+The argument ``connectivity`` is a string that can be either ``box`` or ``sphere``.
+This was discussed in the `issue #142 <https://github.com/clEsperanto/pyclesperanto/issues/142>`__.
+This connectivity management may be applied to other similar function in the future.
+
+.. code-block:: python
+
+    import pyclesperanto as cle
+
+    gpu_output = cle.connected_components_labeling(gpu_input, connectivity="box")
 

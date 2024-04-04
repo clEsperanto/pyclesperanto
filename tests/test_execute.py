@@ -23,14 +23,14 @@ __kernel void absolute(
 """
 
 def test_execute_absolute():
-    test = cle.push(np.asarray([
+    input = cle.push(np.asarray([
         [1, -1],
         [1, -1]
     ]))
+    output = cle.create(input)
 
-    output = cle.create(test)
-
-    cle.execute(device=cle.get_device(), kernel_name="absolute", kernel_source=absolute_ocl, parameters={'src': test, 'dst': output}, range=test.shape)
+    param = {'src': input, 'dst': output}
+    cle.execute(kernel_source=absolute_ocl, kernel_name="absolute", global_size=input.shape,  parameters=param)
 
     print(output)
 

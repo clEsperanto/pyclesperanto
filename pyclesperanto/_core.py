@@ -5,7 +5,7 @@ import warnings
 
 from ._pyclesperanto import _Device as Device
 from ._pyclesperanto import _BackendManager as BackendManager
-from ._pyclesperanto import _execute
+from ._pyclesperanto import _execute, _native_execute
 
 
 class _current_device:
@@ -214,6 +214,71 @@ def execute(anchor = '__file__', kernel_source: str = '', kernel_name: str = '',
             global_size = (global_size,)
             
     _execute(device, kernel_name, kernel_source, parameters, global_size, constants)           
+
+
+
+def native_execute(anchor = '__file__', kernel_source: str = '', kernel_name: str = '', global_size: tuple = (1, 1, 1), local_size: tuple = (1, 1, 1), parameters: dict = {}, device: Device = None):
+    """Execute an OpenCL kernel from a file or a string
+
+    Call, build, and execute a kernel compatible with OpenCL language.
+    The kernel can be called from a file or a string.
+
+    The parameters must still be passed as a dictionary with the correct types and order.
+    Buffer parameters must be passed as Array objects. Scalars must be passed as Python native float or int.
+    
+    Warning: Only 1D buffers are supported for now.
+
+    Parameters
+    ----------
+    anchor : str, default = '__file__'
+        Enter __file__ when calling this method and the corresponding open.cl
+        file lies in the same folder as the python file calling it.
+        Ignored if kernel_source is a string.
+    kernel_source : str 
+        Filename of the open.cl file to be called or string containing the open.cl source code
+    kernel_name : str
+        Kernel method inside the open.cl file to be called
+        most clij/clesperanto kernel functions have the same name as the file they are in
+    global_size : tuple (z,y,x), default = (1, 1, 1)
+        Global_size according to OpenCL definition (usually shape of the destination image).
+    local_size : tuple (z,y,x), default = (1, 1, 1)
+        Local_size according to OpenCL definition (usually default is good).
+    parameters : dict(str, [Array, float, int])
+        Dictionary containing parameters. Take care: They must be of the
+        right type and in the right order as specified in the open.cl file.
+    device : Device, default = None
+        The device to execute the kernel on. If None, use the current device
+    """
+
+    # load the kernel file
+    def load_file(anchor, filename):
+        """Load the opencl kernel file as a string"""
+        if anchor is None:
+            kernel = Path(filename).read_text()
+        else:
+            kernel = (Path(anchor).parent / filename).read_text()
+        return kernel  
+
+    # manage the device if not given
+    if not device:
+        device = get_device()
+
+    # manage global range
+    if not isinstance(global_size, tuple):
+        if isinstance(global_size, list) or isinstance(global_size, np.ndarray):
+            global_size = tuple(global_size)
+        else:
+            global_size = (global_size,)
+
+    # manage local range
+    if not isinstance(local_size, tuple):
+        if isinstance(local_size, list) or isinstance(local_size, np.ndarray):
+            local_size = tuple(local_size)
+        else:
+            local_size = (local_size,)
+            
+    _native_execute(device, kernel_name, kernel_source, parameters, global_size, local_size)   
+
 
 
 def gpu_info():

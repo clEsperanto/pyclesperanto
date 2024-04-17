@@ -7,6 +7,7 @@ from ._core import Device
 from ._array import Image
 from ._decorators import plugin_function
 import numpy as np
+import warnings
 
 
 @plugin_function(category=['filter', 'in assistant', 'bia-bob-suggestion'])
@@ -38,6 +39,7 @@ def absolute(
 
     from ._pyclesperanto import _absolute as op
 
+    
     return op(
         device=device,
         src=input_image,
@@ -84,6 +86,7 @@ def add_images_weighted(
 
     from ._pyclesperanto import _add_images_weighted as op
 
+    
     return op(
         device=device,
         src0=input_image0,
@@ -127,6 +130,7 @@ def add_image_and_scalar(
 
     from ._pyclesperanto import _add_image_and_scalar as op
 
+    
     return op(
         device=device,
         src=input_image,
@@ -170,6 +174,7 @@ def binary_and(
 
     from ._pyclesperanto import _binary_and as op
 
+    
     return op(
         device=device,
         src0=input_image0,
@@ -208,6 +213,7 @@ def binary_edge_detection(
 
     from ._pyclesperanto import _binary_edge_detection as op
 
+    
     return op(
         device=device,
         src=input_image,
@@ -246,6 +252,7 @@ def binary_not(
 
     from ._pyclesperanto import _binary_not as op
 
+    
     return op(
         device=device,
         src=input_image,
@@ -288,6 +295,7 @@ def binary_or(
 
     from ._pyclesperanto import _binary_or as op
 
+    
     return op(
         device=device,
         src0=input_image0,
@@ -328,6 +336,7 @@ def binary_subtract(
 
     from ._pyclesperanto import _binary_subtract as op
 
+    
     return op(
         device=device,
         src0=input_image0,
@@ -371,6 +380,7 @@ def binary_xor(
 
     from ._pyclesperanto import _binary_xor as op
 
+    
     return op(
         device=device,
         src0=input_image0,
@@ -416,6 +426,7 @@ def block_enumerate(
 
     from ._pyclesperanto import _block_enumerate as op
 
+    
     return op(
         device=device,
         src0=input_image0,
@@ -458,6 +469,7 @@ def convolve(
 
     from ._pyclesperanto import _convolve as op
 
+    
     return op(
         device=device,
         src0=input_image0,
@@ -495,6 +507,7 @@ def copy(
 
     from ._pyclesperanto import _copy as op
 
+    
     return op(
         device=device,
         src=input_image,
@@ -538,6 +551,7 @@ def copy_slice(
 
     from ._pyclesperanto import _copy_slice as op
 
+    
     return op(
         device=device,
         src=input_image,
@@ -579,6 +593,7 @@ def copy_horizontal_slice(
 
     from ._pyclesperanto import _copy_horizontal_slice as op
 
+    
     return op(
         device=device,
         src=input_image,
@@ -620,6 +635,7 @@ def copy_vertical_slice(
 
     from ._pyclesperanto import _copy_vertical_slice as op
 
+    
     return op(
         device=device,
         src=input_image,
@@ -676,6 +692,7 @@ def crop(
 
     from ._pyclesperanto import _crop as op
 
+    
     return op(
         device=device,
         src=input_image,
@@ -715,6 +732,7 @@ def cubic_root(
 
     from ._pyclesperanto import _cubic_root as op
 
+    
     return op(
         device=device,
         src=input_image,
@@ -752,6 +770,7 @@ def detect_label_edges(
 
     from ._pyclesperanto import _detect_label_edges as op
 
+    
     return op(
         device=device,
         src=input_image,
@@ -793,6 +812,7 @@ def dilate_box(
 
     from ._pyclesperanto import _dilate_box as op
 
+    warnings.warn("dilate_box : This function is deprecated. Consider using dilate() instead.", DeprecationWarning)
     return op(
         device=device,
         src=input_image,
@@ -832,10 +852,57 @@ def dilate_sphere(
 
     from ._pyclesperanto import _dilate_sphere as op
 
+    warnings.warn("dilate_sphere : This function is deprecated. Consider using dilate() instead.", DeprecationWarning)
     return op(
         device=device,
         src=input_image,
         dst=output_image
+    )
+
+
+
+@plugin_function(category=['binary processing', 'bia-bob-suggestion'])
+def dilate(
+    input_image: Image,
+    output_image: Image = None,
+    connectivity: str = "box",
+    device: Device = None
+) -> Image:
+    """Computes a binary image with pixel values 0 and 1 containing the binary dilation
+    of a given input image. The dilation apply the Mooreneighborhood (8 pixels in 2D
+    and 26 pixels in 3d) for the "box" connectivity and the vonNeumannneighborhood
+    (4 pixels in 2D and 6 pixels in 3d) for a "sphere" connectivity. The pixels in
+    the input image with pixel value not equal to 0 will be interpreted as 1.
+
+    Parameters
+    ----------
+    input_image: Image
+        Input image to process. Input image to process.
+    output_image: Image = None
+        Output result image. Output result image.
+    connectivity: str = "box"
+        Element shape, "box" or "sphere".
+    device: Device = None
+        Device to perform the operation on.
+
+    Returns
+    -------
+    Image
+    
+    References
+    ----------
+    [1] https://clij.github.io/clij2-docs/reference_dilateBox
+	[2] https://clij.github.io/clij2-docs/reference_dilateSphere
+    """
+
+    from ._pyclesperanto import _dilate as op
+
+    
+    return op(
+        device=device,
+        src=input_image,
+        dst=output_image,
+        connectivity=connectivity
     )
 
 
@@ -871,6 +938,7 @@ def divide_images(
 
     from ._pyclesperanto import _divide_images as op
 
+    
     return op(
         device=device,
         src0=input_image0,
@@ -907,6 +975,7 @@ def divide_scalar_by_image(
 
     from ._pyclesperanto import _divide_scalar_by_image as op
 
+    
     return op(
         device=device,
         src=input_image,
@@ -948,6 +1017,7 @@ def equal(
 
     from ._pyclesperanto import _equal as op
 
+    
     return op(
         device=device,
         src0=input_image0,
@@ -989,6 +1059,7 @@ def equal_constant(
 
     from ._pyclesperanto import _equal_constant as op
 
+    
     return op(
         device=device,
         src=input_image,
@@ -1031,6 +1102,7 @@ def erode_box(
 
     from ._pyclesperanto import _erode_box as op
 
+    warnings.warn("erode_box : This function is deprecated. Consider using erode() instead.", DeprecationWarning)
     return op(
         device=device,
         src=input_image,
@@ -1070,10 +1142,57 @@ def erode_sphere(
 
     from ._pyclesperanto import _erode_sphere as op
 
+    warnings.warn("erode_sphere : This function is deprecated. Consider using erode() instead.", DeprecationWarning)
     return op(
         device=device,
         src=input_image,
         dst=output_image
+    )
+
+
+
+@plugin_function(category=['binary processing', 'bia-bob-suggestion'])
+def erode(
+    input_image: Image,
+    output_image: Image = None,
+    connectivity: str = "box",
+    device: Device = None
+) -> Image:
+    """Computes a binary image with pixel values 0 and 1 containing the binary erosion
+    of a given input image. The erosion apply the Mooreneighborhood (8 pixels in 2D
+    and 26 pixels in 3d) for the "box" connectivity and the vonNeumannneighborhood
+    (4 pixels in 2D and 6 pixels in 3d) for a "sphere" connectivity. The pixels in
+    the input image with pixel value not equal to 0 will be interpreted as 1.
+
+    Parameters
+    ----------
+    input_image: Image
+        Input image to process.
+    output_image: Image = None
+        Output result image.
+    connectivity: str = "box"
+        Element shape, "box" or "sphere".
+    device: Device = None
+        Device to perform the operation on.
+
+    Returns
+    -------
+    Image
+    
+    References
+    ----------
+    [1] https://clij.github.io/clij2-docs/reference_erodeBox
+	[2] https://clij.github.io/clij2-docs/reference_erodeSphere
+    """
+
+    from ._pyclesperanto import _erode as op
+
+    
+    return op(
+        device=device,
+        src=input_image,
+        dst=output_image,
+        connectivity=connectivity
     )
 
 
@@ -1107,6 +1226,7 @@ def exponential(
 
     from ._pyclesperanto import _exponential as op
 
+    
     return op(
         device=device,
         src=input_image,
@@ -1152,6 +1272,7 @@ def flip(
 
     from ._pyclesperanto import _flip as op
 
+    
     return op(
         device=device,
         src=input_image,
@@ -1202,6 +1323,7 @@ def gaussian_blur(
 
     from ._pyclesperanto import _gaussian_blur as op
 
+    
     return op(
         device=device,
         src=input_image,
@@ -1252,6 +1374,7 @@ def generate_distance_matrix(
 
     from ._pyclesperanto import _generate_distance_matrix as op
 
+    
     return op(
         device=device,
         src0=input_image0,
@@ -1291,6 +1414,7 @@ def gradient_x(
 
     from ._pyclesperanto import _gradient_x as op
 
+    
     return op(
         device=device,
         src=input_image,
@@ -1329,6 +1453,7 @@ def gradient_y(
 
     from ._pyclesperanto import _gradient_y as op
 
+    
     return op(
         device=device,
         src=input_image,
@@ -1367,6 +1492,7 @@ def gradient_z(
 
     from ._pyclesperanto import _gradient_z as op
 
+    
     return op(
         device=device,
         src=input_image,
@@ -1407,6 +1533,7 @@ def greater(
 
     from ._pyclesperanto import _greater as op
 
+    
     return op(
         device=device,
         src0=input_image0,
@@ -1447,6 +1574,7 @@ def greater_constant(
 
     from ._pyclesperanto import _greater_constant as op
 
+    
     return op(
         device=device,
         src=input_image,
@@ -1488,6 +1616,7 @@ def greater_or_equal(
 
     from ._pyclesperanto import _greater_or_equal as op
 
+    
     return op(
         device=device,
         src0=input_image0,
@@ -1529,6 +1658,7 @@ def greater_or_equal_constant(
 
     from ._pyclesperanto import _greater_or_equal_constant as op
 
+    
     return op(
         device=device,
         src=input_image,
@@ -1577,6 +1707,7 @@ def hessian_eigenvalues(
 
     from ._pyclesperanto import _hessian_eigenvalues as op
 
+    
     return op(
         device=device,
         src=input_image,
@@ -1615,6 +1746,7 @@ def laplace_box(
 
     from ._pyclesperanto import _laplace_box as op
 
+    warnings.warn("laplace_box : This function is deprecated. Consider using laplace() instead.", DeprecationWarning)
     return op(
         device=device,
         src=input_image,
@@ -1651,10 +1783,53 @@ def laplace_diamond(
 
     from ._pyclesperanto import _laplace_diamond as op
 
+    warnings.warn("laplace_diamond : This function is deprecated. Consider using laplace() instead.", DeprecationWarning)
     return op(
         device=device,
         src=input_image,
         dst=output_image
+    )
+
+
+
+@plugin_function(category=['filter', 'edge detection', 'bia-bob-suggestion'])
+def laplace(
+    input_image: Image,
+    output_image: Image = None,
+    connectivity: str = "box",
+    device: Device = None
+) -> Image:
+    """Applies the Laplace operator with a "box" or a "sphere" neighborhood to an
+    image.
+
+    Parameters
+    ----------
+    input_image: Image
+        Input image to process.
+    output_image: Image = None
+        Output result image.
+    connectivity: str = "box"
+        Filter neigborhood
+    device: Device = None
+        Device to perform the operation on.
+
+    Returns
+    -------
+    Image
+    
+    References
+    ----------
+    [1] https://clij.github.io/clij2-docs/reference_laplaceDiamond
+    """
+
+    from ._pyclesperanto import _laplace as op
+
+    
+    return op(
+        device=device,
+        src=input_image,
+        dst=output_image,
+        connectivity=connectivity
     )
 
 
@@ -1687,6 +1862,7 @@ def local_cross_correlation(
 
     from ._pyclesperanto import _local_cross_correlation as op
 
+    
     return op(
         device=device,
         src0=input_image0,
@@ -1725,6 +1901,7 @@ def logarithm(
 
     from ._pyclesperanto import _logarithm as op
 
+    
     return op(
         device=device,
         src=input_image,
@@ -1767,6 +1944,7 @@ def mask(
 
     from ._pyclesperanto import _mask as op
 
+    
     return op(
         device=device,
         src=input_image,
@@ -1813,6 +1991,7 @@ def mask_label(
 
     from ._pyclesperanto import _mask_label as op
 
+    
     return op(
         device=device,
         src0=input_image0,
@@ -1855,6 +2034,7 @@ def maximum_image_and_scalar(
 
     from ._pyclesperanto import _maximum_image_and_scalar as op
 
+    
     return op(
         device=device,
         src=input_image,
@@ -1896,6 +2076,7 @@ def maximum_images(
 
     from ._pyclesperanto import _maximum_images as op
 
+    
     return op(
         device=device,
         src0=input_image0,
@@ -1943,6 +2124,7 @@ def maximum_box(
 
     from ._pyclesperanto import _maximum_box as op
 
+    warnings.warn("maximum_box : This function is deprecated. Consider using maximum() instead.", DeprecationWarning)
     return op(
         device=device,
         src=input_image,
@@ -1950,6 +2132,62 @@ def maximum_box(
         radius_x=int(radius_x),
         radius_y=int(radius_y),
         radius_z=int(radius_z)
+    )
+
+
+
+@plugin_function(category=['filter', 'in assistant'])
+def maximum(
+    input_image: Image,
+    output_image: Image = None,
+    radius_x: int = 0,
+    radius_y: int = 0,
+    radius_z: int = 0,
+    connectivity: str = "box",
+    device: Device = None
+) -> Image:
+    """Computes the local maximum of a pixels neighborhood (box or sphere). The
+    neighborhood size is specified by its halfwidth, halfheight and halfdepth
+    (radius).
+
+    Parameters
+    ----------
+    input_image: Image
+        Input image to process.
+    output_image: Image = None
+        Output result image.
+    radius_x: int = 0
+        Radius size along x axis.
+    radius_y: int = 0
+        Radius size along y axis.
+    radius_z: int = 0
+        Radius size along z axis.
+    connectivity: str = "box"
+        Filter neigborhood
+    device: Device = None
+        Device to perform the operation on.
+
+    Returns
+    -------
+    Image
+    
+    References
+    ----------
+    [1] https://clij.github.io/clij2-docs/reference_maximum3DBox
+	[2] https://clij.github.io/clij2-docs/reference_maximum3DSphere
+    """
+
+    from ._pyclesperanto import _maximum as op
+
+    
+    return op(
+        device=device,
+        src=input_image,
+        dst=output_image,
+        radius_x=int(radius_x),
+        radius_y=int(radius_y),
+        radius_z=int(radius_z),
+        connectivity=connectivity
     )
 
 
@@ -1982,6 +2220,7 @@ def maximum_x_projection(
 
     from ._pyclesperanto import _maximum_x_projection as op
 
+    
     return op(
         device=device,
         src=input_image,
@@ -2018,6 +2257,7 @@ def maximum_y_projection(
 
     from ._pyclesperanto import _maximum_y_projection as op
 
+    
     return op(
         device=device,
         src=input_image,
@@ -2054,6 +2294,7 @@ def maximum_z_projection(
 
     from ._pyclesperanto import _maximum_z_projection as op
 
+    
     return op(
         device=device,
         src=input_image,
@@ -2100,6 +2341,7 @@ def mean_box(
 
     from ._pyclesperanto import _mean_box as op
 
+    warnings.warn("mean_box : This function is deprecated. Consider using mean() instead.", DeprecationWarning)
     return op(
         device=device,
         src=input_image,
@@ -2149,6 +2391,7 @@ def mean_sphere(
 
     from ._pyclesperanto import _mean_sphere as op
 
+    warnings.warn("mean_sphere : This function is deprecated. Consider using mean() instead.", DeprecationWarning)
     return op(
         device=device,
         src=input_image,
@@ -2156,6 +2399,61 @@ def mean_sphere(
         radius_x=int(radius_x),
         radius_y=int(radius_y),
         radius_z=int(radius_z)
+    )
+
+
+
+@plugin_function(category=['filter', 'denoise', 'in assistant', 'bia-bob-suggestion'])
+def mean(
+    input_image: Image,
+    output_image: Image = None,
+    radius_x: int = 1,
+    radius_y: int = 1,
+    radius_z: int = 1,
+    connectivity: str = "box",
+    device: Device = None
+) -> Image:
+    """Computes the local mean average of a pixels neighborhood defined as a boxshaped
+    or a sphereshaped. The shape size is specified by its halfwidth, halfheight and
+    halfdepth (radius).
+
+    Parameters
+    ----------
+    input_image: Image
+        Input image to process.
+    output_image: Image = None
+        Output result image.
+    radius_x: int = 1
+        Radius size along x axis.
+    radius_y: int = 1
+        Radius size along y axis.
+    radius_z: int = 1
+        Radius size along z axis.
+    connectivity: str = "box"
+        Filter neigborhood
+    device: Device = None
+        Device to perform the operation on.
+
+    Returns
+    -------
+    Image
+    
+    References
+    ----------
+    [1] https://clij.github.io/clij2-docs/reference_mean3DSphere
+    """
+
+    from ._pyclesperanto import _mean as op
+
+    
+    return op(
+        device=device,
+        src=input_image,
+        dst=output_image,
+        radius_x=int(radius_x),
+        radius_y=int(radius_y),
+        radius_z=int(radius_z),
+        connectivity=connectivity
     )
 
 
@@ -2188,6 +2486,7 @@ def mean_x_projection(
 
     from ._pyclesperanto import _mean_x_projection as op
 
+    
     return op(
         device=device,
         src=input_image,
@@ -2224,6 +2523,7 @@ def mean_y_projection(
 
     from ._pyclesperanto import _mean_y_projection as op
 
+    
     return op(
         device=device,
         src=input_image,
@@ -2260,6 +2560,7 @@ def mean_z_projection(
 
     from ._pyclesperanto import _mean_z_projection as op
 
+    
     return op(
         device=device,
         src=input_image,
@@ -2307,6 +2608,7 @@ def median_box(
 
     from ._pyclesperanto import _median_box as op
 
+    warnings.warn("median_box : This function is deprecated. Consider using median() instead.", DeprecationWarning)
     return op(
         device=device,
         src=input_image,
@@ -2357,6 +2659,7 @@ def median_sphere(
 
     from ._pyclesperanto import _median_sphere as op
 
+    warnings.warn("median_sphere : This function is deprecated. Consider using median() instead.", DeprecationWarning)
     return op(
         device=device,
         src=input_image,
@@ -2364,6 +2667,62 @@ def median_sphere(
         radius_x=int(radius_x),
         radius_y=int(radius_y),
         radius_z=int(radius_z)
+    )
+
+
+
+@plugin_function(category=['filter', 'denoise', 'in assistant'])
+def median(
+    input_image: Image,
+    output_image: Image = None,
+    radius_x: int = 1,
+    radius_y: int = 1,
+    radius_z: int = 1,
+    connectivity: str = "box",
+    device: Device = None
+) -> Image:
+    """Computes the local median of a pixels neighborhood. The neighborhood is defined
+    as a box or a sphere shape. Its size is specified by its halfwidth, halfheight,
+    and halfdepth (radius). For technical reasons, the area of the shpae must have
+    less than 1000 pixels.
+
+    Parameters
+    ----------
+    input_image: Image
+        Input image to process.
+    output_image: Image = None
+        Output result image.
+    radius_x: int = 1
+        Radius size along x axis.
+    radius_y: int = 1
+        Radius size along y axis.
+    radius_z: int = 1
+        Radius size along z axis.
+    connectivity: str = "box"
+        Filter neigborhood
+    device: Device = None
+        Device to perform the operation on.
+
+    Returns
+    -------
+    Image
+    
+    References
+    ----------
+    [1] https://clij.github.io/clij2-docs/reference_median3DSphere
+    """
+
+    from ._pyclesperanto import _median as op
+
+    
+    return op(
+        device=device,
+        src=input_image,
+        dst=output_image,
+        radius_x=int(radius_x),
+        radius_y=int(radius_y),
+        radius_z=int(radius_z),
+        connectivity=connectivity
     )
 
 
@@ -2406,6 +2765,7 @@ def minimum_box(
 
     from ._pyclesperanto import _minimum_box as op
 
+    warnings.warn("minimum_box : This function is deprecated. Consider using minimum() instead.", DeprecationWarning)
     return op(
         device=device,
         src=input_image,
@@ -2413,6 +2773,61 @@ def minimum_box(
         radius_x=int(radius_x),
         radius_y=int(radius_y),
         radius_z=int(radius_z)
+    )
+
+
+
+@plugin_function(category=['filter', 'in assistant'])
+def minimum(
+    input_image: Image,
+    output_image: Image = None,
+    radius_x: int = 0,
+    radius_y: int = 0,
+    radius_z: int = 0,
+    connectivity: str = "box",
+    device: Device = None
+) -> Image:
+    """Computes the local minimum of a pixels cube neighborhood. The cubes size is
+    specified by its halfwidth, halfheight and halfdepth (radius).
+
+    Parameters
+    ----------
+    input_image: Image
+        Input image to process.
+    output_image: Image = None
+        Output result image.
+    radius_x: int = 0
+        Radius size along x axis.
+    radius_y: int = 0
+        Radius size along y axis.
+    radius_z: int = 0
+        Radius size along z axis.
+    connectivity: str = "box"
+        Filter neigborhood
+    device: Device = None
+        Device to perform the operation on.
+
+    Returns
+    -------
+    Image
+    
+    References
+    ----------
+    [1] https://clij.github.io/clij2-docs/reference_minimum3DBox
+	[2] https://clij.github.io/clij2-docs/reference_minimum3DSphere
+    """
+
+    from ._pyclesperanto import _minimum as op
+
+    
+    return op(
+        device=device,
+        src=input_image,
+        dst=output_image,
+        radius_x=int(radius_x),
+        radius_y=int(radius_y),
+        radius_z=int(radius_z),
+        connectivity=connectivity
     )
 
 
@@ -2449,6 +2864,7 @@ def minimum_image_and_scalar(
 
     from ._pyclesperanto import _minimum_image_and_scalar as op
 
+    
     return op(
         device=device,
         src=input_image,
@@ -2490,6 +2906,7 @@ def minimum_images(
 
     from ._pyclesperanto import _minimum_images as op
 
+    
     return op(
         device=device,
         src0=input_image0,
@@ -2527,6 +2944,7 @@ def minimum_x_projection(
 
     from ._pyclesperanto import _minimum_x_projection as op
 
+    
     return op(
         device=device,
         src=input_image,
@@ -2563,6 +2981,7 @@ def minimum_y_projection(
 
     from ._pyclesperanto import _minimum_y_projection as op
 
+    
     return op(
         device=device,
         src=input_image,
@@ -2599,6 +3018,7 @@ def minimum_z_projection(
 
     from ._pyclesperanto import _minimum_z_projection as op
 
+    
     return op(
         device=device,
         src=input_image,
@@ -2645,6 +3065,7 @@ def mode_box(
 
     from ._pyclesperanto import _mode_box as op
 
+    warnings.warn("mode_box : This function is deprecated. Consider using mode() instead.", DeprecationWarning)
     return op(
         device=device,
         src=input_image,
@@ -2694,6 +3115,7 @@ def mode_sphere(
 
     from ._pyclesperanto import _mode_sphere as op
 
+    warnings.warn("mode_sphere : This function is deprecated. Consider using mode() instead.", DeprecationWarning)
     return op(
         device=device,
         src=input_image,
@@ -2701,6 +3123,61 @@ def mode_sphere(
         radius_x=int(radius_x),
         radius_y=int(radius_y),
         radius_z=int(radius_z)
+    )
+
+
+
+@plugin_function(category=['label processing', 'in assistant', 'bia-bob-suggestion'])
+def mode(
+    input_image: Image,
+    output_image: Image = None,
+    radius_x: int = 1,
+    radius_y: int = 1,
+    radius_z: int = 1,
+    connectivity: str = "box",
+    device: Device = None
+) -> Image:
+    """Computes the local mode of a pixels neighborhood. This neighborhood can be
+    shaped as a box or a sphere. This can be used to postprocess and locally correct
+    semantic segmentation results. The shape size is specified by its halfwidth,
+    halfheight, and halfdepth (radius). For technical reasons, the intensities must
+    lie within a range from 0 to 255 (uint8). In case multiple values have maximum
+    frequency, the smallest one is returned.
+
+    Parameters
+    ----------
+    input_image: Image
+        Input image to process.
+    output_image: Image = None
+        Output result image.
+    radius_x: int = 1
+        Radius size along x axis.
+    radius_y: int = 1
+        Radius size along y axis.
+    radius_z: int = 1
+        Radius size along z axis.
+    connectivity: str = "box"
+        Filter neigborhood
+    device: Device = None
+        Device to perform the operation on.
+
+    Returns
+    -------
+    Image
+    
+    """
+
+    from ._pyclesperanto import _mode as op
+
+    
+    return op(
+        device=device,
+        src=input_image,
+        dst=output_image,
+        radius_x=int(radius_x),
+        radius_y=int(radius_y),
+        radius_z=int(radius_z),
+        connectivity=connectivity
     )
 
 
@@ -2733,6 +3210,7 @@ def modulo_images(
 
     from ._pyclesperanto import _modulo_images as op
 
+    
     return op(
         device=device,
         src0=input_image0,
@@ -2774,6 +3252,7 @@ def multiply_image_and_position(
 
     from ._pyclesperanto import _multiply_image_and_position as op
 
+    
     return op(
         device=device,
         src=input_image,
@@ -2815,6 +3294,7 @@ def multiply_image_and_scalar(
 
     from ._pyclesperanto import _multiply_image_and_scalar as op
 
+    
     return op(
         device=device,
         src=input_image,
@@ -2856,6 +3336,7 @@ def multiply_images(
 
     from ._pyclesperanto import _multiply_images as op
 
+    
     return op(
         device=device,
         src0=input_image0,
@@ -2906,6 +3387,7 @@ def nan_to_num(
 
     from ._pyclesperanto import _nan_to_num as op
 
+    
     return op(
         device=device,
         src=input_image,
@@ -2951,6 +3433,7 @@ def nonzero_maximum_box(
 
     from ._pyclesperanto import _nonzero_maximum_box as op
 
+    warnings.warn("nonzero_maximum_box : This function is deprecated. Consider using nonzero_maximum() instead.", DeprecationWarning)
     return op(
         device=device,
         src=input_image,
@@ -2994,11 +3477,62 @@ def nonzero_maximum_diamond(
 
     from ._pyclesperanto import _nonzero_maximum_diamond as op
 
+    warnings.warn("nonzero_maximum_diamond : This function is deprecated. Consider using nonzero_maximum() instead.", DeprecationWarning)
     return op(
         device=device,
         src=input_image,
         dst0=output_image0,
         dst1=output_image1
+    )
+
+
+
+@plugin_function
+def nonzero_maximum(
+    input_image: Image,
+    output_image0: Image,
+    output_image1: Image = None,
+    connectivity: str = "box",
+    device: Device = None
+) -> Image:
+    """Apply a maximum filter of a neighborhood to the input image. The neighborhood
+    shape can be a box or a sphere. The size is fixed to 1 and pixels with value 0
+    are ignored. Note: Pixels with 0 value in the input image will not be
+    overwritten in the output image. Thus, the result image should be initialized by
+    copying the original image in advance.
+
+    Parameters
+    ----------
+    input_image: Image
+        Input image to process.
+    output_image0: Image
+        Output flag (0 or 1).
+    output_image1: Image = None
+        Output image where results are written into.
+    connectivity: str = "box"
+        Filter neigborhood
+    device: Device = None
+        Device to perform the operation on.
+
+    Returns
+    -------
+    Image
+    
+    References
+    ----------
+    [1] https://clij.github.io/clij2-docs/reference_nonzeroMaximumBox
+	[2] https://clij.github.io/clij2-docs/reference_nonzeroMaximumDiamond
+    """
+
+    from ._pyclesperanto import _nonzero_maximum as op
+
+    
+    return op(
+        device=device,
+        src=input_image,
+        dst0=output_image0,
+        dst1=output_image1,
+        connectivity=connectivity
     )
 
 
@@ -3037,6 +3571,7 @@ def nonzero_minimum_box(
 
     from ._pyclesperanto import _nonzero_minimum_box as op
 
+    warnings.warn("nonzero_minimum_box : This function is deprecated. Consider using nonzero_minimum() instead.", DeprecationWarning)
     return op(
         device=device,
         src=input_image,
@@ -3080,11 +3615,62 @@ def nonzero_minimum_diamond(
 
     from ._pyclesperanto import _nonzero_minimum_diamond as op
 
+    warnings.warn("nonzero_minimum_diamond : This function is deprecated. Consider using nonzero_minimum() instead.", DeprecationWarning)
     return op(
         device=device,
         src=input_image,
         dst0=output_image0,
         dst1=output_image1
+    )
+
+
+
+@plugin_function
+def nonzero_minimum(
+    input_image: Image,
+    output_image0: Image,
+    output_image1: Image = None,
+    connectivity: str = "box",
+    device: Device = None
+) -> Image:
+    """Apply a minimum filter of a neighborhood to the input image. The neighborhood
+    shape can be a box or a sphere. The radius is fixed to 1 and pixels with value 0
+    are ignored.Note: Pixels with 0 value in the input image will not be overwritten
+    in the output image. Thus, the result image should be initialized by copying the
+    original image in advance.
+
+    Parameters
+    ----------
+    input_image: Image
+        Input image to process.
+    output_image0: Image
+        Output flag (0 or 1).
+    output_image1: Image = None
+        Output image where results are written into.
+    connectivity: str = "box"
+        Filter neigborhood
+    device: Device = None
+        Device to perform the operation on.
+
+    Returns
+    -------
+    Image
+    
+    References
+    ----------
+    [1] https://clij.github.io/clij2-docs/reference_nonzeroMinimumBox
+	[2] https://clij.github.io/clij2-docs/reference_nonzeroMinimumDiamond
+    """
+
+    from ._pyclesperanto import _nonzero_minimum as op
+
+    
+    return op(
+        device=device,
+        src=input_image,
+        dst0=output_image0,
+        dst1=output_image1,
+        connectivity=connectivity
     )
 
 
@@ -3121,6 +3707,7 @@ def not_equal(
 
     from ._pyclesperanto import _not_equal as op
 
+    
     return op(
         device=device,
         src0=input_image0,
@@ -3162,6 +3749,7 @@ def not_equal_constant(
 
     from ._pyclesperanto import _not_equal_constant as op
 
+    
     return op(
         device=device,
         src=input_image,
@@ -3208,6 +3796,7 @@ def paste(
 
     from ._pyclesperanto import _paste as op
 
+    
     return op(
         device=device,
         src=input_image,
@@ -3251,6 +3840,7 @@ def onlyzero_overwrite_maximum_box(
 
     from ._pyclesperanto import _onlyzero_overwrite_maximum_box as op
 
+    warnings.warn("onlyzero_overwrite_maximum_box : This function is deprecated. Consider using onlyzero_overwrite_maximum() instead.", DeprecationWarning)
     return op(
         device=device,
         src=input_image,
@@ -3292,11 +3882,59 @@ def onlyzero_overwrite_maximum_diamond(
 
     from ._pyclesperanto import _onlyzero_overwrite_maximum_diamond as op
 
+    warnings.warn("onlyzero_overwrite_maximum_diamond : This function is deprecated. Consider using onlyzero_overwrite_maximum() instead.", DeprecationWarning)
     return op(
         device=device,
         src=input_image,
         dst0=output_image0,
         dst1=output_image1
+    )
+
+
+
+@plugin_function
+def onlyzero_overwrite_maximum(
+    input_image: Image,
+    output_image0: Image,
+    output_image1: Image = None,
+    connectivity: str = "box",
+    device: Device = None
+) -> Image:
+    """Apply a local maximum filter to an image which only overwrites pixels with value
+    0.
+
+    Parameters
+    ----------
+    input_image: Image
+        Input image to process.
+    output_image0: Image
+        Output flag value, 0 or 1.
+    output_image1: Image = None
+        Output image.
+    connectivity: str = "box"
+        Filter neigborhood
+    device: Device = None
+        Device to perform the operation on.
+
+    Returns
+    -------
+    Image
+    
+    References
+    ----------
+    [1] https://clij.github.io/clij2-docs/reference_onlyzeroOverwriteMaximumBox
+	[2] https://clij.github.io/clij2-docs/reference_onlyzeroOverwriteMaximumDiamond
+    """
+
+    from ._pyclesperanto import _onlyzero_overwrite_maximum as op
+
+    
+    return op(
+        device=device,
+        src=input_image,
+        dst0=output_image0,
+        dst1=output_image1,
+        connectivity=connectivity
     )
 
 
@@ -3333,6 +3971,7 @@ def power(
 
     from ._pyclesperanto import _power as op
 
+    
     return op(
         device=device,
         src=input_image,
@@ -3373,6 +4012,7 @@ def power_images(
 
     from ._pyclesperanto import _power_images as op
 
+    
     return op(
         device=device,
         src0=input_image0,
@@ -3434,6 +4074,7 @@ def range(
 
     from ._pyclesperanto import _range as op
 
+    
     return op(
         device=device,
         src=input_image,
@@ -3481,6 +4122,7 @@ def read_values_from_positions(
 
     from ._pyclesperanto import _read_values_from_positions as op
 
+    
     return op(
         device=device,
         src=input_image,
@@ -3523,6 +4165,7 @@ def replace_values(
 
     from ._pyclesperanto import _replace_values as op
 
+    
     return op(
         device=device,
         src0=input_image0,
@@ -3566,6 +4209,7 @@ def replace_value(
 
     from ._pyclesperanto import _replace_value as op
 
+    
     return op(
         device=device,
         src=input_image,
@@ -3614,6 +4258,7 @@ def maximum_sphere(
 
     from ._pyclesperanto import _maximum_sphere as op
 
+    warnings.warn("maximum_sphere : This function is deprecated. Consider using maximum() instead.", DeprecationWarning)
     return op(
         device=device,
         src=input_image,
@@ -3663,6 +4308,7 @@ def minimum_sphere(
 
     from ._pyclesperanto import _minimum_sphere as op
 
+    warnings.warn("minimum_sphere : This function is deprecated. Consider using minimum() instead.", DeprecationWarning)
     return op(
         device=device,
         src=input_image,
@@ -3706,6 +4352,7 @@ def multiply_matrix(
 
     from ._pyclesperanto import _multiply_matrix as op
 
+    
     return op(
         device=device,
         src0=input_image0,
@@ -3744,6 +4391,7 @@ def reciprocal(
 
     from ._pyclesperanto import _reciprocal as op
 
+    
     return op(
         device=device,
         src=input_image,
@@ -3781,6 +4429,7 @@ def set(
 
     from ._pyclesperanto import _set as op
 
+    
     return op(
         device=device,
         src=input_image,
@@ -3820,6 +4469,7 @@ def set_column(
 
     from ._pyclesperanto import _set_column as op
 
+    
     return op(
         device=device,
         src=input_image,
@@ -3857,6 +4507,7 @@ def set_image_borders(
 
     from ._pyclesperanto import _set_image_borders as op
 
+    
     return op(
         device=device,
         src=input_image,
@@ -3896,6 +4547,7 @@ def set_plane(
 
     from ._pyclesperanto import _set_plane as op
 
+    
     return op(
         device=device,
         src=input_image,
@@ -3930,6 +4582,7 @@ def set_ramp_x(
 
     from ._pyclesperanto import _set_ramp_x as op
 
+    
     return op(
         device=device,
         src=input_image
@@ -3962,6 +4615,7 @@ def set_ramp_y(
 
     from ._pyclesperanto import _set_ramp_y as op
 
+    
     return op(
         device=device,
         src=input_image
@@ -3994,6 +4648,7 @@ def set_ramp_z(
 
     from ._pyclesperanto import _set_ramp_z as op
 
+    
     return op(
         device=device,
         src=input_image
@@ -4030,6 +4685,7 @@ def set_row(
 
     from ._pyclesperanto import _set_row as op
 
+    
     return op(
         device=device,
         src=input_image,
@@ -4067,6 +4723,7 @@ def set_nonzero_pixels_to_pixelindex(
 
     from ._pyclesperanto import _set_nonzero_pixels_to_pixelindex as op
 
+    
     return op(
         device=device,
         src=input_image,
@@ -4106,6 +4763,7 @@ def set_where_x_equals_y(
 
     from ._pyclesperanto import _set_where_x_equals_y as op
 
+    
     return op(
         device=device,
         src=input_image,
@@ -4144,6 +4802,7 @@ def set_where_x_greater_than_y(
 
     from ._pyclesperanto import _set_where_x_greater_than_y as op
 
+    
     return op(
         device=device,
         src=input_image,
@@ -4182,6 +4841,7 @@ def set_where_x_smaller_than_y(
 
     from ._pyclesperanto import _set_where_x_smaller_than_y as op
 
+    
     return op(
         device=device,
         src=input_image,
@@ -4217,6 +4877,7 @@ def sign(
 
     from ._pyclesperanto import _sign as op
 
+    
     return op(
         device=device,
         src=input_image,
@@ -4257,6 +4918,7 @@ def smaller(
 
     from ._pyclesperanto import _smaller as op
 
+    
     return op(
         device=device,
         src0=input_image0,
@@ -4298,6 +4960,7 @@ def smaller_constant(
 
     from ._pyclesperanto import _smaller_constant as op
 
+    
     return op(
         device=device,
         src=input_image,
@@ -4339,6 +5002,7 @@ def smaller_or_equal(
 
     from ._pyclesperanto import _smaller_or_equal as op
 
+    
     return op(
         device=device,
         src0=input_image0,
@@ -4380,6 +5044,7 @@ def smaller_or_equal_constant(
 
     from ._pyclesperanto import _smaller_or_equal_constant as op
 
+    
     return op(
         device=device,
         src=input_image,
@@ -4418,6 +5083,7 @@ def sobel(
 
     from ._pyclesperanto import _sobel as op
 
+    
     return op(
         device=device,
         src=input_image,
@@ -4451,6 +5117,7 @@ def square_root(
 
     from ._pyclesperanto import _square_root as op
 
+    
     return op(
         device=device,
         src=input_image,
@@ -4488,6 +5155,7 @@ def std_z_projection(
 
     from ._pyclesperanto import _std_z_projection as op
 
+    
     return op(
         device=device,
         src=input_image,
@@ -4527,6 +5195,7 @@ def subtract_image_from_scalar(
 
     from ._pyclesperanto import _subtract_image_from_scalar as op
 
+    
     return op(
         device=device,
         src=input_image,
@@ -4566,6 +5235,7 @@ def sum_reduction_x(
 
     from ._pyclesperanto import _sum_reduction_x as op
 
+    
     return op(
         device=device,
         src=input_image,
@@ -4603,6 +5273,7 @@ def sum_x_projection(
 
     from ._pyclesperanto import _sum_x_projection as op
 
+    
     return op(
         device=device,
         src=input_image,
@@ -4639,6 +5310,7 @@ def sum_y_projection(
 
     from ._pyclesperanto import _sum_y_projection as op
 
+    
     return op(
         device=device,
         src=input_image,
@@ -4675,6 +5347,7 @@ def sum_z_projection(
 
     from ._pyclesperanto import _sum_z_projection as op
 
+    
     return op(
         device=device,
         src=input_image,
@@ -4711,6 +5384,7 @@ def transpose_xy(
 
     from ._pyclesperanto import _transpose_xy as op
 
+    
     return op(
         device=device,
         src=input_image,
@@ -4747,6 +5421,7 @@ def transpose_xz(
 
     from ._pyclesperanto import _transpose_xz as op
 
+    
     return op(
         device=device,
         src=input_image,
@@ -4783,6 +5458,7 @@ def transpose_yz(
 
     from ._pyclesperanto import _transpose_yz as op
 
+    
     return op(
         device=device,
         src=input_image,
@@ -4820,6 +5496,7 @@ def undefined_to_zero(
 
     from ._pyclesperanto import _undefined_to_zero as op
 
+    
     return op(
         device=device,
         src=input_image,
@@ -4867,6 +5544,7 @@ def variance_box(
 
     from ._pyclesperanto import _variance_box as op
 
+    warnings.warn("variance_box : This function is deprecated. Consider using variance() instead.", DeprecationWarning)
     return op(
         device=device,
         src=input_image,
@@ -4917,6 +5595,7 @@ def variance_sphere(
 
     from ._pyclesperanto import _variance_sphere as op
 
+    warnings.warn("variance_sphere : This function is deprecated. Consider using variance() instead.", DeprecationWarning)
     return op(
         device=device,
         src=input_image,
@@ -4924,6 +5603,62 @@ def variance_sphere(
         radius_x=int(radius_x),
         radius_y=int(radius_y),
         radius_z=int(radius_z)
+    )
+
+
+
+@plugin_function(category=['filter', 'edge detection', 'in assistant'])
+def variance(
+    input_image: Image,
+    output_image: Image = None,
+    radius_x: int = 1,
+    radius_y: int = 1,
+    radius_z: int = 1,
+    connectivity: str = "box",
+    device: Device = None
+) -> Image:
+    """Computes the local variance of a pixels neighborhood (box or sphere). The
+    neighborhood size is specified by its halfwidth, halfheight and halfdepth
+    (radius). If 2D images are given, radius_z will be ignored.
+
+    Parameters
+    ----------
+    input_image: Image
+        Input image to process.
+    output_image: Image = None
+        Output result image.
+    radius_x: int = 1
+        Radius size along x axis.
+    radius_y: int = 1
+        Radius size along y axis.
+    radius_z: int = 1
+        Radius size along z axis.
+    connectivity: str = "box"
+        Filter neigborhood
+    device: Device = None
+        Device to perform the operation on.
+
+    Returns
+    -------
+    Image
+    
+    References
+    ----------
+    [1] https://clij.github.io/clij2-docs/reference_varianceBox
+	[2] https://clij.github.io/clij2-docs/reference_varianceSphere
+    """
+
+    from ._pyclesperanto import _variance as op
+
+    
+    return op(
+        device=device,
+        src=input_image,
+        dst=output_image,
+        radius_x=int(radius_x),
+        radius_y=int(radius_y),
+        radius_z=int(radius_z),
+        connectivity=connectivity
     )
 
 
@@ -4958,6 +5693,7 @@ def write_values_to_positions(
 
     from ._pyclesperanto import _write_values_to_positions as op
 
+    
     return op(
         device=device,
         src=input_image,
@@ -4993,6 +5729,7 @@ def x_position_of_maximum_x_projection(
 
     from ._pyclesperanto import _x_position_of_maximum_x_projection as op
 
+    
     return op(
         device=device,
         src=input_image,
@@ -5028,6 +5765,7 @@ def x_position_of_minimum_x_projection(
 
     from ._pyclesperanto import _x_position_of_minimum_x_projection as op
 
+    
     return op(
         device=device,
         src=input_image,
@@ -5063,6 +5801,7 @@ def y_position_of_maximum_y_projection(
 
     from ._pyclesperanto import _y_position_of_maximum_y_projection as op
 
+    
     return op(
         device=device,
         src=input_image,
@@ -5098,6 +5837,7 @@ def y_position_of_minimum_y_projection(
 
     from ._pyclesperanto import _y_position_of_minimum_y_projection as op
 
+    
     return op(
         device=device,
         src=input_image,
@@ -5133,6 +5873,7 @@ def z_position_of_maximum_z_projection(
 
     from ._pyclesperanto import _z_position_of_maximum_z_projection as op
 
+    
     return op(
         device=device,
         src=input_image,
@@ -5168,6 +5909,7 @@ def z_position_of_minimum_z_projection(
 
     from ._pyclesperanto import _z_position_of_minimum_z_projection as op
 
+    
     return op(
         device=device,
         src=input_image,

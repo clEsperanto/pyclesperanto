@@ -7,6 +7,7 @@ from ._core import Device
 from ._array import Image
 from ._decorators import plugin_function
 import numpy as np
+import warnings
 
 
 @plugin_function(category=['label processing', 'in assistant', 'bia-bob-suggestion'])
@@ -38,6 +39,7 @@ def dilate_labels(
 
     from ._pyclesperanto import _dilate_labels as op
 
+    
     return op(
         device=device,
         src=input_image,
@@ -79,6 +81,7 @@ def erode_labels(
 
     from ._pyclesperanto import _erode_labels as op
 
+    
     return op(
         device=device,
         src=input_image,
@@ -125,6 +128,7 @@ def gauss_otsu_labeling(
 
     from ._pyclesperanto import _gauss_otsu_labeling as op
 
+    
     return op(
         device=device,
         src0=input_image0,
@@ -164,6 +168,7 @@ def masked_voronoi_labeling(
 
     from ._pyclesperanto import _masked_voronoi_labeling as op
 
+    
     return op(
         device=device,
         src=input_image,
@@ -201,6 +206,7 @@ def voronoi_labeling(
 
     from ._pyclesperanto import _voronoi_labeling as op
 
+    
     return op(
         device=device,
         src=input_image,

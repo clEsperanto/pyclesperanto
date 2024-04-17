@@ -7,6 +7,7 @@ from ._core import Device
 from ._array import Image
 from ._decorators import plugin_function
 import numpy as np
+import warnings
 
 
 @plugin_function
@@ -35,6 +36,7 @@ def bounding_box(
 
     from ._pyclesperanto import _bounding_box as op
 
+    
     return op(
         device=device,
         src=input_image
@@ -67,6 +69,7 @@ def center_of_mass(
 
     from ._pyclesperanto import _center_of_mass as op
 
+    
     return op(
         device=device,
         src=input_image
@@ -106,6 +109,7 @@ def exclude_labels(
 
     from ._pyclesperanto import _exclude_labels as op
 
+    
     return op(
         device=device,
         src=input_image,
@@ -151,6 +155,7 @@ def exclude_labels_on_edges(
 
     from ._pyclesperanto import _exclude_labels_on_edges as op
 
+    
     return op(
         device=device,
         src=input_image,
@@ -190,6 +195,7 @@ def flag_existing_labels(
 
     from ._pyclesperanto import _flag_existing_labels as op
 
+    
     return op(
         device=device,
         src=input_image,
@@ -228,6 +234,7 @@ def gamma_correction(
 
     from ._pyclesperanto import _gamma_correction as op
 
+    
     return op(
         device=device,
         src=input_image,
@@ -268,6 +275,7 @@ def generate_binary_overlap_matrix(
 
     from ._pyclesperanto import _generate_binary_overlap_matrix as op
 
+    
     return op(
         device=device,
         src0=input_image0,
@@ -307,6 +315,7 @@ def generate_touch_matrix(
 
     from ._pyclesperanto import _generate_touch_matrix as op
 
+    
     return op(
         device=device,
         src=input_image,
@@ -362,6 +371,7 @@ def histogram(
 
     from ._pyclesperanto import _histogram as op
 
+    
     return op(
         device=device,
         src=input_image,
@@ -403,6 +413,7 @@ def jaccard_index(
 
     from ._pyclesperanto import _jaccard_index as op
 
+    
     return op(
         device=device,
         src0=input_image0,
@@ -441,6 +452,7 @@ def labelled_spots_to_pointlist(
 
     from ._pyclesperanto import _labelled_spots_to_pointlist as op
 
+    
     return op(
         device=device,
         src=input_image,
@@ -471,6 +483,7 @@ def maximum_position(
 
     from ._pyclesperanto import _maximum_position as op
 
+    
     return op(
         device=device,
         src=input_image
@@ -503,6 +516,7 @@ def mean_of_all_pixels(
 
     from ._pyclesperanto import _mean_of_all_pixels as op
 
+    
     return op(
         device=device,
         src=input_image
@@ -532,6 +546,7 @@ def minimum_position(
 
     from ._pyclesperanto import _minimum_position as op
 
+    
     return op(
         device=device,
         src=input_image

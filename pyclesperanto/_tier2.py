@@ -7,6 +7,7 @@ from ._core import Device
 from ._array import Image
 from ._decorators import plugin_function
 import numpy as np
+import warnings
 
 
 @plugin_function(category=['combine', 'in assistant', 'bia-bob-suggestion'])
@@ -41,6 +42,7 @@ def absolute_difference(
 
     from ._pyclesperanto import _absolute_difference as op
 
+    
     return op(
         device=device,
         src0=input_image0,
@@ -82,6 +84,7 @@ def add_images(
 
     from ._pyclesperanto import _add_images as op
 
+    
     return op(
         device=device,
         src0=input_image0,
@@ -128,6 +131,7 @@ def bottom_hat_box(
 
     from ._pyclesperanto import _bottom_hat_box as op
 
+    warnings.warn("bottom_hat_box : This method is deprecated. Consider using bottom_hat() instead.", DeprecationWarning)
     return op(
         device=device,
         src=input_image,
@@ -176,6 +180,7 @@ def bottom_hat_sphere(
 
     from ._pyclesperanto import _bottom_hat_sphere as op
 
+    warnings.warn("bottom_hat_sphere : This method is deprecated. Consider using bottom_hat() instead.", DeprecationWarning)
     return op(
         device=device,
         src=input_image,
@@ -183,6 +188,60 @@ def bottom_hat_sphere(
         radius_x=float(radius_x),
         radius_y=float(radius_y),
         radius_z=float(radius_z)
+    )
+
+
+
+@plugin_function(category=['filter', 'background removal', 'in assistant', 'bia-bob-suggestion'])
+def bottom_hat(
+    input_image: Image,
+    output_image: Image = None,
+    radius_x: float = 1,
+    radius_y: float = 1,
+    radius_z: float = 1,
+    connectivity: str = "box",
+    device: Device = None
+) -> Image:
+    """Applies a bottomhat filter for background subtraction to the input image.
+
+    Parameters
+    ----------
+    input_image: Image
+        The input image where the background is subtracted from.
+    output_image: Image = None
+        The output image where results are written into.
+    radius_x: float = 1
+        Radius of the background determination region in X.
+    radius_y: float = 1
+        Radius of the background determination region in Y.
+    radius_z: float = 1
+        Radius of the background determination region in Z.
+    connectivity: str = "box"
+        Element shape, "box" or "sphere"
+    device: Device = None
+        Device to perform the operation on.
+
+    Returns
+    -------
+    Image
+    
+    References
+    ----------
+    [1] https://clij.github.io/clij2-docs/reference_bottomHatBox
+	[2] https://clij.github.io/clij2-docs/reference_bottomHatSphere
+    """
+
+    from ._pyclesperanto import _bottom_hat as op
+
+    
+    return op(
+        device=device,
+        src=input_image,
+        dst=output_image,
+        radius_x=float(radius_x),
+        radius_y=float(radius_y),
+        radius_z=float(radius_z),
+        connectivity=connectivity
     )
 
 
@@ -222,6 +281,7 @@ def clip(
 
     from ._pyclesperanto import _clip as op
 
+    
     return op(
         device=device,
         src=input_image,
@@ -267,6 +327,7 @@ def closing_box(
 
     from ._pyclesperanto import _closing_box as op
 
+    warnings.warn("closing_box : This method is deprecated. Consider using closing() instead.", DeprecationWarning)
     return op(
         device=device,
         src=input_image,
@@ -313,6 +374,7 @@ def closing_sphere(
 
     from ._pyclesperanto import _closing_sphere as op
 
+    warnings.warn("closing_sphere : This method is deprecated. Consider using closing() instead.", DeprecationWarning)
     return op(
         device=device,
         src=input_image,
@@ -320,6 +382,57 @@ def closing_sphere(
         radius_x=int(radius_x),
         radius_y=int(radius_y),
         radius_z=int(radius_z)
+    )
+
+
+
+@plugin_function(category=['filter', 'in assistant', 'bia-bob-suggestion'])
+def closing(
+    input_image: Image,
+    output_image: Image = None,
+    radius_x: int = 1,
+    radius_y: int = 1,
+    radius_z: int = 0,
+    connectivity: str = "box",
+    device: Device = None
+) -> Image:
+    """Closing operator, sphereshaped Applies morphological closing to intensity images
+    using a sphereshaped footprint. This operator also works with binary images.
+
+    Parameters
+    ----------
+    input_image: Image
+        Input image to process.
+    output_image: Image = None
+        Output result image.
+    radius_x: int = 1
+        Radius along the x axis.
+    radius_y: int = 1
+        Radius along the y axis.
+    radius_z: int = 0
+        Radius along the z axis.
+    connectivity: str = "box"
+        Element shape, "box" or "sphere"
+    device: Device = None
+        Device to perform the operation on.
+
+    Returns
+    -------
+    Image
+    
+    """
+
+    from ._pyclesperanto import _closing as op
+
+    
+    return op(
+        device=device,
+        src=input_image,
+        dst=output_image,
+        radius_x=int(radius_x),
+        radius_y=int(radius_y),
+        radius_z=int(radius_z),
+        connectivity=connectivity
     )
 
 
@@ -355,6 +468,7 @@ def concatenate_along_x(
 
     from ._pyclesperanto import _concatenate_along_x as op
 
+    
     return op(
         device=device,
         src0=input_image0,
@@ -395,6 +509,7 @@ def concatenate_along_y(
 
     from ._pyclesperanto import _concatenate_along_y as op
 
+    
     return op(
         device=device,
         src0=input_image0,
@@ -435,6 +550,7 @@ def concatenate_along_z(
 
     from ._pyclesperanto import _concatenate_along_z as op
 
+    
     return op(
         device=device,
         src0=input_image0,
@@ -477,6 +593,7 @@ def count_touching_neighbors(
 
     from ._pyclesperanto import _count_touching_neighbors as op
 
+    
     return op(
         device=device,
         src=input_image,
@@ -515,6 +632,7 @@ def crop_border(
 
     from ._pyclesperanto import _crop_border as op
 
+    
     return op(
         device=device,
         src=input_image,
@@ -561,6 +679,7 @@ def divide_by_gaussian_background(
 
     from ._pyclesperanto import _divide_by_gaussian_background as op
 
+    
     return op(
         device=device,
         src=input_image,
@@ -597,6 +716,7 @@ def degrees_to_radians(
 
     from ._pyclesperanto import _degrees_to_radians as op
 
+    
     return op(
         device=device,
         src=input_image,
@@ -644,6 +764,7 @@ def detect_maxima_box(
 
     from ._pyclesperanto import _detect_maxima_box as op
 
+    warnings.warn("detect_maxima_box : This method is deprecated. Consider using detect_maxima() instead.", DeprecationWarning)
     return op(
         device=device,
         src=input_image,
@@ -651,6 +772,62 @@ def detect_maxima_box(
         radius_x=int(radius_x),
         radius_y=int(radius_y),
         radius_z=int(radius_z)
+    )
+
+
+
+@plugin_function(category=['binarize', 'in assistant'])
+def detect_maxima(
+    input_image: Image,
+    output_image: Image = None,
+    radius_x: int = 0,
+    radius_y: int = 0,
+    radius_z: int = 0,
+    connectivity: str = "box",
+    device: Device = None
+) -> Image:
+    """Detects local maxima in a given square/cubic neighborhood. Pixels in the
+    resulting image are set to 1 if there is no other pixel in a given radius which
+    has a higher intensity, and to 0 otherwise.
+
+    Parameters
+    ----------
+    input_image: Image
+        Input image to process.
+    output_image: Image = None
+        Output result image.
+    radius_x: int = 0
+        Radius along the x axis.
+    radius_y: int = 0
+        Radius along the y axis.
+    radius_z: int = 0
+        Radius along the z axis.
+    connectivity: str = "box"
+        Element shape, "box" or "sphere"
+    device: Device = None
+        Device to perform the operation on.
+
+    Returns
+    -------
+    Image
+    
+    References
+    ----------
+    [1] https://clij.github.io/clij2-docs/reference_detectMaximaBox
+	[2] https://clij.github.io/clij2-docs/reference_detectMaximaSphere
+    """
+
+    from ._pyclesperanto import _detect_maxima as op
+
+    
+    return op(
+        device=device,
+        src=input_image,
+        dst=output_image,
+        radius_x=int(radius_x),
+        radius_y=int(radius_y),
+        radius_z=int(radius_z),
+        connectivity=connectivity
     )
 
 
@@ -689,11 +866,12 @@ def detect_minima_box(
     
     References
     ----------
-    [1] https://clij.github.io/clij2-docs/reference_detectMaximaBox
+    [1] https://clij.github.io/clij2-docs/reference_detectMinimaBox
     """
 
     from ._pyclesperanto import _detect_minima_box as op
 
+    warnings.warn("detect_minima_box : This method is deprecated. Consider using detect_minima() instead.", DeprecationWarning)
     return op(
         device=device,
         src=input_image,
@@ -701,6 +879,62 @@ def detect_minima_box(
         radius_x=int(radius_x),
         radius_y=int(radius_y),
         radius_z=int(radius_z)
+    )
+
+
+
+@plugin_function(category=['binarize', 'in assistant'])
+def detect_minima(
+    input_image: Image,
+    output_image: Image = None,
+    radius_x: int = 0,
+    radius_y: int = 0,
+    radius_z: int = 0,
+    connectivity: str = "box",
+    device: Device = None
+) -> Image:
+    """Detects local maxima in a given square/cubic neighborhood. Pixels in the
+    resulting image are set to 1 if there is no other pixel in a given radius which
+    has a lower intensity, and to 0 otherwise.
+
+    Parameters
+    ----------
+    input_image: Image
+        Input image to process.
+    output_image: Image = None
+        Output result image.
+    radius_x: int = 0
+        Radius along the x axis.
+    radius_y: int = 0
+        Radius along the y axis.
+    radius_z: int = 0
+        Radius along the z axis.
+    connectivity: str = "box"
+        Element shape, "box" or "sphere"
+    device: Device = None
+        Device to perform the operation on.
+
+    Returns
+    -------
+    Image
+    
+    References
+    ----------
+    [1] https://clij.github.io/clij2-docs/reference_detectMinimaBox
+	[2] https://clij.github.io/clij2-docs/reference_detectMinimaSphere
+    """
+
+    from ._pyclesperanto import _detect_minima as op
+
+    
+    return op(
+        device=device,
+        src=input_image,
+        dst=output_image,
+        radius_x=int(radius_x),
+        radius_y=int(radius_y),
+        radius_z=int(radius_z),
+        connectivity=connectivity
     )
 
 
@@ -754,6 +988,7 @@ def difference_of_gaussian(
 
     from ._pyclesperanto import _difference_of_gaussian as op
 
+    
     return op(
         device=device,
         src=input_image,
@@ -797,6 +1032,7 @@ def extend_labeling_via_voronoi(
 
     from ._pyclesperanto import _extend_labeling_via_voronoi as op
 
+    
     return op(
         device=device,
         src=input_image,
@@ -835,6 +1071,7 @@ def invert(
 
     from ._pyclesperanto import _invert as op
 
+    
     return op(
         device=device,
         src=input_image,
@@ -873,6 +1110,7 @@ def label_spots(
 
     from ._pyclesperanto import _label_spots as op
 
+    
     return op(
         device=device,
         src=input_image,
@@ -906,6 +1144,7 @@ def large_hessian_eigenvalue(
 
     from ._pyclesperanto import _large_hessian_eigenvalue as op
 
+    
     return op(
         device=device,
         src=input_image,
@@ -940,6 +1179,7 @@ def maximum_of_all_pixels(
 
     from ._pyclesperanto import _maximum_of_all_pixels as op
 
+    
     return op(
         device=device,
         src=input_image
@@ -973,6 +1213,7 @@ def minimum_of_all_pixels(
 
     from ._pyclesperanto import _minimum_of_all_pixels as op
 
+    
     return op(
         device=device,
         src=input_image
@@ -1009,6 +1250,7 @@ def minimum_of_masked_pixels(
 
     from ._pyclesperanto import _minimum_of_masked_pixels as op
 
+    
     return op(
         device=device,
         src=input_image,
@@ -1052,6 +1294,7 @@ def opening_box(
 
     from ._pyclesperanto import _opening_box as op
 
+    warnings.warn("opening_box : This method is deprecated. Consider using opening() instead.", DeprecationWarning)
     return op(
         device=device,
         src=input_image,
@@ -1098,6 +1341,7 @@ def opening_sphere(
 
     from ._pyclesperanto import _opening_sphere as op
 
+    warnings.warn("opening_sphere : This method is deprecated. Consider using opening() instead.", DeprecationWarning)
     return op(
         device=device,
         src=input_image,
@@ -1105,6 +1349,57 @@ def opening_sphere(
         radius_x=float(radius_x),
         radius_y=float(radius_y),
         radius_z=float(radius_z)
+    )
+
+
+
+@plugin_function(category=['filter', 'in assistant', 'bia-bob-suggestion'])
+def opening(
+    input_image: Image,
+    output_image: Image = None,
+    radius_x: float = 1,
+    radius_y: float = 1,
+    radius_z: float = 0,
+    connectivity: str = "box",
+    device: Device = None
+) -> Image:
+    """Opening operator, sphereshaped Applies morphological opening to intensity images
+    using a sphereshaped footprint. This operator also works with binary images.
+
+    Parameters
+    ----------
+    input_image: Image
+        Input image to process.
+    output_image: Image = None
+        Output result image.
+    radius_x: float = 1
+        Radius along the x axis.
+    radius_y: float = 1
+        Radius along the y axis.
+    radius_z: float = 0
+        Radius along the z axis.
+    connectivity: str = "box"
+        Element shape, "box" or "sphere"
+    device: Device = None
+        Device to perform the operation on.
+
+    Returns
+    -------
+    Image
+    
+    """
+
+    from ._pyclesperanto import _opening as op
+
+    
+    return op(
+        device=device,
+        src=input_image,
+        dst=output_image,
+        radius_x=float(radius_x),
+        radius_y=float(radius_y),
+        radius_z=float(radius_z),
+        connectivity=connectivity
     )
 
 
@@ -1134,6 +1429,7 @@ def radians_to_degrees(
 
     from ._pyclesperanto import _radians_to_degrees as op
 
+    
     return op(
         device=device,
         src=input_image,
@@ -1171,6 +1467,7 @@ def reduce_labels_to_label_edges(
 
     from ._pyclesperanto import _reduce_labels_to_label_edges as op
 
+    
     return op(
         device=device,
         src=input_image,
@@ -1204,6 +1501,7 @@ def small_hessian_eigenvalue(
 
     from ._pyclesperanto import _small_hessian_eigenvalue as op
 
+    
     return op(
         device=device,
         src=input_image,
@@ -1241,6 +1539,7 @@ def square(
 
     from ._pyclesperanto import _square as op
 
+    
     return op(
         device=device,
         src=input_image,
@@ -1280,6 +1579,7 @@ def squared_difference(
 
     from ._pyclesperanto import _squared_difference as op
 
+    
     return op(
         device=device,
         src0=input_image0,
@@ -1328,6 +1628,7 @@ def standard_deviation_box(
 
     from ._pyclesperanto import _standard_deviation_box as op
 
+    warnings.warn("standard_deviation_box : This method is deprecated. Consider using standard_deviation() instead.", DeprecationWarning)
     return op(
         device=device,
         src=input_image,
@@ -1378,6 +1679,7 @@ def standard_deviation_sphere(
 
     from ._pyclesperanto import _standard_deviation_sphere as op
 
+    warnings.warn("standard_deviation_sphere : This method is deprecated. Consider using standard_deviation() instead.", DeprecationWarning)
     return op(
         device=device,
         src=input_image,
@@ -1385,6 +1687,62 @@ def standard_deviation_sphere(
         radius_x=int(radius_x),
         radius_y=int(radius_y),
         radius_z=int(radius_z)
+    )
+
+
+
+@plugin_function(category=['filter', 'edge detection', 'in assistant', 'bia-bob-suggestion'])
+def standard_deviation(
+    input_image: Image,
+    output_image: Image = None,
+    radius_x: int = 1,
+    radius_y: int = 1,
+    radius_z: int = 1,
+    connectivity: str = "box",
+    device: Device = None
+) -> Image:
+    """Computes the local standard deviation of a pixels sphere neighborhood. The box
+    size is specified by its halfwidth, halfheight and halfdepth (radius). If 2D
+    images are given, radius_z will be ignored.
+
+    Parameters
+    ----------
+    input_image: Image
+        Input image to process.
+    output_image: Image = None
+        Output result image.
+    radius_x: int = 1
+        Radius along the x axis.
+    radius_y: int = 1
+        Radius along the y axis.
+    radius_z: int = 1
+        Radius along the z axis.
+    connectivity: str = "box"
+        Neigborhood shape, "box" or "sphere"
+    device: Device = None
+        Device to perform the operation on.
+
+    Returns
+    -------
+    Image
+    
+    References
+    ----------
+    [1] https://clij.github.io/clij2-docs/reference_standardDeviationBox
+	[2] https://clij.github.io/clij2-docs/reference_standardDeviationSphere
+    """
+
+    from ._pyclesperanto import _standard_deviation as op
+
+    
+    return op(
+        device=device,
+        src=input_image,
+        dst=output_image,
+        radius_x=int(radius_x),
+        radius_y=int(radius_y),
+        radius_z=int(radius_z),
+        connectivity=connectivity
     )
 
 
@@ -1427,6 +1785,7 @@ def subtract_gaussian_background(
 
     from ._pyclesperanto import _subtract_gaussian_background as op
 
+    
     return op(
         device=device,
         src=input_image,
@@ -1469,6 +1828,7 @@ def subtract_images(
 
     from ._pyclesperanto import _subtract_images as op
 
+    
     return op(
         device=device,
         src0=input_image0,
@@ -1504,6 +1864,7 @@ def sum_of_all_pixels(
 
     from ._pyclesperanto import _sum_of_all_pixels as op
 
+    
     return op(
         device=device,
         src=input_image
@@ -1548,6 +1909,7 @@ def top_hat_box(
 
     from ._pyclesperanto import _top_hat_box as op
 
+    warnings.warn("top_hat_box : This method is deprecated. Consider using top_hat() instead.", DeprecationWarning)
     return op(
         device=device,
         src=input_image,
@@ -1596,6 +1958,7 @@ def top_hat_sphere(
 
     from ._pyclesperanto import _top_hat_sphere as op
 
+    warnings.warn("top_hat_sphere : This method is deprecated. Consider using top_hat() instead.", DeprecationWarning)
     return op(
         device=device,
         src=input_image,
@@ -1603,5 +1966,59 @@ def top_hat_sphere(
         radius_x=float(radius_x),
         radius_y=float(radius_y),
         radius_z=float(radius_z)
+    )
+
+
+
+@plugin_function(category=['filter', 'background removal', 'in assistant', 'bia-bob-suggestion'])
+def top_hat(
+    input_image: Image,
+    output_image: Image = None,
+    radius_x: float = 1,
+    radius_y: float = 1,
+    radius_z: float = 1,
+    connectivity: str = "box",
+    device: Device = None
+) -> Image:
+    """Applies a tophat filter for background subtraction to the input image.
+
+    Parameters
+    ----------
+    input_image: Image
+        The input image where the background is subtracted from.
+    output_image: Image = None
+        The output image where results are written into.
+    radius_x: float = 1
+        Radius of the background determination region in X.
+    radius_y: float = 1
+        Radius of the background determination region in Y.
+    radius_z: float = 1
+        Radius of the background determination region in Z.
+    connectivity: str = "box"
+        Element shape, "box" or "sphere"
+    device: Device = None
+        Device to perform the operation on.
+
+    Returns
+    -------
+    Image
+    
+    References
+    ----------
+    [1] https://clij.github.io/clij2-docs/reference_topHatBox
+	[2] https://clij.github.io/clij2-docs/reference_topHatSphere
+    """
+
+    from ._pyclesperanto import _top_hat as op
+
+    
+    return op(
+        device=device,
+        src=input_image,
+        dst=output_image,
+        radius_x=float(radius_x),
+        radius_y=float(radius_y),
+        radius_z=float(radius_z),
+        connectivity=connectivity
     )
 

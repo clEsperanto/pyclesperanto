@@ -7,6 +7,7 @@ from ._core import Device
 from ._array import Image
 from ._decorators import plugin_function
 import numpy as np
+import warnings
 
 
 @plugin_function(category=['combine'])
@@ -37,6 +38,7 @@ def array_equal(
 
     from ._pyclesperanto import _array_equal as op
 
+    
     return op(
         device=device,
         src0=input_image0,
@@ -75,6 +77,7 @@ def combine_labels(
 
     from ._pyclesperanto import _combine_labels as op
 
+    
     return op(
         device=device,
         src0=input_image0,
@@ -101,7 +104,7 @@ def connected_components_labeling(
     output_image: Image = None
         Output label image.
     connectivity: str = 'box'
-        Defines pixel neighborhood relationship.
+        Defines pixel neighborhood relationship, "box" or "sphere".
     device: Device = None
         Device to perform the operation on.
 
@@ -116,6 +119,7 @@ def connected_components_labeling(
 
     from ._pyclesperanto import _connected_components_labeling as op
 
+    
     return op(
         device=device,
         src=input_image,

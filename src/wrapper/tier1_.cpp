@@ -110,6 +110,11 @@ m.def("_dilate_sphere", &cle::tier1::dilate_sphere_func, "Call dilate_sphere fro
     py::arg("device"), py::arg("src"), py::arg("dst"));
 
 	
+m.def("_dilate", &cle::tier1::dilate_func, "Call dilate from C++.",
+    py::return_value_policy::take_ownership,
+    py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("connectivity"));
+
+	
 m.def("_divide_images", &cle::tier1::divide_images_func, "Call divide_images from C++.",
     py::return_value_policy::take_ownership,
     py::arg("device"), py::arg("src0"), py::arg("src1"), py::arg("dst"));
@@ -138,6 +143,11 @@ m.def("_erode_box", &cle::tier1::erode_box_func, "Call erode_box from C++.",
 m.def("_erode_sphere", &cle::tier1::erode_sphere_func, "Call erode_sphere from C++.",
     py::return_value_policy::take_ownership,
     py::arg("device"), py::arg("src"), py::arg("dst"));
+
+	
+m.def("_erode", &cle::tier1::erode_func, "Call erode from C++.",
+    py::return_value_policy::take_ownership,
+    py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("connectivity"));
 
 	
 m.def("_exponential", &cle::tier1::exponential_func, "Call exponential from C++.",
@@ -210,6 +220,11 @@ m.def("_laplace_diamond", &cle::tier1::laplace_diamond_func, "Call laplace_diamo
     py::arg("device"), py::arg("src"), py::arg("dst"));
 
 	
+m.def("_laplace", &cle::tier1::laplace_func, "Call laplace from C++.",
+    py::return_value_policy::take_ownership,
+    py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("connectivity"));
+
+	
 m.def("_local_cross_correlation", &cle::tier1::local_cross_correlation_func, "Call local_cross_correlation from C++.",
     py::return_value_policy::take_ownership,
     py::arg("device"), py::arg("src0"), py::arg("src1"), py::arg("dst"));
@@ -245,6 +260,11 @@ m.def("_maximum_box", &cle::tier1::maximum_box_func, "Call maximum_box from C++.
     py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("radius_x"), py::arg("radius_y"), py::arg("radius_z"));
 
 	
+m.def("_maximum", &cle::tier1::maximum_func, "Call maximum from C++.",
+    py::return_value_policy::take_ownership,
+    py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("radius_x"), py::arg("radius_y"), py::arg("radius_z"), py::arg("connectivity"));
+
+	
 m.def("_maximum_x_projection", &cle::tier1::maximum_x_projection_func, "Call maximum_x_projection from C++.",
     py::return_value_policy::take_ownership,
     py::arg("device"), py::arg("src"), py::arg("dst"));
@@ -268,6 +288,11 @@ m.def("_mean_box", &cle::tier1::mean_box_func, "Call mean_box from C++.",
 m.def("_mean_sphere", &cle::tier1::mean_sphere_func, "Call mean_sphere from C++.",
     py::return_value_policy::take_ownership,
     py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("radius_x"), py::arg("radius_y"), py::arg("radius_z"));
+
+	
+m.def("_mean", &cle::tier1::mean_func, "Call mean from C++.",
+    py::return_value_policy::take_ownership,
+    py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("radius_x"), py::arg("radius_y"), py::arg("radius_z"), py::arg("connectivity"));
 
 	
 m.def("_mean_x_projection", &cle::tier1::mean_x_projection_func, "Call mean_x_projection from C++.",
@@ -295,9 +320,19 @@ m.def("_median_sphere", &cle::tier1::median_sphere_func, "Call median_sphere fro
     py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("radius_x"), py::arg("radius_y"), py::arg("radius_z"));
 
 	
+m.def("_median", &cle::tier1::median_func, "Call median from C++.",
+    py::return_value_policy::take_ownership,
+    py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("radius_x"), py::arg("radius_y"), py::arg("radius_z"), py::arg("connectivity"));
+
+	
 m.def("_minimum_box", &cle::tier1::minimum_box_func, "Call minimum_box from C++.",
     py::return_value_policy::take_ownership,
     py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("radius_x"), py::arg("radius_y"), py::arg("radius_z"));
+
+	
+m.def("_minimum", &cle::tier1::minimum_func, "Call minimum from C++.",
+    py::return_value_policy::take_ownership,
+    py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("radius_x"), py::arg("radius_y"), py::arg("radius_z"), py::arg("connectivity"));
 
 	
 m.def("_minimum_image_and_scalar", &cle::tier1::minimum_image_and_scalar_func, "Call minimum_image_and_scalar from C++.",
@@ -335,6 +370,11 @@ m.def("_mode_sphere", &cle::tier1::mode_sphere_func, "Call mode_sphere from C++.
     py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("radius_x"), py::arg("radius_y"), py::arg("radius_z"));
 
 	
+m.def("_mode", &cle::tier1::mode_func, "Call mode from C++.",
+    py::return_value_policy::take_ownership,
+    py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("radius_x"), py::arg("radius_y"), py::arg("radius_z"), py::arg("connectivity"));
+
+	
 m.def("_modulo_images", &cle::tier1::modulo_images_func, "Call modulo_images from C++.",
     py::return_value_policy::take_ownership,
     py::arg("device"), py::arg("src0"), py::arg("src1"), py::arg("dst"));
@@ -370,6 +410,11 @@ m.def("_nonzero_maximum_diamond", &cle::tier1::nonzero_maximum_diamond_func, "Ca
     py::arg("device"), py::arg("src"), py::arg("dst0"), py::arg("dst1"));
 
 	
+m.def("_nonzero_maximum", &cle::tier1::nonzero_maximum_func, "Call nonzero_maximum from C++.",
+    py::return_value_policy::take_ownership,
+    py::arg("device"), py::arg("src"), py::arg("dst0"), py::arg("dst1"), py::arg("connectivity"));
+
+	
 m.def("_nonzero_minimum_box", &cle::tier1::nonzero_minimum_box_func, "Call nonzero_minimum_box from C++.",
     py::return_value_policy::take_ownership,
     py::arg("device"), py::arg("src"), py::arg("dst0"), py::arg("dst1"));
@@ -378,6 +423,11 @@ m.def("_nonzero_minimum_box", &cle::tier1::nonzero_minimum_box_func, "Call nonze
 m.def("_nonzero_minimum_diamond", &cle::tier1::nonzero_minimum_diamond_func, "Call nonzero_minimum_diamond from C++.",
     py::return_value_policy::take_ownership,
     py::arg("device"), py::arg("src"), py::arg("dst0"), py::arg("dst1"));
+
+	
+m.def("_nonzero_minimum", &cle::tier1::nonzero_minimum_func, "Call nonzero_minimum from C++.",
+    py::return_value_policy::take_ownership,
+    py::arg("device"), py::arg("src"), py::arg("dst0"), py::arg("dst1"), py::arg("connectivity"));
 
 	
 m.def("_not_equal", &cle::tier1::not_equal_func, "Call not_equal from C++.",
@@ -403,6 +453,11 @@ m.def("_onlyzero_overwrite_maximum_box", &cle::tier1::onlyzero_overwrite_maximum
 m.def("_onlyzero_overwrite_maximum_diamond", &cle::tier1::onlyzero_overwrite_maximum_diamond_func, "Call onlyzero_overwrite_maximum_diamond from C++.",
     py::return_value_policy::take_ownership,
     py::arg("device"), py::arg("src"), py::arg("dst0"), py::arg("dst1"));
+
+	
+m.def("_onlyzero_overwrite_maximum", &cle::tier1::onlyzero_overwrite_maximum_func, "Call onlyzero_overwrite_maximum from C++.",
+    py::return_value_policy::take_ownership,
+    py::arg("device"), py::arg("src"), py::arg("dst0"), py::arg("dst1"), py::arg("connectivity"));
 
 	
 m.def("_power", &cle::tier1::power_func, "Call power from C++.",
@@ -608,6 +663,11 @@ m.def("_variance_box", &cle::tier1::variance_box_func, "Call variance_box from C
 m.def("_variance_sphere", &cle::tier1::variance_sphere_func, "Call variance_sphere from C++.",
     py::return_value_policy::take_ownership,
     py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("radius_x"), py::arg("radius_y"), py::arg("radius_z"));
+
+	
+m.def("_variance", &cle::tier1::variance_func, "Call variance from C++.",
+    py::return_value_policy::take_ownership,
+    py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("radius_x"), py::arg("radius_y"), py::arg("radius_z"), py::arg("connectivity"));
 
 	
 m.def("_write_values_to_positions", &cle::tier1::write_values_to_positions_func, "Call write_values_to_positions from C++.",

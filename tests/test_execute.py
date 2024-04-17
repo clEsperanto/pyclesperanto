@@ -22,6 +22,33 @@ __kernel void absolute(
 }
 """
 
+add_native_ocl = """
+__kernel void add_arrays(__global const float* a, __global const float* b, __global float* c, const unsigned int n) {
+    int id = get_global_id(0);
+    if (id < n) {
+        c[id] = a[id] + b[id];
+    }
+}
+"""
+
+
+def test_execute_native():
+    input1 = cle.push(np.ones(10).astype(float))
+    input2 = cle.push(np.ones(10).astype(float) * 2)
+    output = cle.create(input1)
+
+    param = {'a': input1, 'b': input2, 'c': output, 'n': int(np.prod(input1.shape))}
+    cle.native_execute(kernel_source=add_native_ocl, kernel_name="add_arrays", global_size=input1.shape, local_size=(1,1,1),  parameters=param)
+
+    print(output)
+
+    a = cle.pull(output)
+    assert (np.min(a) == 3)
+    assert (np.max(a) == 3)
+    assert (np.mean(a) == 3)
+
+
+
 def test_execute_absolute():
     input = cle.push(np.asarray([
         [1, -1],
@@ -38,3 +65,4 @@ def test_execute_absolute():
     assert (np.min(a) == 1)
     assert (np.max(a) == 1)
     assert (np.mean(a) == 1)
+

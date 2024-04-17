@@ -4,7 +4,7 @@ import numpy as np
 cle.select_device("TX")
 
 
-def test_bottom_hat_sphere():
+def test_bottom_hat_box():
     test = cle.push(
         np.asarray(
             [
@@ -18,7 +18,7 @@ def test_bottom_hat_sphere():
     )
 
     result = cle.create_like(test)
-    cle.bottom_hat_box(test, result, 1, 1, 0)
+    cle.bottom_hat(test, result, 1, 1, 0)
 
     print(result)
 

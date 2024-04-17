@@ -30,7 +30,7 @@ def test_mean_sphere():
     )
 
     result = cle.create(test1, dtype=float)
-    cle.mean_sphere(test1, result, 1, 1, 0)
+    cle.mean(test1, result, 1, 1, 0, "sphere")
 
     a = cle.pull(result)
     b = cle.pull(reference)

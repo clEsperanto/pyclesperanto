@@ -30,7 +30,7 @@ def test_erode_sphere():
     )
 
     result = cle.create(test)
-    cle.erode_sphere(test, result)
+    cle.erode(test, result, "sphere")
 
     print(result)
 

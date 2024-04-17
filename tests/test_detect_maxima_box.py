@@ -30,7 +30,7 @@ def test_detect_maxima_box():
         )
     )
 
-    cle.detect_maxima_box(gpu_input, gpu_output)
+    cle.detect_maxima(gpu_input, gpu_output)
 
     a = cle.pull(gpu_output)
     b = cle.pull(gpu_reference)

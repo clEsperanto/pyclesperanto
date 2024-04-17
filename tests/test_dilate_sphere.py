@@ -30,7 +30,7 @@ def test_dilate_sphere():
     )
 
     result = cle.create(test)
-    cle.dilate_sphere(test, result)
+    cle.dilate(test, result, "sphere")
 
     print(result)
 

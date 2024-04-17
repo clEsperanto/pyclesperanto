@@ -1,63 +1,154 @@
 from os import path
 from typing import Optional, Union
+from pathlib import Path
+import numpy as np
 
+from ._pyclesperanto import _execute, _native_execute
 from ._array import Array, Image
 from ._memory import pull
 from ._core import Device, get_device
 
-# def execute(
-#     anchor: str,
-#     kernel_filepath: str,
-#     kernel_name: str,
-#     parameters: dict,
-#     range: Optional[tuple] = None,
-#     device: Optional[Device] = None,
-# ):
-#     """Execute a custom OpenCL kernel.
 
-#     Parameters
-#     ----------
-#     anchor : str
-#         Path to the directory where the kernel file is located.
-#     opencl_kernel_filename : str
-#         Name of the OpenCL kernel file, e.g. "my_kernel.cl".
-#     kernel_name : str
-#         Name of the kernel function to be executed in the OpenCL kernel file.
-#     parameters : dict
-#         Dictionary of parameters to be passed to the kernel function, e.g. {"src": src, "dst": dst}.
-#     range : tuple, optional
-#         Global size of the kernel execution, by default None.
-#     device : Device, optional
-#         Device to be used for execution, by default None.
-#     """
-#     from ._pyclesperanto import _std_variant as std_variant
-#     from ._pyclesperanto import _execute as op
+def execute(
+    anchor="__file__",
+    kernel_source: str = "",
+    kernel_name: str = "",
+    global_size: tuple = (1, 1, 1),
+    parameters: dict = {},
+    constants: dict = {},
+    device: Device = None,
+):
+    """Execute a kernel from a file or a string
 
-#     if range is None:
-#         range = (1, 1, 1)
-#     else:
-#         if len(range) == 2:
-#             range = (1, range[0], range[1])
-#         if len(range) == 1:
-#             range = (1, 1, range[0])
+    Call, build, and execute a kernel compatible with CLIj framework.
+    The kernel can be called from a file or a string.
 
-#     if device is None:
-#         device = parameters["src"].device or parameters["src1"].device or get_device()
+    Parameters
+    ----------
+    anchor : str, default = '__file__'
+        Enter __file__ when calling this method and the corresponding open.cl
+        file lies in the same folder as the python file calling it.
+        Ignored if kernel_source is a string.
+    kernel_source : str
+        Filename of the open.cl file to be called or string containing the open.cl source code
+    kernel_name : str
+        Kernel method inside the open.cl file to be called
+        most clij/clesperanto kernel functions have the same name as the file they are in
+    global_size : tuple (z,y,x), default = (1, 1, 1)
+        Global_size according to OpenCL definition (usually shape of the destination image).
+    parameters : dict(str, [Array, float, int])
+        Dictionary containing parameters. Take care: They must be of the
+        right type and in the right order as specified in the open.cl file.
+    constants: dict(str, int), optional
+        Dictionary with names/values which will be added to the define
+        statements. They are necessary, e.g. to create arrays of a given
+        maximum size in OpenCL as variable array lengths are not supported.
+    device : Device, default = None
+        The device to execute the kernel on. If None, use the current device
+    """
 
-#     kernel_source = open(path.join(anchor, kernel_filepath), "r").read()
+    # load the kernel file
+    def load_file(anchor, filename):
+        """Load the opencl kernel file as a string"""
+        if anchor is None:
+            kernel = Path(filename).read_text()
+        else:
+            kernel = (Path(anchor).parent / filename).read_text()
+        return kernel
 
-#     cpp_parameter_map = {
-#         key: std_variant(val.super) if isinstance(val, Array) else std_variant(val)
-#         for key, val in parameters.items()
-# }
-# op(
-#     device,
-#     kernel_name=kernel_name,
-#     kernel_source=kernel_source,
-#     parameters=cpp_parameter_map,
-#     range=range,
-#     # constants=cpp_constant_map,
-# )
+    # test if kernel_source ends with .cl or .cu
+    if kernel_source.endswith(".cl") or kernel_source.endswith(".cu"):
+        kernel_source = load_file(anchor, kernel_source)
+
+    # manage the device if not given
+    if not device:
+        device = get_device()
+
+    # manage global range
+    if not isinstance(global_size, tuple):
+        if isinstance(global_size, list) or isinstance(global_size, np.ndarray):
+            global_size = tuple(global_size)
+        else:
+            global_size = (global_size,)
+
+    _execute(device, kernel_name, kernel_source, parameters, global_size, constants)
+
+
+def native_execute(
+    anchor="__file__",
+    kernel_source: str = "",
+    kernel_name: str = "",
+    global_size: tuple = (1, 1, 1),
+    local_size: tuple = (1, 1, 1),
+    parameters: dict = {},
+    device: Device = None,
+):
+    """Execute an OpenCL kernel from a file or a string
+
+    Call, build, and execute a kernel compatible with OpenCL language.
+    The kernel can be called from a file or a string.
+
+    The parameters must still be passed as a dictionary with the correct types and order.
+    Buffer parameters must be passed as Array objects. Scalars must be passed as Python native float or int.
+
+    Warning: Only 1D buffers are supported for now.
+
+    Parameters
+    ----------
+    anchor : str, default = '__file__'
+        Enter __file__ when calling this method and the corresponding open.cl
+        file lies in the same folder as the python file calling it.
+        Ignored if kernel_source is a string.
+    kernel_source : str
+        Filename of the open.cl file to be called or string containing the open.cl source code
+    kernel_name : str
+        Kernel method inside the open.cl file to be called
+        most clij/clesperanto kernel functions have the same name as the file they are in
+    global_size : tuple (z,y,x), default = (1, 1, 1)
+        Global_size according to OpenCL definition (usually shape of the destination image).
+    local_size : tuple (z,y,x), default = (1, 1, 1)
+        Local_size according to OpenCL definition (usually default is good).
+    parameters : dict(str, [Array, float, int])
+        Dictionary containing parameters. Take care: They must be of the
+        right type and in the right order as specified in the open.cl file.
+    device : Device, default = None
+        The device to execute the kernel on. If None, use the current device
+    """
+
+    # load the kernel file
+    def load_file(anchor, filename):
+        """Load the opencl kernel file as a string"""
+        if anchor is None:
+            kernel = Path(filename).read_text()
+        else:
+            kernel = (Path(anchor).parent / filename).read_text()
+        return kernel
+
+    # test if kernel_source ends with .cl or .cu
+    if kernel_source.endswith(".cl") or kernel_source.endswith(".cu"):
+        kernel_source = load_file(anchor, kernel_source)
+
+    # manage the device if not given
+    if not device:
+        device = get_device()
+
+    # manage global range
+    if not isinstance(global_size, tuple):
+        if isinstance(global_size, list) or isinstance(global_size, np.ndarray):
+            global_size = tuple(global_size)
+        else:
+            global_size = (global_size,)
+
+    # manage local range
+    if not isinstance(local_size, tuple):
+        if isinstance(local_size, list) or isinstance(local_size, np.ndarray):
+            local_size = tuple(local_size)
+        else:
+            local_size = (local_size,)
+
+    _native_execute(
+        device, kernel_name, kernel_source, parameters, global_size, local_size
+    )
 
 
 def imshow(
@@ -73,7 +164,7 @@ def imshow(
     alpha: Optional[float] = None,
     continue_drawing: Optional[bool] = False,
 ):
-    """Visualize an image, e.g. in Jupyter notebooks using matplotlib.   
+    """Visualize an image, e.g. in Jupyter notebooks using matplotlib.
 
     Parameters
     ----------

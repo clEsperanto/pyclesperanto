@@ -7,6 +7,7 @@ from ._core import Device
 from ._array import Image
 from ._decorators import plugin_function
 import numpy as np
+import warnings
 
 
 @plugin_function
@@ -46,6 +47,7 @@ def affine_transform(
 
     from ._pyclesperanto import _affine_transform as op
 
+    
     return op(
         device=device,
         src=input_image,
@@ -100,6 +102,7 @@ def eroded_otsu_labeling(
 
     from ._pyclesperanto import _eroded_otsu_labeling as op
 
+    
     return op(
         device=device,
         src=input_image,
@@ -164,6 +167,7 @@ def rigid_transform(
 
     from ._pyclesperanto import _rigid_transform as op
 
+    
     return op(
         device=device,
         src=input_image,
@@ -226,6 +230,7 @@ def rotate(
 
     from ._pyclesperanto import _rotate as op
 
+    
     return op(
         device=device,
         src=input_image,
@@ -283,6 +288,7 @@ def scale(
 
     from ._pyclesperanto import _scale as op
 
+    
     return op(
         device=device,
         src=input_image,
@@ -334,6 +340,7 @@ def translate(
 
     from ._pyclesperanto import _translate as op
 
+    
     return op(
         device=device,
         src=input_image,
@@ -378,6 +385,7 @@ def closing_labels(
 
     from ._pyclesperanto import _closing_labels as op
 
+    
     return op(
         device=device,
         src=input_image,
@@ -415,6 +423,7 @@ def erode_connected_labels(
 
     from ._pyclesperanto import _erode_connected_labels as op
 
+    
     return op(
         device=device,
         src=input_image,
@@ -456,6 +465,7 @@ def opening_labels(
 
     from ._pyclesperanto import _opening_labels as op
 
+    
     return op(
         device=device,
         src=input_image,
@@ -506,6 +516,7 @@ def voronoi_otsu_labeling(
 
     from ._pyclesperanto import _voronoi_otsu_labeling as op
 
+    
     return op(
         device=device,
         src=input_image,

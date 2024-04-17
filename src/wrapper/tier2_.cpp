@@ -30,6 +30,11 @@ m.def("_bottom_hat_sphere", &cle::tier2::bottom_hat_sphere_func, "Call bottom_ha
     py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("radius_x"), py::arg("radius_y"), py::arg("radius_z"));
 
 	
+m.def("_bottom_hat", &cle::tier2::bottom_hat_func, "Call bottom_hat from C++.",
+    py::return_value_policy::take_ownership,
+    py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("radius_x"), py::arg("radius_y"), py::arg("radius_z"), py::arg("connectivity"));
+
+	
 m.def("_clip", &cle::tier2::clip_func, "Call clip from C++.",
     py::return_value_policy::take_ownership,
     py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("min_intensity"), py::arg("max_intensity"));
@@ -43,6 +48,11 @@ m.def("_closing_box", &cle::tier2::closing_box_func, "Call closing_box from C++.
 m.def("_closing_sphere", &cle::tier2::closing_sphere_func, "Call closing_sphere from C++.",
     py::return_value_policy::take_ownership,
     py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("radius_x"), py::arg("radius_y"), py::arg("radius_z"));
+
+	
+m.def("_closing", &cle::tier2::closing_func, "Call closing from C++.",
+    py::return_value_policy::take_ownership,
+    py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("radius_x"), py::arg("radius_y"), py::arg("radius_z"), py::arg("connectivity"));
 
 	
 m.def("_concatenate_along_x", &cle::tier2::concatenate_along_x_func, "Call concatenate_along_x from C++.",
@@ -85,9 +95,19 @@ m.def("_detect_maxima_box", &cle::tier2::detect_maxima_box_func, "Call detect_ma
     py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("radius_x"), py::arg("radius_y"), py::arg("radius_z"));
 
 	
+m.def("_detect_maxima", &cle::tier2::detect_maxima_func, "Call detect_maxima from C++.",
+    py::return_value_policy::take_ownership,
+    py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("radius_x"), py::arg("radius_y"), py::arg("radius_z"), py::arg("connectivity"));
+
+	
 m.def("_detect_minima_box", &cle::tier2::detect_minima_box_func, "Call detect_minima_box from C++.",
     py::return_value_policy::take_ownership,
     py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("radius_x"), py::arg("radius_y"), py::arg("radius_z"));
+
+	
+m.def("_detect_minima", &cle::tier2::detect_minima_func, "Call detect_minima from C++.",
+    py::return_value_policy::take_ownership,
+    py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("radius_x"), py::arg("radius_y"), py::arg("radius_z"), py::arg("connectivity"));
 
 	
 m.def("_difference_of_gaussian", &cle::tier2::difference_of_gaussian_func, "Call difference_of_gaussian from C++.",
@@ -140,6 +160,11 @@ m.def("_opening_sphere", &cle::tier2::opening_sphere_func, "Call opening_sphere 
     py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("radius_x"), py::arg("radius_y"), py::arg("radius_z"));
 
 	
+m.def("_opening", &cle::tier2::opening_func, "Call opening from C++.",
+    py::return_value_policy::take_ownership,
+    py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("radius_x"), py::arg("radius_y"), py::arg("radius_z"), py::arg("connectivity"));
+
+	
 m.def("_radians_to_degrees", &cle::tier2::radians_to_degrees_func, "Call radians_to_degrees from C++.",
     py::return_value_policy::take_ownership,
     py::arg("device"), py::arg("src"), py::arg("dst"));
@@ -175,6 +200,11 @@ m.def("_standard_deviation_sphere", &cle::tier2::standard_deviation_sphere_func,
     py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("radius_x"), py::arg("radius_y"), py::arg("radius_z"));
 
 	
+m.def("_standard_deviation", &cle::tier2::standard_deviation_func, "Call standard_deviation from C++.",
+    py::return_value_policy::take_ownership,
+    py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("radius_x"), py::arg("radius_y"), py::arg("radius_z"), py::arg("connectivity"));
+
+	
 m.def("_subtract_gaussian_background", &cle::tier2::subtract_gaussian_background_func, "Call subtract_gaussian_background from C++.",
     py::return_value_policy::take_ownership,
     py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("sigma_x"), py::arg("sigma_y"), py::arg("sigma_z"));
@@ -198,6 +228,11 @@ m.def("_top_hat_box", &cle::tier2::top_hat_box_func, "Call top_hat_box from C++.
 m.def("_top_hat_sphere", &cle::tier2::top_hat_sphere_func, "Call top_hat_sphere from C++.",
     py::return_value_policy::take_ownership,
     py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("radius_x"), py::arg("radius_y"), py::arg("radius_z"));
+
+	
+m.def("_top_hat", &cle::tier2::top_hat_func, "Call top_hat from C++.",
+    py::return_value_policy::take_ownership,
+    py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("radius_x"), py::arg("radius_y"), py::arg("radius_z"), py::arg("connectivity"));
 
 
 }

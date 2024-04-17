@@ -8,7 +8,7 @@ def test_maximum_sphere_1():
     test = cle.push(np.asarray([[1, 1, 1], [1, 2, 1], [1, 1, 1]]))
 
     test2 = cle.create(test)
-    cle.maximum_sphere(test, test2, 1, 1, 1)
+    cle.maximum(test, test2, 1, 1, 1, "sphere")
 
     a = cle.pull(test2)
     assert np.min(a) == 1
@@ -27,7 +27,7 @@ def test_maximum_sphere_1():
 def test_maximum_sphere_2():
     gpu_a = cle.push(np.asarray([[1, 1, 1], [1, 2, 1], [1, 1, 1]]))
     gpu_b = cle.create(gpu_a)
-    cle.maximum_sphere(gpu_a, gpu_b, 1, 1, 1)
+    cle.maximum(gpu_a, gpu_b, 1, 1, 1, "sphere")
 
     a = cle.pull(gpu_b)
     assert np.min(a) == 1

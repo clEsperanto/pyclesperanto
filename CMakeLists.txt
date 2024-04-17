@@ -23,8 +23,10 @@ option(BUILD_SHARED_LIBS OFF)
 
 
 ## CLIc dependency
-set(CLIC_REPO_TAG 0.9.1) # branch name for dev
+set(CLIC_REPO_TAG 0.10.0) # branch name for dev
 set(CLIC_REPO_URL https://github.com/clEsperanto/CLIc.git)
+set(BUILD_OPENCL_BACKEND ON CACHE BOOL "Build with OCL if FOUND" FORCE)
+set(BUILD_CUDA_BACKEND ON CACHE BOOL "Build with CUDA if FOUND" FORCE)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/src/clic EXCLUDE_FROM_ALL)
 
 

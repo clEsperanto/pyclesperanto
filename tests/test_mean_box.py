@@ -30,7 +30,7 @@ def test_mean_box():
     )
 
     result = cle.create(test1)
-    cle.mean_box(test1, result, 1, 1, 0)
+    cle.mean(test1, result, 1, 1, 0)
 
     a = cle.pull(result)
     b = cle.pull(reference)

@@ -7,6 +7,7 @@ from ._core import Device
 from ._array import Image
 from ._decorators import plugin_function
 import numpy as np
+import warnings
 
 
 @plugin_function(category=['label processing', 'in assistant', 'bia-bob-suggestion'])
@@ -40,6 +41,7 @@ def smooth_labels(
 
     from ._pyclesperanto import _smooth_labels as op
 
+    
     return op(
         device=device,
         src=input_image,
@@ -79,6 +81,7 @@ def smooth_connected_labels(
 
     from ._pyclesperanto import _smooth_connected_labels as op
 
+    
     return op(
         device=device,
         src=input_image,

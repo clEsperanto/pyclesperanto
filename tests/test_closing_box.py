@@ -31,7 +31,7 @@ def test_close_box_2d():
         )
     )
 
-    gpu_output = cle.closing_box(gpu_input, radius_x=1, radius_y=1)
+    gpu_output = cle.closing(gpu_input, radius_x=1, radius_y=1)
 
     a = cle.pull(gpu_output)
     b = cle.pull(gpu_reference)
@@ -90,7 +90,7 @@ def test_close_box_3d():
         )
     )
 
-    gpu_output = cle.closing_box(gpu_input, radius_x=1, radius_y=1)
+    gpu_output = cle.closing(gpu_input, radius_x=1, radius_y=1)
 
     a = cle.pull(gpu_output)
     b = cle.pull(gpu_reference)

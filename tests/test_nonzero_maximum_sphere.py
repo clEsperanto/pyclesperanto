@@ -4,7 +4,7 @@ import numpy as np
 cle.select_device("TX")
 
 
-def test_nonzero_maximum_diamond():
+def test_nonzero_maximum_sphere():
     test = cle.push(
         np.asarray(
             [
@@ -35,7 +35,7 @@ def test_nonzero_maximum_diamond():
     # as nonzero filters don't touch zero values, we need to initialize the result in advance
     cle.set(result, 0)
 
-    cle.nonzero_maximum_diamond(test, flag, result)
+    cle.nonzero_maximum(test, flag, result, connectivity="sphere")
 
     print(result)
 

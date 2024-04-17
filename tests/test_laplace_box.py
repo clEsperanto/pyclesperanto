@@ -30,7 +30,7 @@ def test_laplace_box():
     )
 
     result = cle.create(test1)
-    cle.laplace_box(test1, result)
+    cle.laplace(test1, result)
 
     a = cle.pull(result)
     b = cle.pull(reference)

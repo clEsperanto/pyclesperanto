@@ -27,7 +27,7 @@ def select_device(device_id: Union[str, int] = "", device_type: str = "all") -> 
 
     If selecting the device by string, the function compares the device name and substring.
     (e.g. "NVIDIA", "RTX", "Iris", etc. will match the device name "NVIDIA RTX 2080" or "Intel Iris Pro")
-    If selecting the device by index, the function will select the device at the given index in the list 
+    If selecting the device by index, the function will select the device at the given index in the list
     of available devices. (e.g. 0, 1, 2, etc. will select the first, second, third, etc. device in the list)
     If device_id is an empty string, the function will select the first available device.
     The device_type enables selecting the type of device to be selected (e.g. "all", "cpu", "gpu")
@@ -62,7 +62,7 @@ def list_available_devices(device_type: str = "all") -> list:
     """Retrieve a list of names of available devices
 
     Will search the system for backend compatible device available and return a list of their names.
-    This will NOT set the device! 
+    This will NOT set the device!
     Use 'select_device' to select devices.
     Use 'get_device' to retrieve the current device.
 
@@ -130,7 +130,7 @@ def select_backend(backend: str = "opencl") -> str:
 def wait_for_kernel_to_finish(flag: bool = True, device: Device = None):
     """Wait for kernel to finish
 
-    Enforce the system to wait for the kernel to finish before continuing. Introducing a 
+    Enforce the system to wait for the kernel to finish before continuing. Introducing a
     slowdown in the workflow. This is useful for debugging purposes, benchmarking and
     profiling, as well as for complex workflows where the order of operations is important.
 
@@ -159,7 +159,15 @@ def default_initialisation():
         )
 
 
-def execute(anchor = '__file__', kernel_source: str = '', kernel_name: str = '', global_size: tuple = (1, 1, 1), parameters: dict = {}, constants: dict = {}, device: Device = None):
+def execute(
+    anchor="__file__",
+    kernel_source: str = "",
+    kernel_name: str = "",
+    global_size: tuple = (1, 1, 1),
+    parameters: dict = {},
+    constants: dict = {},
+    device: Device = None,
+):
     """Execute a kernel from a file or a string
 
     Call, build, and execute a kernel compatible with CLIj framework.
@@ -171,7 +179,7 @@ def execute(anchor = '__file__', kernel_source: str = '', kernel_name: str = '',
         Enter __file__ when calling this method and the corresponding open.cl
         file lies in the same folder as the python file calling it.
         Ignored if kernel_source is a string.
-    kernel_source : str 
+    kernel_source : str
         Filename of the open.cl file to be called or string containing the open.cl source code
     kernel_name : str
         Kernel method inside the open.cl file to be called
@@ -196,10 +204,10 @@ def execute(anchor = '__file__', kernel_source: str = '', kernel_name: str = '',
             kernel = Path(filename).read_text()
         else:
             kernel = (Path(anchor).parent / filename).read_text()
-        return kernel  
-    
+        return kernel
+
     # test if kernel_source ends with .cl or .cu
-    if kernel_source.endswith('.cl') or kernel_source.endswith('.cu'):
+    if kernel_source.endswith(".cl") or kernel_source.endswith(".cu"):
         kernel_source = load_file(anchor, kernel_source)
 
     # manage the device if not given
@@ -212,12 +220,19 @@ def execute(anchor = '__file__', kernel_source: str = '', kernel_name: str = '',
             global_size = tuple(global_size)
         else:
             global_size = (global_size,)
-            
-    _execute(device, kernel_name, kernel_source, parameters, global_size, constants)           
+
+    _execute(device, kernel_name, kernel_source, parameters, global_size, constants)
 
 
-
-def native_execute(anchor = '__file__', kernel_source: str = '', kernel_name: str = '', global_size: tuple = (1, 1, 1), local_size: tuple = (1, 1, 1), parameters: dict = {}, device: Device = None):
+def native_execute(
+    anchor="__file__",
+    kernel_source: str = "",
+    kernel_name: str = "",
+    global_size: tuple = (1, 1, 1),
+    local_size: tuple = (1, 1, 1),
+    parameters: dict = {},
+    device: Device = None,
+):
     """Execute an OpenCL kernel from a file or a string
 
     Call, build, and execute a kernel compatible with OpenCL language.
@@ -225,7 +240,7 @@ def native_execute(anchor = '__file__', kernel_source: str = '', kernel_name: st
 
     The parameters must still be passed as a dictionary with the correct types and order.
     Buffer parameters must be passed as Array objects. Scalars must be passed as Python native float or int.
-    
+
     Warning: Only 1D buffers are supported for now.
 
     Parameters
@@ -234,7 +249,7 @@ def native_execute(anchor = '__file__', kernel_source: str = '', kernel_name: st
         Enter __file__ when calling this method and the corresponding open.cl
         file lies in the same folder as the python file calling it.
         Ignored if kernel_source is a string.
-    kernel_source : str 
+    kernel_source : str
         Filename of the open.cl file to be called or string containing the open.cl source code
     kernel_name : str
         Kernel method inside the open.cl file to be called
@@ -257,7 +272,11 @@ def native_execute(anchor = '__file__', kernel_source: str = '', kernel_name: st
             kernel = Path(filename).read_text()
         else:
             kernel = (Path(anchor).parent / filename).read_text()
-        return kernel  
+        return kernel
+
+    # test if kernel_source ends with .cl or .cu
+    if kernel_source.endswith(".cl") or kernel_source.endswith(".cu"):
+        kernel_source = load_file(anchor, kernel_source)
 
     # manage the device if not given
     if not device:
@@ -276,9 +295,10 @@ def native_execute(anchor = '__file__', kernel_source: str = '', kernel_name: st
             local_size = tuple(local_size)
         else:
             local_size = (local_size,)
-            
-    _native_execute(device, kernel_name, kernel_source, parameters, global_size, local_size)   
 
+    _native_execute(
+        device, kernel_name, kernel_source, parameters, global_size, local_size
+    )
 
 
 def gpu_info():

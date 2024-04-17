@@ -1,7 +1,5 @@
 from ._core import (
     gpu_info,
-    execute,
-    native_execute,
     select_backend,
     select_device,
     get_device,
@@ -13,7 +11,7 @@ from ._core import (
 )
 from ._array import Array, Image, is_image
 from ._memory import create, create_like, push, pull
-from ._functionalities import imshow, list_operations
+from ._functionalities import imshow, list_operations, execute, native_execute
 
 from ._tier1 import *
 from ._tier2 import *

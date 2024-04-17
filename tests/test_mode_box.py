@@ -26,7 +26,7 @@ def test_mode_box_2d():
         ]
     )
 
-    result = cle.mode_box(image, None, 1, 1, 1)
+    result = cle.mode(image, None, 1, 1, 1)
 
     assert cle.array_equal(result, reference)
 
@@ -58,6 +58,6 @@ def test_mode_box_3d():
         ]
     )
 
-    result = cle.mode_box(image, None, 1, 1, 1)
+    result = cle.mode(image, None, 1, 1, 1)
 
     assert cle.array_equal(result, reference)

@@ -30,7 +30,7 @@ def test_erode_box():
     )
 
     result = cle.create(test)
-    cle.erode_box(test, result)
+    cle.erode(test, result)
 
     print(result)
 

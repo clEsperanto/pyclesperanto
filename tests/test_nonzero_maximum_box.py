@@ -35,7 +35,7 @@ def test_nonzero_maximum_box():
     # as nonzero filters don't touch zero values, we need to initialize the result in advance
     cle.set(result, 0)
 
-    cle.nonzero_maximum_box(test, flag, result)
+    cle.nonzero_maximum(test, flag, result)
 
     print(result)
 

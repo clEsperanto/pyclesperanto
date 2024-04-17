@@ -18,7 +18,7 @@ def test_top_hat_sphere():
     )
 
     result = cle.create(test)
-    cle.top_hat_sphere(test, result, 1, 1, 0)
+    cle.top_hat(test, result, 1, 1, 0, connectivity="sphere")
 
     print(result)
 

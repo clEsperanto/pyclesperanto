@@ -4,7 +4,7 @@ import numpy as np
 cle.select_device("TX")
 
 
-def test_median_box():
+def test_median():
     test1 = cle.push(
         np.asarray(
             [
@@ -30,7 +30,7 @@ def test_median_box():
     )
 
     result = cle.create(test1)
-    cle.median_box(test1, result, 1, 1, 0)
+    cle.median(test1, result, 1, 1, 0)
 
     a = cle.pull(result)
     b = cle.pull(reference)

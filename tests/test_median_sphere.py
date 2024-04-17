@@ -30,7 +30,7 @@ def test_median_sphere():
     )
 
     result = cle.create(test1)
-    cle.median_sphere(test1, result, 1, 1, 0)
+    cle.median(test1, result, 1, 1, 0, "sphere")
 
     a = cle.pull(result)
     b = cle.pull(reference)

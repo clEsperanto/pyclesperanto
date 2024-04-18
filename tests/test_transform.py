@@ -23,15 +23,15 @@ def test_rotate():
                 [
                     [0, 0, 0, 0, 0],
                     [0, 0, 0, 0, 0],
-                    [0, 0, 1, 0, 0],
-                    [0, 0, 1, 1, 0],
                     [0, 0, 0, 0, 0],
+                    [0, 1, 0, 0, 0],
+                    [0, 1, 0, 0, 0],
                 ]
             ]
         )
     )
 
-    result = cle.rotate(source, angle_z=45.0, centered=False)
+    result = cle.rotate(source, angle_z=60.0, centered=False)
 
     a = cle.pull(result)
     b = cle.pull(reference)

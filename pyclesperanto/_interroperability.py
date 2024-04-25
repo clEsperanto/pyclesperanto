@@ -24,10 +24,10 @@ from ._tier5 import connected_components_labeling as label
 # numpy operations aliases
 from ._memory import push as asarray
 
-from typing import Union
+import numpy as np
 
 
-def clip(a: Image, a_min: float, a_max: float, out: Image = None) -> Image:
+def clip(a, a_min, a_max, out=None):
     from ._tier2 import clip
 
     a = asarray(a)
@@ -42,7 +42,7 @@ def clip(a: Image, a_min: float, a_max: float, out: Image = None) -> Image:
     )
 
 
-def mod(x1: Image, x2: Image, out: Image = None) -> Image:
+def mod(x1, x2, out=None):
     from ._tier1 import modulo_images
 
     x1 = asarray(x1)
@@ -51,7 +51,7 @@ def mod(x1: Image, x2: Image, out: Image = None) -> Image:
     return modulo_images(input_image0=x1, input_image1=x2, device=x1.device)
 
 
-def sqrt(x: Image, out: Image = None) -> Image:
+def sqrt(x, out=None):
     from ._tier1 import square_root
 
     x = asarray(x)
@@ -60,7 +60,7 @@ def sqrt(x: Image, out: Image = None) -> Image:
     return square_root(input_image=x, output_image=out, device=x.device)
 
 
-def cbrt(x: Image, out: Image = None) -> Image:
+def cbrt(x, out=None):
     from ._tier1 import cubic_root
 
     x = asarray(x)
@@ -69,25 +69,26 @@ def cbrt(x: Image, out: Image = None) -> Image:
     return cubic_root(input_image=x, output_image=out, device=x.device)
 
 
-def power(x1: Image, x2: Union[float, int, Image], out: Image = None) -> Image:
+def power(x1, x2, out=None):
     x1 = asarray(x1)
     if out:
         out = asarray(out)
 
-    if x2 is Image:
+    # test if x2 is a scalar
+    if np.isscalar(x2):
+        from ._tier1 import power
+
+        return power(input_image=x1, scalar=x2, output_image=out, device=x1.device)
+    else:
         from ._tier1 import power_images
 
         x2 = asarray(x2)
         return power_images(
             input_image0=x1, input_image1=x2, output_image=out, device=x1.device
         )
-    else:
-        from ._tier1 import power
-
-        return power(input_image=x1, scalar=x2, output_image=out, device=x1.device)
 
 
-def fabs(x: Image, out: Image = None) -> Image:
+def fabs(x, out=None):
     from ._tier1 import absolute
     from ._memory import create
 

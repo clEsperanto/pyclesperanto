@@ -39,7 +39,8 @@ def test_execute_native_from_file():
 
     param = {"a": input1, "b": input2, "c": output, "n": int(np.prod(input1.shape))}
     cle.native_execute(
-        kernel_source="tests/_test_add_arrays.cl",
+        anchor=__file__,
+        kernel_source="_test_add_arrays.cl",
         kernel_name="add_arrays",
         global_size=input1.shape,
         local_size=(1, 1, 1),
@@ -60,7 +61,8 @@ def test_execute_absolute_from_file():
 
     param = {"src": input, "dst": output}
     cle.execute(
-        kernel_source="tests/_test_absolute.cl",
+        anchor=__file__,
+        kernel_source="_test_absolute.cl",
         kernel_name="absolute",
         global_size=input.shape,
         parameters=param,

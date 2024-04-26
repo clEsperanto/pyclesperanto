@@ -148,7 +148,11 @@ cle::dType get_cle_dtype(const py::object &type)
      }
      else if (np_type.equal(py::dtype("int64")) || np_type.equal(py::dtype("int")))
      {
+#if __APPLE__
+          return cle::dType::INT32;
+#else
           return cle::dType::INT64;
+#endif
      }
      else if (np_type.equal(py::dtype("int32")))
      {
@@ -164,7 +168,11 @@ cle::dType get_cle_dtype(const py::object &type)
      }
      else if (np_type.equal(py::dtype("uint64")))
      {
+#if __APPLE__
+          return cle::dType::UINT32;
+#else
           return cle::dType::UINT64;
+#endif
      }
      else if (np_type.equal(py::dtype("uint32")))
      {

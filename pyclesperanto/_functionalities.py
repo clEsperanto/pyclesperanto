@@ -10,7 +10,7 @@ from ._core import Device, get_device
 
 
 def execute(
-    anchor="__file__",
+    anchor=__file__,
     kernel_source: str = "",
     kernel_name: str = "",
     global_size: tuple = (1, 1, 1),
@@ -75,7 +75,7 @@ def execute(
 
 
 def native_execute(
-    anchor="__file__",
+    anchor=__file__,
     kernel_source: str = "",
     kernel_name: str = "",
     global_size: tuple = (1, 1, 1),

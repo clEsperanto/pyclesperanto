@@ -32,37 +32,87 @@ __kernel void add_arrays(__global const float* a, __global const float* b, __glo
 """
 
 
+def test_execute_native_from_file():
+    input1 = cle.push(np.ones(10).astype(float))
+    input2 = cle.push(np.ones(10).astype(float) * 2)
+    output = cle.create(input1)
+
+    param = {"a": input1, "b": input2, "c": output, "n": int(np.prod(input1.shape))}
+    cle.native_execute(
+        anchor=__file__,
+        kernel_source="_test_add_arrays.cl",
+        kernel_name="add_arrays",
+        global_size=input1.shape,
+        local_size=(1, 1, 1),
+        parameters=param,
+    )
+
+    print(output)
+
+    a = cle.pull(output)
+    assert np.min(a) == 3
+    assert np.max(a) == 3
+    assert np.mean(a) == 3
+
+
+def test_execute_absolute_from_file():
+    input = cle.push(np.asarray([[1, -1], [1, -1]]).astype(float))
+    output = cle.create(input)
+
+    param = {"src": input, "dst": output}
+    cle.execute(
+        anchor=__file__,
+        kernel_source="_test_absolute.cl",
+        kernel_name="absolute",
+        global_size=input.shape,
+        parameters=param,
+    )
+
+    print(output)
+
+    a = cle.pull(output)
+    assert np.min(a) == 1
+    assert np.max(a) == 1
+    assert np.mean(a) == 1
+
+
 def test_execute_native():
     input1 = cle.push(np.ones(10).astype(float))
     input2 = cle.push(np.ones(10).astype(float) * 2)
     output = cle.create(input1)
 
-    param = {'a': input1, 'b': input2, 'c': output, 'n': int(np.prod(input1.shape))}
-    cle.native_execute(kernel_source=add_native_ocl, kernel_name="add_arrays", global_size=input1.shape, local_size=(1,1,1),  parameters=param)
+    param = {"a": input1, "b": input2, "c": output, "n": int(np.prod(input1.shape))}
+    cle.native_execute(
+        kernel_source=add_native_ocl,
+        kernel_name="add_arrays",
+        global_size=input1.shape,
+        local_size=(1, 1, 1),
+        parameters=param,
+    )
 
     print(output)
 
     a = cle.pull(output)
-    assert (np.min(a) == 3)
-    assert (np.max(a) == 3)
-    assert (np.mean(a) == 3)
-
+    assert np.min(a) == 3
+    assert np.max(a) == 3
+    assert np.mean(a) == 3
 
 
 def test_execute_absolute():
-    input = cle.push(np.asarray([
-        [1, -1],
-        [1, -1]
-    ]))
+    input = cle.push(np.asarray([[1, -1], [1, -1]]).astype(float))
     output = cle.create(input)
 
-    param = {'src': input, 'dst': output}
-    cle.execute(kernel_source=absolute_ocl, kernel_name="absolute", global_size=input.shape,  parameters=param)
+    param = {"src": input, "dst": output}
+    cle.execute(
+        kernel_source=absolute_ocl,
+        kernel_name="absolute",
+        global_size=input.shape,
+        parameters=param,
+    )
 
     print(output)
 
     a = cle.pull(output)
-    assert (np.min(a) == 1)
-    assert (np.max(a) == 1)
-    assert (np.mean(a) == 1)
-
+    assert np.min(a) == 1
+    assert np.max(a) == 1
+    assert np.mean(a) == 1

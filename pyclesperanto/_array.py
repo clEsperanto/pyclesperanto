@@ -9,12 +9,12 @@ import numpy as np
 
 def _prepare_array(arr) -> np.ndarray:
     """Converts a given array to a numpy array with C memory layout.
-    
+
     Parameters
     ----------
-    arr : 
+    arr :
         The array to convert.
-        
+
     Returns
     -------
     np.ndarray
@@ -37,7 +37,7 @@ def __repr__(self) -> str:
 
 def set(self, array: np.ndarray, origin: tuple = None, region: tuple = None) -> None:
     """Set the content of the Array to the given numpy array.
-    
+
     Parameters
     ----------
     array : np.ndarray
@@ -46,7 +46,7 @@ def set(self, array: np.ndarray, origin: tuple = None, region: tuple = None) -> 
         The origin of the region of interest, by default None
     region : tuple, optional
         The region of interest, by default None
-        
+
     Returns
     -------
     Array
@@ -73,14 +73,14 @@ def set(self, array: np.ndarray, origin: tuple = None, region: tuple = None) -> 
 
 def get(self, origin: tuple = None, region: tuple = None) -> np.ndarray:
     """Get the content of the Array into a numpy array.
-    
+
     Parameters
     ----------
     origin : tuple, optional
         The origin of the region of interest, by default None
     region : tuple, optional
         The region of interest, by default None
-        
+
     Returns
     -------
     np.ndarray
@@ -91,11 +91,11 @@ def get(self, origin: tuple = None, region: tuple = None) -> np.ndarray:
         "int8": self._read_int8,
         "int16": self._read_int16,
         "int32": self._read_int32,
-        "int64": self._read_int64,
+        # "int64": self._read_int64,
         "uint8": self._read_uint8,
         "uint16": self._read_uint16,
         "uint32": self._read_uint32,
-        "uint64": self._read_uint64,
+        # "uint64": self._read_uint64,
     }
     return caster[self.dtype.name](origin, region)
 
@@ -110,7 +110,7 @@ def __array__(self, dtype=None) -> np.ndarray:
 
 def to_device(cls, arr, *args, **kwargs):
     """Create an Array object from a numpy array (same shape, dtype, and memory).
-    
+
     Parameters
     ----------
     arr : np.ndarray
@@ -119,7 +119,7 @@ def to_device(cls, arr, *args, **kwargs):
         The memory type, by default "buffer"
     device : Device, optional
         The device, by default None
-    
+
     Returns
     -------
     Array
@@ -134,7 +134,7 @@ def to_device(cls, arr, *args, **kwargs):
 
 def from_array(cls, arr, *args, **kwargs):
     """Create an Array object from a numpy array (same shape, dtype, and memory).
-    
+
     Parameters
     ----------
     arr : np.ndarray
@@ -143,7 +143,7 @@ def from_array(cls, arr, *args, **kwargs):
         The memory type, by default "buffer"
     device : Device, optional
         The device, by default None
-    
+
     Returns
     -------
     Array
@@ -155,7 +155,7 @@ def from_array(cls, arr, *args, **kwargs):
 
 def empty(cls, shape, dtype=float, *args, **kwargs):
     """Create an empty Array object from a shape.
-    
+
     Parameters
     ----------
     shape : tuple, list or np.ndarray
@@ -166,7 +166,7 @@ def empty(cls, shape, dtype=float, *args, **kwargs):
         The memory type, by default "buffer"
     device : Device, optional
         The device, by default None
-    
+
     Returns
     -------
     Array
@@ -181,12 +181,12 @@ def empty(cls, shape, dtype=float, *args, **kwargs):
 
 def empty_like(cls, arr):
     """Create an empty Array object from an other array.
-    
+
     Parameters
     ----------
     arr : np.ndarray or Array or other array-like structure
         The array to create like.
-    
+
     Returns
     -------
     Array
@@ -198,7 +198,7 @@ def empty_like(cls, arr):
 
 def zeros(cls, shape, dtype=float, *args, **kwargs):
     """Create an Array object full of zeros from a shape.
-    
+
     Parameters
     ----------
     shape : tuple, list or np.ndarray
@@ -209,7 +209,7 @@ def zeros(cls, shape, dtype=float, *args, **kwargs):
         The memory type, by default "buffer"
     device : Device, optional
         The device, by default None
-    
+
     Returns
     -------
     Array
@@ -223,12 +223,12 @@ def zeros(cls, shape, dtype=float, *args, **kwargs):
 
 def zeros_like(cls, arr):
     """Create an Array object filled with zeros from an other array.
-    
+
     Parameters
     ----------
     arr : np.ndarray or Array or other array-like structure
         The array to create like.
-    
+
     Returns
     -------
     Array

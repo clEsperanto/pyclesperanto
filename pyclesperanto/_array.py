@@ -193,7 +193,9 @@ def empty_like(cls, arr):
         The created array.
     """
     _assert_supported_dtype(arr.dtype)
-    return Array.create(arr.shape, arr.dtype, arr.mtype, arr.device)
+    mtype = arr.mtype if hasattr(arr, "mtype") else "buffer"
+    device = arr.device if hasattr(arr, "device") else get_device()
+    return Array.create(arr.shape, arr.dtype, mtype, device)
 
 
 def zeros(cls, shape, dtype=float, *args, **kwargs):
@@ -235,9 +237,9 @@ def zeros_like(cls, arr):
         The created array.
     """
     _assert_supported_dtype(arr.dtype)
-    return cls.zeros(
-        shape=arr.shape, dtype=arr.dtype, mtype=arr.mtype, device=arr.device
-    )
+    mtype = arr.mtype if hasattr(arr, "mtype") else "buffer"
+    device = arr.device if hasattr(arr, "device") else get_device()
+    return cls.zeros(shape=arr.shape, dtype=arr.dtype, mtype=mtype, device=device)
 
 
 def T(self):
@@ -277,6 +279,7 @@ setattr(Array, "empty", classmethod(empty))
 setattr(Array, "empty_like", classmethod(empty_like))
 setattr(Array, "zeros", classmethod(zeros))
 setattr(Array, "zeros_like", classmethod(zeros_like))
+setattr(Array, "to_device", classmethod(to_device))
 
 # Add operations and class methods from _operators module
 setattr(Array, "astype", _operators._astype)

@@ -91,11 +91,11 @@ def get(self, origin: tuple = None, region: tuple = None) -> np.ndarray:
         "int8": self._read_int8,
         "int16": self._read_int16,
         "int32": self._read_int32,
-        "int64": self._read_int64,
+        # "int64": self._read_int64,
         "uint8": self._read_uint8,
         "uint16": self._read_uint16,
         "uint32": self._read_uint32,
-        "uint64": self._read_uint64,
+        # "uint64": self._read_uint64,
     }
     return caster[self.dtype.name](origin, region)
 

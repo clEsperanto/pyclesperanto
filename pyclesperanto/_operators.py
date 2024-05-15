@@ -332,6 +332,7 @@ def __ipow__(x1, x2):
 
 def __iter__(self):
     """Iterate over the first dimension of the array."""
+
     class MyIterator:
         def __init__(self, image):
             self.image = image

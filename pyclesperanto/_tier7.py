@@ -17,7 +17,7 @@ def affine_transform(
     transform_matrix: list = None,
     interpolate: bool = False,
     resize: bool = False,
-    device: Device = None
+    device: Device = None,
 ) -> Image:
     """Apply an affine transformation matrix to an array and return the result.  The
     transformation matrix must be 3x3 or 4x4 stored as a 1D array.  The matrix
@@ -42,30 +42,28 @@ def affine_transform(
     Returns
     -------
     Image
-    
+
     """
 
     from ._pyclesperanto import _affine_transform as op
 
-    
     return op(
         device=device,
         src=input_image,
         dst=output_image,
         transform_matrix=transform_matrix,
         interpolate=bool(interpolate),
-        resize=bool(resize)
+        resize=bool(resize),
     )
 
 
-
-@plugin_function(category=['label', 'in assistant', 'bia-bob-suggestion'])
+@plugin_function(category=["label", "in assistant", "bia-bob-suggestion"])
 def eroded_otsu_labeling(
     input_image: Image,
     output_image: Image = None,
     number_of_erosions: int = 5,
     outline_sigma: float = 2,
-    device: Device = None
+    device: Device = None,
 ) -> Image:
     """Segments and labels an image using blurring, Otsu-thresholding, binary erosion
     and  masked Voronoi-labeling.  After bluring and Otsu-thresholding the image,
@@ -93,27 +91,25 @@ def eroded_otsu_labeling(
     Returns
     -------
     Image
-    
+
     References
     ----------
     [1] https://github.com/biovoxxel/bv3dbox (BV_LabelSplitter.java#L83)
-	[2] https://zenodo.org/badge/latestdoi/434949702
+        [2] https://zenodo.org/badge/latestdoi/434949702
     """
 
     from ._pyclesperanto import _eroded_otsu_labeling as op
 
-    
     return op(
         device=device,
         src=input_image,
         dst=output_image,
         number_of_erosions=int(number_of_erosions),
-        outline_sigma=float(outline_sigma)
+        outline_sigma=float(outline_sigma),
     )
 
 
-
-@plugin_function(category=['transform', 'in assistant', 'bia-bob-suggestion'])
+@plugin_function(category=["transform", "in assistant", "bia-bob-suggestion"])
 def rigid_transform(
     input_image: Image,
     output_image: Image = None,
@@ -126,7 +122,7 @@ def rigid_transform(
     centered: bool = True,
     interpolate: bool = False,
     resize: bool = False,
-    device: Device = None
+    device: Device = None,
 ) -> Image:
     """Translate the image by a given vector and rotate it by given angles. Angles are
     given in degrees. To convert radians to degrees, use this formula:
@@ -162,12 +158,11 @@ def rigid_transform(
     Returns
     -------
     Image
-    
+
     """
 
     from ._pyclesperanto import _rigid_transform as op
 
-    
     return op(
         device=device,
         src=input_image,
@@ -180,12 +175,11 @@ def rigid_transform(
         angle_z=float(angle_z),
         centered=bool(centered),
         interpolate=bool(interpolate),
-        resize=bool(resize)
+        resize=bool(resize),
     )
 
 
-
-@plugin_function(category=['transform', 'in assistant'])
+@plugin_function(category=["transform", "in assistant"])
 def rotate(
     input_image: Image,
     output_image: Image = None,
@@ -195,7 +189,7 @@ def rotate(
     centered: bool = True,
     interpolate: bool = False,
     resize: bool = False,
-    device: Device = None
+    device: Device = None,
 ) -> Image:
     """Rotate the image by given angles. Angles are given in degrees. To convert
     radians to degrees, use this formula: angle_in_degrees = angle_in_radians /
@@ -225,12 +219,11 @@ def rotate(
     Returns
     -------
     Image
-    
+
     """
 
     from ._pyclesperanto import _rotate as op
 
-    
     return op(
         device=device,
         src=input_image,
@@ -240,12 +233,11 @@ def rotate(
         angle_z=float(angle_z),
         centered=bool(centered),
         interpolate=bool(interpolate),
-        resize=bool(resize)
+        resize=bool(resize),
     )
 
 
-
-@plugin_function(category=['transform', 'in assistant'])
+@plugin_function(category=["transform", "in assistant"])
 def scale(
     input_image: Image,
     output_image: Image = None,
@@ -255,7 +247,7 @@ def scale(
     centered: bool = True,
     interpolate: bool = False,
     resize: bool = False,
-    device: Device = None
+    device: Device = None,
 ) -> Image:
     """Scale the image by given factors.
 
@@ -283,12 +275,11 @@ def scale(
     Returns
     -------
     Image
-    
+
     """
 
     from ._pyclesperanto import _scale as op
 
-    
     return op(
         device=device,
         src=input_image,
@@ -298,12 +289,11 @@ def scale(
         factor_z=float(factor_z),
         centered=bool(centered),
         interpolate=bool(interpolate),
-        resize=bool(resize)
+        resize=bool(resize),
     )
 
 
-
-@plugin_function(category=['transform', 'in assistant'])
+@plugin_function(category=["transform", "in assistant"])
 def translate(
     input_image: Image,
     output_image: Image = None,
@@ -311,7 +301,7 @@ def translate(
     translate_y: float = 0,
     translate_z: float = 0,
     interpolate: bool = False,
-    device: Device = None
+    device: Device = None,
 ) -> Image:
     """Translate the image by a given vector.
 
@@ -335,12 +325,11 @@ def translate(
     Returns
     -------
     Image
-    
+
     """
 
     from ._pyclesperanto import _translate as op
 
-    
     return op(
         device=device,
         src=input_image,
@@ -348,17 +337,16 @@ def translate(
         translate_x=float(translate_x),
         translate_y=float(translate_y),
         translate_z=float(translate_z),
-        interpolate=bool(interpolate)
+        interpolate=bool(interpolate),
     )
 
 
-
-@plugin_function(category=['label processing', 'in assistant', 'bia-bob-suggestion'])
+@plugin_function(category=["label processing", "in assistant", "bia-bob-suggestion"])
 def closing_labels(
     input_image: Image,
     output_image: Image = None,
     radius: int = 0,
-    device: Device = None
+    device: Device = None,
 ) -> Image:
     """Apply a morphological closing operation to a label image. The operation consists
     of iterative dilation and erosion of the labels. With every iteration, box and
@@ -380,19 +368,12 @@ def closing_labels(
     Returns
     -------
     Image
-    
+
     """
 
     from ._pyclesperanto import _closing_labels as op
 
-    
-    return op(
-        device=device,
-        src=input_image,
-        dst=output_image,
-        radius=int(radius)
-    )
-
+    return op(device=device, src=input_image, dst=output_image, radius=int(radius))
 
 
 @plugin_function
@@ -400,7 +381,7 @@ def erode_connected_labels(
     input_image: Image,
     output_image: Image = None,
     radius: int = 1,
-    device: Device = None
+    device: Device = None,
 ) -> Image:
     """Erodes labels to a smaller size. Note: Depending on the label image and the
     radius,  labels may disappear and labels may split into multiple islands. Thus,
@@ -418,27 +399,20 @@ def erode_connected_labels(
     Returns
     -------
     Image
-    
+
     """
 
     from ._pyclesperanto import _erode_connected_labels as op
 
-    
-    return op(
-        device=device,
-        src=input_image,
-        dst=output_image,
-        radius=int(radius)
-    )
+    return op(device=device, src=input_image, dst=output_image, radius=int(radius))
 
 
-
-@plugin_function(category=['label processing', 'in assistant', 'bia-bob-suggestion'])
+@plugin_function(category=["label processing", "in assistant", "bia-bob-suggestion"])
 def opening_labels(
     input_image: Image,
     output_image: Image = None,
     radius: int = 0,
-    device: Device = None
+    device: Device = None,
 ) -> Image:
     """Apply a morphological opening operation to a label image. The operation consists
     of iterative erosion and dilation of the labels. With every iteration, box and
@@ -460,28 +434,21 @@ def opening_labels(
     Returns
     -------
     Image
-    
+
     """
 
     from ._pyclesperanto import _opening_labels as op
 
-    
-    return op(
-        device=device,
-        src=input_image,
-        dst=output_image,
-        radius=int(radius)
-    )
+    return op(device=device, src=input_image, dst=output_image, radius=int(radius))
 
 
-
-@plugin_function(category=['label', 'in assistant', 'bia-bob-suggestion'])
+@plugin_function(category=["label", "in assistant", "bia-bob-suggestion"])
 def voronoi_otsu_labeling(
     input_image: Image,
     output_image: Image = None,
     spot_sigma: float = 2,
     outline_sigma: float = 2,
-    device: Device = None
+    device: Device = None,
 ) -> Image:
     """Labels objects directly from greyvalue images. The two sigma parameters allow
     tuning the segmentation result. Under the hood, this filter applies two Gaussian
@@ -506,22 +473,20 @@ def voronoi_otsu_labeling(
     Returns
     -------
     Image
-    
+
     References
     ----------
     [1] https://clij.github.io/clij2-docs/reference_voronoiOtsuLabeling
-	[2] https://ieeexplore.ieee.org/document/4310076
-	[3] https://en.wikipedia.org/wiki/Voronoi_diagram
+        [2] https://ieeexplore.ieee.org/document/4310076
+        [3] https://en.wikipedia.org/wiki/Voronoi_diagram
     """
 
     from ._pyclesperanto import _voronoi_otsu_labeling as op
 
-    
     return op(
         device=device,
         src=input_image,
         dst=output_image,
         spot_sigma=float(spot_sigma),
-        outline_sigma=float(outline_sigma)
+        outline_sigma=float(outline_sigma),
     )
-

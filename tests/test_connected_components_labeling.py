@@ -21,7 +21,6 @@ def test_connected_components_labeling_box():
     assert np.array_equal(a, b)
 
 
-
 def test_connected_components_labeling_sphere():
     gpu_input = cle.push(np.asarray([[0, 1, 0, 1], [0, 1, 0, 0], [1, 0, 0, 1]]))
 

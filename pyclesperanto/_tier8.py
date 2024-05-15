@@ -10,12 +10,12 @@ import numpy as np
 import warnings
 
 
-@plugin_function(category=['label processing', 'in assistant', 'bia-bob-suggestion'])
+@plugin_function(category=["label processing", "in assistant", "bia-bob-suggestion"])
 def smooth_labels(
     input_image: Image,
     output_image: Image = None,
     radius: int = 0,
-    device: Device = None
+    device: Device = None,
 ) -> Image:
     """Apply a morphological opening operation to a label image and afterwards   fills
     gaps between the labels using voronoi-labeling. Finally, the result   label
@@ -36,19 +36,12 @@ def smooth_labels(
     Returns
     -------
     Image
-    
+
     """
 
     from ._pyclesperanto import _smooth_labels as op
 
-    
-    return op(
-        device=device,
-        src=input_image,
-        dst=output_image,
-        radius=int(radius)
-    )
-
+    return op(device=device, src=input_image, dst=output_image, radius=int(radius))
 
 
 @plugin_function
@@ -56,7 +49,7 @@ def smooth_connected_labels(
     input_image: Image,
     output_image: Image = None,
     radius: int = 0,
-    device: Device = None
+    device: Device = None,
 ) -> Image:
     """Apply a morphological erosion and dilation of the label image with respect to
     the connectivity of the labels.   Note: It is recommended to process isotropic
@@ -76,16 +69,9 @@ def smooth_connected_labels(
     Returns
     -------
     Image
-    
+
     """
 
     from ._pyclesperanto import _smooth_connected_labels as op
 
-    
-    return op(
-        device=device,
-        src=input_image,
-        dst=output_image,
-        radius=int(radius)
-    )
-
+    return op(device=device, src=input_image, dst=output_image, radius=int(radius))

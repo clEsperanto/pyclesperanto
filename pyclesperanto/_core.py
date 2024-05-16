@@ -1,9 +1,10 @@
-from typing import Optional, Union
-import numpy as np
 import warnings
+from typing import Optional, Union
 
-from ._pyclesperanto import _Device as Device
+import numpy as np
+
 from ._pyclesperanto import _BackendManager as BackendManager
+from ._pyclesperanto import _Device as Device
 
 
 class _current_device:

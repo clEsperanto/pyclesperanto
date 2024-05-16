@@ -1,11 +1,12 @@
-from typing import Callable, Optional
-from functools import wraps
-from toolz import curry
 import inspect
+from functools import wraps
+from typing import Callable, Optional
 
-from ._memory import push
-from ._array import is_image, Image
+from toolz import curry
+
+from ._array import Image, is_image
 from ._core import Device
+from ._memory import push
 
 
 @curry

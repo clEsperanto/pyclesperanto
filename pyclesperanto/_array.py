@@ -1,10 +1,12 @@
-from ._pyclesperanto import _Array as Array
-from ._core import Device, get_device
-from ._utils import _assert_supported_dtype
-from . import _operators
-
 from typing import Union
+
 import numpy as np
+
+from ._core import Device, get_device
+from ._pyclesperanto import _Array as Array
+from ._utils import _assert_supported_dtype
+
+from . import _operators
 
 
 def _prepare_array(arr) -> np.ndarray:

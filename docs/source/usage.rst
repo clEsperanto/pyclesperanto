@@ -33,8 +33,8 @@ Memory transfer
 ===============
 
 It is a good practice to consider the GPU as another computer. Its memory is separated from your computer (host) memory, hence you need to transfer your data to the device memory in order to process it.
-Going both ways, you will need to transfer it back to your computer (host) memory when you are done running GPU operations so that you can read the results. In pyclesperanto this is managed by the 
-functions ``push``, ``pull``, and ``create``. ``push`` and ``pull`` are used to transfer data from the host to the GPU and vice versa. ``create`` is used to allocate an empty space on the GPU which will be 
+Going both ways, you will need to transfer it back to your computer (host) memory when you are done running GPU operations so that you can read the results. In pyclesperanto this is managed by the
+functions ``push``, ``pull``, and ``create``. ``push`` and ``pull`` are used to transfer data from the host to the GPU and vice versa. ``create`` is used to allocate an empty space on the GPU which will be
 then use, for example to store a result.
 
 
@@ -77,7 +77,7 @@ The ``push`` will create a memory space on the GPU like ``create`` but will also
 
 The data pushed will keep the same data type as the array. Hence, if you push a ``uint8`` array, the data will be stored as ``uint8`` on the GPU.
 The array will then use 4 times less memory than if it was stored as ``float32``. This is a good practice to keep in mind when working with GPUs as their
-memory is limited. 
+memory is limited.
 
 .. warning::
     Python natively manage only 2 type of scalar, ``float`` and ``int``, correspondint to ``float64``, also known as ``double`` and ``int64``. However, ``double`` type

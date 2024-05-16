@@ -1,6 +1,7 @@
-from skimage.io import imread
-import pyclesperanto as cle
 import numpy as np
+from skimage.io import imread
+
+import pyclesperanto as cle
 
 cle.select_device("TX")
 
@@ -19,7 +20,6 @@ def test_connected_components_labeling_box():
     print(b)
 
     assert np.array_equal(a, b)
-
 
 
 def test_connected_components_labeling_sphere():

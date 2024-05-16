@@ -25,7 +25,7 @@ or via conda:
         mamba create --name myenv
         mamba activate myenv
 
-.. note:: 
+.. note::
 
     It is often require to also install an additional package to use pyClesperanto, especially on MacOS or Linux:
 
@@ -81,4 +81,4 @@ However, any modification of the source code will require you to re-install the 
 
 .. warning::
 
-    If using an install from source, do not import the package from the source directory as it will not work properly.    
+    If using an install from source, do not import the package from the source directory as it will not work properly.

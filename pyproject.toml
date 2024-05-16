@@ -74,3 +74,6 @@ skip = ["cp27-*", "pp*", "*-win32"]
 [tool.cibuildwheel.macos]
 environment = { MACOSX_DEPLOYMENT_TARGET = '10.14' }
 skip = ["cp27-*", "pp*", "*_universal2"]
+
+[tool.isort]
+profile = "black"

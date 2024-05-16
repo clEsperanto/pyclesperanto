@@ -3,18 +3,17 @@
 # Do not edit manually.
 #
 
-from ._core import Device
-from ._array import Image
-from ._decorators import plugin_function
-import numpy as np
 import warnings
+
+import numpy as np
+
+from ._array import Image
+from ._core import Device
+from ._decorators import plugin_function
 
 
 @plugin_function
-def bounding_box(
-    input_image: Image,
-    device: Device = None
-) -> list:
+def bounding_box(input_image: Image, device: Device = None) -> list:
     """Determines the bounding box of all nonzero pixels in a binary image. The
     positions are returned in  an array of 6 values as follows: minX, minY, minZ,
     maxX, maxY, maxZ.
@@ -28,7 +27,7 @@ def bounding_box(
     Returns
     -------
     list
-    
+
     References
     ----------
     [1] https://clij.github.io/clij2-docs/reference_boundingBox
@@ -36,19 +35,11 @@ def bounding_box(
 
     from ._pyclesperanto import _bounding_box as op
 
-    
-    return op(
-        device=device,
-        src=input_image
-    )
-
+    return op(device=device, src=input_image)
 
 
 @plugin_function
-def center_of_mass(
-    input_image: Image,
-    device: Device = None
-) -> list:
+def center_of_mass(input_image: Image, device: Device = None) -> list:
     """Determines the center of mass of an image or image stack. It writes the result
     in the results table in the columns MassX, MassY and MassZ.
 
@@ -61,7 +52,7 @@ def center_of_mass(
     Returns
     -------
     list
-    
+
     References
     ----------
     [1] https://clij.github.io/clij2-docs/reference_centerOfMass
@@ -69,20 +60,12 @@ def center_of_mass(
 
     from ._pyclesperanto import _center_of_mass as op
 
-    
-    return op(
-        device=device,
-        src=input_image
-    )
-
+    return op(device=device, src=input_image)
 
 
 @plugin_function
 def exclude_labels(
-    input_image: Image,
-    list: Image,
-    output_image: Image = None,
-    device: Device = None
+    input_image: Image, list: Image, output_image: Image = None, device: Device = None
 ) -> Image:
     """This operation removes labels from a labelmap and renumbers the remaining
     labels. Hand over a binary flag list vector starting with a flag for the
@@ -101,7 +84,7 @@ def exclude_labels(
     Returns
     -------
     Image
-    
+
     References
     ----------
     [1] https://clij.github.io/clij2-docs/reference_excludeLabels
@@ -109,24 +92,17 @@ def exclude_labels(
 
     from ._pyclesperanto import _exclude_labels as op
 
-    
-    return op(
-        device=device,
-        src=input_image,
-        list=list,
-        dst=output_image
-    )
+    return op(device=device, src=input_image, list=list, dst=output_image)
 
 
-
-@plugin_function(category=['label processing', 'in assistant', 'bia-bob-suggestion'])
+@plugin_function(category=["label processing", "in assistant", "bia-bob-suggestion"])
 def exclude_labels_on_edges(
     input_image: Image,
     output_image: Image = None,
     exclude_x: bool = True,
     exclude_y: bool = True,
     exclude_z: bool = True,
-    device: Device = None
+    device: Device = None,
 ) -> Image:
     """Removes all labels from a label map which touch the edges of the image.
     Remaining label elements are renumbered afterwards.
@@ -147,7 +123,7 @@ def exclude_labels_on_edges(
     Returns
     -------
     Image
-    
+
     References
     ----------
     [1] https://clij.github.io/clij2-docs/reference_excludeLabelsOnEdges
@@ -155,23 +131,19 @@ def exclude_labels_on_edges(
 
     from ._pyclesperanto import _exclude_labels_on_edges as op
 
-    
     return op(
         device=device,
         src=input_image,
         dst=output_image,
         exclude_x=bool(exclude_x),
         exclude_y=bool(exclude_y),
-        exclude_z=bool(exclude_z)
+        exclude_z=bool(exclude_z),
     )
-
 
 
 @plugin_function
 def flag_existing_labels(
-    input_image: Image,
-    output_image: Image = None,
-    device: Device = None
+    input_image: Image, output_image: Image = None, device: Device = None
 ) -> Image:
     """Given a label map this function will generate a binary vector where all pixels
     are set to 1 if label with given xcoordinate in the vector exists. For example a
@@ -190,26 +162,20 @@ def flag_existing_labels(
     Returns
     -------
     Image
-    
+
     """
 
     from ._pyclesperanto import _flag_existing_labels as op
 
-    
-    return op(
-        device=device,
-        src=input_image,
-        dst=output_image
-    )
+    return op(device=device, src=input_image, dst=output_image)
 
 
-
-@plugin_function(category=['filter', 'in assistant'])
+@plugin_function(category=["filter", "in assistant"])
 def gamma_correction(
     input_image: Image,
     output_image: Image = None,
     gamma: float = 1,
-    device: Device = None
+    device: Device = None,
 ) -> Image:
     """Applies a gamma correction to an image. Therefore, all pixels x of the Image X
     are normalized and the power to gamma g is computed, before normlization is
@@ -226,7 +192,7 @@ def gamma_correction(
     Returns
     -------
     Image
-    
+
     References
     ----------
     [1] https://clij.github.io/clij2-docs/reference_gammaCorrection
@@ -234,14 +200,7 @@ def gamma_correction(
 
     from ._pyclesperanto import _gamma_correction as op
 
-    
-    return op(
-        device=device,
-        src=input_image,
-        dst=output_image,
-        gamma=float(gamma)
-    )
-
+    return op(device=device, src=input_image, dst=output_image, gamma=float(gamma))
 
 
 @plugin_function
@@ -249,7 +208,7 @@ def generate_binary_overlap_matrix(
     input_image0: Image,
     input_image1: Image,
     output_image: Image = None,
-    device: Device = None
+    device: Device = None,
 ) -> Image:
     """Takes two labelmaps with n and m labels and generates a (n+1)*(m+1) matrix where
     all pixels are set to 0 exept those where labels overlap between the label maps.
@@ -267,7 +226,7 @@ def generate_binary_overlap_matrix(
     Returns
     -------
     Image
-    
+
     References
     ----------
     [1] https://clij.github.io/clij2-docs/reference_generateBinaryOverlapMatrix
@@ -275,21 +234,12 @@ def generate_binary_overlap_matrix(
 
     from ._pyclesperanto import _generate_binary_overlap_matrix as op
 
-    
-    return op(
-        device=device,
-        src0=input_image0,
-        src1=input_image1,
-        dst=output_image
-    )
+    return op(device=device, src0=input_image0, src1=input_image1, dst=output_image)
 
 
-
-@plugin_function(category=['bia-bob-suggestion'])
+@plugin_function(category=["bia-bob-suggestion"])
 def generate_touch_matrix(
-    input_image: Image,
-    output_image: Image = None,
-    device: Device = None
+    input_image: Image, output_image: Image = None, device: Device = None
 ) -> Image:
     """Takes a labelmap with n labels and generates a (n+1)*(n+1) matrix where all
     pixels are set to 0 exept those where labels are touching. Only half of the
@@ -307,7 +257,7 @@ def generate_touch_matrix(
     Returns
     -------
     Image
-    
+
     References
     ----------
     [1] https://clij.github.io/clij2-docs/reference_generateTouchMatrix
@@ -315,13 +265,7 @@ def generate_touch_matrix(
 
     from ._pyclesperanto import _generate_touch_matrix as op
 
-    
-    return op(
-        device=device,
-        src=input_image,
-        dst=output_image
-    )
-
+    return op(device=device, src=input_image, dst=output_image)
 
 
 @plugin_function
@@ -331,7 +275,7 @@ def histogram(
     nbins: int = 256,
     min: float = None,
     max: float = None,
-    device: Device = None
+    device: Device = None,
 ) -> Image:
     """Determines the histogram of a given image. The histogram image is of dimensions
     number_of_bins/1/1; a 3D image with height=1 and depth=1. Histogram bins contain
@@ -363,7 +307,7 @@ def histogram(
     Returns
     -------
     Image
-    
+
     References
     ----------
     [1] https://clij.github.io/clij2-docs/reference_histogram
@@ -371,23 +315,19 @@ def histogram(
 
     from ._pyclesperanto import _histogram as op
 
-    
     return op(
         device=device,
         src=input_image,
         dst=output_image,
         nbins=int(nbins),
         min=float(min),
-        max=float(max)
+        max=float(max),
     )
-
 
 
 @plugin_function
 def jaccard_index(
-    input_image0: Image,
-    input_image1: Image,
-    device: Device = None
+    input_image0: Image, input_image1: Image, device: Device = None
 ) -> float:
     """Determines the overlap of two binary images using the Jaccard index. A value of
     0 suggests no overlap, 1 means perfect overlap. The resulting Jaccard index is
@@ -405,7 +345,7 @@ def jaccard_index(
     Returns
     -------
     float
-    
+
     References
     ----------
     [1] https://clij.github.io/clij2-docs/reference_jaccardIndex
@@ -413,20 +353,12 @@ def jaccard_index(
 
     from ._pyclesperanto import _jaccard_index as op
 
-    
-    return op(
-        device=device,
-        src0=input_image0,
-        src1=input_image1
-    )
+    return op(device=device, src0=input_image0, src1=input_image1)
 
 
-
-@plugin_function(category=['bia-bob-suggestion'])
+@plugin_function(category=["bia-bob-suggestion"])
 def labelled_spots_to_pointlist(
-    input_image: Image,
-    output_image: Image = None,
-    device: Device = None
+    input_image: Image, output_image: Image = None, device: Device = None
 ) -> Image:
     """Generates a coordinate list of points in a labelled spot image. Transforms a
     labelmap of spots (single pixels with values 1, 2,..., n for n spots) as
@@ -444,7 +376,7 @@ def labelled_spots_to_pointlist(
     Returns
     -------
     Image
-    
+
     References
     ----------
     [1] https://clij.github.io/clij2-docs/reference_labelledSpotsToPointList
@@ -452,20 +384,11 @@ def labelled_spots_to_pointlist(
 
     from ._pyclesperanto import _labelled_spots_to_pointlist as op
 
-    
-    return op(
-        device=device,
-        src=input_image,
-        dst=output_image
-    )
-
+    return op(device=device, src=input_image, dst=output_image)
 
 
 @plugin_function
-def maximum_position(
-    input_image: Image,
-    device: Device = None
-) -> list:
+def maximum_position(input_image: Image, device: Device = None) -> list:
     """Determines the position of the maximum of all pixels in a given image.
 
     Parameters
@@ -478,24 +401,16 @@ def maximum_position(
     Returns
     -------
     list
-    
+
     """
 
     from ._pyclesperanto import _maximum_position as op
 
-    
-    return op(
-        device=device,
-        src=input_image
-    )
-
+    return op(device=device, src=input_image)
 
 
 @plugin_function
-def mean_of_all_pixels(
-    input_image: Image,
-    device: Device = None
-) -> float:
+def mean_of_all_pixels(input_image: Image, device: Device = None) -> float:
     """Determines the mean average of all pixels in a given image.
 
     Parameters
@@ -508,7 +423,7 @@ def mean_of_all_pixels(
     Returns
     -------
     float
-    
+
     References
     ----------
     [1] https://clij.github.io/clij2-docs/reference_meanOfAllPixels
@@ -516,19 +431,11 @@ def mean_of_all_pixels(
 
     from ._pyclesperanto import _mean_of_all_pixels as op
 
-    
-    return op(
-        device=device,
-        src=input_image
-    )
-
+    return op(device=device, src=input_image)
 
 
 @plugin_function
-def minimum_position(
-    input_image: Image,
-    device: Device = None
-) -> list:
+def minimum_position(input_image: Image, device: Device = None) -> list:
     """Determines the position of the minimum of all pixels in a given image.
 
     Parameters
@@ -541,14 +448,9 @@ def minimum_position(
     Returns
     -------
     list
-    
+
     """
 
     from ._pyclesperanto import _minimum_position as op
 
-    
-    return op(
-        device=device,
-        src=input_image
-    )
-
+    return op(device=device, src=input_image)

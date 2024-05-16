@@ -9,22 +9,20 @@
 # Deprecated aliases
 #
 
+import numpy as np
+
 from ._array import Image
 
 # pyclesperanto_prototype aliases
+from ._core import gpu_info as cl_info
 from ._core import list_available_devices as available_device_names
 from ._core import wait_for_kernel_to_finish as set_wait_for_kernel_to_finish
-from ._core import gpu_info as cl_info
-
-
-# scikit-image aliases
-from ._tier5 import connected_components_labeling as label
-
 
 # numpy operations aliases
 from ._memory import push as asarray
 
-import numpy as np
+# scikit-image aliases
+from ._tier5 import connected_components_labeling as label
 
 
 def clip(a, a_min, a_max, out=None):
@@ -89,8 +87,8 @@ def power(x1, x2, out=None):
 
 
 def fabs(x, out=None):
-    from ._tier1 import absolute
     from ._memory import create
+    from ._tier1 import absolute
 
     x = asarray(x)
     if out:

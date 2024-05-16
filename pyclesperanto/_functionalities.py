@@ -1,12 +1,13 @@
 from os import path
-from typing import Optional, Union
 from pathlib import Path
+from typing import Optional, Union
+
 import numpy as np
 
-from ._pyclesperanto import _execute, _native_execute
 from ._array import Array, Image
-from ._memory import pull
 from ._core import Device, get_device
+from ._memory import pull
+from ._pyclesperanto import _execute, _native_execute
 
 
 def execute(
@@ -215,8 +216,7 @@ def imshow(
     if labels:
         if not hasattr(imshow, "labels_cmap"):
             from matplotlib.colors import ListedColormap
-            from numpy.random import MT19937
-            from numpy.random import RandomState, SeedSequence
+            from numpy.random import MT19937, RandomState, SeedSequence
 
             rs = RandomState(MT19937(SeedSequence(3)))
             lut = rs.rand(65537, 3)
@@ -288,6 +288,7 @@ def operations(
     result = {}
 
     from inspect import getmembers, isfunction
+
     import pyclesperanto as cle
 
     # retrieve all operations and cache the result for later reuse

@@ -1,9 +1,9 @@
-import pytest
 import numpy as np
+import pytest
+
 import pyclesperanto as cle
 
 cle.select_device("TX")
-
 
 
 # @pytest.mark.parametrize("shape", 2 ** np.arange(9, 11), ids=lambda x: f"{x}x{x}")
@@ -29,8 +29,8 @@ cle.select_device("TX")
 
 # make a test for matrix multiplication
 def test_multiply_matrix():
-    matrix_a = np.random.rand(3,3).astype("float32")
-    matrix_b = np.random.rand(3,3).astype("float32")
+    matrix_a = np.random.rand(3, 3).astype("float32")
+    matrix_b = np.random.rand(3, 3).astype("float32")
 
     valid = np.dot(matrix_a, matrix_b)
     matrix_c = cle.multiply_matrix(matrix_a, matrix_b)

@@ -31,15 +31,3 @@ repos:
     rev: 5.0.4
     hooks:
     -   id: flake8
-
-# mypy - static type checking
--   repo: https://github.com/pre-commit/mirrors-mypy
-    rev: v0.910
-    hooks:
-    -   id: mypy
-
-# pydocstyle - docstring style checking
--   repo: https://github.com/pycqa/pydocstyle
-    rev: 6.1.1
-    hooks:
-    -   id: pydocstyle

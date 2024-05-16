@@ -3,8 +3,12 @@ from typing import Optional, Union
 import numpy as np
 
 from ._array import Array
-from ._utils import (_assert_supported_dtype, _compute_range,
-                     _process_ellipsis_into_slice, _trim_index_to_shape)
+from ._utils import (
+    _assert_supported_dtype,
+    _compute_range,
+    _process_ellipsis_into_slice,
+    _trim_index_to_shape,
+)
 
 cl_buffer_datatype_dict = {
     bool: "bool",
@@ -48,8 +52,7 @@ def _astype(self, dtype: type):
 
 def _max(self, axis: Optional[int] = None, out=None):
     """Return the maximum value in the Array, or along an axis if specified."""
-    from ._tier1 import (maximum_x_projection, maximum_y_projection,
-                         maximum_z_projection)
+    from ._tier1 import maximum_x_projection, maximum_y_projection, maximum_z_projection
     from ._tier2 import maximum_of_all_pixels
 
     if axis == 0:
@@ -72,8 +75,7 @@ def _max(self, axis: Optional[int] = None, out=None):
 
 def _min(self, axis: Optional[int] = None, out=None):
     """Return the minimum value in the Array, or along an axis if specified."""
-    from ._tier1 import (minimum_x_projection, minimum_y_projection,
-                         minimum_z_projection)
+    from ._tier1 import minimum_x_projection, minimum_y_projection, minimum_z_projection
     from ._tier2 import minimum_of_all_pixels
 
     if axis == 0:

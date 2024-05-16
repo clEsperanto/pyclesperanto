@@ -1,7 +1,15 @@
 from ._array import Array, Image, is_image
-from ._core import (Device, default_initialisation, get_device, gpu_info,
-                    list_available_backends, list_available_devices,
-                    select_backend, select_device, wait_for_kernel_to_finish)
+from ._core import (
+    Device,
+    default_initialisation,
+    get_device,
+    gpu_info,
+    list_available_backends,
+    list_available_devices,
+    select_backend,
+    select_device,
+    wait_for_kernel_to_finish,
+)
 from ._functionalities import execute, imshow, list_operations, native_execute
 from ._interroperability import *
 from ._memory import create, create_like, pull, push

@@ -12,12 +12,15 @@
 import numpy as np
 
 from ._array import Image
+
 # pyclesperanto_prototype aliases
 from ._core import gpu_info as cl_info
 from ._core import list_available_devices as available_device_names
 from ._core import wait_for_kernel_to_finish as set_wait_for_kernel_to_finish
+
 # numpy operations aliases
 from ._memory import push as asarray
+
 # scikit-image aliases
 from ._tier5 import connected_components_labeling as label
 

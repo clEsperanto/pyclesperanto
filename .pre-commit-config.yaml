@@ -13,7 +13,6 @@ repos:
     -   id: check-merge-conflict
     -   id: check-symlinks
     -   id: mixed-line-ending
-    -   id: name-tests-test
 
 # black - code formatting
 -   repo: https://github.com/psf/black

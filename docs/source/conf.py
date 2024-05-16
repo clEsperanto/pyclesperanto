@@ -68,7 +68,7 @@ html_theme_options = {
 }
 html_context = {}
 
-if not "READTHEDOCS" in os.environ:
+if "READTHEDOCS" not in os.environ:
     html_static_path = ["_static/"]
     html_js_files = ["debug.js"]
 
@@ -91,6 +91,7 @@ texinfo_documents = [
 ]
 
 html_static_path = ["_static"]
+
 
 # Extensions to theme docs
 def setup(app):

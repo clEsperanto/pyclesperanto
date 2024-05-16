@@ -2,10 +2,6 @@ name: Deploy
 
 # Build on every branch push, tag push, and pull request change:
 on:
-  workflow_run:
-      workflows: ["Build"]
-      types:
-        - completed
   push:
     branches: [main]
     paths-ignore:

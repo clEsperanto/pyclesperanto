@@ -1,9 +1,11 @@
 [flake8]
-# Ignore error codes that may conflict with Black
-ignore = E203, E231, E501, W503, F401, F403
-
-# Enable line length of 88, matching Black's default
+ignore = E203, E231, W503
 max-line-length = 88
-
-# Exclude some directories and files from linting (customize as needed)
 exclude = .git, .venv, __pycache__, .eggs, *.egg, build, dist
+
+# Ignore F401 and F403 only for __init__.py files
+per-file-ignores =
+    */__init__.py: F401, F403
+
+# Warn if the complexity of a function exceeds 10
+max-complexity = 10

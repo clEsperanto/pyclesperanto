@@ -64,7 +64,7 @@ def _max(self, axis: Optional[int] = None, out=None):
     elif axis is None:
         result = maximum_of_all_pixels(self)
     else:
-        raise ValueError("Axis " + axis + " not supported")
+        raise ValueError("Axis " + str(axis) + " not supported")
     if out is not None:
         if isinstance(out, (Array, np.ndarray)):
             np.copyto(out, result.get().astype(out.dtype))
@@ -87,7 +87,7 @@ def _min(self, axis: Optional[int] = None, out=None):
     elif axis is None:
         result = minimum_of_all_pixels(self)
     else:
-        raise ValueError("Axis " + axis + " not supported")
+        raise ValueError("Axis " + str(axis) + " not supported")
     if out is not None:
         if isinstance(out, (Array, np.ndarray)):
             np.copyto(out, result.get().astype(out.dtype))
@@ -108,7 +108,7 @@ def _sum(self, axis: Optional[int] = None, out=None):
     elif axis is None:
         result = sum_of_all_pixels(self)
     else:
-        raise ValueError("Axis " + axis + " not supported")
+        raise ValueError("Axis " + str(axis) + " not supported")
     if out is not None:
         if isinstance(out, (Array, np.ndarray)):
             np.copyto(out, result.get().astype(out.dtype))

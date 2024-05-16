@@ -1,6 +1,7 @@
-from skimage.io import imread
-import pyclesperanto as cle
 import numpy as np
+from skimage.io import imread
+
+import pyclesperanto as cle
 
 cle.select_device("TX")
 

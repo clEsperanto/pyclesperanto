@@ -1,5 +1,6 @@
-import pyclesperanto as cle
 import numpy as np
+
+import pyclesperanto as cle
 
 absolute_ocl = """
 __constant sampler_t sampler = CLK_NORMALIZED_COORDS_FALSE | CLK_ADDRESS_CLAMP_TO_EDGE | CLK_FILTER_NEAREST;

@@ -1,10 +1,10 @@
 import warnings
+from typing import Optional, Tuple
+
+import numpy as np
 
 from ._array import Array, Image
 from ._core import Device, get_device
-
-import numpy as np
-from typing import Tuple, Optional
 
 
 def create(

@@ -1,10 +1,10 @@
-import numpy as np
 from typing import Optional, Union
 
-from ._array import Array
+import numpy as np
 
-from ._utils import _compute_range, _process_ellipsis_into_slice, _trim_index_to_shape
-from ._utils import _assert_supported_dtype
+from ._array import Array
+from ._utils import (_assert_supported_dtype, _compute_range,
+                     _process_ellipsis_into_slice, _trim_index_to_shape)
 
 cl_buffer_datatype_dict = {
     bool: "bool",
@@ -38,8 +38,8 @@ def _astype(self, dtype: type):
     if dtype == self.dtype:
         return self
 
-    from ._tier1 import copy
     from ._memory import create_like
+    from ._tier1 import copy
 
     result = create_like(self, dtype=dtype)
     copy(input_image=self, output_image=result)
@@ -48,10 +48,9 @@ def _astype(self, dtype: type):
 
 def _max(self, axis: Optional[int] = None, out=None):
     """Return the maximum value in the Array, or along an axis if specified."""
+    from ._tier1 import (maximum_x_projection, maximum_y_projection,
+                         maximum_z_projection)
     from ._tier2 import maximum_of_all_pixels
-    from ._tier1 import maximum_x_projection
-    from ._tier1 import maximum_y_projection
-    from ._tier1 import maximum_z_projection
 
     if axis == 0:
         result = maximum_z_projection(self)
@@ -73,10 +72,9 @@ def _max(self, axis: Optional[int] = None, out=None):
 
 def _min(self, axis: Optional[int] = None, out=None):
     """Return the minimum value in the Array, or along an axis if specified."""
+    from ._tier1 import (minimum_x_projection, minimum_y_projection,
+                         minimum_z_projection)
     from ._tier2 import minimum_of_all_pixels
-    from ._tier1 import minimum_x_projection
-    from ._tier1 import minimum_y_projection
-    from ._tier1 import minimum_z_projection
 
     if axis == 0:
         result = minimum_z_projection(self)
@@ -96,10 +94,8 @@ def _min(self, axis: Optional[int] = None, out=None):
 
 def _sum(self, axis: Optional[int] = None, out=None):
     """Return the sum of the Array, or along an axis if specified."""
+    from ._tier1 import sum_x_projection, sum_y_projection, sum_z_projection
     from ._tier2 import sum_of_all_pixels
-    from ._tier1 import sum_x_projection
-    from ._tier1 import sum_y_projection
-    from ._tier1 import sum_z_projection
 
     if axis == 0:
         result = sum_z_projection(self)
@@ -438,8 +434,8 @@ def __getitem__(self, index):
 
     # if result is an Array, and one of the dimension is equal to 1
     if result.shape != tuple(dst_shape):
-        from ._tier1 import transpose_xy, transpose_yz
         from ._memory import create
+        from ._tier1 import transpose_xy, transpose_yz
 
         tmp = create(
             dst_shape,
@@ -589,8 +585,9 @@ def __plt_to_png__(self):
     -------
     In memory binary stream containing a PNG matplotlib image.
     """
-    import matplotlib.pyplot as plt
     from io import BytesIO
+
+    import matplotlib.pyplot as plt
 
     with BytesIO() as file_obj:
         plt.savefig(file_obj, format="png")
@@ -613,8 +610,9 @@ def __repr_html__(self):
     -------
     HTML text with the image and some properties.
     """
-    import numpy as np
     import matplotlib.pyplot as plt
+    import numpy as np
+
     from ._functionalities import imshow
 
     size_in_pixels = np.prod(self.size)

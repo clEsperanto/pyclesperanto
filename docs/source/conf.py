@@ -4,8 +4,8 @@
 # https://www.sphinx-doc.org/en/master/usage/configuration.html
 
 import os
-import sys
 import re
+import sys
 
 from sphinx.locale import _
 

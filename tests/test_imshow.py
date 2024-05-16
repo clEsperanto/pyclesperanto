@@ -1,7 +1,9 @@
-import matplotlib.pyplot as plt
-import pyclesperanto as cle
-import numpy as np
 from unittest.mock import patch
+
+import matplotlib.pyplot as plt
+import numpy as np
+
+import pyclesperanto as cle
 
 
 @patch("matplotlib.pyplot.show")

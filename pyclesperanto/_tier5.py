@@ -3,11 +3,13 @@
 # Do not edit manually.
 #
 
-from ._core import Device
-from ._array import Image
-from ._decorators import plugin_function
-import numpy as np
 import warnings
+
+import numpy as np
+
+from ._array import Image
+from ._core import Device
+from ._decorators import plugin_function
 
 
 @plugin_function(category=["combine"])

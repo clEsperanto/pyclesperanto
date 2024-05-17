@@ -23,12 +23,10 @@ class PluginFunction(CallableFunction):
         self,
         function: Callable[..., Any],
         category: Optional[List] = None,
-        priority: int = 0,
     ):
         self.function = function
         self.fullargspec = inspect.getfullargspec(function)
         self.category = category
-        self.priority = priority
 
     def __call__(self, *args, **kwargs):
         return self.function(*args, **kwargs)
@@ -38,10 +36,27 @@ class PluginFunction(CallableFunction):
 def plugin_function(
     function: PluginFunction,
     category: Optional[List] = None,
-    priority: int = 0,
 ) -> Callable:
-    """A decorator for kernels functions."""
-    function = PluginFunction(function, category, priority)
+    """A decorator for kernels functions.
+
+    The decorator allocate a device if None is provided, and push the input image to the device
+    if it is not already there.
+    This function can be extended to support more functionalities in the future if we need to automatised
+    more behaviours on the kernels calls.
+
+    Parameters
+    ----------
+    function : Callable[..., Any]
+        The function to be decorated.
+    category : Optional[List], optional
+        The category of the function, by default None.
+
+    Returns
+    -------
+    Callable
+        The decorated function.
+    """
+    function = PluginFunction(function, category)
 
     @wraps(function.function)
     def worker_function(*args, **kwargs):

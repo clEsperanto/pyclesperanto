@@ -4,6 +4,7 @@
 #
 
 import warnings
+from typing import Optional
 
 import numpy as np
 
@@ -13,7 +14,7 @@ from ._decorators import plugin_function
 
 
 @plugin_function
-def bounding_box(input_image: Image, device: Device = None) -> list:
+def bounding_box(input_image: Image, device: Optional[Device] = None) -> list:
     """Determines the bounding box of all nonzero pixels in a binary image. The
     positions are returned in  an array of 6 values as follows: minX, minY, minZ,
     maxX, maxY, maxZ.
@@ -21,7 +22,7 @@ def bounding_box(input_image: Image, device: Device = None) -> list:
     Parameters
     ----------
     input_image: Image
-    device: Device = None
+    device: Optional[Device] = None
         Device to perform the operation on.
 
     Returns
@@ -39,14 +40,14 @@ def bounding_box(input_image: Image, device: Device = None) -> list:
 
 
 @plugin_function
-def center_of_mass(input_image: Image, device: Device = None) -> list:
+def center_of_mass(input_image: Image, device: Optional[Device] = None) -> list:
     """Determines the center of mass of an image or image stack. It writes the result
     in the results table in the columns MassX, MassY and MassZ.
 
     Parameters
     ----------
     input_image: Image
-    device: Device = None
+    device: Optional[Device] = None
         Device to perform the operation on.
 
     Returns
@@ -65,7 +66,10 @@ def center_of_mass(input_image: Image, device: Device = None) -> list:
 
 @plugin_function
 def exclude_labels(
-    input_image: Image, list: Image, output_image: Image = None, device: Device = None
+    input_image: Image,
+    list: Image,
+    output_image: Optional[Image] = None,
+    device: Optional[Device] = None,
 ) -> Image:
     """This operation removes labels from a labelmap and renumbers the remaining
     labels. Hand over a binary flag list vector starting with a flag for the
@@ -77,8 +81,8 @@ def exclude_labels(
     ----------
     input_image: Image
     list: Image
-    output_image: Image = None
-    device: Device = None
+    output_image: Optional[Image] = None
+    device: Optional[Device] = None
         Device to perform the operation on.
 
     Returns
@@ -98,11 +102,11 @@ def exclude_labels(
 @plugin_function(category=["label processing", "in assistant", "bia-bob-suggestion"])
 def exclude_labels_on_edges(
     input_image: Image,
-    output_image: Image = None,
+    output_image: Optional[Image] = None,
     exclude_x: bool = True,
     exclude_y: bool = True,
     exclude_z: bool = True,
-    device: Device = None,
+    device: Optional[Device] = None,
 ) -> Image:
     """Removes all labels from a label map which touch the edges of the image.
     Remaining label elements are renumbered afterwards.
@@ -110,14 +114,14 @@ def exclude_labels_on_edges(
     Parameters
     ----------
     input_image: Image
-    output_image: Image = None
+    output_image: Optional[Image] = None
     exclude_x: bool = True
         Exclude labels along min and max x
     exclude_y: bool = True
         Exclude labels along min and max y
     exclude_z: bool = True
         Exclude labels along min and max z
-    device: Device = None
+    device: Optional[Device] = None
         Device to perform the operation on.
 
     Returns
@@ -143,7 +147,9 @@ def exclude_labels_on_edges(
 
 @plugin_function
 def flag_existing_labels(
-    input_image: Image, output_image: Image = None, device: Device = None
+    input_image: Image,
+    output_image: Optional[Image] = None,
+    device: Optional[Device] = None,
 ) -> Image:
     """Given a label map this function will generate a binary vector where all pixels
     are set to 1 if label with given xcoordinate in the vector exists. For example a
@@ -154,9 +160,9 @@ def flag_existing_labels(
     ----------
     input_image: Image
         a label image
-    output_image: Image = None
+    output_image: Optional[Image] = None
         binary vector, if given should have size 1*n with n = maximum label + 1
-    device: Device = None
+    device: Optional[Device] = None
         Device to perform the operation on.
 
     Returns
@@ -173,9 +179,9 @@ def flag_existing_labels(
 @plugin_function(category=["filter", "in assistant"])
 def gamma_correction(
     input_image: Image,
-    output_image: Image = None,
+    output_image: Optional[Image] = None,
     gamma: float = 1,
-    device: Device = None,
+    device: Optional[Device] = None,
 ) -> Image:
     """Applies a gamma correction to an image. Therefore, all pixels x of the Image X
     are normalized and the power to gamma g is computed, before normlization is
@@ -184,9 +190,9 @@ def gamma_correction(
     Parameters
     ----------
     input_image: Image
-    output_image: Image = None
+    output_image: Optional[Image] = None
     gamma: float = 1
-    device: Device = None
+    device: Optional[Device] = None
         Device to perform the operation on.
 
     Returns
@@ -207,8 +213,8 @@ def gamma_correction(
 def generate_binary_overlap_matrix(
     input_image0: Image,
     input_image1: Image,
-    output_image: Image = None,
-    device: Device = None,
+    output_image: Optional[Image] = None,
+    device: Optional[Device] = None,
 ) -> Image:
     """Takes two labelmaps with n and m labels and generates a (n+1)*(m+1) matrix where
     all pixels are set to 0 exept those where labels overlap between the label maps.
@@ -219,8 +225,8 @@ def generate_binary_overlap_matrix(
     ----------
     input_image0: Image
     input_image1: Image
-    output_image: Image = None
-    device: Device = None
+    output_image: Optional[Image] = None
+    device: Optional[Device] = None
         Device to perform the operation on.
 
     Returns
@@ -239,7 +245,9 @@ def generate_binary_overlap_matrix(
 
 @plugin_function(category=["bia-bob-suggestion"])
 def generate_touch_matrix(
-    input_image: Image, output_image: Image = None, device: Device = None
+    input_image: Image,
+    output_image: Optional[Image] = None,
+    device: Optional[Device] = None,
 ) -> Image:
     """Takes a labelmap with n labels and generates a (n+1)*(n+1) matrix where all
     pixels are set to 0 exept those where labels are touching. Only half of the
@@ -250,8 +258,8 @@ def generate_touch_matrix(
     Parameters
     ----------
     input_image: Image
-    output_image: Image = None
-    device: Device = None
+    output_image: Optional[Image] = None
+    device: Optional[Device] = None
         Device to perform the operation on.
 
     Returns
@@ -271,11 +279,11 @@ def generate_touch_matrix(
 @plugin_function
 def histogram(
     input_image: Image,
-    output_image: Image = None,
+    output_image: Optional[Image] = None,
     nbins: int = 256,
-    min: float = None,
-    max: float = None,
-    device: Device = None,
+    min: Optional[float] = None,
+    max: Optional[float] = None,
+    device: Optional[Device] = None,
 ) -> Image:
     """Determines the histogram of a given image. The histogram image is of dimensions
     number_of_bins/1/1; a 3D image with height=1 and depth=1. Histogram bins contain
@@ -297,11 +305,11 @@ def histogram(
     Parameters
     ----------
     input_image: Image
-    output_image: Image = None
+    output_image: Optional[Image] = None
     nbins: int = 256
-    min: float = None
-    max: float = None
-    device: Device = None
+    min: Optional[float] = None
+    max: Optional[float] = None
+    device: Optional[Device] = None
         Device to perform the operation on.
 
     Returns
@@ -320,14 +328,14 @@ def histogram(
         src=input_image,
         dst=output_image,
         nbins=int(nbins),
-        min=float(min),
-        max=float(max),
+        min=float(min) if min is not None else None,
+        max=float(max) if max is not None else None,
     )
 
 
 @plugin_function
 def jaccard_index(
-    input_image0: Image, input_image1: Image, device: Device = None
+    input_image0: Image, input_image1: Image, device: Optional[Device] = None
 ) -> float:
     """Determines the overlap of two binary images using the Jaccard index. A value of
     0 suggests no overlap, 1 means perfect overlap. The resulting Jaccard index is
@@ -339,7 +347,7 @@ def jaccard_index(
     ----------
     input_image0: Image
     input_image1: Image
-    device: Device = None
+    device: Optional[Device] = None
         Device to perform the operation on.
 
     Returns
@@ -358,7 +366,9 @@ def jaccard_index(
 
 @plugin_function(category=["bia-bob-suggestion"])
 def labelled_spots_to_pointlist(
-    input_image: Image, output_image: Image = None, device: Device = None
+    input_image: Image,
+    output_image: Optional[Image] = None,
+    device: Optional[Device] = None,
 ) -> Image:
     """Generates a coordinate list of points in a labelled spot image. Transforms a
     labelmap of spots (single pixels with values 1, 2,..., n for n spots) as
@@ -369,8 +379,8 @@ def labelled_spots_to_pointlist(
     Parameters
     ----------
     input_image: Image
-    output_image: Image = None
-    device: Device = None
+    output_image: Optional[Image] = None
+    device: Optional[Device] = None
         Device to perform the operation on.
 
     Returns
@@ -388,14 +398,14 @@ def labelled_spots_to_pointlist(
 
 
 @plugin_function
-def maximum_position(input_image: Image, device: Device = None) -> list:
+def maximum_position(input_image: Image, device: Optional[Device] = None) -> list:
     """Determines the position of the maximum of all pixels in a given image.
 
     Parameters
     ----------
     input_image: Image
         The image of which the position of the maximum of all pixels will be determined.
-    device: Device = None
+    device: Optional[Device] = None
         Device to perform the operation on.
 
     Returns
@@ -410,14 +420,14 @@ def maximum_position(input_image: Image, device: Device = None) -> list:
 
 
 @plugin_function
-def mean_of_all_pixels(input_image: Image, device: Device = None) -> float:
+def mean_of_all_pixels(input_image: Image, device: Optional[Device] = None) -> float:
     """Determines the mean average of all pixels in a given image.
 
     Parameters
     ----------
     input_image: Image
         The image of which the mean average of all pixels will be determined.
-    device: Device = None
+    device: Optional[Device] = None
         Device to perform the operation on.
 
     Returns
@@ -435,14 +445,14 @@ def mean_of_all_pixels(input_image: Image, device: Device = None) -> float:
 
 
 @plugin_function
-def minimum_position(input_image: Image, device: Device = None) -> list:
+def minimum_position(input_image: Image, device: Optional[Device] = None) -> list:
     """Determines the position of the minimum of all pixels in a given image.
 
     Parameters
     ----------
     input_image: Image
         The image of which the position of the minimum of all pixels will be determined.
-    device: Device = None
+    device: Optional[Device] = None
         Device to perform the operation on.
 
     Returns

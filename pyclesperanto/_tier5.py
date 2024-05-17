@@ -4,6 +4,7 @@
 #
 
 import warnings
+from typing import Optional
 
 import numpy as np
 
@@ -14,7 +15,7 @@ from ._decorators import plugin_function
 
 @plugin_function(category=["combine"])
 def array_equal(
-    input_image0: Image, input_image1: Image, device: Device = None
+    input_image0: Image, input_image1: Image, device: Optional[Device] = None
 ) -> bool:
     """Compares if all pixels of two images are identical. If shape of the images or
     any pixel are different, returns False. True otherwise This function is supposed
@@ -24,7 +25,7 @@ def array_equal(
     ----------
     input_image0: Image
     input_image1: Image
-    device: Device = None
+    device: Optional[Device] = None
         Device to perform the operation on.
 
     Returns
@@ -52,8 +53,8 @@ def array_equal(
 def combine_labels(
     input_image0: Image,
     input_image1: Image,
-    output_image: Image = None,
-    device: Device = None,
+    output_image: Optional[Image] = None,
+    device: Optional[Device] = None,
 ) -> Image:
     """Combines two label images by adding labels of a given label image to another.
     Labels in the second image overwrite labels in the first passed image.
@@ -65,9 +66,9 @@ def combine_labels(
         label image to add labels to.
     input_image1: Image
         label image to add labels from.
-    output_image: Image = None
+    output_image: Optional[Image] = None
         Output label image.
-    device: Device = None
+    device: Optional[Device] = None
         Device to perform the operation on.
 
     Returns
@@ -84,9 +85,9 @@ def combine_labels(
 @plugin_function(category=["label", "in assistant", "bia-bob-suggestion"])
 def connected_components_labeling(
     input_image: Image,
-    output_image: Image = None,
+    output_image: Optional[Image] = None,
     connectivity: str = "box",
-    device: Device = None,
+    device: Optional[Device] = None,
 ) -> Image:
     """Performs connected components analysis inspecting the box neighborhood of every
     pixel to a binary image and generates a label map.
@@ -95,11 +96,11 @@ def connected_components_labeling(
     ----------
     input_image: Image
         Binary image to label.
-    output_image: Image = None
+    output_image: Optional[Image] = None
         Output label image.
     connectivity: str = 'box'
         Defines pixel neighborhood relationship, "box" or "sphere".
-    device: Device = None
+    device: Optional[Device] = None
         Device to perform the operation on.
 
     Returns

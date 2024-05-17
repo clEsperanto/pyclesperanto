@@ -12,7 +12,6 @@ from ._core import (
 )
 from ._functionalities import execute, imshow, list_operations, native_execute
 from ._memory import create, create_like, pull, push
-
 from ._tier1 import *
 from ._tier2 import *
 from ._tier3 import *
@@ -21,11 +20,10 @@ from ._tier5 import *
 from ._tier6 import *
 from ._tier7 import *
 from ._tier8 import *
-
-from ._interroperability import *
-
 from ._version import CLIC_VERSION as __clic_version__
 from ._version import COMMON_ALIAS as __common_alias__
 from ._version import VERSION as __version__
+
+from ._interroperability import *  # isort:skip
 
 default_initialisation()

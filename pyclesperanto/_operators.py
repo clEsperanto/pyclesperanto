@@ -2,7 +2,8 @@ from typing import Optional, Union
 
 import numpy as np
 
-from ._array import Array
+# from ._array import Array
+from ._pyclesperanto import _Array as Array
 from ._utils import (
     _assert_supported_dtype,
     _compute_range,

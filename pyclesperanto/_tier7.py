@@ -4,6 +4,7 @@
 #
 
 import warnings
+from typing import Optional
 
 import numpy as np
 
@@ -15,11 +16,11 @@ from ._decorators import plugin_function
 @plugin_function
 def affine_transform(
     input_image: Image,
-    output_image: Image = None,
-    transform_matrix: list = None,
+    output_image: Optional[Image] = None,
+    transform_matrix: Optional[list] = None,
     interpolate: bool = False,
     resize: bool = False,
-    device: Device = None,
+    device: Optional[Device] = None,
 ) -> Image:
     """Apply an affine transformation matrix to an array and return the result.  The
     transformation matrix must be 3x3 or 4x4 stored as a 1D array.  The matrix
@@ -30,15 +31,15 @@ def affine_transform(
     ----------
     input_image: Image
         Input Array to be transformed.
-    output_image: Image = None
+    output_image: Optional[Image] = None
         Output Array.
-    transform_matrix: list = None
+    transform_matrix: Optional[list] = None
         Affine transformation matrix (3x3 or 4x4).
     interpolate: bool = False
         If true, bi/trilinear interpolation will be applied, if hardware allows.
     resize: bool = False
         Automatically determines the size of the output depending on the rotation angles.
-    device: Device = None
+    device: Optional[Device] = None
         Device to perform the operation on.
 
     Returns
@@ -62,10 +63,10 @@ def affine_transform(
 @plugin_function(category=["label", "in assistant", "bia-bob-suggestion"])
 def eroded_otsu_labeling(
     input_image: Image,
-    output_image: Image = None,
+    output_image: Optional[Image] = None,
     number_of_erosions: int = 5,
     outline_sigma: float = 2,
-    device: Device = None,
+    device: Optional[Device] = None,
 ) -> Image:
     """Segments and labels an image using blurring, Otsu-thresholding, binary erosion
     and  masked Voronoi-labeling.  After bluring and Otsu-thresholding the image,
@@ -81,13 +82,13 @@ def eroded_otsu_labeling(
     ----------
     input_image: Image
         Input Array to be transformed.
-    output_image: Image = None
+    output_image: Optional[Image] = None
         Output Array.
     number_of_erosions: int = 5
         Number of iteration of erosion.
     outline_sigma: float = 2
         Gaussian blur sigma applied before Otsu thresholding.
-    device: Device = None
+    device: Optional[Device] = None
         Device to perform the operation on.
 
     Returns
@@ -114,7 +115,7 @@ def eroded_otsu_labeling(
 @plugin_function(category=["transform", "in assistant", "bia-bob-suggestion"])
 def rigid_transform(
     input_image: Image,
-    output_image: Image = None,
+    output_image: Optional[Image] = None,
     translate_x: float = 0,
     translate_y: float = 0,
     translate_z: float = 0,
@@ -124,7 +125,7 @@ def rigid_transform(
     centered: bool = True,
     interpolate: bool = False,
     resize: bool = False,
-    device: Device = None,
+    device: Optional[Device] = None,
 ) -> Image:
     """Translate the image by a given vector and rotate it by given angles. Angles are
     given in degrees. To convert radians to degrees, use this formula:
@@ -134,7 +135,7 @@ def rigid_transform(
     ----------
     input_image: Image
         Input Array to be transformed.
-    output_image: Image = None
+    output_image: Optional[Image] = None
         Output Array.
     translate_x: float = 0
         Translation along x axis in pixels.
@@ -154,7 +155,7 @@ def rigid_transform(
         If true, bi/trilinear interpolation will be applied, if hardware allows.
     resize: bool = False
         Automatically determines the size of the output depending on the rotation angles.
-    device: Device = None
+    device: Optional[Device] = None
         Device to perform the operation on.
 
     Returns
@@ -184,14 +185,14 @@ def rigid_transform(
 @plugin_function(category=["transform", "in assistant"])
 def rotate(
     input_image: Image,
-    output_image: Image = None,
+    output_image: Optional[Image] = None,
     angle_x: float = 0,
     angle_y: float = 0,
     angle_z: float = 0,
     centered: bool = True,
     interpolate: bool = False,
     resize: bool = False,
-    device: Device = None,
+    device: Optional[Device] = None,
 ) -> Image:
     """Rotate the image by given angles. Angles are given in degrees. To convert
     radians to degrees, use this formula: angle_in_degrees = angle_in_radians /
@@ -201,7 +202,7 @@ def rotate(
     ----------
     input_image: Image
         Input Array to be rotated.
-    output_image: Image = None
+    output_image: Optional[Image] = None
         Output Array.
     angle_x: float = 0
         Rotation around x axis in degrees.
@@ -215,7 +216,7 @@ def rotate(
         If true, bi/trilinear interpolation will be applied, if hardware allows.
     resize: bool = False
         Automatically determines the size of the output depending on the rotation angles.
-    device: Device = None
+    device: Optional[Device] = None
         Device to perform the operation on.
 
     Returns
@@ -242,14 +243,14 @@ def rotate(
 @plugin_function(category=["transform", "in assistant"])
 def scale(
     input_image: Image,
-    output_image: Image = None,
+    output_image: Optional[Image] = None,
     factor_x: float = 1,
     factor_y: float = 1,
     factor_z: float = 1,
     centered: bool = True,
     interpolate: bool = False,
     resize: bool = False,
-    device: Device = None,
+    device: Optional[Device] = None,
 ) -> Image:
     """Scale the image by given factors.
 
@@ -257,7 +258,7 @@ def scale(
     ----------
     input_image: Image
         Input Array to be scaleded.
-    output_image: Image = None
+    output_image: Optional[Image] = None
         Output Array.
     factor_x: float = 1
         Scaling along x axis.
@@ -271,7 +272,7 @@ def scale(
         If true, bi/trilinear interplation will be applied.
     resize: bool = False
         Automatically determines output size image.
-    device: Device = None
+    device: Optional[Device] = None
         Device to perform the operation on.
 
     Returns
@@ -298,12 +299,12 @@ def scale(
 @plugin_function(category=["transform", "in assistant"])
 def translate(
     input_image: Image,
-    output_image: Image = None,
+    output_image: Optional[Image] = None,
     translate_x: float = 0,
     translate_y: float = 0,
     translate_z: float = 0,
     interpolate: bool = False,
-    device: Device = None,
+    device: Optional[Device] = None,
 ) -> Image:
     """Translate the image by a given vector.
 
@@ -311,7 +312,7 @@ def translate(
     ----------
     input_image: Image
         Input Array to be translated.
-    output_image: Image = None
+    output_image: Optional[Image] = None
         Output Array.
     translate_x: float = 0
         Translation along x axis in pixels.
@@ -321,7 +322,7 @@ def translate(
         Translation along z axis in pixels.
     interpolate: bool = False
         If true, bi/trilinear interplation will be applied.
-    device: Device = None
+    device: Optional[Device] = None
         Device to perform the operation on.
 
     Returns
@@ -346,9 +347,9 @@ def translate(
 @plugin_function(category=["label processing", "in assistant", "bia-bob-suggestion"])
 def closing_labels(
     input_image: Image,
-    output_image: Image = None,
+    output_image: Optional[Image] = None,
     radius: int = 0,
-    device: Device = None,
+    device: Optional[Device] = None,
 ) -> Image:
     """Apply a morphological closing operation to a label image. The operation consists
     of iterative dilation and erosion of the labels. With every iteration, box and
@@ -360,11 +361,11 @@ def closing_labels(
     ----------
     input_image: Image
         Input label Array.
-    output_image: Image = None
+    output_image: Optional[Image] = None
         Output label Array.
     radius: int = 0
         Radius size for the closing.
-    device: Device = None
+    device: Optional[Device] = None
         Device to perform the operation on.
 
     Returns
@@ -381,9 +382,9 @@ def closing_labels(
 @plugin_function
 def erode_connected_labels(
     input_image: Image,
-    output_image: Image = None,
+    output_image: Optional[Image] = None,
     radius: int = 1,
-    device: Device = None,
+    device: Optional[Device] = None,
 ) -> Image:
     """Erodes labels to a smaller size. Note: Depending on the label image and the
     radius,  labels may disappear and labels may split into multiple islands. Thus,
@@ -393,9 +394,9 @@ def erode_connected_labels(
     ----------
     input_image: Image
         result
-    output_image: Image = None
+    output_image: Optional[Image] = None
     radius: int = 1
-    device: Device = None
+    device: Optional[Device] = None
         Device to perform the operation on.
 
     Returns
@@ -412,9 +413,9 @@ def erode_connected_labels(
 @plugin_function(category=["label processing", "in assistant", "bia-bob-suggestion"])
 def opening_labels(
     input_image: Image,
-    output_image: Image = None,
+    output_image: Optional[Image] = None,
     radius: int = 0,
-    device: Device = None,
+    device: Optional[Device] = None,
 ) -> Image:
     """Apply a morphological opening operation to a label image. The operation consists
     of iterative erosion and dilation of the labels. With every iteration, box and
@@ -426,11 +427,11 @@ def opening_labels(
     ----------
     input_image: Image
         Input label Array.
-    output_image: Image = None
+    output_image: Optional[Image] = None
         Output label Array.
     radius: int = 0
         Radius size for the opening.
-    device: Device = None
+    device: Optional[Device] = None
         Device to perform the operation on.
 
     Returns
@@ -447,10 +448,10 @@ def opening_labels(
 @plugin_function(category=["label", "in assistant", "bia-bob-suggestion"])
 def voronoi_otsu_labeling(
     input_image: Image,
-    output_image: Image = None,
+    output_image: Optional[Image] = None,
     spot_sigma: float = 2,
     outline_sigma: float = 2,
-    device: Device = None,
+    device: Optional[Device] = None,
 ) -> Image:
     """Labels objects directly from greyvalue images. The two sigma parameters allow
     tuning the segmentation result. Under the hood, this filter applies two Gaussian
@@ -463,13 +464,13 @@ def voronoi_otsu_labeling(
     ----------
     input_image: Image
         Input intensity Array.
-    output_image: Image = None
+    output_image: Optional[Image] = None
         Output label Array.
     spot_sigma: float = 2
         Controls how close detected cells can be.
     outline_sigma: float = 2
         Controls how precise segmented objects are outlined.
-    device: Device = None
+    device: Optional[Device] = None
         Device to perform the operation on.
 
     Returns

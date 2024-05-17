@@ -1,12 +1,11 @@
-from typing import Union
+from typing import Optional, Union
 
 import numpy as np
 
+from . import _operators
 from ._core import Device, get_device
 from ._pyclesperanto import _Array as Array
 from ._utils import _assert_supported_dtype
-
-from . import _operators
 
 
 def _prepare_array(arr) -> np.ndarray:
@@ -37,7 +36,12 @@ def __repr__(self) -> str:
     return repr_str[:-1] + f", {extra_info})"
 
 
-def set(self, array: np.ndarray, origin: tuple = None, region: tuple = None) -> None:
+def set(
+    self,
+    array: np.ndarray,
+    origin: Optional[tuple] = None,
+    region: Optional[tuple] = None,
+) -> None:
     """Set the content of the Array to the given numpy array.
 
     Parameters
@@ -73,7 +77,9 @@ def set(self, array: np.ndarray, origin: tuple = None, region: tuple = None) -> 
     return self
 
 
-def get(self, origin: tuple = None, region: tuple = None) -> np.ndarray:
+def get(
+    self, origin: Optional[tuple] = None, region: Optional[tuple] = None
+) -> np.ndarray:
     """Get the content of the Array into a numpy array.
 
     Parameters

@@ -3,6 +3,7 @@ from pathlib import Path
 from typing import Optional, Union
 
 import numpy as np
+from matplotlib.colors import ListedColormap
 
 from ._array import Array, Image
 from ._core import Device, get_device
@@ -161,7 +162,7 @@ def imshow(
     color_map: Optional[str] = None,
     plot=None,
     colorbar: Optional[bool] = False,
-    colormap: Union[str, None] = None,
+    colormap: Union[str, ListedColormap, None] = None,
     alpha: Optional[float] = None,
     continue_drawing: Optional[bool] = False,
 ):
@@ -209,13 +210,8 @@ def imshow(
         if colormap is None:
             colormap = color_map
 
-    if colormap is None:
-        colormap = "Greys_r"
-
-    cmap = colormap
     if labels:
-        if not hasattr(imshow, "labels_cmap"):
-            from matplotlib.colors import ListedColormap
+        if not hasattr(imshow, "colormap"):
             from numpy.random import MT19937, RandomState, SeedSequence
 
             rs = RandomState(MT19937(SeedSequence(3)))
@@ -226,14 +222,17 @@ def imshow(
             lut[2] = [1.0, 0.4980392156862745, 0.054901960784313725]
             lut[3] = [0.17254901960784313, 0.6274509803921569, 0.17254901960784313]
             lut[4] = [0.8392156862745098, 0.15294117647058825, 0.1568627450980392]
-            imshow.labels_cmap = ListedColormap(lut)
+            colormap = ListedColormap(lut)
 
-        cmap = imshow.labels_cmap
         if min_display_intensity is None:
             min_display_intensity = 0
         if max_display_intensity is None:
             max_display_intensity = 65536
 
+    if colormap is None:
+        colormap = "Greys_r"
+
+    cmap = colormap
     if plot is None:
         import matplotlib.pyplot as plt
 
@@ -265,7 +264,8 @@ def imshow(
 
 
 def operations(
-    must_have_categories: list = None, must_not_have_categories: list = None
+    must_have_categories: Optional[list] = None,
+    must_not_have_categories: Optional[list] = None,
 ) -> dict:
     """Retrieve a dictionary of operations, which can be filtered by annotated categories.
 
@@ -292,11 +292,12 @@ def operations(
     import pyclesperanto as cle
 
     # retrieve all operations and cache the result for later reuse
+    operation_list = []
     if not hasattr(operations, "_all") or operations._all is None:
-        operations._all = getmembers(cle, isfunction)
+        operation_list = getmembers(cle, isfunction)
 
     # filter operations according to given constraints
-    for operation_name, operation in operations._all:
+    for operation_name, operation in operation_list:
         keep_it = True
         if hasattr(operation, "categories") and operation.categories is not None:
             if must_have_categories is not None:

@@ -3,7 +3,7 @@ from ._core import (
     Device,
     default_initialisation,
     get_device,
-    gpu_info,
+    info,
     list_available_backends,
     list_available_devices,
     select_backend,

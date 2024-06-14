@@ -68,7 +68,7 @@ jobs:
       - name: Coverage
         id: coverage
         if: matrix.platform == 'ubuntu-latest'
-        uses: codecov/codecov-action@v3
+        uses: codecov/codecov-action@v4.4.1
         with:
           token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos
           files: ./coverage/coverage.xml

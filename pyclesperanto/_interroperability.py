@@ -16,7 +16,7 @@ from ._array import Image
 # pyclesperanto_prototype aliases
 from ._core import info as cl_info
 from ._core import list_available_devices as available_device_names
-from ._core import wait_for_kernel_to_finish as set_wait_for_kernel_to_finish
+from ._core import wait_for_kernel_to_finish as set_wait_for_kernel_finish
 
 # numpy operations aliases
 from ._memory import push as asarray

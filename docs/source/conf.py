@@ -43,10 +43,11 @@ extensions = [
     "sphinx.ext.intersphinx",
     "sphinx.ext.viewcode",
     "sphinx_rtd_theme",
+    "nbsphinx",
 ]
 
 templates_path = ["_templates"]
-exclude_patterns = ["build", "_build", "Thumbs.db", ".DS_Store"]
+exclude_patterns = ["build", "_build", "Thumbs.db", ".DS_Store", "**.ipynb_checkpoints"]
 
 autodoc_mock_imports = ["pyclesperanto._pyclesperanto", "toolz", "matplotlib", "numpy"]
 add_module_names = False

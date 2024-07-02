@@ -94,4 +94,3 @@ Otherwise, any pull request will automatically run the checks on the pre-commit 
 .. note::
 
     `mypy <https://mypy.readthedocs.io/en/stable/>`__ is not yet integrated in the pre-commit hooks, but it is aleardy used and is planned to be added in the future.
-

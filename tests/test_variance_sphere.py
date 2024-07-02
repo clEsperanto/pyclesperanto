@@ -1,5 +1,6 @@
-import pyclesperanto as cle
 import numpy as np
+
+import pyclesperanto as cle
 
 cle.select_device("TX")
 
@@ -30,7 +31,7 @@ def test_variance_sphere():
     )
 
     result = cle.create(test1, dtype=float)
-    cle.variance_sphere(test1, result, 1, 1, 0)
+    cle.variance(test1, result, 1, 1, 0, connectivity="sphere")
 
     a = cle.pull(result)
     b = cle.pull(reference)

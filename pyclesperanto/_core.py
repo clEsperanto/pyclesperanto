@@ -1,8 +1,10 @@
-from typing import Optional, Union
 import warnings
+from typing import Optional, Union
 
-from ._pyclesperanto import _Device as Device
+import numpy as np
+
 from ._pyclesperanto import _BackendManager as BackendManager
+from ._pyclesperanto import _Device as Device
 
 
 class _current_device:
@@ -24,7 +26,7 @@ def select_device(device_id: Union[str, int] = "", device_type: str = "all") -> 
 
     If selecting the device by string, the function compares the device name and substring.
     (e.g. "NVIDIA", "RTX", "Iris", etc. will match the device name "NVIDIA RTX 2080" or "Intel Iris Pro")
-    If selecting the device by index, the function will select the device at the given index in the list 
+    If selecting the device by index, the function will select the device at the given index in the list
     of available devices. (e.g. 0, 1, 2, etc. will select the first, second, third, etc. device in the list)
     If device_id is an empty string, the function will select the first available device.
     The device_type enables selecting the type of device to be selected (e.g. "all", "cpu", "gpu")
@@ -59,7 +61,7 @@ def list_available_devices(device_type: str = "all") -> list:
     """Retrieve a list of names of available devices
 
     Will search the system for backend compatible device available and return a list of their names.
-    This will NOT set the device! 
+    This will NOT set the device!
     Use 'select_device' to select devices.
     Use 'get_device' to retrieve the current device.
 
@@ -127,7 +129,7 @@ def select_backend(backend: str = "opencl") -> str:
 def wait_for_kernel_to_finish(flag: bool = True, device: Device = None):
     """Wait for kernel to finish
 
-    Enforce the system to wait for the kernel to finish before continuing. Introducing a 
+    Enforce the system to wait for the kernel to finish before continuing. Introducing a
     slowdown in the workflow. This is useful for debugging purposes, benchmarking and
     profiling, as well as for complex workflows where the order of operations is important.
 
@@ -156,9 +158,10 @@ def default_initialisation():
         )
 
 
-def gpu_info():
-    device_list = list_available_devices()
-    info = []
-    for device_name in device_list:
-        info.append(select_device(device_name).info)
-    return info
+def info():
+    """Print information about the devices available on the system"""
+    device_info = [
+        f"{idx} - {select_device(device).info}"
+        for idx, device in enumerate(list_available_devices())
+    ]
+    print("".join(device_info))

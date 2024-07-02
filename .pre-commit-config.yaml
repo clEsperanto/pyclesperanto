@@ -2,23 +2,32 @@
 # See https://pre-commit.com/hooks.html for more hooks
 repos:
 -   repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v3.2.0
+    rev: v4.6.0
     hooks:
+    -   id: check-toml
+    -   id: check-yaml
     -   id: trailing-whitespace
     -   id: end-of-file-fixer
     -   id: check-added-large-files
-    -   id: check-toml
     -   id: check-case-conflict
+    -   id: check-merge-conflict
+    -   id: check-symlinks
     -   id: mixed-line-ending
 
-    # black - code formatting
+# black - code formatting
 -   repo: https://github.com/psf/black
-    rev: 22.8.0
+    rev: 24.4.2
     hooks:
     -   id: black
 
-    # flake8 - linting
--   repo: https://github.com/pycqa/flake8
-    rev: 5.0.4
+# isort - import sorting
+-   repo: https://github.com/pycqa/isort
+    rev: 5.13.2
     hooks:
-      - id: flake8
+    -   id: isort
+
+# flake8 - linting
+-   repo: https://github.com/pycqa/flake8
+    rev: 7.1.0
+    hooks:
+    -   id: flake8

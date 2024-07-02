@@ -1,5 +1,6 @@
-import pyclesperanto as cle
 import numpy as np
+
+import pyclesperanto as cle
 
 cle.select_device("TX")
 
@@ -30,7 +31,7 @@ def test_minimum_box():
     )
 
     result = cle.create(test1)
-    cle.minimum_box(test1, result, 1, 1, 0)
+    cle.minimum(test1, result, 1, 1, 0)
 
     a = cle.pull(result)
     b = cle.pull(reference)

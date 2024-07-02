@@ -18,11 +18,12 @@ You will find here a first draft of the API for reference and documentation purp
 .. toctree::
    :caption: User Guide
    :maxdepth: 1
-   
+
    install
    usage
    prototype
    api
+   api_differences
    genindex
 
 .. toctree::

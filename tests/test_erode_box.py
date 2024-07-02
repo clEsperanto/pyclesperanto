@@ -1,5 +1,6 @@
-import pyclesperanto as cle
 import numpy as np
+
+import pyclesperanto as cle
 
 cle.select_device("TX")
 
@@ -30,7 +31,7 @@ def test_erode_box():
     )
 
     result = cle.create(test)
-    cle.erode_box(test, result)
+    cle.erode(test, result)
 
     print(result)
 

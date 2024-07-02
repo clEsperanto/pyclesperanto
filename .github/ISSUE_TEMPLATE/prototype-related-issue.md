@@ -16,7 +16,7 @@ assignees: ''
 
 **Describe the bug**
 A clear and concise description of what the bug is. What were you trying to do and what happened.
-It can be from a parameter or function name discreptency. to a change of results, or a full crash. 
+It can be from a parameter or function name discreptency. to a change of results, or a full crash.
 
 **To Reproduce**
 Steps to reproduce the behavior, ideally a notebook ready to run, with test data, at minima a code snippet.

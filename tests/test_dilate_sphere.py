@@ -1,5 +1,6 @@
-import pyclesperanto as cle
 import numpy as np
+
+import pyclesperanto as cle
 
 cle.select_device("TX")
 
@@ -30,7 +31,7 @@ def test_dilate_sphere():
     )
 
     result = cle.create(test)
-    cle.dilate_sphere(test, result)
+    cle.dilate(test, result, "sphere")
 
     print(result)
 

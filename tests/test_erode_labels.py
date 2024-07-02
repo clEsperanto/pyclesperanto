@@ -1,5 +1,6 @@
-import pyclesperanto as cle
 import numpy as np
+
+import pyclesperanto as cle
 
 cle.select_device("TX")
 
@@ -60,7 +61,7 @@ def test_erode_labels_2d_1():
 
     for r in range(5):
         print("r", r)
-        gpu_reference = cle.minimum_box(gpu_input, radius_x=r, radius_y=r)
+        gpu_reference = cle.minimum(gpu_input, radius_x=r, radius_y=r)
         gpu_output = cle.erode_labels(gpu_input, radius=r, relabel=False)
 
         print(gpu_output)

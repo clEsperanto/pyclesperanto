@@ -1,5 +1,6 @@
-import pyclesperanto as cle
 import numpy as np
+
+import pyclesperanto as cle
 
 cle.select_device("TX")
 
@@ -31,7 +32,7 @@ def test_onlyzero_overwrite_maximum_box():
 
     result = cle.create(test1)
     flag = cle.create((1, 1, 1))
-    cle.onlyzero_overwrite_maximum_box(test1, flag, result)
+    cle.onlyzero_overwrite_maximum(test1, flag, result)
 
     print(result)
 

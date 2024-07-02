@@ -70,7 +70,7 @@ tier3
     :undoc-members:
 
 tier4
-------  
+------
 
 .. automodule:: pyclesperanto._tier4
     :members:

@@ -1,10 +1,11 @@
-import pyclesperanto as cle
 import numpy as np
+
+import pyclesperanto as cle
 
 cle.select_device("TX")
 
 
-def test_dilate_box():
+def test_dilate():
     test = cle.push(
         np.asarray(
             [
@@ -30,7 +31,7 @@ def test_dilate_box():
     )
 
     result = cle.create(test)
-    cle.dilate_box(test, result)
+    cle.dilate(test, result)
 
     print(result)
 

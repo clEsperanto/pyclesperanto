@@ -42,7 +42,7 @@ description = "GPU-accelerated image processing in python using OpenCL"
 name = "pyclesperanto"
 readme = "README.md"
 requires-python = ">=3.7"
-version = "0.9.0"
+version = "0.10.3"
 
 [project.urls]
 Documentation = "https://clesperanto.github.io/pyclesperanto/"
@@ -74,3 +74,6 @@ skip = ["cp27-*", "pp*", "*-win32"]
 [tool.cibuildwheel.macos]
 environment = { MACOSX_DEPLOYMENT_TARGET = '10.14' }
 skip = ["cp27-*", "pp*", "*_universal2"]
+
+[tool.isort]
+profile = "black"

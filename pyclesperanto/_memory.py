@@ -1,10 +1,10 @@
 import warnings
+from typing import Optional, Tuple
+
+import numpy as np
 
 from ._array import Array, Image
 from ._core import Device, get_device
-
-import numpy as np
-from typing import Tuple, Optional
 
 
 def create(
@@ -12,7 +12,7 @@ def create(
     dtype: Optional[type] = None,
     mtype: Optional[str] = None,
     device: Optional[Device] = None,
-) -> Image:
+) -> Array:
     """Create a new image on the device.
 
     Parameters
@@ -28,8 +28,8 @@ def create(
 
     Returns
     -------
-    Image
-        Created an empty image on the device
+    Array
+        Created an empty Array on the device
     """
     if isinstance(dim, Array):
         device = device if device else dim.device
@@ -52,7 +52,7 @@ def create_like(
     dtype: Optional[type] = None,
     mtype: Optional[str] = None,
     device: Optional[Device] = None,
-) -> Image:
+) -> Array:
     """Create a new image on the device with the same shape and dtype as the input image.
 
     Parameters
@@ -68,8 +68,8 @@ def create_like(
 
     Returns
     -------
-    Image
-        Created an empty image on the device
+    Array
+        Created an empty Array on the device
     """
     return create(array.shape, dtype, mtype, device)
 
@@ -79,7 +79,7 @@ def push(
     dtype: Optional[type] = None,
     mtype: Optional[str] = None,
     device: Optional[Device] = None,
-) -> Image:
+) -> Array:
     """Create a new image on the device and push the input image into it.
 
     Parameters
@@ -98,8 +98,8 @@ def push(
 
     Returns
     -------
-    Image
-        Created image on the device with the input image data
+    Array
+        Created Array on the device with the input image data
     """
     if isinstance(array, Array):
         return array

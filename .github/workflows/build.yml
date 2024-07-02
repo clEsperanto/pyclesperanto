@@ -67,8 +67,8 @@ jobs:
 
       - name: Coverage
         id: coverage
-        if: matrix.platform == 'ubuntu-latest'
-        uses: codecov/codecov-action@v3
+        if: matrix.platform == 'ubuntu-latest' && github.actor != 'dependabot[bot]' && github.actor != 'dependabot-preview[bot]'
+        uses: codecov/codecov-action@v4.4.1
         with:
           token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos
           files: ./coverage/coverage.xml

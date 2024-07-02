@@ -1,10 +1,11 @@
-import pyclesperanto as cle
 import numpy as np
+
+import pyclesperanto as cle
 
 cle.select_device("TX")
 
 
-def test_laplace_diamond():
+def test_laplace_sphere():
     test1 = cle.push(
         np.asarray(
             [
@@ -30,7 +31,7 @@ def test_laplace_diamond():
     )
 
     result = cle.create(test1)
-    cle.laplace_diamond(test1, result)
+    cle.laplace(test1, result, connectivity="sphere")
 
     a = cle.pull(result)
     b = cle.pull(reference)

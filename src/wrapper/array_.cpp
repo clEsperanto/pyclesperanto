@@ -117,16 +117,16 @@ py::object get_np_dtype(const cle::Array::Pointer &array)
      {
      case cle::dType::FLOAT:
           return py::dtype::of<float>();
-     case cle::dType::INT64:
-          return py::dtype::of<int64_t>();
+     // case cle::dType::INT64:
+     //      return py::dtype::of<int64_t>();
      case cle::dType::INT32:
           return py::dtype::of<int>();
      case cle::dType::INT16:
           return py::dtype::of<int16_t>();
      case cle::dType::INT8:
           return py::dtype::of<int8_t>();
-     case cle::dType::UINT64:
-          return py::dtype::of<uint64_t>();
+     // case cle::dType::UINT64:
+     //      return py::dtype::of<uint64_t>();
      case cle::dType::UINT32:
           return py::dtype::of<uint32_t>();
      case cle::dType::UINT16:
@@ -146,11 +146,7 @@ cle::dType get_cle_dtype(const py::object &type)
      {
           return cle::dType::FLOAT;
      }
-     else if (np_type.equal(py::dtype("int64")) || np_type.equal(py::dtype("int")))
-     {
-          return cle::dType::INT64;
-     }
-     else if (np_type.equal(py::dtype("int32")))
+     else if (np_type.equal(py::dtype("int32")) || np_type.equal(py::dtype("int")) || np_type.equal(py::dtype("int64")))
      {
           return cle::dType::INT32;
      }
@@ -162,11 +158,7 @@ cle::dType get_cle_dtype(const py::object &type)
      {
           return cle::dType::INT8;
      }
-     else if (np_type.equal(py::dtype("uint64")))
-     {
-          return cle::dType::UINT64;
-     }
-     else if (np_type.equal(py::dtype("uint32")))
+     else if (np_type.equal(py::dtype("uint32")) || np_type.equal(py::dtype("uint64")))
      {
           return cle::dType::UINT32;
      }
@@ -248,21 +240,21 @@ auto array_(py::module_ &m) -> void
          .def("_write", &write_region<int8_t>, py::arg("value"), py::arg("origin") = py::none(), py::arg("region") = py::none())
          .def("_write", &write_region<int16_t>, py::arg("value"), py::arg("origin") = py::none(), py::arg("region") = py::none())
          .def("_write", &write_region<int32_t>, py::arg("value"), py::arg("origin") = py::none(), py::arg("region") = py::none())
-         .def("_write", &write_region<int64_t>, py::arg("value"), py::arg("origin") = py::none(), py::arg("region") = py::none())
+         //     .def("_write", &write_region<int64_t>, py::arg("value"), py::arg("origin") = py::none(), py::arg("region") = py::none())
          .def("_write", &write_region<uint8_t>, py::arg("value"), py::arg("origin") = py::none(), py::arg("region") = py::none())
          .def("_write", &write_region<uint16_t>, py::arg("value"), py::arg("origin") = py::none(), py::arg("region") = py::none())
          .def("_write", &write_region<uint32_t>, py::arg("value"), py::arg("origin") = py::none(), py::arg("region") = py::none())
-         .def("_write", &write_region<uint64_t>, py::arg("value"), py::arg("origin") = py::none(), py::arg("region") = py::none())
+         //     .def("_write", &write_region<uint64_t>, py::arg("value"), py::arg("origin") = py::none(), py::arg("region") = py::none())
 
          .def("_read_float32", &read_region<float>, py::arg("origin") = py::none(), py::arg("region") = py::none())
          .def("_read_int8", &read_region<int8_t>, py::arg("origin") = py::none(), py::arg("region") = py::none())
          .def("_read_int16", &read_region<int16_t>, py::arg("origin") = py::none(), py::arg("region") = py::none())
          .def("_read_int32", &read_region<int32_t>, py::arg("origin") = py::none(), py::arg("region") = py::none())
-         .def("_read_int64", &read_region<int64_t>, py::arg("origin") = py::none(), py::arg("region") = py::none())
+         //     .def("_read_int64", &read_region<int64_t>, py::arg("origin") = py::none(), py::arg("region") = py::none())
          .def("_read_uint8", &read_region<uint8_t>, py::arg("origin") = py::none(), py::arg("region") = py::none())
          .def("_read_uint16", &read_region<uint16_t>, py::arg("origin") = py::none(), py::arg("region") = py::none())
          .def("_read_uint32", &read_region<uint32_t>, py::arg("origin") = py::none(), py::arg("region") = py::none())
-         .def("_read_uint64", &read_region<uint64_t>, py::arg("origin") = py::none(), py::arg("region") = py::none())
+         //     .def("_read_uint64", &read_region<uint64_t>, py::arg("origin") = py::none(), py::arg("region") = py::none())
 
          .def("copy", &copy_region, py::arg("dst"), py::arg("src_origin") = py::none(), py::arg("dst_origin") = py::none(), py::arg("region") = py::none())
          .def("fill", &cle::Array::fill, py::arg("value"))

@@ -1,5 +1,6 @@
-import pyclesperanto as cle
 import numpy as np
+
+import pyclesperanto as cle
 
 cle.select_device("TX")
 
@@ -31,7 +32,7 @@ def test_opening_sphere_2d():
         )
     )
 
-    gpu_output = cle.opening_sphere(gpu_input, radius_x=1, radius_y=1)
+    gpu_output = cle.opening(gpu_input, radius_x=1, radius_y=1, connectivity="sphere")
 
     a = cle.pull(gpu_output)
     b = cle.pull(gpu_reference)
@@ -90,7 +91,7 @@ def test_opening_sphere_3d():
         )
     )
 
-    gpu_output = cle.opening_sphere(gpu_input, radius_x=1, radius_y=1)
+    gpu_output = cle.opening(gpu_input, radius_x=1, radius_y=1, connectivity="sphere")
 
     a = cle.pull(gpu_output)
     b = cle.pull(gpu_reference)

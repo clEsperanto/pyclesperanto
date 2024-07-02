@@ -1,15 +1,21 @@
-import pyclesperanto as cle
 import numpy as np
+
+import pyclesperanto as cle
+
 
 def test_bounding_box_2d():
 
-    test = cle.push(np.asarray([
-        [0, 0, 0, 0, 0],
-        [0, 1, 1, 0, 0],
-        [0, 1, 1, 0, 0],
-        [0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0]
-    ]))
+    test = cle.push(
+        np.asarray(
+            [
+                [0, 0, 0, 0, 0],
+                [0, 1, 1, 0, 0],
+                [0, 1, 1, 0, 0],
+                [0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0],
+            ]
+        )
+    )
 
     bb = cle.bounding_box(test)
     print(bb)
@@ -20,21 +26,29 @@ def test_bounding_box_2d():
     assert bb[4] == 2
     assert bb[3] == 2
 
+
 def test_bounding_box_3d():
 
-    test = cle.push(np.asarray([[
-        [0, 0, 0, 0, 0],
-        [0, 1, 1, 0, 0],
-        [0, 1, 1, 0, 0],
-        [0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0]
-    ],[
-        [0, 0, 0, 0, 0],
-        [0, 1, 1, 0, 0],
-        [0, 1, 1, 0, 0],
-        [0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0]
-    ]]))
+    test = cle.push(
+        np.asarray(
+            [
+                [
+                    [0, 0, 0, 0, 0],
+                    [0, 1, 1, 0, 0],
+                    [0, 1, 1, 0, 0],
+                    [0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0],
+                ],
+                [
+                    [0, 0, 0, 0, 0],
+                    [0, 1, 1, 0, 0],
+                    [0, 1, 1, 0, 0],
+                    [0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0],
+                ],
+            ]
+        )
+    )
 
     bb = cle.bounding_box(test)
     print(bb)

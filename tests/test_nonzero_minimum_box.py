@@ -1,5 +1,6 @@
-import pyclesperanto as cle
 import numpy as np
+
+import pyclesperanto as cle
 
 cle.select_device("TX")
 
@@ -35,7 +36,7 @@ def test_nonzero_minimum_box():
     # as nonzero filters don't touch zero values, we need to initialize the result in advance
     cle.set(result, 0)
 
-    cle.nonzero_minimum_box(test, flag, result)
+    cle.nonzero_minimum(test, flag, result)
 
     print(result)
 

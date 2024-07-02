@@ -1,7 +1,8 @@
 import numpy as np
-import pyclesperanto as cle
 from skimage.data import camera
 from skimage.filters import threshold_otsu
+
+import pyclesperanto as cle
 
 cle.select_device("TX")
 

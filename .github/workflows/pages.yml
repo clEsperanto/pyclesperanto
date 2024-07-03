@@ -27,10 +27,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      # - name: Set up Python environment
-      #   uses: actions/setup-python@v5
-      #   with:
-      #     python-version: 3.9
+      - name: Set up Python environment
+        uses: actions/setup-python@v5
+        with:
+          python-version: 3.9
 
       # - name: generat build folder
       #   run: |
@@ -39,21 +39,22 @@ jobs:
       #     cd docs
       #     make clean && make html
 
-      - name: Get conda - 3.9
-        id: get-conda
-        uses: conda-incubator/setup-miniconda@v3
-        with:
-          python-version: 3.9
-          miniforge-variant: Mambaforge
-          miniforge-version: latest
-          activate-environment: test
-          use-mamba: true
+      # - name: Get conda - 3.9
+      #   id: get-conda
+      #   uses: conda-incubator/setup-miniconda@v3
+      #   with:
+      #     python-version: 3.9
+      #     miniforge-variant: Mambaforge
+      #     miniforge-version: latest
+      #     activate-environment: test
+      #     use-mamba: true
 
       - name: Dependencies
         id: install-dependencies
         run: |
-          sudo apt install python3-sphinx
-          pip install sphinx nbsphinx sphinx_rtd_theme sphinx-autodoc-typehints sphinx_copybutton pandoc
+          sudo apt install python3-sphinx pandoc
+          python -m pip install --upgrade pip
+          pip install sphinx nbsphinx sphinx_rtd_theme sphinx-autodoc-typehints sphinx_copybutton
           cd docs
           make clean && make html
 

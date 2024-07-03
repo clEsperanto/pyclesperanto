@@ -53,7 +53,7 @@ jobs:
         id: install-dependencies
         run: |
           sudo apt install python3-sphinx
-          conda install -c conda-forge sphinx nbsphinx sphinx_rtd_theme sphinx-autodoc-typehints pandoc jupyter -y
+          pip install sphinx nbsphinx sphinx_rtd_theme sphinx-autodoc-typehints sphinx_copybutton pandoc
           cd docs
           make clean && make html
 

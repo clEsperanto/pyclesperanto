@@ -52,7 +52,7 @@ jobs:
       - name: Dependencies
         id: install-dependencies
         run: |
-          mamba install -y sphinx nbsphinx sphinx_rtd_theme sphinx-autodoc-typehints pandoc
+          mamba install -y sphinx nbsphinx sphinx_rtd_theme sphinx-autodoc-typehints pandoc jupyter
 
 
       - name: Setup Pages

@@ -35,7 +35,7 @@ jobs:
       - name: generat build folder
         run: |
           python -m pip install --upgrade pip
-          pip install sphinx nbsphinx sphinx_rtd_theme sphinx-autodoc-typehints sphinx_copybutton
+          pip install sphinx nbsphinx sphinx_rtd_theme sphinx-autodoc-typehints sphinx_copybutton pandoc
           cd docs
           make clean && make html
 

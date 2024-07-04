@@ -1,8 +1,15 @@
 Prototype migration
 ===================
 
-List of changes to be made in order to migrate from the prototype to the current version of the library.
+This document is intended to help users to migrate their code from the prototype to the current version of the library.
+We mainly focus on change of function names or arguments.
+Possible changes of position in the library are not covered here as they are not expected to be affecting the user code.
 
+.. note::
+
+    This document is not exhaustive and may not cover all changes.
+    Please refer to the `repository issues <https://github.com/clEsperanto/pyclesperanto/issues>`__ for more information.
+    And feel free to open an issue if you have any question or if you think something is missing.
 
 import
 ------
@@ -79,3 +86,16 @@ List of filters that were changed (the list may not be exhaustive):
 - ``variance_sphere`` -> ``variance``
 - ``standard_deviation_box`` -> ``standard_deviation``
 - ``standard_deviation_sphere`` -> ``standard_deviation``
+
+
+affine transform
+----------------
+
+We have updated the ``affine_transform`` arguments names:
+- ``transform`` -> ``transform_matrix``
+- ``linear_interpolation`` -> ``interpolate``
+- ``auto_size`` -> ``resize``
+
+``transform_matrix`` now only allow a 1D list of 9 or 16 elements respectively for 2D and 3D transform matrix.
+This is a downgrade from the ``prototype`` version which support ``numpy.ndarray`` or ``AffineTransform3D`` and ``AffineTransform`` object directly.
+However, this simplify code generation. In future we will try to accept ``numpy.ndarray`` as input.

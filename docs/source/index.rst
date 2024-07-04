@@ -21,8 +21,8 @@ You will find here a first draft of the API for reference and documentation purp
 
    install
    usage
-   prototype
    api
+   prototype
    api_differences
    genindex
 

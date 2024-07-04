@@ -6,10 +6,18 @@ on:
     branches: [main]
     paths-ignore:
       - 'docs/**'
+      - 'benchmarking/**'
+      - 'demos/**'
+      - 'workflows/pages.yml'
+      - 'workflows/build.yml'
   pull_request:
     branches: [main]
     paths-ignore:
       - 'docs/**'
+      - 'benchmarking/**'
+      - 'demos/**'
+      - 'workflows/pages.yml'
+      - 'workflows/build.yml'
   release:
     types: [created]
 

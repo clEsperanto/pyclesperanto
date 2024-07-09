@@ -9,6 +9,8 @@
 # Deprecated aliases
 #
 
+import warnings
+
 import numpy as np
 
 from ._array import Image
@@ -16,13 +18,21 @@ from ._array import Image
 # pyclesperanto_prototype aliases
 from ._core import info as cl_info
 from ._core import list_available_devices as available_device_names
-from ._core import wait_for_kernel_to_finish as set_wait_for_kernel_to_finish
+from ._core import wait_for_kernel_to_finish
 
 # numpy operations aliases
 from ._memory import push as asarray
 
 # scikit-image aliases
 from ._tier5 import connected_components_labeling as label
+
+
+def set_wait_for_kernel_finish(bool=True):
+    warnings.warn(
+        "set_wait_for_kernel_finish : This method is deprecated. Consider using wait_for_kernel_to_finish() instead.",
+        DeprecationWarning,
+    )
+    wait_for_kernel_to_finish(bool)
 
 
 def clip(a, a_min, a_max, out=None):

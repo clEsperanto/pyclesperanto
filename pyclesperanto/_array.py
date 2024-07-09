@@ -201,8 +201,8 @@ def empty_like(cls, arr):
         The created array.
     """
     _assert_supported_dtype(arr.dtype)
-    mtype = arr.mtype if hasattr(arr, "mtype") else "buffer"
-    device = arr.device if hasattr(arr, "device") else get_device()
+    mtype = arr.mtype if isinstance(arr, Array) else "buffer"
+    device = arr.device if isinstance(arr, Array) else get_device()
     return Array.create(arr.shape, arr.dtype, mtype, device)
 
 
@@ -245,8 +245,8 @@ def zeros_like(cls, arr):
         The created array.
     """
     _assert_supported_dtype(arr.dtype)
-    mtype = arr.mtype if hasattr(arr, "mtype") else "buffer"
-    device = arr.device if hasattr(arr, "device") else get_device()
+    mtype = arr.mtype if isinstance(arr, Array) else "buffer"
+    device = arr.device if isinstance(arr, Array) else get_device()
     return cls.zeros(shape=arr.shape, dtype=arr.dtype, mtype=mtype, device=device)
 
 

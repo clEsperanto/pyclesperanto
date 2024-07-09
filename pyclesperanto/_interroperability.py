@@ -28,6 +28,7 @@ from ._memory import push as asarray
 from ._tier5 import connected_components_labeling as label
 from ._tier7 import affine_transform as _tier7_affine_transform
 
+# enforce deprecation warnings display
 warnings.filterwarnings("always", category=DeprecationWarning, module=__name__)
 
 

@@ -464,3 +464,53 @@ def minimum_position(input_image: Image, device: Optional[Device] = None) -> lis
     from ._pyclesperanto import _minimum_position as op
 
     return op(device=device, src=input_image)
+
+
+@plugin_function
+def morphological_chan_vese(
+    input_image: Image,
+    output_image: Optional[Image] = None,
+    number_iteration: int = 100,
+    smoothing_iteration: int = 1,
+    lambda1: float = 1,
+    lambda2: float = 1,
+    device: Optional[Device] = None,
+) -> Image:
+    """Compute an active contour model using the Chan-Vese morphological algorithm. The
+    output image (dst) should also be initialisation of the contour. If not provided
+    (nullptr), the function will use a checkboard pattern initialisation.
+
+    Parameters
+    ----------
+    input_image: Image
+        Input image to process.
+    output_image: Optional[Image] = None
+        Output contour, can also be use to provide initialisation.
+    number_iteration: int = 100
+        Number of iterations.
+    smoothing_iteration: int = 1
+        Number of smoothing iterations.
+    lambda1: float = 1
+        Lambda1.
+    lambda2: float = 1
+        Lambda2.
+    device: Optional[Device] = None
+        Device to perform the operation on.
+
+    Returns
+    -------
+    Image
+
+    """
+
+    from ._pyclesperanto import _morphological_chan_vese as op
+
+    return op(
+        device=device,
+        src=input_image,
+        dst=output_image,
+        number_iteration=int(number_iteration),
+        smoothing_iteration=int(smoothing_iteration),
+        lambda1=float(lambda1),
+        lambda2=float(lambda2),
+    )

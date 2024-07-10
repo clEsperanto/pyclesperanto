@@ -82,7 +82,7 @@ m.def("_minimum_position", &cle::tier3::minimum_position_func, "Call minimum_pos
 
 m.def("_morphological_chan_vese", &cle::tier3::morphological_chan_vese_func, "Call morphological_chan_vese from C++.",
     py::return_value_policy::take_ownership,
-    py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("number_iteration"), py::arg("smoothing_iteration"), py::arg("lambda1"), py::arg("lambda2"));
+    py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("num_iter"), py::arg("smoothing"), py::arg("lambda1"), py::arg("lambda2"));
 
 
 }

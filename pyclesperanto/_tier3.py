@@ -470,8 +470,8 @@ def minimum_position(input_image: Image, device: Optional[Device] = None) -> lis
 def morphological_chan_vese(
     input_image: Image,
     output_image: Optional[Image] = None,
-    number_iteration: int = 100,
-    smoothing_iteration: int = 1,
+    num_iter: int = 100,
+    smoothing: int = 1,
     lambda1: float = 1,
     lambda2: float = 1,
     device: Optional[Device] = None,
@@ -486,10 +486,10 @@ def morphological_chan_vese(
         Input image to process.
     output_image: Optional[Image] = None
         Output contour, can also be use to provide initialisation.
-    number_iteration: int = 100
+    num_iter: int = 100
         Number of iterations.
-    smoothing_iteration: int = 1
-        Number of smoothing iterations.
+    smoothing: int = 1
+        Number of
     lambda1: float = 1
         Lambda1.
     lambda2: float = 1
@@ -509,8 +509,8 @@ def morphological_chan_vese(
         device=device,
         src=input_image,
         dst=output_image,
-        number_iteration=int(number_iteration),
-        smoothing_iteration=int(smoothing_iteration),
+        num_iter=int(num_iter),
+        smoothing=int(smoothing),
         lambda1=float(lambda1),
         lambda2=float(lambda2),
     )

@@ -55,6 +55,16 @@ m.def("_binary_xor", &cle::tier1::binary_xor_func, "Call binary_xor from C++.",
     py::arg("device"), py::arg("src0"), py::arg("src1"), py::arg("dst"));
 
 
+m.def("_binary_supinf", &cle::tier1::binary_supinf_func, "Call binary_supinf from C++.",
+    py::return_value_policy::take_ownership,
+    py::arg("device"), py::arg("src"), py::arg("dst"));
+
+
+m.def("_binary_infsup", &cle::tier1::binary_infsup_func, "Call binary_infsup from C++.",
+    py::return_value_policy::take_ownership,
+    py::arg("device"), py::arg("src"), py::arg("dst"));
+
+
 m.def("_block_enumerate", &cle::tier1::block_enumerate_func, "Call block_enumerate from C++.",
     py::return_value_policy::take_ownership,
     py::arg("device"), py::arg("src0"), py::arg("src1"), py::arg("dst"), py::arg("blocksize"));

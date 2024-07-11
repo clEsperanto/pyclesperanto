@@ -64,7 +64,15 @@ build = [
   "cp312-*",
   "cp313-*",
 ]
-skip = ["cp27-*", "pp*", "*-win32", "*-musllinux*", "*_i686", "*_universal2"]
+skip = [
+  "cp27-*",
+  "cp36*",
+  "pp*",
+  "*-win32",
+  "*-musllinux*",
+  "*_i686",
+  "*_universal2",
+]
 build-frontend = "build"
 build-verbosity = 1
 test-command = "pytest {project}/tests/test_import.py"

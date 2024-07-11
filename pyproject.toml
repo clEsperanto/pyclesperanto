@@ -55,7 +55,24 @@ addopts = "-ra -q"
 testpaths = ["tests"]
 
 [tool.cibuildwheel]
-build = ["cp37-*", "cp38-*", "cp39-*", "cp310-*", "cp311-*", "cp312-*"]
+build = [
+  "cp37-*",
+  "cp38-*",
+  "cp39-*",
+  "cp310-*",
+  "cp311-*",
+  "cp312-*",
+  "cp313-*",
+]
+skip = [
+  "cp27-*",
+  "cp36*",
+  "pp*",
+  "*-win32",
+  "*-musllinux*",
+  "*_i686",
+  "*_universal2",
+]
 build-frontend = "build"
 build-verbosity = 1
 test-command = "pytest {project}/tests/test_import.py"
@@ -64,16 +81,16 @@ test-requires = ["pytest", "pytest-cov", "pytest-benchmark", "scikit-image"]
 [tool.cibuildwheel.linux]
 before-all = ["bash {package}/scripts/build-opencl-linux.sh"]
 repair-wheel-command = "auditwheel show {wheel} && auditwheel repair --lib-sdir .libs -w {dest_dir} {wheel}"
-skip = ["cp27-*", "pp*", "*-musllinux*", "*_i686"]
+# skip = ["cp27-*", "pp*", "*-musllinux*", "*_i686"]
 
 [tool.cibuildwheel.windows]
 before-all = "bash {package}/scripts/build-opencl-windows.sh"
 environment = { SKBUILD_CMAKE_ARGS = "-DOpenCL_LIBRARIES:FILEPATH='C:/Program Files/OpenCL-ICD-Loader/lib/OpenCL.lib';-DOpenCL_INCLUDE_DIRS:PATH='C:/Program Files/OpenCL-ICD-Loader/include/'" }
-skip = ["cp27-*", "pp*", "*-win32"]
+# skip = ["cp27-*", "pp*", "*-win32"]
 
 [tool.cibuildwheel.macos]
 environment = { MACOSX_DEPLOYMENT_TARGET = '10.14' }
-skip = ["cp27-*", "pp*", "*_universal2"]
+# skip = ["cp27-*", "pp*", "*_universal2"]
 
 [tool.isort]
 profile = "black"

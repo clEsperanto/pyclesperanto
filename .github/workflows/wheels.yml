@@ -42,6 +42,7 @@ jobs:
       - uses: actions/upload-artifact@v4
         with:
           path: ./wheelhouse/*.whl
+          name: artifacts-${{ matrix.os }}
 
   build_sdist:
     name: build dist
@@ -56,6 +57,7 @@ jobs:
       - uses: actions/upload-artifact@v4
         with:
           path: dist/*.tar.gz
+          name: artifacts-sdist
 
   upload_all:
     name: publish (PyPI)

@@ -66,6 +66,7 @@ This was discussed in the `issue #142 <https://github.com/clEsperanto/pyclespera
 
 
 List of filters that were changed (the list may not be exhaustive):
+
 - ``connected_components_labeling_box`` -> ``connected_components_labeling``
 - ``connected_components_labeling_diamond`` -> ``connected_components_labeling``
 - ``laplace_box`` -> ``laplace``
@@ -74,7 +75,7 @@ List of filters that were changed (the list may not be exhaustive):
 - ``maximum_sphere`` -> ``maximum``
 - ``mean_box`` -> ``mean``
 - ``mean_sphere`` -> ``mean``
-- ``median_box`` -> ``median`
+- ``median_box`` -> ``median``
 - ``median_sphere`` -> ``median``
 - ``minimum_box`` -> ``minimum``
 - ``minimum_sphere`` -> ``minimum``
@@ -92,10 +93,13 @@ affine transform
 ----------------
 
 We have updated the ``affine_transform`` arguments names:
+
 - ``transform`` -> ``transform_matrix``
 - ``linear_interpolation`` -> ``interpolate``
 - ``auto_size`` -> ``resize``
 
-``transform_matrix`` now only allow a 1D list of 9 or 16 elements respectively for 2D and 3D transform matrix.
-This is a downgrade from the ``prototype`` version which support ``numpy.ndarray`` or ``AffineTransform3D`` and ``AffineTransform`` object directly.
-However, this simplify code generation. In future we will try to accept ``numpy.ndarray`` as input.
+The argument name change is to support more explicit names and to avoid confusion. The ``auto_size`` argument was changed to ``resize`` to be more explicit.
+The ``linear_interpolation`` argument was changed to ``interpolate`` to be more flexible. For now only ``linear`` and ``nearest_neighbor`` are supported, hence the use of a ``boo``.
+Future versions may support more interpolation methods. ``transformation`` argument was changed to ``transform_matrix`` to be more explicit as we expect a matrix as input.
+``prototype`` allowed a ``numpy.ndarray`` or ``AffineTransform3D`` and ``AffineTransform`` object directly. However, we have drop compatibility with ``AffineTransform3D`` and ``AffineTransform`` objects.
+For technical reason, we now only support 1D list of 9 or 16 elements.

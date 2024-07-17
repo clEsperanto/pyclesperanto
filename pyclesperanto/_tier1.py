@@ -389,6 +389,64 @@ def binary_xor(
     return op(device=device, src0=input_image0, src1=input_image1, dst=output_image)
 
 
+@plugin_function(category=["filter", "binary processing"])
+def binary_supinf(
+    input_image: Image,
+    output_image: Optional[Image] = None,
+    device: Optional[Device] = None,
+) -> Image:
+    """Compute the maximum of the erosion with plannar structuring elements. Warning:
+    This operation is only supported BINARY data type images.
+
+    Parameters
+    ----------
+    input_image: Image
+        The binary input image to be processed.
+    output_image: Optional[Image] = None
+        The output image where results are written into.
+    device: Optional[Device] = None
+        Device to perform the operation on.
+
+    Returns
+    -------
+    Image
+
+    """
+
+    from ._pyclesperanto import _binary_supinf as op
+
+    return op(device=device, src=input_image, dst=output_image)
+
+
+@plugin_function(category=["filter", "binary processing"])
+def binary_infsup(
+    input_image: Image,
+    output_image: Optional[Image] = None,
+    device: Optional[Device] = None,
+) -> Image:
+    """Compute the minimum of the dilation with plannar structuring elements. Warning:
+    This operation is only supported BINARY data type images.
+
+    Parameters
+    ----------
+    input_image: Image
+        The binary input image to be processed.
+    output_image: Optional[Image] = None
+        The output image where results are written into.
+    device: Optional[Device] = None
+        Device to perform the operation on.
+
+    Returns
+    -------
+    Image
+
+    """
+
+    from ._pyclesperanto import _binary_infsup as op
+
+    return op(device=device, src=input_image, dst=output_image)
+
+
 @plugin_function
 def block_enumerate(
     input_image0: Image,

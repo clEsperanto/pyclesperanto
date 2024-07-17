@@ -16,7 +16,7 @@ This package is developped in python and C++ wrapped using [PyBind11], and uses 
 
 ### Reference and examples
 
-An API reference and package documentation can be found [here](https://clesperanto.github.io/pyclesperanto/), and several demonstration notebook on how to use the library and major functionnality are available in the [demos folder](https://github.com/clEsperanto/pyclesperanto/tree/main/demos)
+An in-depth API reference and package documentation can be found [here](https://clesperanto.github.io/pyclesperanto/), and several demonstration notebook on how to use the library and major functionnality are available in the [demos folder](https://github.com/clEsperanto/pyclesperanto/tree/main/demos)
 
 ## __Installation__
 
@@ -35,15 +35,10 @@ mamba activate cle
 mamba install -c conda-forge pyclesperanto
 ```
 
-__MacOS__ users may need to install the following package:
-```
-mamba install -c conda-forge ocl_icd_wrapper_apple
-```
+__MacOS__ users may need to install the following package: `mamba install -c conda-forge ocl_icd_wrapper_apple`
+__Linux__ users may need to install the following package: `mamba install -c conda-forge ocl-icd-system`
 
-__Linux__ users may need to install the following package:
-```
-mamba install -c conda-forge ocl-icd-system
-```
+**NOTE:** It is also possible to install pyclesperanto with `pip`
 
 ## Troubleshooting: Graphics cards drivers
 
@@ -63,8 +58,6 @@ please install recent drivers for your graphics card and/or OpenCL device. Selec
 Linux user may have to install packages such as `intel-opencl-icd` or `rocm-opencl-runtime` depending on their GPU.
 
 ## __Code Example__
-
-**Note**: This project is under heavy development. General API, functions, and parameters are subject to change.
 
 ```python
 import pyclesperanto as cle
@@ -104,7 +97,7 @@ imsave("result.tif", output_image)
 <img src="https://github.com/clEsperanto/pyclesperanto/raw/main/demos/images/labeled_blobs.png" width="300"/>
 </td><td>
 
-[Segment + analyze blobs](https://github.com/clEsperanto/pyclesperanto/tree/main/demos/process_blobs.ipynb)
+[Segment + analyze blobs](https://github.com/clEsperanto/pyclesperanto/tree/main/demos/basics/count_blobs.ipynb)
 
 </td></tr>
 

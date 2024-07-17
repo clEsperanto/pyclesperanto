@@ -43,10 +43,11 @@ extensions = [
     "sphinx.ext.intersphinx",
     "sphinx.ext.viewcode",
     "sphinx_rtd_theme",
+    "nbsphinx",
 ]
 
 templates_path = ["_templates"]
-exclude_patterns = ["build", "_build", "Thumbs.db", ".DS_Store"]
+exclude_patterns = ["build", "_build", "Thumbs.db", ".DS_Store", "**.ipynb_checkpoints"]
 
 autodoc_mock_imports = ["pyclesperanto._pyclesperanto", "toolz", "matplotlib", "numpy"]
 add_module_names = False
@@ -55,6 +56,7 @@ gettext_compact = False
 master_doc = "index"
 suppress_warnings = ["image.nonlocal_uri"]
 pygments_style = "default"
+nbsphinx_execute = "never"
 
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output

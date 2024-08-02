@@ -514,3 +514,34 @@ def morphological_chan_vese(
         lambda1=float(lambda1),
         lambda2=float(lambda2),
     )
+
+
+@plugin_function
+def statistics_of_labelled_pixels(
+    input_image: Image,
+    intensity: Optional[Image] = None,
+    device: Optional[Device] = None,
+) -> dict:
+    """Compute the bounding box, area (in pixels/voxels), minimum intensity, maximum
+    intensity, average intensity, standard deviation of the intensity, and some
+    shape descriptors of labelled objects in a label image and its corresponding
+    intensity image. The intensity image is optional and set to 0 if not provided.
+
+    Parameters
+    ----------
+    input_image: Image
+        Label image to compute the statistics.
+    intensity: Optional[Image] = None
+        Intensity image.
+    device: Optional[Device] = None
+        Device to perform the operation on.
+
+    Returns
+    -------
+    dict
+
+    """
+
+    from ._pyclesperanto import _statistics_of_labelled_pixels as op
+
+    return op(device=device, src=input_image, intensity=intensity)

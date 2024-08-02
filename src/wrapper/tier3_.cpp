@@ -85,4 +85,9 @@ m.def("_morphological_chan_vese", &cle::tier3::morphological_chan_vese_func, "Ca
     py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("num_iter"), py::arg("smoothing"), py::arg("lambda1"), py::arg("lambda2"));
 
 
+m.def("_statistics_of_labelled_pixels", &cle::tier3::statistics_of_labelled_pixels_func, "Call statistics_of_labelled_pixels from C++.",
+    py::return_value_policy::take_ownership,
+    py::arg("device"), py::arg("src"), py::arg("intensity"));
+
+
 }

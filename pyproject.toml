@@ -1,6 +1,6 @@
 [build-system]
 build-backend = "scikit_build_core.build"
-requires = ["setuptools", "wheel", "scikit-build-core>=0.8.2", "pybind11"]
+requires = ["setuptools", "wheel", "scikit-build-core>=0.10.1", "pybind11"]
 
 [tool.scikit-build]
 build-dir = "build/{wheel_tag}"

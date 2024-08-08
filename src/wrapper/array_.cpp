@@ -62,7 +62,7 @@ py::array_t<T, py::array::c_style> read_region(const cle::Array &array, const py
      py::buffer_info info = np_array.request();
      void *data = info.ptr;
      size_t size = info.size * info.itemsize;
-     array.read(data, region_, origin_);
+     array.readTo(data, region_, origin_);
      return np_array;
 }
 
@@ -84,7 +84,7 @@ void write_region(cle::Array &array, const py::array_t<T, py::array::c_style> &v
      py::buffer_info info = value.request();
      const void *data = info.ptr;
      size_t size = info.size * info.itemsize;
-     array.write(data, region_, origin_);
+     array.writeFrom(data, region_, origin_);
 }
 
 void copy_region(const cle::Array &array, const cle::Array::Pointer &dst,
@@ -108,7 +108,7 @@ void copy_region(const cle::Array &array, const cle::Array::Pointer &dst,
      {
           invert_tuple(region_obj.cast<py::tuple>(), &region_);
      }
-     array.copy(dst, region_, src_origin_, dst_origin_);
+     array.copyTo(dst, region_, src_origin_, dst_origin_);
 }
 
 py::object get_np_dtype(const cle::Array::Pointer &array)

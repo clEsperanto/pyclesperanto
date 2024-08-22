@@ -41,8 +41,9 @@ dependencies = [
 description = "GPU-accelerated image processing in python using OpenCL"
 name = "pyclesperanto"
 readme = "README.md"
-requires-python = ">=3.7"
+requires-python = ">=3.8"
 version = "0.12.0"
+
 
 [project.urls]
 Documentation = "https://clesperanto.github.io/pyclesperanto/"
@@ -56,7 +57,6 @@ testpaths = ["tests"]
 
 [tool.cibuildwheel]
 build = [
-  "cp37-*",
   "cp38-*",
   "cp39-*",
   "cp310-*",
@@ -67,6 +67,7 @@ build = [
 skip = [
   "cp27-*",
   "cp36*",
+  "cp37*",
   "pp*",
   "*-win32",
   "*-musllinux*",

@@ -1,8 +1,8 @@
 #
-# This code is auto-generated from 'tier7.hpp' file, using 'gencle' script.
-# Do not edit manually.
+# This code is auto-generated from CLIc 'cle::tier7.hpp' file, do not edit manually.
 #
 
+import importlib
 import warnings
 from typing import Optional
 
@@ -11,6 +11,8 @@ import numpy as np
 from ._array import Image
 from ._core import Device
 from ._decorators import plugin_function
+
+clic = importlib.import_module("._pyclesperanto", package="pyclesperanto")
 
 
 @plugin_function
@@ -31,32 +33,24 @@ def affine_transform(
     ----------
     input_image: Image
         Input Array to be transformed.
-    output_image: Optional[Image] = None
+    output_image: Optional[Image] (= None)
         Output Array.
-    transform_matrix: Optional[list] = None
+    transform_matrix: Optional[list] (= None)
         Affine transformation matrix (3x3 or 4x4).
-    interpolate: bool = False
+    interpolate: bool (= False)
         If true, bi/trilinear interpolation will be applied, if hardware allows.
-    resize: bool = False
+    resize: bool (= False)
         Automatically determines the size of the output depending on the rotation angles.
-    device: Optional[Device] = None
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
     -------
     Image
-
     """
 
-    from ._pyclesperanto import _affine_transform as op
-
-    return op(
-        device=device,
-        src=input_image,
-        dst=output_image,
-        transform_matrix=transform_matrix,
-        interpolate=bool(interpolate),
-        resize=bool(resize),
+    return clic._affine_transform(
+        device, input_image, output_image, transform_matrix, interpolate, resize
     )
 
 
@@ -82,13 +76,13 @@ def eroded_otsu_labeling(
     ----------
     input_image: Image
         Input Array to be transformed.
-    output_image: Optional[Image] = None
+    output_image: Optional[Image] (= None)
         Output Array.
-    number_of_erosions: int = 5
+    number_of_erosions: int (= 5)
         Number of iteration of erosion.
-    outline_sigma: float = 2
+    outline_sigma: float (= 2)
         Gaussian blur sigma applied before Otsu thresholding.
-    device: Optional[Device] = None
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
@@ -98,17 +92,11 @@ def eroded_otsu_labeling(
     References
     ----------
     [1] https://github.com/biovoxxel/bv3dbox (BV_LabelSplitter.java#L83)
-        [2] https://zenodo.org/badge/latestdoi/434949702
+    [2] https://zenodo.org/badge/latestdoi/434949702
     """
 
-    from ._pyclesperanto import _eroded_otsu_labeling as op
-
-    return op(
-        device=device,
-        src=input_image,
-        dst=output_image,
-        number_of_erosions=int(number_of_erosions),
-        outline_sigma=float(outline_sigma),
+    return clic._eroded_otsu_labeling(
+        device, input_image, output_image, int(number_of_erosions), float(outline_sigma)
     )
 
 
@@ -135,50 +123,47 @@ def rigid_transform(
     ----------
     input_image: Image
         Input Array to be transformed.
-    output_image: Optional[Image] = None
+    output_image: Optional[Image] (= None)
         Output Array.
-    translate_x: float = 0
+    translate_x: float (= 0)
         Translation along x axis in pixels.
-    translate_y: float = 0
+    translate_y: float (= 0)
         Translation along y axis in pixels.
-    translate_z: float = 0
+    translate_z: float (= 0)
         Translation along z axis in pixels.
-    angle_x: float = 0
+    angle_x: float (= 0)
         Rotation around x axis in radians.
-    angle_y: float = 0
+    angle_y: float (= 0)
         Rotation around y axis in radians.
-    angle_z: float = 0
+    angle_z: float (= 0)
         Rotation around z axis in radians.
-    centered: bool = True
+    centered: bool (= True)
         If true, rotate image around center, else around the origin.
-    interpolate: bool = False
+    interpolate: bool (= False)
         If true, bi/trilinear interpolation will be applied, if hardware allows.
-    resize: bool = False
+    resize: bool (= False)
         Automatically determines the size of the output depending on the rotation angles.
-    device: Optional[Device] = None
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
     -------
     Image
-
     """
 
-    from ._pyclesperanto import _rigid_transform as op
-
-    return op(
-        device=device,
-        src=input_image,
-        dst=output_image,
-        translate_x=float(translate_x),
-        translate_y=float(translate_y),
-        translate_z=float(translate_z),
-        angle_x=float(angle_x),
-        angle_y=float(angle_y),
-        angle_z=float(angle_z),
-        centered=bool(centered),
-        interpolate=bool(interpolate),
-        resize=bool(resize),
+    return clic._rigid_transform(
+        device,
+        input_image,
+        output_image,
+        float(translate_x),
+        float(translate_y),
+        float(translate_z),
+        float(angle_x),
+        float(angle_y),
+        float(angle_z),
+        centered,
+        interpolate,
+        resize,
     )
 
 
@@ -202,41 +187,38 @@ def rotate(
     ----------
     input_image: Image
         Input Array to be rotated.
-    output_image: Optional[Image] = None
+    output_image: Optional[Image] (= None)
         Output Array.
-    angle_x: float = 0
+    angle_x: float (= 0)
         Rotation around x axis in degrees.
-    angle_y: float = 0
+    angle_y: float (= 0)
         Rotation around y axis in degrees.
-    angle_z: float = 0
+    angle_z: float (= 0)
         Rotation around z axis in degrees.
-    centered: bool = True
+    centered: bool (= True)
         If true, rotate image around center, else around the origin.
-    interpolate: bool = False
+    interpolate: bool (= False)
         If true, bi/trilinear interpolation will be applied, if hardware allows.
-    resize: bool = False
+    resize: bool (= False)
         Automatically determines the size of the output depending on the rotation angles.
-    device: Optional[Device] = None
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
     -------
     Image
-
     """
 
-    from ._pyclesperanto import _rotate as op
-
-    return op(
-        device=device,
-        src=input_image,
-        dst=output_image,
-        angle_x=float(angle_x),
-        angle_y=float(angle_y),
-        angle_z=float(angle_z),
-        centered=bool(centered),
-        interpolate=bool(interpolate),
-        resize=bool(resize),
+    return clic._rotate(
+        device,
+        input_image,
+        output_image,
+        float(angle_x),
+        float(angle_y),
+        float(angle_z),
+        centered,
+        interpolate,
+        resize,
     )
 
 
@@ -258,41 +240,38 @@ def scale(
     ----------
     input_image: Image
         Input Array to be scaleded.
-    output_image: Optional[Image] = None
+    output_image: Optional[Image] (= None)
         Output Array.
-    factor_x: float = 1
+    factor_x: float (= 1)
         Scaling along x axis.
-    factor_y: float = 1
+    factor_y: float (= 1)
         Scaling along y axis.
-    factor_z: float = 1
+    factor_z: float (= 1)
         Scaling along z axis.
-    centered: bool = True
+    centered: bool (= True)
         If true, the image will be scaled to the center of the image.
-    interpolate: bool = False
+    interpolate: bool (= False)
         If true, bi/trilinear interplation will be applied.
-    resize: bool = False
+    resize: bool (= False)
         Automatically determines output size image.
-    device: Optional[Device] = None
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
     -------
     Image
-
     """
 
-    from ._pyclesperanto import _scale as op
-
-    return op(
-        device=device,
-        src=input_image,
-        dst=output_image,
-        factor_x=float(factor_x),
-        factor_y=float(factor_y),
-        factor_z=float(factor_z),
-        centered=bool(centered),
-        interpolate=bool(interpolate),
-        resize=bool(resize),
+    return clic._scale(
+        device,
+        input_image,
+        output_image,
+        float(factor_x),
+        float(factor_y),
+        float(factor_z),
+        centered,
+        interpolate,
+        resize,
     )
 
 
@@ -312,35 +291,32 @@ def translate(
     ----------
     input_image: Image
         Input Array to be translated.
-    output_image: Optional[Image] = None
+    output_image: Optional[Image] (= None)
         Output Array.
-    translate_x: float = 0
+    translate_x: float (= 0)
         Translation along x axis in pixels.
-    translate_y: float = 0
+    translate_y: float (= 0)
         Translation along y axis in pixels.
-    translate_z: float = 0
+    translate_z: float (= 0)
         Translation along z axis in pixels.
-    interpolate: bool = False
+    interpolate: bool (= False)
         If true, bi/trilinear interplation will be applied.
-    device: Optional[Device] = None
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
     -------
     Image
-
     """
 
-    from ._pyclesperanto import _translate as op
-
-    return op(
-        device=device,
-        src=input_image,
-        dst=output_image,
-        translate_x=float(translate_x),
-        translate_y=float(translate_y),
-        translate_z=float(translate_z),
-        interpolate=bool(interpolate),
+    return clic._translate(
+        device,
+        input_image,
+        output_image,
+        float(translate_x),
+        float(translate_y),
+        float(translate_z),
+        interpolate,
     )
 
 
@@ -361,22 +337,19 @@ def closing_labels(
     ----------
     input_image: Image
         Input label Array.
-    output_image: Optional[Image] = None
+    output_image: Optional[Image] (= None)
         Output label Array.
-    radius: int = 0
+    radius: int (= 0)
         Radius size for the closing.
-    device: Optional[Device] = None
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
     -------
     Image
-
     """
 
-    from ._pyclesperanto import _closing_labels as op
-
-    return op(device=device, src=input_image, dst=output_image, radius=int(radius))
+    return clic._closing_labels(device, input_image, output_image, int(radius))
 
 
 @plugin_function
@@ -394,20 +367,19 @@ def erode_connected_labels(
     ----------
     input_image: Image
         result
-    output_image: Optional[Image] = None
-    radius: int = 1
-    device: Optional[Device] = None
+    output_image: Optional[Image] (= None)
+
+    radius: int (= 1)
+
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
     -------
     Image
-
     """
 
-    from ._pyclesperanto import _erode_connected_labels as op
-
-    return op(device=device, src=input_image, dst=output_image, radius=int(radius))
+    return clic._erode_connected_labels(device, input_image, output_image, int(radius))
 
 
 @plugin_function(category=["label processing", "in assistant", "bia-bob-suggestion"])
@@ -427,22 +399,19 @@ def opening_labels(
     ----------
     input_image: Image
         Input label Array.
-    output_image: Optional[Image] = None
+    output_image: Optional[Image] (= None)
         Output label Array.
-    radius: int = 0
+    radius: int (= 0)
         Radius size for the opening.
-    device: Optional[Device] = None
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
     -------
     Image
-
     """
 
-    from ._pyclesperanto import _opening_labels as op
-
-    return op(device=device, src=input_image, dst=output_image, radius=int(radius))
+    return clic._opening_labels(device, input_image, output_image, int(radius))
 
 
 @plugin_function(category=["label", "in assistant", "bia-bob-suggestion"])
@@ -464,13 +433,13 @@ def voronoi_otsu_labeling(
     ----------
     input_image: Image
         Input intensity Array.
-    output_image: Optional[Image] = None
+    output_image: Optional[Image] (= None)
         Output label Array.
-    spot_sigma: float = 2
+    spot_sigma: float (= 2)
         Controls how close detected cells can be.
-    outline_sigma: float = 2
+    outline_sigma: float (= 2)
         Controls how precise segmented objects are outlined.
-    device: Optional[Device] = None
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
@@ -480,16 +449,10 @@ def voronoi_otsu_labeling(
     References
     ----------
     [1] https://clij.github.io/clij2-docs/reference_voronoiOtsuLabeling
-        [2] https://ieeexplore.ieee.org/document/4310076
-        [3] https://en.wikipedia.org/wiki/Voronoi_diagram
+    [2] https://ieeexplore.ieee.org/document/4310076
+    [3] https://en.wikipedia.org/wiki/Voronoi_diagram
     """
 
-    from ._pyclesperanto import _voronoi_otsu_labeling as op
-
-    return op(
-        device=device,
-        src=input_image,
-        dst=output_image,
-        spot_sigma=float(spot_sigma),
-        outline_sigma=float(outline_sigma),
+    return clic._voronoi_otsu_labeling(
+        device, input_image, output_image, float(spot_sigma), float(outline_sigma)
     )

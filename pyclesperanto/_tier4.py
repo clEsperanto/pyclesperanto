@@ -1,8 +1,8 @@
 #
-# This code is auto-generated from 'tier4.hpp' file, using 'gencle' script.
-# Do not edit manually.
+# This code is auto-generated from CLIc 'cle::tier4.hpp' file, do not edit manually.
 #
 
+import importlib
 import warnings
 from typing import Optional
 
@@ -11,6 +11,8 @@ import numpy as np
 from ._array import Image
 from ._core import Device
 from ._decorators import plugin_function
+
+clic = importlib.import_module("._pyclesperanto", package="pyclesperanto")
 
 
 @plugin_function
@@ -24,8 +26,10 @@ def label_bounding_box(
     Parameters
     ----------
     input_image: Image
+
     label_id: int
-    device: Optional[Device] = None
+
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
@@ -37,9 +41,7 @@ def label_bounding_box(
     [1] https://clij.github.io/clij2-docs/reference_boundingBox
     """
 
-    from ._pyclesperanto import _label_bounding_box as op
-
-    return op(device=device, src=input_image, label_id=int(label_id))
+    return clic._label_bounding_box(device, input_image, int(label_id))
 
 
 @plugin_function(category=["in assistant", "combine", "bia-bob-suggestion"])
@@ -52,8 +54,10 @@ def mean_squared_error(
     Parameters
     ----------
     input_image0: Image
+
     input_image1: Image
-    device: Optional[Device] = None
+
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
@@ -65,9 +69,7 @@ def mean_squared_error(
     [1] https://clij.github.io/clij2-docs/reference_meanSquaredError
     """
 
-    from ._pyclesperanto import _mean_squared_error as op
-
-    return op(device=device, src0=input_image0, src1=input_image1)
+    return clic._mean_squared_error(device, input_image0, input_image1)
 
 
 @plugin_function
@@ -83,8 +85,10 @@ def spots_to_pointlist(
     Parameters
     ----------
     input_image: Image
-    output_image: Optional[Image] = None
-    device: Optional[Device] = None
+
+    output_image: Optional[Image] (= None)
+
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
@@ -96,9 +100,7 @@ def spots_to_pointlist(
     [1] https://clij.github.io/clij2-docs/reference_spotsToPointList
     """
 
-    from ._pyclesperanto import _spots_to_pointlist as op
-
-    return op(device=device, src=input_image, dst=output_image)
+    return clic._spots_to_pointlist(device, input_image, output_image)
 
 
 @plugin_function(category=["label processing", "in assistant", "bia-bob-suggestion"])
@@ -116,10 +118,12 @@ def relabel_sequential(
     Parameters
     ----------
     input_image: Image
-    output_image: Optional[Image] = None
-    blocksize: int = 4096
+
+    output_image: Optional[Image] (= None)
+
+    blocksize: int (= 4096)
         Renumbering is done in blocks for performance reasons.
-    device: Optional[Device] = None
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
@@ -131,11 +135,7 @@ def relabel_sequential(
     [1] https://clij.github.io/clij2-docs/reference_closeIndexGapsInLabelMap
     """
 
-    from ._pyclesperanto import _relabel_sequential as op
-
-    return op(
-        device=device, src=input_image, dst=output_image, blocksize=int(blocksize)
-    )
+    return clic._relabel_sequential(device, input_image, output_image, int(blocksize))
 
 
 @plugin_function(category=["binarize", "in assistant", "bia-bob-suggestion"])
@@ -150,8 +150,10 @@ def threshold_otsu(
     Parameters
     ----------
     input_image: Image
-    output_image: Optional[Image] = None
-    device: Optional[Device] = None
+
+    output_image: Optional[Image] (= None)
+
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
@@ -161,10 +163,8 @@ def threshold_otsu(
     References
     ----------
     [1] https://clij.github.io/clij2-docs/reference_thresholdOtsu
-        [2] https://scikit-image.org/docs/dev/api/skimage.filters.html#skimage.filters.threshold_otsu
-        [3] https://ieeexplore.ieee.org/document/4310076
+    [2] https://scikit-image.org/docs/dev/api/skimage.filters.html#skimage.filters.threshold_otsu
+    [3] https://ieeexplore.ieee.org/document/4310076
     """
 
-    from ._pyclesperanto import _threshold_otsu as op
-
-    return op(device=device, src=input_image, dst=output_image)
+    return clic._threshold_otsu(device, input_image, output_image)

@@ -23,7 +23,7 @@ option(BUILD_SHARED_LIBS OFF)
 
 
 ## CLIc dependency
-set(CLIC_REPO_TAG 0.11.1) # branch name for dev
+set(CLIC_REPO_TAG 0.12.0) # branch name for dev
 set(CLIC_REPO_URL https://github.com/clEsperanto/CLIc.git)
 set(BUILD_OPENCL_BACKEND ON CACHE BOOL "Build with OCL if FOUND" FORCE)
 set(BUILD_CUDA_BACKEND ON CACHE BOOL "Build with CUDA if FOUND" FORCE)

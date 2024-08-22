@@ -1,8 +1,8 @@
 #
-# This code is auto-generated from 'tier3.hpp' file, using 'gencle' script.
-# Do not edit manually.
+# This code is auto-generated from CLIc 'cle::tier3.hpp' file, do not edit manually.
 #
 
+import importlib
 import warnings
 from typing import Optional
 
@@ -11,6 +11,8 @@ import numpy as np
 from ._array import Image
 from ._core import Device
 from ._decorators import plugin_function
+
+clic = importlib.import_module("._pyclesperanto", package="pyclesperanto")
 
 
 @plugin_function
@@ -22,7 +24,8 @@ def bounding_box(input_image: Image, device: Optional[Device] = None) -> list:
     Parameters
     ----------
     input_image: Image
-    device: Optional[Device] = None
+
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
@@ -34,9 +37,7 @@ def bounding_box(input_image: Image, device: Optional[Device] = None) -> list:
     [1] https://clij.github.io/clij2-docs/reference_boundingBox
     """
 
-    from ._pyclesperanto import _bounding_box as op
-
-    return op(device=device, src=input_image)
+    return clic._bounding_box(device, input_image)
 
 
 @plugin_function
@@ -47,7 +48,8 @@ def center_of_mass(input_image: Image, device: Optional[Device] = None) -> list:
     Parameters
     ----------
     input_image: Image
-    device: Optional[Device] = None
+
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
@@ -59,9 +61,7 @@ def center_of_mass(input_image: Image, device: Optional[Device] = None) -> list:
     [1] https://clij.github.io/clij2-docs/reference_centerOfMass
     """
 
-    from ._pyclesperanto import _center_of_mass as op
-
-    return op(device=device, src=input_image)
+    return clic._center_of_mass(device, input_image)
 
 
 @plugin_function
@@ -80,9 +80,12 @@ def exclude_labels(
     Parameters
     ----------
     input_image: Image
+
     list: Image
-    output_image: Optional[Image] = None
-    device: Optional[Device] = None
+
+    output_image: Optional[Image] (= None)
+
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
@@ -94,9 +97,7 @@ def exclude_labels(
     [1] https://clij.github.io/clij2-docs/reference_excludeLabels
     """
 
-    from ._pyclesperanto import _exclude_labels as op
-
-    return op(device=device, src=input_image, list=list, dst=output_image)
+    return clic._exclude_labels(device, input_image, list, output_image)
 
 
 @plugin_function(category=["label processing", "in assistant", "bia-bob-suggestion"])
@@ -114,14 +115,16 @@ def exclude_labels_on_edges(
     Parameters
     ----------
     input_image: Image
-    output_image: Optional[Image] = None
-    exclude_x: bool = True
+
+    output_image: Optional[Image] (= None)
+
+    exclude_x: bool (= True)
         Exclude labels along min and max x
-    exclude_y: bool = True
+    exclude_y: bool (= True)
         Exclude labels along min and max y
-    exclude_z: bool = True
+    exclude_z: bool (= True)
         Exclude labels along min and max z
-    device: Optional[Device] = None
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
@@ -133,15 +136,8 @@ def exclude_labels_on_edges(
     [1] https://clij.github.io/clij2-docs/reference_excludeLabelsOnEdges
     """
 
-    from ._pyclesperanto import _exclude_labels_on_edges as op
-
-    return op(
-        device=device,
-        src=input_image,
-        dst=output_image,
-        exclude_x=bool(exclude_x),
-        exclude_y=bool(exclude_y),
-        exclude_z=bool(exclude_z),
+    return clic._exclude_labels_on_edges(
+        device, input_image, output_image, exclude_x, exclude_y, exclude_z
     )
 
 
@@ -160,20 +156,17 @@ def flag_existing_labels(
     ----------
     input_image: Image
         a label image
-    output_image: Optional[Image] = None
+    output_image: Optional[Image] (= None)
         binary vector, if given should have size 1*n with n = maximum label + 1
-    device: Optional[Device] = None
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
     -------
     Image
-
     """
 
-    from ._pyclesperanto import _flag_existing_labels as op
-
-    return op(device=device, src=input_image, dst=output_image)
+    return clic._flag_existing_labels(device, input_image, output_image)
 
 
 @plugin_function(category=["filter", "in assistant"])
@@ -190,9 +183,12 @@ def gamma_correction(
     Parameters
     ----------
     input_image: Image
-    output_image: Optional[Image] = None
-    gamma: float = 1
-    device: Optional[Device] = None
+
+    output_image: Optional[Image] (= None)
+
+    gamma: float (= 1)
+
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
@@ -204,9 +200,7 @@ def gamma_correction(
     [1] https://clij.github.io/clij2-docs/reference_gammaCorrection
     """
 
-    from ._pyclesperanto import _gamma_correction as op
-
-    return op(device=device, src=input_image, dst=output_image, gamma=float(gamma))
+    return clic._gamma_correction(device, input_image, output_image, float(gamma))
 
 
 @plugin_function
@@ -224,9 +218,12 @@ def generate_binary_overlap_matrix(
     Parameters
     ----------
     input_image0: Image
+
     input_image1: Image
-    output_image: Optional[Image] = None
-    device: Optional[Device] = None
+
+    output_image: Optional[Image] (= None)
+
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
@@ -238,9 +235,9 @@ def generate_binary_overlap_matrix(
     [1] https://clij.github.io/clij2-docs/reference_generateBinaryOverlapMatrix
     """
 
-    from ._pyclesperanto import _generate_binary_overlap_matrix as op
-
-    return op(device=device, src0=input_image0, src1=input_image1, dst=output_image)
+    return clic._generate_binary_overlap_matrix(
+        device, input_image0, input_image1, output_image
+    )
 
 
 @plugin_function(category=["bia-bob-suggestion"])
@@ -258,8 +255,10 @@ def generate_touch_matrix(
     Parameters
     ----------
     input_image: Image
-    output_image: Optional[Image] = None
-    device: Optional[Device] = None
+
+    output_image: Optional[Image] (= None)
+
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
@@ -271,9 +270,7 @@ def generate_touch_matrix(
     [1] https://clij.github.io/clij2-docs/reference_generateTouchMatrix
     """
 
-    from ._pyclesperanto import _generate_touch_matrix as op
-
-    return op(device=device, src=input_image, dst=output_image)
+    return clic._generate_touch_matrix(device, input_image, output_image)
 
 
 @plugin_function
@@ -305,11 +302,16 @@ def histogram(
     Parameters
     ----------
     input_image: Image
-    output_image: Optional[Image] = None
-    nbins: int = 256
-    min: Optional[float] = None
-    max: Optional[float] = None
-    device: Optional[Device] = None
+
+    output_image: Optional[Image] (= None)
+
+    nbins: int (= 256)
+
+    min: Optional[float] (= None)
+
+    max: Optional[float] (= None)
+
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
@@ -321,16 +323,7 @@ def histogram(
     [1] https://clij.github.io/clij2-docs/reference_histogram
     """
 
-    from ._pyclesperanto import _histogram as op
-
-    return op(
-        device=device,
-        src=input_image,
-        dst=output_image,
-        nbins=int(nbins),
-        min=float(min) if min is not None else None,
-        max=float(max) if max is not None else None,
-    )
+    return clic._histogram(device, input_image, output_image, int(nbins), min, max)
 
 
 @plugin_function
@@ -346,8 +339,10 @@ def jaccard_index(
     Parameters
     ----------
     input_image0: Image
+
     input_image1: Image
-    device: Optional[Device] = None
+
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
@@ -359,9 +354,7 @@ def jaccard_index(
     [1] https://clij.github.io/clij2-docs/reference_jaccardIndex
     """
 
-    from ._pyclesperanto import _jaccard_index as op
-
-    return op(device=device, src0=input_image0, src1=input_image1)
+    return clic._jaccard_index(device, input_image0, input_image1)
 
 
 @plugin_function(category=["bia-bob-suggestion"])
@@ -379,8 +372,10 @@ def labelled_spots_to_pointlist(
     Parameters
     ----------
     input_image: Image
-    output_image: Optional[Image] = None
-    device: Optional[Device] = None
+
+    output_image: Optional[Image] (= None)
+
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
@@ -392,9 +387,7 @@ def labelled_spots_to_pointlist(
     [1] https://clij.github.io/clij2-docs/reference_labelledSpotsToPointList
     """
 
-    from ._pyclesperanto import _labelled_spots_to_pointlist as op
-
-    return op(device=device, src=input_image, dst=output_image)
+    return clic._labelled_spots_to_pointlist(device, input_image, output_image)
 
 
 @plugin_function
@@ -405,18 +398,15 @@ def maximum_position(input_image: Image, device: Optional[Device] = None) -> lis
     ----------
     input_image: Image
         The image of which the position of the maximum of all pixels will be determined.
-    device: Optional[Device] = None
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
     -------
     list
-
     """
 
-    from ._pyclesperanto import _maximum_position as op
-
-    return op(device=device, src=input_image)
+    return clic._maximum_position(device, input_image)
 
 
 @plugin_function
@@ -427,7 +417,7 @@ def mean_of_all_pixels(input_image: Image, device: Optional[Device] = None) -> f
     ----------
     input_image: Image
         The image of which the mean average of all pixels will be determined.
-    device: Optional[Device] = None
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
@@ -439,9 +429,7 @@ def mean_of_all_pixels(input_image: Image, device: Optional[Device] = None) -> f
     [1] https://clij.github.io/clij2-docs/reference_meanOfAllPixels
     """
 
-    from ._pyclesperanto import _mean_of_all_pixels as op
-
-    return op(device=device, src=input_image)
+    return clic._mean_of_all_pixels(device, input_image)
 
 
 @plugin_function
@@ -452,18 +440,15 @@ def minimum_position(input_image: Image, device: Optional[Device] = None) -> lis
     ----------
     input_image: Image
         The image of which the position of the minimum of all pixels will be determined.
-    device: Optional[Device] = None
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
     -------
     list
-
     """
 
-    from ._pyclesperanto import _minimum_position as op
-
-    return op(device=device, src=input_image)
+    return clic._minimum_position(device, input_image)
 
 
 @plugin_function
@@ -484,35 +469,32 @@ def morphological_chan_vese(
     ----------
     input_image: Image
         Input image to process.
-    output_image: Optional[Image] = None
+    output_image: Optional[Image] (= None)
         Output contour, can also be use to provide initialisation.
-    num_iter: int = 100
+    num_iter: int (= 100)
         Number of iterations.
-    smoothing: int = 1
+    smoothing: int (= 1)
         Number of
-    lambda1: float = 1
+    lambda1: float (= 1)
         Lambda1.
-    lambda2: float = 1
+    lambda2: float (= 1)
         Lambda2.
-    device: Optional[Device] = None
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
     -------
     Image
-
     """
 
-    from ._pyclesperanto import _morphological_chan_vese as op
-
-    return op(
-        device=device,
-        src=input_image,
-        dst=output_image,
-        num_iter=int(num_iter),
-        smoothing=int(smoothing),
-        lambda1=float(lambda1),
-        lambda2=float(lambda2),
+    return clic._morphological_chan_vese(
+        device,
+        input_image,
+        output_image,
+        int(num_iter),
+        int(smoothing),
+        float(lambda1),
+        float(lambda2),
     )
 
 
@@ -531,17 +513,14 @@ def statistics_of_labelled_pixels(
     ----------
     input_image: Image
         Label image to compute the statistics.
-    intensity: Optional[Image] = None
+    intensity: Optional[Image] (= None)
         Intensity image.
-    device: Optional[Device] = None
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
     -------
     dict
-
     """
 
-    from ._pyclesperanto import _statistics_of_labelled_pixels as op
-
-    return op(device=device, src=input_image, intensity=intensity)
+    return clic._statistics_of_labelled_pixels(device, input_image, intensity)

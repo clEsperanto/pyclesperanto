@@ -1,8 +1,8 @@
 #
-# This code is auto-generated from 'tier6.hpp' file, using 'gencle' script.
-# Do not edit manually.
+# This code is auto-generated from CLIc 'cle::tier6.hpp' file, do not edit manually.
 #
 
+import importlib
 import warnings
 from typing import Optional
 
@@ -11,6 +11,8 @@ import numpy as np
 from ._array import Image
 from ._core import Device
 from ._decorators import plugin_function
+
+clic = importlib.import_module("._pyclesperanto", package="pyclesperanto")
 
 
 @plugin_function(category=["label processing", "in assistant", "bia-bob-suggestion"])
@@ -28,21 +30,19 @@ def dilate_labels(
     ----------
     input_image: Image
         label image to erode
-    output_image: Optional[Image] = None
+    output_image: Optional[Image] (= None)
         result
-    radius: int = 2
-    device: Optional[Device] = None
+    radius: int (= 2)
+
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
     -------
     Image
-
     """
 
-    from ._pyclesperanto import _dilate_labels as op
-
-    return op(device=device, src=input_image, dst=output_image, radius=int(radius))
+    return clic._dilate_labels(device, input_image, output_image, int(radius))
 
 
 @plugin_function(category=["label processing", "in assistant"])
@@ -62,28 +62,21 @@ def erode_labels(
     ----------
     input_image: Image
         result
-    output_image: Optional[Image] = None
-    radius: int = 1
-    relabel: bool = False
+    output_image: Optional[Image] (= None)
+
+    radius: int (= 1)
+
+    relabel: bool (= False)
         and all label indices exist.
-    device: Optional[Device] = None
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
     -------
     Image
-
     """
 
-    from ._pyclesperanto import _erode_labels as op
-
-    return op(
-        device=device,
-        src=input_image,
-        dst=output_image,
-        radius=int(radius),
-        relabel=bool(relabel),
-    )
+    return clic._erode_labels(device, input_image, output_image, int(radius), relabel)
 
 
 @plugin_function(category=["label", "in assistant", "bia-bob-suggestion"])
@@ -103,11 +96,11 @@ def gauss_otsu_labeling(
     ----------
     input_image0: Image
         intensity image to add labels
-    output_image: Optional[Image] = None
+    output_image: Optional[Image] (= None)
         Output label image.
-    outline_sigma: float = 0
+    outline_sigma: float (= 0)
         Gaussian blur sigma along all axes
-    device: Optional[Device] = None
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
@@ -117,16 +110,11 @@ def gauss_otsu_labeling(
     References
     ----------
     [1] https://ieeexplore.ieee.org/document/4310076
-        [2] https://en.wikipedia.org/wiki/Connected-component_labeling
+    [2] https://en.wikipedia.org/wiki/Connected-component_labeling
     """
 
-    from ._pyclesperanto import _gauss_otsu_labeling as op
-
-    return op(
-        device=device,
-        src0=input_image0,
-        dst=output_image,
-        outline_sigma=float(outline_sigma),
+    return clic._gauss_otsu_labeling(
+        device, input_image0, output_image, float(outline_sigma)
     )
 
 
@@ -144,9 +132,12 @@ def masked_voronoi_labeling(
     Parameters
     ----------
     input_image: Image
+
     mask: Image
-    output_image: Optional[Image] = None
-    device: Optional[Device] = None
+
+    output_image: Optional[Image] (= None)
+
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
@@ -158,9 +149,7 @@ def masked_voronoi_labeling(
     [1] https://clij.github.io/clij2-docs/reference_maskedVoronoiLabeling
     """
 
-    from ._pyclesperanto import _masked_voronoi_labeling as op
-
-    return op(device=device, src=input_image, mask=mask, dst=output_image)
+    return clic._masked_voronoi_labeling(device, input_image, mask, output_image)
 
 
 @plugin_function(category=["label", "in assistant", "bia-bob-suggestion"])
@@ -176,8 +165,10 @@ def voronoi_labeling(
     Parameters
     ----------
     input_image: Image
-    output_image: Optional[Image] = None
-    device: Optional[Device] = None
+
+    output_image: Optional[Image] (= None)
+
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
@@ -189,6 +180,4 @@ def voronoi_labeling(
     [1] https://clij.github.io/clij2-docs/reference_voronoiLabeling
     """
 
-    from ._pyclesperanto import _voronoi_labeling as op
-
-    return op(device=device, src=input_image, dst=output_image)
+    return clic._voronoi_labeling(device, input_image, output_image)

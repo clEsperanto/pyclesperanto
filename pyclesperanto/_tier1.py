@@ -1,8 +1,8 @@
 #
-# This code is auto-generated from 'tier1.hpp' file, using 'gencle' script.
-# Do not edit manually.
+# This code is auto-generated from CLIc 'cle::tier1.hpp' file, do not edit manually.
 #
 
+import importlib
 import warnings
 from typing import Optional
 
@@ -11,6 +11,8 @@ import numpy as np
 from ._array import Image
 from ._core import Device
 from ._decorators import plugin_function
+
+clic = importlib.import_module("._pyclesperanto", package="pyclesperanto")
 
 
 @plugin_function(category=["filter", "in assistant", "bia-bob-suggestion"])
@@ -26,9 +28,9 @@ def absolute(
     ----------
     input_image: Image
         The input image to be processed.
-    output_image: Optional[Image] = None
+    output_image: Optional[Image] (= None)
         The output image where results are written into.
-    device: Optional[Device] = None
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
@@ -40,9 +42,7 @@ def absolute(
     [1] https://clij.github.io/clij2-docs/reference_absolute
     """
 
-    from ._pyclesperanto import _absolute as op
-
-    return op(device=device, src=input_image, dst=output_image)
+    return clic._absolute(device, input_image, output_image)
 
 
 @plugin_function(category=["combine", "in assistant"])
@@ -63,13 +63,13 @@ def add_images_weighted(
         The first input image to added.
     input_image1: Image
         The second image to be added.
-    output_image: Optional[Image] = None
+    output_image: Optional[Image] (= None)
         The output image where results are written into.
-    factor0: float = 1
+    factor0: float (= 1)
         Multiplication factor of each pixel of src0 before adding it.
-    factor1: float = 1
+    factor1: float (= 1)
         Multiplication factor of each pixel of src1 before adding it.
-    device: Optional[Device] = None
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
@@ -81,15 +81,8 @@ def add_images_weighted(
     [1] https://clij.github.io/clij2-docs/reference_addImagesWeighted
     """
 
-    from ._pyclesperanto import _add_images_weighted as op
-
-    return op(
-        device=device,
-        src0=input_image0,
-        src1=input_image1,
-        dst=output_image,
-        factor0=float(factor0),
-        factor1=float(factor1),
+    return clic._add_images_weighted(
+        device, input_image0, input_image1, output_image, float(factor0), float(factor1)
     )
 
 
@@ -107,11 +100,11 @@ def add_image_and_scalar(
     ----------
     input_image: Image
         The input image where scalare should be added.
-    output_image: Optional[Image] = None
+    output_image: Optional[Image] (= None)
         The output image where results are written into.
-    scalar: float = 1
+    scalar: float (= 1)
         The constant number which will be added to all pixels.
-    device: Optional[Device] = None
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
@@ -123,9 +116,7 @@ def add_image_and_scalar(
     [1] https://clij.github.io/clij2-docs/reference_addImageAndScalar
     """
 
-    from ._pyclesperanto import _add_image_and_scalar as op
-
-    return op(device=device, src=input_image, dst=output_image, scalar=float(scalar))
+    return clic._add_image_and_scalar(device, input_image, output_image, float(scalar))
 
 
 @plugin_function(
@@ -155,9 +146,9 @@ def binary_and(
         The first binary input image to be processed.
     input_image1: Image
         The second binary input image to be processed.
-    output_image: Optional[Image] = None
+    output_image: Optional[Image] (= None)
         The output image where results are written into.
-    device: Optional[Device] = None
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
@@ -169,9 +160,7 @@ def binary_and(
     [1] https://clij.github.io/clij2-docs/reference_binaryAnd
     """
 
-    from ._pyclesperanto import _binary_and as op
-
-    return op(device=device, src0=input_image0, src1=input_image1, dst=output_image)
+    return clic._binary_and(device, input_image0, input_image1, output_image)
 
 
 @plugin_function(
@@ -194,9 +183,9 @@ def binary_edge_detection(
     ----------
     input_image: Image
         The binary input image where edges will be searched.
-    output_image: Optional[Image] = None
+    output_image: Optional[Image] (= None)
         The output image where edge pixels will be 1.
-    device: Optional[Device] = None
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
@@ -208,9 +197,7 @@ def binary_edge_detection(
     [1] https://clij.github.io/clij2-docs/reference_binaryEdgeDetection
     """
 
-    from ._pyclesperanto import _binary_edge_detection as op
-
-    return op(device=device, src=input_image, dst=output_image)
+    return clic._binary_edge_detection(device, input_image, output_image)
 
 
 @plugin_function(
@@ -235,9 +222,9 @@ def binary_not(
     ----------
     input_image: Image
         The binary input image to be inverted.
-    output_image: Optional[Image] = None
+    output_image: Optional[Image] (= None)
         The output image where results are written into.
-    device: Optional[Device] = None
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
@@ -249,9 +236,7 @@ def binary_not(
     [1] https://clij.github.io/clij2-docs/reference_binaryNot
     """
 
-    from ._pyclesperanto import _binary_not as op
-
-    return op(device=device, src=input_image, dst=output_image)
+    return clic._binary_not(device, input_image, output_image)
 
 
 @plugin_function(
@@ -281,9 +266,9 @@ def binary_or(
         The first binary input image to be processed.
     input_image1: Image
         The second binary input image to be processed.
-    output_image: Optional[Image] = None
+    output_image: Optional[Image] (= None)
         The output image where results are written into.
-    device: Optional[Device] = None
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
@@ -295,9 +280,7 @@ def binary_or(
     [1] https://clij.github.io/clij2-docs/reference_binaryOr
     """
 
-    from ._pyclesperanto import _binary_or as op
-
-    return op(device=device, src0=input_image0, src1=input_image1, dst=output_image)
+    return clic._binary_or(device, input_image0, input_image1, output_image)
 
 
 @plugin_function(
@@ -324,9 +307,9 @@ def binary_subtract(
         The first binary input image to be processed.
     input_image1: Image
         The second binary input image to be subtracted from the first.
-    output_image: Optional[Image] = None
+    output_image: Optional[Image] (= None)
         The output image where results are written into.
-    device: Optional[Device] = None
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
@@ -338,9 +321,7 @@ def binary_subtract(
     [1] https://clij.github.io/clij2-docs/reference_binarySubtract
     """
 
-    from ._pyclesperanto import _binary_subtract as op
-
-    return op(device=device, src0=input_image0, src1=input_image1, dst=output_image)
+    return clic._binary_subtract(device, input_image0, input_image1, output_image)
 
 
 @plugin_function(
@@ -370,9 +351,9 @@ def binary_xor(
         The first binary input image to be processed.
     input_image1: Image
         The second binary input image to be processed.
-    output_image: Optional[Image] = None
+    output_image: Optional[Image] (= None)
         The output image where results are written into.
-    device: Optional[Device] = None
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
@@ -384,9 +365,7 @@ def binary_xor(
     [1] https://clij.github.io/clij2-docs/reference_binaryXOr
     """
 
-    from ._pyclesperanto import _binary_xor as op
-
-    return op(device=device, src0=input_image0, src1=input_image1, dst=output_image)
+    return clic._binary_xor(device, input_image0, input_image1, output_image)
 
 
 @plugin_function(category=["filter", "binary processing"])
@@ -402,20 +381,17 @@ def binary_supinf(
     ----------
     input_image: Image
         The binary input image to be processed.
-    output_image: Optional[Image] = None
+    output_image: Optional[Image] (= None)
         The output image where results are written into.
-    device: Optional[Device] = None
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
     -------
     Image
-
     """
 
-    from ._pyclesperanto import _binary_supinf as op
-
-    return op(device=device, src=input_image, dst=output_image)
+    return clic._binary_supinf(device, input_image, output_image)
 
 
 @plugin_function(category=["filter", "binary processing"])
@@ -431,20 +407,17 @@ def binary_infsup(
     ----------
     input_image: Image
         The binary input image to be processed.
-    output_image: Optional[Image] = None
+    output_image: Optional[Image] (= None)
         The output image where results are written into.
-    device: Optional[Device] = None
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
     -------
     Image
-
     """
 
-    from ._pyclesperanto import _binary_infsup as op
-
-    return op(device=device, src=input_image, dst=output_image)
+    return clic._binary_infsup(device, input_image, output_image)
 
 
 @plugin_function
@@ -469,26 +442,20 @@ def block_enumerate(
         input binary vector image
     input_image1: Image
         precomputed sums of blocks
-    output_image: Optional[Image] = None
+    output_image: Optional[Image] (= None)
         output enumerated vector image
-    blocksize: int = 256
-    device: Optional[Device] = None
+    blocksize: int (= 256)
+
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
     -------
     Image
-
     """
 
-    from ._pyclesperanto import _block_enumerate as op
-
-    return op(
-        device=device,
-        src0=input_image0,
-        src1=input_image1,
-        dst=output_image,
-        blocksize=int(blocksize),
+    return clic._block_enumerate(
+        device, input_image0, input_image1, output_image, int(blocksize)
     )
 
 
@@ -508,9 +475,9 @@ def convolve(
         First input image to process.
     input_image1: Image
         Second input image to process.
-    output_image: Optional[Image] = None
+    output_image: Optional[Image] (= None)
         Output result image.
-    device: Optional[Device] = None
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
@@ -522,9 +489,7 @@ def convolve(
     [1] https://clij.github.io/clij2-docs/reference_convolve
     """
 
-    from ._pyclesperanto import _convolve as op
-
-    return op(device=device, src0=input_image0, src1=input_image1, dst=output_image)
+    return clic._convolve(device, input_image0, input_image1, output_image)
 
 
 @plugin_function
@@ -539,9 +504,9 @@ def copy(
     ----------
     input_image: Image
         Input image to copy.
-    output_image: Optional[Image] = None
+    output_image: Optional[Image] (= None)
         Output copy image.
-    device: Optional[Device] = None
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
@@ -553,9 +518,7 @@ def copy(
     [1] https://clij.github.io/clij2-docs/reference_copy
     """
 
-    from ._pyclesperanto import _copy as op
-
-    return op(device=device, src=input_image, dst=output_image)
+    return clic._copy(device, input_image, output_image)
 
 
 @plugin_function
@@ -576,10 +539,11 @@ def copy_slice(
     ----------
     input_image: Image
         Input image to copy from.
-    output_image: Optional[Image] = None
+    output_image: Optional[Image] (= None)
         Output copy image slice.
-    slice: int = 0
-    device: Optional[Device] = None
+    slice: int (= 0)
+
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
@@ -591,9 +555,7 @@ def copy_slice(
     [1] https://clij.github.io/clij2-docs/reference_copySlice
     """
 
-    from ._pyclesperanto import _copy_slice as op
-
-    return op(device=device, src=input_image, dst=output_image, slice=int(slice))
+    return clic._copy_slice(device, input_image, output_image, int(slice))
 
 
 @plugin_function
@@ -611,10 +573,11 @@ def copy_horizontal_slice(
     ----------
     input_image: Image
         Input image to copy from.
-    output_image: Optional[Image] = None
+    output_image: Optional[Image] (= None)
         Output copy image slice.
-    slice: int = 0
-    device: Optional[Device] = None
+    slice: int (= 0)
+
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
@@ -626,9 +589,7 @@ def copy_horizontal_slice(
     [1] https://clij.github.io/clij2-docs/reference_copySlice
     """
 
-    from ._pyclesperanto import _copy_horizontal_slice as op
-
-    return op(device=device, src=input_image, dst=output_image, slice=int(slice))
+    return clic._copy_horizontal_slice(device, input_image, output_image, int(slice))
 
 
 @plugin_function
@@ -646,10 +607,11 @@ def copy_vertical_slice(
     ----------
     input_image: Image
         Input image to copy from.
-    output_image: Optional[Image] = None
+    output_image: Optional[Image] (= None)
         Output copy image slice.
-    slice: int = 0
-    device: Optional[Device] = None
+    slice: int (= 0)
+
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
@@ -661,9 +623,7 @@ def copy_vertical_slice(
     [1] https://clij.github.io/clij2-docs/reference_copySlice
     """
 
-    from ._pyclesperanto import _copy_vertical_slice as op
-
-    return op(device=device, src=input_image, dst=output_image, slice=int(slice))
+    return clic._copy_vertical_slice(device, input_image, output_image, int(slice))
 
 
 @plugin_function
@@ -685,21 +645,21 @@ def crop(
     ----------
     input_image: Image
         Input image to process.
-    output_image: Optional[Image] = None
+    output_image: Optional[Image] (= None)
         Output result image.
-    start_x: int = 0
+    start_x: int (= 0)
         Starting index coordicante x.
-    start_y: int = 0
+    start_y: int (= 0)
         Starting index coordicante y.
-    start_z: int = 0
+    start_z: int (= 0)
         Starting index coordicante z.
-    width: int = 1
+    width: int (= 1)
         Width size of the region to crop.
-    height: int = 1
+    height: int (= 1)
         Height size of the region to crop.
-    depth: int = 1
+    depth: int (= 1)
         Depth size of the region to crop.
-    device: Optional[Device] = None
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
@@ -711,18 +671,16 @@ def crop(
     [1] https://clij.github.io/clij2-docs/reference_crop3D
     """
 
-    from ._pyclesperanto import _crop as op
-
-    return op(
-        device=device,
-        src=input_image,
-        dst=output_image,
-        start_x=int(start_x),
-        start_y=int(start_y),
-        start_z=int(start_z),
-        width=int(width),
-        height=int(height),
-        depth=int(depth),
+    return clic._crop(
+        device,
+        input_image,
+        output_image,
+        int(start_x),
+        int(start_y),
+        int(start_z),
+        int(width),
+        int(height),
+        int(depth),
     )
 
 
@@ -738,20 +696,17 @@ def cubic_root(
     ----------
     input_image: Image
         Input image to process.
-    output_image: Optional[Image] = None
+    output_image: Optional[Image] (= None)
         Output result image.
-    device: Optional[Device] = None
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
     -------
     Image
-
     """
 
-    from ._pyclesperanto import _cubic_root as op
-
-    return op(device=device, src=input_image, dst=output_image)
+    return clic._cubic_root(device, input_image, output_image)
 
 
 @plugin_function(
@@ -769,9 +724,9 @@ def detect_label_edges(
     ----------
     input_image: Image
         Input image to process.
-    output_image: Optional[Image] = None
+    output_image: Optional[Image] (= None)
         Output result image.
-    device: Optional[Device] = None
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
@@ -783,9 +738,7 @@ def detect_label_edges(
     [1] https://clij.github.io/clij2-docs/reference_detectLabelEdges
     """
 
-    from ._pyclesperanto import _detect_label_edges as op
-
-    return op(device=device, src=input_image, dst=output_image)
+    return clic._detect_label_edges(device, input_image, output_image)
 
 
 @plugin_function(category=["binary processing"])
@@ -805,9 +758,9 @@ def dilate_box(
     ----------
     input_image: Image
         Input image to process. Input image to process.
-    output_image: Optional[Image] = None
+    output_image: Optional[Image] (= None)
         Output result image. Output result image.
-    device: Optional[Device] = None
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
@@ -819,13 +772,11 @@ def dilate_box(
     [1] https://clij.github.io/clij2-docs/reference_dilateBox
     """
 
-    from ._pyclesperanto import _dilate_box as op
-
     warnings.warn(
-        "dilate_box : This function is deprecated. Consider using dilate() instead.",
+        "pyclesperanto.dilate_box: This function is deprecated. Consider using dilate() instead.",
         DeprecationWarning,
     )
-    return op(device=device, src=input_image, dst=output_image)
+    return clic._dilate_box(device, input_image, output_image)
 
 
 @plugin_function(category=["binary processing", "bia-bob-suggestion"])
@@ -843,9 +794,9 @@ def dilate_sphere(
     ----------
     input_image: Image
         Input image to process. Input image to process.
-    output_image: Optional[Image] = None
+    output_image: Optional[Image] (= None)
         Output result image. Output result image.
-    device: Optional[Device] = None
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
@@ -857,13 +808,11 @@ def dilate_sphere(
     [1] https://clij.github.io/clij2-docs/reference_dilateSphere
     """
 
-    from ._pyclesperanto import _dilate_sphere as op
-
     warnings.warn(
-        "dilate_sphere : This function is deprecated. Consider using dilate() instead.",
+        "pyclesperanto.dilate_sphere: This function is deprecated. Consider using dilate() instead.",
         DeprecationWarning,
     )
-    return op(device=device, src=input_image, dst=output_image)
+    return clic._dilate_sphere(device, input_image, output_image)
 
 
 @plugin_function(category=["binary processing", "bia-bob-suggestion"])
@@ -883,11 +832,11 @@ def dilate(
     ----------
     input_image: Image
         Input image to process. Input image to process.
-    output_image: Optional[Image] = None
+    output_image: Optional[Image] (= None)
         Output result image. Output result image.
-    connectivity: str = "box"
+    connectivity: str (= "box")
         Element shape, "box" or "sphere".
-    device: Optional[Device] = None
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
@@ -897,14 +846,10 @@ def dilate(
     References
     ----------
     [1] https://clij.github.io/clij2-docs/reference_dilateBox
-        [2] https://clij.github.io/clij2-docs/reference_dilateSphere
+    [2] https://clij.github.io/clij2-docs/reference_dilateSphere
     """
 
-    from ._pyclesperanto import _dilate as op
-
-    return op(
-        device=device, src=input_image, dst=output_image, connectivity=connectivity
-    )
+    return clic._dilate(device, input_image, output_image, str(connectivity))
 
 
 @plugin_function(category=["combine", "in assistant"])
@@ -922,9 +867,9 @@ def divide_images(
         First input image to process.
     input_image1: Image
         Second input image to process.
-    output_image: Optional[Image] = None
+    output_image: Optional[Image] (= None)
         Output result image.
-    device: Optional[Device] = None
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
@@ -936,9 +881,7 @@ def divide_images(
     [1] https://clij.github.io/clij2-docs/reference_divideImages
     """
 
-    from ._pyclesperanto import _divide_images as op
-
-    return op(device=device, src0=input_image0, src1=input_image1, dst=output_image)
+    return clic._divide_images(device, input_image0, input_image1, output_image)
 
 
 @plugin_function(category=["filter", "in assistant"])
@@ -954,21 +897,21 @@ def divide_scalar_by_image(
     ----------
     input_image: Image
         Input image to process.
-    output_image: Optional[Image] = None
+    output_image: Optional[Image] (= None)
         Output result image.
-    scalar: float = 0
-    device: Optional[Device] = None
+    scalar: float (= 0)
+
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
     -------
     Image
-
     """
 
-    from ._pyclesperanto import _divide_scalar_by_image as op
-
-    return op(device=device, src=input_image, dst=output_image, scalar=float(scalar))
+    return clic._divide_scalar_by_image(
+        device, input_image, output_image, float(scalar)
+    )
 
 
 @plugin_function(category=["combine", "binarize", "in assistant"])
@@ -987,9 +930,9 @@ def equal(
         The first image to be compared with.
     input_image1: Image
         The second image to be compared with the first.
-    output_image: Optional[Image] = None
+    output_image: Optional[Image] (= None)
         The resulting binary image where pixels will be 1 only if source1
-    device: Optional[Device] = None
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
@@ -1001,9 +944,7 @@ def equal(
     [1] https://clij.github.io/clij2-docs/reference_equal
     """
 
-    from ._pyclesperanto import _equal as op
-
-    return op(device=device, src0=input_image0, src1=input_image1, dst=output_image)
+    return clic._equal(device, input_image0, input_image1, output_image)
 
 
 @plugin_function(category=["binarize", "in assistant"])
@@ -1020,11 +961,11 @@ def equal_constant(
     ----------
     input_image: Image
         The image where every pixel is compared to the constant.
-    output_image: Optional[Image] = None
+    output_image: Optional[Image] (= None)
         The resulting binary image where pixels will be 1 only if source1
-    scalar: float = 0
+    scalar: float (= 0)
         The constant where every pixel is compared to.
-    device: Optional[Device] = None
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
@@ -1036,9 +977,7 @@ def equal_constant(
     [1] https://clij.github.io/clij2-docs/reference_equalConstant
     """
 
-    from ._pyclesperanto import _equal_constant as op
-
-    return op(device=device, src=input_image, dst=output_image, scalar=float(scalar))
+    return clic._equal_constant(device, input_image, output_image, float(scalar))
 
 
 @plugin_function(category=["binary processing"])
@@ -1058,9 +997,9 @@ def erode_box(
     ----------
     input_image: Image
         Input image to process.
-    output_image: Optional[Image] = None
+    output_image: Optional[Image] (= None)
         Output result image.
-    device: Optional[Device] = None
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
@@ -1072,13 +1011,11 @@ def erode_box(
     [1] https://clij.github.io/clij2-docs/reference_erodeBox
     """
 
-    from ._pyclesperanto import _erode_box as op
-
     warnings.warn(
-        "erode_box : This function is deprecated. Consider using erode() instead.",
+        "pyclesperanto.erode_box: This function is deprecated. Consider using erode() instead.",
         DeprecationWarning,
     )
-    return op(device=device, src=input_image, dst=output_image)
+    return clic._erode_box(device, input_image, output_image)
 
 
 @plugin_function(category=["binary processing", "bia-bob-suggestion"])
@@ -1096,9 +1033,9 @@ def erode_sphere(
     ----------
     input_image: Image
         Input image to process.
-    output_image: Optional[Image] = None
+    output_image: Optional[Image] (= None)
         Output result image.
-    device: Optional[Device] = None
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
@@ -1110,13 +1047,11 @@ def erode_sphere(
     [1] https://clij.github.io/clij2-docs/reference_erodeSphere
     """
 
-    from ._pyclesperanto import _erode_sphere as op
-
     warnings.warn(
-        "erode_sphere : This function is deprecated. Consider using erode() instead.",
+        "pyclesperanto.erode_sphere: This function is deprecated. Consider using erode() instead.",
         DeprecationWarning,
     )
-    return op(device=device, src=input_image, dst=output_image)
+    return clic._erode_sphere(device, input_image, output_image)
 
 
 @plugin_function(category=["binary processing", "bia-bob-suggestion"])
@@ -1136,11 +1071,11 @@ def erode(
     ----------
     input_image: Image
         Input image to process.
-    output_image: Optional[Image] = None
+    output_image: Optional[Image] (= None)
         Output result image.
-    connectivity: str = "box"
+    connectivity: str (= "box")
         Element shape, "box" or "sphere".
-    device: Optional[Device] = None
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
@@ -1150,14 +1085,10 @@ def erode(
     References
     ----------
     [1] https://clij.github.io/clij2-docs/reference_erodeBox
-        [2] https://clij.github.io/clij2-docs/reference_erodeSphere
+    [2] https://clij.github.io/clij2-docs/reference_erodeSphere
     """
 
-    from ._pyclesperanto import _erode as op
-
-    return op(
-        device=device, src=input_image, dst=output_image, connectivity=connectivity
-    )
+    return clic._erode(device, input_image, output_image, str(connectivity))
 
 
 @plugin_function(category=["filter", "in assistant"])
@@ -1173,9 +1104,9 @@ def exponential(
     ----------
     input_image: Image
         Input image to process.
-    output_image: Optional[Image] = None
+    output_image: Optional[Image] (= None)
         Output result image.
-    device: Optional[Device] = None
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
@@ -1187,9 +1118,7 @@ def exponential(
     [1] https://clij.github.io/clij2-docs/reference_exponential
     """
 
-    from ._pyclesperanto import _exponential as op
-
-    return op(device=device, src=input_image, dst=output_image)
+    return clic._exponential(device, input_image, output_image)
 
 
 @plugin_function
@@ -1207,15 +1136,15 @@ def flip(
     ----------
     input_image: Image
         Input image to process.
-    output_image: Optional[Image] = None
+    output_image: Optional[Image] (= None)
         Output result image.
-    flip_x: bool = True
+    flip_x: bool (= True)
         Flip along the x axis if true.
-    flip_y: bool = True
+    flip_y: bool (= True)
         Flip along the y axis if true.
-    flip_z: bool = True
+    flip_z: bool (= True)
         Flip along the z axis if true.
-    device: Optional[Device] = None
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
@@ -1227,16 +1156,7 @@ def flip(
     [1] https://clij.github.io/clij2-docs/reference_flip3D
     """
 
-    from ._pyclesperanto import _flip as op
-
-    return op(
-        device=device,
-        src=input_image,
-        dst=output_image,
-        flip_x=bool(flip_x),
-        flip_y=bool(flip_y),
-        flip_z=bool(flip_z),
-    )
+    return clic._flip(device, input_image, output_image, flip_x, flip_y, flip_z)
 
 
 @plugin_function(category=["filter", "denoise", "in assistant", "bia-bob-suggestion"])
@@ -1256,15 +1176,15 @@ def gaussian_blur(
     ----------
     input_image: Image
         Input image to process.
-    output_image: Optional[Image] = None
+    output_image: Optional[Image] (= None)
         Output result image.
-    sigma_x: float = 0
+    sigma_x: float (= 0)
         Sigma value along the x axis.
-    sigma_y: float = 0
+    sigma_y: float (= 0)
         Sigma value along the y axis.
-    sigma_z: float = 0
+    sigma_z: float (= 0)
         Sigma value along the z axis.
-    device: Optional[Device] = None
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
@@ -1276,15 +1196,13 @@ def gaussian_blur(
     [1] https://clij.github.io/clij2-docs/reference_gaussianBlur3D
     """
 
-    from ._pyclesperanto import _gaussian_blur as op
-
-    return op(
-        device=device,
-        src=input_image,
-        dst=output_image,
-        sigma_x=float(sigma_x),
-        sigma_y=float(sigma_y),
-        sigma_z=float(sigma_z),
+    return clic._gaussian_blur(
+        device,
+        input_image,
+        output_image,
+        float(sigma_x),
+        float(sigma_y),
+        float(sigma_z),
     )
 
 
@@ -1311,9 +1229,9 @@ def generate_distance_matrix(
         First input image to process.
     input_image1: Image
         Second input image to process.
-    output_image: Optional[Image] = None
+    output_image: Optional[Image] (= None)
         Output result image.
-    device: Optional[Device] = None
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
@@ -1325,9 +1243,9 @@ def generate_distance_matrix(
     [1] https://clij.github.io/clij2-docs/reference_generateDistanceMatrix
     """
 
-    from ._pyclesperanto import _generate_distance_matrix as op
-
-    return op(device=device, src0=input_image0, src1=input_image1, dst=output_image)
+    return clic._generate_distance_matrix(
+        device, input_image0, input_image1, output_image
+    )
 
 
 @plugin_function(category=["filter", "edge detection", "in assistant"])
@@ -1344,9 +1262,9 @@ def gradient_x(
     ----------
     input_image: Image
         Input image to process.
-    output_image: Optional[Image] = None
+    output_image: Optional[Image] (= None)
         Output result image.
-    device: Optional[Device] = None
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
@@ -1358,9 +1276,7 @@ def gradient_x(
     [1] https://clij.github.io/clij2-docs/reference_gradientX
     """
 
-    from ._pyclesperanto import _gradient_x as op
-
-    return op(device=device, src=input_image, dst=output_image)
+    return clic._gradient_x(device, input_image, output_image)
 
 
 @plugin_function(category=["filter", "edge detection", "in assistant"])
@@ -1377,9 +1293,9 @@ def gradient_y(
     ----------
     input_image: Image
         Input image to process.
-    output_image: Optional[Image] = None
+    output_image: Optional[Image] (= None)
         Output result image.
-    device: Optional[Device] = None
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
@@ -1391,9 +1307,7 @@ def gradient_y(
     [1] https://clij.github.io/clij2-docs/reference_gradientY
     """
 
-    from ._pyclesperanto import _gradient_y as op
-
-    return op(device=device, src=input_image, dst=output_image)
+    return clic._gradient_y(device, input_image, output_image)
 
 
 @plugin_function(category=["filter", "edge detection", "in assistant"])
@@ -1410,9 +1324,9 @@ def gradient_z(
     ----------
     input_image: Image
         Input image to process.
-    output_image: Optional[Image] = None
+    output_image: Optional[Image] (= None)
         Output result image.
-    device: Optional[Device] = None
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
@@ -1424,9 +1338,7 @@ def gradient_z(
     [1] https://clij.github.io/clij2-docs/reference_gradientZ
     """
 
-    from ._pyclesperanto import _gradient_z as op
-
-    return op(device=device, src=input_image, dst=output_image)
+    return clic._gradient_z(device, input_image, output_image)
 
 
 @plugin_function(category=["combine", "binarize", "in assistant"])
@@ -1445,9 +1357,9 @@ def greater(
         First input image to process.
     input_image1: Image
         Second input image to process.
-    output_image: Optional[Image] = None
+    output_image: Optional[Image] (= None)
         Output result image.
-    device: Optional[Device] = None
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
@@ -1459,9 +1371,7 @@ def greater(
     [1] https://clij.github.io/clij2-docs/reference_greater
     """
 
-    from ._pyclesperanto import _greater as op
-
-    return op(device=device, src0=input_image0, src1=input_image1, dst=output_image)
+    return clic._greater(device, input_image0, input_image1, output_image)
 
 
 @plugin_function(category=["binarize", "in assistant"])
@@ -1478,10 +1388,11 @@ def greater_constant(
     ----------
     input_image: Image
         Input image to process.
-    output_image: Optional[Image] = None
+    output_image: Optional[Image] (= None)
         Output result image.
-    scalar: float = 0
-    device: Optional[Device] = None
+    scalar: float (= 0)
+
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
@@ -1493,9 +1404,7 @@ def greater_constant(
     [1] https://clij.github.io/clij2-docs/reference_greaterConstant
     """
 
-    from ._pyclesperanto import _greater_constant as op
-
-    return op(device=device, src=input_image, dst=output_image, scalar=float(scalar))
+    return clic._greater_constant(device, input_image, output_image, float(scalar))
 
 
 @plugin_function(category=["combine", "binarize", "in assistant"])
@@ -1514,9 +1423,9 @@ def greater_or_equal(
         First input image to process.
     input_image1: Image
         Second input image to process.
-    output_image: Optional[Image] = None
+    output_image: Optional[Image] (= None)
         Output result image.
-    device: Optional[Device] = None
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
@@ -1528,9 +1437,7 @@ def greater_or_equal(
     [1] https://clij.github.io/clij2-docs/reference_greaterOrEqual
     """
 
-    from ._pyclesperanto import _greater_or_equal as op
-
-    return op(device=device, src0=input_image0, src1=input_image1, dst=output_image)
+    return clic._greater_or_equal(device, input_image0, input_image1, output_image)
 
 
 @plugin_function(category=["binarize", "in assistant"])
@@ -1547,11 +1454,11 @@ def greater_or_equal_constant(
     ----------
     input_image: Image
         Input image to process.
-    output_image: Optional[Image] = None
+    output_image: Optional[Image] (= None)
         Output result image.
-    scalar: float = 0
+    scalar: float (= 0)
         Scalar value used in the comparison.
-    device: Optional[Device] = None
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
@@ -1563,9 +1470,9 @@ def greater_or_equal_constant(
     [1] https://clij.github.io/clij2-docs/reference_greaterOrEqualConstant
     """
 
-    from ._pyclesperanto import _greater_or_equal_constant as op
-
-    return op(device=device, src=input_image, dst=output_image, scalar=float(scalar))
+    return clic._greater_or_equal_constant(
+        device, input_image, output_image, float(scalar)
+    )
 
 
 @plugin_function
@@ -1575,7 +1482,7 @@ def hessian_eigenvalues(
     middle_eigenvalue: Optional[Image] = None,
     large_eigenvalue: Optional[Image] = None,
     device: Optional[Device] = None,
-) -> list:
+) -> Image:
     """Computes the eigenvalues of the hessian matrix of a 2d or 3d image. Hessian
     matrix or 2D images: [Ixx, Ixy] [Ixy, Iyy] Hessian matrix for 3D images: [Ixx,
     Ixy, Ixz] [Ixy, Iyy, Iyz] [Ixz, Iyz, Izz] Ixx denotes the second derivative in
@@ -1590,29 +1497,22 @@ def hessian_eigenvalues(
     ----------
     input_image: Image
         Input image to process.
-    small_eigenvalue: Optional[Image] = None
+    small_eigenvalue: Optional[Image] (= None)
         Output result image.
-    middle_eigenvalue: Optional[Image] = None
+    middle_eigenvalue: Optional[Image] (= None)
         Output result image, null if input is 2D.
-    large_eigenvalue: Optional[Image] = None
+    large_eigenvalue: Optional[Image] (= None)
         Output result image.
-    device: Optional[Device] = None
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
     -------
-    list
-
+    Image
     """
 
-    from ._pyclesperanto import _hessian_eigenvalues as op
-
-    return op(
-        device=device,
-        src=input_image,
-        small_eigenvalue=small_eigenvalue,
-        middle_eigenvalue=middle_eigenvalue,
-        large_eigenvalue=large_eigenvalue,
+    return clic._hessian_eigenvalues(
+        device, input_image, small_eigenvalue, middle_eigenvalue, large_eigenvalue
     )
 
 
@@ -1630,9 +1530,9 @@ def laplace_box(
     ----------
     input_image: Image
         Input image to process.
-    output_image: Optional[Image] = None
+    output_image: Optional[Image] (= None)
         Output result image.
-    device: Optional[Device] = None
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
@@ -1644,13 +1544,11 @@ def laplace_box(
     [1] https://clij.github.io/clij2-docs/reference_laplaceBox
     """
 
-    from ._pyclesperanto import _laplace_box as op
-
     warnings.warn(
-        "laplace_box : This function is deprecated. Consider using laplace() instead.",
+        "pyclesperanto.laplace_box: This function is deprecated. Consider using laplace() instead.",
         DeprecationWarning,
     )
-    return op(device=device, src=input_image, dst=output_image)
+    return clic._laplace_box(device, input_image, output_image)
 
 
 @plugin_function(category=["filter", "edge detection", "bia-bob-suggestion"])
@@ -1665,9 +1563,9 @@ def laplace_diamond(
     ----------
     input_image: Image
         Input image to process.
-    output_image: Optional[Image] = None
+    output_image: Optional[Image] (= None)
         Output result image.
-    device: Optional[Device] = None
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
@@ -1679,13 +1577,11 @@ def laplace_diamond(
     [1] https://clij.github.io/clij2-docs/reference_laplaceDiamond
     """
 
-    from ._pyclesperanto import _laplace_diamond as op
-
     warnings.warn(
-        "laplace_diamond : This function is deprecated. Consider using laplace() instead.",
+        "pyclesperanto.laplace_diamond: This function is deprecated. Consider using laplace() instead.",
         DeprecationWarning,
     )
-    return op(device=device, src=input_image, dst=output_image)
+    return clic._laplace_diamond(device, input_image, output_image)
 
 
 @plugin_function(category=["filter", "edge detection", "bia-bob-suggestion"])
@@ -1702,11 +1598,11 @@ def laplace(
     ----------
     input_image: Image
         Input image to process.
-    output_image: Optional[Image] = None
+    output_image: Optional[Image] (= None)
         Output result image.
-    connectivity: str = "box"
+    connectivity: str (= "box")
         Filter neigborhood
-    device: Optional[Device] = None
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
@@ -1718,11 +1614,7 @@ def laplace(
     [1] https://clij.github.io/clij2-docs/reference_laplaceDiamond
     """
 
-    from ._pyclesperanto import _laplace as op
-
-    return op(
-        device=device, src=input_image, dst=output_image, connectivity=connectivity
-    )
+    return clic._laplace(device, input_image, output_image, str(connectivity))
 
 
 @plugin_function(category=["filter", "combine", "in assistant"])
@@ -1740,20 +1632,19 @@ def local_cross_correlation(
         First input image to process.
     input_image1: Image
         Second input image to process.
-    output_image: Optional[Image] = None
+    output_image: Optional[Image] (= None)
         Output result image.
-    device: Optional[Device] = None
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
     -------
     Image
-
     """
 
-    from ._pyclesperanto import _local_cross_correlation as op
-
-    return op(device=device, src0=input_image0, src1=input_image1, dst=output_image)
+    return clic._local_cross_correlation(
+        device, input_image0, input_image1, output_image
+    )
 
 
 @plugin_function(category=["filter", "in assistant"])
@@ -1769,9 +1660,9 @@ def logarithm(
     ----------
     input_image: Image
         Input image to process.
-    output_image: Optional[Image] = None
+    output_image: Optional[Image] (= None)
         Output result image.
-    device: Optional[Device] = None
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
@@ -1783,9 +1674,7 @@ def logarithm(
     [1] https://clij.github.io/clij2-docs/reference_logarithm
     """
 
-    from ._pyclesperanto import _logarithm as op
-
-    return op(device=device, src=input_image, dst=output_image)
+    return clic._logarithm(device, input_image, output_image)
 
 
 @plugin_function(category=["bia-bob-suggestion"])
@@ -1806,9 +1695,9 @@ def mask(
         Input image to process.
     mask: Image
         Mask image to apply.
-    output_image: Optional[Image] = None
+    output_image: Optional[Image] (= None)
         Output result image.
-    device: Optional[Device] = None
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
@@ -1820,9 +1709,7 @@ def mask(
     [1] https://clij.github.io/clij2-docs/reference_mask
     """
 
-    from ._pyclesperanto import _mask as op
-
-    return op(device=device, src=input_image, mask=mask, dst=output_image)
+    return clic._mask(device, input_image, mask, output_image)
 
 
 @plugin_function(category=["bia-bob-suggestion"])
@@ -1844,11 +1731,11 @@ def mask_label(
         Input Intensity image.
     input_image1: Image
         Input Label image.
-    output_image: Optional[Image] = None
+    output_image: Optional[Image] (= None)
         Output result image.
-    label: float = 1
+    label: float (= 1)
         Label value to use.
-    device: Optional[Device] = None
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
@@ -1860,14 +1747,8 @@ def mask_label(
     [1] https://clij.github.io/clij2-docs/reference_maskLabel
     """
 
-    from ._pyclesperanto import _mask_label as op
-
-    return op(
-        device=device,
-        src0=input_image0,
-        src1=input_image1,
-        dst=output_image,
-        label=float(label),
+    return clic._mask_label(
+        device, input_image0, input_image1, output_image, float(label)
     )
 
 
@@ -1885,11 +1766,11 @@ def maximum_image_and_scalar(
     ----------
     input_image: Image
         Input image to process.
-    output_image: Optional[Image] = None
+    output_image: Optional[Image] (= None)
         Output result image.
-    scalar: float = 0
+    scalar: float (= 0)
         Scalar value used in the comparison.
-    device: Optional[Device] = None
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
@@ -1901,9 +1782,9 @@ def maximum_image_and_scalar(
     [1] https://clij.github.io/clij2-docs/reference_maximumImageAndScalar
     """
 
-    from ._pyclesperanto import _maximum_image_and_scalar as op
-
-    return op(device=device, src=input_image, dst=output_image, scalar=float(scalar))
+    return clic._maximum_image_and_scalar(
+        device, input_image, output_image, float(scalar)
+    )
 
 
 @plugin_function(category=["combine", "in assistant", "bia-bob-suggestion"])
@@ -1922,9 +1803,9 @@ def maximum_images(
         First input image to process.
     input_image1: Image
         Second input image to process.
-    output_image: Optional[Image] = None
+    output_image: Optional[Image] (= None)
         Output result image.
-    device: Optional[Device] = None
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
@@ -1936,9 +1817,7 @@ def maximum_images(
     [1] https://clij.github.io/clij2-docs/reference_maximumImages
     """
 
-    from ._pyclesperanto import _maximum_images as op
-
-    return op(device=device, src0=input_image0, src1=input_image1, dst=output_image)
+    return clic._maximum_images(device, input_image0, input_image1, output_image)
 
 
 @plugin_function(category=["filter", "in assistant"])
@@ -1957,15 +1836,15 @@ def maximum_box(
     ----------
     input_image: Image
         Input image to process.
-    output_image: Optional[Image] = None
+    output_image: Optional[Image] (= None)
         Output result image.
-    radius_x: int = 1
+    radius_x: int (= 1)
         Radius size along x axis.
-    radius_y: int = 1
+    radius_y: int (= 1)
         Radius size along y axis.
-    radius_z: int = 1
+    radius_z: int (= 1)
         Radius size along z axis.
-    device: Optional[Device] = None
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
@@ -1977,19 +1856,12 @@ def maximum_box(
     [1] https://clij.github.io/clij2-docs/reference_maximum3DBox
     """
 
-    from ._pyclesperanto import _maximum_box as op
-
     warnings.warn(
-        "maximum_box : This function is deprecated. Consider using maximum() instead.",
+        "pyclesperanto.maximum_box: This function is deprecated. Consider using maximum() instead.",
         DeprecationWarning,
     )
-    return op(
-        device=device,
-        src=input_image,
-        dst=output_image,
-        radius_x=int(radius_x),
-        radius_y=int(radius_y),
-        radius_z=int(radius_z),
+    return clic._maximum_box(
+        device, input_image, output_image, int(radius_x), int(radius_y), int(radius_z)
     )
 
 
@@ -2011,17 +1883,17 @@ def maximum(
     ----------
     input_image: Image
         Input image to process.
-    output_image: Optional[Image] = None
+    output_image: Optional[Image] (= None)
         Output result image.
-    radius_x: int = 0
+    radius_x: int (= 0)
         Radius size along x axis.
-    radius_y: int = 0
+    radius_y: int (= 0)
         Radius size along y axis.
-    radius_z: int = 0
+    radius_z: int (= 0)
         Radius size along z axis.
-    connectivity: str = "box"
+    connectivity: str (= "box")
         Filter neigborhood
-    device: Optional[Device] = None
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
@@ -2031,19 +1903,17 @@ def maximum(
     References
     ----------
     [1] https://clij.github.io/clij2-docs/reference_maximum3DBox
-        [2] https://clij.github.io/clij2-docs/reference_maximum3DSphere
+    [2] https://clij.github.io/clij2-docs/reference_maximum3DSphere
     """
 
-    from ._pyclesperanto import _maximum as op
-
-    return op(
-        device=device,
-        src=input_image,
-        dst=output_image,
-        radius_x=int(radius_x),
-        radius_y=int(radius_y),
-        radius_z=int(radius_z),
-        connectivity=connectivity,
+    return clic._maximum(
+        device,
+        input_image,
+        output_image,
+        int(radius_x),
+        int(radius_y),
+        int(radius_z),
+        str(connectivity),
     )
 
 
@@ -2059,9 +1929,9 @@ def maximum_x_projection(
     ----------
     input_image: Image
         Input image to process.
-    output_image: Optional[Image] = None
+    output_image: Optional[Image] (= None)
         Output result image.
-    device: Optional[Device] = None
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
@@ -2073,9 +1943,7 @@ def maximum_x_projection(
     [1] https://clij.github.io/clij2-docs/reference_maximumXProjection
     """
 
-    from ._pyclesperanto import _maximum_x_projection as op
-
-    return op(device=device, src=input_image, dst=output_image)
+    return clic._maximum_x_projection(device, input_image, output_image)
 
 
 @plugin_function(category=["projection"])
@@ -2090,9 +1958,9 @@ def maximum_y_projection(
     ----------
     input_image: Image
         Input image to process.
-    output_image: Optional[Image] = None
+    output_image: Optional[Image] (= None)
         Output result image.
-    device: Optional[Device] = None
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
@@ -2104,9 +1972,7 @@ def maximum_y_projection(
     [1] https://clij.github.io/clij2-docs/reference_maximumYProjection
     """
 
-    from ._pyclesperanto import _maximum_y_projection as op
-
-    return op(device=device, src=input_image, dst=output_image)
+    return clic._maximum_y_projection(device, input_image, output_image)
 
 
 @plugin_function(category=["projection", "in assistant", "bia-bob-suggestion"])
@@ -2121,9 +1987,9 @@ def maximum_z_projection(
     ----------
     input_image: Image
         Input image to process.
-    output_image: Optional[Image] = None
+    output_image: Optional[Image] (= None)
         Output result image.
-    device: Optional[Device] = None
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
@@ -2135,9 +2001,7 @@ def maximum_z_projection(
     [1] https://clij.github.io/clij2-docs/reference_maximumZProjection
     """
 
-    from ._pyclesperanto import _maximum_z_projection as op
-
-    return op(device=device, src=input_image, dst=output_image)
+    return clic._maximum_z_projection(device, input_image, output_image)
 
 
 @plugin_function(category=["filter", "denoise", "in assistant"])
@@ -2156,15 +2020,15 @@ def mean_box(
     ----------
     input_image: Image
         Input image to process.
-    output_image: Optional[Image] = None
+    output_image: Optional[Image] (= None)
         Output result image.
-    radius_x: int = 1
+    radius_x: int (= 1)
         Radius size along x axis.
-    radius_y: int = 1
+    radius_y: int (= 1)
         Radius size along y axis.
-    radius_z: int = 1
+    radius_z: int (= 1)
         Radius size along z axis.
-    device: Optional[Device] = None
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
@@ -2176,19 +2040,12 @@ def mean_box(
     [1] https://clij.github.io/clij2-docs/reference_mean3DBox
     """
 
-    from ._pyclesperanto import _mean_box as op
-
     warnings.warn(
-        "mean_box : This function is deprecated. Consider using mean() instead.",
+        "pyclesperanto.mean_box: This function is deprecated. Consider using mean() instead.",
         DeprecationWarning,
     )
-    return op(
-        device=device,
-        src=input_image,
-        dst=output_image,
-        radius_x=int(radius_x),
-        radius_y=int(radius_y),
-        radius_z=int(radius_z),
+    return clic._mean_box(
+        device, input_image, output_image, int(radius_x), int(radius_y), int(radius_z)
     )
 
 
@@ -2208,15 +2065,15 @@ def mean_sphere(
     ----------
     input_image: Image
         Input image to process.
-    output_image: Optional[Image] = None
+    output_image: Optional[Image] (= None)
         Output result image.
-    radius_x: int = 1
+    radius_x: int (= 1)
         Radius size along x axis.
-    radius_y: int = 1
+    radius_y: int (= 1)
         Radius size along y axis.
-    radius_z: int = 1
+    radius_z: int (= 1)
         Radius size along z axis.
-    device: Optional[Device] = None
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
@@ -2228,19 +2085,12 @@ def mean_sphere(
     [1] https://clij.github.io/clij2-docs/reference_mean3DSphere
     """
 
-    from ._pyclesperanto import _mean_sphere as op
-
     warnings.warn(
-        "mean_sphere : This function is deprecated. Consider using mean() instead.",
+        "pyclesperanto.mean_sphere: This function is deprecated. Consider using mean() instead.",
         DeprecationWarning,
     )
-    return op(
-        device=device,
-        src=input_image,
-        dst=output_image,
-        radius_x=int(radius_x),
-        radius_y=int(radius_y),
-        radius_z=int(radius_z),
+    return clic._mean_sphere(
+        device, input_image, output_image, int(radius_x), int(radius_y), int(radius_z)
     )
 
 
@@ -2262,17 +2112,17 @@ def mean(
     ----------
     input_image: Image
         Input image to process.
-    output_image: Optional[Image] = None
+    output_image: Optional[Image] (= None)
         Output result image.
-    radius_x: int = 1
+    radius_x: int (= 1)
         Radius size along x axis.
-    radius_y: int = 1
+    radius_y: int (= 1)
         Radius size along y axis.
-    radius_z: int = 1
+    radius_z: int (= 1)
         Radius size along z axis.
-    connectivity: str = "box"
+    connectivity: str (= "box")
         Filter neigborhood
-    device: Optional[Device] = None
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
@@ -2284,16 +2134,14 @@ def mean(
     [1] https://clij.github.io/clij2-docs/reference_mean3DSphere
     """
 
-    from ._pyclesperanto import _mean as op
-
-    return op(
-        device=device,
-        src=input_image,
-        dst=output_image,
-        radius_x=int(radius_x),
-        radius_y=int(radius_y),
-        radius_z=int(radius_z),
-        connectivity=connectivity,
+    return clic._mean(
+        device,
+        input_image,
+        output_image,
+        int(radius_x),
+        int(radius_y),
+        int(radius_z),
+        str(connectivity),
     )
 
 
@@ -2309,9 +2157,9 @@ def mean_x_projection(
     ----------
     input_image: Image
         Input image to process.
-    output_image: Optional[Image] = None
+    output_image: Optional[Image] (= None)
         Output result image.
-    device: Optional[Device] = None
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
@@ -2323,9 +2171,7 @@ def mean_x_projection(
     [1] https://clij.github.io/clij2-docs/reference_meanXProjection
     """
 
-    from ._pyclesperanto import _mean_x_projection as op
-
-    return op(device=device, src=input_image, dst=output_image)
+    return clic._mean_x_projection(device, input_image, output_image)
 
 
 @plugin_function(category=["projection"])
@@ -2340,9 +2186,9 @@ def mean_y_projection(
     ----------
     input_image: Image
         Input image to process.
-    output_image: Optional[Image] = None
+    output_image: Optional[Image] (= None)
         Output result image.
-    device: Optional[Device] = None
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
@@ -2354,9 +2200,7 @@ def mean_y_projection(
     [1] https://clij.github.io/clij2-docs/reference_meanYProjection
     """
 
-    from ._pyclesperanto import _mean_y_projection as op
-
-    return op(device=device, src=input_image, dst=output_image)
+    return clic._mean_y_projection(device, input_image, output_image)
 
 
 @plugin_function(category=["projection", "in assistant", "bia-bob-suggestion"])
@@ -2371,9 +2215,9 @@ def mean_z_projection(
     ----------
     input_image: Image
         Input image to process.
-    output_image: Optional[Image] = None
+    output_image: Optional[Image] (= None)
         Output result image.
-    device: Optional[Device] = None
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
@@ -2385,9 +2229,7 @@ def mean_z_projection(
     [1] https://clij.github.io/clij2-docs/reference_meanZProjection
     """
 
-    from ._pyclesperanto import _mean_z_projection as op
-
-    return op(device=device, src=input_image, dst=output_image)
+    return clic._mean_z_projection(device, input_image, output_image)
 
 
 @plugin_function(category=["filter", "denoise", "in assistant"])
@@ -2407,15 +2249,15 @@ def median_box(
     ----------
     input_image: Image
         Input image to process.
-    output_image: Optional[Image] = None
+    output_image: Optional[Image] (= None)
         Output result image.
-    radius_x: int = 1
+    radius_x: int (= 1)
         Radius size along x axis.
-    radius_y: int = 1
+    radius_y: int (= 1)
         Radius size along y axis.
-    radius_z: int = 1
+    radius_z: int (= 1)
         Radius size along z axis.
-    device: Optional[Device] = None
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
@@ -2427,19 +2269,12 @@ def median_box(
     [1] https://clij.github.io/clij2-docs/reference_median3DBox
     """
 
-    from ._pyclesperanto import _median_box as op
-
     warnings.warn(
-        "median_box : This function is deprecated. Consider using median() instead.",
+        "pyclesperanto.median_box: This function is deprecated. Consider using median() instead.",
         DeprecationWarning,
     )
-    return op(
-        device=device,
-        src=input_image,
-        dst=output_image,
-        radius_x=int(radius_x),
-        radius_y=int(radius_y),
-        radius_z=int(radius_z),
+    return clic._median_box(
+        device, input_image, output_image, int(radius_x), int(radius_y), int(radius_z)
     )
 
 
@@ -2460,15 +2295,15 @@ def median_sphere(
     ----------
     input_image: Image
         Input image to process.
-    output_image: Optional[Image] = None
+    output_image: Optional[Image] (= None)
         Output result image.
-    radius_x: int = 1
+    radius_x: int (= 1)
         Radius size along x axis.
-    radius_y: int = 1
+    radius_y: int (= 1)
         Radius size along y axis.
-    radius_z: int = 1
+    radius_z: int (= 1)
         Radius size along z axis.
-    device: Optional[Device] = None
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
@@ -2480,19 +2315,12 @@ def median_sphere(
     [1] https://clij.github.io/clij2-docs/reference_median3DSphere
     """
 
-    from ._pyclesperanto import _median_sphere as op
-
     warnings.warn(
-        "median_sphere : This function is deprecated. Consider using median() instead.",
+        "pyclesperanto.median_sphere: This function is deprecated. Consider using median() instead.",
         DeprecationWarning,
     )
-    return op(
-        device=device,
-        src=input_image,
-        dst=output_image,
-        radius_x=int(radius_x),
-        radius_y=int(radius_y),
-        radius_z=int(radius_z),
+    return clic._median_sphere(
+        device, input_image, output_image, int(radius_x), int(radius_y), int(radius_z)
     )
 
 
@@ -2515,17 +2343,17 @@ def median(
     ----------
     input_image: Image
         Input image to process.
-    output_image: Optional[Image] = None
+    output_image: Optional[Image] (= None)
         Output result image.
-    radius_x: int = 1
+    radius_x: int (= 1)
         Radius size along x axis.
-    radius_y: int = 1
+    radius_y: int (= 1)
         Radius size along y axis.
-    radius_z: int = 1
+    radius_z: int (= 1)
         Radius size along z axis.
-    connectivity: str = "box"
+    connectivity: str (= "box")
         Filter neigborhood
-    device: Optional[Device] = None
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
@@ -2537,16 +2365,14 @@ def median(
     [1] https://clij.github.io/clij2-docs/reference_median3DSphere
     """
 
-    from ._pyclesperanto import _median as op
-
-    return op(
-        device=device,
-        src=input_image,
-        dst=output_image,
-        radius_x=int(radius_x),
-        radius_y=int(radius_y),
-        radius_z=int(radius_z),
-        connectivity=connectivity,
+    return clic._median(
+        device,
+        input_image,
+        output_image,
+        int(radius_x),
+        int(radius_y),
+        int(radius_z),
+        str(connectivity),
     )
 
 
@@ -2566,15 +2392,15 @@ def minimum_box(
     ----------
     input_image: Image
         Input image to process.
-    output_image: Optional[Image] = None
+    output_image: Optional[Image] (= None)
         Output result image.
-    radius_x: int = 0
+    radius_x: int (= 0)
         Radius size along x axis.
-    radius_y: int = 0
+    radius_y: int (= 0)
         Radius size along y axis.
-    radius_z: int = 0
+    radius_z: int (= 0)
         Radius size along z axis.
-    device: Optional[Device] = None
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
@@ -2586,19 +2412,12 @@ def minimum_box(
     [1] https://clij.github.io/clij2-docs/reference_minimum3DBox
     """
 
-    from ._pyclesperanto import _minimum_box as op
-
     warnings.warn(
-        "minimum_box : This function is deprecated. Consider using minimum() instead.",
+        "pyclesperanto.minimum_box: This function is deprecated. Consider using minimum() instead.",
         DeprecationWarning,
     )
-    return op(
-        device=device,
-        src=input_image,
-        dst=output_image,
-        radius_x=int(radius_x),
-        radius_y=int(radius_y),
-        radius_z=int(radius_z),
+    return clic._minimum_box(
+        device, input_image, output_image, int(radius_x), int(radius_y), int(radius_z)
     )
 
 
@@ -2619,17 +2438,17 @@ def minimum(
     ----------
     input_image: Image
         Input image to process.
-    output_image: Optional[Image] = None
+    output_image: Optional[Image] (= None)
         Output result image.
-    radius_x: int = 0
+    radius_x: int (= 0)
         Radius size along x axis.
-    radius_y: int = 0
+    radius_y: int (= 0)
         Radius size along y axis.
-    radius_z: int = 0
+    radius_z: int (= 0)
         Radius size along z axis.
-    connectivity: str = "box"
+    connectivity: str (= "box")
         Filter neigborhood
-    device: Optional[Device] = None
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
@@ -2639,19 +2458,17 @@ def minimum(
     References
     ----------
     [1] https://clij.github.io/clij2-docs/reference_minimum3DBox
-        [2] https://clij.github.io/clij2-docs/reference_minimum3DSphere
+    [2] https://clij.github.io/clij2-docs/reference_minimum3DSphere
     """
 
-    from ._pyclesperanto import _minimum as op
-
-    return op(
-        device=device,
-        src=input_image,
-        dst=output_image,
-        radius_x=int(radius_x),
-        radius_y=int(radius_y),
-        radius_z=int(radius_z),
-        connectivity=connectivity,
+    return clic._minimum(
+        device,
+        input_image,
+        output_image,
+        int(radius_x),
+        int(radius_y),
+        int(radius_z),
+        str(connectivity),
     )
 
 
@@ -2669,11 +2486,11 @@ def minimum_image_and_scalar(
     ----------
     input_image: Image
         Input image to process.
-    output_image: Optional[Image] = None
+    output_image: Optional[Image] (= None)
         Output result image.
-    scalar: float = 0
+    scalar: float (= 0)
         Scalar value used in the comparison.
-    device: Optional[Device] = None
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
@@ -2685,9 +2502,9 @@ def minimum_image_and_scalar(
     [1] https://clij.github.io/clij2-docs/reference_minimumImageAndScalar
     """
 
-    from ._pyclesperanto import _minimum_image_and_scalar as op
-
-    return op(device=device, src=input_image, dst=output_image, scalar=float(scalar))
+    return clic._minimum_image_and_scalar(
+        device, input_image, output_image, float(scalar)
+    )
 
 
 @plugin_function(category=["combine", "in assistant"])
@@ -2706,9 +2523,9 @@ def minimum_images(
         First input image to process.
     input_image1: Image
         Second input image to process.
-    output_image: Optional[Image] = None
+    output_image: Optional[Image] (= None)
         Output result image.
-    device: Optional[Device] = None
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
@@ -2720,9 +2537,7 @@ def minimum_images(
     [1] https://clij.github.io/clij2-docs/reference_minimumImages
     """
 
-    from ._pyclesperanto import _minimum_images as op
-
-    return op(device=device, src0=input_image0, src1=input_image1, dst=output_image)
+    return clic._minimum_images(device, input_image0, input_image1, output_image)
 
 
 @plugin_function(category=["projection"])
@@ -2737,9 +2552,9 @@ def minimum_x_projection(
     ----------
     input_image: Image
         Input image to process.
-    output_image: Optional[Image] = None
+    output_image: Optional[Image] (= None)
         Output result image.
-    device: Optional[Device] = None
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
@@ -2751,9 +2566,7 @@ def minimum_x_projection(
     [1] https://clij.github.io/clij2-docs/reference_minimumXProjection
     """
 
-    from ._pyclesperanto import _minimum_x_projection as op
-
-    return op(device=device, src=input_image, dst=output_image)
+    return clic._minimum_x_projection(device, input_image, output_image)
 
 
 @plugin_function(category=["projection"])
@@ -2768,9 +2581,9 @@ def minimum_y_projection(
     ----------
     input_image: Image
         Input image to process.
-    output_image: Optional[Image] = None
+    output_image: Optional[Image] (= None)
         Output result image.
-    device: Optional[Device] = None
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
@@ -2782,9 +2595,7 @@ def minimum_y_projection(
     [1] https://clij.github.io/clij2-docs/reference_minimumYProjection
     """
 
-    from ._pyclesperanto import _minimum_y_projection as op
-
-    return op(device=device, src=input_image, dst=output_image)
+    return clic._minimum_y_projection(device, input_image, output_image)
 
 
 @plugin_function(category=["projection", "in assistant", "bia-bob-suggestion"])
@@ -2799,9 +2610,9 @@ def minimum_z_projection(
     ----------
     input_image: Image
         Input image to process.
-    output_image: Optional[Image] = None
+    output_image: Optional[Image] (= None)
         Output result image.
-    device: Optional[Device] = None
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
@@ -2813,9 +2624,7 @@ def minimum_z_projection(
     [1] https://clij.github.io/clij2-docs/reference_minimumZProjection
     """
 
-    from ._pyclesperanto import _minimum_z_projection as op
-
-    return op(device=device, src=input_image, dst=output_image)
+    return clic._minimum_z_projection(device, input_image, output_image)
 
 
 @plugin_function(category=["label processing", "in assistant"])
@@ -2837,36 +2646,28 @@ def mode_box(
     ----------
     input_image: Image
         Input image to process.
-    output_image: Optional[Image] = None
+    output_image: Optional[Image] (= None)
         Output result image.
-    radius_x: int = 1
+    radius_x: int (= 1)
         Radius size along x axis.
-    radius_y: int = 1
+    radius_y: int (= 1)
         Radius size along y axis.
-    radius_z: int = 1
+    radius_z: int (= 1)
         Radius size along z axis.
-    device: Optional[Device] = None
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
     -------
     Image
-
     """
 
-    from ._pyclesperanto import _mode_box as op
-
     warnings.warn(
-        "mode_box : This function is deprecated. Consider using mode() instead.",
+        "pyclesperanto.mode_box: This function is deprecated. Consider using mode() instead.",
         DeprecationWarning,
     )
-    return op(
-        device=device,
-        src=input_image,
-        dst=output_image,
-        radius_x=int(radius_x),
-        radius_y=int(radius_y),
-        radius_z=int(radius_z),
+    return clic._mode_box(
+        device, input_image, output_image, int(radius_x), int(radius_y), int(radius_z)
     )
 
 
@@ -2889,36 +2690,28 @@ def mode_sphere(
     ----------
     input_image: Image
         Input image to process.
-    output_image: Optional[Image] = None
+    output_image: Optional[Image] (= None)
         Output result image.
-    radius_x: int = 1
+    radius_x: int (= 1)
         Radius size along x axis.
-    radius_y: int = 1
+    radius_y: int (= 1)
         Radius size along y axis.
-    radius_z: int = 1
+    radius_z: int (= 1)
         Radius size along z axis.
-    device: Optional[Device] = None
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
     -------
     Image
-
     """
 
-    from ._pyclesperanto import _mode_sphere as op
-
     warnings.warn(
-        "mode_sphere : This function is deprecated. Consider using mode() instead.",
+        "pyclesperanto.mode_sphere: This function is deprecated. Consider using mode() instead.",
         DeprecationWarning,
     )
-    return op(
-        device=device,
-        src=input_image,
-        dst=output_image,
-        radius_x=int(radius_x),
-        radius_y=int(radius_y),
-        radius_z=int(radius_z),
+    return clic._mode_sphere(
+        device, input_image, output_image, int(radius_x), int(radius_y), int(radius_z)
     )
 
 
@@ -2943,35 +2736,32 @@ def mode(
     ----------
     input_image: Image
         Input image to process.
-    output_image: Optional[Image] = None
+    output_image: Optional[Image] (= None)
         Output result image.
-    radius_x: int = 1
+    radius_x: int (= 1)
         Radius size along x axis.
-    radius_y: int = 1
+    radius_y: int (= 1)
         Radius size along y axis.
-    radius_z: int = 1
+    radius_z: int (= 1)
         Radius size along z axis.
-    connectivity: str = "box"
+    connectivity: str (= "box")
         Filter neigborhood
-    device: Optional[Device] = None
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
     -------
     Image
-
     """
 
-    from ._pyclesperanto import _mode as op
-
-    return op(
-        device=device,
-        src=input_image,
-        dst=output_image,
-        radius_x=int(radius_x),
-        radius_y=int(radius_y),
-        radius_z=int(radius_z),
-        connectivity=connectivity,
+    return clic._mode(
+        device,
+        input_image,
+        output_image,
+        int(radius_x),
+        int(radius_y),
+        int(radius_z),
+        str(connectivity),
     )
 
 
@@ -2990,20 +2780,17 @@ def modulo_images(
         First input image to process.
     input_image1: Image
         Second input image to process.
-    output_image: Optional[Image] = None
+    output_image: Optional[Image] (= None)
         Output result image.
-    device: Optional[Device] = None
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
     -------
     Image
-
     """
 
-    from ._pyclesperanto import _modulo_images as op
-
-    return op(device=device, src0=input_image0, src1=input_image1, dst=output_image)
+    return clic._modulo_images(device, input_image0, input_image1, output_image)
 
 
 @plugin_function
@@ -3020,11 +2807,11 @@ def multiply_image_and_position(
     ----------
     input_image: Image
         Input image to process.
-    output_image: Optional[Image] = None
+    output_image: Optional[Image] (= None)
         Output result image.
-    dimension: int = 0
+    dimension: int (= 0)
         Dimension (0,1,2) to use in the operation.
-    device: Optional[Device] = None
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
@@ -3036,10 +2823,8 @@ def multiply_image_and_position(
     [1] https://clij.github.io/clij2-docs/reference_multiplyImageAndCoordinate
     """
 
-    from ._pyclesperanto import _multiply_image_and_position as op
-
-    return op(
-        device=device, src=input_image, dst=output_image, dimension=int(dimension)
+    return clic._multiply_image_and_position(
+        device, input_image, output_image, int(dimension)
     )
 
 
@@ -3057,11 +2842,11 @@ def multiply_image_and_scalar(
     ----------
     input_image: Image
         The input image to be multiplied with a constant.
-    output_image: Optional[Image] = None
+    output_image: Optional[Image] (= None)
         The output image where results are written into.
-    scalar: float = 0
+    scalar: float (= 0)
         The number with which every pixel will be multiplied with.
-    device: Optional[Device] = None
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
@@ -3073,9 +2858,9 @@ def multiply_image_and_scalar(
     [1] https://clij.github.io/clij2-docs/reference_multiplyImageAndScalar
     """
 
-    from ._pyclesperanto import _multiply_image_and_scalar as op
-
-    return op(device=device, src=input_image, dst=output_image, scalar=float(scalar))
+    return clic._multiply_image_and_scalar(
+        device, input_image, output_image, float(scalar)
+    )
 
 
 @plugin_function(category=["combine", "in assistant"])
@@ -3094,9 +2879,9 @@ def multiply_images(
         The first input image to be multiplied.
     input_image1: Image
         The second image to be multiplied.
-    output_image: Optional[Image] = None
+    output_image: Optional[Image] (= None)
         The output image where results are written into.
-    device: Optional[Device] = None
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
@@ -3108,9 +2893,7 @@ def multiply_images(
     [1] https://clij.github.io/clij2-docs/reference_multiplyImages
     """
 
-    from ._pyclesperanto import _multiply_images as op
-
-    return op(device=device, src0=input_image0, src1=input_image1, dst=output_image)
+    return clic._multiply_images(device, input_image0, input_image1, output_image)
 
 
 @plugin_function
@@ -3132,15 +2915,15 @@ def nan_to_num(
     ----------
     input_image: Image
         Input image to process.
-    output_image: Optional[Image] = None
+    output_image: Optional[Image] (= None)
         The output image where results are written into.
-    nan: float = 0
+    nan: float (= 0)
         Value to replace
-    posinf: float = np.nan_to_num(float('inf'))
+    posinf: float (= np.nan_to_num(float('inf')))
         Value to replace +inf with.
-    neginf: float = np.nan_to_num(float('-inf'))
+    neginf: float (= np.nan_to_num(float('-inf')))
         Value to replace -inf with.
-    device: Optional[Device] = None
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
@@ -3152,15 +2935,8 @@ def nan_to_num(
     [1] https://numpy.org/doc/stable/reference/generated/numpy.nan_to_num.html
     """
 
-    from ._pyclesperanto import _nan_to_num as op
-
-    return op(
-        device=device,
-        src=input_image,
-        dst=output_image,
-        nan=float(nan),
-        posinf=float(posinf),
-        neginf=float(neginf),
+    return clic._nan_to_num(
+        device, input_image, output_image, float(nan), float(posinf), float(neginf)
     )
 
 
@@ -3182,9 +2958,9 @@ def nonzero_maximum_box(
         Input image to process.
     output_image0: Image
         Output flag (0 or 1).
-    output_image1: Optional[Image] = None
+    output_image1: Optional[Image] (= None)
         Output image where results are written into.
-    device: Optional[Device] = None
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
@@ -3196,13 +2972,11 @@ def nonzero_maximum_box(
     [1] https://clij.github.io/clij2-docs/reference_nonzeroMaximumBox
     """
 
-    from ._pyclesperanto import _nonzero_maximum_box as op
-
     warnings.warn(
-        "nonzero_maximum_box : This function is deprecated. Consider using nonzero_maximum() instead.",
+        "pyclesperanto.nonzero_maximum_box: This function is deprecated. Consider using nonzero_maximum() instead.",
         DeprecationWarning,
     )
-    return op(device=device, src=input_image, dst0=output_image0, dst1=output_image1)
+    return clic._nonzero_maximum_box(device, input_image, output_image0, output_image1)
 
 
 @plugin_function
@@ -3223,9 +2997,9 @@ def nonzero_maximum_diamond(
         Input image to process.
     output_image0: Image
         Output flag (0 or 1).
-    output_image1: Optional[Image] = None
+    output_image1: Optional[Image] (= None)
         Output image where results are written into.
-    device: Optional[Device] = None
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
@@ -3237,13 +3011,13 @@ def nonzero_maximum_diamond(
     [1] https://clij.github.io/clij2-docs/reference_nonzeroMaximumDiamond
     """
 
-    from ._pyclesperanto import _nonzero_maximum_diamond as op
-
     warnings.warn(
-        "nonzero_maximum_diamond : This function is deprecated. Consider using nonzero_maximum() instead.",
+        "pyclesperanto.nonzero_maximum_diamond: This function is deprecated. Consider using nonzero_maximum() instead.",
         DeprecationWarning,
     )
-    return op(device=device, src=input_image, dst0=output_image0, dst1=output_image1)
+    return clic._nonzero_maximum_diamond(
+        device, input_image, output_image0, output_image1
+    )
 
 
 @plugin_function
@@ -3266,11 +3040,11 @@ def nonzero_maximum(
         Input image to process.
     output_image0: Image
         Output flag (0 or 1).
-    output_image1: Optional[Image] = None
+    output_image1: Optional[Image] (= None)
         Output image where results are written into.
-    connectivity: str = "box"
+    connectivity: str (= "box")
         Filter neigborhood
-    device: Optional[Device] = None
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
@@ -3280,17 +3054,11 @@ def nonzero_maximum(
     References
     ----------
     [1] https://clij.github.io/clij2-docs/reference_nonzeroMaximumBox
-        [2] https://clij.github.io/clij2-docs/reference_nonzeroMaximumDiamond
+    [2] https://clij.github.io/clij2-docs/reference_nonzeroMaximumDiamond
     """
 
-    from ._pyclesperanto import _nonzero_maximum as op
-
-    return op(
-        device=device,
-        src=input_image,
-        dst0=output_image0,
-        dst1=output_image1,
-        connectivity=connectivity,
+    return clic._nonzero_maximum(
+        device, input_image, output_image0, output_image1, str(connectivity)
     )
 
 
@@ -3312,9 +3080,9 @@ def nonzero_minimum_box(
         Input image to process.
     output_image0: Image
         Output flag (0 or 1).
-    output_image1: Optional[Image] = None
+    output_image1: Optional[Image] (= None)
         Output image where results are written into.
-    device: Optional[Device] = None
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
@@ -3326,13 +3094,11 @@ def nonzero_minimum_box(
     [1] https://clij.github.io/clij2-docs/reference_nonzeroMinimumBox
     """
 
-    from ._pyclesperanto import _nonzero_minimum_box as op
-
     warnings.warn(
-        "nonzero_minimum_box : This function is deprecated. Consider using nonzero_minimum() instead.",
+        "pyclesperanto.nonzero_minimum_box: This function is deprecated. Consider using nonzero_minimum() instead.",
         DeprecationWarning,
     )
-    return op(device=device, src=input_image, dst0=output_image0, dst1=output_image1)
+    return clic._nonzero_minimum_box(device, input_image, output_image0, output_image1)
 
 
 @plugin_function
@@ -3353,9 +3119,9 @@ def nonzero_minimum_diamond(
         Input image to process.
     output_image0: Image
         Output flag (0 or 1).
-    output_image1: Optional[Image] = None
+    output_image1: Optional[Image] (= None)
         Output image where results are written into.
-    device: Optional[Device] = None
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
@@ -3367,13 +3133,13 @@ def nonzero_minimum_diamond(
     [1] https://clij.github.io/clij2-docs/reference_nonzeroMinimumDiamond
     """
 
-    from ._pyclesperanto import _nonzero_minimum_diamond as op
-
     warnings.warn(
-        "nonzero_minimum_diamond : This function is deprecated. Consider using nonzero_minimum() instead.",
+        "pyclesperanto.nonzero_minimum_diamond: This function is deprecated. Consider using nonzero_minimum() instead.",
         DeprecationWarning,
     )
-    return op(device=device, src=input_image, dst0=output_image0, dst1=output_image1)
+    return clic._nonzero_minimum_diamond(
+        device, input_image, output_image0, output_image1
+    )
 
 
 @plugin_function
@@ -3396,11 +3162,11 @@ def nonzero_minimum(
         Input image to process.
     output_image0: Image
         Output flag (0 or 1).
-    output_image1: Optional[Image] = None
+    output_image1: Optional[Image] (= None)
         Output image where results are written into.
-    connectivity: str = "box"
+    connectivity: str (= "box")
         Filter neigborhood
-    device: Optional[Device] = None
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
@@ -3410,17 +3176,11 @@ def nonzero_minimum(
     References
     ----------
     [1] https://clij.github.io/clij2-docs/reference_nonzeroMinimumBox
-        [2] https://clij.github.io/clij2-docs/reference_nonzeroMinimumDiamond
+    [2] https://clij.github.io/clij2-docs/reference_nonzeroMinimumDiamond
     """
 
-    from ._pyclesperanto import _nonzero_minimum as op
-
-    return op(
-        device=device,
-        src=input_image,
-        dst0=output_image0,
-        dst1=output_image1,
-        connectivity=connectivity,
+    return clic._nonzero_minimum(
+        device, input_image, output_image0, output_image1, str(connectivity)
     )
 
 
@@ -3440,9 +3200,9 @@ def not_equal(
         The first image to be compared with.
     input_image1: Image
         The second image to be compared with the first.
-    output_image: Optional[Image] = None
+    output_image: Optional[Image] (= None)
         The resulting binary image where pixels will be 1 only if source1
-    device: Optional[Device] = None
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
@@ -3454,9 +3214,7 @@ def not_equal(
     [1] https://clij.github.io/clij2-docs/reference_notEqual
     """
 
-    from ._pyclesperanto import _not_equal as op
-
-    return op(device=device, src0=input_image0, src1=input_image1, dst=output_image)
+    return clic._not_equal(device, input_image0, input_image1, output_image)
 
 
 @plugin_function(category=["binarize", "in assistant"])
@@ -3473,11 +3231,11 @@ def not_equal_constant(
     ----------
     input_image: Image
         The image where every pixel is compared to the constant.
-    output_image: Optional[Image] = None
+    output_image: Optional[Image] (= None)
         The resulting binary image where pixels will be 1 only if source1
-    scalar: float = 0
+    scalar: float (= 0)
         The constant where every pixel is compared to.
-    device: Optional[Device] = None
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
@@ -3489,9 +3247,7 @@ def not_equal_constant(
     [1] https://clij.github.io/clij2-docs/reference_notEqualConstant
     """
 
-    from ._pyclesperanto import _not_equal_constant as op
-
-    return op(device=device, src=input_image, dst=output_image, scalar=float(scalar))
+    return clic._not_equal_constant(device, input_image, output_image, float(scalar))
 
 
 @plugin_function(category=["combine", "in assistant"])
@@ -3509,15 +3265,15 @@ def paste(
     ----------
     input_image: Image
         Input image to process.
-    output_image: Optional[Image] = None
+    output_image: Optional[Image] (= None)
         Output result image.
-    index_x: int = 0
+    index_x: int (= 0)
         Origin pixel coodinate in x to paste.
-    index_y: int = 0
+    index_y: int (= 0)
         Origin pixel coodinate in y to paste.
-    index_z: int = 0
+    index_z: int (= 0)
         Origin pixel coodinate in z to paste.
-    device: Optional[Device] = None
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
@@ -3529,15 +3285,8 @@ def paste(
     [1] https://clij.github.io/clij2-docs/reference_paste3D
     """
 
-    from ._pyclesperanto import _paste as op
-
-    return op(
-        device=device,
-        src=input_image,
-        dst=output_image,
-        index_x=int(index_x),
-        index_y=int(index_y),
-        index_z=int(index_z),
+    return clic._paste(
+        device, input_image, output_image, int(index_x), int(index_y), int(index_z)
     )
 
 
@@ -3557,9 +3306,9 @@ def onlyzero_overwrite_maximum_box(
         Input image to process.
     output_image0: Image
         Output flag value, 0 or 1.
-    output_image1: Optional[Image] = None
+    output_image1: Optional[Image] (= None)
         Output image.
-    device: Optional[Device] = None
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
@@ -3571,13 +3320,13 @@ def onlyzero_overwrite_maximum_box(
     [1] https://clij.github.io/clij2-docs/reference_onlyzeroOverwriteMaximumBox
     """
 
-    from ._pyclesperanto import _onlyzero_overwrite_maximum_box as op
-
     warnings.warn(
-        "onlyzero_overwrite_maximum_box : This function is deprecated. Consider using onlyzero_overwrite_maximum() instead.",
+        "pyclesperanto.onlyzero_overwrite_maximum_box: This function is deprecated. Consider using onlyzero_overwrite_maximum() instead.",
         DeprecationWarning,
     )
-    return op(device=device, src=input_image, dst0=output_image0, dst1=output_image1)
+    return clic._onlyzero_overwrite_maximum_box(
+        device, input_image, output_image0, output_image1
+    )
 
 
 @plugin_function
@@ -3596,9 +3345,9 @@ def onlyzero_overwrite_maximum_diamond(
         Input image to process.
     output_image0: Image
         Output flag value, 0 or 1.
-    output_image1: Optional[Image] = None
+    output_image1: Optional[Image] (= None)
         Output image.
-    device: Optional[Device] = None
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
@@ -3610,13 +3359,13 @@ def onlyzero_overwrite_maximum_diamond(
     [1] https://clij.github.io/clij2-docs/reference_onlyzeroOverwriteMaximumDiamond
     """
 
-    from ._pyclesperanto import _onlyzero_overwrite_maximum_diamond as op
-
     warnings.warn(
-        "onlyzero_overwrite_maximum_diamond : This function is deprecated. Consider using onlyzero_overwrite_maximum() instead.",
+        "pyclesperanto.onlyzero_overwrite_maximum_diamond: This function is deprecated. Consider using onlyzero_overwrite_maximum() instead.",
         DeprecationWarning,
     )
-    return op(device=device, src=input_image, dst0=output_image0, dst1=output_image1)
+    return clic._onlyzero_overwrite_maximum_diamond(
+        device, input_image, output_image0, output_image1
+    )
 
 
 @plugin_function
@@ -3636,11 +3385,11 @@ def onlyzero_overwrite_maximum(
         Input image to process.
     output_image0: Image
         Output flag value, 0 or 1.
-    output_image1: Optional[Image] = None
+    output_image1: Optional[Image] (= None)
         Output image.
-    connectivity: str = "box"
+    connectivity: str (= "box")
         Filter neigborhood
-    device: Optional[Device] = None
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
@@ -3650,17 +3399,11 @@ def onlyzero_overwrite_maximum(
     References
     ----------
     [1] https://clij.github.io/clij2-docs/reference_onlyzeroOverwriteMaximumBox
-        [2] https://clij.github.io/clij2-docs/reference_onlyzeroOverwriteMaximumDiamond
+    [2] https://clij.github.io/clij2-docs/reference_onlyzeroOverwriteMaximumDiamond
     """
 
-    from ._pyclesperanto import _onlyzero_overwrite_maximum as op
-
-    return op(
-        device=device,
-        src=input_image,
-        dst0=output_image0,
-        dst1=output_image1,
-        connectivity=connectivity,
+    return clic._onlyzero_overwrite_maximum(
+        device, input_image, output_image0, output_image1, str(connectivity)
     )
 
 
@@ -3678,11 +3421,11 @@ def power(
     ----------
     input_image: Image
         Input image to process.
-    output_image: Optional[Image] = None
+    output_image: Optional[Image] (= None)
         Output result image.
-    scalar: float = 1
+    scalar: float (= 1)
         Power value.
-    device: Optional[Device] = None
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
@@ -3694,9 +3437,7 @@ def power(
     [1] https://clij.github.io/clij2-docs/reference_power
     """
 
-    from ._pyclesperanto import _power as op
-
-    return op(device=device, src=input_image, dst=output_image, scalar=float(scalar))
+    return clic._power(device, input_image, output_image, float(scalar))
 
 
 @plugin_function(category=["combine", "in assistant"])
@@ -3714,9 +3455,9 @@ def power_images(
         First input image to process.
     input_image1: Image
         Second input image to process.
-    output_image: Optional[Image] = None
+    output_image: Optional[Image] (= None)
         Output result image.
-    device: Optional[Device] = None
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
@@ -3728,9 +3469,7 @@ def power_images(
     [1] https://clij.github.io/clij2-docs/reference_powerImages
     """
 
-    from ._pyclesperanto import _power_images as op
-
-    return op(device=device, src0=input_image0, src1=input_image1, dst=output_image)
+    return clic._power_images(device, input_image0, input_image1, output_image)
 
 
 @plugin_function(category=["transform", "in assistant"])
@@ -3754,50 +3493,47 @@ def range(
     ----------
     input_image: Image
         First input image to process.
-    output_image: Optional[Image] = None
+    output_image: Optional[Image] (= None)
         Output result image.
-    start_x: Optional[int] = None
+    start_x: Optional[int] (= None)
         Range starting value in x
-    stop_x: Optional[int] = None
+    stop_x: Optional[int] (= None)
         Range stop value in x
-    step_x: Optional[int] = None
+    step_x: Optional[int] (= None)
         Range step value in x
-    start_y: Optional[int] = None
+    start_y: Optional[int] (= None)
         Range starting value in y
-    stop_y: Optional[int] = None
+    stop_y: Optional[int] (= None)
         Range stop value in y
-    step_y: Optional[int] = None
+    step_y: Optional[int] (= None)
         Range step value in y
-    start_z: Optional[int] = None
+    start_z: Optional[int] (= None)
         Range starting value in z
-    stop_z: Optional[int] = None
+    stop_z: Optional[int] (= None)
         Range stop value in z
-    step_z: Optional[int] = None
+    step_z: Optional[int] (= None)
         Range step value in z
-    device: Optional[Device] = None
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
     -------
     Image
-
     """
 
-    from ._pyclesperanto import _range as op
-
-    return op(
-        device=device,
-        src=input_image,
-        dst=output_image,
-        start_x=int(start_x) if start_x is not None else None,
-        stop_x=int(stop_x) if stop_x is not None else None,
-        step_x=int(step_x) if step_x is not None else None,
-        start_y=int(start_y) if start_y is not None else None,
-        stop_y=int(stop_y) if stop_y is not None else None,
-        step_y=int(step_y) if step_y is not None else None,
-        start_z=int(start_z) if start_z is not None else None,
-        stop_z=int(stop_z) if stop_z is not None else None,
-        step_z=int(step_z) if step_z is not None else None,
+    return clic._range(
+        device,
+        input_image,
+        output_image,
+        start_x,
+        stop_x,
+        step_x,
+        start_y,
+        stop_y,
+        step_y,
+        start_z,
+        stop_z,
+        step_z,
     )
 
 
@@ -3818,20 +3554,17 @@ def read_values_from_positions(
         Input image to process.
     list: Image
         List of coordinate, as a 2D matrix.
-    output_image: Optional[Image] = None
+    output_image: Optional[Image] (= None)
         Output vector image of intensities.
-    device: Optional[Device] = None
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
     -------
     Image
-
     """
 
-    from ._pyclesperanto import _read_values_from_positions as op
-
-    return op(device=device, src=input_image, list=list, dst=output_image)
+    return clic._read_values_from_positions(device, input_image, list, output_image)
 
 
 @plugin_function(category=["bia-bob-suggestion"])
@@ -3851,9 +3584,9 @@ def replace_values(
         Input image to process.
     input_image1: Image
         List of intensities to replace, as a vector of values.
-    output_image: Optional[Image] = None
+    output_image: Optional[Image] (= None)
         Output result image.
-    device: Optional[Device] = None
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
@@ -3865,9 +3598,7 @@ def replace_values(
     [1] https://clij.github.io/clij2-docs/reference_replaceIntensities
     """
 
-    from ._pyclesperanto import _replace_values as op
-
-    return op(device=device, src0=input_image0, src1=input_image1, dst=output_image)
+    return clic._replace_values(device, input_image0, input_image1, output_image)
 
 
 @plugin_function
@@ -3884,13 +3615,13 @@ def replace_value(
     ----------
     input_image: Image
         Input image to process.
-    output_image: Optional[Image] = None
+    output_image: Optional[Image] (= None)
         Output result image.
-    scalar0: float = 0
+    scalar0: float (= 0)
         Old value.
-    scalar1: float = 1
+    scalar1: float (= 1)
         New value.
-    device: Optional[Device] = None
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
@@ -3902,14 +3633,8 @@ def replace_value(
     [1] https://clij.github.io/clij2-docs/reference_replaceIntensity
     """
 
-    from ._pyclesperanto import _replace_value as op
-
-    return op(
-        device=device,
-        src=input_image,
-        dst=output_image,
-        scalar0=float(scalar0),
-        scalar1=float(scalar1),
+    return clic._replace_value(
+        device, input_image, output_image, float(scalar0), float(scalar1)
     )
 
 
@@ -3929,15 +3654,15 @@ def maximum_sphere(
     ----------
     input_image: Image
         Input image to process.
-    output_image: Optional[Image] = None
+    output_image: Optional[Image] (= None)
         Output result image.
-    radius_x: float = 1
+    radius_x: float (= 1)
         Radius size along x axis.
-    radius_y: float = 1
+    radius_y: float (= 1)
         Radius size along y axis.
-    radius_z: float = 0
+    radius_z: float (= 0)
         Radius size along z axis.
-    device: Optional[Device] = None
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
@@ -3949,19 +3674,17 @@ def maximum_sphere(
     [1] https://clij.github.io/clij2-docs/reference_maximum3DSphere
     """
 
-    from ._pyclesperanto import _maximum_sphere as op
-
     warnings.warn(
-        "maximum_sphere : This function is deprecated. Consider using maximum() instead.",
+        "pyclesperanto.maximum_sphere: This function is deprecated. Consider using maximum() instead.",
         DeprecationWarning,
     )
-    return op(
-        device=device,
-        src=input_image,
-        dst=output_image,
-        radius_x=float(radius_x),
-        radius_y=float(radius_y),
-        radius_z=float(radius_z),
+    return clic._maximum_sphere(
+        device,
+        input_image,
+        output_image,
+        float(radius_x),
+        float(radius_y),
+        float(radius_z),
     )
 
 
@@ -3981,15 +3704,15 @@ def minimum_sphere(
     ----------
     input_image: Image
         Input image to process.
-    output_image: Optional[Image] = None
+    output_image: Optional[Image] (= None)
         Output result image.
-    radius_x: float = 1
+    radius_x: float (= 1)
         Radius size along x axis.
-    radius_y: float = 1
+    radius_y: float (= 1)
         Radius size along y axis.
-    radius_z: float = 1
+    radius_z: float (= 1)
         Radius size along z axis.
-    device: Optional[Device] = None
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
@@ -4001,19 +3724,17 @@ def minimum_sphere(
     [1] https://clij.github.io/clij2-docs/reference_minimum3DSphere
     """
 
-    from ._pyclesperanto import _minimum_sphere as op
-
     warnings.warn(
-        "minimum_sphere : This function is deprecated. Consider using minimum() instead.",
+        "pyclesperanto.minimum_sphere: This function is deprecated. Consider using minimum() instead.",
         DeprecationWarning,
     )
-    return op(
-        device=device,
-        src=input_image,
-        dst=output_image,
-        radius_x=float(radius_x),
-        radius_y=float(radius_y),
-        radius_z=float(radius_z),
+    return clic._minimum_sphere(
+        device,
+        input_image,
+        output_image,
+        float(radius_x),
+        float(radius_y),
+        float(radius_z),
     )
 
 
@@ -4033,9 +3754,9 @@ def multiply_matrix(
         First input image to process.
     input_image1: Image
         Second input image to process.
-    output_image: Optional[Image] = None
+    output_image: Optional[Image] (= None)
         Output result image.
-    device: Optional[Device] = None
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
@@ -4047,9 +3768,7 @@ def multiply_matrix(
     [1] https://clij.github.io/clij2-docs/reference_multiplyMatrix
     """
 
-    from ._pyclesperanto import _multiply_matrix as op
-
-    return op(device=device, src0=input_image0, src1=input_image1, dst=output_image)
+    return clic._multiply_matrix(device, input_image0, input_image1, output_image)
 
 
 @plugin_function(category=["filter", "in assistant"])
@@ -4065,9 +3784,9 @@ def reciprocal(
     ----------
     input_image: Image
         Input image to process.
-    output_image: Optional[Image] = None
+    output_image: Optional[Image] (= None)
         Output result image.
-    device: Optional[Device] = None
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
@@ -4079,9 +3798,7 @@ def reciprocal(
     [1] https://numpy.org/doc/stable/reference/generated/numpy.reciprocal.html
     """
 
-    from ._pyclesperanto import _reciprocal as op
-
-    return op(device=device, src=input_image, dst=output_image)
+    return clic._reciprocal(device, input_image, output_image)
 
 
 @plugin_function
@@ -4095,9 +3812,9 @@ def set(
     ----------
     input_image: Image
         Input image to process.
-    scalar: float = 0
+    scalar: float (= 0)
         Value to set.
-    device: Optional[Device] = None
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
@@ -4109,9 +3826,7 @@ def set(
     [1] https://clij.github.io/clij2-docs/reference_set
     """
 
-    from ._pyclesperanto import _set as op
-
-    return op(device=device, src=input_image, scalar=float(scalar))
+    return clic._set(device, input_image, float(scalar))
 
 
 @plugin_function
@@ -4127,11 +3842,11 @@ def set_column(
     ----------
     input_image: Image
         Input image to process.
-    column: int = 0
+    column: int (= 0)
         Column index.
-    value: float = 0
+    value: float (= 0)
         Value to set.
-    device: Optional[Device] = None
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
@@ -4143,9 +3858,7 @@ def set_column(
     [1] https://clij.github.io/clij2-docs/reference_setColumn
     """
 
-    from ._pyclesperanto import _set_column as op
-
-    return op(device=device, src=input_image, column=int(column), value=float(value))
+    return clic._set_column(device, input_image, int(column), float(value))
 
 
 @plugin_function
@@ -4158,9 +3871,9 @@ def set_image_borders(
     ----------
     input_image: Image
         Input image to process.
-    value: float = 0
+    value: float (= 0)
         Value to set.
-    device: Optional[Device] = None
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
@@ -4172,9 +3885,7 @@ def set_image_borders(
     [1] https://clij.github.io/clij2-docs/reference_setImageBorders
     """
 
-    from ._pyclesperanto import _set_image_borders as op
-
-    return op(device=device, src=input_image, value=float(value))
+    return clic._set_image_borders(device, input_image, float(value))
 
 
 @plugin_function
@@ -4190,11 +3901,11 @@ def set_plane(
     ----------
     input_image: Image
         Input image to process.
-    plane: int = 0
+    plane: int (= 0)
         Plane index.
-    value: float = 0
+    value: float (= 0)
         Value to set.
-    device: Optional[Device] = None
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
@@ -4206,9 +3917,7 @@ def set_plane(
     [1] https://clij.github.io/clij2-docs/reference_setPlane
     """
 
-    from ._pyclesperanto import _set_plane as op
-
-    return op(device=device, src=input_image, plane=int(plane), value=float(value))
+    return clic._set_plane(device, input_image, int(plane), float(value))
 
 
 @plugin_function
@@ -4219,7 +3928,7 @@ def set_ramp_x(input_image: Image, device: Optional[Device] = None) -> Image:
     ----------
     input_image: Image
         Input image to process.
-    device: Optional[Device] = None
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
@@ -4231,9 +3940,7 @@ def set_ramp_x(input_image: Image, device: Optional[Device] = None) -> Image:
     [1] https://clij.github.io/clij2-docs/reference_setRampX
     """
 
-    from ._pyclesperanto import _set_ramp_x as op
-
-    return op(device=device, src=input_image)
+    return clic._set_ramp_x(device, input_image)
 
 
 @plugin_function
@@ -4244,7 +3951,7 @@ def set_ramp_y(input_image: Image, device: Optional[Device] = None) -> Image:
     ----------
     input_image: Image
         Input image to process.
-    device: Optional[Device] = None
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
@@ -4256,9 +3963,7 @@ def set_ramp_y(input_image: Image, device: Optional[Device] = None) -> Image:
     [1] https://clij.github.io/clij2-docs/reference_setRampY
     """
 
-    from ._pyclesperanto import _set_ramp_y as op
-
-    return op(device=device, src=input_image)
+    return clic._set_ramp_y(device, input_image)
 
 
 @plugin_function
@@ -4269,7 +3974,7 @@ def set_ramp_z(input_image: Image, device: Optional[Device] = None) -> Image:
     ----------
     input_image: Image
         Input image to process.
-    device: Optional[Device] = None
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
@@ -4281,9 +3986,7 @@ def set_ramp_z(input_image: Image, device: Optional[Device] = None) -> Image:
     [1] https://clij.github.io/clij2-docs/reference_setRampZ
     """
 
-    from ._pyclesperanto import _set_ramp_z as op
-
-    return op(device=device, src=input_image)
+    return clic._set_ramp_z(device, input_image)
 
 
 @plugin_function
@@ -4296,9 +3999,11 @@ def set_row(
     ----------
     input_image: Image
         Input image to process.
-    row: int = 0
-    value: float = 0
-    device: Optional[Device] = None
+    row: int (= 0)
+
+    value: float (= 0)
+
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
@@ -4310,9 +4015,7 @@ def set_row(
     [1] https://clij.github.io/clij2-docs/reference_setRow
     """
 
-    from ._pyclesperanto import _set_row as op
-
-    return op(device=device, src=input_image, row=int(row), value=float(value))
+    return clic._set_row(device, input_image, int(row), float(value))
 
 
 @plugin_function
@@ -4328,22 +4031,21 @@ def set_nonzero_pixels_to_pixelindex(
     ----------
     input_image: Image
         Input image to process.
-    output_image: Optional[Image] = None
+    output_image: Optional[Image] (= None)
         Output image.
-    offset: int = 1
+    offset: int (= 1)
         Offset value to start the indexing.
-    device: Optional[Device] = None
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
     -------
     Image
-
     """
 
-    from ._pyclesperanto import _set_nonzero_pixels_to_pixelindex as op
-
-    return op(device=device, src=input_image, dst=output_image, offset=int(offset))
+    return clic._set_nonzero_pixels_to_pixelindex(
+        device, input_image, output_image, int(offset)
+    )
 
 
 @plugin_function
@@ -4358,9 +4060,9 @@ def set_where_x_equals_y(
     ----------
     input_image: Image
         Input image to process.
-    value: float = 0
+    value: float (= 0)
         Value to set.
-    device: Optional[Device] = None
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
@@ -4372,9 +4074,7 @@ def set_where_x_equals_y(
     [1] https://clij.github.io/clij2-docs/reference_setWhereXequalsY
     """
 
-    from ._pyclesperanto import _set_where_x_equals_y as op
-
-    return op(device=device, src=input_image, value=float(value))
+    return clic._set_where_x_equals_y(device, input_image, float(value))
 
 
 @plugin_function
@@ -4389,9 +4089,9 @@ def set_where_x_greater_than_y(
     ----------
     input_image: Image
         Input image to process.
-    value: float = 0
+    value: float (= 0)
         Value to set.
-    device: Optional[Device] = None
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
@@ -4403,9 +4103,7 @@ def set_where_x_greater_than_y(
     [1] https://clij.github.io/clij2-docs/reference_setWhereXgreaterThanY
     """
 
-    from ._pyclesperanto import _set_where_x_greater_than_y as op
-
-    return op(device=device, src=input_image, value=float(value))
+    return clic._set_where_x_greater_than_y(device, input_image, float(value))
 
 
 @plugin_function
@@ -4420,9 +4118,9 @@ def set_where_x_smaller_than_y(
     ----------
     input_image: Image
         Input image to process.
-    value: float = 0
+    value: float (= 0)
         Value to set.
-    device: Optional[Device] = None
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
@@ -4434,9 +4132,7 @@ def set_where_x_smaller_than_y(
     [1] https://clij.github.io/clij2-docs/reference_setWhereXsmallerThanY
     """
 
-    from ._pyclesperanto import _set_where_x_smaller_than_y as op
-
-    return op(device=device, src=input_image, value=float(value))
+    return clic._set_where_x_smaller_than_y(device, input_image, float(value))
 
 
 @plugin_function
@@ -4453,20 +4149,17 @@ def sign(
     ----------
     input_image: Image
         Input image to process.
-    output_image: Optional[Image] = None
+    output_image: Optional[Image] (= None)
         Output result image.
-    device: Optional[Device] = None
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
     -------
     Image
-
     """
 
-    from ._pyclesperanto import _sign as op
-
-    return op(device=device, src=input_image, dst=output_image)
+    return clic._sign(device, input_image, output_image)
 
 
 @plugin_function(category=["combine", "binarize", "in assistant"])
@@ -4485,9 +4178,9 @@ def smaller(
         First input image to process.
     input_image1: Image
         Second input image to process.
-    output_image: Optional[Image] = None
+    output_image: Optional[Image] (= None)
         Output result image.
-    device: Optional[Device] = None
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
@@ -4499,9 +4192,7 @@ def smaller(
     [1] https://clij.github.io/clij2-docs/reference_smaller
     """
 
-    from ._pyclesperanto import _smaller as op
-
-    return op(device=device, src0=input_image0, src1=input_image1, dst=output_image)
+    return clic._smaller(device, input_image0, input_image1, output_image)
 
 
 @plugin_function(category=["binarize", "in assistant"])
@@ -4518,11 +4209,11 @@ def smaller_constant(
     ----------
     input_image: Image
         Input image to process.
-    output_image: Optional[Image] = None
+    output_image: Optional[Image] (= None)
         Output result image.
-    scalar: float = 0
+    scalar: float (= 0)
         Scalar used in the comparison.
-    device: Optional[Device] = None
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
@@ -4534,9 +4225,7 @@ def smaller_constant(
     [1] https://clij.github.io/clij2-docs/reference_smallerConstant
     """
 
-    from ._pyclesperanto import _smaller_constant as op
-
-    return op(device=device, src=input_image, dst=output_image, scalar=float(scalar))
+    return clic._smaller_constant(device, input_image, output_image, float(scalar))
 
 
 @plugin_function(category=["combine", "binarize", "in assistant"])
@@ -4555,9 +4244,9 @@ def smaller_or_equal(
         First input image to process.
     input_image1: Image
         Second input image to process.
-    output_image: Optional[Image] = None
+    output_image: Optional[Image] (= None)
         Output result image.
-    device: Optional[Device] = None
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
@@ -4569,9 +4258,7 @@ def smaller_or_equal(
     [1] https://clij.github.io/clij2-docs/reference_smallerOrEqual
     """
 
-    from ._pyclesperanto import _smaller_or_equal as op
-
-    return op(device=device, src0=input_image0, src1=input_image1, dst=output_image)
+    return clic._smaller_or_equal(device, input_image0, input_image1, output_image)
 
 
 @plugin_function(category=["binarize", "in assistant"])
@@ -4588,11 +4275,11 @@ def smaller_or_equal_constant(
     ----------
     input_image: Image
         Input image to process.
-    output_image: Optional[Image] = None
+    output_image: Optional[Image] (= None)
         Output result image.
-    scalar: float = 0
+    scalar: float (= 0)
         Scalar used in the comparison.
-    device: Optional[Device] = None
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
@@ -4604,9 +4291,9 @@ def smaller_or_equal_constant(
     [1] https://clij.github.io/clij2-docs/reference_smallerOrEqualConstant
     """
 
-    from ._pyclesperanto import _smaller_or_equal_constant as op
-
-    return op(device=device, src=input_image, dst=output_image, scalar=float(scalar))
+    return clic._smaller_or_equal_constant(
+        device, input_image, output_image, float(scalar)
+    )
 
 
 @plugin_function(
@@ -4624,9 +4311,9 @@ def sobel(
     ----------
     input_image: Image
         Input image to process.
-    output_image: Optional[Image] = None
+    output_image: Optional[Image] (= None)
         Output result image.
-    device: Optional[Device] = None
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
@@ -4638,9 +4325,7 @@ def sobel(
     [1] https://clij.github.io/clij2-docs/reference_sobel
     """
 
-    from ._pyclesperanto import _sobel as op
-
-    return op(device=device, src=input_image, dst=output_image)
+    return clic._sobel(device, input_image, output_image)
 
 
 @plugin_function(category=["filter", "in assistant"])
@@ -4655,20 +4340,17 @@ def square_root(
     ----------
     input_image: Image
         Input image to process.
-    output_image: Optional[Image] = None
+    output_image: Optional[Image] (= None)
         Output result image.
-    device: Optional[Device] = None
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
     -------
     Image
-
     """
 
-    from ._pyclesperanto import _square_root as op
-
-    return op(device=device, src=input_image, dst=output_image)
+    return clic._square_root(device, input_image, output_image)
 
 
 @plugin_function(category=["projection", "in assistant", "bia-bob-suggestion"])
@@ -4684,9 +4366,9 @@ def std_z_projection(
     ----------
     input_image: Image
         Input image to process.
-    output_image: Optional[Image] = None
+    output_image: Optional[Image] (= None)
         Output result image.
-    device: Optional[Device] = None
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
@@ -4698,9 +4380,7 @@ def std_z_projection(
     [1] https://clij.github.io/clij2-docs/reference_standardDeviationZProjection
     """
 
-    from ._pyclesperanto import _std_z_projection as op
-
-    return op(device=device, src=input_image, dst=output_image)
+    return clic._std_z_projection(device, input_image, output_image)
 
 
 @plugin_function(category=["filter", "in assistant"])
@@ -4716,11 +4396,11 @@ def subtract_image_from_scalar(
     ----------
     input_image: Image
         Input image to process.
-    output_image: Optional[Image] = None
+    output_image: Optional[Image] (= None)
         Output result image.
-    scalar: float = 0
+    scalar: float (= 0)
         Scalar used in the subtraction.
-    device: Optional[Device] = None
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
@@ -4732,9 +4412,9 @@ def subtract_image_from_scalar(
     [1] https://clij.github.io/clij2-docs/reference_subtractImageFromScalar
     """
 
-    from ._pyclesperanto import _subtract_image_from_scalar as op
-
-    return op(device=device, src=input_image, dst=output_image, scalar=float(scalar))
+    return clic._subtract_image_from_scalar(
+        device, input_image, output_image, float(scalar)
+    )
 
 
 @plugin_function
@@ -4752,24 +4432,19 @@ def sum_reduction_x(
     ----------
     input_image: Image
         Input image to process.
-    output_image: Optional[Image] = None
+    output_image: Optional[Image] (= None)
         Output result image.
-    blocksize: int = 256
+    blocksize: int (= 256)
         Blocksize value.
-    device: Optional[Device] = None
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
     -------
     Image
-
     """
 
-    from ._pyclesperanto import _sum_reduction_x as op
-
-    return op(
-        device=device, src=input_image, dst=output_image, blocksize=int(blocksize)
-    )
+    return clic._sum_reduction_x(device, input_image, output_image, int(blocksize))
 
 
 @plugin_function(category=["projection"])
@@ -4784,9 +4459,9 @@ def sum_x_projection(
     ----------
     input_image: Image
         Input image to process.
-    output_image: Optional[Image] = None
+    output_image: Optional[Image] (= None)
         Output result image.
-    device: Optional[Device] = None
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
@@ -4798,9 +4473,7 @@ def sum_x_projection(
     [1] https://clij.github.io/clij2-docs/reference_sumXProjection
     """
 
-    from ._pyclesperanto import _sum_x_projection as op
-
-    return op(device=device, src=input_image, dst=output_image)
+    return clic._sum_x_projection(device, input_image, output_image)
 
 
 @plugin_function(category=["projection"])
@@ -4815,9 +4488,9 @@ def sum_y_projection(
     ----------
     input_image: Image
         Input image to process.
-    output_image: Optional[Image] = None
+    output_image: Optional[Image] (= None)
         Output result image.
-    device: Optional[Device] = None
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
@@ -4829,9 +4502,7 @@ def sum_y_projection(
     [1] https://clij.github.io/clij2-docs/reference_sumYProjection
     """
 
-    from ._pyclesperanto import _sum_y_projection as op
-
-    return op(device=device, src=input_image, dst=output_image)
+    return clic._sum_y_projection(device, input_image, output_image)
 
 
 @plugin_function(category=["projection", "in assistant", "bia-bob-suggestion"])
@@ -4846,9 +4517,9 @@ def sum_z_projection(
     ----------
     input_image: Image
         Input image to process.
-    output_image: Optional[Image] = None
+    output_image: Optional[Image] (= None)
         Output result image.
-    device: Optional[Device] = None
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
@@ -4860,9 +4531,7 @@ def sum_z_projection(
     [1] https://clij.github.io/clij2-docs/reference_sumZProjection
     """
 
-    from ._pyclesperanto import _sum_z_projection as op
-
-    return op(device=device, src=input_image, dst=output_image)
+    return clic._sum_z_projection(device, input_image, output_image)
 
 
 @plugin_function(category=["transform"])
@@ -4877,9 +4546,9 @@ def transpose_xy(
     ----------
     input_image: Image
         The input image.
-    output_image: Optional[Image] = None
+    output_image: Optional[Image] (= None)
         The output image where results are written into.
-    device: Optional[Device] = None
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
@@ -4891,9 +4560,7 @@ def transpose_xy(
     [1] https://clij.github.io/clij2-docs/reference_transposeXY
     """
 
-    from ._pyclesperanto import _transpose_xy as op
-
-    return op(device=device, src=input_image, dst=output_image)
+    return clic._transpose_xy(device, input_image, output_image)
 
 
 @plugin_function(category=["transform"])
@@ -4908,9 +4575,9 @@ def transpose_xz(
     ----------
     input_image: Image
         The input image.
-    output_image: Optional[Image] = None
+    output_image: Optional[Image] (= None)
         The output image where results are written into.
-    device: Optional[Device] = None
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
@@ -4922,9 +4589,7 @@ def transpose_xz(
     [1] https://clij.github.io/clij2-docs/reference_transposeXZ
     """
 
-    from ._pyclesperanto import _transpose_xz as op
-
-    return op(device=device, src=input_image, dst=output_image)
+    return clic._transpose_xz(device, input_image, output_image)
 
 
 @plugin_function(category=["transform"])
@@ -4939,9 +4604,9 @@ def transpose_yz(
     ----------
     input_image: Image
         The input image.
-    output_image: Optional[Image] = None
+    output_image: Optional[Image] (= None)
         The output image where results are written into.
-    device: Optional[Device] = None
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
@@ -4953,9 +4618,7 @@ def transpose_yz(
     [1] https://clij.github.io/clij2-docs/reference_transposeYZ
     """
 
-    from ._pyclesperanto import _transpose_yz as op
-
-    return op(device=device, src=input_image, dst=output_image)
+    return clic._transpose_yz(device, input_image, output_image)
 
 
 @plugin_function
@@ -4971,9 +4634,9 @@ def undefined_to_zero(
     ----------
     input_image: Image
         Input image to process.
-    output_image: Optional[Image] = None
+    output_image: Optional[Image] (= None)
         Output result image.
-    device: Optional[Device] = None
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
@@ -4985,9 +4648,7 @@ def undefined_to_zero(
     [1] https://clij.github.io/clij2-docs/reference_undefinedToZero
     """
 
-    from ._pyclesperanto import _undefined_to_zero as op
-
-    return op(device=device, src=input_image, dst=output_image)
+    return clic._undefined_to_zero(device, input_image, output_image)
 
 
 @plugin_function(category=["filter", "edge detection", "in assistant"])
@@ -5007,15 +4668,15 @@ def variance_box(
     ----------
     input_image: Image
         Input image to process.
-    output_image: Optional[Image] = None
+    output_image: Optional[Image] (= None)
         Output result image.
-    radius_x: int = 1
+    radius_x: int (= 1)
         Radius size along x axis.
-    radius_y: int = 1
+    radius_y: int (= 1)
         Radius size along y axis.
-    radius_z: int = 1
+    radius_z: int (= 1)
         Radius size along z axis.
-    device: Optional[Device] = None
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
@@ -5027,19 +4688,12 @@ def variance_box(
     [1] https://clij.github.io/clij2-docs/reference_varianceBox
     """
 
-    from ._pyclesperanto import _variance_box as op
-
     warnings.warn(
-        "variance_box : This function is deprecated. Consider using variance() instead.",
+        "pyclesperanto.variance_box: This function is deprecated. Consider using variance() instead.",
         DeprecationWarning,
     )
-    return op(
-        device=device,
-        src=input_image,
-        dst=output_image,
-        radius_x=int(radius_x),
-        radius_y=int(radius_y),
-        radius_z=int(radius_z),
+    return clic._variance_box(
+        device, input_image, output_image, int(radius_x), int(radius_y), int(radius_z)
     )
 
 
@@ -5062,15 +4716,15 @@ def variance_sphere(
     ----------
     input_image: Image
         Input image to process.
-    output_image: Optional[Image] = None
+    output_image: Optional[Image] (= None)
         Output result image.
-    radius_x: int = 1
+    radius_x: int (= 1)
         Radius size along x axis.
-    radius_y: int = 1
+    radius_y: int (= 1)
         Radius size along y axis.
-    radius_z: int = 1
+    radius_z: int (= 1)
         Radius size along z axis.
-    device: Optional[Device] = None
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
@@ -5082,19 +4736,12 @@ def variance_sphere(
     [1] https://clij.github.io/clij2-docs/reference_varianceSphere
     """
 
-    from ._pyclesperanto import _variance_sphere as op
-
     warnings.warn(
-        "variance_sphere : This function is deprecated. Consider using variance() instead.",
+        "pyclesperanto.variance_sphere: This function is deprecated. Consider using variance() instead.",
         DeprecationWarning,
     )
-    return op(
-        device=device,
-        src=input_image,
-        dst=output_image,
-        radius_x=int(radius_x),
-        radius_y=int(radius_y),
-        radius_z=int(radius_z),
+    return clic._variance_sphere(
+        device, input_image, output_image, int(radius_x), int(radius_y), int(radius_z)
     )
 
 
@@ -5116,17 +4763,17 @@ def variance(
     ----------
     input_image: Image
         Input image to process.
-    output_image: Optional[Image] = None
+    output_image: Optional[Image] (= None)
         Output result image.
-    radius_x: int = 1
+    radius_x: int (= 1)
         Radius size along x axis.
-    radius_y: int = 1
+    radius_y: int (= 1)
         Radius size along y axis.
-    radius_z: int = 1
+    radius_z: int (= 1)
         Radius size along z axis.
-    connectivity: str = "box"
+    connectivity: str (= "box")
         Filter neigborhood
-    device: Optional[Device] = None
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
@@ -5136,19 +4783,17 @@ def variance(
     References
     ----------
     [1] https://clij.github.io/clij2-docs/reference_varianceBox
-        [2] https://clij.github.io/clij2-docs/reference_varianceSphere
+    [2] https://clij.github.io/clij2-docs/reference_varianceSphere
     """
 
-    from ._pyclesperanto import _variance as op
-
-    return op(
-        device=device,
-        src=input_image,
-        dst=output_image,
-        radius_x=int(radius_x),
-        radius_y=int(radius_y),
-        radius_z=int(radius_z),
-        connectivity=connectivity,
+    return clic._variance(
+        device,
+        input_image,
+        output_image,
+        int(radius_x),
+        int(radius_y),
+        int(radius_z),
+        str(connectivity),
     )
 
 
@@ -5166,9 +4811,9 @@ def write_values_to_positions(
     ----------
     input_image: Image
         Input image to process.
-    output_image: Optional[Image] = None
+    output_image: Optional[Image] (= None)
         Output result image.
-    device: Optional[Device] = None
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
@@ -5180,9 +4825,7 @@ def write_values_to_positions(
     [1] https://clij.github.io/clij2-docs/reference_writeValuesToPositions
     """
 
-    from ._pyclesperanto import _write_values_to_positions as op
-
-    return op(device=device, src=input_image, dst=output_image)
+    return clic._write_values_to_positions(device, input_image, output_image)
 
 
 @plugin_function(category=["projection", "in assistant"])
@@ -5199,20 +4842,17 @@ def x_position_of_maximum_x_projection(
     ----------
     input_image: Image
         Input image stack
-    output_image: Optional[Image] = None
+    output_image: Optional[Image] (= None)
         altitude map
-    device: Optional[Device] = None
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
     -------
     Image
-
     """
 
-    from ._pyclesperanto import _x_position_of_maximum_x_projection as op
-
-    return op(device=device, src=input_image, dst=output_image)
+    return clic._x_position_of_maximum_x_projection(device, input_image, output_image)
 
 
 @plugin_function(category=["projection", "in assistant"])
@@ -5229,20 +4869,17 @@ def x_position_of_minimum_x_projection(
     ----------
     input_image: Image
         Input image stack
-    output_image: Optional[Image] = None
+    output_image: Optional[Image] (= None)
         altitude map
-    device: Optional[Device] = None
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
     -------
     Image
-
     """
 
-    from ._pyclesperanto import _x_position_of_minimum_x_projection as op
-
-    return op(device=device, src=input_image, dst=output_image)
+    return clic._x_position_of_minimum_x_projection(device, input_image, output_image)
 
 
 @plugin_function(category=["projection", "in assistant"])
@@ -5259,20 +4896,17 @@ def y_position_of_maximum_y_projection(
     ----------
     input_image: Image
         Input image stack
-    output_image: Optional[Image] = None
+    output_image: Optional[Image] (= None)
         altitude map
-    device: Optional[Device] = None
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
     -------
     Image
-
     """
 
-    from ._pyclesperanto import _y_position_of_maximum_y_projection as op
-
-    return op(device=device, src=input_image, dst=output_image)
+    return clic._y_position_of_maximum_y_projection(device, input_image, output_image)
 
 
 @plugin_function(category=["projection", "in assistant"])
@@ -5289,20 +4923,17 @@ def y_position_of_minimum_y_projection(
     ----------
     input_image: Image
         Input image stack
-    output_image: Optional[Image] = None
+    output_image: Optional[Image] (= None)
         altitude map
-    device: Optional[Device] = None
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
     -------
     Image
-
     """
 
-    from ._pyclesperanto import _y_position_of_minimum_y_projection as op
-
-    return op(device=device, src=input_image, dst=output_image)
+    return clic._y_position_of_minimum_y_projection(device, input_image, output_image)
 
 
 @plugin_function(category=["projection", "in assistant"])
@@ -5319,20 +4950,17 @@ def z_position_of_maximum_z_projection(
     ----------
     input_image: Image
         Input image stack
-    output_image: Optional[Image] = None
+    output_image: Optional[Image] (= None)
         altitude map
-    device: Optional[Device] = None
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
     -------
     Image
-
     """
 
-    from ._pyclesperanto import _z_position_of_maximum_z_projection as op
-
-    return op(device=device, src=input_image, dst=output_image)
+    return clic._z_position_of_maximum_z_projection(device, input_image, output_image)
 
 
 @plugin_function(category=["projection", "in assistant"])
@@ -5349,17 +4977,14 @@ def z_position_of_minimum_z_projection(
     ----------
     input_image: Image
         Input image stack
-    output_image: Optional[Image] = None
+    output_image: Optional[Image] (= None)
         altitude map
-    device: Optional[Device] = None
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
     -------
     Image
-
     """
 
-    from ._pyclesperanto import _z_position_of_minimum_z_projection as op
-
-    return op(device=device, src=input_image, dst=output_image)
+    return clic._z_position_of_minimum_z_projection(device, input_image, output_image)

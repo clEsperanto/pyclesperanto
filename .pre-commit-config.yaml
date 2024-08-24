@@ -16,7 +16,7 @@ repos:
 
 # black - code formatting
 -   repo: https://github.com/psf/black
-    rev: 24.4.2
+    rev: 24.8.0
     hooks:
     -   id: black
 
@@ -28,6 +28,6 @@ repos:
 
 # flake8 - linting
 -   repo: https://github.com/pycqa/flake8
-    rev: 7.1.0
+    rev: 7.1.1
     hooks:
     -   id: flake8

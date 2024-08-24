@@ -1,8 +1,8 @@
 #
-# This code is auto-generated from 'tier8.hpp' file, using 'gencle' script.
-# Do not edit manually.
+# This code is auto-generated from CLIc 'cle::tier8.hpp' file, do not edit manually.
 #
 
+import importlib
 import warnings
 from typing import Optional
 
@@ -11,6 +11,8 @@ import numpy as np
 from ._array import Image
 from ._core import Device
 from ._decorators import plugin_function
+
+clic = importlib.import_module("._pyclesperanto", package="pyclesperanto")
 
 
 @plugin_function(category=["label processing", "in assistant", "bia-bob-suggestion"])
@@ -29,22 +31,19 @@ def smooth_labels(
     ----------
     input_image: Image
         Input label image
-    output_image: Optional[Image] = None
+    output_image: Optional[Image] (= None)
         Output label image
-    radius: int = 0
+    radius: int (= 0)
         Smoothing
-    device: Optional[Device] = None
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
     -------
     Image
-
     """
 
-    from ._pyclesperanto import _smooth_labels as op
-
-    return op(device=device, src=input_image, dst=output_image, radius=int(radius))
+    return clic._smooth_labels(device, input_image, output_image, int(radius))
 
 
 @plugin_function
@@ -62,19 +61,16 @@ def smooth_connected_labels(
     ----------
     input_image: Image
         Input label image
-    output_image: Optional[Image] = None
+    output_image: Optional[Image] (= None)
         Output label image
-    radius: int = 0
+    radius: int (= 0)
         Smoothing
-    device: Optional[Device] = None
+    device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
     -------
     Image
-
     """
 
-    from ._pyclesperanto import _smooth_connected_labels as op
-
-    return op(device=device, src=input_image, dst=output_image, radius=int(radius))
+    return clic._smooth_connected_labels(device, input_image, output_image, int(radius))

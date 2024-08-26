@@ -153,7 +153,12 @@ def default_initialisation():
         _ = select_backend(backends[-1])
     else:
         warnings.warn(
-            "No backend available. Please install either OpenCL or CUDA on your system.",
+            "No GPU backend found.\n\n"
+            "pyclesperanto requires either CUDA or OpenCL libraries to be installed on your system to work.\n"
+            "Please ensure you have the appropriate drivers installed and up-to-date.\n\n"
+            "Alternatively, you may need to install the following additional package:\n"
+            "- MacOS: `conda install -c conda-forge ocl_icd_wrapper_apple`\n"
+            "- Linux: `conda install -c conda-forge ocl-icd-system`",
             RuntimeWarning,
         )
 

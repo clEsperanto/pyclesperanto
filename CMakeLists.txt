@@ -24,7 +24,7 @@ option(BUILD_SHARED_LIBS OFF)
 
 ## CLIc dependency
 file(READ "${CMAKE_CURRENT_SOURCE_DIR}/pyclesperanto/_version.py" VERSION_FILE_CONTENT)
-string(REGEX MATCH "CLIC_VERSION = \"([0-9]+\\.[0-9]+\\.[0-9]+)\"" _ ${VERSION_FILE_CONTENT})
+string(REGEX MATCH "CLIC_VERSION = \"([^\"]+)\"" _ ${VERSION_FILE_CONTENT})
 set(CLIC_REPO_TAG ${CMAKE_MATCH_1})
 set(CLIC_REPO_URL "https://github.com/clEsperanto/CLIc.git")
 set(BUILD_OPENCL_BACKEND ON CACHE BOOL "Build with OCL if FOUND" FORCE)

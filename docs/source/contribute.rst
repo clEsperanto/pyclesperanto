@@ -23,13 +23,13 @@ Here we will describe how to setup a development environment for py-clesperanto 
 .. code-block:: bash
 
     mamba create -n pycle-dev python=3.9 -c conda-forge
-    conda activate pycle-dev
+    mamba activate pycle-dev
 
-2. Install the dependencies:
+2. Install extra packages:
 
 .. code-block:: bash
 
-    mamba install -c conda-forge numpy pytest jupyter scikit-image black flake8 pre-commit
+    mamba install -c conda-forge jupyter scikit-image pandas pytest
 
 3. Setup pre-commit:
 
@@ -62,19 +62,17 @@ The ``pre-commit`` tool will ensure that the code is properly formatted and lint
 Versioning
 ----------
 
-pyClesperanto version folows the `CLIc <https://github.com/clEsperanto/CLIc>`__ versioning.
+pyClesperanto version folows the `CLIc <https://github.com/clEsperanto/CLIc>`__ versioning for now as both are development concurently.
 Although they are not necessarily made to be identically, the versioning is kept in sync as much as possible.
 
-In order to update the version of pyClesperanto, you will need to follow the following steps:
+In order to update the version of pyClesperanto, or the version of CLIc, modify the `_version.py` file of pyclesperanto package.
 
-1. Update the `CLIc version tag <https://github.com/clEsperanto/pyclesperanto/blob/825ab6595b254bcda4fda81c03d2e7ff354f6dd2/CMakeLists.txt#L26>`__ used in the ``CMakeLists.txt`` file at the root of the project.
-2. Update the version in the `pyproject.toml <https://github.com/clEsperanto/pyclesperanto/blob/main/pyproject.toml>`__ file.
-3. Update the version in the `pyclesperanto/_version.py <https://github.com/clEsperanto/pyclesperanto/blob/main/pyclesperanto/_version.py>`__ file.
-   Both ``VERSION`` and ``CLIC_VERSION`` should be updated accordingly.
+`VERSION` define the versioning tag of the package `pyclesperanto`. It should be updated when a new release is made.
+`CLIC_VERSION` define the `CLIc <https://github.com/clEsperanto/CLIc>`__ library version to use.
 
 .. note::
 
-    The version tag in the ``pyproject.toml`` file should be made automatic in the near future.
+    `CLIC_VERSION` can also be set to an active branch name for development testing.
 
 
 Code quality and formating

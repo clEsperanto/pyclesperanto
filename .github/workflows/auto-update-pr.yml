@@ -47,7 +47,7 @@ jobs:
           if [ -z "$EXISTING_ISSUE_NUMBER" ]; then
             ISSUE_NUMBER=$(gh issue create --title "$ISSUE_TITLE" \
             --body $'## Auto-update pyclesperanto\n\nThis issue has been automatically created by the auto-update workflow.\n\n### Update Details\n- **pyclesperanto Version:** ${{ github.event.client_payload.release_tag }}\n- **CLIc Version:** ${{ github.event.client_payload.release_tag }}\n\n### Action Required\nPlease update pyclesperanto to the specified version.\n\n### Additional Information\nFor more details, refer to the [Release Notes](https://github.com/clEsperanto/CLIc/releases/tag/${{ github.event.client_payload.release_tag }}).\n\nThank you!' \
-            --label "auto-update" --json number --jq '.number')
+            --label "auto-update")
           else
             gh issue comment $EXISTING_ISSUE_NUMBER --body $'## Auto-update pyclesperanto\n\nThis issue has been automatically updated by the auto-update workflow.\n\n### Update Details\n- **pyclesperanto Version:** ${{ github.event.client_payload.release_tag }}\n- **CLIc Version:** ${{ github.event.client_payload.release_tag }}\n\n### Action Required\nPlease update pyclesperanto to the specified version.\n\n### Additional Information\nFor more details, refer to the [Release Notes](https://github.com/clEsperanto/CLIc/releases/tag/${{ github.event.client_payload.release_tag }}).\n\nThank you!'
             ISSUE_NUMBER=$EXISTING_ISSUE_NUMBER

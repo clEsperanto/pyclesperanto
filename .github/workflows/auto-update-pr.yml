@@ -52,7 +52,7 @@ jobs:
         env:
             GH_TOKEN: ${{ secrets.RELEASE_PAT }}
         run: |
-            git clone https://$RELEASE_PAT@github.com/clEsperanto/gencle.git gencle
+            git clone https://$GH_TOKEN@github.com/clEsperanto/gencle.git gencle
             python ./gencle/pyclesperanto_auto_update.py ${{ github.workspace }} "clEsperanto/CLIc" ${{ github.event.inputs.release_tag }}
 
 

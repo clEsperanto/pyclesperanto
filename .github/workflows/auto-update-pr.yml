@@ -1,56 +1,13 @@
 name: auto-update-pr
 
-# on manual activation
 on:
-  workflow_dispatch:
-    inputs:
-      release_tag:
-        description: 'Release tag'
-        required: true
+  repository_dispatch:
+    types: [custom_event]
 
 jobs:
-  auto-pr:
+  handle-custom-event:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-
-      - name: Set up Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: '3.x'
-
-      - name: Install GitHub CLI
+      - name: Print release tag
         run: |
-            sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-key C99B11DEB97541F0
-            sudo apt-add-repository https://cli.github.com/packages
-            sudo apt update
-            sudo apt install gh
-
-      - name: Update local repository code
-        run: |
-          git clone https://github.com/clEsperanto/gencle gencle
-          python ./gencle/pyclesperanto_auto_update.py ${{ github.workspace }} "clEsperanto/CLIc" ${{ github.event.inputs.release_tag }}
-
-      - name: Branch, Commit, and push changes
-        env:
-          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
-        run: |
-          cd gencle
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git config --global user.name "github-actions[bot]"
-          git checkout -b auto-update-${{ github.event.inputs.release_tag }}
-          git add .
-          git commit -m "auto-update pyclesperanto to version ${{ github.event.inputs.release_tag }}"
-          git push origin auto-update-${{ github.event.inputs.release_tag }}
-
-      - name: Create Pull Request
-        env:
-            GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
-        run: |
-            gh auth login --with-token <<< "${{ secrets.GITHUB_TOKEN }}"
-            gh pr create \
-                --title "Auto-update pyclesperanto to version ${{ github.event.inputs.release_tag }}" \
-                --body "This PR updates pyclesperanto tiers code to `clEsperanto/CLIc@${{ github.event.inputs.release_tag }}`" \
-                --head auto-update-${{ github.event.inputs.release_tag }} \
-                --base main
+          echo "Received release tag: ${{ github.event.client_payload.release_tag }}"

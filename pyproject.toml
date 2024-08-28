@@ -13,6 +13,12 @@ minimum-version = "1.11"
 build-type = "Release"
 minimum-version = "3.26.1"
 
+
+[tool.scikit-build.metadata.version]
+provider = "scikit_build_core.metadata.regex"
+regex = 'VERSION = "(?P<value>\d+\.\d+\.\d+)"'
+input = "pyclesperanto/_version.py"
+
 [tool.scikit-build.sdist]
 exclude = [".flake8", ".git*", "*.yaml", "*.ipynb", "*.yml", "docs"]
 
@@ -37,12 +43,13 @@ dependencies = [
   "numpy",
   "toolz",
   "matplotlib",
+  "toml",
 ]
 description = "GPU-accelerated image processing in python using OpenCL"
 name = "pyclesperanto"
 readme = "README.md"
 requires-python = ">=3.8"
-version = "0.12.1"
+dynamic = ["version"]
 
 
 [project.urls]

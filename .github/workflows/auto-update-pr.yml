@@ -39,13 +39,13 @@ jobs:
 
 
       - name: Create a new issue with the release tag
-        run: |
-          gh issue create --title "Auto-update pyclesperanto to version ${{ github.event.client_payload.release_tag }}" \
-          --body "This issue is created by the auto-update workflow.\npyclesperanto can be updated with the CLIc version ${{ github.event.client_payload.release_tag }}.\n\nSee [Release Notes](https://github.com/clEsperanto/CLIc/releases/tag/${{ github.event.client_payload.release_tag }})" \
-          --label "auto-update"
-          export ISSUE_NUMBER=$(gh issue list --label "auto-update" --limit 1 --json number --jq '.[0].number')
         env:
-          ISSUE_NUMBER: ${{ steps.create_issue.outputs.ISSUE_NUMBER }}
+          GH_TOKEN: ${{ secrets.RELEASE_PAT }}
+        run: |
+            gh issue create --title "Auto-update pyclesperanto to version ${{ github.event.client_payload.release_tag }}" \
+            --body "This issue is created by the auto-update workflow.\npyclesperanto can be updated with the CLIc version ${{ github.event.client_payload.release_tag }}.\n\nSee [Release Notes](https://github.com/clEsperanto/CLIc/releases/tag/${{ github.event.client_payload.release_tag }})" \
+            --label "auto-update"
+            export ISSUE_NUMBER=$(gh issue list --label "auto-update" --limit 1 --json number --jq '.[0].number')
 
 
       - name: get gencle and update pyclesperanto
@@ -57,6 +57,8 @@ jobs:
 
 
       - name: Branch, Commit, and push changes
+        env:
+            GH_TOKEN: ${{ secrets.RELEASE_PAT }}
         run: |
           git checkout -b auto-update-${{ github.event.inputs.release_tag }}
           git add .
@@ -66,7 +68,7 @@ jobs:
 
       - name: Create Pull Request
         env:
-            GITHUB_TOKEN: "${{ secrets.RELEASE_PAT }}"
+            GH_TOKEN: "${{ secrets.RELEASE_PAT }}"
             ISSUE_NUMBER: ${{ steps.create_issue.outputs.ISSUE_NUMBER }}
         run: |
             gh auth login --with-token <<< "${{ secrets.RELEASE_PAT }}"

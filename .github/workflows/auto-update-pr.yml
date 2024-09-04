@@ -11,4 +11,3 @@ jobs:
       - name: Print release tag
         run: |
           echo "Received release tag: ${{ github.event.client_payload.release_tag }} from CLIc"
-

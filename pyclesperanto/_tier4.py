@@ -44,7 +44,7 @@ def label_bounding_box(
     return clic._label_bounding_box(device, input_image, int(label_id))
 
 
-@plugin_function(category=["in assistant", "combine", "bia-bob-suggestion"])
+@plugin_function(categories=["in assistant", "combine", "bia-bob-suggestion"])
 def mean_squared_error(
     input_image0: Image, input_image1: Image, device: Optional[Device] = None
 ) -> float:
@@ -103,7 +103,7 @@ def spots_to_pointlist(
     return clic._spots_to_pointlist(device, input_image, output_image)
 
 
-@plugin_function(category=["label processing", "in assistant", "bia-bob-suggestion"])
+@plugin_function(categories=["label processing", "in assistant", "bia-bob-suggestion"])
 def relabel_sequential(
     input_image: Image,
     output_image: Optional[Image] = None,
@@ -138,7 +138,7 @@ def relabel_sequential(
     return clic._relabel_sequential(device, input_image, output_image, int(blocksize))
 
 
-@plugin_function(category=["binarize", "in assistant", "bia-bob-suggestion"])
+@plugin_function(categories=["binarize", "in assistant", "bia-bob-suggestion"])
 def threshold_otsu(
     input_image: Image,
     output_image: Optional[Image] = None,

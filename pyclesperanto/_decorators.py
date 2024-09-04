@@ -12,7 +12,7 @@ from ._memory import push
 @curry
 def plugin_function(
     function: Callable,
-    category: Optional[list] = None,
+    categories: Optional[list] = None,
 ) -> Callable:
     """Function decorator to ensure correct types and values of all parameters.
 
@@ -31,7 +31,7 @@ def plugin_function(
         images.
     device_selector : callable, optional
         A function to select a device. By default, we use the current device instance.
-    category : list of str, optional
+    categories : list of str, optional
         A list of category names the function is associated with
 
     Returns
@@ -42,7 +42,7 @@ def plugin_function(
     """
 
     # function.fullargspec = inspect.getfullargspec(function)
-    # function.category = category
+    function.categories = categories
     # function.priority = priority
 
     @wraps(function)

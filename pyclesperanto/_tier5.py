@@ -15,7 +15,7 @@ from ._decorators import plugin_function
 clic = importlib.import_module("._pyclesperanto", package="pyclesperanto")
 
 
-@plugin_function(category=["combine"])
+@plugin_function(categories=["combine"])
 def array_equal(
     input_image0: Image, input_image1: Image, device: Optional[Device] = None
 ) -> bool:
@@ -45,7 +45,7 @@ def array_equal(
 
 
 @plugin_function(
-    category=[
+    categories=[
         "label processing",
         "combine labels",
         "in assistant",
@@ -81,7 +81,7 @@ def combine_labels(
     return clic._combine_labels(device, input_image0, input_image1, output_image)
 
 
-@plugin_function(category=["label", "in assistant", "bia-bob-suggestion"])
+@plugin_function(categories=["label", "in assistant", "bia-bob-suggestion"])
 def connected_components_labeling(
     input_image: Image,
     output_image: Optional[Image] = None,

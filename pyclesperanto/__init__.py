@@ -24,6 +24,13 @@ from ._version import CLIC_VERSION as __clic_version__
 from ._version import COMMON_ALIAS as __common_alias__
 from ._version import VERSION as __version__
 
+
+from ._categories import categories
+
+from ._operations import operation
+from ._operations import operations
+from ._operations import search_operation_names
+
 from ._interroperability import *  # isort:skip
 
 default_initialisation()

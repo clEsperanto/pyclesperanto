@@ -15,5 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Print release tag
+        env:
+          RELEASE_TAG: ${{ github.event.client_payload.release_tag || github.event.inputs.release_tag }}
         run: |
-          echo "Received release tag: ${{ github.event.client_payload.release_tag }} from CLIc"
+          echo "Received release tag: $RELEASE_TAG from CLIc"

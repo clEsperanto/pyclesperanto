@@ -1,4 +1,4 @@
-name: auto-update-pr
+name: Auto Update
 
 on:
   repository_dispatch:
@@ -12,66 +12,3 @@ jobs:
         run: |
           echo "Received release tag: ${{ github.event.client_payload.release_tag }} from CLIc"
 
-
-      - name: Checkout
-        uses: actions/checkout@v2
-
-
-      - name: Set up Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: '3.x'
-
-
-      - name: Install GitHub CLI
-        run: |
-            sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-key C99B11DEB97541F0
-            sudo apt-add-repository https://cli.github.com/packages
-            sudo apt update
-            sudo apt install gh
-
-
-      - name: Configure git
-        run: |
-            git config --global user.email "github-actions[bot]@users.noreply.github.com"
-            git config --global user.name "github-actions[bot]"
-
-
-      - name: Create a new issue with the release tag
-        run: |
-          gh issue create --title "Auto-update pyclesperanto to version ${{ github.event.client_payload.release_tag }}" \
-          --body "This issue is created by the auto-update workflow.\npyclesperanto can be updated with the CLIc version ${{ github.event.client_payload.release_tag }}.\n\nSee [Release Notes](https://github.com/clEsperanto/CLIc/releases/tag/${{ github.event.client_payload.release_tag }})" \
-          --label "auto-update"
-          export ISSUE_NUMBER=$(gh issue list --label "auto-update" --limit 1 --json number --jq '.[0].number')
-        env:
-          ISSUE_NUMBER: ${{ steps.create_issue.outputs.ISSUE_NUMBER }}
-
-
-      - name: get gencle and update pyclesperanto
-        env:
-          GH_TOKEN: ${{ secrets.RELEASE_PAT }}
-        run: |
-          git clone https://$RELEASE_PAT@github.com/clEsperanto/gencle.git gencle
-          python ./gencle/pyclesperanto_auto_update.py ${{ github.workspace }} "clEsperanto/CLIc" ${{ github.event.inputs.release_tag }}
-
-
-      - name: Branch, Commit, and push changes
-        run: |
-          git checkout -b auto-update-${{ github.event.inputs.release_tag }}
-          git add .
-          git commit -m "auto-update pyclesperanto to version ${{ github.event.inputs.release_tag }}"
-          git push origin auto-update-${{ github.event.inputs.release_tag }}
-
-
-      - name: Create Pull Request
-        env:
-            GITHUB_TOKEN: "${{ secrets.RELEASE_PAT }}"
-            ISSUE_NUMBER: ${{ steps.create_issue.outputs.ISSUE_NUMBER }}
-        run: |
-            gh auth login --with-token <<< "${{ secrets.RELEASE_PAT }}"
-            gh pr create \
-                --title "Auto-update pyclesperanto to version ${{ github.event.client_payload.release_tag }}." \
-                --body "This PR updates pyclesperanto tiers code to `clEsperanto/CLIc@${{ github.event.client_payload.release_tag }}`.\n\ncloses #${{ env.ISSUE_NUMBER }}" \
-                --head auto-update-${{ github.event.client_payload.release_tag }} \
-                --base main \
-                --label "auto-update"

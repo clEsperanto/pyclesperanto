@@ -11,7 +11,7 @@ on:
         default: 'master'
 
 jobs:
-  handle-custom-event:
+  run-cle-roboto:
     runs-on: ubuntu-latest
     steps:
       - name: Print release tag

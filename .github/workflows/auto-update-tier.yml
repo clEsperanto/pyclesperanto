@@ -1,4 +1,4 @@
-name: Auto Update
+name: Auto Update Tiers
 
 on:
   repository_dispatch:
@@ -19,3 +19,13 @@ jobs:
           RELEASE_TAG: ${{ github.event.client_payload.release_tag || github.event.inputs.release_tag }}
         run: |
           echo "Received release tag: $RELEASE_TAG from CLIc"
+
+      - name: Get python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Use cle-roboto to update tiers
+        uses: clEsperanto/cle-roboto-repo@v1
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}

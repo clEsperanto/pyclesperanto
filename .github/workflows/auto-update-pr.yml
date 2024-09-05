@@ -2,10 +2,10 @@ name: auto-update-pr
 
 on:
   repository_dispatch:
-    types: [clic_update]
+    types: [custom_event]
 
 jobs:
-  run-cle-roboto:
+  handle-custom-event:
     runs-on: ubuntu-latest
     steps:
       - name: Print release tag

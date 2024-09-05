@@ -26,8 +26,10 @@ from ._version import VERSION as __version__
 
 
 from ._categories import categories
-from ._functionalities import operations
-from ._functionalities import list_operations
+
+from ._operations import operation
+from ._operations import operations
+from ._operations import search_operation_names
 
 from ._interroperability import *  # isort:skip
 

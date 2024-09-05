@@ -2,7 +2,7 @@ name: Auto Update
 
 on:
   repository_dispatch:
-    types: [custom_event]
+    types: [clic_update]
 
 jobs:
   handle-custom-event:
@@ -11,4 +11,3 @@ jobs:
       - name: Print release tag
         run: |
           echo "Received release tag: ${{ github.event.client_payload.release_tag }} from CLIc"
-

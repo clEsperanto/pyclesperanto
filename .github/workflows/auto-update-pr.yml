@@ -3,6 +3,12 @@ name: Auto Update
 on:
   repository_dispatch:
     types: [clic_update]
+  workflow_dispatch:
+    inputs:
+      release_tag:
+        description: 'CLIc tag'
+        required: true
+        default: 'master'
 
 jobs:
   handle-custom-event:

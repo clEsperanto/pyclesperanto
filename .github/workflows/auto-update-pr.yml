@@ -2,7 +2,7 @@ name: auto-update-pr
 
 on:
   repository_dispatch:
-    types: [custom_event]
+    types: [clic_update]
 
 jobs:
   handle-custom-event:

@@ -278,7 +278,7 @@ def operations(
 
     Returns
     -------
-    dict of str : function
+    dict of str : Callable function
     """
 
     import pyclesperanto as cle
@@ -328,11 +328,24 @@ def operation(name: str) -> Callable:
 
     Returns
     -------
-        function
+        Callable function
     """
     dict = operations()
     return dict[name]
 
 
-def search_operation_names(name) -> list:
+def search_operation_names(name: str) -> list:
+    """
+    Returns a list of operation names containing the given string
+
+    Parameters
+    ----------
+    name : str
+        string to search for in operation names
+
+    Returns
+    -------
+    list
+        list of operation names containing the given string
+    """
     return [a for a in list(operations().keys()) if name in a]

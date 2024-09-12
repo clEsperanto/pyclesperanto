@@ -1,6 +1,7 @@
 from os import path
 from pathlib import Path
-from typing import Optional, Union
+from typing import Optional, Union, Callable
+from inspect import getmembers, isfunction
 
 import numpy as np
 from matplotlib.colors import ListedColormap
@@ -279,16 +280,15 @@ def operations(
     -------
     dict of str : function
     """
+
+    import pyclesperanto as cle
+
     if isinstance(must_have_categories, str):
         must_have_categories = [must_have_categories]
     if isinstance(must_not_have_categories, str):
         must_have_categories = [must_not_have_categories]
 
     result = {}
-
-    from inspect import getmembers, isfunction
-
-    import pyclesperanto as cle
 
     # retrieve all operations and cache the result for later reuse
     if not hasattr(operations, "_all") or operations._all is None:
@@ -318,7 +318,7 @@ def operations(
     return result
 
 
-def operation(name: str):
+def operation(name: str) -> Callable:
     """Returns a function from the pyclesperanto package
 
     Parameters
@@ -334,5 +334,5 @@ def operation(name: str):
     return dict[name]
 
 
-def search_operation_names(name):
+def search_operation_names(name) -> list:
     return [a for a in list(operations().keys()) if name in a]

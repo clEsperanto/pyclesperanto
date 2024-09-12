@@ -15,7 +15,7 @@ from ._decorators import plugin_function
 clic = importlib.import_module("._pyclesperanto", package="pyclesperanto")
 
 
-@plugin_function(category=["filter", "in assistant", "bia-bob-suggestion"])
+@plugin_function(categories=["filter", "in assistant", "bia-bob-suggestion"])
 def absolute(
     input_image: Image,
     output_image: Optional[Image] = None,
@@ -45,7 +45,7 @@ def absolute(
     return clic._absolute(device, input_image, output_image)
 
 
-@plugin_function(category=["combine", "in assistant"])
+@plugin_function(categories=["combine", "in assistant"])
 def add_images_weighted(
     input_image0: Image,
     input_image1: Image,
@@ -86,7 +86,7 @@ def add_images_weighted(
     )
 
 
-@plugin_function(category=["filter", "in assistant"])
+@plugin_function(categories=["filter", "in assistant"])
 def add_image_and_scalar(
     input_image: Image,
     output_image: Optional[Image] = None,
@@ -120,7 +120,7 @@ def add_image_and_scalar(
 
 
 @plugin_function(
-    category=[
+    categories=[
         "combine",
         "binary processing",
         "in assistant",
@@ -164,7 +164,7 @@ def binary_and(
 
 
 @plugin_function(
-    category=[
+    categories=[
         "binary processing",
         "label processing",
         "in assistant",
@@ -201,7 +201,7 @@ def binary_edge_detection(
 
 
 @plugin_function(
-    category=[
+    categories=[
         "binary processing",
         "filter",
         "label processing",
@@ -240,7 +240,7 @@ def binary_not(
 
 
 @plugin_function(
-    category=[
+    categories=[
         "combine",
         "binary processing",
         "in assistant",
@@ -284,7 +284,7 @@ def binary_or(
 
 
 @plugin_function(
-    category=[
+    categories=[
         "combine",
         "binary processing",
         "in assistant",
@@ -325,7 +325,7 @@ def binary_subtract(
 
 
 @plugin_function(
-    category=[
+    categories=[
         "combine",
         "binary processing",
         "in assistant",
@@ -368,7 +368,7 @@ def binary_xor(
     return clic._binary_xor(device, input_image0, input_image1, output_image)
 
 
-@plugin_function(category=["filter", "binary processing"])
+@plugin_function(categories=["filter", "binary processing"])
 def binary_supinf(
     input_image: Image,
     output_image: Optional[Image] = None,
@@ -394,7 +394,7 @@ def binary_supinf(
     return clic._binary_supinf(device, input_image, output_image)
 
 
-@plugin_function(category=["filter", "binary processing"])
+@plugin_function(categories=["filter", "binary processing"])
 def binary_infsup(
     input_image: Image,
     output_image: Optional[Image] = None,
@@ -459,7 +459,7 @@ def block_enumerate(
     )
 
 
-@plugin_function(category=["filter", "combine", "in assistant"])
+@plugin_function(categories=["filter", "combine", "in assistant"])
 def convolve(
     input_image0: Image,
     input_image1: Image,
@@ -684,7 +684,7 @@ def crop(
     )
 
 
-@plugin_function(category=["filter", "in assistant"])
+@plugin_function(categories=["filter", "in assistant"])
 def cubic_root(
     input_image: Image,
     output_image: Optional[Image] = None,
@@ -710,7 +710,7 @@ def cubic_root(
 
 
 @plugin_function(
-    category=["binarize", "label processing", "in assistant", "bia-bob-suggestion"]
+    categories=["binarize", "label processing", "in assistant", "bia-bob-suggestion"]
 )
 def detect_label_edges(
     input_image: Image,
@@ -741,7 +741,7 @@ def detect_label_edges(
     return clic._detect_label_edges(device, input_image, output_image)
 
 
-@plugin_function(category=["binary processing"])
+@plugin_function(categories=["binary processing"])
 def dilate_box(
     input_image: Image,
     output_image: Optional[Image] = None,
@@ -779,7 +779,7 @@ def dilate_box(
     return clic._dilate_box(device, input_image, output_image)
 
 
-@plugin_function(category=["binary processing", "bia-bob-suggestion"])
+@plugin_function(categories=["binary processing", "bia-bob-suggestion"])
 def dilate_sphere(
     input_image: Image,
     output_image: Optional[Image] = None,
@@ -815,7 +815,7 @@ def dilate_sphere(
     return clic._dilate_sphere(device, input_image, output_image)
 
 
-@plugin_function(category=["binary processing", "bia-bob-suggestion"])
+@plugin_function(categories=["binary processing", "bia-bob-suggestion"])
 def dilate(
     input_image: Image,
     output_image: Optional[Image] = None,
@@ -852,7 +852,7 @@ def dilate(
     return clic._dilate(device, input_image, output_image, str(connectivity))
 
 
-@plugin_function(category=["combine", "in assistant"])
+@plugin_function(categories=["combine", "in assistant"])
 def divide_images(
     input_image0: Image,
     input_image1: Image,
@@ -884,7 +884,7 @@ def divide_images(
     return clic._divide_images(device, input_image0, input_image1, output_image)
 
 
-@plugin_function(category=["filter", "in assistant"])
+@plugin_function(categories=["filter", "in assistant"])
 def divide_scalar_by_image(
     input_image: Image,
     output_image: Optional[Image] = None,
@@ -914,7 +914,7 @@ def divide_scalar_by_image(
     )
 
 
-@plugin_function(category=["combine", "binarize", "in assistant"])
+@plugin_function(categories=["combine", "binarize", "in assistant"])
 def equal(
     input_image0: Image,
     input_image1: Image,
@@ -947,7 +947,7 @@ def equal(
     return clic._equal(device, input_image0, input_image1, output_image)
 
 
-@plugin_function(category=["binarize", "in assistant"])
+@plugin_function(categories=["binarize", "in assistant"])
 def equal_constant(
     input_image: Image,
     output_image: Optional[Image] = None,
@@ -980,7 +980,7 @@ def equal_constant(
     return clic._equal_constant(device, input_image, output_image, float(scalar))
 
 
-@plugin_function(category=["binary processing"])
+@plugin_function(categories=["binary processing"])
 def erode_box(
     input_image: Image,
     output_image: Optional[Image] = None,
@@ -1018,7 +1018,7 @@ def erode_box(
     return clic._erode_box(device, input_image, output_image)
 
 
-@plugin_function(category=["binary processing", "bia-bob-suggestion"])
+@plugin_function(categories=["binary processing", "bia-bob-suggestion"])
 def erode_sphere(
     input_image: Image,
     output_image: Optional[Image] = None,
@@ -1054,7 +1054,7 @@ def erode_sphere(
     return clic._erode_sphere(device, input_image, output_image)
 
 
-@plugin_function(category=["binary processing", "bia-bob-suggestion"])
+@plugin_function(categories=["binary processing", "bia-bob-suggestion"])
 def erode(
     input_image: Image,
     output_image: Optional[Image] = None,
@@ -1091,7 +1091,7 @@ def erode(
     return clic._erode(device, input_image, output_image, str(connectivity))
 
 
-@plugin_function(category=["filter", "in assistant"])
+@plugin_function(categories=["filter", "in assistant"])
 def exponential(
     input_image: Image,
     output_image: Optional[Image] = None,
@@ -1159,7 +1159,7 @@ def flip(
     return clic._flip(device, input_image, output_image, flip_x, flip_y, flip_z)
 
 
-@plugin_function(category=["filter", "denoise", "in assistant", "bia-bob-suggestion"])
+@plugin_function(categories=["filter", "denoise", "in assistant", "bia-bob-suggestion"])
 def gaussian_blur(
     input_image: Image,
     output_image: Optional[Image] = None,
@@ -1206,7 +1206,7 @@ def gaussian_blur(
     )
 
 
-@plugin_function(category=["bia-bob-suggestion"])
+@plugin_function(categories=["bia-bob-suggestion"])
 def generate_distance_matrix(
     input_image0: Image,
     input_image1: Image,
@@ -1248,7 +1248,7 @@ def generate_distance_matrix(
     )
 
 
-@plugin_function(category=["filter", "edge detection", "in assistant"])
+@plugin_function(categories=["filter", "edge detection", "in assistant"])
 def gradient_x(
     input_image: Image,
     output_image: Optional[Image] = None,
@@ -1279,7 +1279,7 @@ def gradient_x(
     return clic._gradient_x(device, input_image, output_image)
 
 
-@plugin_function(category=["filter", "edge detection", "in assistant"])
+@plugin_function(categories=["filter", "edge detection", "in assistant"])
 def gradient_y(
     input_image: Image,
     output_image: Optional[Image] = None,
@@ -1310,7 +1310,7 @@ def gradient_y(
     return clic._gradient_y(device, input_image, output_image)
 
 
-@plugin_function(category=["filter", "edge detection", "in assistant"])
+@plugin_function(categories=["filter", "edge detection", "in assistant"])
 def gradient_z(
     input_image: Image,
     output_image: Optional[Image] = None,
@@ -1341,7 +1341,7 @@ def gradient_z(
     return clic._gradient_z(device, input_image, output_image)
 
 
-@plugin_function(category=["combine", "binarize", "in assistant"])
+@plugin_function(categories=["combine", "binarize", "in assistant"])
 def greater(
     input_image0: Image,
     input_image1: Image,
@@ -1374,7 +1374,7 @@ def greater(
     return clic._greater(device, input_image0, input_image1, output_image)
 
 
-@plugin_function(category=["binarize", "in assistant"])
+@plugin_function(categories=["binarize", "in assistant"])
 def greater_constant(
     input_image: Image,
     output_image: Optional[Image] = None,
@@ -1407,7 +1407,7 @@ def greater_constant(
     return clic._greater_constant(device, input_image, output_image, float(scalar))
 
 
-@plugin_function(category=["combine", "binarize", "in assistant"])
+@plugin_function(categories=["combine", "binarize", "in assistant"])
 def greater_or_equal(
     input_image0: Image,
     input_image1: Image,
@@ -1440,7 +1440,7 @@ def greater_or_equal(
     return clic._greater_or_equal(device, input_image0, input_image1, output_image)
 
 
-@plugin_function(category=["binarize", "in assistant"])
+@plugin_function(categories=["binarize", "in assistant"])
 def greater_or_equal_constant(
     input_image: Image,
     output_image: Optional[Image] = None,
@@ -1517,7 +1517,7 @@ def hessian_eigenvalues(
 
 
 @plugin_function(
-    category=["filter", "edge detection", "in assistant", "bia-bob-suggestion"]
+    categories=["filter", "edge detection", "in assistant", "bia-bob-suggestion"]
 )
 def laplace_box(
     input_image: Image,
@@ -1551,7 +1551,7 @@ def laplace_box(
     return clic._laplace_box(device, input_image, output_image)
 
 
-@plugin_function(category=["filter", "edge detection", "bia-bob-suggestion"])
+@plugin_function(categories=["filter", "edge detection", "bia-bob-suggestion"])
 def laplace_diamond(
     input_image: Image,
     output_image: Optional[Image] = None,
@@ -1584,7 +1584,7 @@ def laplace_diamond(
     return clic._laplace_diamond(device, input_image, output_image)
 
 
-@plugin_function(category=["filter", "edge detection", "bia-bob-suggestion"])
+@plugin_function(categories=["filter", "edge detection", "bia-bob-suggestion"])
 def laplace(
     input_image: Image,
     output_image: Optional[Image] = None,
@@ -1617,7 +1617,7 @@ def laplace(
     return clic._laplace(device, input_image, output_image, str(connectivity))
 
 
-@plugin_function(category=["filter", "combine", "in assistant"])
+@plugin_function(categories=["filter", "combine", "in assistant"])
 def local_cross_correlation(
     input_image0: Image,
     input_image1: Image,
@@ -1647,7 +1647,7 @@ def local_cross_correlation(
     )
 
 
-@plugin_function(category=["filter", "in assistant"])
+@plugin_function(categories=["filter", "in assistant"])
 def logarithm(
     input_image: Image,
     output_image: Optional[Image] = None,
@@ -1677,7 +1677,7 @@ def logarithm(
     return clic._logarithm(device, input_image, output_image)
 
 
-@plugin_function(category=["bia-bob-suggestion"])
+@plugin_function(categories=["bia-bob-suggestion"])
 def mask(
     input_image: Image,
     mask: Image,
@@ -1712,7 +1712,7 @@ def mask(
     return clic._mask(device, input_image, mask, output_image)
 
 
-@plugin_function(category=["bia-bob-suggestion"])
+@plugin_function(categories=["bia-bob-suggestion"])
 def mask_label(
     input_image0: Image,
     input_image1: Image,
@@ -1752,7 +1752,7 @@ def mask_label(
     )
 
 
-@plugin_function(category=["filter", "in assistant", "bia-bob-suggestion"])
+@plugin_function(categories=["filter", "in assistant", "bia-bob-suggestion"])
 def maximum_image_and_scalar(
     input_image: Image,
     output_image: Optional[Image] = None,
@@ -1787,7 +1787,7 @@ def maximum_image_and_scalar(
     )
 
 
-@plugin_function(category=["combine", "in assistant", "bia-bob-suggestion"])
+@plugin_function(categories=["combine", "in assistant", "bia-bob-suggestion"])
 def maximum_images(
     input_image0: Image,
     input_image1: Image,
@@ -1820,7 +1820,7 @@ def maximum_images(
     return clic._maximum_images(device, input_image0, input_image1, output_image)
 
 
-@plugin_function(category=["filter", "in assistant"])
+@plugin_function(categories=["filter", "in assistant"])
 def maximum_box(
     input_image: Image,
     output_image: Optional[Image] = None,
@@ -1865,7 +1865,7 @@ def maximum_box(
     )
 
 
-@plugin_function(category=["filter", "in assistant"])
+@plugin_function(categories=["filter", "in assistant"])
 def maximum(
     input_image: Image,
     output_image: Optional[Image] = None,
@@ -1917,7 +1917,7 @@ def maximum(
     )
 
 
-@plugin_function(category=["projection"])
+@plugin_function(categories=["projection"])
 def maximum_x_projection(
     input_image: Image,
     output_image: Optional[Image] = None,
@@ -1946,7 +1946,7 @@ def maximum_x_projection(
     return clic._maximum_x_projection(device, input_image, output_image)
 
 
-@plugin_function(category=["projection"])
+@plugin_function(categories=["projection"])
 def maximum_y_projection(
     input_image: Image,
     output_image: Optional[Image] = None,
@@ -1975,7 +1975,7 @@ def maximum_y_projection(
     return clic._maximum_y_projection(device, input_image, output_image)
 
 
-@plugin_function(category=["projection", "in assistant", "bia-bob-suggestion"])
+@plugin_function(categories=["projection", "in assistant", "bia-bob-suggestion"])
 def maximum_z_projection(
     input_image: Image,
     output_image: Optional[Image] = None,
@@ -2004,7 +2004,7 @@ def maximum_z_projection(
     return clic._maximum_z_projection(device, input_image, output_image)
 
 
-@plugin_function(category=["filter", "denoise", "in assistant"])
+@plugin_function(categories=["filter", "denoise", "in assistant"])
 def mean_box(
     input_image: Image,
     output_image: Optional[Image] = None,
@@ -2049,7 +2049,7 @@ def mean_box(
     )
 
 
-@plugin_function(category=["filter", "denoise", "in assistant", "bia-bob-suggestion"])
+@plugin_function(categories=["filter", "denoise", "in assistant", "bia-bob-suggestion"])
 def mean_sphere(
     input_image: Image,
     output_image: Optional[Image] = None,
@@ -2094,7 +2094,7 @@ def mean_sphere(
     )
 
 
-@plugin_function(category=["filter", "denoise", "in assistant", "bia-bob-suggestion"])
+@plugin_function(categories=["filter", "denoise", "in assistant", "bia-bob-suggestion"])
 def mean(
     input_image: Image,
     output_image: Optional[Image] = None,
@@ -2145,7 +2145,7 @@ def mean(
     )
 
 
-@plugin_function(category=["projection"])
+@plugin_function(categories=["projection"])
 def mean_x_projection(
     input_image: Image,
     output_image: Optional[Image] = None,
@@ -2174,7 +2174,7 @@ def mean_x_projection(
     return clic._mean_x_projection(device, input_image, output_image)
 
 
-@plugin_function(category=["projection"])
+@plugin_function(categories=["projection"])
 def mean_y_projection(
     input_image: Image,
     output_image: Optional[Image] = None,
@@ -2203,7 +2203,7 @@ def mean_y_projection(
     return clic._mean_y_projection(device, input_image, output_image)
 
 
-@plugin_function(category=["projection", "in assistant", "bia-bob-suggestion"])
+@plugin_function(categories=["projection", "in assistant", "bia-bob-suggestion"])
 def mean_z_projection(
     input_image: Image,
     output_image: Optional[Image] = None,
@@ -2232,7 +2232,7 @@ def mean_z_projection(
     return clic._mean_z_projection(device, input_image, output_image)
 
 
-@plugin_function(category=["filter", "denoise", "in assistant"])
+@plugin_function(categories=["filter", "denoise", "in assistant"])
 def median_box(
     input_image: Image,
     output_image: Optional[Image] = None,
@@ -2278,7 +2278,7 @@ def median_box(
     )
 
 
-@plugin_function(category=["filter", "denoise", "in assistant"])
+@plugin_function(categories=["filter", "denoise", "in assistant"])
 def median_sphere(
     input_image: Image,
     output_image: Optional[Image] = None,
@@ -2324,7 +2324,7 @@ def median_sphere(
     )
 
 
-@plugin_function(category=["filter", "denoise", "in assistant"])
+@plugin_function(categories=["filter", "denoise", "in assistant"])
 def median(
     input_image: Image,
     output_image: Optional[Image] = None,
@@ -2376,7 +2376,7 @@ def median(
     )
 
 
-@plugin_function(category=["filter", "in assistant"])
+@plugin_function(categories=["filter", "in assistant"])
 def minimum_box(
     input_image: Image,
     output_image: Optional[Image] = None,
@@ -2421,7 +2421,7 @@ def minimum_box(
     )
 
 
-@plugin_function(category=["filter", "in assistant"])
+@plugin_function(categories=["filter", "in assistant"])
 def minimum(
     input_image: Image,
     output_image: Optional[Image] = None,
@@ -2472,7 +2472,7 @@ def minimum(
     )
 
 
-@plugin_function(category=["filter", "in assistant"])
+@plugin_function(categories=["filter", "in assistant"])
 def minimum_image_and_scalar(
     input_image: Image,
     output_image: Optional[Image] = None,
@@ -2507,7 +2507,7 @@ def minimum_image_and_scalar(
     )
 
 
-@plugin_function(category=["combine", "in assistant"])
+@plugin_function(categories=["combine", "in assistant"])
 def minimum_images(
     input_image0: Image,
     input_image1: Image,
@@ -2540,7 +2540,7 @@ def minimum_images(
     return clic._minimum_images(device, input_image0, input_image1, output_image)
 
 
-@plugin_function(category=["projection"])
+@plugin_function(categories=["projection"])
 def minimum_x_projection(
     input_image: Image,
     output_image: Optional[Image] = None,
@@ -2569,7 +2569,7 @@ def minimum_x_projection(
     return clic._minimum_x_projection(device, input_image, output_image)
 
 
-@plugin_function(category=["projection"])
+@plugin_function(categories=["projection"])
 def minimum_y_projection(
     input_image: Image,
     output_image: Optional[Image] = None,
@@ -2598,7 +2598,7 @@ def minimum_y_projection(
     return clic._minimum_y_projection(device, input_image, output_image)
 
 
-@plugin_function(category=["projection", "in assistant", "bia-bob-suggestion"])
+@plugin_function(categories=["projection", "in assistant", "bia-bob-suggestion"])
 def minimum_z_projection(
     input_image: Image,
     output_image: Optional[Image] = None,
@@ -2627,7 +2627,7 @@ def minimum_z_projection(
     return clic._minimum_z_projection(device, input_image, output_image)
 
 
-@plugin_function(category=["label processing", "in assistant"])
+@plugin_function(categories=["label processing", "in assistant"])
 def mode_box(
     input_image: Image,
     output_image: Optional[Image] = None,
@@ -2671,7 +2671,7 @@ def mode_box(
     )
 
 
-@plugin_function(category=["label processing", "in assistant", "bia-bob-suggestion"])
+@plugin_function(categories=["label processing", "in assistant", "bia-bob-suggestion"])
 def mode_sphere(
     input_image: Image,
     output_image: Optional[Image] = None,
@@ -2715,7 +2715,7 @@ def mode_sphere(
     )
 
 
-@plugin_function(category=["label processing", "in assistant", "bia-bob-suggestion"])
+@plugin_function(categories=["label processing", "in assistant", "bia-bob-suggestion"])
 def mode(
     input_image: Image,
     output_image: Optional[Image] = None,
@@ -2765,7 +2765,7 @@ def mode(
     )
 
 
-@plugin_function(category=["combine", "bia-bob-suggestion"])
+@plugin_function(categories=["combine", "bia-bob-suggestion"])
 def modulo_images(
     input_image0: Image,
     input_image1: Image,
@@ -2828,7 +2828,7 @@ def multiply_image_and_position(
     )
 
 
-@plugin_function(category=["filter", "in assistant"])
+@plugin_function(categories=["filter", "in assistant"])
 def multiply_image_and_scalar(
     input_image: Image,
     output_image: Optional[Image] = None,
@@ -2863,7 +2863,7 @@ def multiply_image_and_scalar(
     )
 
 
-@plugin_function(category=["combine", "in assistant"])
+@plugin_function(categories=["combine", "in assistant"])
 def multiply_images(
     input_image0: Image,
     input_image1: Image,
@@ -3184,7 +3184,7 @@ def nonzero_minimum(
     )
 
 
-@plugin_function(category=["combine", "binarize", "in assistant"])
+@plugin_function(categories=["combine", "binarize", "in assistant"])
 def not_equal(
     input_image0: Image,
     input_image1: Image,
@@ -3217,7 +3217,7 @@ def not_equal(
     return clic._not_equal(device, input_image0, input_image1, output_image)
 
 
-@plugin_function(category=["binarize", "in assistant"])
+@plugin_function(categories=["binarize", "in assistant"])
 def not_equal_constant(
     input_image: Image,
     output_image: Optional[Image] = None,
@@ -3250,7 +3250,7 @@ def not_equal_constant(
     return clic._not_equal_constant(device, input_image, output_image, float(scalar))
 
 
-@plugin_function(category=["combine", "in assistant"])
+@plugin_function(categories=["combine", "in assistant"])
 def paste(
     input_image: Image,
     output_image: Optional[Image] = None,
@@ -3407,7 +3407,7 @@ def onlyzero_overwrite_maximum(
     )
 
 
-@plugin_function(category=["filter", "in assistant"])
+@plugin_function(categories=["filter", "in assistant"])
 def power(
     input_image: Image,
     output_image: Optional[Image] = None,
@@ -3440,7 +3440,7 @@ def power(
     return clic._power(device, input_image, output_image, float(scalar))
 
 
-@plugin_function(category=["combine", "in assistant"])
+@plugin_function(categories=["combine", "in assistant"])
 def power_images(
     input_image0: Image,
     input_image1: Image,
@@ -3472,7 +3472,7 @@ def power_images(
     return clic._power_images(device, input_image0, input_image1, output_image)
 
 
-@plugin_function(category=["transform", "in assistant"])
+@plugin_function(categories=["transform", "in assistant"])
 def range(
     input_image: Image,
     output_image: Optional[Image] = None,
@@ -3537,7 +3537,7 @@ def range(
     )
 
 
-@plugin_function(category=["bia-bob-suggestion"])
+@plugin_function(categories=["bia-bob-suggestion"])
 def read_values_from_positions(
     input_image: Image,
     list: Image,
@@ -3567,7 +3567,7 @@ def read_values_from_positions(
     return clic._read_values_from_positions(device, input_image, list, output_image)
 
 
-@plugin_function(category=["bia-bob-suggestion"])
+@plugin_function(categories=["bia-bob-suggestion"])
 def replace_values(
     input_image0: Image,
     input_image1: Image,
@@ -3638,7 +3638,7 @@ def replace_value(
     )
 
 
-@plugin_function(category=["filter", "in assistant", "bia-bob-suggestion"])
+@plugin_function(categories=["filter", "in assistant", "bia-bob-suggestion"])
 def maximum_sphere(
     input_image: Image,
     output_image: Optional[Image] = None,
@@ -3688,7 +3688,7 @@ def maximum_sphere(
     )
 
 
-@plugin_function(category=["filter", "in assistant", "bia-bob-suggestion"])
+@plugin_function(categories=["filter", "in assistant", "bia-bob-suggestion"])
 def minimum_sphere(
     input_image: Image,
     output_image: Optional[Image] = None,
@@ -3771,7 +3771,7 @@ def multiply_matrix(
     return clic._multiply_matrix(device, input_image0, input_image1, output_image)
 
 
-@plugin_function(category=["filter", "in assistant"])
+@plugin_function(categories=["filter", "in assistant"])
 def reciprocal(
     input_image: Image,
     output_image: Optional[Image] = None,
@@ -4162,7 +4162,7 @@ def sign(
     return clic._sign(device, input_image, output_image)
 
 
-@plugin_function(category=["combine", "binarize", "in assistant"])
+@plugin_function(categories=["combine", "binarize", "in assistant"])
 def smaller(
     input_image0: Image,
     input_image1: Image,
@@ -4195,7 +4195,7 @@ def smaller(
     return clic._smaller(device, input_image0, input_image1, output_image)
 
 
-@plugin_function(category=["binarize", "in assistant"])
+@plugin_function(categories=["binarize", "in assistant"])
 def smaller_constant(
     input_image: Image,
     output_image: Optional[Image] = None,
@@ -4228,7 +4228,7 @@ def smaller_constant(
     return clic._smaller_constant(device, input_image, output_image, float(scalar))
 
 
-@plugin_function(category=["combine", "binarize", "in assistant"])
+@plugin_function(categories=["combine", "binarize", "in assistant"])
 def smaller_or_equal(
     input_image0: Image,
     input_image1: Image,
@@ -4261,7 +4261,7 @@ def smaller_or_equal(
     return clic._smaller_or_equal(device, input_image0, input_image1, output_image)
 
 
-@plugin_function(category=["binarize", "in assistant"])
+@plugin_function(categories=["binarize", "in assistant"])
 def smaller_or_equal_constant(
     input_image: Image,
     output_image: Optional[Image] = None,
@@ -4297,7 +4297,7 @@ def smaller_or_equal_constant(
 
 
 @plugin_function(
-    category=["filter", "edge detection", "in assistant", "bia-bob-suggestion"]
+    categories=["filter", "edge detection", "in assistant", "bia-bob-suggestion"]
 )
 def sobel(
     input_image: Image,
@@ -4328,7 +4328,7 @@ def sobel(
     return clic._sobel(device, input_image, output_image)
 
 
-@plugin_function(category=["filter", "in assistant"])
+@plugin_function(categories=["filter", "in assistant"])
 def square_root(
     input_image: Image,
     output_image: Optional[Image] = None,
@@ -4353,7 +4353,7 @@ def square_root(
     return clic._square_root(device, input_image, output_image)
 
 
-@plugin_function(category=["projection", "in assistant", "bia-bob-suggestion"])
+@plugin_function(categories=["projection", "in assistant", "bia-bob-suggestion"])
 def std_z_projection(
     input_image: Image,
     output_image: Optional[Image] = None,
@@ -4383,7 +4383,7 @@ def std_z_projection(
     return clic._std_z_projection(device, input_image, output_image)
 
 
-@plugin_function(category=["filter", "in assistant"])
+@plugin_function(categories=["filter", "in assistant"])
 def subtract_image_from_scalar(
     input_image: Image,
     output_image: Optional[Image] = None,
@@ -4447,7 +4447,7 @@ def sum_reduction_x(
     return clic._sum_reduction_x(device, input_image, output_image, int(blocksize))
 
 
-@plugin_function(category=["projection"])
+@plugin_function(categories=["projection"])
 def sum_x_projection(
     input_image: Image,
     output_image: Optional[Image] = None,
@@ -4476,7 +4476,7 @@ def sum_x_projection(
     return clic._sum_x_projection(device, input_image, output_image)
 
 
-@plugin_function(category=["projection"])
+@plugin_function(categories=["projection"])
 def sum_y_projection(
     input_image: Image,
     output_image: Optional[Image] = None,
@@ -4505,7 +4505,7 @@ def sum_y_projection(
     return clic._sum_y_projection(device, input_image, output_image)
 
 
-@plugin_function(category=["projection", "in assistant", "bia-bob-suggestion"])
+@plugin_function(categories=["projection", "in assistant", "bia-bob-suggestion"])
 def sum_z_projection(
     input_image: Image,
     output_image: Optional[Image] = None,
@@ -4534,7 +4534,7 @@ def sum_z_projection(
     return clic._sum_z_projection(device, input_image, output_image)
 
 
-@plugin_function(category=["transform"])
+@plugin_function(categories=["transform"])
 def transpose_xy(
     input_image: Image,
     output_image: Optional[Image] = None,
@@ -4563,7 +4563,7 @@ def transpose_xy(
     return clic._transpose_xy(device, input_image, output_image)
 
 
-@plugin_function(category=["transform"])
+@plugin_function(categories=["transform"])
 def transpose_xz(
     input_image: Image,
     output_image: Optional[Image] = None,
@@ -4592,7 +4592,7 @@ def transpose_xz(
     return clic._transpose_xz(device, input_image, output_image)
 
 
-@plugin_function(category=["transform"])
+@plugin_function(categories=["transform"])
 def transpose_yz(
     input_image: Image,
     output_image: Optional[Image] = None,
@@ -4651,7 +4651,7 @@ def undefined_to_zero(
     return clic._undefined_to_zero(device, input_image, output_image)
 
 
-@plugin_function(category=["filter", "edge detection", "in assistant"])
+@plugin_function(categories=["filter", "edge detection", "in assistant"])
 def variance_box(
     input_image: Image,
     output_image: Optional[Image] = None,
@@ -4698,7 +4698,7 @@ def variance_box(
 
 
 @plugin_function(
-    category=["filter", "edge detection", "in assistant", "bia-bob-suggestion"]
+    categories=["filter", "edge detection", "in assistant", "bia-bob-suggestion"]
 )
 def variance_sphere(
     input_image: Image,
@@ -4745,7 +4745,7 @@ def variance_sphere(
     )
 
 
-@plugin_function(category=["filter", "edge detection", "in assistant"])
+@plugin_function(categories=["filter", "edge detection", "in assistant"])
 def variance(
     input_image: Image,
     output_image: Optional[Image] = None,
@@ -4828,7 +4828,7 @@ def write_values_to_positions(
     return clic._write_values_to_positions(device, input_image, output_image)
 
 
-@plugin_function(category=["projection", "in assistant"])
+@plugin_function(categories=["projection", "in assistant"])
 def x_position_of_maximum_x_projection(
     input_image: Image,
     output_image: Optional[Image] = None,
@@ -4855,7 +4855,7 @@ def x_position_of_maximum_x_projection(
     return clic._x_position_of_maximum_x_projection(device, input_image, output_image)
 
 
-@plugin_function(category=["projection", "in assistant"])
+@plugin_function(categories=["projection", "in assistant"])
 def x_position_of_minimum_x_projection(
     input_image: Image,
     output_image: Optional[Image] = None,
@@ -4882,7 +4882,7 @@ def x_position_of_minimum_x_projection(
     return clic._x_position_of_minimum_x_projection(device, input_image, output_image)
 
 
-@plugin_function(category=["projection", "in assistant"])
+@plugin_function(categories=["projection", "in assistant"])
 def y_position_of_maximum_y_projection(
     input_image: Image,
     output_image: Optional[Image] = None,
@@ -4909,7 +4909,7 @@ def y_position_of_maximum_y_projection(
     return clic._y_position_of_maximum_y_projection(device, input_image, output_image)
 
 
-@plugin_function(category=["projection", "in assistant"])
+@plugin_function(categories=["projection", "in assistant"])
 def y_position_of_minimum_y_projection(
     input_image: Image,
     output_image: Optional[Image] = None,
@@ -4936,7 +4936,7 @@ def y_position_of_minimum_y_projection(
     return clic._y_position_of_minimum_y_projection(device, input_image, output_image)
 
 
-@plugin_function(category=["projection", "in assistant"])
+@plugin_function(categories=["projection", "in assistant"])
 def z_position_of_maximum_z_projection(
     input_image: Image,
     output_image: Optional[Image] = None,
@@ -4963,7 +4963,7 @@ def z_position_of_maximum_z_projection(
     return clic._z_position_of_maximum_z_projection(device, input_image, output_image)
 
 
-@plugin_function(category=["projection", "in assistant"])
+@plugin_function(categories=["projection", "in assistant"])
 def z_position_of_minimum_z_projection(
     input_image: Image,
     output_image: Optional[Image] = None,

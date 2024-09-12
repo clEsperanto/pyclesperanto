@@ -15,7 +15,7 @@ from ._decorators import plugin_function
 clic = importlib.import_module("._pyclesperanto", package="pyclesperanto")
 
 
-@plugin_function(category=["label processing", "in assistant", "bia-bob-suggestion"])
+@plugin_function(categories=["label processing", "in assistant", "bia-bob-suggestion"])
 def dilate_labels(
     input_image: Image,
     output_image: Optional[Image] = None,
@@ -45,7 +45,7 @@ def dilate_labels(
     return clic._dilate_labels(device, input_image, output_image, int(radius))
 
 
-@plugin_function(category=["label processing", "in assistant"])
+@plugin_function(categories=["label processing", "in assistant"])
 def erode_labels(
     input_image: Image,
     output_image: Optional[Image] = None,
@@ -79,7 +79,7 @@ def erode_labels(
     return clic._erode_labels(device, input_image, output_image, int(radius), relabel)
 
 
-@plugin_function(category=["label", "in assistant", "bia-bob-suggestion"])
+@plugin_function(categories=["label", "in assistant", "bia-bob-suggestion"])
 def gauss_otsu_labeling(
     input_image0: Image,
     output_image: Optional[Image] = None,
@@ -118,7 +118,7 @@ def gauss_otsu_labeling(
     )
 
 
-@plugin_function(category=["label", "bia-bob-suggestion"])
+@plugin_function(categories=["label", "bia-bob-suggestion"])
 def masked_voronoi_labeling(
     input_image: Image,
     mask: Image,
@@ -152,7 +152,7 @@ def masked_voronoi_labeling(
     return clic._masked_voronoi_labeling(device, input_image, mask, output_image)
 
 
-@plugin_function(category=["label", "in assistant", "bia-bob-suggestion"])
+@plugin_function(categories=["label", "in assistant", "bia-bob-suggestion"])
 def voronoi_labeling(
     input_image: Image,
     output_image: Optional[Image] = None,

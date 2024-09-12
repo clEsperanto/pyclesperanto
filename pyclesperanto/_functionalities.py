@@ -1,6 +1,7 @@
 from os import path
 from pathlib import Path
-from typing import Optional, Union
+from typing import Optional, Union, Callable
+from inspect import getmembers, isfunction
 
 import numpy as np
 from matplotlib.colors import ListedColormap
@@ -264,8 +265,7 @@ def imshow(
 
 
 def operations(
-    must_have_categories: Optional[list] = None,
-    must_not_have_categories: Optional[list] = None,
+    must_have_categories: list = None, must_not_have_categories: list = None
 ) -> dict:
     """Retrieve a dictionary of operations, which can be filtered by annotated categories.
 
@@ -278,8 +278,11 @@ def operations(
 
     Returns
     -------
-    dict of str : function
+    dict of str : Callable function
     """
+
+    import pyclesperanto as cle
+
     if isinstance(must_have_categories, str):
         must_have_categories = [must_have_categories]
     if isinstance(must_not_have_categories, str):
@@ -287,17 +290,12 @@ def operations(
 
     result = {}
 
-    from inspect import getmembers, isfunction
-
-    import pyclesperanto as cle
-
     # retrieve all operations and cache the result for later reuse
-    operation_list = []
     if not hasattr(operations, "_all") or operations._all is None:
-        operation_list = getmembers(cle, isfunction)
+        operations._all = getmembers(cle, isfunction)
 
     # filter operations according to given constraints
-    for operation_name, operation in operation_list:
+    for operation_name, operation in operations._all:
         keep_it = True
         if hasattr(operation, "categories") and operation.categories is not None:
             if must_have_categories is not None:
@@ -320,19 +318,34 @@ def operations(
     return result
 
 
-def list_operations(search_term=None):
-    ops = operations(search_term)
-    for name in ops:
-        func = ops[name]
-        if hasattr(func, "fullargspec"):
-            print(
-                name
-                + "("
-                + str(func.fullargspec.args)
-                .replace("[", "")
-                .replace("]", "")
-                .replace("'", "")
-                + ")"
-            )
-        else:
-            print(name)
+def operation(name: str) -> Callable:
+    """Returns a function from the pyclesperanto package
+
+    Parameters
+    ----------
+    name : str
+        name of the operation
+
+    Returns
+    -------
+        Callable function
+    """
+    dict = operations()
+    return dict[name]
+
+
+def search_operation_names(name: str) -> list:
+    """
+    Returns a list of operation names containing the given string
+
+    Parameters
+    ----------
+    name : str
+        string to search for in operation names
+
+    Returns
+    -------
+    list
+        list of operation names containing the given string
+    """
+    return [a for a in list(operations().keys()) if name in a]

@@ -14,13 +14,10 @@ def categories() -> list:
     import pyclesperanto as cle
 
     ops = getmembers(cle, isfunction)
-
-    cats = []
-
-    for _, operation in ops:
-        if hasattr(operation, "categories") and operation.categories is not None:
-            for cat in operation.categories:
-                if cat not in cats:
-                    cats = cats + [cat]
-
-    return cats
+    cats = {
+        cat
+        for _, operation in ops
+        if hasattr(operation, "categories") and operation.categories is not None
+        for cat in operation.categories
+    }
+    return list(cats)

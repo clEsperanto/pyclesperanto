@@ -1,6 +1,6 @@
-def categories():
-
-    from inspect import getmembers, isfunction
+from inspect import getmembers, isfunction
+ 
+def categories():   
 
     import pyclesperanto as cle
 

@@ -1,5 +1,5 @@
 // this code is auto-generated, do not edit manually
-
+    
 #include "pycle_wrapper.hpp"
 #include "tier1.hpp"
 
@@ -397,6 +397,14 @@ m.def("_absolute", &cle::tier1::absolute_func, "Call cle::tier1::absolute_func f
     m.def("_replace_value", &cle::tier1::replace_value_func, "Call cle::tier1::replace_value_func from C++ CLIc.",
     py::return_value_policy::take_ownership,
     py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("scalar0"), py::arg("scalar1"));
+
+    m.def("_replace_intensity", &cle::tier1::replace_intensity_func, "Call cle::tier1::replace_intensity_func from C++ CLIc.",
+    py::return_value_policy::take_ownership,
+    py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("scalar0"), py::arg("scalar1"));
+
+    m.def("_replace_intensities", &cle::tier1::replace_intensities_func, "Call cle::tier1::replace_intensities_func from C++ CLIc.",
+    py::return_value_policy::take_ownership,
+    py::arg("device"), py::arg("src0"), py::arg("src1"), py::arg("dst"));
 
     m.def("_maximum_sphere", &cle::tier1::maximum_sphere_func, "Call cle::tier1::maximum_sphere_func from C++ CLIc.",
     py::return_value_policy::take_ownership,

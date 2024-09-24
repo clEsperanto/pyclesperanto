@@ -1,5 +1,5 @@
 // this code is auto-generated, do not edit manually
-
+    
 #include "pycle_wrapper.hpp"
 #include "tier2.hpp"
 
@@ -169,6 +169,14 @@ m.def("_absolute_difference", &cle::tier2::absolute_difference_func, "Call cle::
     m.def("_subtract_images", &cle::tier2::subtract_images_func, "Call cle::tier2::subtract_images_func from C++ CLIc.",
     py::return_value_policy::take_ownership,
     py::arg("device"), py::arg("src0"), py::arg("src1"), py::arg("dst"));
+
+    m.def("_sub_stack", &cle::tier2::sub_stack_func, "Call cle::tier2::sub_stack_func from C++ CLIc.",
+    py::return_value_policy::take_ownership,
+    py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("start_z"), py::arg("end_z"));
+
+    m.def("_reduce_stack", &cle::tier2::reduce_stack_func, "Call cle::tier2::reduce_stack_func from C++ CLIc.",
+    py::return_value_policy::take_ownership,
+    py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("reduction_factor"), py::arg("offset"));
 
     m.def("_sum_of_all_pixels", &cle::tier2::sum_of_all_pixels_func, "Call cle::tier2::sum_of_all_pixels_func from C++ CLIc.",
     py::return_value_policy::take_ownership,

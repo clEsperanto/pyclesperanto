@@ -1,4 +1,5 @@
 from ._array import Array, Image, is_image
+from ._categories import categories
 from ._core import (
     Device,
     default_initialisation,
@@ -10,7 +11,7 @@ from ._core import (
     select_device,
     wait_for_kernel_to_finish,
 )
-from ._functionalities import execute, imshow, list_operations, native_execute
+from ._functionalities import execute, imshow, native_execute, operation, operations
 from ._memory import create, create_like, pull, push
 from ._tier1 import *
 from ._tier2 import *

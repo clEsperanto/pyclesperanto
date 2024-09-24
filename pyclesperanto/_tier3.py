@@ -100,7 +100,7 @@ def exclude_labels(
     return clic._exclude_labels(device, input_image, list, output_image)
 
 
-@plugin_function(category=["label processing", "in assistant", "bia-bob-suggestion"])
+@plugin_function(categories=["label processing", "in assistant", "bia-bob-suggestion"])
 def exclude_labels_on_edges(
     input_image: Image,
     output_image: Optional[Image] = None,
@@ -169,7 +169,7 @@ def flag_existing_labels(
     return clic._flag_existing_labels(device, input_image, output_image)
 
 
-@plugin_function(category=["filter", "in assistant"])
+@plugin_function(categories=["filter", "in assistant"])
 def gamma_correction(
     input_image: Image,
     output_image: Optional[Image] = None,
@@ -240,7 +240,7 @@ def generate_binary_overlap_matrix(
     )
 
 
-@plugin_function(category=["bia-bob-suggestion"])
+@plugin_function(categories=["bia-bob-suggestion"])
 def generate_touch_matrix(
     input_image: Image,
     output_image: Optional[Image] = None,
@@ -357,7 +357,7 @@ def jaccard_index(
     return clic._jaccard_index(device, input_image0, input_image1)
 
 
-@plugin_function(category=["bia-bob-suggestion"])
+@plugin_function(categories=["bia-bob-suggestion"])
 def labelled_spots_to_pointlist(
     input_image: Image,
     output_image: Optional[Image] = None,

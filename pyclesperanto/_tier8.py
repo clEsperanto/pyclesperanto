@@ -15,7 +15,7 @@ from ._decorators import plugin_function
 clic = importlib.import_module("._pyclesperanto", package="pyclesperanto")
 
 
-@plugin_function(category=["label processing", "in assistant", "bia-bob-suggestion"])
+@plugin_function(categories=["label processing", "in assistant", "bia-bob-suggestion"])
 def smooth_labels(
     input_image: Image,
     output_image: Optional[Image] = None,

@@ -54,7 +54,7 @@ def affine_transform(
     )
 
 
-@plugin_function(category=["label", "in assistant", "bia-bob-suggestion"])
+@plugin_function(categories=["label", "in assistant", "bia-bob-suggestion"])
 def eroded_otsu_labeling(
     input_image: Image,
     output_image: Optional[Image] = None,
@@ -100,7 +100,7 @@ def eroded_otsu_labeling(
     )
 
 
-@plugin_function(category=["transform", "in assistant", "bia-bob-suggestion"])
+@plugin_function(categories=["transform", "in assistant", "bia-bob-suggestion"])
 def rigid_transform(
     input_image: Image,
     output_image: Optional[Image] = None,
@@ -167,7 +167,7 @@ def rigid_transform(
     )
 
 
-@plugin_function(category=["transform", "in assistant"])
+@plugin_function(categories=["transform", "in assistant"])
 def rotate(
     input_image: Image,
     output_image: Optional[Image] = None,
@@ -222,7 +222,7 @@ def rotate(
     )
 
 
-@plugin_function(category=["transform", "in assistant"])
+@plugin_function(categories=["transform", "in assistant"])
 def scale(
     input_image: Image,
     output_image: Optional[Image] = None,
@@ -275,7 +275,7 @@ def scale(
     )
 
 
-@plugin_function(category=["transform", "in assistant"])
+@plugin_function(categories=["transform", "in assistant"])
 def translate(
     input_image: Image,
     output_image: Optional[Image] = None,
@@ -320,7 +320,7 @@ def translate(
     )
 
 
-@plugin_function(category=["label processing", "in assistant", "bia-bob-suggestion"])
+@plugin_function(categories=["label processing", "in assistant", "bia-bob-suggestion"])
 def closing_labels(
     input_image: Image,
     output_image: Optional[Image] = None,
@@ -382,7 +382,7 @@ def erode_connected_labels(
     return clic._erode_connected_labels(device, input_image, output_image, int(radius))
 
 
-@plugin_function(category=["label processing", "in assistant", "bia-bob-suggestion"])
+@plugin_function(categories=["label processing", "in assistant", "bia-bob-suggestion"])
 def opening_labels(
     input_image: Image,
     output_image: Optional[Image] = None,
@@ -414,7 +414,7 @@ def opening_labels(
     return clic._opening_labels(device, input_image, output_image, int(radius))
 
 
-@plugin_function(category=["label", "in assistant", "bia-bob-suggestion"])
+@plugin_function(categories=["label", "in assistant", "bia-bob-suggestion"])
 def voronoi_otsu_labeling(
     input_image: Image,
     output_image: Optional[Image] = None,

@@ -26,6 +26,6 @@ jobs:
           python-version: '3.x'
 
       - name: Use cle-roboto to update tiers
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         uses: clEsperanto/cle-roboto-repo@v1
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}

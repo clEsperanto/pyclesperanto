@@ -1,5 +1,5 @@
 // this code is auto-generated, do not edit manually
-
+    
 #include "pycle_wrapper.hpp"
 #include "tier3.hpp"
 
@@ -14,9 +14,17 @@ m.def("_bounding_box", &cle::tier3::bounding_box_func, "Call cle::tier3::boundin
     py::return_value_policy::take_ownership,
     py::arg("device"), py::arg("src"));
 
+    m.def("_remove_labels", &cle::tier3::remove_labels_func, "Call cle::tier3::remove_labels_func from C++ CLIc.",
+    py::return_value_policy::take_ownership,
+    py::arg("device"), py::arg("src"), py::arg("list"), py::arg("dst"));
+
     m.def("_exclude_labels", &cle::tier3::exclude_labels_func, "Call cle::tier3::exclude_labels_func from C++ CLIc.",
     py::return_value_policy::take_ownership,
     py::arg("device"), py::arg("src"), py::arg("list"), py::arg("dst"));
+
+    m.def("_remove_labels_on_edges", &cle::tier3::remove_labels_on_edges_func, "Call cle::tier3::remove_labels_on_edges_func from C++ CLIc.",
+    py::return_value_policy::take_ownership,
+    py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("exclude_x"), py::arg("exclude_y"), py::arg("exclude_z"));
 
     m.def("_exclude_labels_on_edges", &cle::tier3::exclude_labels_on_edges_func, "Call cle::tier3::exclude_labels_on_edges_func from C++ CLIc.",
     py::return_value_policy::take_ownership,
@@ -68,5 +76,9 @@ m.def("_bounding_box", &cle::tier3::bounding_box_func, "Call cle::tier3::boundin
 
     m.def("_statistics_of_labelled_pixels", &cle::tier3::statistics_of_labelled_pixels_func, "Call cle::tier3::statistics_of_labelled_pixels_func from C++ CLIc.",
     py::return_value_policy::take_ownership,
-    py::arg("device"), py::arg("src"), py::arg("intensity"));
+    py::arg("device"), py::arg("label"), py::arg("intensity"));
+
+    m.def("_statistics_of_background_and_labelled_pixels", &cle::tier3::statistics_of_background_and_labelled_pixels_func, "Call cle::tier3::statistics_of_background_and_labelled_pixels_func from C++ CLIc.",
+    py::return_value_policy::take_ownership,
+    py::arg("device"), py::arg("label"), py::arg("intensity"));
 }

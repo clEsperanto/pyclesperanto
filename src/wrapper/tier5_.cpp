@@ -1,5 +1,5 @@
 // this code is auto-generated, do not edit manually
-
+    
 #include "pycle_wrapper.hpp"
 #include "tier5.hpp"
 
@@ -17,4 +17,16 @@ m.def("_array_equal", &cle::tier5::array_equal_func, "Call cle::tier5::array_equ
     m.def("_connected_components_labeling", &cle::tier5::connected_components_labeling_func, "Call cle::tier5::connected_components_labeling_func from C++ CLIc.",
     py::return_value_policy::take_ownership,
     py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("connectivity"));
+
+    m.def("_connected_component_labeling", &cle::tier5::connected_component_labeling_func, "Call cle::tier5::connected_component_labeling_func from C++ CLIc.",
+    py::return_value_policy::take_ownership,
+    py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("connectivity"));
+
+    m.def("_reduce_labels_to_centroids", &cle::tier5::reduce_labels_to_centroids_func, "Call cle::tier5::reduce_labels_to_centroids_func from C++ CLIc.",
+    py::return_value_policy::take_ownership,
+    py::arg("device"), py::arg("src"), py::arg("dst"));
+
+    m.def("_filter_label_by_size", &cle::tier5::filter_label_by_size_func, "Call cle::tier5::filter_label_by_size_func from C++ CLIc.",
+    py::return_value_policy::take_ownership,
+    py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("min_size"), py::arg("max_size"));
 }

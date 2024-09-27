@@ -12,15 +12,14 @@ from ._array import Image
 from ._core import Device
 from ._decorators import plugin_function
 
-clic = importlib.import_module("._pyclesperanto", package="pyclesperanto")
-
+clic = importlib.import_module('._pyclesperanto', package='pyclesperanto')
 
 @plugin_function(categories=["label processing", "in assistant", "bia-bob-suggestion"])
 def dilate_labels(
     input_image: Image,
-    output_image: Optional[Image] = None,
-    radius: int = 2,
-    device: Optional[Device] = None,
+    output_image: Optional[Image] =None,
+    radius: int =2,
+    device: Optional[Device] =None
 ) -> Image:
     """Dilates labels to a larger size. No label overwrites another label. Similar to
     the implementation in scikitimage [2] and MorpholibJ[3] Notes * This operation
@@ -28,12 +27,12 @@ def dilate_labels(
 
     Parameters
     ----------
-    input_image: Image
+    input_image: Image 
         label image to erode
     output_image: Optional[Image] (= None)
         result
     radius: int (= 2)
-
+        
     device: Optional[Device] (= None)
         Device to perform the operation on.
 
@@ -41,17 +40,15 @@ def dilate_labels(
     -------
     Image
     """
-
     return clic._dilate_labels(device, input_image, output_image, int(radius))
-
 
 @plugin_function(categories=["label processing", "in assistant"])
 def erode_labels(
     input_image: Image,
-    output_image: Optional[Image] = None,
-    radius: int = 1,
-    relabel: bool = False,
-    device: Optional[Device] = None,
+    output_image: Optional[Image] =None,
+    radius: int =1,
+    relabel: bool =False,
+    device: Optional[Device] =None
 ) -> Image:
     """Erodes labels to a smaller size. Note: Depending on the label image and the
     radius, labels may disappear and labels may split into multiple islands. Thus,
@@ -60,12 +57,12 @@ def erode_labels(
 
     Parameters
     ----------
-    input_image: Image
+    input_image: Image 
         result
     output_image: Optional[Image] (= None)
-
+        
     radius: int (= 1)
-
+        
     relabel: bool (= False)
         and all label indices exist.
     device: Optional[Device] (= None)
@@ -75,16 +72,14 @@ def erode_labels(
     -------
     Image
     """
-
     return clic._erode_labels(device, input_image, output_image, int(radius), relabel)
-
 
 @plugin_function(categories=["label", "in assistant", "bia-bob-suggestion"])
 def gauss_otsu_labeling(
     input_image0: Image,
-    output_image: Optional[Image] = None,
-    outline_sigma: float = 0,
-    device: Optional[Device] = None,
+    output_image: Optional[Image] =None,
+    outline_sigma: float =0,
+    device: Optional[Device] =None
 ) -> Image:
     """Labels objects directly from grey-value images.  The outline_sigma parameter
     allows tuning the segmentation result. Under the hood,  this filter applies a
@@ -94,7 +89,7 @@ def gauss_otsu_labeling(
 
     Parameters
     ----------
-    input_image0: Image
+    input_image0: Image 
         intensity image to add labels
     output_image: Optional[Image] (= None)
         Output label image.
@@ -112,18 +107,14 @@ def gauss_otsu_labeling(
     [1] https://ieeexplore.ieee.org/document/4310076
     [2] https://en.wikipedia.org/wiki/Connected-component_labeling
     """
-
-    return clic._gauss_otsu_labeling(
-        device, input_image0, output_image, float(outline_sigma)
-    )
-
+    return clic._gauss_otsu_labeling(device, input_image0, output_image, float(outline_sigma))
 
 @plugin_function(categories=["label", "bia-bob-suggestion"])
 def masked_voronoi_labeling(
     input_image: Image,
     mask: Image,
-    output_image: Optional[Image] = None,
-    device: Optional[Device] = None,
+    output_image: Optional[Image] =None,
+    device: Optional[Device] =None
 ) -> Image:
     """Takes a binary image, labels connected components and dilates the regions using
     a octagon shape until they touch. The region growing is limited to a masked
@@ -131,12 +122,12 @@ def masked_voronoi_labeling(
 
     Parameters
     ----------
-    input_image: Image
-
-    mask: Image
-
+    input_image: Image 
+        
+    mask: Image 
+        
     output_image: Optional[Image] (= None)
-
+        
     device: Optional[Device] (= None)
         Device to perform the operation on.
 
@@ -148,15 +139,13 @@ def masked_voronoi_labeling(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_maskedVoronoiLabeling
     """
-
     return clic._masked_voronoi_labeling(device, input_image, mask, output_image)
-
 
 @plugin_function(categories=["label", "in assistant", "bia-bob-suggestion"])
 def voronoi_labeling(
     input_image: Image,
-    output_image: Optional[Image] = None,
-    device: Optional[Device] = None,
+    output_image: Optional[Image] =None,
+    device: Optional[Device] =None
 ) -> Image:
     """Takes a binary image, labels connected components and dilates the regions using
     a octagon shape until they touch. The resulting label map is written to the
@@ -164,10 +153,10 @@ def voronoi_labeling(
 
     Parameters
     ----------
-    input_image: Image
-
+    input_image: Image 
+        
     output_image: Optional[Image] (= None)
-
+        
     device: Optional[Device] (= None)
         Device to perform the operation on.
 
@@ -179,5 +168,124 @@ def voronoi_labeling(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_voronoiLabeling
     """
-
     return clic._voronoi_labeling(device, input_image, output_image)
+
+@plugin_function(categories=["label processing", "in assistant", "bia-bob-suggestion"])
+def remove_small_labels(
+    input_image: Image,
+    output_image: Optional[Image] =None,
+    min_size: float =100,
+    device: Optional[Device] =None
+) -> Image:
+    """Removes labelled objects small than a given size (in pixels) from a label map.
+
+    Parameters
+    ----------
+    input_image: Image 
+        Label image to filter.
+    output_image: Optional[Image] (= None)
+        Output label image fitlered.
+    min_size: float (= 100)
+        Smallest size object allowed.
+    device: Optional[Device] (= None)
+        Device to perform the operation on.
+
+    Returns
+    -------
+    Image
+
+    References
+    ----------
+    [1] https://clij.github.io/clij2-docs/reference_excludeLabelsOutsideSizeRange
+    """
+    return clic._remove_small_labels(device, input_image, output_image, float(min_size))
+
+@plugin_function(categories=["label processing", "in assistant", "bia-bob-suggestion"])
+def exclude_small_labels(
+    input_image: Image,
+    output_image: Optional[Image] =None,
+    max_size: float =100,
+    device: Optional[Device] =None
+) -> Image:
+    """Removes labels from a label map which are below a given maximum size.
+
+    Parameters
+    ----------
+    input_image: Image 
+        Label image to filter.
+    output_image: Optional[Image] (= None)
+        Output label image fitlered.
+    max_size: float (= 100)
+        Largest size object to exclude.
+    device: Optional[Device] (= None)
+        Device to perform the operation on.
+
+    Returns
+    -------
+    Image
+
+    References
+    ----------
+    [1] https://clij.github.io/clij2-docs/reference_excludeLabelsOutsideSizeRange
+    """
+    return clic._exclude_small_labels(device, input_image, output_image, float(max_size))
+
+@plugin_function(categories=["label processing", "in assistant", "bia-bob-suggestion"])
+def remove_large_labels(
+    input_image: Image,
+    output_image: Optional[Image] =None,
+    max_size: float =100,
+    device: Optional[Device] =None
+) -> Image:
+    """Removes labelled objects bigger than a given size (in pixels) from a label map.
+
+    Parameters
+    ----------
+    input_image: Image 
+        Label image to filter.
+    output_image: Optional[Image] (= None)
+        Output label image fitlered.
+    max_size: float (= 100)
+        Biggest size object allowed.
+    device: Optional[Device] (= None)
+        Device to perform the operation on.
+
+    Returns
+    -------
+    Image
+
+    References
+    ----------
+    [1] https://clij.github.io/clij2-docs/reference_excludeLabelsOutsideSizeRange
+    """
+    return clic._remove_large_labels(device, input_image, output_image, float(max_size))
+
+@plugin_function(categories=["label processing", "in assistant", "bia-bob-suggestion"])
+def exclude_large_labels(
+    input_image: Image,
+    output_image: Optional[Image] =None,
+    min_size: float =100,
+    device: Optional[Device] =None
+) -> Image:
+    """Removes labels from a label map which are higher a given minimum size.
+
+    Parameters
+    ----------
+    input_image: Image 
+        Label image to filter.
+    output_image: Optional[Image] (= None)
+        Output label image fitlered.
+    min_size: float (= 100)
+        Smallest size object to keep.
+    device: Optional[Device] (= None)
+        Device to perform the operation on.
+
+    Returns
+    -------
+    Image
+
+    References
+    ----------
+    [1] https://clij.github.io/clij2-docs/reference_excludeLabelsOutsideSizeRange
+    """
+    return clic._exclude_large_labels(device, input_image, output_image, float(min_size))

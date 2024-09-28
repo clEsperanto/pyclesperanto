@@ -14,10 +14,9 @@ sys.path.insert(0, os.path.abspath("../../"))
 # Open the CMakeCache.txt file and search for the project version
 with open("../../pyclesperanto/_version.py", "r") as f:
     for line in f:
-        if "VERSION_CODE" in line:
+        if line.startswith("VERSION ="):
             start = line.find("=") + 1
-            end = line.find("\n", start)
-            release = ".".join(line[start:end].strip().split(", "))
+            version = line[start:].strip().strip('"')
             break
 
 # -- Project information -----------------------------------------------------

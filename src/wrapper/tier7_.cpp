@@ -45,8 +45,4 @@ m.def("_affine_transform", &cle::tier7::affine_transform_func, "Call cle::tier7:
     m.def("_voronoi_otsu_labeling", &cle::tier7::voronoi_otsu_labeling_func, "Call cle::tier7::voronoi_otsu_labeling_func from C++ CLIc.",
     py::return_value_policy::take_ownership,
     py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("spot_sigma"), py::arg("outline_sigma"));
-
-    m.def("_fill_holes", &cle::tier7::fill_holes_func, "Call cle::tier7::fill_holes_func from C++ CLIc.",
-    py::return_value_policy::take_ownership,
-    py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("max_size"));
 }

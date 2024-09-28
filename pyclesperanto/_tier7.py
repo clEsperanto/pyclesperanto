@@ -389,34 +389,3 @@ def voronoi_otsu_labeling(
     [3] https://en.wikipedia.org/wiki/Voronoi_diagram
     """
     return clic._voronoi_otsu_labeling(device, input_image, output_image, float(spot_sigma), float(outline_sigma))
-
-@plugin_function(categories=["label processing", "in assistant", "bia-bob-suggestion"])
-def fill_holes(
-    input_image: Image,
-    output_image: Optional[Image] =None,
-    max_size: float =100,
-    device: Optional[Device] =None
-) -> Image:
-    """Fill holes in labelled objects samller than a given size (in pixels) from a
-    label map.
-
-    Parameters
-    ----------
-    input_image: Image 
-        Label image to filter.
-    output_image: Optional[Image] (= None)
-        Output label image fitlered.
-    max_size: float (= 100)
-        Biggest size holes allowed.
-    device: Optional[Device] (= None)
-        Device to perform the operation on.
-
-    Returns
-    -------
-    Image
-
-    References
-    ----------
-    [1] https://clij.github.io/clij2-docs/reference_excludeLabelsOutsideSizeRange
-    """
-    return clic._fill_holes(device, input_image, output_image, float(max_size))

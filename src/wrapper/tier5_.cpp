@@ -29,4 +29,8 @@ m.def("_array_equal", &cle::tier5::array_equal_func, "Call cle::tier5::array_equ
     m.def("_filter_label_by_size", &cle::tier5::filter_label_by_size_func, "Call cle::tier5::filter_label_by_size_func from C++ CLIc.",
     py::return_value_policy::take_ownership,
     py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("min_size"), py::arg("max_size"));
+
+    m.def("_exclude_labels_outside_size_range", &cle::tier5::exclude_labels_outside_size_range_func, "Call cle::tier5::exclude_labels_outside_size_range_func from C++ CLIc.",
+    py::return_value_policy::take_ownership,
+    py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("min_size"), py::arg("max_size"));
 }

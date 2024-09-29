@@ -270,6 +270,11 @@ def __array_ufunc__(self, ufunc, method, *inputs, **kwargs):
     return NotImplemented
 
 
+def reshape(self, shape):
+    """Reshape the Array."""
+    return self.get().reshape(shape)
+
+
 # missing operators:
 # __array_interface__
 # __array_ufunc__
@@ -288,6 +293,7 @@ setattr(Array, "empty_like", classmethod(empty_like))
 setattr(Array, "zeros", classmethod(zeros))
 setattr(Array, "zeros_like", classmethod(zeros_like))
 setattr(Array, "to_device", classmethod(to_device))
+setattr(Array, "reshape", reshape)
 
 # Add operations and class methods from _operators module
 setattr(Array, "astype", _operators._astype)

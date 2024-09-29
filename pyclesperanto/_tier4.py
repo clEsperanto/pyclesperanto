@@ -164,6 +164,35 @@ def threshold_otsu(
     return clic._threshold_otsu(device, input_image, output_image)
 
 @plugin_function(categories=["label measurement", "map", "in assistant"])
+def pixel_count_map(
+    input_image: Image,
+    output_image: Optional[Image] =None,
+    device: Optional[Device] =None
+) -> Image:
+    """Takes a label map, determines the number of pixels per label and replaces every
+    label with the that number. This results in a parametric image expressing area
+    or volume.
+
+    Parameters
+    ----------
+    input_image: Image 
+        Label image to measure
+    output_image: Optional[Image] (= None)
+        Parametric image computed
+    device: Optional[Device] (= None)
+        Device to perform the operation on.
+
+    Returns
+    -------
+    Image
+
+    References
+    ----------
+    [1] https://clij.github.io/clij2-docs/reference_pixelCountMap
+    """
+    return clic._pixel_count_map(device, input_image, output_image)
+
+@plugin_function(categories=["label measurement", "map", "in assistant"])
 def label_pixel_count_map(
     input_image: Image,
     output_image: Optional[Image] =None,
@@ -192,7 +221,7 @@ def label_pixel_count_map(
     """
     return clic._label_pixel_count_map(device, input_image, output_image)
 
-@plugin_function(categories=["bia-bob-suggestion"])
+@plugin_function
 def centroids_of_labels(
     input_image: Image,
     output_image: Optional[Image] =None,
@@ -226,7 +255,7 @@ def centroids_of_labels(
     return clic._centroids_of_labels(device, input_image, output_image, withBG)
 
 @plugin_function(categories=["label processing", "combine"])
-def remove_labels_with_values_out_of_range(
+def remove_labels_with_map_values_out_of_range(
     input_image: Image,
     values: Image,
     output_image: Optional[Image] =None,
@@ -260,10 +289,10 @@ def remove_labels_with_values_out_of_range(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_excludeLabelsWithValuesOutOfRange
     """
-    return clic._remove_labels_with_values_out_of_range(device, input_image, values, output_image, float(min_value), float(max_value))
+    return clic._remove_labels_with_map_values_out_of_range(device, input_image, values, output_image, float(min_value), float(max_value))
 
 @plugin_function(categories=["label processing", "combine"])
-def remove_labels_with_values_within_range(
+def remove_labels_with_map_values_within_range(
     input_image: Image,
     values: Image,
     output_image: Optional[Image] =None,
@@ -297,7 +326,7 @@ def remove_labels_with_values_within_range(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_excludeLabelsWithValuesWithinRange
     """
-    return clic._remove_labels_with_values_within_range(device, input_image, values, output_image, float(min_value), float(max_value))
+    return clic._remove_labels_with_map_values_within_range(device, input_image, values, output_image, float(min_value), float(max_value))
 
 @plugin_function(categories=["label processing", "combine"])
 def exclude_labels_with_values_out_of_range(

@@ -14,7 +14,7 @@ from ._decorators import plugin_function
 
 clic = importlib.import_module('._pyclesperanto', package='pyclesperanto')
 
-@plugin_function(categories=["filter", "in assistant", "bia-bob-suggestion"])
+@plugin_function(categories=["filter", "in assistant"])
 def absolute(
     input_image: Image,
     output_image: Optional[Image] =None,
@@ -110,7 +110,7 @@ def add_image_and_scalar(
     """
     return clic._add_image_and_scalar(device, input_image, output_image, float(scalar))
 
-@plugin_function(categories=["combine", "binary processing", "in assistant", "combine labels", "label processing", "bia-bob-suggestion"])
+@plugin_function(categories=["combine", "binary processing", "in assistant", "combine labels", "label processing"])
 def binary_and(
     input_image0: Image,
     input_image1: Image,
@@ -200,7 +200,7 @@ def binary_not(
     """
     return clic._binary_not(device, input_image, output_image)
 
-@plugin_function(categories=["combine", "binary processing", "in assistant", "combine labels", "label processing", "bia-bob-suggestion"])
+@plugin_function(categories=["combine", "binary processing", "in assistant", "combine labels", "label processing"])
 def binary_or(
     input_image0: Image,
     input_image1: Image,
@@ -233,7 +233,7 @@ def binary_or(
     """
     return clic._binary_or(device, input_image0, input_image1, output_image)
 
-@plugin_function(categories=["combine", "binary processing", "in assistant", "combine labels", "label processing", "bia-bob-suggestion"])
+@plugin_function(categories=["combine", "binary processing", "in assistant", "combine labels", "label processing"])
 def binary_subtract(
     input_image0: Image,
     input_image1: Image,
@@ -263,7 +263,7 @@ def binary_subtract(
     """
     return clic._binary_subtract(device, input_image0, input_image1, output_image)
 
-@plugin_function(categories=["combine", "binary processing", "in assistant", "combine labels", "label processing", "bia-bob-suggestion"])
+@plugin_function(categories=["combine", "binary processing", "in assistant", "combine labels", "label processing"])
 def binary_xor(
     input_image0: Image,
     input_image1: Image,
@@ -665,7 +665,7 @@ def dilate_box(
     """
     return clic._dilate_box(device, input_image, output_image)
 
-@plugin_function(categories=["binary processing", "bia-bob-suggestion"])
+@plugin_function(categories=["binary processing"])
 def dilate_sphere(
     input_image: Image,
     output_image: Optional[Image] =None,
@@ -695,7 +695,7 @@ def dilate_sphere(
     """
     return clic._dilate_sphere(device, input_image, output_image)
 
-@plugin_function(categories=["binary processing", "bia-bob-suggestion"])
+@plugin_function(categories=["binary processing"])
 def dilate(
     input_image: Image,
     output_image: Optional[Image] =None,
@@ -880,7 +880,7 @@ def erode_box(
     """
     return clic._erode_box(device, input_image, output_image)
 
-@plugin_function(categories=["binary processing", "bia-bob-suggestion"])
+@plugin_function(categories=["binary processing"])
 def erode_sphere(
     input_image: Image,
     output_image: Optional[Image] =None,
@@ -910,7 +910,7 @@ def erode_sphere(
     """
     return clic._erode_sphere(device, input_image, output_image)
 
-@plugin_function(categories=["binary processing", "bia-bob-suggestion"])
+@plugin_function(categories=["binary processing"])
 def erode(
     input_image: Image,
     output_image: Optional[Image] =None,
@@ -1047,7 +1047,7 @@ def gaussian_blur(
     """
     return clic._gaussian_blur(device, input_image, output_image, float(sigma_x), float(sigma_y), float(sigma_z))
 
-@plugin_function(categories=["bia-bob-suggestion"])
+@plugin_function
 def generate_distance_matrix(
     input_image0: Image,
     input_image1: Image,
@@ -1333,7 +1333,7 @@ def hessian_eigenvalues(
     """
     return clic._hessian_eigenvalues(device, input_image, small_eigenvalue, middle_eigenvalue, large_eigenvalue)
 
-@plugin_function(categories=["filter", "edge detection", "in assistant", "bia-bob-suggestion"])
+@plugin_function(categories=["filter", "edge detection", "in assistant"])
 def laplace_box(
     input_image: Image,
     output_image: Optional[Image] =None,
@@ -1360,7 +1360,7 @@ def laplace_box(
     """
     return clic._laplace_box(device, input_image, output_image)
 
-@plugin_function(categories=["filter", "edge detection", "bia-bob-suggestion"])
+@plugin_function(categories=["filter", "edge detection"])
 def laplace_diamond(
     input_image: Image,
     output_image: Optional[Image] =None,
@@ -1387,7 +1387,7 @@ def laplace_diamond(
     """
     return clic._laplace_diamond(device, input_image, output_image)
 
-@plugin_function(categories=["filter", "edge detection", "bia-bob-suggestion"])
+@plugin_function(categories=["filter", "edge detection"])
 def laplace(
     input_image: Image,
     output_image: Optional[Image] =None,
@@ -1472,7 +1472,7 @@ def logarithm(
     """
     return clic._logarithm(device, input_image, output_image)
 
-@plugin_function(categories=["bia-bob-suggestion"])
+@plugin_function
 def mask(
     input_image: Image,
     mask: Image,
@@ -1505,7 +1505,7 @@ def mask(
     """
     return clic._mask(device, input_image, mask, output_image)
 
-@plugin_function(categories=["bia-bob-suggestion"])
+@plugin_function
 def mask_label(
     input_image0: Image,
     input_image1: Image,
@@ -1541,7 +1541,7 @@ def mask_label(
     """
     return clic._mask_label(device, input_image0, input_image1, output_image, float(label))
 
-@plugin_function(categories=["filter", "in assistant", "bia-bob-suggestion"])
+@plugin_function(categories=["filter", "in assistant"])
 def maximum_image_and_scalar(
     input_image: Image,
     output_image: Optional[Image] =None,
@@ -1572,7 +1572,7 @@ def maximum_image_and_scalar(
     """
     return clic._maximum_image_and_scalar(device, input_image, output_image, float(scalar))
 
-@plugin_function(categories=["combine", "in assistant", "bia-bob-suggestion"])
+@plugin_function(categories=["combine", "in assistant"])
 def maximum_images(
     input_image0: Image,
     input_image1: Image,
@@ -1837,7 +1837,7 @@ def mean_sphere(
     """
     return clic._mean_sphere(device, input_image, output_image, int(radius_x), int(radius_y), int(radius_z))
 
-@plugin_function(categories=["filter", "denoise", "in assistant", "bia-bob-suggestion"])
+@plugin_function(categories=["filter", "denoise", "in assistant"])
 def mean(
     input_image: Image,
     output_image: Optional[Image] =None,
@@ -2370,7 +2370,7 @@ def mode_sphere(
     """
     return clic._mode_sphere(device, input_image, output_image, int(radius_x), int(radius_y), int(radius_z))
 
-@plugin_function(categories=["label processing", "in assistant", "bia-bob-suggestion"])
+@plugin_function(categories=["label processing", "in assistant"])
 def mode(
     input_image: Image,
     output_image: Optional[Image] =None,
@@ -2410,7 +2410,7 @@ def mode(
     """
     return clic._mode(device, input_image, output_image, int(radius_x), int(radius_y), int(radius_z), str(connectivity))
 
-@plugin_function(categories=["combine", "bia-bob-suggestion"])
+@plugin_function(categories=["combine"])
 def modulo_images(
     input_image0: Image,
     input_image1: Image,
@@ -3083,7 +3083,7 @@ def range(
     """
     return clic._range(device, input_image, output_image, start_x, stop_x, step_x, start_y, stop_y, step_y, start_z, stop_z, step_z)
 
-@plugin_function(categories=["bia-bob-suggestion"])
+@plugin_function
 def read_values_from_positions(
     input_image: Image,
     list: Image,
@@ -3209,7 +3209,7 @@ def replace_intensity(
     """
     return clic._replace_intensity(device, input_image, output_image, float(scalar0), float(scalar1))
 
-@plugin_function(categories=["bia-bob-suggestion"])
+@plugin_function
 def replace_intensities(
     input_image0: Image,
     input_image1: Image,
@@ -4218,7 +4218,7 @@ def variance_box(
     """
     return clic._variance_box(device, input_image, output_image, int(radius_x), int(radius_y), int(radius_z))
 
-@plugin_function(categories=["filter", "edge detection", "in assistant", "bia-bob-suggestion"])
+@plugin_function(categories=["filter", "edge detection", "in assistant"])
 def variance_sphere(
     input_image: Image,
     output_image: Optional[Image] =None,

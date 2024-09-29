@@ -14,7 +14,7 @@ from ._decorators import plugin_function
 
 clic = importlib.import_module('._pyclesperanto', package='pyclesperanto')
 
-@plugin_function(categories=["combine", "in assistant", "bia-bob-suggestion"])
+@plugin_function(categories=["combine", "in assistant"])
 def absolute_difference(
     input_image0: Image,
     input_image1: Image,
@@ -112,7 +112,7 @@ def bottom_hat_box(
     """
     return clic._bottom_hat_box(device, input_image, output_image, int(radius_x), int(radius_y), int(radius_z))
 
-@plugin_function(categories=["filter", "background removal", "in assistant", "bia-bob-suggestion"])
+@plugin_function(categories=["filter", "background removal", "in assistant"])
 def bottom_hat_sphere(
     input_image: Image,
     output_image: Optional[Image] =None,
@@ -148,7 +148,7 @@ def bottom_hat_sphere(
     """
     return clic._bottom_hat_sphere(device, input_image, output_image, float(radius_x), float(radius_y), float(radius_z))
 
-@plugin_function(categories=["filter", "background removal", "in assistant", "bia-bob-suggestion"])
+@plugin_function(categories=["filter", "background removal", "in assistant"])
 def bottom_hat(
     input_image: Image,
     output_image: Optional[Image] =None,
@@ -288,7 +288,7 @@ def closing_sphere(
     """
     return clic._closing_sphere(device, input_image, output_image, int(radius_x), int(radius_y), int(radius_z))
 
-@plugin_function(categories=["filter", "in assistant", "bia-bob-suggestion"])
+@plugin_function(categories=["filter", "in assistant"])
 def closing(
     input_image: Image,
     output_image: Optional[Image] =None,
@@ -414,7 +414,7 @@ def concatenate_along_z(
     """
     return clic._concatenate_along_z(device, input_image0, input_image1, output_image)
 
-@plugin_function(categories=["bia-bob-suggestion"])
+@plugin_function
 def count_touching_neighbors(
     input_image: Image,
     output_image: Optional[Image] =None,
@@ -474,7 +474,7 @@ def crop_border(
     """
     return clic._crop_border(device, input_image, output_image, int(border_size))
 
-@plugin_function(categories=["filter", "background removal", "in assistant", "bia-bob-suggestion"])
+@plugin_function(categories=["filter", "background removal", "in assistant"])
 def divide_by_gaussian_background(
     input_image: Image,
     output_image: Optional[Image] =None,
@@ -741,7 +741,7 @@ def difference_of_gaussian(
     """
     return clic._difference_of_gaussian(device, input_image, output_image, float(sigma1_x), float(sigma1_y), float(sigma1_z), float(sigma2_x), float(sigma2_y), float(sigma2_z))
 
-@plugin_function(categories=["label processing", "in assistant", "bia-bob-suggestion"])
+@plugin_function(categories=["label processing", "in assistant"])
 def extend_labeling_via_voronoi(
     input_image: Image,
     output_image: Optional[Image] =None,
@@ -798,7 +798,7 @@ def invert(
     """
     return clic._invert(device, input_image, output_image)
 
-@plugin_function(categories=["label", "in assistant", "bia-bob-suggestion"])
+@plugin_function(categories=["label", "in assistant"])
 def label_spots(
     input_image: Image,
     output_image: Optional[Image] =None,
@@ -961,7 +961,7 @@ def opening_box(
     """
     return clic._opening_box(device, input_image, output_image, int(radius_x), int(radius_y), int(radius_z))
 
-@plugin_function(categories=["filter", "in assistant", "bia-bob-suggestion"])
+@plugin_function(categories=["filter", "in assistant"])
 def opening_sphere(
     input_image: Image,
     output_image: Optional[Image] =None,
@@ -994,7 +994,7 @@ def opening_sphere(
     """
     return clic._opening_sphere(device, input_image, output_image, float(radius_x), float(radius_y), float(radius_z))
 
-@plugin_function(categories=["filter", "in assistant", "bia-bob-suggestion"])
+@plugin_function(categories=["filter", "in assistant"])
 def opening(
     input_image: Image,
     output_image: Optional[Image] =None,
@@ -1132,7 +1132,7 @@ def square(
     """
     return clic._square(device, input_image, output_image)
 
-@plugin_function(categories=["combine", "in assistant", "bia-bob-suggestion"])
+@plugin_function(categories=["combine", "in assistant"])
 def squared_difference(
     input_image0: Image,
     input_image1: Image,
@@ -1200,7 +1200,7 @@ def standard_deviation_box(
     """
     return clic._standard_deviation_box(device, input_image, output_image, int(radius_x), int(radius_y), int(radius_z))
 
-@plugin_function(categories=["filter", "edge detection", "in assistant", "bia-bob-suggestion"])
+@plugin_function(categories=["filter", "edge detection", "in assistant"])
 def standard_deviation_sphere(
     input_image: Image,
     output_image: Optional[Image] =None,
@@ -1238,7 +1238,7 @@ def standard_deviation_sphere(
     """
     return clic._standard_deviation_sphere(device, input_image, output_image, int(radius_x), int(radius_y), int(radius_z))
 
-@plugin_function(categories=["filter", "edge detection", "in assistant", "bia-bob-suggestion"])
+@plugin_function(categories=["filter", "edge detection", "in assistant"])
 def standard_deviation(
     input_image: Image,
     output_image: Optional[Image] =None,
@@ -1512,7 +1512,7 @@ def top_hat_sphere(
     """
     return clic._top_hat_sphere(device, input_image, output_image, float(radius_x), float(radius_y), float(radius_z))
 
-@plugin_function(categories=["filter", "background removal", "in assistant", "bia-bob-suggestion"])
+@plugin_function(categories=["filter", "background removal", "in assistant"])
 def top_hat(
     input_image: Image,
     output_image: Optional[Image] =None,

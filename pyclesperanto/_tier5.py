@@ -71,7 +71,7 @@ def combine_labels(
     """
     return clic._combine_labels(device, input_image0, input_image1, output_image)
 
-@plugin_function(categories=["label", "in assistant", "bia-bob-suggestion"])
+@plugin_function(categories=["label", "in assistant"])
 def connected_components_labeling(
     input_image: Image,
     output_image: Optional[Image] =None,

@@ -170,7 +170,7 @@ def remove_labels_on_edges(
     """
     return clic._remove_labels_on_edges(device, input_image, output_image, exclude_x, exclude_y, exclude_z)
 
-@plugin_function(categories=["label processing", "in assistant", "bia-bob-suggestion"])
+@plugin_function(categories=["label processing", "in assistant"])
 def exclude_labels_on_edges(
     input_image: Image,
     output_image: Optional[Image] =None,
@@ -298,7 +298,7 @@ def generate_binary_overlap_matrix(
     """
     return clic._generate_binary_overlap_matrix(device, input_image0, input_image1, output_image)
 
-@plugin_function(categories=["bia-bob-suggestion"])
+@plugin_function
 def generate_touch_matrix(
     input_image: Image,
     output_image: Optional[Image] =None,
@@ -411,7 +411,7 @@ def jaccard_index(
     """
     return clic._jaccard_index(device, input_image0, input_image1)
 
-@plugin_function(categories=["bia-bob-suggestion"])
+@plugin_function
 def labelled_spots_to_pointlist(
     input_image: Image,
     output_image: Optional[Image] =None,

@@ -74,7 +74,7 @@ def erode_labels(
     """
     return clic._erode_labels(device, input_image, output_image, int(radius), relabel)
 
-@plugin_function(categories=["label", "in assistant", "bia-bob-suggestion"])
+@plugin_function(categories=["label", "in assistant"])
 def gauss_otsu_labeling(
     input_image0: Image,
     output_image: Optional[Image] =None,
@@ -109,7 +109,7 @@ def gauss_otsu_labeling(
     """
     return clic._gauss_otsu_labeling(device, input_image0, output_image, float(outline_sigma))
 
-@plugin_function(categories=["label", "bia-bob-suggestion"])
+@plugin_function(categories=["label"])
 def masked_voronoi_labeling(
     input_image: Image,
     mask: Image,
@@ -200,7 +200,7 @@ def remove_small_labels(
     """
     return clic._remove_small_labels(device, input_image, output_image, float(min_size))
 
-@plugin_function(categories=["label processing", "in assistant", "bia-bob-suggestion"])
+@plugin_function(categories=["label processing", "in assistant"])
 def exclude_small_labels(
     input_image: Image,
     output_image: Optional[Image] =None,
@@ -260,7 +260,7 @@ def remove_large_labels(
     """
     return clic._remove_large_labels(device, input_image, output_image, float(max_size))
 
-@plugin_function(categories=["label processing", "in assistant", "bia-bob-suggestion"])
+@plugin_function(categories=["label processing", "in assistant"])
 def exclude_large_labels(
     input_image: Image,
     output_image: Optional[Image] =None,

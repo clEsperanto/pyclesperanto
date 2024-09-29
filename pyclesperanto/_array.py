@@ -344,5 +344,6 @@ def is_image(object):
             "<class 'xarray.core.dataarray.DataArray'>",
             "<class 'resource_backed_dask_array.ResourceBackedDaskArray'>",
             "<class 'torch.Tensor'>",
+            "<class 'pyclesperanto_prototype._tier0._pycl.OCLArray'>"
         ]
     )

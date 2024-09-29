@@ -26,6 +26,10 @@ m.def("_label_bounding_box", &cle::tier4::label_bounding_box_func, "Call cle::ti
     py::return_value_policy::take_ownership,
     py::arg("device"), py::arg("src"), py::arg("dst"));
 
+    m.def("_pixel_count_map", &cle::tier4::pixel_count_map_func, "Call cle::tier4::pixel_count_map_func from C++ CLIc.",
+    py::return_value_policy::take_ownership,
+    py::arg("device"), py::arg("src"), py::arg("dst"));
+
     m.def("_label_pixel_count_map", &cle::tier4::label_pixel_count_map_func, "Call cle::tier4::label_pixel_count_map_func from C++ CLIc.",
     py::return_value_policy::take_ownership,
     py::arg("device"), py::arg("src"), py::arg("dst"));
@@ -34,19 +38,19 @@ m.def("_label_bounding_box", &cle::tier4::label_bounding_box_func, "Call cle::ti
     py::return_value_policy::take_ownership,
     py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("withBG"));
 
-    m.def("_remove_labels_with_values_out_of_range", &cle::tier4::remove_labels_with_values_out_of_range_func, "Call cle::tier4::remove_labels_with_values_out_of_range_func from C++ CLIc.",
+    m.def("_remove_labels_with_map_values_out_of_range", &cle::tier4::remove_labels_with_map_values_out_of_range_func, "Call cle::tier4::remove_labels_with_map_values_out_of_range_func from C++ CLIc.",
     py::return_value_policy::take_ownership,
     py::arg("device"), py::arg("src"), py::arg("values"), py::arg("dst"), py::arg("min_value"), py::arg("max_value"));
 
-    m.def("_remove_labels_with_values_within_range", &cle::tier4::remove_labels_with_values_within_range_func, "Call cle::tier4::remove_labels_with_values_within_range_func from C++ CLIc.",
+    m.def("_remove_labels_with_map_values_within_range", &cle::tier4::remove_labels_with_map_values_within_range_func, "Call cle::tier4::remove_labels_with_map_values_within_range_func from C++ CLIc.",
     py::return_value_policy::take_ownership,
     py::arg("device"), py::arg("src"), py::arg("values"), py::arg("dst"), py::arg("min_value"), py::arg("max_value"));
 
-    m.def("_exclude_labels_with_values_out_of_range", &cle::tier4::exclude_labels_with_values_out_of_range_func, "Call cle::tier4::exclude_labels_with_values_out_of_range_func from C++ CLIc.",
+    m.def("_exclude_labels_with_map_values_out_of_range", &cle::tier4::exclude_labels_with_map_values_out_of_range_func, "Call cle::tier4::exclude_labels_with_map_values_out_of_range_func from C++ CLIc.",
     py::return_value_policy::take_ownership,
     py::arg("device"), py::arg("src"), py::arg("values"), py::arg("dst"), py::arg("min_value_range"), py::arg("max_value_range"));
 
-    m.def("_exclude_labels_with_values_within_range", &cle::tier4::exclude_labels_with_values_within_range_func, "Call cle::tier4::exclude_labels_with_values_within_range_func from C++ CLIc.",
+    m.def("_exclude_labels_with_map_values_within_range", &cle::tier4::exclude_labels_with_map_values_within_range_func, "Call cle::tier4::exclude_labels_with_map_values_within_range_func from C++ CLIc.",
     py::return_value_policy::take_ownership,
     py::arg("device"), py::arg("src"), py::arg("values"), py::arg("dst"), py::arg("min_value_range"), py::arg("max_value_range"));
 

@@ -43,7 +43,7 @@ def smooth_labels(
     """
     return clic._smooth_labels(device, input_image, output_image, int(radius))
 
-@plugin_function
+@plugin_function(categories=["label processing", "in assistant", "bia-bob-suggestion"])
 def smooth_connected_labels(
     input_image: Image,
     output_image: Optional[Image] =None,

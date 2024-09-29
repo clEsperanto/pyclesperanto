@@ -99,3 +99,6 @@ environment = { MACOSX_DEPLOYMENT_TARGET = '10.14' }
 
 [tool.isort]
 profile = "black"
+
+[project.entry-points."bia_bob_plugins"]
+plugin_pyclesperanto = "pyclesperanto._bia_bob_plugins:list_bia_bob_plugins"

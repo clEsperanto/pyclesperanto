@@ -1,6 +1,6 @@
-
 def list_bia_bob_plugins():
     """List of function hints for bia_bob"""
+
     return """
     ## pyclesperanto
     pyclesperanto is a Python library for GPU-accelerated image processing and analysis. 

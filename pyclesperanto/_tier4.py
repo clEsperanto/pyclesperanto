@@ -329,7 +329,7 @@ def remove_labels_with_map_values_within_range(
     return clic._remove_labels_with_map_values_within_range(device, input_image, values, output_image, float(min_value), float(max_value))
 
 @plugin_function(categories=["label processing", "combine"])
-def exclude_labels_with_values_out_of_range(
+def exclude_labels_with_map_values_out_of_range(
     input_image: Image,
     values: Image,
     output_image: Optional[Image] =None,
@@ -363,10 +363,10 @@ def exclude_labels_with_values_out_of_range(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_excludeLabelsWithValuesOutOfRange
     """
-    return clic._exclude_labels_with_values_out_of_range(device, input_image, values, output_image, float(min_value_range), float(max_value_range))
+    return clic._exclude_labels_with_map_values_out_of_range(device, input_image, values, output_image, float(min_value_range), float(max_value_range))
 
 @plugin_function(categories=["label processing", "combine"])
-def exclude_labels_with_values_within_range(
+def exclude_labels_with_map_values_within_range(
     input_image: Image,
     values: Image,
     output_image: Optional[Image] =None,
@@ -400,7 +400,7 @@ def exclude_labels_with_values_within_range(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_excludeLabelsWithValuesWithinRange
     """
-    return clic._exclude_labels_with_values_within_range(device, input_image, values, output_image, float(min_value_range), float(max_value_range))
+    return clic._exclude_labels_with_map_values_within_range(device, input_image, values, output_image, float(min_value_range), float(max_value_range))
 
 @plugin_function(categories=["label processing", "in assistant", "map"])
 def extension_ratio_map(

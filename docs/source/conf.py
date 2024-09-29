@@ -16,7 +16,7 @@ with open("../../pyclesperanto/_version.py", "r") as f:
     for line in f:
         if line.startswith("VERSION ="):
             start = line.find("=") + 1
-            version = line[start:].strip().strip('"')
+            release = line[start:].strip().strip('"')
             break
 
 # -- Project information -----------------------------------------------------

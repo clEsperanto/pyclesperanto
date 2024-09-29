@@ -49,7 +49,7 @@ def affine_transform(
     """
     return clic._affine_transform(device, input_image, output_image, transform_matrix, interpolate, resize)
 
-@plugin_function(categories=["label", "in assistant", "bia-bob-suggestion"])
+@plugin_function(categories=["label", "in assistant"])
 def eroded_otsu_labeling(
     input_image: Image,
     output_image: Optional[Image] =None,
@@ -91,7 +91,7 @@ def eroded_otsu_labeling(
     """
     return clic._eroded_otsu_labeling(device, input_image, output_image, int(number_of_erosions), float(outline_sigma))
 
-@plugin_function(categories=["transform", "in assistant", "bia-bob-suggestion"])
+@plugin_function(categories=["transform", "in assistant"])
 def rigid_transform(
     input_image: Image,
     output_image: Optional[Image] =None,
@@ -262,7 +262,7 @@ def translate(
     """
     return clic._translate(device, input_image, output_image, float(translate_x), float(translate_y), float(translate_z), interpolate)
 
-@plugin_function(categories=["label processing", "in assistant", "bia-bob-suggestion"])
+@plugin_function(categories=["label processing", "in assistant"])
 def closing_labels(
     input_image: Image,
     output_image: Optional[Image] =None,
@@ -292,7 +292,7 @@ def closing_labels(
     """
     return clic._closing_labels(device, input_image, output_image, int(radius))
 
-@plugin_function
+@plugin_function(categories=["label processing", "in assistant"])
 def erode_connected_labels(
     input_image: Image,
     output_image: Optional[Image] =None,
@@ -320,7 +320,7 @@ def erode_connected_labels(
     """
     return clic._erode_connected_labels(device, input_image, output_image, int(radius))
 
-@plugin_function(categories=["label processing", "in assistant", "bia-bob-suggestion"])
+@plugin_function(categories=["label processing", "in assistant"])
 def opening_labels(
     input_image: Image,
     output_image: Optional[Image] =None,

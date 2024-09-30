@@ -9,6 +9,8 @@
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 [![GitHub stars](https://img.shields.io/github/stars/clEsperanto/pyclesperanto?style=social)](https://github.com/clEsperanto/pyclesperanto)
 [![GitHub forks](https://img.shields.io/github/forks/clEsperanto/pyclesperanto?style=social)](https://github.com/clEsperanto/pyclesperanto)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.13857425.svg)](https://doi.org/10.5281/zenodo.13857425)
+
 
 pyclesperanto is the python package of [clEsperanto] - a multi-language framework for GPU-accelerated image processing.
 It relies on a familly of [OpenCL kernels] originated from [CLIJ].

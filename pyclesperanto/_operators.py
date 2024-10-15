@@ -673,7 +673,7 @@ def __repr_html__(self):
         image,
         "</td>",
         '<td style="text-align: center; vertical-align: top;">',
-        '<b><a href="https://github.com/clEsperanto/pyclesperanto_prototype" target="_blank">cle._</a> image</b><br/>',
+        '<b><a href="https://github.com/clEsperanto/pyclesperanto" target="_blank">cle._</a> image</b><br/>',
         "<table>",
         "<tr><td>shape</td><td>"
         + str(self.shape).replace(" ", "&nbsp;")

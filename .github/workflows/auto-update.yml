@@ -1,4 +1,4 @@
-name: Auto Update Tiers
+name: Auto Update
 
 on:
   repository_dispatch:

@@ -174,7 +174,7 @@ def voronoi_labeling(
 def remove_small_labels(
     input_image: Image,
     output_image: Optional[Image] =None,
-    min_size: float =100,
+    minimum_size: float =100,
     device: Optional[Device] =None
 ) -> Image:
     """Removes labelled objects small than a given size (in pixels) from a label map.
@@ -185,7 +185,7 @@ def remove_small_labels(
         Label image to filter.
     output_image: Optional[Image] (= None)
         Output label image fitlered.
-    min_size: float (= 100)
+    minimum_size: float (= 100)
         Smallest size object allowed.
     device: Optional[Device] (= None)
         Device to perform the operation on.
@@ -198,13 +198,13 @@ def remove_small_labels(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_excludeLabelsOutsideSizeRange
     """
-    return clic._remove_small_labels(device, input_image, output_image, float(min_size))
+    return clic._remove_small_labels(device, input_image, output_image, float(minimum_size))
 
 @plugin_function(categories=["label processing", "in assistant"])
 def exclude_small_labels(
     input_image: Image,
     output_image: Optional[Image] =None,
-    max_size: float =100,
+    maximum_size: float =100,
     device: Optional[Device] =None
 ) -> Image:
     """Removes labels from a label map which are below a given maximum size.
@@ -215,7 +215,7 @@ def exclude_small_labels(
         Label image to filter.
     output_image: Optional[Image] (= None)
         Output label image fitlered.
-    max_size: float (= 100)
+    maximum_size: float (= 100)
         Largest size object to exclude.
     device: Optional[Device] (= None)
         Device to perform the operation on.
@@ -228,13 +228,13 @@ def exclude_small_labels(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_excludeLabelsOutsideSizeRange
     """
-    return clic._exclude_small_labels(device, input_image, output_image, float(max_size))
+    return clic._exclude_small_labels(device, input_image, output_image, float(maximum_size))
 
 @plugin_function(categories=["label processing", "in assistant", "bia-bob-suggestion"])
 def remove_large_labels(
     input_image: Image,
     output_image: Optional[Image] =None,
-    max_size: float =100,
+    maximum_size: float =100,
     device: Optional[Device] =None
 ) -> Image:
     """Removes labelled objects bigger than a given size (in pixels) from a label map.
@@ -245,7 +245,7 @@ def remove_large_labels(
         Label image to filter.
     output_image: Optional[Image] (= None)
         Output label image fitlered.
-    max_size: float (= 100)
+    maximum_size: float (= 100)
         Biggest size object allowed.
     device: Optional[Device] (= None)
         Device to perform the operation on.
@@ -258,13 +258,13 @@ def remove_large_labels(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_excludeLabelsOutsideSizeRange
     """
-    return clic._remove_large_labels(device, input_image, output_image, float(max_size))
+    return clic._remove_large_labels(device, input_image, output_image, float(maximum_size))
 
 @plugin_function(categories=["label processing", "in assistant"])
 def exclude_large_labels(
     input_image: Image,
     output_image: Optional[Image] =None,
-    min_size: float =100,
+    minimum_size: float =100,
     device: Optional[Device] =None
 ) -> Image:
     """Removes labels from a label map which are higher a given minimum size.
@@ -275,7 +275,7 @@ def exclude_large_labels(
         Label image to filter.
     output_image: Optional[Image] (= None)
         Output label image fitlered.
-    min_size: float (= 100)
+    minimum_size: float (= 100)
         Smallest size object to keep.
     device: Optional[Device] (= None)
         Device to perform the operation on.
@@ -288,4 +288,4 @@ def exclude_large_labels(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_excludeLabelsOutsideSizeRange
     """
-    return clic._exclude_large_labels(device, input_image, output_image, float(min_size))
+    return clic._exclude_large_labels(device, input_image, output_image, float(minimum_size))

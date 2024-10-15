@@ -164,8 +164,8 @@ def reduce_labels_to_centroids(
 def filter_label_by_size(
     input_image: Image,
     output_image: Optional[Image] =None,
-    min_size: float =0,
-    max_size: float =100,
+    minimum_size: float =0,
+    maximum_size: float =100,
     device: Optional[Device] =None
 ) -> Image:
     """Filter labelled objects outside of the min/max size range value.
@@ -176,9 +176,9 @@ def filter_label_by_size(
         Input label image.
     output_image: Optional[Image] (= None)
         Output label image.
-    min_size: float (= 0)
+    minimum_size: float (= 0)
         Minimum size of labels to keep.
-    max_size: float (= 100)
+    maximum_size: float (= 100)
         Maximum size of labels to keep.
     device: Optional[Device] (= None)
         Device to perform the operation on.
@@ -191,14 +191,14 @@ def filter_label_by_size(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_excludeLabelsOutsideSizeRange
     """
-    return clic._filter_label_by_size(device, input_image, output_image, float(min_size), float(max_size))
+    return clic._filter_label_by_size(device, input_image, output_image, float(minimum_size), float(maximum_size))
 
 @plugin_function(categories=["label processing", "in assistant"])
 def exclude_labels_outside_size_range(
     input_image: Image,
     output_image: Optional[Image] =None,
-    min_size: float =0,
-    max_size: float =100,
+    minimum_size: float =0,
+    maximum_size: float =100,
     device: Optional[Device] =None
 ) -> Image:
     """Filter labelled objects outside of the min/max size range value.
@@ -209,9 +209,9 @@ def exclude_labels_outside_size_range(
         Input label image.
     output_image: Optional[Image] (= None)
         Output label image.
-    min_size: float (= 0)
+    minimum_size: float (= 0)
         Minimum size of labels to keep.
-    max_size: float (= 100)
+    maximum_size: float (= 100)
         Maximum size of labels to keep.
     device: Optional[Device] (= None)
         Device to perform the operation on.
@@ -224,4 +224,4 @@ def exclude_labels_outside_size_range(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_excludeLabelsOutsideSizeRange
     """
-    return clic._exclude_labels_outside_size_range(device, input_image, output_image, float(min_size), float(max_size))
+    return clic._exclude_labels_outside_size_range(device, input_image, output_image, float(minimum_size), float(maximum_size))

@@ -28,17 +28,17 @@ m.def("_dilate_labels", &cle::tier6::dilate_labels_func, "Call cle::tier6::dilat
 
     m.def("_remove_small_labels", &cle::tier6::remove_small_labels_func, "Call cle::tier6::remove_small_labels_func from C++ CLIc.",
     py::return_value_policy::take_ownership,
-    py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("min_size"));
+    py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("minimum_size"));
 
     m.def("_exclude_small_labels", &cle::tier6::exclude_small_labels_func, "Call cle::tier6::exclude_small_labels_func from C++ CLIc.",
     py::return_value_policy::take_ownership,
-    py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("max_size"));
+    py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("maximum_size"));
 
     m.def("_remove_large_labels", &cle::tier6::remove_large_labels_func, "Call cle::tier6::remove_large_labels_func from C++ CLIc.",
     py::return_value_policy::take_ownership,
-    py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("max_size"));
+    py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("maximum_size"));
 
     m.def("_exclude_large_labels", &cle::tier6::exclude_large_labels_func, "Call cle::tier6::exclude_large_labels_func from C++ CLIc.",
     py::return_value_policy::take_ownership,
-    py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("min_size"));
+    py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("minimum_size"));
 }

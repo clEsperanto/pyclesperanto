@@ -28,7 +28,7 @@ def test_exclude_labels_out_of_size_range_2d():
         )
     )
 
-    gpu_output = cle.filter_label_by_size(gpu_input, min_size=4, max_size=5)
+    gpu_output = cle.filter_label_by_size(gpu_input, minimum_size=4, maximum_size=5)
 
     a = cle.pull(gpu_output)
     b = cle.pull(gpu_reference)
@@ -64,7 +64,7 @@ def test_exclude_small_labels_2d():
         )
     )
 
-    gpu_output = cle.exclude_small_labels(gpu_input, max_size=5)
+    gpu_output = cle.exclude_small_labels(gpu_input, maximum_size=5)
 
     a = cle.pull(gpu_output)
     b = cle.pull(gpu_reference)
@@ -100,7 +100,7 @@ def test_exclude_large_labels_2d():
         )
     )
 
-    gpu_output = cle.exclude_large_labels(gpu_input, min_size=3)
+    gpu_output = cle.exclude_large_labels(gpu_input, minimum_size=3)
 
     a = cle.pull(gpu_output)
     b = cle.pull(gpu_reference)

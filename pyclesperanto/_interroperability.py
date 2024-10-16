@@ -128,22 +128,22 @@ def cbrt(x, out=None):
     return cubic_root(input_image=x, output_image=out, device=x.device)
 
 
-def power(x1, x2, out=None):
-    x1 = asarray(x1)
-    if out:
-        out = asarray(out)
+def power(input_image, output_image, exponent):
+    input_image = asarray(input_image)
+    if output_image:
+        output_image = asarray(output_image)
 
-    # test if x2 is a scalar
-    if np.isscalar(x2):
+    # test if exponent is a scalar
+    if np.isscalar(exponent):
         from ._tier1 import power
 
-        return power(input_image=x1, scalar=x2, output_image=out, device=x1.device)
+        return power(input_image=input_image, scalar=exponent, output_image=output_image, device=input_image.device)
     else:
         from ._tier1 import power_images
 
-        x2 = asarray(x2)
+        exponent = asarray(exponent)
         return power_images(
-            input_image0=x1, input_image1=x2, output_image=out, device=x1.device
+            input_image0=input_image, input_image1=exponent, output_image=output_image, device=input_image.device
         )
 
 

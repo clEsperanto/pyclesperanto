@@ -102,7 +102,7 @@ def remove_labels(
 @plugin_function
 def exclude_labels(
     input_image: Image,
-    list: Image,
+    flag_list: Image,
     output_image: Optional[Image] =None,
     device: Optional[Device] =None
 ) -> Image:
@@ -116,7 +116,7 @@ def exclude_labels(
     ----------
     input_image: Image 
         
-    list: Image 
+    flag_list: Image 
         
     output_image: Optional[Image] (= None)
         
@@ -131,7 +131,7 @@ def exclude_labels(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_excludeLabels
     """
-    return clic._exclude_labels(device, input_image, list, output_image)
+    return clic._exclude_labels(device, input_image, flag_list, output_image)
 
 @plugin_function(categories=["label processing", "in assistant", "bia-bob-suggestion"])
 def remove_labels_on_edges(
@@ -429,7 +429,7 @@ def labelled_spots_to_pointlist(
         
     output_image: Optional[Image] (= None)
         
-    device: Optional[Device] (= None)
+    device: Optional[Device] =None
         Device to perform the operation on.
 
     Returns

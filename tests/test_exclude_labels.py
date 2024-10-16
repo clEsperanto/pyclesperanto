@@ -34,7 +34,7 @@ def test_exclude_labels_2d():
 
     flaglist = cle.push(np.asarray([[0, 0, 0, 1, 1, 0, 0, 1, 0]]).astype(np.uint32))
 
-    gpu_output = cle.exclude_labels(gpu_input, flaglist)
+    gpu_output = cle.exclude_labels(gpu_input, label_image=flaglist)
 
     a = cle.pull(gpu_output)
     b = cle.pull(gpu_reference)
@@ -82,7 +82,7 @@ def test_exclude_labels_3d():
 
     flaglist = cle.push(np.asarray([[0, 0, 0, 1, 1, 0, 0, 1, 0]]).astype(np.uint32))
 
-    gpu_output = cle.exclude_labels(gpu_input, flaglist)
+    gpu_output = cle.exclude_labels(gpu_input, label_image=flaglist)
 
     a = cle.pull(gpu_output)
     b = cle.pull(gpu_reference)

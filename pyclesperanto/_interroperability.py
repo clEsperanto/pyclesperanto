@@ -78,7 +78,7 @@ def affine_transform(
     )
 
 
-def set_wait_for_kernel_finish(wait_for_kernel_finish=True):
+def set_wait_for_kernel_finish(wait: bool =True):
     warnings.warn(
         "set_wait_for_kernel_finish : This method is deprecated. Consider using wait_for_kernel_to_finish() instead.",
         DeprecationWarning,

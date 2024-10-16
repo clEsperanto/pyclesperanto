@@ -78,12 +78,12 @@ def affine_transform(
     )
 
 
-def set_wait_for_kernel_finish(wait: bool =True):
+def set_wait_for_kernel_finish(wait_for_kernel_finish: bool =True):
     warnings.warn(
         "set_wait_for_kernel_finish : This method is deprecated. Consider using wait_for_kernel_to_finish() instead.",
         DeprecationWarning,
     )
-    wait_for_kernel_to_finish(wait)
+    wait_for_kernel_to_finish(wait_for_kernel_finish)
 
 
 def clip(a, a_min, a_max, out=None):

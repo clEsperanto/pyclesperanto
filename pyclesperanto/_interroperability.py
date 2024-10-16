@@ -86,7 +86,7 @@ def set_wait_for_kernel_finish(bool=True):
     wait_for_kernel_to_finish(bool)
 
 
-def clip(a, a_min, a_max, out=None):
+def clip(a, out, a_min, a_max):
     from ._tier2 import clip
 
     a = asarray(a)

@@ -126,7 +126,7 @@ def select_backend(backend: str = "opencl") -> str:
     return f"{BackendManager.get_backend()} selected."
 
 
-def wait_for_kernel_to_finish(flag: bool = True, device: Device = None):
+def wait_for_kernel_to_finish(wait: bool = True, device: Device = None):
     """Wait for kernel to finish
 
     Enforce the system to wait for the kernel to finish before continuing. Introducing a
@@ -135,15 +135,15 @@ def wait_for_kernel_to_finish(flag: bool = True, device: Device = None):
 
     Parameters
     ----------
-    flag : bool, default = True
+    wait : bool, default = True
         if True, wait for kernel to finish
     device : Device, default = None
         the device to set the flag. If None, set it to the current device
     """
     if device is None:
-        get_device().set_wait_to_finish(flag)
+        get_device().set_wait_to_finish(wait)
     else:
-        device.set_wait_to_finish(flag)
+        device.set_wait_to_finish(wait)
 
 
 def default_initialisation():

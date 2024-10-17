@@ -10,7 +10,9 @@ def test_histogram():
 
     ref_histogram = [1, 2, 3, 4, 2]
 
-    my_histogram = cle.histogram(test, nbins=5, min=1, max=5)
+    my_histogram = cle.histogram(
+        test, num_bins=5, minimum_intensity=1, maximum_intensity=5
+    )
 
     print(my_histogram)
 
@@ -23,7 +25,9 @@ def test_histogram_3d():
 
     ref_histogram = [1, 2, 3, 4, 2]
 
-    my_histogram = cle.histogram(test, nbins=5, min=1, max=5)
+    my_histogram = cle.histogram(
+        test, num_bins=5, minimum_intensity=1, maximum_intensity=5
+    )
 
     print(my_histogram)
 
@@ -36,7 +40,9 @@ def test_histogram_3d_2():
 
     ref_histogram = [1, 2, 3, 4, 2]
 
-    my_histogram = cle.histogram(test, nbins=5, min=1, max=5)
+    my_histogram = cle.histogram(
+        test, num_bins=5, minimum_intensity=1, maximum_intensity=5
+    )
 
     print(my_histogram)
 
@@ -51,6 +57,6 @@ def test_histogram_3d_2():
 #     hist, bc = exposure.histogram(image.ravel(), 256, source_range="image")
 #     print(hist)
 #     gpu_image = cle.push(image.astype(int))
-#     gpu_hist = cle.histogram(gpu_image, nbins=256, min=0, max=gpu_image.max())
+#     gpu_hist = cle.histogram(gpu_image, num_bins=256, minimum_intensity=0, maximum_intensity=gpu_image.max())
 #     print(cle.pull(gpu_hist))
 #     assert np.allclose(hist, cle.pull(gpu_hist))

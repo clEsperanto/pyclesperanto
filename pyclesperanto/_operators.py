@@ -135,7 +135,7 @@ def __add__(x1, x2):
     else:
         from ._tier1 import add_images_weighted
 
-        return add_images_weighted(x1, x2, factor0=1, factor1=1)
+        return add_images_weighted(x1, x2, factor1=1, factor2=1)
 
 
 def __iadd__(x1, x2):
@@ -150,7 +150,7 @@ def __iadd__(x1, x2):
     else:
         from ._tier1 import add_images_weighted
 
-        add_images_weighted(temp, x2, output_image=x1, factor0=1, factor1=1)
+        add_images_weighted(temp, x2, output_image=x1, factor1=1, factor2=1)
     return x1
 
 
@@ -163,7 +163,7 @@ def __sub__(x1, x2):
     else:
         from ._tier1 import add_images_weighted
 
-        return add_images_weighted(x1, x2, factor0=1, factor1=-1)
+        return add_images_weighted(x1, x2, factor1=1, factor2=-1)
 
 
 def __div__(x1, x2):

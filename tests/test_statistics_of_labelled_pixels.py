@@ -31,7 +31,7 @@ def test_statistics_of_labelled_pixels():
         )
     )
 
-    result = cle.statistics_of_labelled_pixels(labels, intensities)
+    result = cle.statistics_of_labelled_pixels(intensities, labels)
 
     print(result)
 

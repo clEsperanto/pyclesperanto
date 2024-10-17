@@ -31,7 +31,7 @@ def test_maximum_box():
     )
 
     result = cle.create(test1)
-    cle.maximum(test1, result, 1, 1, 0)
+    cle.maximum_filter(test1, result, 1, 1, 0)
 
     a = cle.pull(result)
     b = cle.pull(reference)

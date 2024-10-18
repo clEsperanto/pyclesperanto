@@ -30,7 +30,7 @@ def test_power():
         )
     )
 
-    result = cle.power(test1, 3)
+    result = cle.power(test1, scalar=3)
 
     print(result)
 

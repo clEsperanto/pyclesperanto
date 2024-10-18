@@ -1838,7 +1838,7 @@ def mean_sphere(
     return clic._mean_sphere(device, input_image, output_image, int(radius_x), int(radius_y), int(radius_z))
 
 @plugin_function(categories=["filter", "denoise", "in assistant"])
-def mean(
+def mean_filter(
     input_image: Image,
     output_image: Optional[Image] =None,
     radius_x: int =1,
@@ -1876,7 +1876,7 @@ def mean(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_mean3DSphere
     """
-    return clic._mean(device, input_image, output_image, int(radius_x), int(radius_y), int(radius_z), str(connectivity))
+    return clic._mean_filter(device, input_image, output_image, int(radius_x), int(radius_y), int(radius_z), str(connectivity))
 
 @plugin_function(categories=["projection"])
 def mean_x_projection(
@@ -4257,7 +4257,7 @@ def variance_sphere(
     return clic._variance_sphere(device, input_image, output_image, int(radius_x), int(radius_y), int(radius_z))
 
 @plugin_function(categories=["filter", "edge detection", "in assistant"])
-def variance(
+def variance_filter(
     input_image: Image,
     output_image: Optional[Image] =None,
     radius_x: int =1,
@@ -4296,7 +4296,7 @@ def variance(
     [1] https://clij.github.io/clij2-docs/reference_varianceBox
     [2] https://clij.github.io/clij2-docs/reference_varianceSphere
     """
-    return clic._variance(device, input_image, output_image, int(radius_x), int(radius_y), int(radius_z), str(connectivity))
+    return clic._variance_filter(device, input_image, output_image, int(radius_x), int(radius_y), int(radius_z), str(connectivity))
 
 @plugin_function
 def write_values_to_positions(

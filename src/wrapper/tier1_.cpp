@@ -238,7 +238,7 @@ m.def("_absolute", &cle::tier1::absolute_func, "Call cle::tier1::absolute_func f
     py::return_value_policy::take_ownership,
     py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("radius_x"), py::arg("radius_y"), py::arg("radius_z"));
 
-    m.def("_mean", &cle::tier1::mean_func, "Call cle::tier1::mean_func from C++ CLIc.",
+    m.def("_mean_filter", &cle::tier1::mean_filter_func, "Call cle::tier1::mean_filter_func from C++ CLIc.",
     py::return_value_policy::take_ownership,
     py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("radius_x"), py::arg("radius_y"), py::arg("radius_z"), py::arg("connectivity"));
 
@@ -546,7 +546,7 @@ m.def("_absolute", &cle::tier1::absolute_func, "Call cle::tier1::absolute_func f
     py::return_value_policy::take_ownership,
     py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("radius_x"), py::arg("radius_y"), py::arg("radius_z"));
 
-    m.def("_variance", &cle::tier1::variance_func, "Call cle::tier1::variance_func from C++ CLIc.",
+    m.def("_variance_filter", &cle::tier1::variance_filter_func, "Call cle::tier1::variance_filter_func from C++ CLIc.",
     py::return_value_policy::take_ownership,
     py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("radius_x"), py::arg("radius_y"), py::arg("radius_z"), py::arg("connectivity"));
 

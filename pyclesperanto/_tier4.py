@@ -163,6 +163,38 @@ def threshold_otsu(
     """
     return clic._threshold_otsu(device, input_image, output_image)
 
+@plugin_function(categories=["label measurement", "map", "in assistant", "combine"])
+def mean_intensity_map(
+    input_image: Image,
+    labels: Image,
+    output_image: Optional[Image] =None,
+    device: Optional[Device] =None
+) -> Image:
+    """Takes an image and a corresponding label map, determines the mean   intensity
+    per label and replaces every label with the that number. This results in a
+    parametric image expressing mean object intensity.
+
+    Parameters
+    ----------
+    input_image: Image 
+        intensity image
+    labels: Image 
+        label image
+    output_image: Optional[Image] (= None)
+        Parametric image computed
+    device: Optional[Device] (= None)
+        Device to perform the operation on.
+
+    Returns
+    -------
+    Image
+
+    References
+    ----------
+    [1] https://clij.github.io/clij2-docs/reference_meanIntensityMap
+    """
+    return clic._mean_intensity_map(device, input_image, labels, output_image)
+
 @plugin_function(categories=["label measurement", "map", "in assistant"])
 def pixel_count_map(
     input_image: Image,

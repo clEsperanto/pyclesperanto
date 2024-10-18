@@ -26,6 +26,10 @@ m.def("_label_bounding_box", &cle::tier4::label_bounding_box_func, "Call cle::ti
     py::return_value_policy::take_ownership,
     py::arg("device"), py::arg("src"), py::arg("dst"));
 
+    m.def("_mean_intensity_map", &cle::tier4::mean_intensity_map_func, "Call cle::tier4::mean_intensity_map_func from C++ CLIc.",
+    py::return_value_policy::take_ownership,
+    py::arg("device"), py::arg("src"), py::arg("labels"), py::arg("dst"));
+
     m.def("_pixel_count_map", &cle::tier4::pixel_count_map_func, "Call cle::tier4::pixel_count_map_func from C++ CLIc.",
     py::return_value_policy::take_ownership,
     py::arg("device"), py::arg("src"), py::arg("dst"));

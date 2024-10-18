@@ -36,7 +36,7 @@ def test_add_images_weighted_named_parameters():
     input2 = np.asarray([4, 5, 6])
 
     reference = np.asarray([9, 12, 15])
-    output = cle.add_images_weighted(input1, input2, None, factor0=1, factor1=2)
+    output = cle.add_images_weighted(input1, input2, None, factor1=1, factor2=2)
     result = cle.pull(output)
 
     print(result)
@@ -49,7 +49,7 @@ def test_add_images_weighted_wrong_parameter_order():
     input2 = np.asarray([4, 5, 6])
 
     reference = np.asarray([9, 12, 15])
-    output = cle.add_images_weighted(input1, input2, factor0=1, factor1=2)
+    output = cle.add_images_weighted(input1, input2, factor1=1, factor2=2)
     result = cle.pull(output)
 
     print(result)
@@ -62,7 +62,7 @@ def test_add_images_weighted_parameters_wrong_order_and_missing():
     input2 = np.asarray([4, 5, 6])
 
     reference = np.asarray([9, 12, 15])
-    output = cle.add_images_weighted(input1, input2, factor1=2, factor0=1)
+    output = cle.add_images_weighted(input1, input2, factor2=2, factor1=1)
     result = cle.pull(output)
 
     print(result)

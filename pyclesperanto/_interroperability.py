@@ -86,19 +86,19 @@ def set_wait_for_kernel_finish(wait: bool = True):
     wait_for_kernel_to_finish(wait)
 
 
-def clip(a, a_min, a_max, out=None):
-    from ._tier2 import clip
+# def clip(a, a_min, a_max, out=None):
+#     from ._tier2 import clip
 
-    a = asarray(a)
-    if out:
-        out = asarray(out)
-    return clip(
-        input_image=a,
-        output_image=out,
-        min_intensity=a_min,
-        max_intensity=a_max,
-        device=a.device,
-    )
+#     a = asarray(a)
+#     if out:
+#         out = asarray(out)
+#     return clip(
+#         input_image=a,
+#         output_image=out,
+#         min_intensity=a_min,
+#         max_intensity=a_max,
+#         device=a.device,
+#     )
 
 
 def mod(x1, x2, out=None):

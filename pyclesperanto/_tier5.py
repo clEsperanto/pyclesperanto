@@ -27,9 +27,9 @@ def array_equal(
     Parameters
     ----------
     input_image0: Image 
-        
+        First array to compare
     input_image1: Image 
-        
+        Second array to compare
     device: Optional[Device] (= None)
         Device to perform the operation on.
 

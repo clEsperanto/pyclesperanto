@@ -12,7 +12,7 @@ m.def("_absolute", &cle::tier1::absolute_func, "Call cle::tier1::absolute_func f
 
     m.def("_add_images_weighted", &cle::tier1::add_images_weighted_func, "Call cle::tier1::add_images_weighted_func from C++ CLIc.",
     py::return_value_policy::take_ownership,
-    py::arg("device"), py::arg("src0"), py::arg("src1"), py::arg("dst"), py::arg("factor0"), py::arg("factor1"));
+    py::arg("device"), py::arg("src0"), py::arg("src1"), py::arg("dst"), py::arg("factor1"), py::arg("factor2"));
 
     m.def("_add_image_and_scalar", &cle::tier1::add_image_and_scalar_func, "Call cle::tier1::add_image_and_scalar_func from C++ CLIc.",
     py::return_value_policy::take_ownership,
@@ -64,15 +64,15 @@ m.def("_absolute", &cle::tier1::absolute_func, "Call cle::tier1::absolute_func f
 
     m.def("_copy_slice", &cle::tier1::copy_slice_func, "Call cle::tier1::copy_slice_func from C++ CLIc.",
     py::return_value_policy::take_ownership,
-    py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("slice"));
+    py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("slice_index"));
 
     m.def("_copy_horizontal_slice", &cle::tier1::copy_horizontal_slice_func, "Call cle::tier1::copy_horizontal_slice_func from C++ CLIc.",
     py::return_value_policy::take_ownership,
-    py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("slice"));
+    py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("slice_index"));
 
     m.def("_copy_vertical_slice", &cle::tier1::copy_vertical_slice_func, "Call cle::tier1::copy_vertical_slice_func from C++ CLIc.",
     py::return_value_policy::take_ownership,
-    py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("slice"));
+    py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("slice_index"));
 
     m.def("_crop", &cle::tier1::crop_func, "Call cle::tier1::crop_func from C++ CLIc.",
     py::return_value_policy::take_ownership,
@@ -140,7 +140,7 @@ m.def("_absolute", &cle::tier1::absolute_func, "Call cle::tier1::absolute_func f
 
     m.def("_generate_distance_matrix", &cle::tier1::generate_distance_matrix_func, "Call cle::tier1::generate_distance_matrix_func from C++ CLIc.",
     py::return_value_policy::take_ownership,
-    py::arg("device"), py::arg("src0"), py::arg("src1"), py::arg("dst"));
+    py::arg("device"), py::arg("coordinate_list1"), py::arg("coordinate_list2"), py::arg("dst"));
 
     m.def("_gradient_x", &cle::tier1::gradient_x_func, "Call cle::tier1::gradient_x_func from C++ CLIc.",
     py::return_value_policy::take_ownership,
@@ -214,7 +214,7 @@ m.def("_absolute", &cle::tier1::absolute_func, "Call cle::tier1::absolute_func f
     py::return_value_policy::take_ownership,
     py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("radius_x"), py::arg("radius_y"), py::arg("radius_z"));
 
-    m.def("_maximum", &cle::tier1::maximum_func, "Call cle::tier1::maximum_func from C++ CLIc.",
+    m.def("_maximum_filter", &cle::tier1::maximum_filter_func, "Call cle::tier1::maximum_filter_func from C++ CLIc.",
     py::return_value_policy::take_ownership,
     py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("radius_x"), py::arg("radius_y"), py::arg("radius_z"), py::arg("connectivity"));
 
@@ -270,7 +270,7 @@ m.def("_absolute", &cle::tier1::absolute_func, "Call cle::tier1::absolute_func f
     py::return_value_policy::take_ownership,
     py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("radius_x"), py::arg("radius_y"), py::arg("radius_z"));
 
-    m.def("_minimum", &cle::tier1::minimum_func, "Call cle::tier1::minimum_func from C++ CLIc.",
+    m.def("_minimum_filter", &cle::tier1::minimum_filter_func, "Call cle::tier1::minimum_filter_func from C++ CLIc.",
     py::return_value_policy::take_ownership,
     py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("radius_x"), py::arg("radius_y"), py::arg("radius_z"), py::arg("connectivity"));
 
@@ -360,7 +360,7 @@ m.def("_absolute", &cle::tier1::absolute_func, "Call cle::tier1::absolute_func f
 
     m.def("_paste", &cle::tier1::paste_func, "Call cle::tier1::paste_func from C++ CLIc.",
     py::return_value_policy::take_ownership,
-    py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("index_x"), py::arg("index_y"), py::arg("index_z"));
+    py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("destination_x"), py::arg("destination_y"), py::arg("destination_z"));
 
     m.def("_onlyzero_overwrite_maximum_box", &cle::tier1::onlyzero_overwrite_maximum_box_func, "Call cle::tier1::onlyzero_overwrite_maximum_box_func from C++ CLIc.",
     py::return_value_policy::take_ownership,
@@ -396,11 +396,11 @@ m.def("_absolute", &cle::tier1::absolute_func, "Call cle::tier1::absolute_func f
 
     m.def("_replace_value", &cle::tier1::replace_value_func, "Call cle::tier1::replace_value_func from C++ CLIc.",
     py::return_value_policy::take_ownership,
-    py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("scalar0"), py::arg("scalar1"));
+    py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("value_to_replace"), py::arg("value_replacement"));
 
     m.def("_replace_intensity", &cle::tier1::replace_intensity_func, "Call cle::tier1::replace_intensity_func from C++ CLIc.",
     py::return_value_policy::take_ownership,
-    py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("scalar0"), py::arg("scalar1"));
+    py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("value_to_replace"), py::arg("value_replacement"));
 
     m.def("_replace_intensities", &cle::tier1::replace_intensities_func, "Call cle::tier1::replace_intensities_func from C++ CLIc.",
     py::return_value_policy::take_ownership,
@@ -416,7 +416,7 @@ m.def("_absolute", &cle::tier1::absolute_func, "Call cle::tier1::absolute_func f
 
     m.def("_multiply_matrix", &cle::tier1::multiply_matrix_func, "Call cle::tier1::multiply_matrix_func from C++ CLIc.",
     py::return_value_policy::take_ownership,
-    py::arg("device"), py::arg("src0"), py::arg("src1"), py::arg("dst"));
+    py::arg("device"), py::arg("matrix1"), py::arg("matrix2"), py::arg("matrix_destination"));
 
     m.def("_reciprocal", &cle::tier1::reciprocal_func, "Call cle::tier1::reciprocal_func from C++ CLIc.",
     py::return_value_policy::take_ownership,
@@ -428,7 +428,7 @@ m.def("_absolute", &cle::tier1::absolute_func, "Call cle::tier1::absolute_func f
 
     m.def("_set_column", &cle::tier1::set_column_func, "Call cle::tier1::set_column_func from C++ CLIc.",
     py::return_value_policy::take_ownership,
-    py::arg("device"), py::arg("src"), py::arg("column"), py::arg("value"));
+    py::arg("device"), py::arg("src"), py::arg("column_index"), py::arg("value"));
 
     m.def("_set_image_borders", &cle::tier1::set_image_borders_func, "Call cle::tier1::set_image_borders_func from C++ CLIc.",
     py::return_value_policy::take_ownership,
@@ -436,7 +436,7 @@ m.def("_absolute", &cle::tier1::absolute_func, "Call cle::tier1::absolute_func f
 
     m.def("_set_plane", &cle::tier1::set_plane_func, "Call cle::tier1::set_plane_func from C++ CLIc.",
     py::return_value_policy::take_ownership,
-    py::arg("device"), py::arg("src"), py::arg("plane"), py::arg("value"));
+    py::arg("device"), py::arg("src"), py::arg("plane_index"), py::arg("value"));
 
     m.def("_set_ramp_x", &cle::tier1::set_ramp_x_func, "Call cle::tier1::set_ramp_x_func from C++ CLIc.",
     py::return_value_policy::take_ownership,
@@ -452,7 +452,7 @@ m.def("_absolute", &cle::tier1::absolute_func, "Call cle::tier1::absolute_func f
 
     m.def("_set_row", &cle::tier1::set_row_func, "Call cle::tier1::set_row_func from C++ CLIc.",
     py::return_value_policy::take_ownership,
-    py::arg("device"), py::arg("src"), py::arg("row"), py::arg("value"));
+    py::arg("device"), py::arg("src"), py::arg("row_index"), py::arg("value"));
 
     m.def("_set_nonzero_pixels_to_pixelindex", &cle::tier1::set_nonzero_pixels_to_pixelindex_func, "Call cle::tier1::set_nonzero_pixels_to_pixelindex_func from C++ CLIc.",
     py::return_value_policy::take_ownership,

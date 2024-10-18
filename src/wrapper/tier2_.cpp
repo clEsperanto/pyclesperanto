@@ -56,7 +56,7 @@ m.def("_absolute_difference", &cle::tier2::absolute_difference_func, "Call cle::
 
     m.def("_count_touching_neighbors", &cle::tier2::count_touching_neighbors_func, "Call cle::tier2::count_touching_neighbors_func from C++ CLIc.",
     py::return_value_policy::take_ownership,
-    py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("ignore_background"));
+    py::arg("device"), py::arg("touch_matrix"), py::arg("touching_neighbors_count_destination"), py::arg("ignore_background"));
 
     m.def("_crop_border", &cle::tier2::crop_border_func, "Call cle::tier2::crop_border_func from C++ CLIc.",
     py::return_value_policy::take_ownership,

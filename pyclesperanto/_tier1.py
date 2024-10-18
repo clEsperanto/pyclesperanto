@@ -47,8 +47,8 @@ def add_images_weighted(
     input_image0: Image,
     input_image1: Image,
     output_image: Optional[Image] =None,
-    factor0: float =1,
     factor1: float =1,
+    factor2: float =1,
     device: Optional[Device] =None
 ) -> Image:
     """Calculates the sum of pairs of pixels x and y from images X and Y weighted with
@@ -62,9 +62,9 @@ def add_images_weighted(
         The second image to be added.
     output_image: Optional[Image] (= None)
         The output image where results are written into.
-    factor0: float (= 1)
-        Multiplication factor of each pixel of src0 before adding it.
     factor1: float (= 1)
+        Multiplication factor of each pixel of src0 before adding it.
+    factor2: float (= 1)
         Multiplication factor of each pixel of src1 before adding it.
     device: Optional[Device] (= None)
         Device to perform the operation on.
@@ -77,7 +77,7 @@ def add_images_weighted(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_addImagesWeighted
     """
-    return clic._add_images_weighted(device, input_image0, input_image1, output_image, float(factor0), float(factor1))
+    return clic._add_images_weighted(device, input_image0, input_image1, output_image, float(factor1), float(factor2))
 
 @plugin_function(categories=["filter", "in assistant"])
 def add_image_and_scalar(
@@ -441,23 +441,23 @@ def copy(
 def copy_slice(
     input_image: Image,
     output_image: Optional[Image] =None,
-    slice: int =0,
+    slice_index: int =0,
     device: Optional[Device] =None
 ) -> Image:
-    """This method has two purposes: It copies a 2D image to a given slice z position
-    in a 3D image stack or It copies a given slice at position z in an image stack
-    to a 2D image. The first case is only available via ImageJ macro. If you are
-    using it, it is recommended that the target 3D image already preexists in GPU
-    memory before calling this method. Otherwise, CLIJ create the image stack with z
-    planes.
+    """This method has two purposes: It copies a 2D image to a given slice_index z
+    position in a 3D image stack or It copies a given slice_index at position z in
+    an image stack to a 2D image. The first case is only available via ImageJ macro.
+    If you are using it, it is recommended that the target 3D image already
+    preexists in GPU memory before calling this method. Otherwise, CLIJ create the
+    image stack with z planes.
 
     Parameters
     ----------
     input_image: Image 
         Input image to copy from.
     output_image: Optional[Image] (= None)
-        Output copy image slice.
-    slice: int (= 0)
+        Output copy image slice_index.
+    slice_index: int (= 0)
         
     device: Optional[Device] (= None)
         Device to perform the operation on.
@@ -470,26 +470,26 @@ def copy_slice(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_copySlice
     """
-    return clic._copy_slice(device, input_image, output_image, int(slice))
+    return clic._copy_slice(device, input_image, output_image, int(slice_index))
 
 @plugin_function
 def copy_horizontal_slice(
     input_image: Image,
     output_image: Optional[Image] =None,
-    slice: int =0,
+    slice_index: int =0,
     device: Optional[Device] =None
 ) -> Image:
-    """This method has two purposes: It copies a 2D image to a given slice y position
-    in a 3D image stack or It copies a given slice at position y in an image stack
-    to a 2D image.
+    """This method has two purposes: It copies a 2D image to a given slice_index y
+    position in a 3D image stack or It copies a given slice_index at position y in
+    an image stack to a 2D image.
 
     Parameters
     ----------
     input_image: Image 
         Input image to copy from.
     output_image: Optional[Image] (= None)
-        Output copy image slice.
-    slice: int (= 0)
+        Output copy image slice_index.
+    slice_index: int (= 0)
         
     device: Optional[Device] (= None)
         Device to perform the operation on.
@@ -502,26 +502,26 @@ def copy_horizontal_slice(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_copySlice
     """
-    return clic._copy_horizontal_slice(device, input_image, output_image, int(slice))
+    return clic._copy_horizontal_slice(device, input_image, output_image, int(slice_index))
 
 @plugin_function
 def copy_vertical_slice(
     input_image: Image,
     output_image: Optional[Image] =None,
-    slice: int =0,
+    slice_index: int =0,
     device: Optional[Device] =None
 ) -> Image:
-    """This method has two purposes: It copies a 2D image to a given slice x position
-    in a 3D image stack or It copies a given slice at position x in an image stack
-    to a 2D image.
+    """This method has two purposes: It copies a 2D image to a given slice_index x
+    position in a 3D image stack or It copies a given slice_index at position x in
+    an image stack to a 2D image.
 
     Parameters
     ----------
     input_image: Image 
         Input image to copy from.
     output_image: Optional[Image] (= None)
-        Output copy image slice.
-    slice: int (= 0)
+        Output copy image slice_index.
+    slice_index: int (= 0)
         
     device: Optional[Device] (= None)
         Device to perform the operation on.
@@ -534,7 +534,7 @@ def copy_vertical_slice(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_copySlice
     """
-    return clic._copy_vertical_slice(device, input_image, output_image, int(slice))
+    return clic._copy_vertical_slice(device, input_image, output_image, int(slice_index))
 
 @plugin_function
 def crop(
@@ -1049,8 +1049,8 @@ def gaussian_blur(
 
 @plugin_function
 def generate_distance_matrix(
-    input_image0: Image,
-    input_image1: Image,
+    coordinate_list1: Image,
+    coordinate_list2: Image,
     output_image: Optional[Image] =None,
     device: Optional[Device] =None
 ) -> Image:
@@ -1066,10 +1066,10 @@ def generate_distance_matrix(
 
     Parameters
     ----------
-    input_image0: Image 
-        First input image to process.
-    input_image1: Image 
-        Second input image to process.
+    coordinate_list1: Image 
+        First coordinate list to process.
+    coordinate_list2: Image 
+        Second coordinate list to process.
     output_image: Optional[Image] (= None)
         Output result image.
     device: Optional[Device] (= None)
@@ -1083,7 +1083,7 @@ def generate_distance_matrix(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_generateDistanceMatrix
     """
-    return clic._generate_distance_matrix(device, input_image0, input_image1, output_image)
+    return clic._generate_distance_matrix(device, coordinate_list1, coordinate_list2, output_image)
 
 @plugin_function(categories=["filter", "edge detection", "in assistant"])
 def gradient_x(
@@ -1641,7 +1641,7 @@ def maximum_box(
     return clic._maximum_box(device, input_image, output_image, int(radius_x), int(radius_y), int(radius_z))
 
 @plugin_function(categories=["filter", "in assistant"])
-def maximum(
+def maximum_filter(
     input_image: Image,
     output_image: Optional[Image] =None,
     radius_x: int =0,
@@ -1680,7 +1680,7 @@ def maximum(
     [1] https://clij.github.io/clij2-docs/reference_maximum3DBox
     [2] https://clij.github.io/clij2-docs/reference_maximum3DSphere
     """
-    return clic._maximum(device, input_image, output_image, int(radius_x), int(radius_y), int(radius_z), str(connectivity))
+    return clic._maximum_filter(device, input_image, output_image, int(radius_x), int(radius_y), int(radius_z), str(connectivity))
 
 @plugin_function(categories=["projection"])
 def maximum_x_projection(
@@ -2115,7 +2115,7 @@ def minimum_box(
     return clic._minimum_box(device, input_image, output_image, int(radius_x), int(radius_y), int(radius_z))
 
 @plugin_function(categories=["filter", "in assistant"])
-def minimum(
+def minimum_filter(
     input_image: Image,
     output_image: Optional[Image] =None,
     radius_x: int =0,
@@ -2153,7 +2153,7 @@ def minimum(
     [1] https://clij.github.io/clij2-docs/reference_minimum3DBox
     [2] https://clij.github.io/clij2-docs/reference_minimum3DSphere
     """
-    return clic._minimum(device, input_image, output_image, int(radius_x), int(radius_y), int(radius_z), str(connectivity))
+    return clic._minimum_filter(device, input_image, output_image, int(radius_x), int(radius_y), int(radius_z), str(connectivity))
 
 @plugin_function(categories=["filter", "in assistant"])
 def minimum_image_and_scalar(
@@ -2843,9 +2843,9 @@ def not_equal_constant(
 def paste(
     input_image: Image,
     output_image: Optional[Image] =None,
-    index_x: int =0,
-    index_y: int =0,
-    index_z: int =0,
+    destination_x: int =0,
+    destination_y: int =0,
+    destination_z: int =0,
     device: Optional[Device] =None
 ) -> Image:
     """Pastes an image into another image at a given position.
@@ -2856,11 +2856,11 @@ def paste(
         Input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
-    index_x: int (= 0)
+    destination_x: int (= 0)
         Origin pixel coodinate in x to paste.
-    index_y: int (= 0)
+    destination_y: int (= 0)
         Origin pixel coodinate in y to paste.
-    index_z: int (= 0)
+    destination_z: int (= 0)
         Origin pixel coodinate in z to paste.
     device: Optional[Device] (= None)
         Device to perform the operation on.
@@ -2873,7 +2873,7 @@ def paste(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_paste3D
     """
-    return clic._paste(device, input_image, output_image, int(index_x), int(index_y), int(index_z))
+    return clic._paste(device, input_image, output_image, int(destination_x), int(destination_y), int(destination_z))
 
 @plugin_function
 def onlyzero_overwrite_maximum_box(
@@ -3147,8 +3147,8 @@ def replace_values(
 def replace_value(
     input_image: Image,
     output_image: Optional[Image] =None,
-    scalar0: float =0,
-    scalar1: float =1,
+    value_to_replace: float =0,
+    value_replacement: float =1,
     device: Optional[Device] =None
 ) -> Image:
     """Replaces a specific intensity in an image with a given new value.
@@ -3159,9 +3159,9 @@ def replace_value(
         Input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
-    scalar0: float (= 0)
+    value_to_replace: float (= 0)
         Old value.
-    scalar1: float (= 1)
+    value_replacement: float (= 1)
         New value.
     device: Optional[Device] (= None)
         Device to perform the operation on.
@@ -3174,14 +3174,14 @@ def replace_value(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_replaceIntensity
     """
-    return clic._replace_value(device, input_image, output_image, float(scalar0), float(scalar1))
+    return clic._replace_value(device, input_image, output_image, float(value_to_replace), float(value_replacement))
 
 @plugin_function
 def replace_intensity(
     input_image: Image,
     output_image: Optional[Image] =None,
-    scalar0: float =0,
-    scalar1: float =1,
+    value_to_replace: float =0,
+    value_replacement: float =1,
     device: Optional[Device] =None
 ) -> Image:
     """Replaces a specific intensity in an image with a given new value.
@@ -3192,9 +3192,9 @@ def replace_intensity(
         Input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
-    scalar0: float (= 0)
+    value_to_replace: float (= 0)
         Old value.
-    scalar1: float (= 1)
+    value_replacement: float (= 1)
         New value.
     device: Optional[Device] (= None)
         Device to perform the operation on.
@@ -3207,7 +3207,7 @@ def replace_intensity(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_replaceIntensity
     """
-    return clic._replace_intensity(device, input_image, output_image, float(scalar0), float(scalar1))
+    return clic._replace_intensity(device, input_image, output_image, float(value_to_replace), float(value_replacement))
 
 @plugin_function
 def replace_intensities(
@@ -3317,9 +3317,9 @@ def minimum_sphere(
 
 @plugin_function
 def multiply_matrix(
-    input_image0: Image,
-    input_image1: Image,
-    output_image: Optional[Image] =None,
+    matrix1: Image,
+    matrix2: Image,
+    matrix_destination: Optional[Image] =None,
     device: Optional[Device] =None
 ) -> Image:
     """Multiplies two matrices with each other. Shape of matrix1 should be equal to
@@ -3327,12 +3327,12 @@ def multiply_matrix(
 
     Parameters
     ----------
-    input_image0: Image 
-        First input image to process.
-    input_image1: Image 
-        Second input image to process.
-    output_image: Optional[Image] (= None)
-        Output result image.
+    matrix1: Image 
+        First matrix to process.
+    matrix2: Image 
+        Second matrix to process.
+    matrix_destination: Optional[Image] (= None)
+        Output result matrix.
     device: Optional[Device] (= None)
         Device to perform the operation on.
 
@@ -3344,7 +3344,7 @@ def multiply_matrix(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_multiplyMatrix
     """
-    return clic._multiply_matrix(device, input_image0, input_image1, output_image)
+    return clic._multiply_matrix(device, matrix1, matrix2, matrix_destination)
 
 @plugin_function(categories=["filter", "in assistant"])
 def reciprocal(
@@ -3405,7 +3405,7 @@ def set(
 @plugin_function
 def set_column(
     input_image: Image,
-    column: int =0,
+    column_index: int =0,
     value: float =0,
     device: Optional[Device] =None
 ) -> Image:
@@ -3415,7 +3415,7 @@ def set_column(
     ----------
     input_image: Image 
         Input image to process.
-    column: int (= 0)
+    column_index: int (= 0)
         Column index.
     value: float (= 0)
         Value to set.
@@ -3430,7 +3430,7 @@ def set_column(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_setColumn
     """
-    return clic._set_column(device, input_image, int(column), float(value))
+    return clic._set_column(device, input_image, int(column_index), float(value))
 
 @plugin_function
 def set_image_borders(
@@ -3462,7 +3462,7 @@ def set_image_borders(
 @plugin_function
 def set_plane(
     input_image: Image,
-    plane: int =0,
+    plane_index: int =0,
     value: float =0,
     device: Optional[Device] =None
 ) -> Image:
@@ -3472,7 +3472,7 @@ def set_plane(
     ----------
     input_image: Image 
         Input image to process.
-    plane: int (= 0)
+    plane_index: int (= 0)
         Plane index.
     value: float (= 0)
         Value to set.
@@ -3487,7 +3487,7 @@ def set_plane(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_setPlane
     """
-    return clic._set_plane(device, input_image, int(plane), float(value))
+    return clic._set_plane(device, input_image, int(plane_index), float(value))
 
 @plugin_function
 def set_ramp_x(
@@ -3564,7 +3564,7 @@ def set_ramp_z(
 @plugin_function
 def set_row(
     input_image: Image,
-    row: int =0,
+    row_index: int =0,
     value: float =0,
     device: Optional[Device] =None
 ) -> Image:
@@ -3574,7 +3574,7 @@ def set_row(
     ----------
     input_image: Image 
         Input image to process.
-    row: int (= 0)
+    row_index: int (= 0)
         
     value: float (= 0)
         
@@ -3589,7 +3589,7 @@ def set_row(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_setRow
     """
-    return clic._set_row(device, input_image, int(row), float(value))
+    return clic._set_row(device, input_image, int(row_index), float(value))
 
 @plugin_function
 def set_nonzero_pixels_to_pixelindex(

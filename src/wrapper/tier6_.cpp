@@ -24,7 +24,7 @@ m.def("_dilate_labels", &cle::tier6::dilate_labels_func, "Call cle::tier6::dilat
 
     m.def("_voronoi_labeling", &cle::tier6::voronoi_labeling_func, "Call cle::tier6::voronoi_labeling_func from C++ CLIc.",
     py::return_value_policy::take_ownership,
-    py::arg("device"), py::arg("src"), py::arg("dst"));
+    py::arg("device"), py::arg("input_binary"), py::arg("output_labels"));
 
     m.def("_remove_small_labels", &cle::tier6::remove_small_labels_func, "Call cle::tier6::remove_small_labels_func from C++ CLIc.",
     py::return_value_policy::take_ownership,

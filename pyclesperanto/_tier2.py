@@ -416,8 +416,8 @@ def concatenate_along_z(
 
 @plugin_function
 def count_touching_neighbors(
-    input_image: Image,
-    output_image: Optional[Image] =None,
+    touch_matrix: Image,
+    touching_neighbors_count_destination: Optional[Image] =None,
     ignore_background: bool =True,
     device: Optional[Device] =None
 ) -> Image:
@@ -428,10 +428,10 @@ def count_touching_neighbors(
 
     Parameters
     ----------
-    input_image: Image 
-        Input image to process.
-    output_image: Optional[Image] (= None)
-        Output result image.
+    touch_matrix: Image 
+        Input touch matrix to process.
+    touching_neighbors_count_destination: Optional[Image] (= None)
+        Output vector of touch count.
     ignore_background: bool (= True)
         
     device: Optional[Device] (= None)
@@ -445,7 +445,7 @@ def count_touching_neighbors(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_countTouchingNeighbors
     """
-    return clic._count_touching_neighbors(device, input_image, output_image, ignore_background)
+    return clic._count_touching_neighbors(device, touch_matrix, touching_neighbors_count_destination, ignore_background)
 
 @plugin_function
 def crop_border(

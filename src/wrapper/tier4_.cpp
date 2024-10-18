@@ -36,7 +36,7 @@ m.def("_label_bounding_box", &cle::tier4::label_bounding_box_func, "Call cle::ti
 
     m.def("_centroids_of_labels", &cle::tier4::centroids_of_labels_func, "Call cle::tier4::centroids_of_labels_func from C++ CLIc.",
     py::return_value_policy::take_ownership,
-    py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("withBG"));
+    py::arg("device"), py::arg("label_image"), py::arg("coorindate_list_destination"), py::arg("include_background"));
 
     m.def("_remove_labels_with_map_values_out_of_range", &cle::tier4::remove_labels_with_map_values_out_of_range_func, "Call cle::tier4::remove_labels_with_map_values_out_of_range_func from C++ CLIc.",
     py::return_value_policy::take_ownership,
@@ -48,11 +48,11 @@ m.def("_label_bounding_box", &cle::tier4::label_bounding_box_func, "Call cle::ti
 
     m.def("_exclude_labels_with_map_values_out_of_range", &cle::tier4::exclude_labels_with_map_values_out_of_range_func, "Call cle::tier4::exclude_labels_with_map_values_out_of_range_func from C++ CLIc.",
     py::return_value_policy::take_ownership,
-    py::arg("device"), py::arg("src"), py::arg("values"), py::arg("dst"), py::arg("min_value_range"), py::arg("max_value_range"));
+    py::arg("device"), py::arg("values_map"), py::arg("label_map_input"), py::arg("dst"), py::arg("minimum_value_range"), py::arg("maximum_value_range"));
 
     m.def("_exclude_labels_with_map_values_within_range", &cle::tier4::exclude_labels_with_map_values_within_range_func, "Call cle::tier4::exclude_labels_with_map_values_within_range_func from C++ CLIc.",
     py::return_value_policy::take_ownership,
-    py::arg("device"), py::arg("src"), py::arg("values"), py::arg("dst"), py::arg("min_value_range"), py::arg("max_value_range"));
+    py::arg("device"), py::arg("values_map"), py::arg("label_map_input"), py::arg("dst"), py::arg("minimum_value_range"), py::arg("maximum_value_range"));
 
     m.def("_extension_ratio_map", &cle::tier4::extension_ratio_map_func, "Call cle::tier4::extension_ratio_map_func from C++ CLIc.",
     py::return_value_policy::take_ownership,

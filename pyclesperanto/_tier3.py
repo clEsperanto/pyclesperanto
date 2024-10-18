@@ -26,7 +26,7 @@ def bounding_box(
     Parameters
     ----------
     input_image: Image 
-        
+        Input binary image
     device: Optional[Device] (= None)
         Device to perform the operation on.
 
@@ -51,7 +51,7 @@ def center_of_mass(
     Parameters
     ----------
     input_image: Image 
-        
+        Input image
     device: Optional[Device] (= None)
         Device to perform the operation on.
 
@@ -81,11 +81,11 @@ def remove_labels(
     Parameters
     ----------
     input_image: Image 
-        
+        Input label image
     list: Image 
-        
+        Vector of 0 and 1 flagging labels to remove
     output_image: Optional[Image] (= None)
-        
+        Output label image
     device: Optional[Device] (= None)
         Device to perform the operation on.
 
@@ -115,11 +115,11 @@ def exclude_labels(
     Parameters
     ----------
     input_image: Image 
-        
+        Input label image
     list: Image 
-        
+        Vector of 0 and 1 flagging labels to remove
     output_image: Optional[Image] (= None)
-        
+        Output label image
     device: Optional[Device] (= None)
         Device to perform the operation on.
 
@@ -148,9 +148,9 @@ def remove_labels_on_edges(
     Parameters
     ----------
     input_image: Image 
-        
+        Input label image
     output_image: Optional[Image] (= None)
-        
+        Output label image
     exclude_x: bool (= True)
         Exclude labels along min and max x
     exclude_y: bool (= True)
@@ -185,9 +185,9 @@ def exclude_labels_on_edges(
     Parameters
     ----------
     input_image: Image 
-        
+        Input label image
     output_image: Optional[Image] (= None)
-        
+        Output label image
     exclude_x: bool (= True)
         Exclude labels along min and max x
     exclude_y: bool (= True)
@@ -247,9 +247,9 @@ def gamma_correction(
     Parameters
     ----------
     input_image: Image 
-        
+        Input image
     output_image: Optional[Image] (= None)
-        
+        Output image
     gamma: float (= 1)
         
     device: Optional[Device] (= None)
@@ -280,11 +280,11 @@ def generate_binary_overlap_matrix(
     Parameters
     ----------
     input_image0: Image 
-        
+        First input label image
     input_image1: Image 
-        
+        Second input label image
     output_image: Optional[Image] (= None)
-        
+        Output overlap matrix
     device: Optional[Device] (= None)
         Device to perform the operation on.
 
@@ -313,9 +313,9 @@ def generate_touch_matrix(
     Parameters
     ----------
     input_image: Image 
-        
+        Input label image
     output_image: Optional[Image] (= None)
-        
+        Output touch matrix
     device: Optional[Device] (= None)
         Device to perform the operation on.
 
@@ -333,9 +333,9 @@ def generate_touch_matrix(
 def histogram(
     input_image: Image,
     output_image: Optional[Image] =None,
-    nbins: int =256,
-    min: Optional[float] =None,
-    max: Optional[float] =None,
+    num_bins: int =256,
+    minimum_intensity: Optional[float] =None,
+    maximum_intensity: Optional[float] =None,
     device: Optional[Device] =None
 ) -> Image:
     """Determines the histogram of a given image. The histogram image is of dimensions
@@ -358,14 +358,14 @@ def histogram(
     Parameters
     ----------
     input_image: Image 
-        
+        Input image to derive histogram from
     output_image: Optional[Image] (= None)
+        Output histogram
+    num_bins: int (= 256)
         
-    nbins: int (= 256)
+    minimum_intensity: Optional[float] (= None)
         
-    min: Optional[float] (= None)
-        
-    max: Optional[float] (= None)
+    maximum_intensity: Optional[float] (= None)
         
     device: Optional[Device] (= None)
         Device to perform the operation on.
@@ -378,7 +378,7 @@ def histogram(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_histogram
     """
-    return clic._histogram(device, input_image, output_image, int(nbins), min, max)
+    return clic._histogram(device, input_image, output_image, int(num_bins), minimum_intensity, maximum_intensity)
 
 @plugin_function
 def jaccard_index(
@@ -395,9 +395,9 @@ def jaccard_index(
     Parameters
     ----------
     input_image0: Image 
-        
+        First binary image to compare
     input_image1: Image 
-        
+        Second binary image to compare
     device: Optional[Device] (= None)
         Device to perform the operation on.
 
@@ -426,9 +426,9 @@ def labelled_spots_to_pointlist(
     Parameters
     ----------
     input_image: Image 
-        
+        Input label image
     output_image: Optional[Image] (= None)
-        
+        Output coordinate list
     device: Optional[Device] (= None)
         Device to perform the operation on.
 
@@ -545,21 +545,22 @@ def morphological_chan_vese(
 
 @plugin_function
 def statistics_of_labelled_pixels(
-    label: Image,
     intensity: Optional[Image] =None,
+    label: Optional[Image] =None,
     device: Optional[Device] =None
 ) -> dict:
     """Compute the bounding box, area (in pixels/voxels), minimum intensity, maximum
     intensity, average intensity, standard deviation of the intensity, and some
     shape descriptors of labelled objects in a label image and its corresponding
-    intensity image. The intensity image is optional and set to 0 if not provided.
+    intensity image. The intensity image is equal to the label image if not
+    provided. The label image is set to the entire image if not provided.
 
     Parameters
     ----------
-    label: Image 
-        Label image to compute the statistics.
     intensity: Optional[Image] (= None)
         Intensity image.
+    label: Optional[Image] (= None)
+        Label image to compute the statistics.
     device: Optional[Device] (= None)
         Device to perform the operation on.
 
@@ -571,26 +572,27 @@ def statistics_of_labelled_pixels(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_statisticsOfLabelledPixels
     """
-    return clic._statistics_of_labelled_pixels(device, label, intensity)
+    return clic._statistics_of_labelled_pixels(device, intensity, label)
 
 @plugin_function
 def statistics_of_background_and_labelled_pixels(
-    label: Image,
     intensity: Optional[Image] =None,
+    label: Optional[Image] =None,
     device: Optional[Device] =None
 ) -> dict:
     """Compute, for the background and labels, the bounding box, area (in
     pixels/voxels), minimum intensity, maximum intensity, average intensity,
     standard deviation of the intensity, and some shape descriptors of labelled
     objects in a label image and its corresponding intensity image. The intensity
-    image is optional and set to 0 if not provided.
+    image is equal to the label image if not provided. The label image is set to the
+    entire image if not provided.
 
     Parameters
     ----------
-    label: Image 
-        Label image to compute the statistics.
     intensity: Optional[Image] (= None)
         Intensity image.
+    label: Optional[Image] (= None)
+        Label image to compute the statistics.
     device: Optional[Device] (= None)
         Device to perform the operation on.
 
@@ -602,4 +604,4 @@ def statistics_of_background_and_labelled_pixels(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_statisticsOfBackgroundAndLabelledPixels
     """
-    return clic._statistics_of_background_and_labelled_pixels(device, label, intensity)
+    return clic._statistics_of_background_and_labelled_pixels(device, intensity, label)

@@ -48,7 +48,7 @@ m.def("_bounding_box", &cle::tier3::bounding_box_func, "Call cle::tier3::boundin
 
     m.def("_histogram", &cle::tier3::histogram_func, "Call cle::tier3::histogram_func from C++ CLIc.",
     py::return_value_policy::take_ownership,
-    py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("nbins"), py::arg("min"), py::arg("max"));
+    py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("num_bins"), py::arg("minimum_intensity"), py::arg("maximum_intensity"));
 
     m.def("_jaccard_index", &cle::tier3::jaccard_index_func, "Call cle::tier3::jaccard_index_func from C++ CLIc.",
     py::return_value_policy::take_ownership,
@@ -76,9 +76,9 @@ m.def("_bounding_box", &cle::tier3::bounding_box_func, "Call cle::tier3::boundin
 
     m.def("_statistics_of_labelled_pixels", &cle::tier3::statistics_of_labelled_pixels_func, "Call cle::tier3::statistics_of_labelled_pixels_func from C++ CLIc.",
     py::return_value_policy::take_ownership,
-    py::arg("device"), py::arg("label"), py::arg("intensity"));
+    py::arg("device"), py::arg("intensity"), py::arg("label"));
 
     m.def("_statistics_of_background_and_labelled_pixels", &cle::tier3::statistics_of_background_and_labelled_pixels_func, "Call cle::tier3::statistics_of_background_and_labelled_pixels_func from C++ CLIc.",
     py::return_value_policy::take_ownership,
-    py::arg("device"), py::arg("label"), py::arg("intensity"));
+    py::arg("device"), py::arg("intensity"), py::arg("label"));
 }

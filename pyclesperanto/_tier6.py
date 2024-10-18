@@ -28,9 +28,9 @@ def dilate_labels(
     Parameters
     ----------
     input_image: Image 
-        label image to erode
+        Input label image to erode
     output_image: Optional[Image] (= None)
-        result
+        Output label image
     radius: int (= 2)
         
     device: Optional[Device] (= None)
@@ -58,13 +58,13 @@ def erode_labels(
     Parameters
     ----------
     input_image: Image 
-        result
+        Input label image
     output_image: Optional[Image] (= None)
-        
+        Output label image
     radius: int (= 1)
         
     relabel: bool (= False)
-        and all label indices exist.
+        Relabel the image, e.g. if object disappear or split.
     device: Optional[Device] (= None)
         Device to perform the operation on.
 
@@ -90,7 +90,7 @@ def gauss_otsu_labeling(
     Parameters
     ----------
     input_image0: Image 
-        intensity image to add labels
+        Intensity image to segment
     output_image: Optional[Image] (= None)
         Output label image.
     outline_sigma: float (= 0)
@@ -123,11 +123,11 @@ def masked_voronoi_labeling(
     Parameters
     ----------
     input_image: Image 
-        
+        Input binary image
     mask: Image 
-        
+        Input
     output_image: Optional[Image] (= None)
-        
+        Output label image
     device: Optional[Device] (= None)
         Device to perform the operation on.
 
@@ -143,8 +143,8 @@ def masked_voronoi_labeling(
 
 @plugin_function(categories=["label", "in assistant", "bia-bob-suggestion"])
 def voronoi_labeling(
-    input_image: Image,
-    output_image: Optional[Image] =None,
+    input_binary: Image,
+    output_labels: Optional[Image] =None,
     device: Optional[Device] =None
 ) -> Image:
     """Takes a binary image, labels connected components and dilates the regions using
@@ -153,10 +153,10 @@ def voronoi_labeling(
 
     Parameters
     ----------
-    input_image: Image 
-        
-    output_image: Optional[Image] (= None)
-        
+    input_binary: Image 
+        Input binary image
+    output_labels: Optional[Image] (= None)
+        Output label image
     device: Optional[Device] (= None)
         Device to perform the operation on.
 
@@ -168,7 +168,7 @@ def voronoi_labeling(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_voronoiLabeling
     """
-    return clic._voronoi_labeling(device, input_image, output_image)
+    return clic._voronoi_labeling(device, input_binary, output_labels)
 
 @plugin_function(categories=["label processing", "in assistant", "bia-bob-suggestion"])
 def remove_small_labels(
@@ -184,7 +184,7 @@ def remove_small_labels(
     input_image: Image 
         Label image to filter.
     output_image: Optional[Image] (= None)
-        Output label image fitlered.
+        Output label image filtered.
     minimum_size: float (= 100)
         Smallest size object allowed.
     device: Optional[Device] (= None)
@@ -214,7 +214,7 @@ def exclude_small_labels(
     input_image: Image 
         Label image to filter.
     output_image: Optional[Image] (= None)
-        Output label image fitlered.
+        Output label image filtered.
     maximum_size: float (= 100)
         Largest size object to exclude.
     device: Optional[Device] (= None)
@@ -237,14 +237,14 @@ def remove_large_labels(
     maximum_size: float =100,
     device: Optional[Device] =None
 ) -> Image:
-    """Removes labelled objects bigger than a given size (in pixels) from a label map.
+    """Removes labeled objects bigger than a given size (in pixels) from a label map.
 
     Parameters
     ----------
     input_image: Image 
         Label image to filter.
     output_image: Optional[Image] (= None)
-        Output label image fitlered.
+        Output label image filtered.
     maximum_size: float (= 100)
         Biggest size object allowed.
     device: Optional[Device] (= None)
@@ -274,7 +274,7 @@ def exclude_large_labels(
     input_image: Image 
         Label image to filter.
     output_image: Optional[Image] (= None)
-        Output label image fitlered.
+        Output label image filtered.
     minimum_size: float (= 100)
         Smallest size object to keep.
     device: Optional[Device] (= None)

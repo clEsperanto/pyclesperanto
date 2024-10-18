@@ -31,9 +31,9 @@ def affine_transform(
     Parameters
     ----------
     input_image: Image 
-        Input Array to be transformed.
+        Input image to be transformed.
     output_image: Optional[Image] (= None)
-        Output Array.
+        Output image.
     transform_matrix: Optional[list] (= None)
         Affine transformation matrix (3x3 or 4x4).
     interpolate: bool (= False)
@@ -70,9 +70,9 @@ def eroded_otsu_labeling(
     Parameters
     ----------
     input_image: Image 
-        Input Array to be transformed.
+        Input image to be transformed.
     output_image: Optional[Image] (= None)
-        Output Array.
+        Output label image.
     number_of_erosions: int (= 5)
         Number of iteration of erosion.
     outline_sigma: float (= 2)
@@ -113,9 +113,9 @@ def rigid_transform(
     Parameters
     ----------
     input_image: Image 
-        Input Array to be transformed.
+        Input image to be transformed.
     output_image: Optional[Image] (= None)
-        Output Array.
+        Output image.
     translate_x: float (= 0)
         Translation along x axis in pixels.
     translate_y: float (= 0)
@@ -162,9 +162,9 @@ def rotate(
     Parameters
     ----------
     input_image: Image 
-        Input Array to be rotated.
+        Input image to be rotated.
     output_image: Optional[Image] (= None)
-        Output Array.
+        Output image.
     angle_x: float (= 0)
         Rotation around x axis in degrees.
     angle_y: float (= 0)
@@ -203,9 +203,9 @@ def scale(
     Parameters
     ----------
     input_image: Image 
-        Input Array to be scaleded.
+        Input image to be scaled.
     output_image: Optional[Image] (= None)
-        Output Array.
+        Output image.
     factor_x: float (= 1)
         Scaling along x axis.
     factor_y: float (= 1)
@@ -242,9 +242,9 @@ def translate(
     Parameters
     ----------
     input_image: Image 
-        Input Array to be translated.
+        Input image to be translated.
     output_image: Optional[Image] (= None)
-        Output Array.
+        Output image.
     translate_x: float (= 0)
         Translation along x axis in pixels.
     translate_y: float (= 0)
@@ -278,9 +278,9 @@ def closing_labels(
     Parameters
     ----------
     input_image: Image 
-        Input label Array.
+        Input label image.
     output_image: Optional[Image] (= None)
-        Output label Array.
+        Output label image.
     radius: int (= 0)
         Radius size for the closing.
     device: Optional[Device] (= None)
@@ -306,9 +306,9 @@ def erode_connected_labels(
     Parameters
     ----------
     input_image: Image 
-        result
+        Input image to process
     output_image: Optional[Image] (= None)
-        
+        Output label image
     radius: int (= 1)
         
     device: Optional[Device] (= None)
@@ -336,9 +336,9 @@ def opening_labels(
     Parameters
     ----------
     input_image: Image 
-        Input label Array.
+        Input label image.
     output_image: Optional[Image] (= None)
-        Output label Array.
+        Output label image.
     radius: int (= 0)
         Radius size for the opening.
     device: Optional[Device] (= None)
@@ -368,9 +368,9 @@ def voronoi_otsu_labeling(
     Parameters
     ----------
     input_image: Image 
-        Input intensity Array.
+        Input intensity image.
     output_image: Optional[Image] (= None)
-        Output label Array.
+        Output label image.
     spot_sigma: float (= 2)
         Controls how close detected cells can be.
     outline_sigma: float (= 2)

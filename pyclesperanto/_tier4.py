@@ -27,9 +27,9 @@ def label_bounding_box(
     Parameters
     ----------
     input_image: Image 
-        
+        Label image
     label_id: int 
-        
+        Identifier of label
     device: Optional[Device] (= None)
         Device to perform the operation on.
 
@@ -55,9 +55,9 @@ def mean_squared_error(
     Parameters
     ----------
     input_image0: Image 
-        
+        First image to compare
     input_image1: Image 
-        
+        Second image to compare
     device: Optional[Device] (= None)
         Device to perform the operation on.
 
@@ -84,9 +84,9 @@ def spots_to_pointlist(
     Parameters
     ----------
     input_image: Image 
-        
+        Input binary image of spots
     output_image: Optional[Image] (= None)
-        
+        Output coordinate list of spots
     device: Optional[Device] (= None)
         Device to perform the operation on.
 
@@ -115,7 +115,7 @@ def relabel_sequential(
     Parameters
     ----------
     input_image: Image 
-        Label image.
+        Input label image.
     output_image: Optional[Image] (= None)
         Output label image.
     blocksize: int (= 4096)
@@ -223,9 +223,9 @@ def label_pixel_count_map(
 
 @plugin_function
 def centroids_of_labels(
-    input_image: Image,
-    output_image: Optional[Image] =None,
-    withBG: bool =False,
+    label_image: Image,
+    coorindate_list_destination: Image,
+    include_background: bool =False,
     device: Optional[Device] =None
 ) -> Image:
     """Determines the centroids of all labels in a label image or image stack. It
@@ -235,11 +235,11 @@ def centroids_of_labels(
 
     Parameters
     ----------
-    input_image: Image 
+    label_image: Image 
         Label image where the centroids will be determined from.
-    output_image: Optional[Image] (= None)
-        Output image where the centroids will be written to.
-    withBG: bool (= False)
+    coorindate_list_destination: Image 
+        Output list of coordinates where the centroids will be written to.
+    include_background: bool (= False)
         Determines if the background label should be included.
     device: Optional[Device] (= None)
         Device to perform the operation on.
@@ -252,7 +252,7 @@ def centroids_of_labels(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_centroidsOfLabels
     """
-    return clic._centroids_of_labels(device, input_image, output_image, withBG)
+    return clic._centroids_of_labels(device, label_image, coorindate_list_destination, include_background)
 
 @plugin_function(categories=["label processing", "combine"])
 def remove_labels_with_map_values_out_of_range(
@@ -330,11 +330,11 @@ def remove_labels_with_map_values_within_range(
 
 @plugin_function(categories=["label processing", "combine"])
 def exclude_labels_with_map_values_out_of_range(
-    input_image: Image,
-    values: Image,
+    values_map: Image,
+    label_map_input: Image,
     output_image: Optional[Image] =None,
-    min_value_range: float =0,
-    max_value_range: float =100,
+    minimum_value_range: float =0,
+    maximum_value_range: float =100,
     device: Optional[Device] =None
 ) -> Image:
     """Exclude labels with values outside a given value range based on a vector of
@@ -342,15 +342,15 @@ def exclude_labels_with_map_values_out_of_range(
 
     Parameters
     ----------
-    input_image: Image 
+    values_map: Image 
+        Vector of values associated with the labels.
+    label_map_input: Image 
         Input image where labels will be filtered.
-    values: Image 
-        Vector of
     output_image: Optional[Image] (= None)
         Output image where labels will be written to.
-    min_value_range: float (= 0)
+    minimum_value_range: float (= 0)
         Minimum value to keep.
-    max_value_range: float (= 100)
+    maximum_value_range: float (= 100)
         Maximum value to keep.
     device: Optional[Device] (= None)
         Device to perform the operation on.
@@ -363,15 +363,15 @@ def exclude_labels_with_map_values_out_of_range(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_excludeLabelsWithValuesOutOfRange
     """
-    return clic._exclude_labels_with_map_values_out_of_range(device, input_image, values, output_image, float(min_value_range), float(max_value_range))
+    return clic._exclude_labels_with_map_values_out_of_range(device, values_map, label_map_input, output_image, float(minimum_value_range), float(maximum_value_range))
 
 @plugin_function(categories=["label processing", "combine"])
 def exclude_labels_with_map_values_within_range(
-    input_image: Image,
-    values: Image,
+    values_map: Image,
+    label_map_input: Image,
     output_image: Optional[Image] =None,
-    min_value_range: float =0,
-    max_value_range: float =100,
+    minimum_value_range: float =0,
+    maximum_value_range: float =100,
     device: Optional[Device] =None
 ) -> Image:
     """Exclude labels with values inside a given value range based on a vector of
@@ -379,15 +379,15 @@ def exclude_labels_with_map_values_within_range(
 
     Parameters
     ----------
-    input_image: Image 
+    values_map: Image 
+        Vector of values associated with the labels.
+    label_map_input: Image 
         Input image where labels will be filtered.
-    values: Image 
-        Vector of
     output_image: Optional[Image] (= None)
         Output image where labels will be written to.
-    min_value_range: float (= 0)
+    minimum_value_range: float (= 0)
         Minimum value to keep.
-    max_value_range: float (= 100)
+    maximum_value_range: float (= 100)
         Maximum value to keep.
     device: Optional[Device] (= None)
         Device to perform the operation on.
@@ -400,7 +400,7 @@ def exclude_labels_with_map_values_within_range(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_excludeLabelsWithValuesWithinRange
     """
-    return clic._exclude_labels_with_map_values_within_range(device, input_image, values, output_image, float(min_value_range), float(max_value_range))
+    return clic._exclude_labels_with_map_values_within_range(device, values_map, label_map_input, output_image, float(minimum_value_range), float(maximum_value_range))
 
 @plugin_function(categories=["label processing", "in assistant", "map"])
 def extension_ratio_map(

@@ -101,31 +101,31 @@ def set_wait_for_kernel_finish(wait: bool = True):
 #     )
 
 
-def mod(x1, x2, out=None):
-    from ._tier1 import modulo_images
+# def mod(x1, x2, out=None):
+#     from ._tier1 import modulo_images
 
-    x1 = asarray(x1)
-    if out:
-        out = asarray(out)
-    return modulo_images(input_image0=x1, input_image1=x2, device=x1.device)
-
-
-def sqrt(x, out=None):
-    from ._tier1 import square_root
-
-    x = asarray(x)
-    if out:
-        out = asarray(out)
-    return square_root(input_image=x, output_image=out, device=x.device)
+#     x1 = asarray(x1)
+#     if out:
+#         out = asarray(out)
+#     return modulo_images(input_image0=x1, input_image1=x2, device=x1.device)
 
 
-def cbrt(x, out=None):
-    from ._tier1 import cubic_root
+# def sqrt(x, out=None):
+#     from ._tier1 import square_root
 
-    x = asarray(x)
-    if out:
-        out = asarray(out)
-    return cubic_root(input_image=x, output_image=out, device=x.device)
+#     x = asarray(x)
+#     if out:
+#         out = asarray(out)
+#     return square_root(input_image=x, output_image=out, device=x.device)
+
+
+# def cbrt(x, out=None):
+#     from ._tier1 import cubic_root
+
+#     x = asarray(x)
+#     if out:
+#         out = asarray(out)
+#     return cubic_root(input_image=x, output_image=out, device=x.device)
 
 
 # def power(x1, x2, out=None):
@@ -147,13 +147,13 @@ def cbrt(x, out=None):
 #         )
 
 
-def fabs(x, out=None):
-    from ._memory import create
-    from ._tier1 import absolute
+# def fabs(x, out=None):
+#     from ._memory import create
+#     from ._tier1 import absolute
 
-    x = asarray(x)
-    if out:
-        out = asarray(out)
-    else:
-        out = create(x.shape, dtype=float, mtype=x.mtype, device=x.device)
-    return absolute(input_image=x, output_image=out, device=x.device)
+#     x = asarray(x)
+#     if out:
+#         out = asarray(out)
+#     else:
+#         out = create(x.shape, dtype=float, mtype=x.mtype, device=x.device)
+#     return absolute(input_image=x, output_image=out, device=x.device)

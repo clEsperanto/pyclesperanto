@@ -644,7 +644,7 @@ def __repr_html__(self):
 
             num_bins = 32
             h = np.asarray(
-                histogram(self, nbins=num_bins, min=self.min(), max=self.max())
+                histogram(self, num_bins=num_bins, minimum_intensity=self.min(), maximum_intensity=self.max())
             )
             plt.figure(figsize=(1.8, 1.2))
             plt.bar(range(0, len(h)), h)

@@ -1,5 +1,6 @@
-import pyclesperanto as cle
 import numpy as np
+
+import pyclesperanto as cle
 
 
 def test_label_pixel_count_map():

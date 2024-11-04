@@ -1,5 +1,6 @@
-import pyclesperanto as cle
 import numpy as np
+
+import pyclesperanto as cle
 
 
 def test_reduce_labels_to_centroids():

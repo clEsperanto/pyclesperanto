@@ -1,5 +1,6 @@
-import pyclesperanto as cle
 import numpy as np
+
+import pyclesperanto as cle
 
 
 def test_exclude_labels_out_of_size_range_2d():

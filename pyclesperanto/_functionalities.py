@@ -1,7 +1,7 @@
+from inspect import getmembers, isfunction
 from os import path
 from pathlib import Path
-from typing import Optional, Union, Callable
-from inspect import getmembers, isfunction
+from typing import Callable, Optional, Union
 
 import numpy as np
 from matplotlib.colors import ListedColormap

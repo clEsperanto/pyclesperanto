@@ -32,16 +32,11 @@ def test_threshold_otsu_against_scikit_image():
     assert np.allclose(binary, (cle.pull(gpu_binary) > 0))
 
 
-
 def test_threshold_otsu_low_values():
-    input = np.asarray([[0,0,0],
-             [0,0.003,0],
-             [0,0,0]])
-    
-    reference = np.asarray([[0,0,0],
-             [0,1,0],
-             [0,0,0]])
-    
+    input = np.asarray([[0, 0, 0], [0, 0.003, 0], [0, 0, 0]])
+
+    reference = np.asarray([[0, 0, 0], [0, 1, 0], [0, 0, 0]])
+
     result = cle.threshold_otsu(input)
 
     assert np.allclose(reference, cle.pull(result) > 0)

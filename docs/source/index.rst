@@ -41,5 +41,8 @@ As well as documentation on how to migrate from the `prototype <https://github.c
 📖 Citation
 -----------
 
-There is no publication for pyclesperanto yet. If you use pyclesperanto in your research, please use the zenodo DOI
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.13853800.svg)](https://doi.org/10.5281/zenodo.13853800) to cite it.
+There is no publication for pyclesperanto yet. If you use pyclesperanto in your research, please use the zenodo DOI to cite it.
+
+.. image:: https://zenodo.org/badge/DOI/10.5281/zenodo.13853800.svg
+   :target: https://doi.org/10.5281/zenodo.13853800
+   :align: center

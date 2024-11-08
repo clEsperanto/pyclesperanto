@@ -105,11 +105,11 @@ if build_all_docs is not None:
 
     # and we append all versions and langauges accordingly
     # we treat t he main branch as latest
-    if current_version == "latest":
+    if current_version == "main":
         html_context["languages"].append(["en", pages_root])
 
     if current_language == "en":
-        html_context["versions"].append(["latest", pages_root])
+        html_context["versions"].append(["main", pages_root])
 
     # and loop over all other versions from our yaml file
     # to set versions and languages
@@ -117,7 +117,7 @@ if build_all_docs is not None:
         docs = yaml.safe_load(yaml_file)
 
     if docs:
-        if current_version != "latest":
+        if current_version != "main":
             for language in docs[current_version].get("languages", []):
                 html_context["languages"].append(
                     [language, pages_root + "/" + current_version + "/" + language]

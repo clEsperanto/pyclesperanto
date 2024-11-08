@@ -24,7 +24,7 @@ with open("../../pyclesperanto/_version.py", "r") as f:
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
-project = "py-clEsperanto"
+project = "pyclEsperanto"
 slug = re.sub(r"\W+", "-", project.lower())
 author = "Stephane Rigaud"
 copyright = f"2024, {author}"
@@ -59,7 +59,7 @@ modindex_common_prefix = ["pyclesperanto."]
 gettext_compact = False
 master_doc = "index"
 suppress_warnings = ["image.nonlocal_uri"]
-pygments_style = "default"
+pygments_style = "friendly"
 nbsphinx_execute = "never"
 
 # -- Options for HTML output -------------------------------------------------
@@ -70,9 +70,9 @@ html_theme_options = {
     "logo_only": False,
     "navigation_depth": 5,
     "collapse_navigation": False,
+    "sticky_navigation": True,
+    "version_selector": True,
 }
-html_context = {}
-
 
 html_logo = "./images/logo_d_small.png"
 # html_favicon = "demo/static/favicon.ico"

@@ -4,7 +4,7 @@ API Documentation
 Core functions
 ==============
 
-Collection of functions explore and select system devices (e.g. GPUs) and initialize a device to work with.
+Collection of functions to explore and select system devices (e.g. GPUs) and initialize a device to work with.
 
 .. automodule:: pyclesperanto._core
     :members:
@@ -46,52 +46,31 @@ Collection of operations aiming to help in displaying and analyzing results, e.g
 Filters
 =======
 
-Complete list, organized by complexity, of all available filters in pyclesperanto.
-
-tier1
-------
+Complete list of all available filters in pyclesperanto.
 
 .. automodule:: pyclesperanto._tier1
     :members:
     :undoc-members:
 
-tier2
-------
-
 .. automodule:: pyclesperanto._tier2
     :members:
     :undoc-members:
-
-tier3
-------
 
 .. automodule:: pyclesperanto._tier3
     :members:
     :undoc-members:
 
-tier4
-------
-
 .. automodule:: pyclesperanto._tier4
     :members:
     :undoc-members:
-
-tier5
-------
 
 .. automodule:: pyclesperanto._tier5
     :members:
     :undoc-members:
 
-tier6
-------
-
 .. automodule:: pyclesperanto._tier6
     :members:
     :undoc-members:
-
-tier7
-------
 
 .. automodule:: pyclesperanto._tier7
     :members:

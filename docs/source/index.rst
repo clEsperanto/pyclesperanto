@@ -1,33 +1,38 @@
-.. pyclesperanto documentation master file, created by
-   sphinx-quickstart on Wed Mar 22 13:58:38 2023.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
+***************************
+pyclesperanto documentation
+***************************
 
-******************************************************
-py-clesperanto documentation
-******************************************************
+.. add logo here centered
+.. image:: images/logo_w.png
+   :align: center
 
-py-clesperanto is the python package of clEsperanto - a multi-language framework for GPU-accelerated image processing.
-You will find here a first draft of the API for reference and documentation purposes as well as how to use the package.
+pyclesperanto is the python package of clEsperanto - a multi-language framework for GPU-accelerated image processing.
+You will find here the documentation for the python bindings of clEsperanto, pyclesperanto. The documentation covers the installation, the usage and the API of pyclesperanto.
+As well as documentation on how to migrate from the `prototype <https://github.com/clEsperanto/pyclesperanto_prototype>__` to `pyclesperanto <https://github.com/clEsperanto/pyclesperanto>__`.
 
 .. note::
 
-   This project is under active development, as well as its documentation.
-
+   This project is still under active development, as well as its documentation. If you find any issues, please raise an `issue <https://github.com/clEsperanto/pyclesperanto/issues>__`.
 
 .. toctree::
-   :caption: User Guide
+   :caption: :books: Documentation
    :maxdepth: 1
 
-   install
-   usage
-   api
-   prototype
-   api_differences
+   documentation/install
+   documentation/usage
+   documentation/faq
+   documentation/api
    genindex
 
 .. toctree::
-   :caption: Developper Guide
+   :caption: :metal: Prototype Migration
    :maxdepth: 1
 
-   contribute
+   prototype/prototype
+   prototype/api_differences
+
+.. toctree::
+   :caption: :computer: Developper Guide
+   :maxdepth: 1
+
+   developpers/contribute

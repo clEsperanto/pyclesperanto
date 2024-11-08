@@ -1,12 +1,7 @@
 Contributing
 ############
 
-.. warning::
-
-    This section of the documentation in under construction.
-
-
-py-clesperanto is a Python API layer for the `CLIc library <https://github.com/clEsperanto/CLIc>`__.
+pyclesperanto is a Python API layer for the `CLIc library <https://github.com/clEsperanto/CLIc>`__.
 Several operation and functionality are directly inherited from the CLIc library, compiled and imported in the package as ``_clesperanto``.
 Arround this C++ core, the package as several Python code to ensure proper integration with the Python ecosystem (numpy, etc.).
 
@@ -15,57 +10,36 @@ Therefore, it is possible to contribute to the development of py-clesperanto eit
 Environment setup
 ------------------
 
-Like for any other python development we encourage you to use a virtual environment to develop py-clesperanto.
-Here we will describe how to setup a development environment for py-clesperanto with `conda/mamba`.
+To contribute to the development of pyclesperanto, you will need to install it from the source code.
+Please follow the `installation guide <install.rst>`__ to install the package from source.
 
-1. Create a new environment with `conda/mamba`:
-
-.. code-block:: bash
-
-    mamba create -n pycle-dev python=3.9 -c conda-forge
-    mamba activate pycle-dev
-
-2. Install extra packages:
+Also for code cleaness, we strongly advise to install the pre-commit hooks to ensure code quality and style.
 
 .. code-block:: bash
 
-    mamba install -c conda-forge jupyter scikit-image pandas pytest
-
-3. Setup pre-commit:
-
-.. code-block:: bash
-
+    pip install pre-commit
     pre-commit install
 
-4. Install py-clesperanto in development mode:
+New python operations
+---------------------
 
-.. code-block:: bash
+Algorithm implementation of the library is destined to be in C++. However, C++ development can be tedious and difficult, and its integration into CLIc can be complex.
+Therefore, it is possible to implement new operations in Python, and provid it to the python package in the  ``__future__`` or ``__interroperability__`` module of the package.
 
-    pip install . -v
+Once stable and tested, we will be happy to fully integrate the operation to the C++ side of the library for full deployement.
 
-5. Run the tests:
+New OpenCL operations
+---------------------
 
-.. code-block:: bash
-
-    pytest
-
-All tests should pass.
-The ``pip install`` command will compile and install the package in the environment.
-You will now be able to modify the ``pyclesperanto`` package and see the changes directly in the environment.
-The ``pre-commit`` tool will ensure that the code is properly formatted and linted before any commit.
-
-.. warning::
-
-    ``-e`` flag of the ``pip install`` command is not available for the moment.
-
+(WIP)
 
 Versioning
 ----------
 
-pyClesperanto version folows the `CLIc <https://github.com/clEsperanto/CLIc>`__ versioning for now as both are development concurently.
+pyclesperanto version folows the `CLIc <https://github.com/clEsperanto/CLIc>`__ versioning for now as both are development concurently.
 Although they are not necessarily made to be identically, the versioning is kept in sync as much as possible.
 
-In order to update the version of pyClesperanto, or the version of CLIc, modify the `_version.py` file of pyclesperanto package.
+In order to update the version of pyclesperanto, or the version of CLIc, modify the `_version.py` file of pyclesperanto package.
 
 `VERSION` define the versioning tag of the package `pyclesperanto`. It should be updated when a new release is made.
 `CLIC_VERSION` define the `CLIc <https://github.com/clEsperanto/CLIc>`__ library version to use.
@@ -86,7 +60,13 @@ We are using the following hooks:
 - `flake8 <https://flake8.pycqa.org/en/latest/>`__ for code linting
 in addition to more classical cleaning hooks like `end-of-file-fixer` and `trailing-whitespace`.
 
-You can install the pre-commit hooks locally (see `pre-commit installation <https://pre-commit.com/>`__), allowing you to run the checks before committing your changes.
+You can install the pre-commit hooks locally (see `pre-commit installation <https://pre-commit.com/>`__), allowing you to run the checks before committing your changes:
+
+.. code-block:: bash
+
+    pip install pre-commit
+    pre-commit install
+
 Otherwise, any pull request will automatically run the checks on the pre-commit CI.
 
 .. note::

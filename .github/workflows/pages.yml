@@ -30,7 +30,7 @@ jobs:
       - name: Set up Python environment
         uses: actions/setup-python@v5
         with:
-          python-version: 3.9
+          python-version: 3.11
 
       # - name: generat build folder
       #   run: |
@@ -54,9 +54,12 @@ jobs:
         run: |
           sudo apt install python3-sphinx pandoc
           python -m pip install --upgrade pip
-          pip install sphinx nbsphinx sphinx_rtd_theme sphinx-autodoc-typehints sphinx_copybutton
+          pip install sphinx nbsphinx sphinx_rtd_theme sphinx-autodoc-typehints sphinx_copybutton sphinx-tabs sphinxemoji pyyaml
+
+      - name: Build
+        run: |
           cd docs
-          make clean && make html
+          python build_doc.py
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
@@ -64,7 +67,7 @@ jobs:
         uses: actions/upload-pages-artifact@v3
         with:
           # Upload entire repository
-          path: './docs/build/html'
+          path: './pages'
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4

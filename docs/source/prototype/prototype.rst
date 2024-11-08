@@ -35,7 +35,7 @@ The import of the library was changed from ``import pyclesperanto_prototype as c
 --------------------
 
 ``imread`` and ``imwrite`` were removed from the library as they are redondant with other libraries such as `scikit-image`.
-Please rely on these libraries to read and write images. This was discussed in the `issue #140 <https://github.com/clEsperanto/pyclesperanto/issues/140>`__.
+Please rely on these libraries to read and write images. This was discussed in this `issue <https://github.com/clEsperanto/pyclesperanto/issues/140>`__.
 
 .. code-block:: python
 
@@ -49,7 +49,7 @@ erode_labels
 ------------
 
 ``erode_labels`` arguments ``relabeled_island`` was renamed to ``relabel`` for more sense.
-This was discussed in the `issue #141 <https://github.com/clEsperanto/pyclesperanto/issues/141>`__.
+This was discussed in the following `issue <https://github.com/clEsperanto/pyclesperanto/issues/141>`__.
 
 .. tabs::
 
@@ -90,7 +90,7 @@ and updated the filters to have it as a parameter (e.g. ``connected_component_la
 
 
 We unified the connectivity name to be either ``box`` or ``sphere``, and applied this to all filters that have a connectivity parameter.
-This was discussed in the `issue #142 <https://github.com/clEsperanto/pyclesperanto/issues/142>`__.
+This was discussed in this `issue <https://github.com/clEsperanto/pyclesperanto/issues/142>`__.
 
 List of filters that were changed (the list may not be exhaustive):
 
@@ -139,13 +139,16 @@ The `prototype` library had a set of morphological operations for grayscale and 
 This was discussed in this `issue <https://github.com/clEsperanto/CLIc/issues/385>__`.
 
 binary images:
- - dilate_box & dilate_sphere -> binary_dilate and take a connectivity parameter and a radius parameter for x, y, and z.
- - erode_box & erode_sphere -> binary_erode and take a connectivity parameter and a radius parameter for x, y, and z.
+ - ``dilate_box`` & ``dilate_sphere`` -> ``binary_dilate``.
+ - ``erode_box`` & ``erode_sphere`` -> ``binary_erode``.
 grayscale images:
- - minimum_box & minimum_sphere -> minimum_filter and take a connectivity parameter and a radius parameter for x, y, and z.
- - maximum_box & maximum_sphere -> maximum_filter and take a connectivity parameter and a radius parameter for x, y, and z.
- - opening_box & opening_sphere -> grayscale_opening and take a connectivity parameter and a radius parameter for x, y, and z.
- - closing_box & closing_sphere -> grayscale_closing and take a connectivity parameter and a radius parameter for x, y, and z.
+ - ``minimum_box`` & ``minimum_sphere`` -> ``minimum_filter``.
+ - ``maximum_box`` & ``maximum_sphere`` -> ``maximum_filter``.
+ - ``opening_box`` & ``opening_sphere`` -> ``grayscale_opening``.
+ - ``closing_box`` & ``closing_sphere`` -> ``grayscale_closing``.
 
-We also introduce a `binary_opening` and `binary_closing` operation that rely on the `binary_dilate` and `binary_erode` operations.
-These operations uses a box or sphere shape footprint only. For custom footprint, please use the `dilation` and `erosion` operations.
+All operations now have a ``connectivity`` parameter that can be either ``box`` or ``sphere``. The default value is ``box``.
+And a ``radius_x``, ``radius_y``, ``radius_z`` parameter that can be used to specify the radius of the structuring element in each dimension.
+
+We also introduce a ``binary_opening`` and ``binary_closing`` operation that rely on the ``binary_dilate`` and ``binary_erode`` operations.
+These operations uses a box or sphere shape footprint only. For custom footprint, please use the ``dilation`` and ``erosion`` operations.

@@ -15,7 +15,7 @@ As well as documentation on how to migrate from the `prototype <https://github.c
    This project is still under active development, as well as its documentation. If you find any issues, please raise an `issue <https://github.com/clEsperanto/pyclesperanto/issues>__`.
 
 .. toctree::
-   :caption: :books: Documentation
+   :caption: 📘 Documentation
    :maxdepth: 1
 
    documentation/install
@@ -25,14 +25,21 @@ As well as documentation on how to migrate from the `prototype <https://github.c
    genindex
 
 .. toctree::
-   :caption: :metal: Prototype Migration
+   :caption: 🚀 Prototype Migration
    :maxdepth: 1
 
    prototype/prototype
    prototype/api_differences
 
 .. toctree::
-   :caption: :computer: Developper Guide
+   :caption: 🛠️ Developper Guide
    :maxdepth: 1
 
    developpers/contribute
+
+
+📖 Citation
+-----------
+
+There is no publication for pyclesperanto yet. If you use pyclesperanto in your research, please use the zenodo DOI
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.13853800.svg)](https://doi.org/10.5281/zenodo.13853800) to cite it.

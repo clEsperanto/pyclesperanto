@@ -1,10 +1,10 @@
+.. image:: images/logo_w.png
+   :align: center
+   :alt: clEsperanto logo
+
 ***************************
 pyclesperanto documentation
 ***************************
-
-.. add logo here centered
-.. image:: images/logo_w.png
-   :align: center
 
 pyclesperanto is the python package of clEsperanto - a multi-language framework for GPU-accelerated image processing.
 You will find here the documentation for the python bindings of clEsperanto, pyclesperanto. The documentation covers the installation, the usage and the API of pyclesperanto.
@@ -45,4 +45,5 @@ There is no publication for pyclesperanto yet. If you use pyclesperanto in your 
 
 .. image:: https://zenodo.org/badge/DOI/10.5281/zenodo.13853800.svg
    :target: https://doi.org/10.5281/zenodo.13853800
+   :alt: DOI 10.5281/zenodo.13853800
    :align: center

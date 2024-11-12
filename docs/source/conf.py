@@ -68,13 +68,14 @@ nbsphinx_execute = "never"
 html_theme = "sphinx_rtd_theme"  # 'alabaster'
 html_theme_options = {
     "logo_only": False,
+    "title_only": True,
     "navigation_depth": 5,
     "collapse_navigation": False,
     "sticky_navigation": True,
     "version_selector": True,
 }
 
-html_logo = "./images/logo_d_small.png"
+# html_logo = "./images/logo_d_small.png"
 # html_favicon = "demo/static/favicon.ico"
 html_show_sourcelink = True
 htmlhelp_basename = slug

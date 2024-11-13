@@ -5,44 +5,38 @@ pyclesperanto is a Python API layer for the `CLIc library <https://github.com/cl
 Several operation and functionality are directly inherited from the CLIc library, compiled and imported in the package as ``_clesperanto``.
 Arround this C++ core, the package as several Python code to ensure proper integration with the Python ecosystem (numpy, etc.).
 
-Therefore, it is possible to contribute to the development of py-clesperanto either on the C++ side or on the Python side depending on what you are trying to achieve.
+It is possible to contribute to the development of pyclesperanto either on the C++ side (see `CLIc Documentation <>`__) and on the Python side (pyclesperanto).
+Developement on pyclesperanto can target new operations, new functionalities, bug fixes, code improvement, or documentation.
 
 Environment setup
 ------------------
 
 To contribute to the development of pyclesperanto, you will need to install it from the source code.
-Please follow the `installation guide <install.rst>`__ to install the package from source.
+Please follow the `installation guide <install.rst>`__ to install the package from source. Additional packages maybe requiered to run tests, like ``pytest`` or ``scikit-image``.
 
-Also for code cleaness, we strongly advise to install the pre-commit hooks to ensure code quality and style.
+Contributing to the python bindings
+-----------------------------------
 
-.. code-block:: bash
+While most of the implementation is done in C++, we are also very interested in improving the Python API and developing new functions exclusively in Python.
+Proposed new operations can be implemented in the ``__future__`` module of the package. Once stable and tested, we will fully integrate the operation into the package or migrate it to the C++ side of the library for full deployment.
+API improvements are also welcome and can be discussed in issues or pull requests.
+Additionally, any bug fixes, code improvements, documentation updates, typo corrections, etc., are highly appreciated.
 
-    pip install pre-commit
-    pre-commit install
-
-New python operations
+New OpenCL operations (WIP)
 ---------------------
 
-Algorithm implementation of the library is destined to be in C++. However, C++ development can be tedious and difficult, and its integration into CLIc can be complex.
-Therefore, it is possible to implement new operations in Python, and provid it to the python package in the  ``__future__`` or ``__interroperability__`` module of the package.
+pyclesperanto provide two method for executing custom OpenCL code: `execute <>`_ and `native_execute <>`_.
 
-Once stable and tested, we will be happy to fully integrate the operation to the C++ side of the library for full deployement.
-
-New OpenCL operations
----------------------
-
-(WIP)
 
 Versioning
 ----------
 
 pyclesperanto version folows the `CLIc <https://github.com/clEsperanto/CLIc>`__ versioning for now as both are development concurently.
-Although they are not necessarily made to be identically, the versioning is kept in sync as much as possible.
+Although they are not necessarily made to be identical, the versioning is kept in sync as much as possible. This may change in the future.
 
-In order to update the version of pyclesperanto, or the version of CLIc, modify the `_version.py` file of pyclesperanto package.
-
-`VERSION` define the versioning tag of the package `pyclesperanto`. It should be updated when a new release is made.
-`CLIC_VERSION` define the `CLIc <https://github.com/clEsperanto/CLIc>`__ library version to use.
+Update of version number in pyclesperanto is done in the `_version.py` file of pyclesperanto package, by updating the `VERSION` value.
+The `CLIC_VERSION` variable refer to the `CLIc <https://github.com/clEsperanto/CLIc>`__ library tag to use for building the bindings.
+It should not be modified unless you are directly updating code on the CLIc side.
 
 .. note::
 

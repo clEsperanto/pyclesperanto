@@ -71,7 +71,7 @@ Run the following commands in your terminal to install the package from source:
 
 .. warning::
 
-    The ``-e`` flag is not supported yet. Hence, you should not import the package from the source directory as it will fail to import the dynamic library build with the package.
+    The ``-e`` flag is advised if you are planning to contribute to the development of the package.
 
 
 pyClesperanto should now be installed as a package along with all its dependencies. You can now start using it in your Python scripts and test modifications to the source code.

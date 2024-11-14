@@ -602,9 +602,9 @@ def degrees_to_radians(
 def detect_maxima_box(
     input_image: Image,
     output_image: Optional[Image] =None,
-    radius_x: float =1,
-    radius_y: float =1,
-    radius_z: float =1,
+    radius_x: float =0,
+    radius_y: float =0,
+    radius_z: float =0,
     device: Optional[Device] =None
 ) -> Image:
     """Detects local maxima in a given square/cubic neighborhood. Pixels in the
@@ -617,11 +617,11 @@ def detect_maxima_box(
         Input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
-    radius_x: float (= 1)
+    radius_x: float (= 0)
         Radius along the x axis.
-    radius_y: float (= 1)
+    radius_y: float (= 0)
         Radius along the y axis.
-    radius_z: float (= 1)
+    radius_z: float (= 0)
         Radius along the z axis.
     device: Optional[Device] (= None)
         Device to perform the operation on.
@@ -640,9 +640,9 @@ def detect_maxima_box(
 def detect_maxima(
     input_image: Image,
     output_image: Optional[Image] =None,
-    radius_x: float =1,
-    radius_y: float =1,
-    radius_z: float =1,
+    radius_x: float =0,
+    radius_y: float =0,
+    radius_z: float =0,
     connectivity: str ="box",
     device: Optional[Device] =None
 ) -> Image:
@@ -656,11 +656,11 @@ def detect_maxima(
         Input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
-    radius_x: float (= 1)
+    radius_x: float (= 0)
         Radius along the x axis.
-    radius_y: float (= 1)
+    radius_y: float (= 0)
         Radius along the y axis.
-    radius_z: float (= 1)
+    radius_z: float (= 0)
         Radius along the z axis.
     connectivity: str (= "box")
         Element shape, "box" or "sphere"
@@ -682,9 +682,9 @@ def detect_maxima(
 def detect_minima_box(
     input_image: Image,
     output_image: Optional[Image] =None,
-    radius_x: float =1,
-    radius_y: float =1,
-    radius_z: float =1,
+    radius_x: float =0,
+    radius_y: float =0,
+    radius_z: float =0,
     device: Optional[Device] =None
 ) -> Image:
     """Detects local maxima in a given square/cubic neighborhood. Pixels in the
@@ -697,11 +697,11 @@ def detect_minima_box(
         Input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
-    radius_x: float (= 1)
+    radius_x: float (= 0)
         Radius along the x axis.
-    radius_y: float (= 1)
+    radius_y: float (= 0)
         Radius along the y axis.
-    radius_z: float (= 1)
+    radius_z: float (= 0)
         Radius along the z axis.
     device: Optional[Device] (= None)
         Device to perform the operation on.
@@ -720,9 +720,9 @@ def detect_minima_box(
 def detect_minima(
     input_image: Image,
     output_image: Optional[Image] =None,
-    radius_x: float =1,
-    radius_y: float =1,
-    radius_z: float =1,
+    radius_x: float =0,
+    radius_y: float =0,
+    radius_z: float =0,
     connectivity: str ="box",
     device: Optional[Device] =None
 ) -> Image:
@@ -736,11 +736,11 @@ def detect_minima(
         Input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
-    radius_x: float (= 1)
+    radius_x: float (= 0)
         Radius along the x axis.
-    radius_y: float (= 1)
+    radius_y: float (= 0)
         Radius along the y axis.
-    radius_z: float (= 1)
+    radius_z: float (= 0)
         Radius along the z axis.
     connectivity: str (= "box")
         Element shape, "box" or "sphere"

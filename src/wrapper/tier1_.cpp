@@ -1,5 +1,5 @@
 // this code is auto-generated, do not edit manually
-
+    
 #include "pycle_wrapper.hpp"
 #include "tier1.hpp"
 
@@ -86,6 +86,10 @@ m.def("_absolute", &cle::tier1::absolute_func, "Call cle::tier1::absolute_func f
     py::return_value_policy::take_ownership,
     py::arg("device"), py::arg("src"), py::arg("dst"));
 
+    m.def("_dilation", &cle::tier1::dilation_func, "Call cle::tier1::dilation_func from C++ CLIc.",
+    py::return_value_policy::take_ownership,
+    py::arg("device"), py::arg("src"), py::arg("footprint"), py::arg("dst"));
+
     m.def("_dilate_box", &cle::tier1::dilate_box_func, "Call cle::tier1::dilate_box_func from C++ CLIc.",
     py::return_value_policy::take_ownership,
     py::arg("device"), py::arg("src"), py::arg("dst"));
@@ -94,13 +98,13 @@ m.def("_absolute", &cle::tier1::absolute_func, "Call cle::tier1::absolute_func f
     py::return_value_policy::take_ownership,
     py::arg("device"), py::arg("src"), py::arg("dst"));
 
-    m.def("_dilate", &cle::tier1::dilate_func, "Call cle::tier1::dilate_func from C++ CLIc.",
+    m.def("_binary_dilate", &cle::tier1::binary_dilate_func, "Call cle::tier1::binary_dilate_func from C++ CLIc.",
     py::return_value_policy::take_ownership,
-    py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("connectivity"));
+    py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("radius_x"), py::arg("radius_y"), py::arg("radius_z"), py::arg("connectivity"));
 
     m.def("_divide_images", &cle::tier1::divide_images_func, "Call cle::tier1::divide_images_func from C++ CLIc.",
     py::return_value_policy::take_ownership,
-    py::arg("device"), py::arg("src0"), py::arg("src1"), py::arg("dst"));
+    py::arg("device"), py::arg("dividend"), py::arg("divisor"), py::arg("dst"));
 
     m.def("_divide_scalar_by_image", &cle::tier1::divide_scalar_by_image_func, "Call cle::tier1::divide_scalar_by_image_func from C++ CLIc.",
     py::return_value_policy::take_ownership,
@@ -114,6 +118,10 @@ m.def("_absolute", &cle::tier1::absolute_func, "Call cle::tier1::absolute_func f
     py::return_value_policy::take_ownership,
     py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("scalar"));
 
+    m.def("_erosion", &cle::tier1::erosion_func, "Call cle::tier1::erosion_func from C++ CLIc.",
+    py::return_value_policy::take_ownership,
+    py::arg("device"), py::arg("src"), py::arg("footprint"), py::arg("dst"));
+
     m.def("_erode_box", &cle::tier1::erode_box_func, "Call cle::tier1::erode_box_func from C++ CLIc.",
     py::return_value_policy::take_ownership,
     py::arg("device"), py::arg("src"), py::arg("dst"));
@@ -122,9 +130,9 @@ m.def("_absolute", &cle::tier1::absolute_func, "Call cle::tier1::absolute_func f
     py::return_value_policy::take_ownership,
     py::arg("device"), py::arg("src"), py::arg("dst"));
 
-    m.def("_erode", &cle::tier1::erode_func, "Call cle::tier1::erode_func from C++ CLIc.",
+    m.def("_binary_erode", &cle::tier1::binary_erode_func, "Call cle::tier1::binary_erode_func from C++ CLIc.",
     py::return_value_policy::take_ownership,
-    py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("connectivity"));
+    py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("radius_x"), py::arg("radius_y"), py::arg("radius_z"), py::arg("connectivity"));
 
     m.def("_exponential", &cle::tier1::exponential_func, "Call cle::tier1::exponential_func from C++ CLIc.",
     py::return_value_policy::take_ownership,
@@ -140,7 +148,7 @@ m.def("_absolute", &cle::tier1::absolute_func, "Call cle::tier1::absolute_func f
 
     m.def("_generate_distance_matrix", &cle::tier1::generate_distance_matrix_func, "Call cle::tier1::generate_distance_matrix_func from C++ CLIc.",
     py::return_value_policy::take_ownership,
-    py::arg("device"), py::arg("coordinate_list1"), py::arg("coordinate_list2"), py::arg("dst"));
+    py::arg("device"), py::arg("coordinate_list1"), py::arg("coordinate_list2"), py::arg("distance_matrix_destination"));
 
     m.def("_gradient_x", &cle::tier1::gradient_x_func, "Call cle::tier1::gradient_x_func from C++ CLIc.",
     py::return_value_policy::take_ownership,
@@ -188,7 +196,7 @@ m.def("_absolute", &cle::tier1::absolute_func, "Call cle::tier1::absolute_func f
 
     m.def("_local_cross_correlation", &cle::tier1::local_cross_correlation_func, "Call cle::tier1::local_cross_correlation_func from C++ CLIc.",
     py::return_value_policy::take_ownership,
-    py::arg("device"), py::arg("src0"), py::arg("src1"), py::arg("dst"));
+    py::arg("device"), py::arg("src"), py::arg("kernel"), py::arg("dst"));
 
     m.def("_logarithm", &cle::tier1::logarithm_func, "Call cle::tier1::logarithm_func from C++ CLIc.",
     py::return_value_policy::take_ownership,
@@ -215,6 +223,10 @@ m.def("_absolute", &cle::tier1::absolute_func, "Call cle::tier1::absolute_func f
     py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("radius_x"), py::arg("radius_y"), py::arg("radius_z"));
 
     m.def("_maximum_filter", &cle::tier1::maximum_filter_func, "Call cle::tier1::maximum_filter_func from C++ CLIc.",
+    py::return_value_policy::take_ownership,
+    py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("radius_x"), py::arg("radius_y"), py::arg("radius_z"), py::arg("connectivity"));
+
+    m.def("_grayscale_dilate", &cle::tier1::grayscale_dilate_func, "Call cle::tier1::grayscale_dilate_func from C++ CLIc.",
     py::return_value_policy::take_ownership,
     py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("radius_x"), py::arg("radius_y"), py::arg("radius_z"), py::arg("connectivity"));
 
@@ -271,6 +283,10 @@ m.def("_absolute", &cle::tier1::absolute_func, "Call cle::tier1::absolute_func f
     py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("radius_x"), py::arg("radius_y"), py::arg("radius_z"));
 
     m.def("_minimum_filter", &cle::tier1::minimum_filter_func, "Call cle::tier1::minimum_filter_func from C++ CLIc.",
+    py::return_value_policy::take_ownership,
+    py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("radius_x"), py::arg("radius_y"), py::arg("radius_z"), py::arg("connectivity"));
+
+    m.def("_grayscale_erode", &cle::tier1::grayscale_erode_func, "Call cle::tier1::grayscale_erode_func from C++ CLIc.",
     py::return_value_policy::take_ownership,
     py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("radius_x"), py::arg("radius_y"), py::arg("radius_z"), py::arg("connectivity"));
 
@@ -364,15 +380,15 @@ m.def("_absolute", &cle::tier1::absolute_func, "Call cle::tier1::absolute_func f
 
     m.def("_onlyzero_overwrite_maximum_box", &cle::tier1::onlyzero_overwrite_maximum_box_func, "Call cle::tier1::onlyzero_overwrite_maximum_box_func from C++ CLIc.",
     py::return_value_policy::take_ownership,
-    py::arg("device"), py::arg("src"), py::arg("dst0"), py::arg("dst1"));
+    py::arg("device"), py::arg("src"), py::arg("flag"), py::arg("dst"));
 
     m.def("_onlyzero_overwrite_maximum_diamond", &cle::tier1::onlyzero_overwrite_maximum_diamond_func, "Call cle::tier1::onlyzero_overwrite_maximum_diamond_func from C++ CLIc.",
     py::return_value_policy::take_ownership,
-    py::arg("device"), py::arg("src"), py::arg("dst0"), py::arg("dst1"));
+    py::arg("device"), py::arg("src"), py::arg("flag"), py::arg("dst"));
 
     m.def("_onlyzero_overwrite_maximum", &cle::tier1::onlyzero_overwrite_maximum_func, "Call cle::tier1::onlyzero_overwrite_maximum_func from C++ CLIc.",
     py::return_value_policy::take_ownership,
-    py::arg("device"), py::arg("src"), py::arg("dst0"), py::arg("dst1"), py::arg("connectivity"));
+    py::arg("device"), py::arg("src"), py::arg("flag"), py::arg("dst"), py::arg("connectivity"));
 
     m.def("_power", &cle::tier1::power_func, "Call cle::tier1::power_func from C++ CLIc.",
     py::return_value_policy::take_ownership,

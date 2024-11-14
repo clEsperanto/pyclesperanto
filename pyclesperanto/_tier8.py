@@ -12,15 +12,14 @@ from ._array import Image
 from ._core import Device
 from ._decorators import plugin_function
 
-clic = importlib.import_module("._pyclesperanto", package="pyclesperanto")
-
+clic = importlib.import_module('._pyclesperanto', package='pyclesperanto')
 
 @plugin_function(categories=["label processing", "in assistant", "bia-bob-suggestion"])
 def smooth_labels(
     input_image: Image,
-    output_image: Optional[Image] = None,
-    radius: int = 0,
-    device: Optional[Device] = None,
+    output_image: Optional[Image] =None,
+    radius: int =0,
+    device: Optional[Device] =None
 ) -> Image:
     """Apply a morphological opening operation to a label image and afterwards   fills
     gaps between the labels using voronoi-labeling. Finally, the result   label
@@ -29,7 +28,7 @@ def smooth_labels(
 
     Parameters
     ----------
-    input_image: Image
+    input_image: Image 
         Input label image
     output_image: Optional[Image] (= None)
         Output label image
@@ -44,13 +43,12 @@ def smooth_labels(
     """
     return clic._smooth_labels(device, input_image, output_image, int(radius))
 
-
 @plugin_function(categories=["label processing", "in assistant", "bia-bob-suggestion"])
 def smooth_connected_labels(
     input_image: Image,
-    output_image: Optional[Image] = None,
-    radius: int = 0,
-    device: Optional[Device] = None,
+    output_image: Optional[Image] =None,
+    radius: int =0,
+    device: Optional[Device] =None
 ) -> Image:
     """Apply a morphological erosion and dilation of the label image with respect to
     the connectivity of the labels.   Note: It is recommended to process isotropic
@@ -58,7 +56,7 @@ def smooth_connected_labels(
 
     Parameters
     ----------
-    input_image: Image
+    input_image: Image 
         Input label image
     output_image: Optional[Image] (= None)
         Output label image

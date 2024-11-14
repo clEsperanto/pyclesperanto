@@ -1,5 +1,5 @@
 // this code is auto-generated, do not edit manually
-
+    
 #include "pycle_wrapper.hpp"
 #include "tier2.hpp"
 
@@ -38,7 +38,15 @@ m.def("_absolute_difference", &cle::tier2::absolute_difference_func, "Call cle::
     py::return_value_policy::take_ownership,
     py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("radius_x"), py::arg("radius_y"), py::arg("radius_z"));
 
+    m.def("_grayscale_closing", &cle::tier2::grayscale_closing_func, "Call cle::tier2::grayscale_closing_func from C++ CLIc.",
+    py::return_value_policy::take_ownership,
+    py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("radius_x"), py::arg("radius_y"), py::arg("radius_z"), py::arg("connectivity"));
+
     m.def("_closing", &cle::tier2::closing_func, "Call cle::tier2::closing_func from C++ CLIc.",
+    py::return_value_policy::take_ownership,
+    py::arg("device"), py::arg("src"), py::arg("footprint"), py::arg("dst"));
+
+    m.def("_binary_closing", &cle::tier2::binary_closing_func, "Call cle::tier2::binary_closing_func from C++ CLIc.",
     py::return_value_policy::take_ownership,
     py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("radius_x"), py::arg("radius_y"), py::arg("radius_z"), py::arg("connectivity"));
 
@@ -126,7 +134,15 @@ m.def("_absolute_difference", &cle::tier2::absolute_difference_func, "Call cle::
     py::return_value_policy::take_ownership,
     py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("radius_x"), py::arg("radius_y"), py::arg("radius_z"));
 
+    m.def("_grayscale_opening", &cle::tier2::grayscale_opening_func, "Call cle::tier2::grayscale_opening_func from C++ CLIc.",
+    py::return_value_policy::take_ownership,
+    py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("radius_x"), py::arg("radius_y"), py::arg("radius_z"), py::arg("connectivity"));
+
     m.def("_opening", &cle::tier2::opening_func, "Call cle::tier2::opening_func from C++ CLIc.",
+    py::return_value_policy::take_ownership,
+    py::arg("device"), py::arg("src"), py::arg("footprint"), py::arg("dst"));
+
+    m.def("_binary_opening", &cle::tier2::binary_opening_func, "Call cle::tier2::binary_opening_func from C++ CLIc.",
     py::return_value_policy::take_ownership,
     py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("radius_x"), py::arg("radius_y"), py::arg("radius_z"), py::arg("connectivity"));
 

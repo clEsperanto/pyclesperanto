@@ -40,6 +40,3 @@ def test_detect_maxima_box():
     print(b)
 
     assert np.array_equal(a, b)
-
-
-test_detect_maxima_box()

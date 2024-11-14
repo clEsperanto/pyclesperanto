@@ -5,6 +5,44 @@ import pyclesperanto as cle
 cle.select_device("TX")
 
 
+def test_opening_sphere_old():
+    gpu_input = cle.push(
+        np.asarray(
+            [
+                [0, 0, 0, 0, 0, 0],
+                [1, 1, 1, 0, 0, 0],
+                [1, 1, 1, 0, 2, 0],
+                [1, 1, 1, 0, 2, 0],
+                [0, 0, 0, 0, 2, 0],
+                [3, 0, 0, 0, 0, 0],
+            ]
+        )
+    )
+
+    gpu_reference = cle.push(
+        np.asarray(
+            [
+                [0, 0, 0, 0, 0, 0],
+                [1, 1, 0, 0, 0, 0],
+                [1, 1, 1, 0, 0, 0],
+                [1, 1, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0],
+            ]
+        )
+    )
+
+    gpu_output = cle.opening_sphere(gpu_input, radius_x=1, radius_y=1)
+
+    a = cle.pull(gpu_output)
+    b = cle.pull(gpu_reference)
+
+    print(a)
+    print(b)
+
+    assert np.array_equal(a, b)
+
+
 def test_opening_sphere_2d():
     gpu_input = cle.push(
         np.asarray(
@@ -32,7 +70,9 @@ def test_opening_sphere_2d():
         )
     )
 
-    gpu_output = cle.opening(gpu_input, radius_x=1, radius_y=1, connectivity="sphere")
+    gpu_output = cle.grayscale_opening(
+        gpu_input, radius_x=1, radius_y=1, connectivity="sphere"
+    )
 
     a = cle.pull(gpu_output)
     b = cle.pull(gpu_reference)
@@ -91,7 +131,9 @@ def test_opening_sphere_3d():
         )
     )
 
-    gpu_output = cle.opening(gpu_input, radius_x=1, radius_y=1, connectivity="sphere")
+    gpu_output = cle.grayscale_opening(
+        gpu_input, radius_x=1, radius_y=1, connectivity="sphere"
+    )
 
     a = cle.pull(gpu_output)
     b = cle.pull(gpu_reference)

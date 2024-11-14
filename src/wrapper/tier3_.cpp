@@ -1,5 +1,5 @@
 // this code is auto-generated, do not edit manually
-
+    
 #include "pycle_wrapper.hpp"
 #include "tier3.hpp"
 
@@ -56,7 +56,7 @@ m.def("_bounding_box", &cle::tier3::bounding_box_func, "Call cle::tier3::boundin
 
     m.def("_labelled_spots_to_pointlist", &cle::tier3::labelled_spots_to_pointlist_func, "Call cle::tier3::labelled_spots_to_pointlist_func from C++ CLIc.",
     py::return_value_policy::take_ownership,
-    py::arg("device"), py::arg("src"), py::arg("dst"));
+    py::arg("device"), py::arg("label"), py::arg("pointlist"));
 
     m.def("_maximum_position", &cle::tier3::maximum_position_func, "Call cle::tier3::maximum_position_func from C++ CLIc.",
     py::return_value_policy::take_ownership,

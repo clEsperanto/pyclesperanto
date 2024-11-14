@@ -1,5 +1,5 @@
 // this code is auto-generated, do not edit manually
-
+    
 #include "pycle_wrapper.hpp"
 #include "tier4.hpp"
 
@@ -40,7 +40,7 @@ m.def("_label_bounding_box", &cle::tier4::label_bounding_box_func, "Call cle::ti
 
     m.def("_centroids_of_labels", &cle::tier4::centroids_of_labels_func, "Call cle::tier4::centroids_of_labels_func from C++ CLIc.",
     py::return_value_policy::take_ownership,
-    py::arg("device"), py::arg("label_image"), py::arg("coorindate_list_destination"), py::arg("include_background"));
+    py::arg("device"), py::arg("label_image"), py::arg("centroids_coordinates"), py::arg("include_background"));
 
     m.def("_remove_labels_with_map_values_out_of_range", &cle::tier4::remove_labels_with_map_values_out_of_range_func, "Call cle::tier4::remove_labels_with_map_values_out_of_range_func from C++ CLIc.",
     py::return_value_policy::take_ownership,

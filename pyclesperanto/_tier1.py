@@ -988,7 +988,7 @@ def erode_sphere(
     return clic._erode_sphere(device, input_image, output_image)
 
 @plugin_function(categories=["binary processing"])
-def erode(
+def binary_erode(
     input_image: Image,
     output_image: Optional[Image] =None,
     radius_x: float =1,
@@ -1030,7 +1030,7 @@ def erode(
     [1] https://clij.github.io/clij2-docs/reference_erodeBox
     [2] https://clij.github.io/clij2-docs/reference_erodeSphere
     """
-    return clic._erode(device, input_image, output_image, float(radius_x), float(radius_y), float(radius_z), str(connectivity))
+    return clic._binary_erode(device, input_image, output_image, float(radius_x), float(radius_y), float(radius_z), str(connectivity))
 
 @plugin_function(categories=["filter", "in assistant"])
 def exponential(

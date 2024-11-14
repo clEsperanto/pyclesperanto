@@ -130,7 +130,7 @@ m.def("_absolute", &cle::tier1::absolute_func, "Call cle::tier1::absolute_func f
     py::return_value_policy::take_ownership,
     py::arg("device"), py::arg("src"), py::arg("dst"));
 
-    m.def("_erode", &cle::tier1::erode_func, "Call cle::tier1::erode_func from C++ CLIc.",
+    m.def("_binary_erode", &cle::tier1::binary_erode_func, "Call cle::tier1::binary_erode_func from C++ CLIc.",
     py::return_value_policy::take_ownership,
     py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("radius_x"), py::arg("radius_y"), py::arg("radius_z"), py::arg("connectivity"));
 

@@ -1102,7 +1102,7 @@ def opening(
     output_image: Optional[Image] =None,
     device: Optional[Device] =None
 ) -> Image:
-    """Closing operator, applies morphological opening to intensity images using a
+    """Opening operator, applies morphological opening to intensity images using a
     custom structuring element provided as input. This operator also works with
     binary images.
 

@@ -148,12 +148,16 @@ def wait_for_kernel_to_finish(wait: bool = True, device: Device = None):
 
 def default_initialisation():
     """Set default backend and device"""
-    backends = list_available_backends()
-    if backends:
-        _ = select_backend(backends[-1])
-    else:
+    try:
+        backends = list_available_backends()
+        if backends:
+            _ = select_backend(backends[-1])
+        else:
+            raise RuntimeError("No backend available.")
+    except Exception as e:
         warnings.warn(
-            "No GPU backend found.\n\n"
+            f"Error while initialising pyclesperanto: {e}\n\n"
+            "No GPU Backend found.\n\n"
             "pyclesperanto requires either CUDA or OpenCL libraries to be installed on your system to work.\n"
             "Please ensure you have the appropriate drivers installed and up-to-date.\n\n"
             "Alternatively, you may need to install the following additional package:\n"

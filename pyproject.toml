@@ -7,7 +7,6 @@ build-dir = "build/{wheel_tag}"
 
 [tool.scikit-build.ninja]
 make-fallback = false
-minimum-version = "1.11"
 
 [tool.scikit-build.cmake]
 build-type = "Release"
@@ -50,6 +49,8 @@ name = "pyclesperanto"
 readme = "README.md"
 requires-python = ">=3.8"
 dynamic = ["version"]
+license = { file = "LICENSE" }
+keywords = ["image processing", "GPU", "OpenCL", "scientific computing"]
 
 
 [project.urls]

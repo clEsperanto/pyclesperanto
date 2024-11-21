@@ -26,31 +26,31 @@ jobs:
         id: checkout
         uses: actions/checkout@v4
 
-      - name: setup micromamba
-        id: setup-micromamba
-        uses: mamba-org/setup-micromamba@v2.0.1
-        with:
-          environment-name: test
-          cache-environment: true
-          post-cleanup: 'all'
-          create-args: >-
-            python=${{ matrix.python-version }}
-            pytest pytest-cov pytest-benchmark scikit-image
-
-
-      # - name: Get conda - ${{ matrix.python-version }}
-      #   id: get-conda
-      #   uses: conda-incubator/setup-miniconda@v3
+      # - name: setup micromamba
+      #   id: setup-micromamba
+      #   uses: mamba-org/setup-micromamba@v2.0.1
       #   with:
-      #     python-version: ${{ matrix.python-version }}
-      #     miniforge-version: latest
-      #     activate-environment: test
-      #     use-mamba: true
+      #     environment-name: test
+      #     cache-environment: true
+      #     post-cleanup: 'all'
+      #     create-args: >-
+      #       python=${{ matrix.python-version }}
+      #       pytest pytest-cov pytest-benchmark scikit-image
 
-      # - name: Dependencies
-      #   id: install-dependencies
-      #   run: |
-      #     mamba install -y pytest pytest-cov pytest-benchmark scikit-image
+
+      - name: Get conda - ${{ matrix.python-version }}
+        id: get-conda
+        uses: conda-incubator/setup-miniconda@v3
+        with:
+          python-version: ${{ matrix.python-version }}
+          miniforge-version: latest
+          activate-environment: test
+          use-mamba: true
+
+      - name: Dependencies
+        id: install-dependencies
+        run: |
+          mamba install -y pytest pytest-cov pytest-benchmark scikit-image
 
       - name: Install OpenCL (pocl)
         id: install-pocl

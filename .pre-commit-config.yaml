@@ -4,11 +4,6 @@ ci:
     autoupdate_schedule: monthly
     autofix_commit_msg: "style(pre-commit.ci): auto fixes"
     autoupdate_commit_msg: "ci(pre-commit.ci): auto update"
-    autofix_prs: false  # tag the PR with 'pre-commit.ci autofix' to run it
-
-default_install_hook_types:
-  - pre-commit
-  - commit-msg
 
 repos:
 -   repo: https://github.com/pre-commit/pre-commit-hooks

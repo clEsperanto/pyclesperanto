@@ -51,8 +51,16 @@ def select_device(device_id: Union[str, int] = "", device_type: str = "all") -> 
         raise ValueError(
             f"'{device_id}' is not a supported device_id. Please use either a string or an integer."
         )
+
+    if device is None:
+        warnings.warn(
+            "No device found in the system. Please check your system installation.",
+            RuntimeWarning,
+        )
+
     if _current_device._instance and device == _current_device._instance:
         return _current_device._instance
+
     _current_device._instance = device
     return device
 
@@ -112,7 +120,6 @@ def select_backend(backend: str = "opencl") -> str:
     type : str, default = "opencl"
         determine the backend to use between opencl and cuda
     """
-
     # enforce lowercase for backend_type
     backend = backend.lower()
     # is backend_type is different than "cuda" or "opencl", raise an error
@@ -123,6 +130,12 @@ def select_backend(backend: str = "opencl") -> str:
     BackendManager.set_backend(backend=backend)
     # reset current device to default one
     select_device()
+
+    if _current_device._instance is None:
+        raise RuntimeError(
+            "No device available. Please check your system installation."
+        )
+
     return f"{BackendManager.get_backend()} selected."
 
 
@@ -148,12 +161,17 @@ def wait_for_kernel_to_finish(wait: bool = True, device: Device = None):
 
 def default_initialisation():
     """Set default backend and device"""
-    backends = list_available_backends()
-    if backends:
-        _ = select_backend(backends[-1])
-    else:
+
+    try:
+        backends = list_available_backends()
+        if backends:
+            _ = select_backend(backends[-1])
+        else:
+            raise RuntimeError("No backend available.")
+    except Exception as e:
         warnings.warn(
-            "No GPU backend found.\n\n"
+            f"Error while initialising pyclesperanto: {e}\n\n"
+            "No GPU Backend found.\n\n"
             "pyclesperanto requires either CUDA or OpenCL libraries to be installed on your system to work.\n"
             "Please ensure you have the appropriate drivers installed and up-to-date.\n\n"
             "Alternatively, you may need to install the following additional package:\n"

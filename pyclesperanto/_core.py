@@ -130,6 +130,12 @@ def select_backend(backend: str = "opencl") -> str:
     BackendManager.set_backend(backend=backend)
     # reset current device to default one
     select_device()
+
+    if _current_device._instance is None:
+        raise RuntimeError(
+            "No device available. Please check your system installation."
+        )
+
     return f"{BackendManager.get_backend()} selected."
 
 

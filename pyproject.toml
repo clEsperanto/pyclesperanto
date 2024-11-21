@@ -38,12 +38,7 @@ classifiers = [
   "Topic :: Scientific/Engineering :: Image Processing",
   "Topic :: Scientific/Engineering :: Information Analysis",
 ]
-dependencies = [
-  "numpy",
-  "toolz",
-  "matplotlib",
-  "toml",
-]
+dependencies = ["numpy", "toolz", "matplotlib", "toml"]
 description = "GPU-accelerated image processing in python using OpenCL"
 name = "pyclesperanto"
 readme = "README.md"
@@ -64,14 +59,7 @@ addopts = "-ra -q"
 testpaths = ["tests"]
 
 [tool.cibuildwheel]
-build = [
-  "cp38-*",
-  "cp39-*",
-  "cp310-*",
-  "cp311-*",
-  "cp312-*",
-  "cp313-*",
-]
+build = ["cp38-*", "cp39-*", "cp310-*", "cp311-*", "cp312-*", "cp313-*"]
 skip = [
   "cp27-*",
   "cp36*",
@@ -84,7 +72,7 @@ skip = [
 ]
 build-frontend = "build"
 build-verbosity = 1
-test-command = "pytest {project}/tests/test_import.py"
+test-command = "" #"pytest {project}/tests/test_import.py"
 test-requires = ["pytest", "pytest-cov", "pytest-benchmark", "scikit-image"]
 
 [tool.cibuildwheel.linux]

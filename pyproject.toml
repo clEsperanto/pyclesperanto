@@ -72,7 +72,7 @@ skip = [
 ]
 build-frontend = "build"
 build-verbosity = 1
-test-command = "" #"pytest {project}/tests/test_import.py"
+test-command = "pytest {project}/tests/test_import.py"
 test-requires = ["pytest", "pytest-cov", "pytest-benchmark", "scikit-image"]
 
 [tool.cibuildwheel.linux]

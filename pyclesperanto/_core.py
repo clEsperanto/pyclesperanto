@@ -43,7 +43,6 @@ def select_device(device_id: Union[str, int] = "", device_type: str = "all") -> 
     -------
     device : Device
     """
-    print("\t\tselecting device ...")
     if isinstance(device_id, str):
         device = BackendManager.get_backend().getDeviceFromName(device_id, device_type)
     elif isinstance(device_id, int):
@@ -52,10 +51,17 @@ def select_device(device_id: Union[str, int] = "", device_type: str = "all") -> 
         raise ValueError(
             f"'{device_id}' is not a supported device_id. Please use either a string or an integer."
         )
+
+    if device is None:
+        warnings.warn(
+            "No device found in the system. Please check your system installation.",
+            RuntimeWarning,
+        )
+
     if _current_device._instance and device == _current_device._instance:
         return _current_device._instance
+
     _current_device._instance = device
-    print("\t\tdone!")
     return device
 
 
@@ -94,14 +100,12 @@ def list_available_backends() -> list:
     -------
     name list : list[str]
     """
-    print("\tlist available backends ...")
     back_list = list(BackendManager.get_backends_list())
     if not back_list:
         warnings.warn(
             "No backend available. Please install either OpenCL or CUDA on your system.",
             RuntimeWarning,
         )
-    print("\tdone!")
     return back_list
 
 
@@ -116,7 +120,6 @@ def select_backend(backend: str = "opencl") -> str:
     type : str, default = "opencl"
         determine the backend to use between opencl and cuda
     """
-    print("\tset backend ...")
     # enforce lowercase for backend_type
     backend = backend.lower()
     # is backend_type is different than "cuda" or "opencl", raise an error
@@ -125,11 +128,8 @@ def select_backend(backend: str = "opencl") -> str:
             f"'{backend}' is not a supported Backend. Please use either 'opencl' or 'cuda'."
         )
     BackendManager.set_backend(backend=backend)
-    print("\tdone!")
     # reset current device to default one
-    print("\tset default device ...")
     select_device()
-    print("\tdone!")
     return f"{BackendManager.get_backend()} selected."
 
 
@@ -157,13 +157,11 @@ def default_initialisation():
     """Set default backend and device"""
 
     try:
-        print("Initialising pyclesperanto...")
         backends = list_available_backends()
         if backends:
             _ = select_backend(backends[-1])
         else:
             raise RuntimeError("No backend available.")
-        print("done!")
     except Exception as e:
         warnings.warn(
             f"Error while initialising pyclesperanto: {e}\n\n"

@@ -85,8 +85,8 @@ and updated the filters to have it as a parameter (e.g. ``connected_component_la
 
         .. code-block:: python
 
-            gpu_output = cle.connected_components_labeling_box(gpu_input, connectivity="box")
-            gpu_output = cle.connected_components_labeling_sphere(gpu_input, connectivity="sphere")
+            gpu_output = cle.connected_components_labeling_box(gpu_input)
+            gpu_output = cle.connected_components_labeling_sphere(gpu_input)
 
 
 We unified the connectivity name to be either ``box`` or ``sphere``, and applied this to all filters that have a connectivity parameter.
@@ -152,3 +152,23 @@ And a ``radius_x``, ``radius_y``, ``radius_z`` parameter that can be used to spe
 
 We also introduce a ``binary_opening`` and ``binary_closing`` operation that rely on the ``binary_dilate`` and ``binary_erode`` operations.
 These operations uses a box or sphere shape footprint only. For custom footprint, please use the ``dilation`` and ``erosion`` operations.
+
+Histogram
+---------
+
+The ``histogram`` function got the parameter `determine_min_max` removed. Now the function compute the minimum or the maximum values of the image if the parameter
+`minimum_intensity` or `maximum_intensity` are not provided. This was discussed in this `issue <https://github.com/clEsperanto/pyclesperanto/issues/264>`__.
+
+.. tabs::
+
+    .. tab:: pyclesperanto
+
+        .. code-block:: python
+
+            histogram = cle.histogram(gpu_input, minimum_intensity=0, maximum_intensity=255)
+
+    .. tab:: prototype
+
+        .. code-block:: python
+
+            histogram = cle.histogram(gpu_input, minimum_intensity=0, maximum_intensity=255, determine_min_max=True)

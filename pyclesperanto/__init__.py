@@ -27,4 +27,6 @@ from ._version import VERSION as __version__
 
 from ._interroperability import *  # isort:skip
 
+print(f"pyclesperanto version: {__version__}")
+
 default_initialisation()

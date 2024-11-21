@@ -16,7 +16,7 @@ jobs:
       fail-fast: false
       matrix:
         python-version: ["3.9", "3.13"]
-        platform: [ubuntu-latest, macos-latest, windows-latest]
+        platform: [ubuntu-latest, macos-latest]
     defaults:
       run:
         shell: "bash -l {0}"
@@ -71,7 +71,7 @@ jobs:
 
       - name: Test
         id: test
-        if: matrix.platform == 'ubuntu-latest'
+        # if: matrix.platform == 'ubuntu-latest'
         run: |
           mkdir coverage && cd coverage
           pytest --cov=pyclesperanto ../tests/ --cov-report=xml

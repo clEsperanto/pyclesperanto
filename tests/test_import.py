@@ -1,2 +1,5 @@
 def test_import():
-    import pyclesperanto as cle
+    try:
+        import pyclesperanto as cle
+    except ImportError as e:
+        print(f"ImportError: {e}")

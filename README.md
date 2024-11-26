@@ -41,7 +41,8 @@ mamba install -c conda-forge pyclesperanto
 __MacOS__ users may need to install the following package: `mamba install -c conda-forge ocl_icd_wrapper_apple`
 __Linux__ users may need to install the following package: `mamba install -c conda-forge ocl-icd-system`
 
-> [!NOTE] pyclesperanto package is also available on `PyPI` and can be install with the command `pip install pyclesperanto`
+> [!NOTE]
+pyclesperanto package is also available on `PyPI` and can be install with the command `pip install pyclesperanto`
 
 ## Troubleshooting: Graphics cards drivers
 

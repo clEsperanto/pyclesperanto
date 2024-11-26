@@ -1,7 +1,7 @@
 # py-clesperanto
 [![Conda Version](https://img.shields.io/conda/vn/conda-forge/pyclesperanto.svg)](https://anaconda.org/conda-forge/pyclesperanto)
 [![PyPI](https://img.shields.io/pypi/v/pyclesperanto.svg?color=green)](https://pypi.org/project/pyclesperanto)
-[![License](https://img.shields.io/pypi/l/pyclesperanto.svg?color=green)](https://github.com/clEsperanto/pyclesperanto/raw/main/LICENSE)
+[![License](https://img.shields.io/pypi/l/pyclesperanto.svg?color=green)](https://github.com/clEsperanto/pyclesperanto/blob/main/LICENSE)
 [![Development Status](https://img.shields.io/pypi/status/pyclesperanto.svg)](https://en.wikipedia.org/wiki/Software_release_life_cycle#Alpha)
 [![Build](https://github.com/clEsperanto/pyclesperanto/actions/workflows/build.yml/badge.svg)](https://github.com/clEsperanto/pyclesperanto/actions/workflows/build.yml)
 [![codecov](https://codecov.io/gh/clesperanto/pyclesperanto/branch/main/graph/badge.svg)](https://codecov.io/gh/clesperanto/pyclesperanto)
@@ -71,7 +71,7 @@ from skimage.io import imread, imsave
 device = cle.select_device()
 print("Used GPU: ", device)
 
-image = imread("https://samples.fiji.sc/blobs.png")
+image = imread("https://samples.fiji.sc/blobs.png?raw=true")
 
 # push image to device memory
 input_image = cle.push(image)
@@ -96,9 +96,8 @@ imsave("result.tif", output_image)
 ## __Examples & Demos__
 
 <table border="0">
-
 <tr><td>
-<img src="https://github.com/clEsperanto/pyclesperanto/raw/main/demos/images/select_device.png" width="300"/>
+<img src="https://github.com/clEsperanto/pyclesperanto/blob/main/demos/images/select_device.png?raw=true" width="300"/>
 </td><td>
 
 * [Select and Manage devices](https://github.com/clEsperanto/pyclesperanto/tree/main/demos/api/select_devices.ipynb)
@@ -108,7 +107,7 @@ imsave("result.tif", output_image)
 </td></tr>
 
 <tr><td>
-<img src="https://github.com/clEsperanto/pyclesperanto/raw/main/demos/images/crop_and_paste_images.png" width="300"/>
+<img src="https://github.com/clEsperanto/pyclesperanto/blob/main/demos/images/crop_and_paste_images.png?raw=true" width="300"/>
 </td><td>
 
 * [Crop, Flip, Paste arrays](https://github.com/clEsperanto/pyclesperanto/tree/main/demos/basics/crop_flip_paste.ipynb)
@@ -121,7 +120,7 @@ imsave("result.tif", output_image)
 
 
 <tr><td>
-<img src="https://github.com/clEsperanto/pyclesperanto/raw/main/demos/images/segmentation_3d.png" width="300"/>
+<img src="https://github.com/clEsperanto/pyclesperanto/blob/main/demos/images/segmentation_3d.png?raw=true" width="300"/>
 </td><td>
 
 * [Segment and analyse blosb](https://github.com/clEsperanto/pyclesperanto/tree/main/demos/example/analyse_blobs.ipynb)
@@ -133,7 +132,7 @@ imsave("result.tif", output_image)
 
 
 <tr><td>
-<img src="https://github.com/clEsperanto/pyclesperanto/raw/main/demos/images/affine_transforms.png" width="300"/>
+<img src="https://github.com/clEsperanto/pyclesperanto/blob/main/demos/images/affine_transforms.png?raw=true" width="300"/>
 </td><td>
 
 * [Edge detection](https://github.com/clEsperanto/pyclesperanto/tree/main/demos/example/edge_detection_and_enhancement.ipynb)
@@ -145,7 +144,7 @@ imsave("result.tif", output_image)
 
 
 <tr><td>
-<img src="https://github.com/clEsperanto/pyclesperanto/raw/main/demos/images/multi-device-tiling.png" width="300"/>
+<img src="https://github.com/clEsperanto/pyclesperanto/blob/main/demos/images/multi-device-tiling.png?raw=true" width="300"/>
 </td><td>
 
 * [Multi-device tile processing](https://github.com/clEsperanto/pyclesperanto/tree/main/demos/example/multi-gpu_tile_processing_with_dask.ipynb)

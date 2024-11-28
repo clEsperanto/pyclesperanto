@@ -148,7 +148,7 @@ imsave("result.tif", output_image)
 </td><td>
 
 * [Multi-device tile processing](https://github.com/clEsperanto/pyclesperanto/tree/main/demos/examples/multi-gpu_tile_processing_with_dask.ipynb)
-* [Bia-Bob](https://github.com/clEsperanto/pyclesperanto/tree/main/demos/interoperability/multi-biabob-example.ipynb)
+* [Bia-Bob](https://github.com/clEsperanto/pyclesperanto/tree/main/demos/interoperability/biabob-example.ipynb)
 
 </td></tr>
 

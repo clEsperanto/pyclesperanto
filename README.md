@@ -38,8 +38,8 @@ mamba install -c conda-forge pyclesperanto
 ```
 
 > [!WARNING]
-> * __MacOS__ users may need to install the following package: `mamba install -c conda-forge ocl_icd_wrapper_apple`  
-> * __Linux__ users may need to install the following package: `mamba install -c conda-forge ocl-icd-system`  
+> * __MacOS__ users may need to install the following package: `mamba install -c conda-forge ocl_icd_wrapper_apple`
+> * __Linux__ users may need to install the following package: `mamba install -c conda-forge ocl-icd-system`
 
 > [!NOTE]
 > pyclesperanto package is also available on `PyPI` and can be install with the command `pip install pyclesperanto`
@@ -113,7 +113,7 @@ imsave("result.tif", output_image)
 * [Crop, Flip, Paste arrays](https://github.com/clEsperanto/pyclesperanto/tree/main/demos/basics/crop_flip_paste.ipynb)
 * [Math operations](https://github.com/clEsperanto/pyclesperanto/tree/main/demos/basics/arithmetic_operators.ipynb)
 * [Matrix operations](https://github.com/clEsperanto/pyclesperanto/tree/main/demos/basics/matrices_operations.ipynb)
-* [Vector and Matrix operations](https://github.com/clEsperanto/pyclesperanto/tree/main/demos/basics/vector_and_matrices_operations.ipynb)
+* [Vector and Matrix operations](https://github.com/clEsperanto/pyclesperanto/tree/main/demos/basics/vectors_and_matrices_operations.ipynb)
 * [Inspecting 3D image](https://github.com/clEsperanto/pyclesperanto/tree/main/demos/basics/inspecting_3d_images.ipynb)
 
 </td></tr>
@@ -123,10 +123,10 @@ imsave("result.tif", output_image)
 <img src="https://github.com/clEsperanto/pyclesperanto/blob/main/demos/images/segmentation_3d.png?raw=true" width="300"/>
 </td><td>
 
-* [Segment and analyse blosb](https://github.com/clEsperanto/pyclesperanto/tree/main/demos/example/analyse_blobs.ipynb)
-* [Segment cell based on membrane](https://github.com/clEsperanto/pyclesperanto/tree/main/demos/example/membrane_segmentation_2d.ipynb)
-* [Cell segmentation in 3D](https://github.com/clEsperanto/pyclesperanto/tree/main/demos/example/Segmentation_3D.ipynb)
-* [Voronoi_Otsu_labeling](https://github.com/clEsperanto/pyclesperanto/tree/main/demos/example/voronoi_otsu_labeling.ipynb)
+* [Segment and analyse blosb](https://github.com/clEsperanto/pyclesperanto/tree/main/demos/examples/analyse_blobs.ipynb)
+* [Segment cell based on membrane](https://github.com/clEsperanto/pyclesperanto/tree/main/demos/examples/membrane_segmentation_2d.ipynb)
+* [Cell segmentation in 3D](https://github.com/clEsperanto/pyclesperanto/tree/main/demos/examples/Segmentation_3D.ipynb)
+* [Voronoi_Otsu_labeling](https://github.com/clEsperanto/pyclesperanto/tree/main/demos/examples/voronoi_otsu_labeling.ipynb)
 
 </td></tr>
 
@@ -135,10 +135,10 @@ imsave("result.tif", output_image)
 <img src="https://github.com/clEsperanto/pyclesperanto/blob/main/demos/images/affine_transforms.png?raw=true" width="300"/>
 </td><td>
 
-* [Edge detection](https://github.com/clEsperanto/pyclesperanto/tree/main/demos/example/edge_detection_and_enhancement.ipynb)
-* [Parametric maps](https://github.com/clEsperanto/pyclesperanto/tree/main/demos/example/parametric_maps.ipynb)
-* [Rotation, scaling, translation, and affine transform](https://github.com/clEsperanto/pyclesperanto/tree/main/demos/example/affine_transforms.ipynb)
-<!-- * [Morphomathic operations](https://github.com/clEsperanto/pyclesperanto/tree/main/demos/example/morphomath_operation.ipynb)   -->
+* [Edge detection](https://github.com/clEsperanto/pyclesperanto/tree/main/demos/examples/edge_detection_and_enhancement.ipynb)
+* [Parametric maps](https://github.com/clEsperanto/pyclesperanto/tree/main/demos/examples/parametric_maps.ipynb)
+* [Rotation, scaling, translation, and affine transform](https://github.com/clEsperanto/pyclesperanto/tree/main/demos/examples/affine_transforms.ipynb)
+<!-- * [Morphomathic operations](https://github.com/clEsperanto/pyclesperanto/tree/main/demos/examples/morphomath_operation.ipynb)   -->
 
 </td></tr>
 
@@ -147,7 +147,7 @@ imsave("result.tif", output_image)
 <img src="https://github.com/clEsperanto/pyclesperanto/blob/main/demos/images/multi-device-tiling.png?raw=true" width="300"/>
 </td><td>
 
-* [Multi-device tile processing](https://github.com/clEsperanto/pyclesperanto/tree/main/demos/example/multi-gpu_tile_processing_with_dask.ipynb)
+* [Multi-device tile processing](https://github.com/clEsperanto/pyclesperanto/tree/main/demos/examples/multi-gpu_tile_processing_with_dask.ipynb)
 * [Bia-Bob](https://github.com/clEsperanto/pyclesperanto/tree/main/demos/interoperability/multi-biabob-example.ipynb)
 
 </td></tr>

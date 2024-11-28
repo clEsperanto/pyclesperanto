@@ -1,0 +1,21 @@
+authors:
+- affiliation: Institut Pasteur, Paris
+  family-names: Stephane Rigaud
+- affiliation: Data Science Center ScaDS.AI, Uni Leipzig
+  family-names: Robert Haase
+- affiliation: DFG cluster of excellence, Physics of Life, TU Dresden
+  family-names: Johannes Soltwedel
+- family-names: grahamross123
+- affiliation: Institut Pasteur
+  family-names: Marvin Albert
+- affiliation: Walter and Eliza Hall Institute of Medical Research
+  family-names: Pradeep Rajasekhar
+cff-version: 1.2.0
+date-released: '2024-11-21'
+doi: 10.5281/zenodo.14199059
+license:
+- cc-by-4.0
+repository-code: https://github.com/clEsperanto/pyclesperanto/tree/0.16.0
+title: 'clEsperanto/pyclesperanto: 0.16.0'
+type: software
+version: 0.16.0

@@ -38,28 +38,31 @@ mamba install -c conda-forge pyclesperanto
 ```
 
 > [!WARNING]
-> * __MacOS__ users may need to install the following package: `mamba install -c conda-forge ocl_icd_wrapper_apple`
-> * __Linux__ users may need to install the following package: `mamba install -c conda-forge ocl-icd-system`
+> * __MacOS__ users may need to install the following package:
+>    * `mamba install -c conda-forge ocl_icd_wrapper_apple`
+> * __Linux__ users may need to install the following package:
+>    * `mamba install -c conda-forge ocl-icd-system`
 
 > [!NOTE]
-> pyclesperanto package is also available on `PyPI` and can be install with the command `pip install pyclesperanto`
+> pyclesperanto package is also available on `PyPI` and can be install with the command:
+> * `pip install pyclesperanto`
 
 ## Troubleshooting: Graphics cards drivers
 
-In case you encounter one of the following error messages:
-* `"ImportError: DLL load failed while importing cl: The specified procedure could not be found"` [see also](https://github.com/clEsperanto/pyclesperanto_prototype/issues/55)
+In case you encounter one of the following error messages indicate a wrong OpenCL setup on your system:
 * `"clGetPlatformIDs failed: PLATFORM_NOT_FOUND_KHR"`
 * `"No backend available. Please install either OpenCL or CUDA on your system."`
-* `"No device available. Please install either OpenCL or CUDA on your system."`
 
-please install recent drivers for your graphics card and/or OpenCL device. Select the right driver source depending on your hardware from this list:
-
+Please install recent drivers for your graphics card and/or OpenCL device. Select the right driver source depending on your hardware from this list:
 * [AMD drivers](https://www.amd.com/en/support)
 * [NVidia drivers](https://www.nvidia.com/download/index.aspx)
 * [Intel GPU drivers](https://www.intel.com/content/www/us/en/download/726609/intel-arc-graphics-windows-dch-driver.html)
 * [Microsoft Windows OpenCL support](https://www.microsoft.com/en-us/p/opencl-and-opengl-compatibility-pack/9nqpsl29bfff)
 
-Linux user may have to install packages such as `intel-opencl-icd` or `rocm-opencl-runtime` depending on their GPU.
+And make sure that your OpenCL library are accessible in you `PATH`.
+
+> [!TIP]
+> __Linux__ users may install packages such as `intel-opencl-icd` or `rocm-opencl-runtime` depending on their GPU.
 
 ## __Code Example__
 
@@ -114,7 +117,7 @@ imsave("result.tif", output_image)
 * [Math operations](https://github.com/clEsperanto/pyclesperanto/tree/main/demos/basics/arithmetic_operators.ipynb)
 * [Matrix operations](https://github.com/clEsperanto/pyclesperanto/tree/main/demos/basics/matrices_operations.ipynb)
 * [Vector and Matrix operations](https://github.com/clEsperanto/pyclesperanto/tree/main/demos/basics/vectors_and_matrices_operations.ipynb)
-* [Inspecting 3D image](https://github.com/clEsperanto/pyclesperanto/tree/main/demos/basics/inspecting_3d_images.ipynb)
+* [How to inspecting 3D image](https://github.com/clEsperanto/pyclesperanto/tree/main/demos/basics/inspecting_3d_images.ipynb)
 
 </td></tr>
 
@@ -123,10 +126,10 @@ imsave("result.tif", output_image)
 <img src="https://github.com/clEsperanto/pyclesperanto/blob/main/demos/images/segmentation_3d.png?raw=true" width="300"/>
 </td><td>
 
-* [Segment and analyse blosb](https://github.com/clEsperanto/pyclesperanto/tree/main/demos/examples/analyse_blobs.ipynb)
-* [Segment cell based on membrane](https://github.com/clEsperanto/pyclesperanto/tree/main/demos/examples/membrane_segmentation_2d.ipynb)
+* [Segment and analyse blobs](https://github.com/clEsperanto/pyclesperanto/tree/main/demos/examples/analyse_blobs.ipynb)
+* [Voronoi-Otsu labeling](https://github.com/clEsperanto/pyclesperanto/tree/main/demos/examples/voronoi_otsu_labeling.ipynb)
+* [Cell segmentation based on membrane](https://github.com/clEsperanto/pyclesperanto/tree/main/demos/examples/membrane_segmentation_2d.ipynb)
 * [Cell segmentation in 3D](https://github.com/clEsperanto/pyclesperanto/tree/main/demos/examples/Segmentation_3D.ipynb)
-* [Voronoi_Otsu_labeling](https://github.com/clEsperanto/pyclesperanto/tree/main/demos/examples/voronoi_otsu_labeling.ipynb)
 
 </td></tr>
 
@@ -148,7 +151,7 @@ imsave("result.tif", output_image)
 </td><td>
 
 * [Multi-device tile processing](https://github.com/clEsperanto/pyclesperanto/tree/main/demos/examples/multi-gpu_tile_processing_with_dask.ipynb)
-* [Bia-Bob](https://github.com/clEsperanto/pyclesperanto/tree/main/demos/interoperability/biabob-example.ipynb)
+* [Ask Bia-Bob example](https://github.com/clEsperanto/pyclesperanto/tree/main/demos/interoperability/biabob-example.ipynb)
 
 </td></tr>
 

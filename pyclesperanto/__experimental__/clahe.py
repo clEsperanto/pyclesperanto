@@ -46,9 +46,7 @@ def clahe(
     """
     Contrast Limited Adaptive Histogram Equalization (CLAHE) is a method to enhance the contrast of images by
     normalizing the intensity values in small regions of the image. This implementation is based on the OpenCL
-    implementation by Hugo Raveton.
-
-    Current implementation only supports 8-bit images.
+    implementation by Hugo Raveton (https://github.com/HugoRaveton/pyopencl_clahe).
 
     Parameters
     ----------
@@ -57,9 +55,9 @@ def clahe(
     output_image : Image, optional
         The output image where the result will be stored. If None, a new image will be created.
     tile_size : int, optional
-        The size of each tile (cube) in pixels.
+        The width size of each tile (cube) in pixels.
     clip_limit : float, optional
-        The clipping limit for histogram equalization (in ratio).
+        The clipping limit for histogram equalization (in ratio, e.g. 0.01).
     min_intensity : float, optional
         The minimum intensity value.
     max_intensity : float, optional
@@ -97,9 +95,9 @@ __kernel void clahe(
         return; // Out of bounds check
     }
 
+    const float range = maxIntensity - minIntensity;
     const int numBins = 256; //number of bins (in a 8bit image)
     float hist[256] = {0}; // Histogram array
-
 
     // Calculate the start and end coordinates of each tile (current pixel position +/- tilesize/2)
     const int x_start = max(0, global_x - tileSize / 2);
@@ -113,8 +111,9 @@ __kernel void clahe(
     for (int z = z_start; z < z_end; z++) {
         for (int y = y_start; y < y_end; y++) {
             for (int x = x_start; x < x_end; x++) {
-                int pixelVal = (int) READ_IMAGE(src, sampler, POS_src_INSTANCE(x, y, z, 0)).x;
-                hist[pixelVal]++;
+                const float pixelVal = (float) READ_IMAGE(src, sampler, POS_src_INSTANCE(x, y, z, 0)).x;
+                const uint indx_x = convert_uint_sat(( (pixelVal - minIntensity) * (float)(numBins - 1) ) / range + 0.5 );
+                hist[indx_x]++;
             }
         }
     }
@@ -149,15 +148,25 @@ __kernel void clahe(
     }
 
     // Map the pixel value using the CDF
-    int pixelVal = (int) READ_IMAGE(src, sampler, POS_src_INSTANCE(global_x, global_y, global_z, 0)).x;
-    WRITE_IMAGE(dst, POS_dst_INSTANCE(global_x, global_y, global_z, 0), CONVERT_dst_PIXEL_TYPE(cdf[pixelVal]));
+    float pixelVal = (float) READ_IMAGE(src, sampler, POS_src_INSTANCE(global_x, global_y, global_z, 0)).x;
+    const uint indx_x = convert_uint_sat(( (pixelVal - minIntensity) * (float)(numBins - 1) ) / range + 0.5 );
+    WRITE_IMAGE(dst, POS_dst_INSTANCE(global_x, global_y, global_z, 0), CONVERT_dst_PIXEL_TYPE(cdf[indx_x]));
 
 }
 """
+
     input_image = Array.to_device(input_image)
     output_image = Array.empty_like(input_image)
-    minimum_intensity = minimum_of_all_pixels(input_image)
-    maximum_intensity = maximum_of_all_pixels(input_image)
+    minimum_intensity = (
+        minimum_of_all_pixels(input_image)
+        if minimum_intensity is None
+        else minimum_intensity
+    )
+    maximum_intensity = (
+        maximum_of_all_pixels(input_image)
+        if maximum_intensity is None
+        else maximum_intensity
+    )
     clip_limit = clip_limit * 255  # top 1% of the histogram for an 8-bit image
 
     # Execute the OpenCL kernel

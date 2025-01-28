@@ -13,7 +13,7 @@ from ._pyclesperanto import _execute, _native_execute
 
 
 def execute(
-    anchor=__file__,
+    anchor=None,
     kernel_source: str = "",
     kernel_name: str = "",
     global_size: tuple = (1, 1, 1),
@@ -28,12 +28,12 @@ def execute(
 
     Parameters
     ----------
-    anchor : str, default = '__file__'
-        Enter __file__ when calling this method and the corresponding open.cl
+    anchor : str, default = 'None'
+        Use __file__ when calling this method and the corresponding open.cl
         file lies in the same folder as the python file calling it.
         Ignored if kernel_source is a string.
     kernel_source : str
-        Filename of the open.cl file to be called or string containing the open.cl source code
+        Filename of the open.cl file to be called, or string containing the open.cl source code
     kernel_name : str
         Kernel method inside the open.cl file to be called
         most clij/clesperanto kernel functions have the same name as the file they are in
@@ -78,7 +78,7 @@ def execute(
 
 
 def native_execute(
-    anchor=__file__,
+    anchor=None,
     kernel_source: str = "",
     kernel_name: str = "",
     global_size: tuple = (1, 1, 1),

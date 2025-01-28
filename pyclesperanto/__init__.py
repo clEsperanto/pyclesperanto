@@ -1,3 +1,4 @@
+from . import __experimental__
 from ._array import Array, Image, is_image
 from ._categories import categories
 from ._core import (
@@ -26,5 +27,6 @@ from ._version import COMMON_ALIAS as __common_alias__
 from ._version import VERSION as __version__
 
 from ._interroperability import *  # isort:skip
+
 
 default_initialisation()

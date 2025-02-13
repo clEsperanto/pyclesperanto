@@ -66,6 +66,9 @@ def plugin_function(
         if not isinstance(input_device, Device):
             input_device = None
 
+        if not isinstance(input_image_device, Device):
+            input_image_device = None
+
         # Use input_device if available, else use the device of the input_image if it has the attribute device, else None
         use_device = input_device or input_image_device or get_device()
 

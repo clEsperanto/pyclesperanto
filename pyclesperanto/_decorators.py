@@ -63,9 +63,8 @@ def plugin_function(
             getattr(input_image, "device", None) if input_image is not None else None
         )
 
-        # if device is `cpu` or a string, set it to None
-        if input_image_device == "cpu":
-            input_image_device = None
+        if not isinstance(input_device, Device):
+            input_device = None
 
         # Use input_device if available, else use the device of the input_image if it has the attribute device, else None
         use_device = input_device or input_image_device or get_device()

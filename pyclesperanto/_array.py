@@ -345,5 +345,6 @@ def is_image(object):
             "<class 'resource_backed_dask_array.ResourceBackedDaskArray'>",
             "<class 'torch.Tensor'>",
             "<class 'pyclesperanto_prototype._tier0._pycl.OCLArray'>",
+            "<class 'napari.layers._multiscale_data.MultiScaleData'>",
         ]
     )

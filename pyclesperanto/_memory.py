@@ -75,7 +75,7 @@ def create_like(
 
 
 def push(
-    array: Image,
+    array,
     dtype: Optional[type] = None,
     mtype: Optional[str] = None,
     device: Optional[Device] = None,
@@ -103,6 +103,14 @@ def push(
     """
     if isinstance(array, Array):
         return array
+
+    if hasattr(array, "is_cuda") and array.is_cuda:
+        # special treatment for pytorch tensors
+        array = array.cpu()
+
+    # test if array is a MultiScaleData object
+    if type(array).__name__ == "MultiScaleData":
+        array = array[0]  # get the highest resolution image
 
     if not isinstance(array, np.ndarray):
         array = np.asarray(array)

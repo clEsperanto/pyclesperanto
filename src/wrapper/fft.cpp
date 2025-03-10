@@ -8,17 +8,17 @@ namespace py = pybind11;
 
 auto fft_(py::module &m) -> void {
 
-    m.def("_fft_forward", &cle::fft::fft_forward, "Apply forward Fourier Transform (clFFT)",
-        py::return_value_policy::take_ownership,
-        py::arg("input"),
-        py::arg("output")
-    );
+    // m.def("_fft_forward", &cle::fft::fft_forward, "Apply forward Fourier Transform (clFFT)",
+    //     py::return_value_policy::take_ownership,
+    //     py::arg("input"),
+    //     py::arg("output")
+    // );
 
-    m.def("_fft_backward", &cle::fft::fft_backward, "Apply backward Fourier Transform (clFFT)",
-        py::return_value_policy::take_ownership,
-        py::arg("input"),
-        py::arg("output")
-    );
+    // m.def("_fft_backward", &cle::fft::fft_backward, "Apply backward Fourier Transform (clFFT)",
+    //     py::return_value_policy::take_ownership,
+    //     py::arg("input"),
+    //     py::arg("output")
+    // );
 
     // m.def("_convolution", &cle::fft::convolution, "Apply convolution (clFFT)",
     //     py::return_value_policy::take_ownership,

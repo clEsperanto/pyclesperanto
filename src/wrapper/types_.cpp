@@ -11,6 +11,7 @@ auto types_(py::module_ &m) -> void
 {
     py::enum_<cle::dType> dtype(m, "_DataType");
     dtype.value("float32", cle::dType::FLOAT);
+    dtype.value("complex32", cle::dType::COMPLEX);
     // dtype.value("int64", cle::dType::INT64);
     dtype.value("int32", cle::dType::INT32);
     dtype.value("int16", cle::dType::INT16);

@@ -117,6 +117,8 @@ py::object get_np_dtype(const cle::Array::Pointer &array)
      {
      case cle::dType::FLOAT:
           return py::dtype::of<float>();
+     case cle::dType::COMPLEX:
+          return py::dtype::of<float>();     
      // case cle::dType::INT64:
      //      return py::dtype::of<int64_t>();
      case cle::dType::INT32:

@@ -66,11 +66,11 @@ def ifft(
 
 
 @plugin_function
-def fft_convolution(
+def convolve_fft(
     input_image: Image,
     kernel: Image,
     output_image: Optional[Image] = None,
-    correlation: bool = False,
+    correlate: bool = False,
     device: Optional[Device] = None,
 ) -> Image:
     """
@@ -84,6 +84,8 @@ def fft_convolution(
         The kernel to convolve with.
     output_image : Image, optional
         The output image where the result will be stored. If None, a new image will be created.
+    correlate : bool, optional
+        If True, convolution with the PSF reversed. Default is False.
     device : Device, optional
         The device on which to run the kernel.
 
@@ -93,11 +95,11 @@ def fft_convolution(
         The convolved image.
     """
 
-    return clic._fft_convolution(device, input_image, kernel, output_image, correlation)
+    return clic._convolve_fft(device, input_image, kernel, output_image, correlate)
 
 
 @plugin_function
-def fft_deconvolution(
+def deconvolve_fft(
     input_image: Image,
     kernel: Image,
     normalization_image: Optional[Image] = None,
@@ -126,7 +128,7 @@ def fft_deconvolution(
         The deconvolved image.
     """
 
-    return clic._fft_deconvolution(
+    return clic._deconvolve_fft(
         device,
         input_image,
         kernel,

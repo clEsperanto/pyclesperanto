@@ -10,6 +10,7 @@ from .._decorators import plugin_function
 
 clic = importlib.import_module("._pyclesperanto", package="pyclesperanto")
 
+
 @plugin_function
 def fft(
     input_image: Image,
@@ -36,6 +37,7 @@ def fft(
 
     return clic._fft(device, input_image, output_image)
 
+
 @plugin_function
 def ifft(
     input_image: Image,
@@ -61,6 +63,7 @@ def ifft(
     """
 
     return clic._ifft(device, input_image, output_image)
+
 
 @plugin_function
 def fft_convolution(
@@ -92,6 +95,7 @@ def fft_convolution(
 
     return clic._fft_convolution(device, input_image, kernel, output_image, correlation)
 
+
 @plugin_function
 def fft_deconvolution(
     input_image: Image,
@@ -122,4 +126,12 @@ def fft_deconvolution(
         The deconvolved image.
     """
 
-    return clic._fft_deconvolution(device, input_image, kernel, normalization_image, output_image, iterations, regularization)
+    return clic._fft_deconvolution(
+        device,
+        input_image,
+        kernel,
+        normalization_image,
+        output_image,
+        iterations,
+        regularization,
+    )

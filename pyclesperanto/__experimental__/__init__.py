@@ -4,7 +4,7 @@
 # from .._pyclesperanto import _performIFFT as vk_ifft
 
 from .clahe import clahe
-from .fft import fft, ifft, fft_convolution, fft_deconvolution
+from .fft import fft, fft_convolution, fft_deconvolution, ifft
 
 # from .._pyclesperanto import _fft as fft
 # from .._pyclesperanto import _ifft as ifft

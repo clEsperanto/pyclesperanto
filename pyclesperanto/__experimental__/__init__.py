@@ -5,14 +5,14 @@
 
 from .clahe import clahe
 from .fft import (
-    convolve_fft, 
-    deconvolve_fft, 
-    fft, 
+    circular_shift,
+    convolve_fft,
+    deconvolve_fft,
+    fft,
+    fft_smooth_shape,
     ifft,
     pad,
     unpad,
-    circular_shift,
-    fft_smooth_shape
 )
 
 # from .._pyclesperanto import _fft as fft

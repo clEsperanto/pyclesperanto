@@ -10,8 +10,9 @@ from .._decorators import plugin_function
 
 clic = importlib.import_module("._pyclesperanto", package="pyclesperanto")
 
+
 def fft_smooth_shape(
-        shape: list[int],
+    shape: list[int],
 ) -> tuple:
     """
     Computes the shape for FFT smoothing.
@@ -71,7 +72,10 @@ def pad(
         The padded image.
     """
 
-    return clic._pad(device, input_image, output_image, x_pad, y_pad, z_pad, value, center)
+    return clic._pad(
+        device, input_image, output_image, x_pad, y_pad, z_pad, value, center
+    )
+
 
 @plugin_function
 def unpad(
@@ -101,6 +105,7 @@ def unpad(
     """
 
     return clic._unpad(device, input_image, output_image, x_pad, y_pad, z_pad)
+
 
 @plugin_function
 def circular_shift(
@@ -135,7 +140,9 @@ def circular_shift(
         The shifted image.
     """
 
-    return clic._circular_shift(device, input_image, output_image, x_shift, y_shift, z_shift)
+    return clic._circular_shift(
+        device, input_image, output_image, x_shift, y_shift, z_shift
+    )
 
 
 @plugin_function

@@ -8,7 +8,7 @@ namespace py = pybind11;
 
 auto fft_(py::module &m) -> void {
 
-    m.def("_fft_smooth_shape", &cle::fft::get_next_smooth, "find the next smooth shape for FFT optimisation",
+    m.def("_fft_smooth_shape", &cle::fft::fft_smooth_shape, "find the next smooth shape for FFT optimisation",
         py::return_value_policy::take_ownership,
         py::arg("shape")
     );

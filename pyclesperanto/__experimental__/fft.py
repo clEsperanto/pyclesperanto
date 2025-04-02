@@ -12,7 +12,7 @@ clic = importlib.import_module("._pyclesperanto", package="pyclesperanto")
 
 
 def fft_smooth_shape(
-    shape: list[int],
+    shape: list,
 ) -> tuple:
     """
     Computes the shape for FFT smoothing.
@@ -34,6 +34,8 @@ def fft_smooth_shape(
 
     if len(shape) > 3:
         shape = shape[:3]
+
+    shape = [int(s) for s in shape]
 
     if len(shape) < 3:
         shape = shape + [0] * (3 - len(shape))

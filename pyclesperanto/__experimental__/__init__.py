@@ -4,7 +4,16 @@
 # from .._pyclesperanto import _performIFFT as vk_ifft
 
 from .clahe import clahe
-from .fft import convolve_fft, deconvolve_fft, fft, ifft
+from .fft import (
+    convolve_fft, 
+    deconvolve_fft, 
+    fft, 
+    ifft,
+    pad,
+    unpad,
+    circular_shift,
+    fft_smooth_shape
+)
 
 # from .._pyclesperanto import _fft as fft
 # from .._pyclesperanto import _ifft as ifft

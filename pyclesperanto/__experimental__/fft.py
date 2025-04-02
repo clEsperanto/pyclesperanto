@@ -1,6 +1,6 @@
 import importlib
 import warnings
-from typing import Optional
+from typing import Optional, Tuple
 
 import numpy as np
 
@@ -9,6 +9,133 @@ from .._core import Device
 from .._decorators import plugin_function
 
 clic = importlib.import_module("._pyclesperanto", package="pyclesperanto")
+
+def fft_smooth_shape(
+        shape: list[int],
+) -> tuple:
+    """
+    Computes the shape for FFT smoothing.
+
+    Parameters
+    ----------
+    shape : tuple
+        The shape of the image.
+
+    Returns
+    -------
+    tuple
+        The shape for FFT smoothing.
+    """
+    length = len(shape)
+
+    if isinstance(shape, Tuple):
+        shape = list(shape)
+
+    if len(shape) > 3:
+        shape = shape[:3]
+
+    if len(shape) < 3:
+        shape = shape + [0] * (3 - len(shape))
+
+    return clic._fft_smooth_shape(shape)[:length]
+
+
+@plugin_function
+def pad(
+    input_image: Image,
+    output_image: Optional[Image] = None,
+    x_pad: int = 0,
+    y_pad: int = 0,
+    z_pad: int = 0,
+    value: float = 0,
+    center: bool = False,
+    device: Optional[Device] = None,
+) -> Image:
+    """
+    Pads an image with zeros.
+
+    Parameters
+    ----------
+    input_image : Image
+        The input image to be padded.
+    output_image : Image, optional
+        The output image where the result will be stored. If None, a new image will be created.
+    padding : np.ndarray, optional
+        The amount of padding to apply to each axis. If None, no padding is applied.
+    device : Device, optional
+        The device on which to run the kernel.
+
+    Returns
+    -------
+    Image
+        The padded image.
+    """
+
+    return clic._pad(device, input_image, output_image, x_pad, y_pad, z_pad, value, center)
+
+@plugin_function
+def unpad(
+    input_image: Image,
+    output_image: Optional[Image] = None,
+    x_pad: int = 0,
+    y_pad: int = 0,
+    z_pad: int = 0,
+    device: Optional[Device] = None,
+) -> Image:
+    """
+    Unpads an image by removing the padding.
+
+    Parameters
+    ----------
+    input_image : Image
+        The input image to be unpadded.
+    output_image : Image, optional
+        The output image where the result will be stored. If None, a new image will be created.
+    device : Device, optional
+        The device on which to run the kernel.
+
+    Returns
+    -------
+    Image
+        The unpadded image.
+    """
+
+    return clic._unpad(device, input_image, output_image, x_pad, y_pad, z_pad)
+
+@plugin_function
+def circular_shift(
+    input_image: Image,
+    output_image: Optional[Image] = None,
+    x_shift: int = 0,
+    y_shift: int = 0,
+    z_shift: int = 0,
+    device: Optional[Device] = None,
+) -> Image:
+    """
+    Circularly shifts an image by the specified amounts.
+
+    Parameters
+    ----------
+    input_image : Image
+        The input image to be shifted.
+    output_image : Image, optional
+        The output image where the result will be stored. If None, a new image will be created.
+    x_shift : int, optional
+        The amount to shift in the x direction. Default is 0.
+    y_shift : int, optional
+        The amount to shift in the y direction. Default is 0.
+    z_shift : int, optional
+        The amount to shift in the z direction. Default is 0.
+    device : Device, optional
+        The device on which to run the kernel.
+
+    Returns
+    -------
+    Image
+        The shifted image.
+    """
+
+    return clic._circular_shift(device, input_image, output_image, x_shift, y_shift, z_shift)
 
 
 @plugin_function

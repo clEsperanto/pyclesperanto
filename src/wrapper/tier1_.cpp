@@ -9,11 +9,11 @@ auto tier1_(py::module &m) -> void {
 
     m.def("_pad", &cle::tier1::pad_func, "Call cle::tier1::pad_func from C++ CLIc.",
     py::return_value_policy::take_ownership,
-    py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("pad_x"), py::arg("pad_y"), py::arg("pad_z"), py::arg("value"), py::arg("center"));
+    py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("size_x"), py::arg("size_y"), py::arg("size_z"), py::arg("value"), py::arg("center"));
 
-    m.def("_unpad", &cle::tier1::unpad_func, "Call cle::tier1::pad_func from C++ CLIc.",
+    m.def("_unpad", &cle::tier1::unpad_func, "Call cle::tier1::unpad_func from C++ CLIc.",
         py::return_value_policy::take_ownership,
-        py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("pad_x"), py::arg("pad_y"), py::arg("pad_z"), py::arg("center"));
+        py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("size_x"), py::arg("size_y"), py::arg("size_z"), py::arg("center"));
 
     m.def("_circular_shift", &cle::tier1::circular_shift_func, "Call cle::tier1::circular_shift_func from C++ CLIc.",
     py::return_value_policy::take_ownership,

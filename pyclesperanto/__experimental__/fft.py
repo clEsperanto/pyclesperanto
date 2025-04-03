@@ -47,9 +47,9 @@ def fft_smooth_shape(
 def pad(
     input_image: Image,
     output_image: Optional[Image] = None,
-    x_pad: int = 0,
-    y_pad: int = 0,
-    z_pad: int = 0,
+    size_x: int = 0,
+    size_y: int = 0,
+    size_z: int = 0,
     value: float = 0,
     center: bool = False,
     device: Optional[Device] = None,
@@ -63,8 +63,16 @@ def pad(
         The input image to be padded.
     output_image : Image, optional
         The output image where the result will be stored. If None, a new image will be created.
-    padding : np.ndarray, optional
-        The amount of padding to apply to each axis. If None, no padding is applied.
+    size_x : int, optional
+        The new size with padding along x direction. Default is 0.
+    size_y : int, optional
+        The new size with padding along y direction. Default is 0.
+    size_z : int, optional
+        The new size with padding along z direction. Default is 0.
+    value : float, optional
+        The value to use for padding. Default is 0.
+    center : bool, optional
+        If True, the padding will be spread evenly around the image. Default is False.
     device : Device, optional
         The device on which to run the kernel.
 
@@ -75,7 +83,7 @@ def pad(
     """
 
     return clic._pad(
-        device, input_image, output_image, x_pad, y_pad, z_pad, value, center
+        device, input_image, output_image, size_x, size_y, size_z, value, center
     )
 
 
@@ -83,9 +91,10 @@ def pad(
 def unpad(
     input_image: Image,
     output_image: Optional[Image] = None,
-    x_pad: int = 0,
-    y_pad: int = 0,
-    z_pad: int = 0,
+    size_x: int = 0,
+    size_y: int = 0,
+    size_z: int = 0,
+    center: bool = False,
     device: Optional[Device] = None,
 ) -> Image:
     """
@@ -97,6 +106,14 @@ def unpad(
         The input image to be unpadded.
     output_image : Image, optional
         The output image where the result will be stored. If None, a new image will be created.
+    size_x : int, optional
+        The new size without padding along x direction. Default is 0.
+    size_y : int, optional
+        The new size without padding along y direction. Default is 0.
+    size_z : int, optional
+        The new size without padding along z direction. Default is 0.
+    center : bool, optional
+        If True, the padding will be cropped evenly around the image. Default is False.
     device : Device, optional
         The device on which to run the kernel.
 
@@ -106,7 +123,9 @@ def unpad(
         The unpadded image.
     """
 
-    return clic._unpad(device, input_image, output_image, x_pad, y_pad, z_pad)
+    return clic._unpad(
+        device, input_image, output_image, size_x, size_y, size_z, center
+    )
 
 
 @plugin_function

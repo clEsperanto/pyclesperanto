@@ -22,11 +22,11 @@ from ._tier5 import *
 from ._tier6 import *
 from ._tier7 import *
 from ._tier8 import *
+from ._utils import fft_smooth_shape
 from ._version import CLIC_VERSION as __clic_version__
 from ._version import COMMON_ALIAS as __common_alias__
 from ._version import VERSION as __version__
 
 from ._interroperability import *  # isort:skip
-
 
 default_initialisation()

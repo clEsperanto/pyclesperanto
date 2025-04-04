@@ -104,6 +104,7 @@ def get(
         "uint16": self._read_uint16,
         "uint32": self._read_uint32,
         # "uint64": self._read_uint64,
+        "complex32": self._read_float32,
     }
     return caster[self.dtype.name](origin, region)
 

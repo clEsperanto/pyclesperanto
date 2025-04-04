@@ -1,12 +1,12 @@
 // this code is auto-generated, do not edit manually
-    
+
 #include "pycle_wrapper.hpp"
 #include "tier1.hpp"
 
 namespace py = pybind11;
 
 auto tier1_(py::module &m) -> void {
-m.def("_absolute", &cle::tier1::absolute_func, "Call cle::tier1::absolute_func from C++ CLIc.",
+    m.def("_absolute", &cle::tier1::absolute_func, "Call cle::tier1::absolute_func from C++ CLIc.",
     py::return_value_policy::take_ownership,
     py::arg("device"), py::arg("src"), py::arg("dst"));
 
@@ -442,7 +442,7 @@ m.def("_absolute", &cle::tier1::absolute_func, "Call cle::tier1::absolute_func f
     py::return_value_policy::take_ownership,
     py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("size_x"), py::arg("size_y"), py::arg("size_z"), py::arg("value"), py::arg("center"));
 
-    m.def("_pad", &cle::tier1::pad_func, "Call cle::tier1::pad_func from C++ CLIc.",
+    m.def("_unpad", &cle::tier1::unpad_func, "Call cle::tier1::unpad_func from C++ CLIc.",
     py::return_value_policy::take_ownership,
     py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("size_x"), py::arg("size_y"), py::arg("size_z"), py::arg("center"));
 

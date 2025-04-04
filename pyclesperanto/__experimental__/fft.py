@@ -11,38 +11,6 @@ from .._decorators import plugin_function
 clic = importlib.import_module("._pyclesperanto", package="pyclesperanto")
 
 
-def fft_smooth_shape(
-    shape: list,
-) -> tuple:
-    """
-    Computes the shape for FFT smoothing.
-
-    Parameters
-    ----------
-    shape : tuple
-        The shape of the image.
-
-    Returns
-    -------
-    tuple
-        The shape for FFT smoothing.
-    """
-    length = len(shape)
-
-    if isinstance(shape, Tuple):
-        shape = list(shape)
-
-    if len(shape) > 3:
-        shape = shape[:3]
-
-    shape = [int(s) for s in shape]
-
-    if len(shape) < 3:
-        shape = shape + [0] * (3 - len(shape))
-
-    return clic._fft_smooth_shape(shape)[:length]
-
-
 @plugin_function
 def pad(
     input_image: Image,

@@ -12,6 +12,7 @@ from ._core import (
     select_device,
     wait_for_kernel_to_finish,
 )
+from ._utils import fft_smooth_shape
 from ._functionalities import execute, imshow, native_execute, operation, operations
 from ._memory import create, create_like, pull, push
 from ._tier1 import *
@@ -27,6 +28,5 @@ from ._version import COMMON_ALIAS as __common_alias__
 from ._version import VERSION as __version__
 
 from ._interroperability import *  # isort:skip
-
 
 default_initialisation()

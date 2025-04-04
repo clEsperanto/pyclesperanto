@@ -1,5 +1,5 @@
 // this code is auto-generated, do not edit manually
-
+    
 #include "pycle_wrapper.hpp"
 #include "tier1.hpp"
 
@@ -56,7 +56,7 @@ m.def("_absolute", &cle::tier1::absolute_func, "Call cle::tier1::absolute_func f
 
     m.def("_circular_shift", &cle::tier1::circular_shift_func, "Call cle::tier1::circular_shift_func from C++ CLIc.",
     py::return_value_policy::take_ownership,
-    py::arg("device"), py::arg("src0"), py::arg("src1"), py::arg("dst"));
+    py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("shift_x"), py::arg("shift_y"), py::arg("shift_z"));
 
     m.def("_convolve", &cle::tier1::convolve_func, "Call cle::tier1::convolve_func from C++ CLIc.",
     py::return_value_policy::take_ownership,

@@ -1,5 +1,5 @@
 // this code is auto-generated, do not edit manually
-
+    
 #include "pycle_wrapper.hpp"
 #include "tier4.hpp"
 
@@ -61,4 +61,24 @@ m.def("_label_bounding_box", &cle::tier4::label_bounding_box_func, "Call cle::ti
     m.def("_extension_ratio_map", &cle::tier4::extension_ratio_map_func, "Call cle::tier4::extension_ratio_map_func from C++ CLIc.",
     py::return_value_policy::take_ownership,
     py::arg("device"), py::arg("src"), py::arg("dst"));
+
+    m.def("_mean_extension_map", &cle::tier4::mean_extension_map_func, "Call cle::tier4::mean_extension_map_func from C++ CLIc.",
+    py::return_value_policy::take_ownership,
+    py::arg("device"), py::arg("src"), py::arg("dst"));
+
+    m.def("_maximum_extension_map", &cle::tier4::maximum_extension_map_func, "Call cle::tier4::maximum_extension_map_func from C++ CLIc.",
+    py::return_value_policy::take_ownership,
+    py::arg("device"), py::arg("src"), py::arg("dst"));
+
+    m.def("_minimum_intensity_map", &cle::tier4::minimum_intensity_map_func, "Call cle::tier4::minimum_intensity_map_func from C++ CLIc.",
+    py::return_value_policy::take_ownership,
+    py::arg("device"), py::arg("src"), py::arg("labels"), py::arg("dst"));
+
+    m.def("_maximum_intensity_map", &cle::tier4::maximum_intensity_map_func, "Call cle::tier4::maximum_intensity_map_func from C++ CLIc.",
+    py::return_value_policy::take_ownership,
+    py::arg("device"), py::arg("src"), py::arg("labels"), py::arg("dst"));
+
+    m.def("_standard_deviation_intensity_map", &cle::tier4::standard_deviation_intensity_map_func, "Call cle::tier4::standard_deviation_intensity_map_func from C++ CLIc.",
+    py::return_value_policy::take_ownership,
+    py::arg("device"), py::arg("src"), py::arg("labels"), py::arg("dst"));
 }

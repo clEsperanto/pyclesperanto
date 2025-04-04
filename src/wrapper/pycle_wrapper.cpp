@@ -9,6 +9,7 @@ PYBIND11_MODULE(_pyclesperanto, m)
   core_(m);
   array_(m);
   execute_(m);
+  utils_(m);
 
   tier1_(m);
   tier2_(m);

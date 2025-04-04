@@ -6,7 +6,7 @@
 namespace py = pybind11;
 
 auto tier1_(py::module &m) -> void {
-m.def("_absolute", &cle::tier1::absolute_func, "Call cle::tier1::absolute_func from C++ CLIc.",
+    m.def("_absolute", &cle::tier1::absolute_func, "Call cle::tier1::absolute_func from C++ CLIc.",
     py::return_value_policy::take_ownership,
     py::arg("device"), py::arg("src"), py::arg("dst"));
 
@@ -53,6 +53,10 @@ m.def("_absolute", &cle::tier1::absolute_func, "Call cle::tier1::absolute_func f
     m.def("_block_enumerate", &cle::tier1::block_enumerate_func, "Call cle::tier1::block_enumerate_func from C++ CLIc.",
     py::return_value_policy::take_ownership,
     py::arg("device"), py::arg("src0"), py::arg("src1"), py::arg("dst"), py::arg("blocksize"));
+
+    m.def("_circular_shift", &cle::tier1::circular_shift_func, "Call cle::tier1::circular_shift_func from C++ CLIc.",
+    py::return_value_policy::take_ownership,
+    py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("shift_x"), py::arg("shift_y"), py::arg("shift_z"));
 
     m.def("_convolve", &cle::tier1::convolve_func, "Call cle::tier1::convolve_func from C++ CLIc.",
     py::return_value_policy::take_ownership,
@@ -434,6 +438,14 @@ m.def("_absolute", &cle::tier1::absolute_func, "Call cle::tier1::absolute_func f
     py::return_value_policy::take_ownership,
     py::arg("device"), py::arg("matrix1"), py::arg("matrix2"), py::arg("matrix_destination"));
 
+    m.def("_pad", &cle::tier1::pad_func, "Call cle::tier1::pad_func from C++ CLIc.",
+    py::return_value_policy::take_ownership,
+    py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("size_x"), py::arg("size_y"), py::arg("size_z"), py::arg("value"), py::arg("center"));
+
+    m.def("_unpad", &cle::tier1::unpad_func, "Call cle::tier1::unpad_func from C++ CLIc.",
+    py::return_value_policy::take_ownership,
+    py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("size_x"), py::arg("size_y"), py::arg("size_z"), py::arg("center"));
+
     m.def("_reciprocal", &cle::tier1::reciprocal_func, "Call cle::tier1::reciprocal_func from C++ CLIc.",
     py::return_value_policy::take_ownership,
     py::arg("device"), py::arg("src"), py::arg("dst"));
@@ -593,4 +605,8 @@ m.def("_absolute", &cle::tier1::absolute_func, "Call cle::tier1::absolute_func f
     m.def("_z_position_of_minimum_z_projection", &cle::tier1::z_position_of_minimum_z_projection_func, "Call cle::tier1::z_position_of_minimum_z_projection_func from C++ CLIc.",
     py::return_value_policy::take_ownership,
     py::arg("device"), py::arg("src"), py::arg("dst"));
+
+    m.def("_z_position_projection", &cle::tier1::z_position_projection_func, "Call cle::tier1::z_position_projection_func from C++ CLIc.",
+    py::return_value_policy::take_ownership,
+    py::arg("device"), py::arg("src"), py::arg("position"), py::arg("dst"));
 }

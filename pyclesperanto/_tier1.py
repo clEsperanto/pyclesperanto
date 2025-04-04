@@ -443,6 +443,43 @@ def block_enumerate(
     )
 
 
+@plugin_function
+def circular_shift(
+    input_image: Image,
+    output_image: Optional[Image] = None,
+    shift_x: int = 0,
+    shift_y: int = 0,
+    shift_z: int = 0,
+    device: Optional[Device] = None,
+) -> Image:
+    """Apply a circular shift (roll) to the input image. Elements at the borders will
+    be shifted to the other side of the image. The shift is specified for each
+    dimension separately.
+
+    Parameters
+    ----------
+    input_image: Image
+        Input image to process.
+    output_image: Optional[Image] (= None)
+        Output result image.
+    shift_x: int (= 0)
+        Shift in x direction.
+    shift_y: int (= 0)
+        Shift in y direction.
+    shift_z: int (= 0)
+        Shift in z direction.
+    device: Optional[Device] (= None)
+        Device to perform the operation on.
+
+    Returns
+    -------
+    Image
+    """
+    return clic._circular_shift(
+        device, input_image, output_image, int(shift_x), int(shift_y), int(shift_z)
+    )
+
+
 @plugin_function(categories=["filter", "combine", "in assistant"])
 def convolve(
     input_image0: Image,
@@ -3909,6 +3946,92 @@ def multiply_matrix(
     return clic._multiply_matrix(device, matrix1, matrix2, matrix_destination)
 
 
+@plugin_function
+def pad(
+    input_image: Image,
+    output_image: Optional[Image] = None,
+    size_x: int = 0,
+    size_y: int = 0,
+    size_z: int = 0,
+    value: float = 0,
+    center: bool = False,
+    device: Optional[Device] = None,
+) -> Image:
+    """Pads an image with a given size along dimensions with a given value.
+
+    Parameters
+    ----------
+    input_image: Image
+        Input image to process.
+    output_image: Optional[Image] (= None)
+        Output result image.
+    size_x: int (= 0)
+        New size along x axis.
+    size_y: int (= 0)
+        New size along y axis.
+    size_z: int (= 0)
+        New size along z axis.
+    value: float (= 0)
+        Value to pad with.
+    center: bool (= False)
+        Center the image in the middle of the padded image.
+    device: Optional[Device] (= None)
+        Device to perform the operation on.
+
+    Returns
+    -------
+    Image
+    """
+    return clic._pad(
+        device,
+        input_image,
+        output_image,
+        int(size_x),
+        int(size_y),
+        int(size_z),
+        float(value),
+        center,
+    )
+
+
+@plugin_function
+def unpad(
+    input_image: Image,
+    output_image: Optional[Image] = None,
+    size_x: int = 0,
+    size_y: int = 0,
+    size_z: int = 0,
+    center: bool = False,
+    device: Optional[Device] = None,
+) -> Image:
+    """Pads an image with a given size along dimensions with a given value.
+
+    Parameters
+    ----------
+    input_image: Image
+        Input image to process.
+    output_image: Optional[Image] (= None)
+        Output result image.
+    size_x: int (= 0)
+        New size along x axis.
+    size_y: int (= 0)
+        New size along y axis.
+    size_z: int (= 0)
+        New size along z axis.
+    center: bool (= False)
+        Center the image in the middle of the padded image.
+    device: Optional[Device] (= None)
+        Device to perform the operation on.
+
+    Returns
+    -------
+    Image
+    """
+    return clic._pad(
+        device, input_image, output_image, int(size_x), int(size_y), int(size_z), center
+    )
+
+
 @plugin_function(categories=["filter", "in assistant"])
 def reciprocal(
     input_image: Image,
@@ -5089,3 +5212,35 @@ def z_position_of_minimum_z_projection(
     Image
     """
     return clic._z_position_of_minimum_z_projection(device, input_image, output_image)
+
+
+@plugin_function(categories=["projection"])
+def z_position_projection(
+    input_image: Image,
+    position: Image,
+    output_image: Optional[Image] = None,
+    device: Optional[Device] = None,
+) -> Image:
+    """Project a defined Z-slice of a 3D stack into a 2D image.  Which Z-slice is
+    defined as the position image, which represents an altitude map.
+
+    Parameters
+    ----------
+    input_image: Image
+        Input image stack
+    position: Image
+        altitude map
+    output_image: Optional[Image] (= None)
+        Output image
+    device: Optional[Device] (= None)
+        Device to perform the operation on.
+
+    Returns
+    -------
+    Image
+
+    References
+    ----------
+    [1] https://clij.github.io/clij2-docs/reference_zPositionProjection
+    """
+    return clic._z_position_projection(device, input_image, position, output_image)

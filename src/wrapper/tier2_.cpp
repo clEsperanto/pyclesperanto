@@ -209,4 +209,8 @@ m.def("_absolute_difference", &cle::tier2::absolute_difference_func, "Call cle::
     m.def("_top_hat", &cle::tier2::top_hat_func, "Call cle::tier2::top_hat_func from C++ CLIc.",
     py::return_value_policy::take_ownership,
     py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("radius_x"), py::arg("radius_y"), py::arg("radius_z"), py::arg("connectivity"));
+
+    m.def("_extended_depth_of_focus_variance_projection", &cle::tier2::extended_depth_of_focus_variance_projection_func, "Call cle::tier2::extended_depth_of_focus_variance_projection_func from C++ CLIc.",
+    py::return_value_policy::take_ownership,
+    py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("radius_x"), py::arg("radius_y"), py::arg("sigma"));
 }

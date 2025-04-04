@@ -493,3 +493,166 @@ def extension_ratio_map(
     [1] https://clij.github.io/clij2-docs/reference_extensionRatioMap
     """
     return clic._extension_ratio_map(device, input_image, output_image)
+
+
+@plugin_function(categories=["label processing", "in assistant", "map"])
+def mean_extension_map(
+    input_image: Image,
+    output_image: Optional[Image] = None,
+    device: Optional[Device] = None,
+) -> Image:
+    """Determines for every label the mean distance of any pixel to the centroid in a
+    label map and returns it as a parametric map. The extension ration is defined as
+    the maximum distance of any pixel in the label to the label's centroid divided
+    by the average distance of all pixels in the label to the centroid.
+
+    Parameters
+    ----------
+    input_image: Image
+        Input label image.
+    output_image: Optional[Image] (= None)
+        Output parametric image.
+    device: Optional[Device] (= None)
+        Device to perform the operation on.
+
+    Returns
+    -------
+    Image
+
+    References
+    ----------
+    [1] https://clij.github.io/clij2-docs/reference_meanExtensionMap
+    """
+    return clic._mean_extension_map(device, input_image, output_image)
+
+
+@plugin_function(categories=["label processing", "in assistant", "map"])
+def maximum_extension_map(
+    input_image: Image,
+    output_image: Optional[Image] = None,
+    device: Optional[Device] = None,
+) -> Image:
+    """Determines for every label the maximum distance of any pixel to the centroid in
+    a label map and returns it as a parametric map. The extension ration is defined
+    as the maximum distance of any pixel in the label to the label's centroid
+    divided by the average distance of all pixels in the label to the centroid.
+
+    Parameters
+    ----------
+    input_image: Image
+        Input label image.
+    output_image: Optional[Image] (= None)
+        Output parametric image.
+    device: Optional[Device] (= None)
+        Device to perform the operation on.
+
+    Returns
+    -------
+    Image
+
+    References
+    ----------
+    [1] https://clij.github.io/clij2-docs/reference_meanExtensionMap
+    """
+    return clic._maximum_extension_map(device, input_image, output_image)
+
+
+@plugin_function(categories=["label measurement", "map", "in assistant", "combine"])
+def minimum_intensity_map(
+    input_image: Image,
+    labels: Image,
+    output_image: Optional[Image] = None,
+    device: Optional[Device] = None,
+) -> Image:
+    """Takes an image and a corresponding label map, determines the minimum   intensity
+    per label and replaces every label with the that number. This results in a
+    parametric image expressing minimum object intensity.
+
+    Parameters
+    ----------
+    input_image: Image
+        intensity image
+    labels: Image
+        label image
+    output_image: Optional[Image] (= None)
+        Parametric image computed
+    device: Optional[Device] (= None)
+        Device to perform the operation on.
+
+    Returns
+    -------
+    Image
+
+    References
+    ----------
+    [1] https://clij.github.io/clij2-docs/reference_minimumIntensityMap
+    """
+    return clic._minimum_intensity_map(device, input_image, labels, output_image)
+
+
+@plugin_function(categories=["label measurement", "map", "in assistant", "combine"])
+def maximum_intensity_map(
+    input_image: Image,
+    labels: Image,
+    output_image: Optional[Image] = None,
+    device: Optional[Device] = None,
+) -> Image:
+    """Takes an image and a corresponding label map, determines the maximum   intensity
+    per label and replaces every label with the that number. This results in a
+    parametric image expressing maximum object intensity.
+
+    Parameters
+    ----------
+    input_image: Image
+        intensity image
+    labels: Image
+        label image
+    output_image: Optional[Image] (= None)
+        Parametric image computed
+    device: Optional[Device] (= None)
+        Device to perform the operation on.
+
+    Returns
+    -------
+    Image
+
+    References
+    ----------
+    [1] https://clij.github.io/clij2-docs/reference_maximumIntensityMap
+    """
+    return clic._maximum_intensity_map(device, input_image, labels, output_image)
+
+
+@plugin_function(categories=["label measurement", "map", "in assistant", "combine"])
+def standard_deviation_intensity_map(
+    input_image: Image,
+    labels: Image,
+    output_image: Optional[Image] = None,
+    device: Optional[Device] = None,
+) -> Image:
+    """Takes an image and a corresponding label map, determines the standard deviation
+    intensity per label and replaces every label with the that number. This results
+    in a parametric image expressing std object intensity.
+
+    Parameters
+    ----------
+    input_image: Image
+        intensity image
+    labels: Image
+        label image
+    output_image: Optional[Image] (= None)
+        Parametric image computed
+    device: Optional[Device] (= None)
+        Device to perform the operation on.
+
+    Returns
+    -------
+    Image
+
+    References
+    ----------
+    [1] https://clij.github.io/clij2-docs/reference_standardDeviationIntensityMap
+    """
+    return clic._standard_deviation_intensity_map(
+        device, input_image, labels, output_image
+    )

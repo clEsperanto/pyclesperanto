@@ -14,6 +14,10 @@ m.def("_bounding_box", &cle::tier3::bounding_box_func, "Call cle::tier3::boundin
     py::return_value_policy::take_ownership,
     py::arg("device"), py::arg("src"));
 
+    m.def("_clahe", &cle::tier3::clahe_func, "Call cle::tier3::clahe_func from C++ CLIc.",
+    py::return_value_policy::take_ownership,
+    py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("tile_size"), py::arg("clip_limit"), py::arg("min_intensity"), py::arg("max_intensity"));
+
     m.def("_remove_labels", &cle::tier3::remove_labels_func, "Call cle::tier3::remove_labels_func from C++ CLIc.",
     py::return_value_policy::take_ownership,
     py::arg("device"), py::arg("src"), py::arg("list"), py::arg("dst"));

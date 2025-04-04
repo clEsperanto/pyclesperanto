@@ -63,6 +63,52 @@ def center_of_mass(input_image: Image, device: Optional[Device] = None) -> list:
 
 
 @plugin_function
+def clahe(
+    input_image: Image,
+    output_image: Optional[Image] = None,
+    tile_size: int = 8,
+    clip_limit: float = 0.01,
+    min_intensity: Optional[float] = None,
+    max_intensity: Optional[float] = None,
+    device: Optional[Device] = None,
+) -> Image:
+    """Applies CLAHE (Contrast Limited Adaptive Histogram Equalization) to the input
+    image. The algorithm is adapted from the work of Hugo Raveton
+    (https://github.com/HugoRaveton/pyopencl_clahe)
+
+    Parameters
+    ----------
+    input_image: Image
+        Input image to process.
+    output_image: Optional[Image] (= None)
+        Output result image.
+    tile_size: int (= 8)
+        Size of the tiles to be used for CLAHE.
+    clip_limit: float (= 0.01)
+        Clip limit for CLAHE.
+    min_intensity: Optional[float] (= None)
+        Minimum intensity value.
+    max_intensity: Optional[float] (= None)
+        Maximum intensity value.
+    device: Optional[Device] (= None)
+        Device to perform the operation on.
+
+    Returns
+    -------
+    Image
+    """
+    return clic._clahe(
+        device,
+        input_image,
+        output_image,
+        int(tile_size),
+        float(clip_limit),
+        min_intensity,
+        max_intensity,
+    )
+
+
+@plugin_function
 def remove_labels(
     input_image: Image,
     list: Image,

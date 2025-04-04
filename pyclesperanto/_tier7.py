@@ -90,7 +90,7 @@ def eroded_otsu_labeling(
 
     References
     ----------
-    [1] https://github.com/biovoxxel/bv3dbox (BV_LabelSplitter.java#L83)
+    [1] https://github.com/biovoxxel/bv3dbox
     [2] https://zenodo.org/badge/latestdoi/434949702
     """
     return clic._eroded_otsu_labeling(

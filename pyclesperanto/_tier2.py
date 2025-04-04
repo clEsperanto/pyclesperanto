@@ -1911,3 +1911,43 @@ def top_hat(
         float(radius_z),
         str(connectivity),
     )
+
+
+@plugin_function(categories=["projection"])
+def extended_depth_of_focus_variance_projection(
+    input_image: Image,
+    output_image: Optional[Image] = None,
+    radius_x: float = 10,
+    radius_y: float = 10,
+    sigma: float = 5,
+    device: Optional[Device] = None,
+) -> Image:
+    """Extended depth of focus projection maximizing local pixel intensity variance.
+
+    Parameters
+    ----------
+    input_image: Image
+        Input image to process.
+    output_image: Optional[Image] (= None)
+        Output result image.
+    radius_x: float (= 10)
+        Sphere radius filter in x axis.
+    radius_y: float (= 10)
+        Sphere radius filter in y axis.
+    sigma: float (= 5)
+        Sigma for Gaussian blur.
+    device: Optional[Device] (= None)
+        Device to perform the operation on.
+
+    Returns
+    -------
+    Image
+    """
+    return clic._extended_depth_of_focus_variance_projection(
+        device,
+        input_image,
+        output_image,
+        float(radius_x),
+        float(radius_y),
+        float(sigma),
+    )

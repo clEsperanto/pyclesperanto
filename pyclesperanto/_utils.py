@@ -1,6 +1,7 @@
-import numpy as np
 import importlib
 from typing import Tuple
+
+import numpy as np
 
 clic = importlib.import_module("._pyclesperanto", package="pyclesperanto")
 

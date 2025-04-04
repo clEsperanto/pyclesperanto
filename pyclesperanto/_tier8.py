@@ -127,7 +127,7 @@ def convolve_fft(
     input_image: Image,
     kernel: Image,
     output_image: Optional[Image] = None,
-    correlate: bool = false,
+    correlate: bool = False,
     device: Optional[Device] = None,
 ) -> Image:
     """Perform a 1D, 2D or 3D convolution using FFT between an input image and a kernel
@@ -144,7 +144,7 @@ def convolve_fft(
         Kernel image
     output_image: Optional[Image] (= None)
         Output image
-    correlate: bool (= false)
+    correlate: bool (= False)
         If true, convolution with the PSF reversed.
     device: Optional[Device] (= None)
         Device to perform the operation on.
@@ -162,7 +162,7 @@ def deconvolve_fft(
     psf: Image,
     normalization: Optional[Image] = None,
     output_image: Optional[Image] = None,
-    iteration: size_t = 100,
+    iteration: int = 100,
     regularization: float = 0.0,
     device: Optional[Device] = None,
 ) -> Image:

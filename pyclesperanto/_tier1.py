@@ -3954,7 +3954,7 @@ def pad(
     size_y: int = 0,
     size_z: int = 0,
     value: float = 0,
-    center: bool = false,
+    center: bool = False,
     device: Optional[Device] = None,
 ) -> Image:
     """Pads an image with a given size along dimensions with a given value.
@@ -3973,7 +3973,7 @@ def pad(
         New size along z axis.
     value: float (= 0)
         Value to pad with.
-    center: bool (= false)
+    center: bool (= False)
         Center the image in the middle of the padded image.
     device: Optional[Device] (= None)
         Device to perform the operation on.
@@ -3995,13 +3995,13 @@ def pad(
 
 
 @plugin_function
-def pad(
+def unpad(
     input_image: Image,
     output_image: Optional[Image] = None,
     size_x: int = 0,
     size_y: int = 0,
     size_z: int = 0,
-    center: bool = false,
+    center: bool = False,
     device: Optional[Device] = None,
 ) -> Image:
     """Pads an image with a given size along dimensions with a given value.
@@ -4018,7 +4018,7 @@ def pad(
         New size along y axis.
     size_z: int (= 0)
         New size along z axis.
-    center: bool (= false)
+    center: bool (= False)
         Center the image in the middle of the padded image.
     device: Optional[Device] (= None)
         Device to perform the operation on.

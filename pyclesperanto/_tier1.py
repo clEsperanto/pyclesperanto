@@ -4027,7 +4027,7 @@ def unpad(
     -------
     Image
     """
-    return clic._pad(
+    return clic._unpad(
         device, input_image, output_image, int(size_x), int(size_y), int(size_z), center
     )
 

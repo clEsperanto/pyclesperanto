@@ -68,8 +68,8 @@ def clahe(
     output_image: Optional[Image] = None,
     tile_size: int = 8,
     clip_limit: float = 0.01,
-    min_intensity: Optional[float] = None,
-    max_intensity: Optional[float] = None,
+    min_intensity: Optional[float] = float('nan'),
+    max_intensity: Optional[float] = float('nan'),
     device: Optional[Device] = None,
 ) -> Image:
     """Applies CLAHE (Contrast Limited Adaptive Histogram Equalization) to the input

@@ -68,8 +68,8 @@ def clahe(
     output_image: Optional[Image] = None,
     tile_size: int = 8,
     clip_limit: float = 0.01,
-    min_intensity: Optional[float] = float("nan"),
-    max_intensity: Optional[float] = float("nan"),
+    minimum_intensity: float = float("nan"),
+    maximum_intensity: float = float("nan"),
     device: Optional[Device] = None,
 ) -> Image:
     """Applies CLAHE (Contrast Limited Adaptive Histogram Equalization) to the input
@@ -86,9 +86,9 @@ def clahe(
         Size of the tiles to be used for CLAHE.
     clip_limit: float (= 0.01)
         Clip limit for CLAHE.
-    min_intensity: Optional[float] (= None)
+    minimum_intensity: float (= float('nan'))
         Minimum intensity value.
-    max_intensity: Optional[float] (= None)
+    maximum_intensity: float (= float('nan'))
         Maximum intensity value.
     device: Optional[Device] (= None)
         Device to perform the operation on.
@@ -103,8 +103,8 @@ def clahe(
         output_image,
         int(tile_size),
         float(clip_limit),
-        min_intensity,
-        max_intensity,
+        float(minimum_intensity),
+        float(maximum_intensity),
     )
 
 
@@ -391,8 +391,8 @@ def histogram(
     input_image: Image,
     output_image: Optional[Image] = None,
     num_bins: int = 256,
-    minimum_intensity: Optional[float] = None,
-    maximum_intensity: Optional[float] = None,
+    minimum_intensity: float = float("nan"),
+    maximum_intensity: float = float("nan"),
     device: Optional[Device] = None,
 ) -> Image:
     """Determines the histogram of a given image. The histogram image is of dimensions
@@ -420,9 +420,9 @@ def histogram(
         Output histogram
     num_bins: int (= 256)
 
-    minimum_intensity: Optional[float] (= None)
+    minimum_intensity: float (= float('nan'))
 
-    maximum_intensity: Optional[float] (= None)
+    maximum_intensity: float (= float('nan'))
 
     device: Optional[Device] (= None)
         Device to perform the operation on.
@@ -440,8 +440,8 @@ def histogram(
         input_image,
         output_image,
         int(num_bins),
-        minimum_intensity,
-        maximum_intensity,
+        float(minimum_intensity),
+        float(maximum_intensity),
     )
 
 

@@ -4004,7 +4004,7 @@ def unpad(
     center: bool = False,
     device: Optional[Device] = None,
 ) -> Image:
-    """Pads an image with a given size along dimensions with a given value.
+    """Removes padding from an image along dimensions.
 
     Parameters
     ----------

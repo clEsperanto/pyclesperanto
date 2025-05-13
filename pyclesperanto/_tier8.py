@@ -185,7 +185,7 @@ def deconvolve_fft(
         Normalization image
     output_image: Optional[Image] (= None)
         Output image
-    iteration: size_t (= 100)
+    iteration: int (= 100)
         Maximum number of
     regularization: float (= 0.0)
         Regularization parameter
@@ -202,6 +202,6 @@ def deconvolve_fft(
         psf,
         normalization,
         output_image,
-        iteration,
+        int(iteration),
         float(regularization),
     )

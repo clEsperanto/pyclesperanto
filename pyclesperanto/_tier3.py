@@ -12,20 +12,18 @@ from ._array import Image
 from ._core import Device
 from ._decorators import plugin_function
 
-clic = importlib.import_module('._pyclesperanto', package='pyclesperanto')
+clic = importlib.import_module("._pyclesperanto", package="pyclesperanto")
+
 
 @plugin_function
-def bounding_box(
-    input_image: Image,
-    device: Optional[Device] =None
-) -> list:
+def bounding_box(input_image: Image, device: Optional[Device] = None) -> list:
     """Determines the bounding box of all nonzero pixels in a binary image. The
     positions are returned in  an array of 6 values as follows: minX, minY, minZ,
     maxX, maxY, maxZ.
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input binary image
     device: Optional[Device] (= None)
         Device to perform the operation on.
@@ -40,17 +38,15 @@ def bounding_box(
     """
     return clic._bounding_box(device, input_image)
 
+
 @plugin_function
-def center_of_mass(
-    input_image: Image,
-    device: Optional[Device] =None
-) -> list:
+def center_of_mass(input_image: Image, device: Optional[Device] = None) -> list:
     """Determines the center of mass of an image or image stack. It writes the result
     in the results table in the columns MassX, MassY and MassZ.
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input image
     device: Optional[Device] (= None)
         Device to perform the operation on.
@@ -65,15 +61,16 @@ def center_of_mass(
     """
     return clic._center_of_mass(device, input_image)
 
+
 @plugin_function
 def clahe(
     input_image: Image,
-    output_image: Optional[Image] =None,
-    tile_size: int =8,
-    clip_limit: float =0.01,
-    minimum_intensity: float =float('nan'),
-    maximum_intensity: float =float('nan'),
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    tile_size: int = 8,
+    clip_limit: float = 0.01,
+    minimum_intensity: float = float("nan"),
+    maximum_intensity: float = float("nan"),
+    device: Optional[Device] = None,
 ) -> Image:
     """Applies CLAHE (Contrast Limited Adaptive Histogram Equalization) to the input
     image. The algorithm is adapted from the work of Hugo Raveton
@@ -81,7 +78,7 @@ def clahe(
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
@@ -100,14 +97,23 @@ def clahe(
     -------
     Image
     """
-    return clic._clahe(device, input_image, output_image, int(tile_size), float(clip_limit), float(minimum_intensity), float(maximum_intensity))
+    return clic._clahe(
+        device,
+        input_image,
+        output_image,
+        int(tile_size),
+        float(clip_limit),
+        float(minimum_intensity),
+        float(maximum_intensity),
+    )
+
 
 @plugin_function
 def remove_labels(
     input_image: Image,
     list: Image,
-    output_image: Optional[Image] =None,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    device: Optional[Device] = None,
 ) -> Image:
     """This operation removes labels from a labelmap and renumbers the remaining
     labels. Hand over a binary flag list vector starting with a flag for the
@@ -117,9 +123,9 @@ def remove_labels(
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input label image
-    list: Image 
+    list: Image
         Vector of 0 and 1 flagging labels to remove
     output_image: Optional[Image] (= None)
         Output label image
@@ -136,12 +142,13 @@ def remove_labels(
     """
     return clic._remove_labels(device, input_image, list, output_image)
 
+
 @plugin_function
 def exclude_labels(
     input_image: Image,
     list: Image,
-    output_image: Optional[Image] =None,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    device: Optional[Device] = None,
 ) -> Image:
     """This operation removes labels from a labelmap and renumbers the remaining
     labels. Hand over a binary flag list vector starting with a flag for the
@@ -151,9 +158,9 @@ def exclude_labels(
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input label image
-    list: Image 
+    list: Image
         Vector of 0 and 1 flagging labels to remove
     output_image: Optional[Image] (= None)
         Output label image
@@ -170,21 +177,22 @@ def exclude_labels(
     """
     return clic._exclude_labels(device, input_image, list, output_image)
 
+
 @plugin_function(categories=["label processing", "in assistant", "bia-bob-suggestion"])
 def remove_labels_on_edges(
     input_image: Image,
-    output_image: Optional[Image] =None,
-    exclude_x: bool =True,
-    exclude_y: bool =True,
-    exclude_z: bool =True,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    exclude_x: bool = True,
+    exclude_y: bool = True,
+    exclude_z: bool = True,
+    device: Optional[Device] = None,
 ) -> Image:
     """Removes all labels from a label map which touch the edges of the image.
     Remaining label elements are renumbered afterwards.
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input label image
     output_image: Optional[Image] (= None)
         Output label image
@@ -205,23 +213,26 @@ def remove_labels_on_edges(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_excludeLabelsOnEdges
     """
-    return clic._remove_labels_on_edges(device, input_image, output_image, exclude_x, exclude_y, exclude_z)
+    return clic._remove_labels_on_edges(
+        device, input_image, output_image, exclude_x, exclude_y, exclude_z
+    )
+
 
 @plugin_function(categories=["label processing", "in assistant"])
 def exclude_labels_on_edges(
     input_image: Image,
-    output_image: Optional[Image] =None,
-    exclude_x: bool =True,
-    exclude_y: bool =True,
-    exclude_z: bool =True,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    exclude_x: bool = True,
+    exclude_y: bool = True,
+    exclude_z: bool = True,
+    device: Optional[Device] = None,
 ) -> Image:
     """Removes all labels from a label map which touch the edges of the image.
     Remaining label elements are renumbered afterwards.
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input label image
     output_image: Optional[Image] (= None)
         Output label image
@@ -242,13 +253,16 @@ def exclude_labels_on_edges(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_excludeLabelsOnEdges
     """
-    return clic._exclude_labels_on_edges(device, input_image, output_image, exclude_x, exclude_y, exclude_z)
+    return clic._exclude_labels_on_edges(
+        device, input_image, output_image, exclude_x, exclude_y, exclude_z
+    )
+
 
 @plugin_function
 def flag_existing_labels(
     input_image: Image,
-    output_image: Optional[Image] =None,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    device: Optional[Device] = None,
 ) -> Image:
     """Given a label map this function will generate a binary vector where all pixels
     are set to 1 if label with given xcoordinate in the vector exists. For example a
@@ -257,7 +271,7 @@ def flag_existing_labels(
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         a label image
     output_image: Optional[Image] (= None)
         binary vector, if given should have size 1*n with n = maximum label + 1
@@ -270,12 +284,13 @@ def flag_existing_labels(
     """
     return clic._flag_existing_labels(device, input_image, output_image)
 
+
 @plugin_function(categories=["filter", "in assistant"])
 def gamma_correction(
     input_image: Image,
-    output_image: Optional[Image] =None,
-    gamma: float =1,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    gamma: float = 1,
+    device: Optional[Device] = None,
 ) -> Image:
     """Applies a gamma correction to an image. Therefore, all pixels x of the Image X
     are normalized and the power to gamma g is computed, before normlization is
@@ -283,12 +298,12 @@ def gamma_correction(
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input image
     output_image: Optional[Image] (= None)
         Output image
     gamma: float (= 1)
-        
+
     device: Optional[Device] (= None)
         Device to perform the operation on.
 
@@ -302,12 +317,13 @@ def gamma_correction(
     """
     return clic._gamma_correction(device, input_image, output_image, float(gamma))
 
+
 @plugin_function
 def generate_binary_overlap_matrix(
     input_image0: Image,
     input_image1: Image,
-    output_image: Optional[Image] =None,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    device: Optional[Device] = None,
 ) -> Image:
     """Takes two labelmaps with n and m labels and generates a (n+1)*(m+1) matrix where
     all pixels are set to 0 exept those where labels overlap between the label maps.
@@ -316,9 +332,9 @@ def generate_binary_overlap_matrix(
 
     Parameters
     ----------
-    input_image0: Image 
+    input_image0: Image
         First input label image
-    input_image1: Image 
+    input_image1: Image
         Second input label image
     output_image: Optional[Image] (= None)
         Output overlap matrix
@@ -333,13 +349,16 @@ def generate_binary_overlap_matrix(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_generateBinaryOverlapMatrix
     """
-    return clic._generate_binary_overlap_matrix(device, input_image0, input_image1, output_image)
+    return clic._generate_binary_overlap_matrix(
+        device, input_image0, input_image1, output_image
+    )
+
 
 @plugin_function
 def generate_touch_matrix(
     input_image: Image,
-    output_image: Optional[Image] =None,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    device: Optional[Device] = None,
 ) -> Image:
     """Takes a labelmap with n labels and generates a (n+1)*(n+1) matrix where all
     pixels are set to 0 exept those where labels are touching. Only half of the
@@ -349,7 +368,7 @@ def generate_touch_matrix(
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input label image
     output_image: Optional[Image] (= None)
         Output touch matrix
@@ -366,14 +385,15 @@ def generate_touch_matrix(
     """
     return clic._generate_touch_matrix(device, input_image, output_image)
 
+
 @plugin_function
 def histogram(
     input_image: Image,
-    output_image: Optional[Image] =None,
-    num_bins: int =256,
-    minimum_intensity: float =float('nan'),
-    maximum_intensity: float =float('nan'),
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    num_bins: int = 256,
+    minimum_intensity: float = float("nan"),
+    maximum_intensity: float = float("nan"),
+    device: Optional[Device] = None,
 ) -> Image:
     """Determines the histogram of a given image. The histogram image is of dimensions
     number_of_bins/1/1; a 3D image with height=1 and depth=1. Histogram bins contain
@@ -394,16 +414,16 @@ def histogram(
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input image to derive histogram from
     output_image: Optional[Image] (= None)
         Output histogram
     num_bins: int (= 256)
-        
+
     minimum_intensity: float (= float('nan'))
-        
+
     maximum_intensity: float (= float('nan'))
-        
+
     device: Optional[Device] (= None)
         Device to perform the operation on.
 
@@ -415,13 +435,19 @@ def histogram(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_histogram
     """
-    return clic._histogram(device, input_image, output_image, int(num_bins), float(minimum_intensity), float(maximum_intensity))
+    return clic._histogram(
+        device,
+        input_image,
+        output_image,
+        int(num_bins),
+        float(minimum_intensity),
+        float(maximum_intensity),
+    )
+
 
 @plugin_function
 def jaccard_index(
-    input_image0: Image,
-    input_image1: Image,
-    device: Optional[Device] =None
+    input_image0: Image, input_image1: Image, device: Optional[Device] = None
 ) -> float:
     """Determines the overlap of two binary images using the Jaccard index. A value of
     0 suggests no overlap, 1 means perfect overlap. The resulting Jaccard index is
@@ -431,9 +457,9 @@ def jaccard_index(
 
     Parameters
     ----------
-    input_image0: Image 
+    input_image0: Image
         First binary image to compare
-    input_image1: Image 
+    input_image1: Image
         Second binary image to compare
     device: Optional[Device] (= None)
         Device to perform the operation on.
@@ -448,11 +474,10 @@ def jaccard_index(
     """
     return clic._jaccard_index(device, input_image0, input_image1)
 
+
 @plugin_function
 def labelled_spots_to_pointlist(
-    label: Image,
-    pointlist: Optional[Image] =None,
-    device: Optional[Device] =None
+    label: Image, pointlist: Optional[Image] = None, device: Optional[Device] = None
 ) -> Image:
     """Generates a coordinate list of points in a labelled spot image. Transforms a
     labelmap of spots (single pixels with values 1, 2,..., n for n spots) as
@@ -462,7 +487,7 @@ def labelled_spots_to_pointlist(
 
     Parameters
     ----------
-    label: Image 
+    label: Image
         Input
     pointlist: Optional[Image] (= None)
         Output coordinate list
@@ -479,16 +504,14 @@ def labelled_spots_to_pointlist(
     """
     return clic._labelled_spots_to_pointlist(device, label, pointlist)
 
+
 @plugin_function
-def maximum_position(
-    input_image: Image,
-    device: Optional[Device] =None
-) -> list:
+def maximum_position(input_image: Image, device: Optional[Device] = None) -> list:
     """Determines the position of the maximum of all pixels in a given image.
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         The image of which the position of the maximum of all pixels will be determined.
     device: Optional[Device] (= None)
         Device to perform the operation on.
@@ -499,16 +522,14 @@ def maximum_position(
     """
     return clic._maximum_position(device, input_image)
 
+
 @plugin_function
-def mean_of_all_pixels(
-    input_image: Image,
-    device: Optional[Device] =None
-) -> float:
+def mean_of_all_pixels(input_image: Image, device: Optional[Device] = None) -> float:
     """Determines the mean average of all pixels in a given image.
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         The image of which the mean average of all pixels will be determined.
     device: Optional[Device] (= None)
         Device to perform the operation on.
@@ -523,16 +544,14 @@ def mean_of_all_pixels(
     """
     return clic._mean_of_all_pixels(device, input_image)
 
+
 @plugin_function
-def minimum_position(
-    input_image: Image,
-    device: Optional[Device] =None
-) -> list:
+def minimum_position(input_image: Image, device: Optional[Device] = None) -> list:
     """Determines the position of the minimum of all pixels in a given image.
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         The image of which the position of the minimum of all pixels will be determined.
     device: Optional[Device] (= None)
         Device to perform the operation on.
@@ -543,15 +562,16 @@ def minimum_position(
     """
     return clic._minimum_position(device, input_image)
 
+
 @plugin_function
 def morphological_chan_vese(
     input_image: Image,
-    output_image: Optional[Image] =None,
-    num_iter: int =100,
-    smoothing: int =1,
-    lambda1: float =1,
-    lambda2: float =1,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    num_iter: int = 100,
+    smoothing: int = 1,
+    lambda1: float = 1,
+    lambda2: float = 1,
+    device: Optional[Device] = None,
 ) -> Image:
     """Compute an active contour model using the Chan-Vese morphological algorithm. The
     output image (dst) should also be initialisation of the contour. If not provided
@@ -559,7 +579,7 @@ def morphological_chan_vese(
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input image to process.
     output_image: Optional[Image] (= None)
         Output contour, can also be use to provide initialisation.
@@ -578,13 +598,22 @@ def morphological_chan_vese(
     -------
     Image
     """
-    return clic._morphological_chan_vese(device, input_image, output_image, int(num_iter), int(smoothing), float(lambda1), float(lambda2))
+    return clic._morphological_chan_vese(
+        device,
+        input_image,
+        output_image,
+        int(num_iter),
+        int(smoothing),
+        float(lambda1),
+        float(lambda2),
+    )
+
 
 @plugin_function
 def statistics_of_labelled_pixels(
-    intensity: Optional[Image] =None,
-    label: Optional[Image] =None,
-    device: Optional[Device] =None
+    intensity: Optional[Image] = None,
+    label: Optional[Image] = None,
+    device: Optional[Device] = None,
 ) -> dict:
     """Compute the bounding box, area (in pixels/voxels), minimum intensity, maximum
     intensity, average intensity, standard deviation of the intensity, and some
@@ -611,11 +640,12 @@ def statistics_of_labelled_pixels(
     """
     return clic._statistics_of_labelled_pixels(device, intensity, label)
 
+
 @plugin_function
 def statistics_of_background_and_labelled_pixels(
-    intensity: Optional[Image] =None,
-    label: Optional[Image] =None,
-    device: Optional[Device] =None
+    intensity: Optional[Image] = None,
+    label: Optional[Image] = None,
+    device: Optional[Device] = None,
 ) -> dict:
     """Compute, for the background and labels, the bounding box, area (in
     pixels/voxels), minimum intensity, maximum intensity, average intensity,

@@ -104,7 +104,12 @@ def push(
     if isinstance(array, Array):
         return array
 
-    if hasattr(array, "is_cuda") and array.is_cuda:
+    # chech if array is type cupy.ndarray
+    if type(array).__module__ == "cupy" and type(array).__name__ == "ndarray":
+        # special treatment for cupy arrays
+        array = array.get()
+
+    if type(array).__module__ == "torch" and array.is_cuda:
         # special treatment for pytorch tensors
         array = array.cpu()
 

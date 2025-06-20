@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
-VERSION="v2022.01.04"
+VERSION="v2024.10.24"
 OPENCL_HEADERS_DIR="${SCRIPT_DIR}/OpenCL-Headers"
 OPENCL_ICD_LOADER_DIR="${SCRIPT_DIR}/OpenCL-ICD-Loader"
 INSTALL_PREFIX="/usr/local"

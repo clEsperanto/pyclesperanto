@@ -34,11 +34,11 @@ def sato(
         # prepare sigma values
         squared_sigma = sigma**2
         half_sigma = sigma / 2.0
-        inverse_sigma = 1.0 / sigma
+        inverse_sigma = 1.0 / half_sigma
 
         # blur the image and downscale for approximate the hessian with gaussian derivatives
         blurred = gaussian_blur(
-            input_image, sigma_x=half_sigma, sigma_y=half_sigma, sigma_z=half_sigma
+            input_image, sigma_x=sigma, sigma_y=sigma, sigma_z=sigma
         )
         downscale = scale(
             blurred,
@@ -70,9 +70,9 @@ def sato(
         # upscale the mean eigenvalues and add to the output image
         upscale = scale(
             value,
-            factor_x=sigma,
-            factor_y=sigma,
-            factor_z=sigma,
+            factor_x=half_sigma,
+            factor_y=half_sigma,
+            factor_z=half_sigma,
             centered=True,
             resize=True,
             interpolate=False,

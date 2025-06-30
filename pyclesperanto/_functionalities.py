@@ -9,7 +9,70 @@ from matplotlib.colors import ListedColormap
 from ._array import Array, Image
 from ._core import Device, get_device
 from ._memory import pull
-from ._pyclesperanto import _execute, _native_execute
+from ._pyclesperanto import _execute, _execute_distributed, _native_execute
+
+
+def execute_separable(
+    anchor=None,
+    kernel_source: str = "",
+    kernel_name: str = "",
+    src: Array = None,
+    dst: Array = None,
+    sigma: list[float] = [1.0, 1.0, 1.0],
+    radius: list[int] = [1, 1, 1],
+    orders: list[int] = [0, 0, 0],
+    device: Device = None,
+):
+    """Execute a separable kernel from a file or a string
+
+    This function is a wrapper around the execute_separable function from C++.
+    It allows you to execute a separable kernel, which is a kernel that can be
+    separated into multiple 1D kernels. This is useful for operations like Gaussian
+    filtering.
+
+    Parameters
+    ----------
+    anchor : str, default = 'None'
+        Use __file__ when calling this method and the corresponding open.cl
+        file lies in the same folder as the python file calling it.
+        Ignored if kernel_source is a string.
+    kernel_source : str
+        Filename of the open.cl file to be called, or string containing the open.cl source code
+    kernel_name : str
+        Kernel method inside the open.cl file to be called
+        most clij/clesperanto kernel functions have the same name as the file they are in
+    src : Array
+        Source image to be processed. Must be a 3D image.
+    dst : Array
+        Destination image where the result will be stored. Must be a 3D image.
+    sigma : list of float, default = [1.0, 1.0, 1.0]
+        List of sigma values for the kernel in each dimension.
+    radius : list of int, default = [1, 1, 1]
+        List of radius values for the kernel size in each dimension.
+    device : Device, default = None
+        The device to execute the kernel on. If None, use the current device
+    """
+
+    # load the kernel file
+    def load_file(anchor, filename):
+        """Load the opencl kernel file as a string"""
+        if anchor is None:
+            kernel = Path(filename).read_text()
+        else:
+            kernel = (Path(anchor).parent / filename).read_text()
+        return kernel
+
+    # test if kernel_source ends with .cl or .cu
+    if kernel_source.endswith(".cl") or kernel_source.endswith(".cu"):
+        kernel_source = load_file(anchor, kernel_source)
+
+    # manage the device if not given
+    if not device:
+        device = get_device()
+
+    _execute_distributed(
+        device, kernel_name, kernel_source, src, dst, sigma, radius, orders
+    )
 
 
 def execute(

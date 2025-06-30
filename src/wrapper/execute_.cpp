@@ -13,6 +13,39 @@
 
 namespace py = pybind11;
 
+
+auto py_execute_distributed(const cle::Device::Pointer &device, const std::string &kernel_name, const std::string &kernel_src, const cle::Array::Pointer &src, const cle::Array::Pointer & dst,
+                 const py::list & sigma,
+                 const py::list & radius,
+                 const py::list & orders) -> void
+{
+     // convert sigma and radius to std::array<float, 3>
+     std::array<float, 3> cpp_sigma = {0.0f, 0.0f, 0.0f};
+     std::array<int, 3> cpp_radius = {0, 0, 0};
+     std::array<int, 3> cpp_orders = {0, 0, 0};
+
+     for (size_t i = 0; i < 3; ++i)
+     {
+          cpp_sigma[i] = sigma[i].cast<float>();
+          cpp_radius[i] = radius[i].cast<int>();
+          cpp_orders[i] = orders[i].cast<int>();
+     }
+
+     // run separable kernel
+     const cle::KernelInfo kernel = { kernel_name, kernel_src };
+     cle::execute_separable(
+          device,
+          kernel,
+          src,
+          dst,
+          cpp_sigma,
+          cpp_radius,
+          cpp_orders
+     );
+}
+
+
+
 auto py_execute(const cle::Device::Pointer &device, const std::string &kernel_name, const std::string &kernel_source, const py::dict &parameters, const py::tuple &range, const py::dict &constants) -> void
 {
      cle::RangeArray global_range = {1, 1, 1};
@@ -158,4 +191,7 @@ auto execute_(py::module_ &m) -> void
 
      m.def("_native_execute", &py_native_execute, "Call native_execute function from C++.",
            py::arg("device"), py::arg("kernel_name"), py::arg("kernel_source"), py::arg("parameters"), py::arg("global"), py::arg("local"));
+
+     m.def("_execute_distributed", &py_execute_distributed, "Call execute_distributed function from C++.",
+           py::arg("device"), py::arg("kernel_name"), py::arg("kernel_source"), py::arg("src"), py::arg("dst"), py::arg("sigma"), py::arg("radius"), py::arg("orders"));
 }

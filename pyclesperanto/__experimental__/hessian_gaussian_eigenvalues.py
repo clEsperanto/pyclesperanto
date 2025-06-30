@@ -11,6 +11,8 @@ from pyclesperanto._decorators import plugin_function
 from pyclesperanto._functionalities import execute
 from pyclesperanto._tier2 import maximum_of_all_pixels, minimum_of_all_pixels
 
+from .gaussian_derivative import gaussian_derivative
+
 
 @plugin_function
 def hessian_gaussian_eigenvalues(
@@ -34,53 +36,32 @@ def hessian_gaussian_eigenvalues(
     sigma_scaled = sigma * sq1_2  # scale sigma for Gaussian derivative
     lw = int(truncate * sigma_scaled + 0.5)
 
-    def make_gaussian(sigma, radius):
-        x = np.arange(-radius, radius + 1)
-        gaussian = np.exp(-0.5 * (x / sigma) ** 2)
-        gaussian /= gaussian.sum()  # Normalize the kernel
-        gaussian_derivative = -x * gaussian / (sigma**2)
-        return gaussian, gaussian_derivative
-
-    gaussian, gaussian_derivative = make_gaussian(sigma_scaled, lw)
-
     dirac = np.zeros((lw * 2 + 1, lw * 2 + 1)).astype(np.float32)
     dirac[lw, lw] = 1.0
 
-    smoothed_rows = np.apply_along_axis(
-        lambda row: np.convolve(row, gaussian, mode="same"), axis=0, arr=dirac
+    Ix = gaussian_derivative(
+        dirac,
+        sigma_x=sigma,
+        sigma_y=sigma,
+        sigma_z=sigma,
+        order_x=1,
+        order_y=0,
+        order_z=0,
     )
-    Ix = np.apply_along_axis(
-        lambda col: np.convolve(col, gaussian_derivative, mode="same"),
-        axis=1,
-        arr=smoothed_rows,
+    Ixy = gaussian_derivative(
+        Ix, sigma_x=sigma, sigma_y=sigma, sigma_z=sigma, order_x=0, order_y=1, order_z=0
     )
-
-    smoothed_rows = np.apply_along_axis(
-        lambda row: np.convolve(row, gaussian, mode="same"), axis=0, arr=Ix
-    )
-    Ixx = np.apply_along_axis(
-        lambda col: np.convolve(col, gaussian_derivative, mode="same"),
-        axis=1,
-        arr=smoothed_rows,
+    Ixx = gaussian_derivative(
+        Ix, sigma_x=sigma, sigma_y=sigma, sigma_z=sigma, order_x=1, order_y=0, order_z=0
     )
 
-    smoothed_rows = np.apply_along_axis(
-        lambda row: np.convolve(row, gaussian, mode="same"), axis=1, arr=Ix
-    )
-    Ixy = np.apply_along_axis(
-        lambda col: np.convolve(col, gaussian_derivative, mode="same"),
-        axis=0,
-        arr=smoothed_rows,
-    )
-
-    gsd_xx_gpu = Array.from_array(Ixx)
-    gsd_xy_gpu = Array.from_array(Ixy)
+    del Ix
 
     # Execute the OpenCL kernel
     params = {
         "src": input_image,
-        "gsd_xx": gsd_xx_gpu,
-        "gsd_xy": gsd_xy_gpu,
+        "g_xx": Ixx,
+        "g_xy": Ixy,
         "small_eigenvalue": output_small,
         "middle_eigenvalue": output_middle,
         "large_eigenvalue": output_large,

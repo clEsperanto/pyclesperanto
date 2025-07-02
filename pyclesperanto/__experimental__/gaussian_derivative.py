@@ -59,13 +59,9 @@ def gaussian_derivative(
         output = Array.zeros_like(input_image)
 
     truncate = 8
-    sqrt_half = 1 / math.sqrt(2)
-    sigmas = [sigma_x, sigma_y, sigma_z]
-    radii = [
-        int(truncate * sigma * sqrt_half + 0.5) if sigma > 0 else 0 for sigma in sigmas
-    ]
-    orders = [order_x, order_y, order_z]
-    orders = [min(order, 2) for order in orders]
+    sigmas = [max(0, sigma_x), max(0, sigma_y), max(0, sigma_z)]
+    radii = [int(truncate * sigma + 0.5) for sigma in sigmas]
+    orders = [min(order, 2) for order in [order_x, order_y, order_z]]
 
     execute_separable(
         anchor=__file__,

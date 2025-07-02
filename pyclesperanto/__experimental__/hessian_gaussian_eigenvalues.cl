@@ -122,8 +122,8 @@ __constant sampler_t sampler = CLK_NORMALIZED_COORDS_FALSE |
 
 inline void compute_gaussian_hessian(
     IMAGE_src_TYPE src,       // Input 3D image
-    IMAGE_gsd_xx_TYPE gsd_xx, // Gaussian second derivative
-    IMAGE_gsd_xy_TYPE gsd_xy, // Gaussian second derivative mixed
+    IMAGE_g_xx_TYPE g_xx, // Gaussian second derivative
+    IMAGE_g_xy_TYPE g_xy, // Gaussian second derivative mixed
     int x, int y, int z,      // Coordinates in the image
     DOUBLE_TYPE hessian[]) {
 
@@ -139,9 +139,9 @@ inline void compute_gaussian_hessian(
   const int height = GET_IMAGE_HEIGHT(src);
   const int depth = GET_IMAGE_DEPTH(src);
 
-  const int kernel_width = GET_IMAGE_WIDTH(gsd_xx);
-  const int kernel_height = GET_IMAGE_HEIGHT(gsd_xx);
-  const int kernel_depth = GET_IMAGE_DEPTH(gsd_xx);
+  const int kernel_width = GET_IMAGE_WIDTH(g_xx);
+  const int kernel_height = GET_IMAGE_HEIGHT(g_xx);
+  const int kernel_depth = GET_IMAGE_DEPTH(g_xx);
 
   const int center_w = (kernel_width > 1) ? kernel_width / 2 : 0;
   const int center_h = (kernel_height > 1) ? kernel_height / 2 : 0;
@@ -158,46 +158,46 @@ inline void compute_gaussian_hessian(
                 .x;
 
         float value_kernel_xx =
-            (float)READ_IMAGE(gsd_xx, sampler,
-                              POS_gsd_xx_INSTANCE(i + center_w, j + center_h,
+            (float)READ_IMAGE(g_xx, sampler,
+                              POS_g_xx_INSTANCE(i + center_w, j + center_h,
                                                   k + center_d, 0))
                 .x;
         I_xx += value * value_kernel_xx;
 
         float value_kernel_yy =
-            (float)READ_IMAGE(gsd_xx, sampler,
-                              POS_gsd_xx_INSTANCE(j + center_h, i + center_w,
+            (float)READ_IMAGE(g_xx, sampler,
+                              POS_g_xx_INSTANCE(j + center_h, i + center_w,
                                                   k + center_d, 0))
                 .x;
         I_yy += value * value_kernel_yy;
 
         if (depth > 1) {
           float value_kernel_zz =
-              (float)READ_IMAGE(gsd_xx, sampler,
-                                POS_gsd_xx_INSTANCE(k + center_d, i + center_w,
+              (float)READ_IMAGE(g_xx, sampler,
+                                POS_g_xx_INSTANCE(k + center_d, i + center_w,
                                                     j + center_h, 0))
                   .x;
           I_zz += value * value_kernel_zz;
         }
 
         float value_xy_kernel =
-            (float)READ_IMAGE(gsd_xy, sampler,
-                              POS_gsd_xy_INSTANCE(i + center_w, j + center_h,
+            (float)READ_IMAGE(g_xy, sampler,
+                              POS_g_xy_INSTANCE(i + center_w, j + center_h,
                                                   k + center_d, 0))
                 .x;
         I_xy += value * value_xy_kernel;
 
         if (depth > 1) {
           float value_xz_kernel =
-              (float)READ_IMAGE(gsd_xy, sampler,
-                                POS_gsd_xy_INSTANCE(i + center_w, k + center_d,
+              (float)READ_IMAGE(g_xy, sampler,
+                                POS_g_xy_INSTANCE(i + center_w, k + center_d,
                                                     j + center_h, 0))
                   .x;
           I_xz += value * value_xz_kernel;
 
           float value_yz_kernel =
-              (float)READ_IMAGE(gsd_xy, sampler,
-                                POS_gsd_xy_INSTANCE(j + center_h, k + center_d,
+              (float)READ_IMAGE(g_xy, sampler,
+                                POS_g_xy_INSTANCE(j + center_h, k + center_d,
                                                     i + center_w, 0))
                   .x;
           I_yz += value * value_yz_kernel;
@@ -232,8 +232,8 @@ inline void compute_gaussian_hessian(
 */
 __kernel void hessian_gaussian_eigenvalues(
     IMAGE_src_TYPE src,       // Input 2D image
-    IMAGE_gsd_xx_TYPE gsd_xx, // Gaussian second derivative 1d array
-    IMAGE_gsd_xy_TYPE gsd_xy, // Gaussian second derivative mixed 2d array
+    IMAGE_g_xx_TYPE g_xx, // Gaussian second derivative 1d array
+    IMAGE_g_xy_TYPE g_xy, // Gaussian second derivative mixed 2d array
     IMAGE_small_eigenvalue_TYPE small_eigenvalue,
     IMAGE_middle_eigenvalue_TYPE middle_eigenvalue,
     IMAGE_large_eigenvalue_TYPE large_eigenvalue) {
@@ -246,7 +246,7 @@ __kernel void hessian_gaussian_eigenvalues(
   DOUBLE_TYPE eigenvalues[3] = {0, 0, 0};
   DOUBLE_TYPE hessian[6] = {0, 0, 0, 0, 0, 0};
 
-  compute_gaussian_hessian(src, gsd_xx, gsd_xy, x, y, z,
+  compute_gaussian_hessian(src, g_xx, g_xy, x, y, z,
                            hessian); // Compute the Hessian matrix
 
   DOUBLE_TYPE a, b, c;

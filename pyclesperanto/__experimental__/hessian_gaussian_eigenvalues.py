@@ -41,18 +41,30 @@ def hessian_gaussian_eigenvalues(
 
     Ix = gaussian_derivative(
         dirac,
-        sigma_x=sigma,
-        sigma_y=sigma,
-        sigma_z=sigma,
+        sigma_x=sigma_scaled,
+        sigma_y=sigma_scaled,
+        sigma_z=sigma_scaled,
         order_x=1,
         order_y=0,
         order_z=0,
     )
     Ixy = gaussian_derivative(
-        Ix, sigma_x=sigma, sigma_y=sigma, sigma_z=sigma, order_x=0, order_y=1, order_z=0
+        Ix,
+        sigma_x=sigma_scaled,
+        sigma_y=sigma_scaled,
+        sigma_z=sigma_scaled,
+        order_x=0,
+        order_y=1,
+        order_z=0,
     )
     Ixx = gaussian_derivative(
-        Ix, sigma_x=sigma, sigma_y=sigma, sigma_z=sigma, order_x=1, order_y=0, order_z=0
+        Ix,
+        sigma_x=sigma_scaled,
+        sigma_y=sigma_scaled,
+        sigma_z=sigma_scaled,
+        order_x=1,
+        order_y=0,
+        order_z=0,
     )
 
     del Ix

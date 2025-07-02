@@ -12,7 +12,9 @@ from pyclesperanto._tier1 import (
     gradient_z,
     hessian_eigenvalues,
     maximum_images,
+    multiply_image_and_scalar,
     multiply_images,
+    power,
 )
 from pyclesperanto._tier2 import clip
 from pyclesperanto._tier7 import scale
@@ -33,28 +35,46 @@ def sato(
     if output_image is None:
         output_image = Array.zeros_like(input_image)
 
-    sigmas = range(int(sigma_minimum), int(sigma_maximum), int(sigma_step))
+    is_3d = len(input_image.shape) == 3
 
+    large = Array.zeros_like(input_image)
+    middle = Array.zeros_like(input_image) if is_3d else None
+
+    sigmas = range(int(sigma_minimum), int(sigma_maximum), int(sigma_step))
     for sigma in sigmas:
 
-        # compute the hessian eigenvalues and keep only the largest and middle eigenvalues
-        middle = Array.zeros_like(input_image)
-        large = Array.zeros_like(input_image)
+        print(f"Processing sigma: {sigma}")
+
+        # We compute the Hessian eigenvalues using a Gaussian derivative approach
+        # We discard the smallest eigenvalue, which is not needed for Sato's method
+        # and keep the largest and the middle eigenvalue (if 3D).
         hessian_gaussian_eigenvalues(
-            input_image, sigma=sigma, output_large=large, output_middle=middle
+            input_image,
+            sigma=sigma,
+            output_small=None,
+            output_large=large,
+            output_middle=middle,
         )
-        # hessian_eigenvalues(blurred, middle_eigenvalue=middle, large_eigenvalue=large)
 
-        # clip the eigenvalues to avoid negative values
-        large = clip(large, min_intensity=0, max_intensity=large.max())
-        middle = clip(middle, min_intensity=0, max_intensity=middle.max())
-
-        # compute the mean eigenvalues
+        # We clip the largest eigenvalues to 0
+        max = large.max()
+        large = clip(large, min_intensity=0, max_intensity=max)
         mean_eigenvalues = large
-        if input_image.ndim == 3:
-            mean_eigenvalues = multiply_images(middle, large) ** (0.5)
-        value = mean_eigenvalues * (sigma**2)
 
+        if is_3d:
+            # We clip the middle eigenvalues to 0
+            max = middle.max()
+            middle = clip(middle, min_intensity=0, max_intensity=max)
+            # We compute the mean eigenvalues between the large and middle eigenvalues
+            mean_eigenvalues = power(multiply_images(middle, large), 0.5)
+        else:
+            # For 2D images, we just use the large eigenvalues
+            mean_eigenvalues = large
+
+        # We multiply the mean eigenvalues by sigma^2 and add it to the output image
+        # using maximum operation
+        sigma_squared = sigma**2
+        value = multiply_image_and_scalar(mean_eigenvalues, scalar=sigma_squared)
         output_image = maximum_images(output_image, value)
 
     return output_image

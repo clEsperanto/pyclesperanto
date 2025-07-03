@@ -12,9 +12,9 @@ inline void compute_gaussian_structure_tensor(
     DOUBLE_TYPE tensor[]) {
 
   // Temporary variables for derivatives
-  float I_x2 = 0.0f;
-  float I_y2 = 0.0f;
-  float I_z2 = 0.0f;
+  float I_x = 0.0f;
+  float I_y = 0.0f;
+  float I_z = 0.0f;
   float I_xy = 0.0f;
   float I_xz = 0.0f;
   float I_yz = 0.0f;
@@ -109,12 +109,12 @@ inline void compute_gaussian_structure_tensor(
     [Ixz, Iyz, Iz2]
   Where Ix2 denotes the first derivative in x^2.
 */
-__kernel void hessian_gaussian_eigenvalues(
+__kernel void harris_corner(
     IMAGE_src_TYPE src,       // Input 2D image
     IMAGE_g_x_TYPE g_x, // Gaussian second derivative 1d array
     IMAGE_g_xy_TYPE g_xy, // Gaussian second derivative mixed 2d array
     IMAGE_dst_TYPE dst,
-    float K) {
+    float precision) {
 
   const int x = get_global_id(0);
   const int y = get_global_id(1);
@@ -139,10 +139,10 @@ __kernel void hessian_gaussian_eigenvalues(
         tensor[3] * (tensor[3] * tensor[2] - tensor[4] * tensor[5]) +
         tensor[4] * (tensor[3] * tensor[5] - tensor[1] * tensor[4])
     );
-    response = det - K * pow(trace, 3); // response
+    response = det - precision * pow(trace, 3); // response
   } else {
     det = tensor[0] * tensor[3] - tensor[1] * tensor[1]; // determinant 2d
-    response = det - K * pow(trace, 2); // response
+    response = det - precision * pow(trace, 2); // response
   }
   WRITE_IMAGE(dst, POS_dst_INSTANCE(x, y, z, 0), CONVERT_dst_PIXEL_TYPE(response));
 }

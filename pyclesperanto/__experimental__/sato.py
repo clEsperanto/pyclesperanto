@@ -43,8 +43,6 @@ def sato(
     sigmas = range(int(sigma_minimum), int(sigma_maximum), int(sigma_step))
     for sigma in sigmas:
 
-        print(f"Processing sigma: {sigma}")
-
         # We compute the Hessian eigenvalues using a Gaussian derivative approach
         # We discard the smallest eigenvalue, which is not needed for Sato's method
         # and keep the largest and the middle eigenvalue (if 3D).
@@ -66,7 +64,7 @@ def sato(
             max = middle.max()
             middle = clip(middle, min_intensity=0, max_intensity=max)
             # We compute the mean eigenvalues between the large and middle eigenvalues
-            mean_eigenvalues = power(multiply_images(middle, large), 0.5)
+            mean_eigenvalues = power(multiply_images(middle, large), scalar=0.5)
         else:
             # For 2D images, we just use the large eigenvalues
             mean_eigenvalues = large

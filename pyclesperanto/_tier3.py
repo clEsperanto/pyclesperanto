@@ -357,7 +357,7 @@ def generate_binary_overlap_matrix(
 @plugin_function
 def generate_touch_matrix(
     input_image: Image,
-    output_image: Optional[Image] = None,
+    output_image_matrix: Optional[Image] = None,
     device: Optional[Device] = None,
 ) -> Image:
     """Takes a labelmap with n labels and generates a (n+1)*(n+1) matrix where all
@@ -370,7 +370,7 @@ def generate_touch_matrix(
     ----------
     input_image: Image
         Input label image
-    output_image: Optional[Image] (= None)
+    output_image_matrix: Optional[Image] (= None)
         Output touch matrix
     device: Optional[Device] (= None)
         Device to perform the operation on.
@@ -383,7 +383,7 @@ def generate_touch_matrix(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_generateTouchMatrix
     """
-    return clic._generate_touch_matrix(device, input_image, output_image)
+    return clic._generate_touch_matrix(device, input_image, output_image_matrix)
 
 
 @plugin_function
@@ -672,3 +672,49 @@ def statistics_of_background_and_labelled_pixels(
     [1] https://clij.github.io/clij2-docs/reference_statisticsOfBackgroundAndLabelledPixels
     """
     return clic._statistics_of_background_and_labelled_pixels(device, intensity, label)
+
+
+@plugin_function(categories=["filter", "in assistant"])
+def sato_filter(
+    input_image: Image,
+    output_image: Optional[Image] = None,
+    sigma_minimum: float = 1,
+    sigma_maximum: float = 3,
+    sigma_step: float = 1,
+    device: Optional[Device] = None,
+) -> Image:
+    """Applies the multi-scale ridge detection Sato filter. This filter was first
+    introduced by Sato et al. in 1998
+    (https://doi.org/10.1016/S1361-8415(98)80009-1)
+
+    Parameters
+    ----------
+    input_image: Image
+        Input image to process.
+    output_image: Optional[Image] (= None)
+        Output result image.
+    sigma_minimum: float (= 1)
+        Minimum sigma value for the filter.
+    sigma_maximum: float (= 3)
+        Maximum sigma value for the filter.
+    sigma_step: float (= 1)
+        Step size for the sigma values.
+    device: Optional[Device] (= None)
+        Device to perform the operation on.
+
+    Returns
+    -------
+    Image
+
+    References
+    ----------
+    [1] https://doi.org/10.1016/S1361-8415(98)80009-1
+    """
+    return clic._sato_filter(
+        device,
+        input_image,
+        output_image,
+        float(sigma_minimum),
+        float(sigma_maximum),
+        float(sigma_step),
+    )

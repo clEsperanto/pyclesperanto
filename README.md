@@ -140,6 +140,7 @@ imsave("result.tif", output_image)
 </td><td>
 
 * [Edge detection](https://github.com/clEsperanto/pyclesperanto/tree/main/demos/examples/edge_detection_and_enhancement.ipynb)
+* [Ridge and Tube detection](https://github.com/clEsperanto/pyclesperanto/tree/main/demos/examples/ridge_detection.ipynb)
 * [Parametric maps](https://github.com/clEsperanto/pyclesperanto/tree/main/demos/examples/parametric_maps.ipynb)
 * [Rotation, scaling, translation, and affine transform](https://github.com/clEsperanto/pyclesperanto/tree/main/demos/examples/affine_transforms.ipynb)
 <!-- * [Morphomathic operations](https://github.com/clEsperanto/pyclesperanto/tree/main/demos/examples/morphomath_operation.ipynb)   -->

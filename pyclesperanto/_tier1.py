@@ -1299,6 +1299,61 @@ def gaussian_blur(
     )
 
 
+@plugin_function(categories=["filter", "in assistant"])
+def gaussian_derivative(
+    input_image: Image,
+    output_image: Optional[Image] = None,
+    sigma_x: float = 0,
+    sigma_y: float = 0,
+    sigma_z: float = 0,
+    order_x: int = 0,
+    order_y: int = 0,
+    order_z: int = 0,
+    device: Optional[Device] = None,
+) -> Image:
+    """Convolve the image with a gaussian derivate. The filter kernel can have
+    nonisotropic sigma and order. The implementation is done separable. In case a
+    sigma equals zero, the direction is not filtered. If all orders are zero, the
+    filtering is equivalent to a Gaussian blur.
+
+    Parameters
+    ----------
+    input_image: Image
+        Input image to process.
+    output_image: Optional[Image] (= None)
+        Output result image.
+    sigma_x: float (= 0)
+        Sigma value along the x axis.
+    sigma_y: float (= 0)
+        Sigma value along the y axis.
+    sigma_z: float (= 0)
+        Sigma value along the z axis.
+    order_x: int (= 0)
+        Order of derivation along the x axis.
+    order_y: int (= 0)
+        Order of derivation along the y axis.
+    order_z: int (= 0)
+        Order of derivation along the z axis.
+    device: Optional[Device] (= None)
+        Device to perform the operation on.
+
+    Returns
+    -------
+    Image
+    """
+    return clic._gaussian_derivative(
+        device,
+        input_image,
+        output_image,
+        float(sigma_x),
+        float(sigma_y),
+        float(sigma_z),
+        int(order_x),
+        int(order_y),
+        int(order_z),
+    )
+
+
 @plugin_function
 def generate_distance_matrix(
     coordinate_list1: Image,
@@ -1570,13 +1625,14 @@ def hessian_eigenvalues(
 ) -> Image:
     """Computes the eigenvalues of the hessian matrix of a 2d or 3d image. Hessian
     matrix or 2D images: [Ixx, Ixy] [Ixy, Iyy] Hessian matrix for 3D images: [Ixx,
-    Ixy, Ixz] [Ixy, Iyy, Iyz] [Ixz, Iyz, Izz] Ixx denotes the second derivative in
+    Ixy, Ixz] [Ixy, Iyy, Iyz] [Ixz, Iyz, Izz], Ixx denotes the second derivative in
     x. Ixx and Iyy are calculated by convolving the image with the 1d kernel [1 2
     1]. Ixy is calculated by a convolution with the 2d kernel: [ 0.25 0 0.25] [ 0 0
-    0] [0.25 0 0.25] Note: This is the only clesperanto function that returns
-    multiple images. This API might be subject to change in the future. Consider
-    using small_hessian_eigenvalue() and/or large_hessian_eigenvalue() instead which
-    return only one image.
+    0] [0.25 0 0.25] The function return the list of eigenvalues as images, by
+    decreasing order. The first image is the largest eigenvalue, Note: This function
+    returns multiple images. This API might be subject to change in the future.
+    Consider using small_hessian_eigenvalue() and/or large_hessian_eigenvalue()
+    instead which return only one image.
 
     Parameters
     ----------

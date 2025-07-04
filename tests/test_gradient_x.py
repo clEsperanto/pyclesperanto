@@ -21,17 +21,16 @@ def test_gradient_x():
     reference = cle.push(
         np.asarray(
             [
-                [0, 0, 0, 0, 0],
-                [-1, -2, 1, 2, 0],
-                [-1, -2, 1, 2, 0],
-                [-1, -3, 1, 3, 0],
-                [0, 0, 0, 0, 0],
+                [0.0, 0.0, 0.0, 0.0, 0.0],
+                [1.0, 1.0, -0.5, -1.0, 0.0],
+                [1.0, 1.0, -0.5, -1.0, 0.0],
+                [1.0, 1.5, -0.5, -1.5, 0.0],
+                [0.0, 0.0, 0.0, 0.0, 0.0],
             ]
         )
     )
 
-    result = cle.create(test)
-    cle.gradient_x(test, result)
+    result = cle.gradient_x(test)
 
     a = cle.pull(result)
     b = cle.pull(reference)

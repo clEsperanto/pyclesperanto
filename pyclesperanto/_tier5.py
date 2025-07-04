@@ -245,3 +245,31 @@ def exclude_labels_outside_size_range(
     return clic._exclude_labels_outside_size_range(
         device, input_image, output_image, float(minimum_size), float(maximum_size)
     )
+
+
+@plugin_function(categories=["label processing", "in assistant"])
+def merge_touching_labels(
+    input_image: Image,
+    output_image: Optional[Image] = None,
+    device: Optional[Device] = None,
+) -> Image:
+    """Merge touching labels of a label image and relabel the result sequentially.
+
+    Parameters
+    ----------
+    input_image: Image
+        Input label image.
+    output_image: Optional[Image] (= None)
+        Output label image.
+    device: Optional[Device] (= None)
+        Device to perform the operation on.
+
+    Returns
+    -------
+    Image
+
+    References
+    ----------
+    [1] https://clij.github.io/clij2-docs/reference_excludeLabelsOutsideSizeRange
+    """
+    return clic._merge_touching_labels(device, input_image, output_image)

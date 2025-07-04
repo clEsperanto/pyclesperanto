@@ -12,7 +12,7 @@ def test_hessian_eigenvalues_2d():
 
     reference_large_hessian_eigenvalue = np.asarray([[0, 2], [0, 2]])
 
-    small_hessian_eigenvalue, large_hessian_eigenvalue = cle.hessian_eigenvalues(test)
+    large_hessian_eigenvalue, small_hessian_eigenvalue = cle.hessian_eigenvalues(test)
 
     print(small_hessian_eigenvalue)
     print(large_hessian_eigenvalue)
@@ -51,9 +51,9 @@ def test_hessian_eigenvalues_3d():
     )
 
     (
-        small_hessian_eigenvalue,
-        middle_hessian_eigenvalue,
         large_hessian_eigenvalue,
+        middle_hessian_eigenvalue,
+        small_hessian_eigenvalue,
     ) = cle.hessian_eigenvalues(test)
 
     print(small_hessian_eigenvalue)

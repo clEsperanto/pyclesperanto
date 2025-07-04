@@ -213,4 +213,12 @@ m.def("_absolute_difference", &cle::tier2::absolute_difference_func, "Call cle::
     m.def("_extended_depth_of_focus_variance_projection", &cle::tier2::extended_depth_of_focus_variance_projection_func, "Call cle::tier2::extended_depth_of_focus_variance_projection_func from C++ CLIc.",
     py::return_value_policy::take_ownership,
     py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("radius_x"), py::arg("radius_y"), py::arg("sigma"));
+
+    m.def("_extended_depth_of_focus_sobel_projection", &cle::tier2::extended_depth_of_focus_sobel_projection_func, "Call cle::tier2::extended_depth_of_focus_sobel_projection_func from C++ CLIc.",
+    py::return_value_policy::take_ownership,
+    py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("sigma"));
+
+    m.def("_hessian_gaussian_eigenvalues", &cle::tier2::hessian_gaussian_eigenvalues_func, "Call cle::tier2::hessian_gaussian_eigenvalues_func from C++ CLIc.",
+    py::return_value_policy::take_ownership,
+    py::arg("device"), py::arg("src"), py::arg("small_eigenvalue"), py::arg("middle_eigenvalue"), py::arg("large_eigenvalue"), py::arg("sigma"));
 }

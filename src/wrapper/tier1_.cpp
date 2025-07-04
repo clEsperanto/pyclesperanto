@@ -150,6 +150,10 @@ m.def("_absolute", &cle::tier1::absolute_func, "Call cle::tier1::absolute_func f
     py::return_value_policy::take_ownership,
     py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("sigma_x"), py::arg("sigma_y"), py::arg("sigma_z"));
 
+    m.def("_gaussian_derivative", &cle::tier1::gaussian_derivative_func, "Call cle::tier1::gaussian_derivative_func from C++ CLIc.",
+    py::return_value_policy::take_ownership,
+    py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("sigma_x"), py::arg("sigma_y"), py::arg("sigma_z"), py::arg("order_x"), py::arg("order_y"), py::arg("order_z"));
+
     m.def("_generate_distance_matrix", &cle::tier1::generate_distance_matrix_func, "Call cle::tier1::generate_distance_matrix_func from C++ CLIc.",
     py::return_value_policy::take_ownership,
     py::arg("device"), py::arg("coordinate_list1"), py::arg("coordinate_list2"), py::arg("distance_matrix_destination"));

@@ -1922,7 +1922,9 @@ def extended_depth_of_focus_variance_projection(
     sigma: float = 5,
     device: Optional[Device] = None,
 ) -> Image:
-    """Extended depth of focus projection maximizing local pixel intensity variance.
+    """Depth projection using the local variance maxima to determine the best focus
+    plane. The radius parameter control the local variance calculation, and the
+    sigma apply a gaussian blur for smoothness of the projection.
 
     Parameters
     ----------
@@ -1949,5 +1951,79 @@ def extended_depth_of_focus_variance_projection(
         output_image,
         float(radius_x),
         float(radius_y),
+        float(sigma),
+    )
+
+
+@plugin_function(categories=["projection"])
+def extended_depth_of_focus_sobel_projection(
+    input_image: Image,
+    output_image: Optional[Image] = None,
+    sigma: float = 5,
+    device: Optional[Device] = None,
+) -> Image:
+    """Depth projection using the local sobel gradient magnitude maxima to determine
+    the best focus plane. The sigma apply a gaussian blur for smoothness of the
+    projection.
+
+    Parameters
+    ----------
+    input_image: Image
+        Input image to process.
+    output_image: Optional[Image] (= None)
+        Output result image.
+    sigma: float (= 5)
+        Sigma for Gaussian blur.
+    device: Optional[Device] (= None)
+        Device to perform the operation on.
+
+    Returns
+    -------
+    Image
+    """
+    return clic._extended_depth_of_focus_sobel_projection(
+        device, input_image, output_image, float(sigma)
+    )
+
+
+@plugin_function
+def hessian_gaussian_eigenvalues(
+    input_image: Image,
+    small_eigenvalue: Optional[Image] = None,
+    middle_eigenvalue: Optional[Image] = None,
+    large_eigenvalue: Optional[Image] = None,
+    sigma: float = 1,
+    device: Optional[Device] = None,
+) -> Image:
+    """Determines the Hessian matrix eigenvalues using the gaussian derivative method
+    and returns the small, middle and large eigenvalue images. The function return
+    the list of eigenvalues as images, by decreasing order. The first image is the
+    largest eigenvalue,
+
+    Parameters
+    ----------
+    input_image: Image
+        Input image to process.
+    small_eigenvalue: Optional[Image] (= None)
+        Output result image for the small eigenvalue.
+    middle_eigenvalue: Optional[Image] (= None)
+        Output result image for the middle eigenvalue.
+    large_eigenvalue: Optional[Image] (= None)
+        Output result image for the large eigenvalue.
+    sigma: float (= 1)
+        Sigma of the Gaussian kernel.
+    device: Optional[Device] (= None)
+        Device to perform the operation on.
+
+    Returns
+    -------
+    Image
+    """
+    return clic._hessian_gaussian_eigenvalues(
+        device,
+        input_image,
+        small_eigenvalue,
+        middle_eigenvalue,
+        large_eigenvalue,
         float(sigma),
     )

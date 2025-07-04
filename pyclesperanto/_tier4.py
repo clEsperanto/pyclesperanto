@@ -656,3 +656,25 @@ def standard_deviation_intensity_map(
     return clic._standard_deviation_intensity_map(
         device, input_image, labels, output_image
     )
+
+
+@plugin_function
+def percentile(
+    input_image: Image, percentile: float = 50.0, device: Optional[Device] = None
+) -> float:
+    """Computes the percentile value of an image.
+
+    Parameters
+    ----------
+    input_image: Image
+        Input image.
+    percentile: float (= 50.0)
+        Percentile to compute.
+    device: Optional[Device] (= None)
+        Device to perform the operation on.
+
+    Returns
+    -------
+    float
+    """
+    return clic._percentile(device, input_image, float(percentile))

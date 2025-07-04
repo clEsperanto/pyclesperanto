@@ -1,5 +1,5 @@
 // this code is auto-generated, do not edit manually
-
+    
 #include "pycle_wrapper.hpp"
 #include "tier5.hpp"
 
@@ -33,4 +33,8 @@ m.def("_array_equal", &cle::tier5::array_equal_func, "Call cle::tier5::array_equ
     m.def("_exclude_labels_outside_size_range", &cle::tier5::exclude_labels_outside_size_range_func, "Call cle::tier5::exclude_labels_outside_size_range_func from C++ CLIc.",
     py::return_value_policy::take_ownership,
     py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("minimum_size"), py::arg("maximum_size"));
+
+    m.def("_merge_touching_labels", &cle::tier5::merge_touching_labels_func, "Call cle::tier5::merge_touching_labels_func from C++ CLIc.",
+    py::return_value_policy::take_ownership,
+    py::arg("device"), py::arg("src"), py::arg("dst"));
 }

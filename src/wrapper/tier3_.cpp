@@ -1,5 +1,5 @@
 // this code is auto-generated, do not edit manually
-
+    
 #include "pycle_wrapper.hpp"
 #include "tier3.hpp"
 
@@ -48,7 +48,7 @@ m.def("_bounding_box", &cle::tier3::bounding_box_func, "Call cle::tier3::boundin
 
     m.def("_generate_touch_matrix", &cle::tier3::generate_touch_matrix_func, "Call cle::tier3::generate_touch_matrix_func from C++ CLIc.",
     py::return_value_policy::take_ownership,
-    py::arg("device"), py::arg("src"), py::arg("dst"));
+    py::arg("device"), py::arg("src"), py::arg("dst_matrix"));
 
     m.def("_histogram", &cle::tier3::histogram_func, "Call cle::tier3::histogram_func from C++ CLIc.",
     py::return_value_policy::take_ownership,
@@ -85,4 +85,8 @@ m.def("_bounding_box", &cle::tier3::bounding_box_func, "Call cle::tier3::boundin
     m.def("_statistics_of_background_and_labelled_pixels", &cle::tier3::statistics_of_background_and_labelled_pixels_func, "Call cle::tier3::statistics_of_background_and_labelled_pixels_func from C++ CLIc.",
     py::return_value_policy::take_ownership,
     py::arg("device"), py::arg("intensity"), py::arg("label"));
+
+    m.def("_sato_filter", &cle::tier3::sato_filter_func, "Call cle::tier3::sato_filter_func from C++ CLIc.",
+    py::return_value_policy::take_ownership,
+    py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("sigma_minimum"), py::arg("sigma_maximum"), py::arg("sigma_step"));
 }

@@ -21,17 +21,16 @@ def test_gradient_y():
     reference = cle.push(
         np.asarray(
             [
-                [0, -1, -2, 0, 0],
-                [0, -1, -2, 0, 0],
-                [0, 0, -1, 0, 0],
-                [0, 1, 2, 0, 0],
-                [0, 1, 3, 0, 0],
+                [0.0, 1.0, 2.0, 0.0, 0.0],
+                [0.0, 0.5, 1.0, 0.0, 0.0],
+                [0.0, 0.0, 0.5, 0.0, 0.0],
+                [0.0, -0.5, -1.0, 0.0, 0.0],
+                [0.0, -1.0, -3.0, 0.0, 0.0],
             ]
         )
     )
 
-    result = cle.create(test)
-    cle.gradient_y(test, result)
+    result = cle.gradient_y(test)
 
     a = cle.pull(result)
     b = cle.pull(reference)

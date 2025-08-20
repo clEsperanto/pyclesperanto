@@ -236,7 +236,7 @@ cle::Array::Pointer create_array(py::tuple shape, py::object dtype, std::string 
 auto array_(py::module_ &m) -> void
 {
      py::class_<cle::Array, std::shared_ptr<cle::Array>>(m, "_Array")
-         .def_static("create", &create_array, py::arg("shape"), py::arg("dtype"), py::arg("mtype"), py::arg("device"))
+         .def_static("create", &create_array, py::return_value_policy::automatic_reference, py::arg("shape"), py::arg("dtype"), py::arg("mtype"), py::arg("device"))
 
          .def("_write", &write_region<float>, py::arg("value"), py::arg("origin") = py::none(), py::arg("region") = py::none())
          .def("_write", &write_region<int8_t>, py::arg("value"), py::arg("origin") = py::none(), py::arg("region") = py::none())
@@ -246,13 +246,13 @@ auto array_(py::module_ &m) -> void
          .def("_write", &write_region<uint16_t>, py::arg("value"), py::arg("origin") = py::none(), py::arg("region") = py::none())
          .def("_write", &write_region<uint32_t>, py::arg("value"), py::arg("origin") = py::none(), py::arg("region") = py::none())
 
-         .def("_read_float32", &read_region<float>, py::arg("origin") = py::none(), py::arg("region") = py::none())
-         .def("_read_int8", &read_region<int8_t>, py::arg("origin") = py::none(), py::arg("region") = py::none())
-         .def("_read_int16", &read_region<int16_t>, py::arg("origin") = py::none(), py::arg("region") = py::none())
-         .def("_read_int32", &read_region<int32_t>, py::arg("origin") = py::none(), py::arg("region") = py::none())
-         .def("_read_uint8", &read_region<uint8_t>, py::arg("origin") = py::none(), py::arg("region") = py::none())
-         .def("_read_uint16", &read_region<uint16_t>, py::arg("origin") = py::none(), py::arg("region") = py::none())
-         .def("_read_uint32", &read_region<uint32_t>, py::arg("origin") = py::none(), py::arg("region") = py::none())
+         .def("_read_float32", &read_region<float>, py::return_value_policy::move, py::arg("origin") = py::none(), py::arg("region") = py::none())
+         .def("_read_int8", &read_region<int8_t>, py::return_value_policy::move, py::arg("origin") = py::none(), py::arg("region") = py::none())
+         .def("_read_int16", &read_region<int16_t>, py::return_value_policy::move, py::arg("origin") = py::none(), py::arg("region") = py::none())
+         .def("_read_int32", &read_region<int32_t>, py::return_value_policy::move, py::arg("origin") = py::none(), py::arg("region") = py::none())
+         .def("_read_uint8", &read_region<uint8_t>, py::return_value_policy::move, py::arg("origin") = py::none(), py::arg("region") = py::none())
+         .def("_read_uint16", &read_region<uint16_t>, py::return_value_policy::move, py::arg("origin") = py::none(), py::arg("region") = py::none())
+         .def("_read_uint32", &read_region<uint32_t>, py::return_value_policy::move, py::arg("origin") = py::none(), py::arg("region") = py::none())
 
          .def("copy", &copy_region, py::arg("dst"), py::arg("src_origin") = py::none(), py::arg("dst_origin") = py::none(), py::arg("region") = py::none())
          .def("fill", &cle::Array::fill, py::arg("value"))

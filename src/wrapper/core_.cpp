@@ -40,10 +40,10 @@ auto core_(pybind11::module_ &m) -> void
 
     py::class_<cle::Backend, std::shared_ptr<cle::Backend>>(m, "_Backend")
         .def_property_readonly("type", &cle::Backend::getType)
-        .def("getDevicesList", &cle::Backend::getDevicesList, py::arg("type"))
-        .def("getDevices", &cle::Backend::getDevices, py::return_value_policy::take_ownership)
-        .def("getDeviceFromName", &cle::Backend::getDevice, py::return_value_policy::take_ownership, py::arg("name"), py::arg("type"))
-        .def("getDeviceFromIndex", &cle::Backend::getDeviceFromIndex, py::return_value_policy::take_ownership, py::arg("index"), py::arg("type"))
+        .def("getDevicesList", &cle::Backend::getDevicesList, py::return_value_policy::automatic_reference, py::arg("type"))
+        .def("getDevices", &cle::Backend::getDevices, py::return_value_policy::automatic_reference)
+        .def("getDeviceFromName", &cle::Backend::getDevice, py::return_value_policy::automatic_reference, py::arg("name"), py::arg("type"))
+        .def("getDeviceFromIndex", &cle::Backend::getDeviceFromIndex, py::return_value_policy::automatic_reference, py::arg("index"), py::arg("type"))
         .def("__str__", [](const cle::Backend &Backend)
              {
         std::ostringstream oss;
@@ -56,17 +56,17 @@ auto core_(pybind11::module_ &m) -> void
         return oss.str(); });
 
     py::class_<cle::BackendManager, std::shared_ptr<cle::BackendManager>>(m, "_BackendManager")
-        .def_static("get_backends_list", &cle::BackendManager::getBackendsList)
+        .def_static("get_backends_list", &cle::BackendManager::getBackendsList, py::return_value_policy::automatic_reference)
         .def_static(
             "set_backend", [](const std::string &backend)
-            { cle::BackendManager::getInstance().setBackend(backend); },
+            { cle::BackendManager::getInstance().setBackend(backend); }, py::return_value_policy::automatic_reference,
             py::arg("backend"))
         .def_static(
             "get_backend", []
             {
         const cle::Backend &backend = cle::BackendManager::getInstance().getBackend();
         return &backend; },
-            py::return_value_policy::reference)
+            py::return_value_policy::automatic_reference)
         .def("__str__", [](const cle::BackendManager &backendManager)
              {
         std::ostringstream oss;

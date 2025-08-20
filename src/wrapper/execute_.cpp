@@ -59,7 +59,7 @@ auto py_execute(const cle::Device::Pointer &device, const std::string &kernel_na
           }
           else
           {
-               throw std::invalid_argument("Error: parameter type not supported. Received " + std::string(py::str(item.second.get_type()).cast<std::string>()));
+               throw std::invalid_argument("Error: parameter type not supported. Received " + std::string(py::str(py::type::of(item.second)).cast<std::string>()));
           }
      }
 

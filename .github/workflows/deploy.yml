@@ -32,7 +32,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Build wheels
         uses: pypa/cibuildwheel@v3.1.3 #2.19.2
@@ -49,7 +49,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Build sdist
         run: pipx run build --sdist
@@ -70,7 +70,7 @@ jobs:
         with:
           python-version: "3.x"
 
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v5
         with:
           pattern: artifacts-*
           path: dist
@@ -89,7 +89,7 @@ jobs:
   #     if: github.event_name == 'release' && success()
   #     steps:
   #       - name: Checkout
-  #         uses: actions/checkout@v4
+  #         uses: actions/checkout@v5
 
   #       - name: Download Zenodo CFF
   #         run: |

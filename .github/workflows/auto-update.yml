@@ -21,7 +21,7 @@ jobs:
           echo "Received release tag: $RELEASE_TAG from CLIc"
 
       - name: Get python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: '3.x'
 

@@ -1,5 +1,5 @@
 // this code is auto-generated, do not edit manually
-
+    
 #include "pycle_wrapper.hpp"
 #include "tier3.hpp"
 
@@ -89,4 +89,8 @@ m.def("_bounding_box", &cle::tier3::bounding_box_func, "Call cle::tier3::boundin
     m.def("_sato_filter", &cle::tier3::sato_filter_func, "Call cle::tier3::sato_filter_func from C++ CLIc.",
     py::return_value_policy::automatic_reference,
     py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("sigma_minimum"), py::arg("sigma_maximum"), py::arg("sigma_step"));
+
+    m.def("_tubeness", &cle::tier3::tubeness_func, "Call cle::tier3::tubeness_func from C++ CLIc.",
+    py::return_value_policy::automatic_reference,
+    py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("sigma"));
 }

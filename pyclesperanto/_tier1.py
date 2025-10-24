@@ -4,7 +4,7 @@
 
 import importlib
 import warnings
-from typing import Optional
+from typing import List, Optional
 
 import numpy as np
 
@@ -1622,7 +1622,7 @@ def hessian_eigenvalues(
     middle_eigenvalue: Optional[Image] = None,
     large_eigenvalue: Optional[Image] = None,
     device: Optional[Device] = None,
-) -> Image:
+) -> List[Image]:
     """Computes the eigenvalues of the hessian matrix of a 2d or 3d image. Hessian
     matrix or 2D images: [Ixx, Ixy] [Ixy, Iyy] Hessian matrix for 3D images: [Ixx,
     Ixy, Ixz] [Ixy, Iyy, Iyz] [Ixz, Iyz, Izz], Ixx denotes the second derivative in
@@ -1649,7 +1649,7 @@ def hessian_eigenvalues(
 
     Returns
     -------
-    Image
+    List[Image]
     """
     return clic._hessian_eigenvalues(
         device, input_image, small_eigenvalue, middle_eigenvalue, large_eigenvalue

@@ -4,7 +4,7 @@
 
 import importlib
 import warnings
-from typing import Optional
+from typing import List, Optional
 
 import numpy as np
 
@@ -16,7 +16,7 @@ clic = importlib.import_module("._pyclesperanto", package="pyclesperanto")
 
 
 @plugin_function
-def bounding_box(input_image: Image, device: Optional[Device] = None) -> list:
+def bounding_box(input_image: Image, device: Optional[Device] = None) -> List:
     """Determines the bounding box of all nonzero pixels in a binary image. The
     positions are returned in  an array of 6 values as follows: minX, minY, minZ,
     maxX, maxY, maxZ.
@@ -30,7 +30,7 @@ def bounding_box(input_image: Image, device: Optional[Device] = None) -> list:
 
     Returns
     -------
-    list
+    List
 
     References
     ----------
@@ -40,7 +40,7 @@ def bounding_box(input_image: Image, device: Optional[Device] = None) -> list:
 
 
 @plugin_function
-def center_of_mass(input_image: Image, device: Optional[Device] = None) -> list:
+def center_of_mass(input_image: Image, device: Optional[Device] = None) -> List:
     """Determines the center of mass of an image or image stack. It writes the result
     in the results table in the columns MassX, MassY and MassZ.
 
@@ -53,7 +53,7 @@ def center_of_mass(input_image: Image, device: Optional[Device] = None) -> list:
 
     Returns
     -------
-    list
+    List
 
     References
     ----------
@@ -506,7 +506,7 @@ def labelled_spots_to_pointlist(
 
 
 @plugin_function
-def maximum_position(input_image: Image, device: Optional[Device] = None) -> list:
+def maximum_position(input_image: Image, device: Optional[Device] = None) -> List:
     """Determines the position of the maximum of all pixels in a given image.
 
     Parameters
@@ -518,7 +518,7 @@ def maximum_position(input_image: Image, device: Optional[Device] = None) -> lis
 
     Returns
     -------
-    list
+    List
     """
     return clic._maximum_position(device, input_image)
 
@@ -546,7 +546,7 @@ def mean_of_all_pixels(input_image: Image, device: Optional[Device] = None) -> f
 
 
 @plugin_function
-def minimum_position(input_image: Image, device: Optional[Device] = None) -> list:
+def minimum_position(input_image: Image, device: Optional[Device] = None) -> List:
     """Determines the position of the minimum of all pixels in a given image.
 
     Parameters
@@ -558,7 +558,7 @@ def minimum_position(input_image: Image, device: Optional[Device] = None) -> lis
 
     Returns
     -------
-    list
+    List
     """
     return clic._minimum_position(device, input_image)
 
@@ -683,9 +683,10 @@ def sato_filter(
     sigma_step: float = 1,
     device: Optional[Device] = None,
 ) -> Image:
-    """Applies the multi-scale ridge detection Sato filter. This filter was first
-    introduced by Sato et al. in 1998
-    (https://doi.org/10.1016/S1361-8415(98)80009-1)
+    """Applies the multi-scale ridge detection Sato filter. This filter is based on
+    Sato et al. in 1998 (https://doi.org/10.1016/S1361-8415(98)80009-1) The filter
+    will cumulate the maximum response over a range of [sigma_minimum,
+    sigma_maximum[.
 
     Parameters
     ----------
@@ -718,3 +719,38 @@ def sato_filter(
         float(sigma_maximum),
         float(sigma_step),
     )
+
+
+@plugin_function(categories=["filter", "in assistant"])
+def tubeness(
+    input_image: Image,
+    output_image: Optional[Image] = None,
+    sigma: float = 1,
+    device: Optional[Device] = None,
+) -> Image:
+    """Enhances filamentous structures of a specified thickness in 2D or 3D This
+    function is a reimplementation of the Tubeness filter from Fiji/ImageJ It is
+    based on the Sato filter (https://doi.org/10.1016/S1361-8415(98)80009-1). The
+    sigma parameter defines the thickness of the structures to be enhanced.
+
+    Parameters
+    ----------
+    input_image: Image
+        Input image to process.
+    output_image: Optional[Image] (= None)
+        Output result image.
+    sigma: float (= 1)
+        Standard deviation of the Gaussian kernel used in the filter.
+    device: Optional[Device] (= None)
+        Device to perform the operation on.
+
+    Returns
+    -------
+    Image
+
+    References
+    ----------
+    [1] https://imagej.net/plugins/tubeness
+    [2] https://doi.org/10.1016/S1361-8415(98)80009-1
+    """
+    return clic._tubeness(device, input_image, output_image, float(sigma))

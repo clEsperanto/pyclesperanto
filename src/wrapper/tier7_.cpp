@@ -1,5 +1,5 @@
 // this code is auto-generated, do not edit manually
-
+    
 #include "pycle_wrapper.hpp"
 #include "tier7.hpp"
 
@@ -29,6 +29,14 @@ m.def("_affine_transform", &cle::tier7::affine_transform_func, "Call cle::tier7:
     m.def("_translate", &cle::tier7::translate_func, "Call cle::tier7::translate_func from C++ CLIc.",
     py::return_value_policy::automatic_reference,
     py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("translate_x"), py::arg("translate_y"), py::arg("translate_z"), py::arg("interpolate"));
+
+    m.def("_deskew_x", &cle::tier7::deskew_x_func, "Call cle::tier7::deskew_x_func from C++ CLIc.",
+    py::return_value_policy::automatic_reference,
+    py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("angle"), py::arg("voxel_size_x"), py::arg("voxel_size_y"), py::arg("voxel_size_z"), py::arg("scale_factor"));
+
+    m.def("_deskew_y", &cle::tier7::deskew_y_func, "Call cle::tier7::deskew_y_func from C++ CLIc.",
+    py::return_value_policy::automatic_reference,
+    py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("angle"), py::arg("voxel_size_x"), py::arg("voxel_size_y"), py::arg("voxel_size_z"), py::arg("scale_factor"));
 
     m.def("_closing_labels", &cle::tier7::closing_labels_func, "Call cle::tier7::closing_labels_func from C++ CLIc.",
     py::return_value_policy::automatic_reference,

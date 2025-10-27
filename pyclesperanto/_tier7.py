@@ -4,7 +4,7 @@
 
 import importlib
 import warnings
-from typing import Optional
+from typing import List, Optional
 
 import numpy as np
 
@@ -19,7 +19,7 @@ clic = importlib.import_module("._pyclesperanto", package="pyclesperanto")
 def affine_transform(
     input_image: Image,
     output_image: Optional[Image] = None,
-    transform_matrix: Optional[list] = None,
+    transform_matrix: Optional[List] = None,
     interpolate: bool = False,
     resize: bool = False,
     device: Optional[Device] = None,
@@ -35,7 +35,7 @@ def affine_transform(
         Input image to be transformed.
     output_image: Optional[Image] (= None)
         Output image.
-    transform_matrix: Optional[list] (= None)
+    transform_matrix: Optional[List] (= None)
         Affine transformation matrix (3x3 or 4x4).
     interpolate: bool (= False)
         If true, bi/trilinear interpolation will be applied, if hardware allows.
@@ -311,6 +311,104 @@ def translate(
         float(translate_y),
         float(translate_z),
         interpolate,
+    )
+
+
+@plugin_function
+def deskew_x(
+    input_image: Image,
+    output_image: Optional[Image] = None,
+    angle: float = 30,
+    voxel_size_x: float = 1.0,
+    voxel_size_y: float = 1.0,
+    voxel_size_z: float = 1.0,
+    scale_factor: float = 1.0,
+    device: Optional[Device] = None,
+) -> Image:
+    """Deskew a volume as acquired with oblique plane light-sheet microscopy with skew
+    in the X direction.
+
+    Parameters
+    ----------
+    input_image: Image
+        Input image to be deskewed.
+    output_image: Optional[Image] (= None)
+        Output image.
+    angle: float (= 30)
+        Angle (in degree)
+    voxel_size_x: float (= 1.0)
+        Voxel size in x direction
+    voxel_size_y: float (= 1.0)
+        Voxel size in y direction
+    voxel_size_z: float (= 1.0)
+        Voxel size in z direction
+    scale_factor: float (= 1.0)
+        Downscaling factor after deskewing
+    device: Optional[Device] (= None)
+        Device to perform the operation on.
+
+    Returns
+    -------
+    Image
+    """
+    return clic._deskew_x(
+        device,
+        input_image,
+        output_image,
+        float(angle),
+        float(voxel_size_x),
+        float(voxel_size_y),
+        float(voxel_size_z),
+        float(scale_factor),
+    )
+
+
+@plugin_function
+def deskew_y(
+    input_image: Image,
+    output_image: Optional[Image] = None,
+    angle: float = 30,
+    voxel_size_x: float = 1.0,
+    voxel_size_y: float = 1.0,
+    voxel_size_z: float = 1.0,
+    scale_factor: float = 1.0,
+    device: Optional[Device] = None,
+) -> Image:
+    """Deskew a volume as acquired with oblique plane light-sheet microscopy with skew
+    in the Y direction.
+
+    Parameters
+    ----------
+    input_image: Image
+        Input image to be deskewed.
+    output_image: Optional[Image] (= None)
+        Output image.
+    angle: float (= 30)
+        Angle (in degree)
+    voxel_size_x: float (= 1.0)
+        Voxel size in x direction
+    voxel_size_y: float (= 1.0)
+        Voxel size in y direction
+    voxel_size_z: float (= 1.0)
+        Voxel size in z direction
+    scale_factor: float (= 1.0)
+        Downscaling factor after deskewing
+    device: Optional[Device] (= None)
+        Device to perform the operation on.
+
+    Returns
+    -------
+    Image
+    """
+    return clic._deskew_y(
+        device,
+        input_image,
+        output_image,
+        float(angle),
+        float(voxel_size_x),
+        float(voxel_size_y),
+        float(voxel_size_z),
+        float(scale_factor),
     )
 
 

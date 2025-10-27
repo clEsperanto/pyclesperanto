@@ -4,7 +4,7 @@
 
 import importlib
 import warnings
-from typing import Optional
+from typing import List, Optional
 
 import numpy as np
 
@@ -1994,7 +1994,7 @@ def hessian_gaussian_eigenvalues(
     large_eigenvalue: Optional[Image] = None,
     sigma: float = 1,
     device: Optional[Device] = None,
-) -> Image:
+) -> List[Image]:
     """Determines the Hessian matrix eigenvalues using the gaussian derivative method
     and returns the small, middle and large eigenvalue images. The function return
     the list of eigenvalues as images, by decreasing order. The first image is the
@@ -2017,7 +2017,7 @@ def hessian_gaussian_eigenvalues(
 
     Returns
     -------
-    Image
+    List[Image]
     """
     return clic._hessian_gaussian_eigenvalues(
         device,

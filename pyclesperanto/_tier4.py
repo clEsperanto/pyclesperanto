@@ -4,7 +4,7 @@
 
 import importlib
 import warnings
-from typing import Optional
+from typing import List, Optional
 
 import numpy as np
 
@@ -18,7 +18,7 @@ clic = importlib.import_module("._pyclesperanto", package="pyclesperanto")
 @plugin_function
 def label_bounding_box(
     input_image: Image, label_id: int, device: Optional[Device] = None
-) -> list:
+) -> List:
     """Determines the bounding box of the specified label from a label image. The
     positions are returned in  an array of 6 values as follows: minX, minY, minZ,
     maxX, maxY, maxZ.
@@ -34,7 +34,7 @@ def label_bounding_box(
 
     Returns
     -------
-    list
+    List
 
     References
     ----------

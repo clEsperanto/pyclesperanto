@@ -29,5 +29,26 @@ from ._version import VERSION as __version__
 
 from ._interroperability import *  # isort:skip
 
+# Build __all__ dynamically
+__all__ = [
+    "get_device",
+    "info",
+    "list_available_devices",
+    "select_device",
+    "wait_for_kernel_to_finish",
+    "create",
+    "create_like",
+    "pull",
+    "push",
+]
+
+# Add all public names from tier modules
+from . import _tier1, _tier2, _tier3, _tier4, _tier5, _tier6, _tier7, _tier8
+
+for _module in [_tier1, _tier2, _tier3, _tier4, _tier5, _tier6, _tier7, _tier8]:
+    if hasattr(_module, "__all__"):
+        __all__.extend(_module.__all__)
+    else:
+        __all__.extend([name for name in dir(_module) if not name.startswith("_")])
 
 default_initialisation()

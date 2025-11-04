@@ -247,7 +247,7 @@ def exclude_labels_on_edges(
 @plugin_function
 def flag_existing_labels(
     input_image: Image,
-    output_image: Image,
+    output_image: Optional[Image] =None,
     device: Optional[Device] =None
 ) -> Image:
     """Given a label map, generates a binary vector whose entries are 1 if a label with
@@ -258,7 +258,7 @@ def flag_existing_labels(
     ----------
     input_image: Image 
         Label image.
-    output_image: Image 
+    output_image: Optional[Image] (= None)
         Binary vector; if provided, it should have size 1×n with n = maximum label + 1.
     device: Optional[Device] (= None)
         Device to perform the operation on.

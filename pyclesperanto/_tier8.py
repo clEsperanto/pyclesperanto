@@ -4,7 +4,7 @@
 
 import importlib
 import warnings
-from typing import Optional, List
+from typing import List, Optional
 
 import numpy as np
 
@@ -12,14 +12,15 @@ from ._array import Image
 from ._core import Device
 from ._decorators import plugin_function
 
-clic = importlib.import_module('._pyclesperanto', package='pyclesperanto')
+clic = importlib.import_module("._pyclesperanto", package="pyclesperanto")
+
 
 @plugin_function(categories=["label processing", "in assistant", "bia-bob-suggestion"])
 def smooth_labels(
     input_image: Image,
-    output_image: Optional[Image] =None,
-    radius: int =0,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    radius: int = 0,
+    device: Optional[Device] = None,
 ) -> Image:
     """Applies a morphological opening operation to a label image and afterward   fills
     gaps between the labels using Voronoi labeling. Finally, the result   label
@@ -28,7 +29,7 @@ def smooth_labels(
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input label image.
     output_image: Optional[Image] (= None)
         Output label image.
@@ -43,12 +44,13 @@ def smooth_labels(
     """
     return clic._smooth_labels(device, input_image, output_image, int(radius))
 
+
 @plugin_function(categories=["label processing", "in assistant", "bia-bob-suggestion"])
 def smooth_connected_labels(
     input_image: Image,
-    output_image: Optional[Image] =None,
-    radius: int =0,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    radius: int = 0,
+    device: Optional[Device] = None,
 ) -> Image:
     """Applies a morphological erosion and dilation of the label image with respect to
     the connectivity of the labels.     Note: It is recommended to process isotropic
@@ -56,7 +58,7 @@ def smooth_connected_labels(
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input label image.
     output_image: Optional[Image] (= None)
         Output label image.
@@ -71,17 +73,18 @@ def smooth_connected_labels(
     """
     return clic._smooth_connected_labels(device, input_image, output_image, int(radius))
 
+
 @plugin_function
 def fft(
     input_image: Image,
-    output_image: Optional[Image] =None,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    device: Optional[Device] = None,
 ) -> Image:
     """Performs a 1D, 2D, or 3D FFT (Fast Fourier Transform) on the input image.
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input image.
     output_image: Optional[Image] (= None)
         Output image.
@@ -94,11 +97,10 @@ def fft(
     """
     return clic._fft(device, input_image, output_image)
 
+
 @plugin_function
 def ifft(
-    input_image: Image,
-    output_image: Image,
-    device: Optional[Device] =None
+    input_image: Image, output_image: Image, device: Optional[Device] = None
 ) -> Image:
     """Performs a 1D, 2D, or 3D IFFT (Inverse Fast Fourier Transform) on the input
     image. The input image must be Hermitian, and the output image must be provided
@@ -106,9 +108,9 @@ def ifft(
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input image.
-    output_image: Image 
+    output_image: Image
         Output image.
     device: Optional[Device] (= None)
         Device to perform the operation on.
@@ -119,13 +121,14 @@ def ifft(
     """
     return clic._ifft(device, input_image, output_image)
 
+
 @plugin_function
 def convolve_fft(
     input_image: Image,
     kernel: Image,
-    output_image: Optional[Image] =None,
-    correlate: bool =False,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    correlate: bool = False,
+    device: Optional[Device] = None,
 ) -> Image:
     """Performs a 1D, 2D, or 3D convolution using FFT between an input image and a
     kernel. Input image, PSF kernel, and normalization image are expected to be in
@@ -135,9 +138,9 @@ def convolve_fft(
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input image.
-    kernel: Image 
+    kernel: Image
         Kernel image.
     output_image: Optional[Image] (= None)
         Output image.
@@ -152,15 +155,16 @@ def convolve_fft(
     """
     return clic._convolve_fft(device, input_image, kernel, output_image, correlate)
 
+
 @plugin_function
 def deconvolve_fft(
     input_image: Image,
     psf: Image,
-    normalization: Optional[Image] =None,
-    output_image: Optional[Image] =None,
-    iteration: int =100,
-    regularization: float =0.0,
-    device: Optional[Device] =None
+    normalization: Optional[Image] = None,
+    output_image: Optional[Image] = None,
+    iteration: int = 100,
+    regularization: float = 0.0,
+    device: Optional[Device] = None,
 ) -> Image:
     """Performs a 1D, 2D, or 3D deconvolution using FFT between an input image and a
     PSF kernel. The deconvolution is performed using the Richardson-Lucy algorithm
@@ -173,9 +177,9 @@ def deconvolve_fft(
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input image.
-    psf: Image 
+    psf: Image
         Kernel image.
     normalization: Optional[Image] (= None)
         Normalization image.
@@ -192,4 +196,12 @@ def deconvolve_fft(
     -------
     Image
     """
-    return clic._deconvolve_fft(device, input_image, psf, normalization, output_image, int(iteration), float(regularization))
+    return clic._deconvolve_fft(
+        device,
+        input_image,
+        psf,
+        normalization,
+        output_image,
+        int(iteration),
+        float(regularization),
+    )

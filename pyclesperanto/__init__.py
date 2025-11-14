@@ -29,5 +29,35 @@ from ._version import VERSION as __version__
 
 from ._interroperability import *  # isort:skip
 
+__all__ = [
+    "Array",
+    "Image",
+    "is_image",
+    "Device",
+    "get_device",
+    "info",
+    "list_available_devices",
+    "select_device",
+    "wait_for_kernel_to_finish",
+    "execute",
+    "imshow",
+    "native_execute",
+    "create",
+    "create_like",
+    "pull",
+    "push",
+    "fft_smooth_shape",
+    "__clic_version__",
+    "__common_alias__",
+    "__version__",
+]
+
+# Add all items from tier modules without polluting namespace
+import importlib
+for _tier_name in ['_tier1', '_tier2', '_tier3', '_tier4', '_tier5', '_tier6', '_tier7', '_tier8']:
+    _tier_module = importlib.import_module(f'.{_tier_name}', package='pyclesperanto')
+    if hasattr(_tier_module, '__all__'):
+        __all__ += _tier_module.__all__
+del importlib, _tier_name, _tier_module
 
 default_initialisation()

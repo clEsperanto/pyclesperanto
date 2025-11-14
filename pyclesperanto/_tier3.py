@@ -4,7 +4,7 @@
 
 import importlib
 import warnings
-from typing import List, Optional
+from typing import Optional, List
 
 import numpy as np
 
@@ -25,7 +25,7 @@ def bounding_box(
 
     Parameters
     ----------
-    input_image: Image
+    input_image: Image 
         Input binary image.
     device: Optional[Device] (= None)
         Device to perform the operation on.
@@ -50,7 +50,7 @@ def center_of_mass(
 
     Parameters
     ----------
-    input_image: Image
+    input_image: Image 
         Input image.
     device: Optional[Device] (= None)
         Device to perform the operation on.
@@ -81,7 +81,7 @@ def clahe(
 
     Parameters
     ----------
-    input_image: Image
+    input_image: Image 
         Input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
@@ -117,9 +117,9 @@ def remove_labels(
 
     Parameters
     ----------
-    input_image: Image
+    input_image: Image 
         Input label image.
-    list: Image
+    list: Image 
         Vector of 0/1 flags indicating labels to remove.
     output_image: Optional[Image] (= None)
         Output label image.
@@ -151,9 +151,9 @@ def exclude_labels(
 
     Parameters
     ----------
-    input_image: Image
+    input_image: Image 
         Input label image.
-    list: Image
+    list: Image 
         Vector of 0/1 flags indicating labels to remove.
     output_image: Optional[Image] (= None)
         Output label image.
@@ -184,7 +184,7 @@ def remove_labels_on_edges(
 
     Parameters
     ----------
-    input_image: Image
+    input_image: Image 
         Input label image.
     output_image: Optional[Image] (= None)
         Output label image.
@@ -221,7 +221,7 @@ def exclude_labels_on_edges(
 
     Parameters
     ----------
-    input_image: Image
+    input_image: Image 
         Input label image.
     output_image: Optional[Image] (= None)
         Output label image.
@@ -256,7 +256,7 @@ def flag_existing_labels(
 
     Parameters
     ----------
-    input_image: Image
+    input_image: Image 
         Label image.
     output_image: Optional[Image] (= None)
         Binary vector; if provided, it should have size 1×n with n = maximum label + 1.
@@ -282,12 +282,12 @@ def gamma_correction(
 
     Parameters
     ----------
-    input_image: Image
+    input_image: Image 
         Input image.
     output_image: Optional[Image] (= None)
         Output image.
     gamma: float (= 1)
-
+        
     device: Optional[Device] (= None)
         Device to perform the operation on.
 
@@ -315,9 +315,9 @@ def generate_binary_overlap_matrix(
 
     Parameters
     ----------
-    input_image0: Image
+    input_image0: Image 
         First input label image.
-    input_image1: Image
+    input_image1: Image 
         Second input label image.
     output_image: Optional[Image] (= None)
         Output overlap matrix.
@@ -348,7 +348,7 @@ def generate_touch_matrix(
 
     Parameters
     ----------
-    input_image: Image
+    input_image: Image 
         Input label image
     output_image_matrix: Optional[Image] (= None)
         Output touch matrix
@@ -394,7 +394,7 @@ def histogram(
 
     Parameters
     ----------
-    input_image: Image
+    input_image: Image 
         Input image from which to derive the histogram.
     output_image: Optional[Image] (= None)
         Output histogram.
@@ -431,9 +431,9 @@ def jaccard_index(
 
     Parameters
     ----------
-    input_image0: Image
+    input_image0: Image 
         First binary image to compare.
-    input_image1: Image
+    input_image1: Image 
         Second binary image to compare.
     device: Optional[Device] (= None)
         Device to perform the operation on.
@@ -462,7 +462,7 @@ def labelled_spots_to_pointlist(
 
     Parameters
     ----------
-    label: Image
+    label: Image 
         Input
     dspointlistt: Optional[Image] (= None)
         Output coordinate list.
@@ -488,7 +488,7 @@ def maximum_position(
 
     Parameters
     ----------
-    input_image: Image
+    input_image: Image 
         The image of which the position of the maximum of all pixels will be determined.
     device: Optional[Device] (= None)
         Device to perform the operation on.
@@ -508,7 +508,7 @@ def mean_of_all_pixels(
 
     Parameters
     ----------
-    input_image: Image
+    input_image: Image 
         The image of which the mean of all pixels will be determined.
     device: Optional[Device] (= None)
         Device to perform the operation on.
@@ -532,7 +532,7 @@ def minimum_position(
 
     Parameters
     ----------
-    input_image: Image
+    input_image: Image 
         The image of which the position of the minimum of all pixels will be determined.
     device: Optional[Device] (= None)
         Device to perform the operation on.
@@ -559,7 +559,7 @@ def morphological_chan_vese(
 
     Parameters
     ----------
-    input_image: Image
+    input_image: Image 
         Input image to process.
     output_image: Optional[Image] (= None)
         Output contour; can also be used to provide initialization.
@@ -658,7 +658,7 @@ def sato_filter(
 
     Parameters
     ----------
-    input_image: Image
+    input_image: Image 
         Input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
@@ -695,7 +695,7 @@ def tubeness(
 
     Parameters
     ----------
-    input_image: Image
+    input_image: Image 
         Input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
@@ -772,9 +772,9 @@ def read_intensities_from_map(
 
     Parameters
     ----------
-    label: Image
+    label: Image 
         Input
-    map: Image
+    map: Image 
         Input
     output_image: Optional[Image] (= None)
         Output result image.

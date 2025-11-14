@@ -1,5 +1,5 @@
 // this code is auto-generated, do not edit manually
-
+    
 #include "pycle_wrapper.hpp"
 #include "tier4.hpp"
 
@@ -96,7 +96,7 @@ m.def("_label_bounding_box", &cle::tier4::label_bounding_box_func, "Call cle::ti
 
     m.def("_mean_of_touching_neighbors_map", &cle::tier4::mean_of_touching_neighbors_map_func, "Call cle::tier4::mean_of_touching_neighbors_map_func from C++ CLIc.",
     py::return_value_policy::automatic_reference,
-    py::arg("device"), py::arg("labels"), py::arg("dst"));
+    py::arg("device"), py::arg("labels"), py::arg("dst"), py::arg("radius"), py::arg("ignore_background"));
 
     m.def("_median_of_touching_neighbors_map", &cle::tier4::median_of_touching_neighbors_map_func, "Call cle::tier4::median_of_touching_neighbors_map_func from C++ CLIc.",
     py::return_value_policy::automatic_reference,

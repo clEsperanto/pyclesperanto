@@ -110,6 +110,10 @@ m.def("_absolute_difference", &cle::tier2::absolute_difference_func, "Call cle::
     py::return_value_policy::automatic_reference,
     py::arg("device"), py::arg("src"), py::arg("dst"));
 
+    m.def("_pointlist_to_labelled_spots", &cle::tier2::pointlist_to_labelled_spots_func, "Call cle::tier2::pointlist_to_labelled_spots_func from C++ CLIc.",
+    py::return_value_policy::automatic_reference,
+    py::arg("device"), py::arg("src"), py::arg("dst"));
+
     m.def("_large_hessian_eigenvalue", &cle::tier2::large_hessian_eigenvalue_func, "Call cle::tier2::large_hessian_eigenvalue_func from C++ CLIc.",
     py::return_value_policy::automatic_reference,
     py::arg("device"), py::arg("src"), py::arg("dst"));
@@ -221,4 +225,8 @@ m.def("_absolute_difference", &cle::tier2::absolute_difference_func, "Call cle::
     m.def("_hessian_gaussian_eigenvalues", &cle::tier2::hessian_gaussian_eigenvalues_func, "Call cle::tier2::hessian_gaussian_eigenvalues_func from C++ CLIc.",
     py::return_value_policy::automatic_reference,
     py::arg("device"), py::arg("src"), py::arg("small_eigenvalue"), py::arg("middle_eigenvalue"), py::arg("large_eigenvalue"), py::arg("sigma"));
+
+    m.def("_generate_proximal_neighbors_matrix", &cle::tier2::generate_proximal_neighbors_matrix_func, "Call cle::tier2::generate_proximal_neighbors_matrix_func from C++ CLIc.",
+    py::return_value_policy::automatic_reference,
+    py::arg("device"), py::arg("src_matrix"), py::arg("dst_matrix"), py::arg("min_distance"), py::arg("max_distance"));
 }

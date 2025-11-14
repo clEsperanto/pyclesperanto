@@ -4,7 +4,7 @@
 
 import importlib
 import warnings
-from typing import List, Optional
+from typing import Optional
 
 import numpy as np
 
@@ -22,8 +22,8 @@ def absolute_difference(
     output_image: Optional[Image] = None,
     device: Optional[Device] = None,
 ) -> Image:
-    """Determines the absolute difference pixel by pixel between two images. <pre>f(x,
-    y) = |x y| </pre>
+    """Determines the absolute difference, pixel-by-pixel, between two images.
+    <pre>f(x, y) = |x - y|</pre>
 
     Parameters
     ----------
@@ -60,7 +60,7 @@ def add_images(
     Parameters
     ----------
     input_image0: Image
-        The first input image to added.
+        The first input image to be added.
     input_image1: Image
         The second image to be added.
     output_image: Optional[Image] (= None)
@@ -88,7 +88,7 @@ def bottom_hat_box(
     radius_z: float = 1,
     device: Optional[Device] = None,
 ) -> Image:
-    """Apply a bottomhat filter for background subtraction to the input image.
+    """Applies a bottom-hat filter for background subtraction to the input image.
 
     Parameters
     ----------
@@ -132,7 +132,7 @@ def bottom_hat_sphere(
     radius_z: float = 1,
     device: Optional[Device] = None,
 ) -> Image:
-    """Applies a bottomhat filter for background subtraction to the input image.
+    """Applies a bottom-hat filter for background subtraction to the input image.
 
     Parameters
     ----------
@@ -177,7 +177,7 @@ def bottom_hat(
     connectivity: str = "box",
     device: Optional[Device] = None,
 ) -> Image:
-    """Applies a bottomhat filter for background subtraction to the input image.
+    """Applies a bottom-hat filter for background subtraction to the input image.
 
     Parameters
     ----------
@@ -192,7 +192,7 @@ def bottom_hat(
     radius_z: float (= 1)
         Radius of the background determination region in Z.
     connectivity: str (= "box")
-        Element shape, "box" or "sphere"
+        Element shape, "box" or "sphere".
     device: Optional[Device] (= None)
         Device to perform the operation on.
 
@@ -224,19 +224,19 @@ def clip(
     max_intensity: Optional[float] = None,
     device: Optional[Device] = None,
 ) -> Image:
-    """Limits the range of values in an image. This function is supposed to work
-    similarly as its counter part in numpy [1].
+    """Limits the range of values in an image. This function works similarly to its
+    counterpart in NumPy.
 
     Parameters
     ----------
     input_image: Image
         Input image to process.
     output_image: Optional[Image] (= None)
-        Output result image.
+        Output image.
     min_intensity: Optional[float] (= None)
-        new, lower limit of the intensity range
+        New lower limit of the intensity range.
     max_intensity: Optional[float] (= None)
-        new, upper limit of the intensity range
+        New upper limit of the intensity range.
     device: Optional[Device] (= None)
         Device to perform the operation on.
 
@@ -255,13 +255,13 @@ def clip(
 def closing_box(
     input_image: Image,
     output_image: Optional[Image] = None,
-    radius_x: int = 1,
-    radius_y: int = 1,
-    radius_z: int = 1,
+    radius_x: float = 1,
+    radius_y: float = 1,
+    radius_z: float = 1,
     device: Optional[Device] = None,
 ) -> Image:
     """Closing operator, applies grayscale morphological closing to intensity images
-    using a box shaped footprint. This operator also works with binary images.
+    using a box-shaped footprint. This operator also works with binary images.
 
     Parameters
     ----------
@@ -269,11 +269,11 @@ def closing_box(
         Input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
-    radius_x: int (= 1)
+    radius_x: float (= 1)
         Radius along the x axis.
-    radius_y: int (= 1)
+    radius_y: float (= 1)
         Radius along the y axis.
-    radius_z: int (= 1)
+    radius_z: float (= 1)
         Radius along the z axis.
     device: Optional[Device] (= None)
         Device to perform the operation on.
@@ -283,7 +283,12 @@ def closing_box(
     Image
     """
     return clic._closing_box(
-        device, input_image, output_image, int(radius_x), int(radius_y), int(radius_z)
+        device,
+        input_image,
+        output_image,
+        float(radius_x),
+        float(radius_y),
+        float(radius_z),
     )
 
 
@@ -297,7 +302,7 @@ def closing_sphere(
     device: Optional[Device] = None,
 ) -> Image:
     """Closing operator, applies grayscale morphological closing to intensity images
-    using a sphere shaped footprint. This operator also works with binary images.
+    using a sphere-shaped footprint. This operator also works with binary images.
 
     Parameters
     ----------
@@ -339,7 +344,7 @@ def grayscale_closing(
     device: Optional[Device] = None,
 ) -> Image:
     """Closing operator, applies grayscale morphological closing to intensity images
-    using a sphere or box shaped footprint. This operator also works with binary
+    using a box- or sphere-shaped footprint. This operator also works with binary
     images.
 
     Parameters
@@ -414,7 +419,7 @@ def binary_closing(
     device: Optional[Device] = None,
 ) -> Image:
     """Closing operator, applies binary morphological closing to intensity images using
-    a sphere or box shaped footprint. This operator also works with binary images.
+    a sphere- or box-shaped footprint. This operator also works with binary images.
 
     Parameters
     ----------
@@ -457,7 +462,7 @@ def concatenate_along_x(
     output_image: Optional[Image] = None,
     device: Optional[Device] = None,
 ) -> Image:
-    """Concatenate two images or stacks along the X axis.
+    """Concatenates two images or stacks along the x axis.
 
     Parameters
     ----------
@@ -490,7 +495,7 @@ def concatenate_along_y(
     output_image: Optional[Image] = None,
     device: Optional[Device] = None,
 ) -> Image:
-    """Concatenate two images or stacks along the Y axis.
+    """Concatenates two images or stacks along the y axis.
 
     Parameters
     ----------
@@ -523,7 +528,7 @@ def concatenate_along_z(
     output_image: Optional[Image] = None,
     device: Optional[Device] = None,
 ) -> Image:
-    """Concatenate two images or stacks along the Z axis.
+    """Concatenates two images or stacks along the z axis.
 
     Parameters
     ----------
@@ -554,10 +559,10 @@ def count_touching_neighbors(
     ignore_background: bool = True,
     device: Optional[Device] = None,
 ) -> Image:
-    """Takes a touch matrix as input and delivers a vector with number of touching
-    neighbors per label as a vector. Note: Background is considered as something
-    that can touch. To ignore touches with background, hand over a touch matrix
-    where the first column (index = 0) has been set to 0. Use set_column for that.
+    """Takes a touch matrix as input and returns a vector containing the number of
+    touching neighbors per label. Note: Background is considered touchable. To
+    ignore touches with the background, pass a touch matrix where the first column
+    (index = 0) is set to 0. Use set_column for that.
 
     Parameters
     ----------
@@ -590,8 +595,8 @@ def crop_border(
     border_size: int = 1,
     device: Optional[Device] = None,
 ) -> Image:
-    """Crops an image by removing the outer pixels, per default 1. Notes * To make sure
-    the output image has the right size, provide destination_image=None.
+    """Crops an image by removing the outer pixels (default: 1). To ensure the output
+    image has the expected size, set dst = None.
 
     Parameters
     ----------
@@ -661,7 +666,7 @@ def degrees_to_radians(
     output_image: Optional[Image] = None,
     device: Optional[Device] = None,
 ) -> Image:
-    """Converts radians to degrees.
+    """Converts degrees to radians.
 
     Parameters
     ----------
@@ -785,7 +790,7 @@ def detect_minima_box(
     radius_z: float = 0,
     device: Optional[Device] = None,
 ) -> Image:
-    """Detects local maxima in a given square/cubic neighborhood. Pixels in the
+    """Detects local minima in a given square/cubic neighborhood. Pixels in the
     resulting image are set to 1 if there is no other pixel in a given radius which
     has a lower intensity, and to 0 otherwise.
 
@@ -832,7 +837,7 @@ def detect_minima(
     connectivity: str = "box",
     device: Optional[Device] = None,
 ) -> Image:
-    """Detects local maxima in a given square/cubic neighborhood. Pixels in the
+    """Detects local minima in a given square/cubic neighborhood. Pixels in the
     resulting image are set to 1 if there is no other pixel in a given radius which
     has a lower intensity, and to 0 otherwise.
 
@@ -885,10 +890,10 @@ def difference_of_gaussian(
     sigma2_z: float = 2,
     device: Optional[Device] = None,
 ) -> Image:
-    """Applies Gaussian blur to the input image twice with different sigma values
-    resulting in two images which are then subtracted from each other. It is
-    recommended to apply this operation to images of type Float (32 bit) as results
-    might be negative.
+    """Applies Gaussian blur to the input image twice with different sigma values,
+    producing two images, one of which is subtracted from the other. It is
+    recommended to apply this operation to images of type float (32-bit) because
+    results might be negative.
 
     Parameters
     ----------
@@ -938,8 +943,8 @@ def extend_labeling_via_voronoi(
     output_image: Optional[Image] = None,
     device: Optional[Device] = None,
 ) -> Image:
-    """Takes a label map image and dilates the regions using a octagon shape until they
-    touch. The resulting label map is written to the output.
+    """Takes a label map image and dilates the regions using an octagon shape until
+    they touch. The resulting label map is written to the output.
 
     Parameters
     ----------
@@ -968,8 +973,8 @@ def invert(
     device: Optional[Device] = None,
 ) -> Image:
     """Computes the negative value of all pixels in a given image. It is recommended to
-    convert images to 32bit float before applying this operation. <pre>f(x) =
-    x</pre> For binary images, use binaryNot.
+    convert images to 32-bit float before applying this operation. <pre>f(x) =
+    -x</pre> For binary images, use binaryNot.
 
     Parameters
     ----------
@@ -997,9 +1002,9 @@ def label_spots(
     output_image: Optional[Image] = None,
     device: Optional[Device] = None,
 ) -> Image:
-    """Transforms a binary image with single pixles set to 1 to a labelled spots image.
-    Transforms a spots image as resulting from maximum/minimum detection in an image
-    of the same size where every spot has a number 1, 2,... n.
+    """Transforms a binary image with single pixels set to 1 into a labeled spots
+    image. Converts a spots image (e.g., from maxima/minima detection) into a label
+    image of the same size, assigning IDs 1, 2, …, n.
 
     Parameters
     ----------
@@ -1019,6 +1024,34 @@ def label_spots(
     [1] https://clij.github.io/clij2-docs/reference_labelSpots
     """
     return clic._label_spots(device, input_image, output_image)
+
+
+@plugin_function
+def pointlist_to_labelled_spots(
+    input_image: Image,
+    output_image: Optional[Image] = None,
+    device: Optional[Device] = None,
+) -> Image:
+    """Converts a pointlist image (x,y,z) into a labelled spots in a label image.
+
+    Parameters
+    ----------
+    input_image: Image
+        Input pointlist image to process.
+    output_image: Optional[Image] (= None)
+        Output result label image.
+    device: Optional[Device] (= None)
+        Device to perform the operation on.
+
+    Returns
+    -------
+    Image
+
+    References
+    ----------
+    [1] https://clij.github.io/clij2-docs/reference_pointlistToLabelledSpots
+    """
+    return clic._pointlist_to_labelled_spots(device, input_image, output_image)
 
 
 @plugin_function(categories=["filter", "in assistant"])
@@ -1047,8 +1080,7 @@ def large_hessian_eigenvalue(
 
 @plugin_function
 def maximum_of_all_pixels(input_image: Image, device: Optional[Device] = None) -> float:
-    """Determines the maximum of all pixels in a given image. It will be stored in a
-    new row of ImageJs Results table in the column 'Max'.
+    """Determines the maximum of all pixels in a given image.
 
     Parameters
     ----------
@@ -1070,8 +1102,7 @@ def maximum_of_all_pixels(input_image: Image, device: Optional[Device] = None) -
 
 @plugin_function
 def minimum_of_all_pixels(input_image: Image, device: Optional[Device] = None) -> float:
-    """Determines the minimum of all pixels in a given image. It will be stored in a
-    new row of ImageJs Results table in the column 'Min'.
+    """Determines the minimum of all pixels in a given image.
 
     Parameters
     ----------
@@ -1095,8 +1126,8 @@ def minimum_of_all_pixels(input_image: Image, device: Optional[Device] = None) -
 def minimum_of_masked_pixels(
     input_image: Image, mask: Image, device: Optional[Device] = None
 ) -> float:
-    """Determines the minimum intensity in a masked image. But only in pixels which
-    have nonzero values in another mask image.
+    """Determines the minimum intensity in a masked image, but only over pixels that
+    have nonzero values in a separate mask image.
 
     Parameters
     ----------
@@ -1128,7 +1159,7 @@ def opening_box(
     device: Optional[Device] = None,
 ) -> Image:
     """Opening operator, applies morphological opening to intensity images using a
-    boxshaped footprint. This operator also works with binary images.
+    box-shaped footprint. This operator also works with binary images.
 
     Parameters
     ----------
@@ -1169,7 +1200,7 @@ def opening_sphere(
     device: Optional[Device] = None,
 ) -> Image:
     """Opening operator, applies morphological opening to intensity images using a
-    sphereshaped footprint. This operator also works with binary images.
+    sphere-shaped footprint. This operator also works with binary images.
 
     Parameters
     ----------
@@ -1210,8 +1241,8 @@ def grayscale_opening(
     connectivity: str = "box",
     device: Optional[Device] = None,
 ) -> Image:
-    """Opening operator, Applies morphological opening to intensity images using a
-    sphereshaped or boxshepd footprint. This operator also works with binary images.
+    """Opening operator, applies morphological opening to intensity images using a
+    sphere- or box-shaped footprint. This operator also works with binary images.
 
     Parameters
     ----------
@@ -1284,8 +1315,8 @@ def binary_opening(
     connectivity: str = "box",
     device: Optional[Device] = None,
 ) -> Image:
-    """Closing operator, applies binary morphological opening to intensity images using
-    a sphere or box shaped footprint. This operator also works with binary images.
+    """Opening operator, applies binary morphological opening to intensity images using
+    a sphere- or box-shaped footprint. This operator also works with binary images.
 
     Parameters
     ----------
@@ -1325,7 +1356,7 @@ def radians_to_degrees(
     output_image: Optional[Image] = None,
     device: Optional[Device] = None,
 ) -> Image:
-    """Converts radians to degrees
+    """Converts radians to degrees.
 
     Parameters
     ----------
@@ -1402,8 +1433,8 @@ def square(
     output_image: Optional[Image] = None,
     device: Optional[Device] = None,
 ) -> Image:
-    """Return the elementwise square of the input. This function is supposed to be
-    similar to its counterpart in numpy [1]
+    """Returns the element-wise square of the input. This function is similar to its
+    counterpart in NumPy.
 
     Parameters
     ----------
@@ -1465,9 +1496,9 @@ def standard_deviation_box(
     radius_z: float = 1,
     device: Optional[Device] = None,
 ) -> Image:
-    """Computes the local standard deviation of a pixels box neighborhood. The box size
-    is specified by its halfwidth, halfheight and halfdepth (radius). If 2D images
-    are given, radius_z will be ignored.
+    """Computes the local standard deviation of each pixel's box neighborhood. The box
+    size is specified by its half-width, half-height, and half-depth (radius). If 2D
+    images are given, radius_z will be ignored.
 
     Parameters
     ----------
@@ -1511,9 +1542,9 @@ def standard_deviation_sphere(
     radius_z: float = 1,
     device: Optional[Device] = None,
 ) -> Image:
-    """Computes the local standard deviation of a pixels sphere neighborhood. The box
-    size is specified by its halfwidth, halfheight and halfdepth (radius). If 2D
-    images are given, radius_z will be ignored.
+    """Computes the local standard deviation of each pixel's spherical neighborhood.
+    The neighborhood size is specified by its half-width, half-height, and
+    half-depth (radius). If 2D images are given, radius_z will be ignored.
 
     Parameters
     ----------
@@ -1558,9 +1589,9 @@ def standard_deviation(
     connectivity: str = "box",
     device: Optional[Device] = None,
 ) -> Image:
-    """Computes the local standard deviation of a pixels sphere neighborhood. The box
-    size is specified by its halfwidth, halfheight and halfdepth (radius). If 2D
-    images are given, radius_z will be ignored.
+    """Computes the local standard deviation of each pixel's neighborhood. The
+    neighborhood size is specified by its half-width, half-height, and half-depth
+    (radius). If 2D images are given, radius_z will be ignored.
 
     Parameters
     ----------
@@ -1575,7 +1606,7 @@ def standard_deviation(
     radius_z: float (= 1)
         Radius along the z axis.
     connectivity: str (= "box")
-        Neigborhood shape, "box" or "sphere"
+        Neighborhood shape, "box" or "sphere".
     device: Optional[Device] (= None)
         Device to perform the operation on.
 
@@ -1620,11 +1651,11 @@ def subtract_gaussian_background(
     output_image: Optional[Image] (= None)
         Output result image.
     sigma_x: float (= 2)
-        Radius along the x axis.
+        Gaussian sigma value along x.
     sigma_y: float (= 2)
-        Radius along the y axis.
+        Gaussian sigma value along y.
     sigma_z: float (= 2)
-        Radius along the z axis.
+        Gaussian sigma value along z.
     device: Optional[Device] (= None)
         Device to perform the operation on.
 
@@ -1653,7 +1684,8 @@ def subtract_images(
     output_image: Optional[Image] = None,
     device: Optional[Device] = None,
 ) -> Image:
-    """Subtracts one image X from another image Y pixel wise. <pre>f(x, y) = x y</pre>
+    """Subtracts one image X from another image Y pixel-wise. <pre>f(x, y) = x -
+    y</pre>
 
     Parameters
     ----------
@@ -1720,8 +1752,8 @@ def reduce_stack(
     device: Optional[Device] = None,
 ) -> Image:
     """Reduces the number of z-slices in a stack by a given factor. With the offset you
-    have control which slices stays: with a factor 3 and offset 0, slices 0,3,6,
-    etc. are kept. with a factor 4 and offset 1, slices 1,5,9, etc. are kept.
+    have control over which slices stay: with factor 3 and offset 0, slices 0, 3, 6,
+    … are kept; with factor 4 and offset 1, slices 1, 5, 9, … are kept.
 
     Parameters
     ----------
@@ -1753,8 +1785,7 @@ def reduce_stack(
 def sum_of_all_pixels(
     input_image: Optional[Image] = None, device: Optional[Device] = None
 ) -> float:
-    """Determines the sum of all pixels in a given image. It will be stored in a new
-    row of ImageJs Results table in the column 'Sum'.
+    """Determines the sum of all pixels in a given image.
 
     Parameters
     ----------
@@ -1783,7 +1814,7 @@ def top_hat_box(
     radius_z: float = 1,
     device: Optional[Device] = None,
 ) -> Image:
-    """Applies a tophat filter for background subtraction to the input image.
+    """Applies a top-hat filter for background subtraction to the input image.
 
     Parameters
     ----------
@@ -1829,7 +1860,7 @@ def top_hat_sphere(
     radius_z: float = 1,
     device: Optional[Device] = None,
 ) -> Image:
-    """Applies a tophat filter for background subtraction to the input image.
+    """Applies a top-hat filter for background subtraction to the input image.
 
     Parameters
     ----------
@@ -1874,7 +1905,7 @@ def top_hat(
     connectivity: str = "box",
     device: Optional[Device] = None,
 ) -> Image:
-    """Applies a tophat filter for background subtraction to the input image.
+    """Applies a top-hat filter for background subtraction to the input image.
 
     Parameters
     ----------
@@ -1923,8 +1954,8 @@ def extended_depth_of_focus_variance_projection(
     device: Optional[Device] = None,
 ) -> Image:
     """Depth projection using the local variance maxima to determine the best focus
-    plane. The radius parameter control the local variance calculation, and the
-    sigma apply a gaussian blur for smoothness of the projection.
+    plane. The radius parameter controls the local variance calculation, and sigma
+    applies a Gaussian blur for smoothness of the projection.
 
     Parameters
     ----------
@@ -1933,9 +1964,9 @@ def extended_depth_of_focus_variance_projection(
     output_image: Optional[Image] (= None)
         Output result image.
     radius_x: float (= 10)
-        Sphere radius filter in x axis.
+        Neighborhood radius along the x axis.
     radius_y: float (= 10)
-        Sphere radius filter in y axis.
+        Neighborhood radius along the y axis.
     sigma: float (= 5)
         Sigma for Gaussian blur.
     device: Optional[Device] (= None)
@@ -1962,8 +1993,8 @@ def extended_depth_of_focus_sobel_projection(
     sigma: float = 5,
     device: Optional[Device] = None,
 ) -> Image:
-    """Depth projection using the local sobel gradient magnitude maxima to determine
-    the best focus plane. The sigma apply a gaussian blur for smoothness of the
+    """Depth projection using the local Sobel gradient magnitude maxima to determine
+    the best focus plane. Sigma applies a Gaussian blur for smoothness of the
     projection.
 
     Parameters
@@ -1994,11 +2025,11 @@ def hessian_gaussian_eigenvalues(
     large_eigenvalue: Optional[Image] = None,
     sigma: float = 1,
     device: Optional[Device] = None,
-) -> List[Image]:
-    """Determines the Hessian matrix eigenvalues using the gaussian derivative method
-    and returns the small, middle and large eigenvalue images. The function return
-    the list of eigenvalues as images, by decreasing order. The first image is the
-    largest eigenvalue,
+) -> Image:
+    """Determines the Hessian matrix eigenvalues using the Gaussian-derivative method
+    and returns the small, middle and large eigenvalue images. The function returns
+    the list of eigenvalues as images, in decreasing order. The first image is the
+    largest eigenvalue.
 
     Parameters
     ----------
@@ -2017,7 +2048,7 @@ def hessian_gaussian_eigenvalues(
 
     Returns
     -------
-    List[Image]
+    Image
     """
     return clic._hessian_gaussian_eigenvalues(
         device,
@@ -2027,3 +2058,103 @@ def hessian_gaussian_eigenvalues(
         large_eigenvalue,
         float(sigma),
     )
+
+
+@plugin_function
+def generate_proximal_neighbors_matrix(
+    input_image_matrix: Image,
+    output_image_matrix: Optional[Image] = None,
+    min_distance: float = -1,
+    max_distance: float = -1,
+    device: Optional[Device] = None,
+) -> Image:
+    """Generates a touch-matrix where the neighbors within a given distance range are
+    marked as touching. It take as input a distance matrix (e.g. from a pointlist of
+    centroids) and marks for every column the neighbors within the given distance
+    range as 1, others as 0. The results is a touch-matrix (adjacency matrix) that
+    can be used for further analysis.
+
+    Parameters
+    ----------
+    input_image_matrix: Image
+        Input distance matrix.
+    output_image_matrix: Optional[Image] (= None)
+        Output touch-matrix.
+    min_distance: float (= -1)
+        Minimum distance to consider a neighbor.
+    max_distance: float (= -1)
+        Maximum distance to consider a neighbor.
+    device: Optional[Device] (= None)
+        Device to perform the operation on.
+
+    Returns
+    -------
+    Image
+    """
+    return clic._generate_proximal_neighbors_matrix(
+        device,
+        input_image_matrix,
+        output_image_matrix,
+        float(min_distance),
+        float(max_distance),
+    )
+
+
+__all__ = [
+    "absolute_difference",
+    "add_images",
+    "bottom_hat_box",
+    "bottom_hat_sphere",
+    "bottom_hat",
+    "clip",
+    "closing_box",
+    "closing_sphere",
+    "grayscale_closing",
+    "closing",
+    "binary_closing",
+    "concatenate_along_x",
+    "concatenate_along_y",
+    "concatenate_along_z",
+    "count_touching_neighbors",
+    "crop_border",
+    "divide_by_gaussian_background",
+    "degrees_to_radians",
+    "detect_maxima_box",
+    "detect_maxima",
+    "detect_minima_box",
+    "detect_minima",
+    "difference_of_gaussian",
+    "extend_labeling_via_voronoi",
+    "invert",
+    "label_spots",
+    "pointlist_to_labelled_spots",
+    "large_hessian_eigenvalue",
+    "maximum_of_all_pixels",
+    "minimum_of_all_pixels",
+    "minimum_of_masked_pixels",
+    "opening_box",
+    "opening_sphere",
+    "grayscale_opening",
+    "opening",
+    "binary_opening",
+    "radians_to_degrees",
+    "reduce_labels_to_label_edges",
+    "small_hessian_eigenvalue",
+    "square",
+    "squared_difference",
+    "standard_deviation_box",
+    "standard_deviation_sphere",
+    "standard_deviation",
+    "subtract_gaussian_background",
+    "subtract_images",
+    "sub_stack",
+    "reduce_stack",
+    "sum_of_all_pixels",
+    "top_hat_box",
+    "top_hat_sphere",
+    "top_hat",
+    "extended_depth_of_focus_variance_projection",
+    "extended_depth_of_focus_sobel_projection",
+    "hessian_gaussian_eigenvalues",
+    "generate_proximal_neighbors_matrix",
+]

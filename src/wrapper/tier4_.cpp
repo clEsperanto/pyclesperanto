@@ -30,6 +30,10 @@ m.def("_label_bounding_box", &cle::tier4::label_bounding_box_func, "Call cle::ti
     py::return_value_policy::automatic_reference,
     py::arg("device"), py::arg("src"), py::arg("labels"), py::arg("dst"));
 
+    m.def("_label_mean_intensity_map", &cle::tier4::label_mean_intensity_map_func, "Call cle::tier4::label_mean_intensity_map_func from C++ CLIc.",
+    py::return_value_policy::automatic_reference,
+    py::arg("device"), py::arg("src"), py::arg("labels"), py::arg("dst"));
+
     m.def("_pixel_count_map", &cle::tier4::pixel_count_map_func, "Call cle::tier4::pixel_count_map_func from C++ CLIc.",
     py::return_value_policy::automatic_reference,
     py::arg("device"), py::arg("src"), py::arg("dst"));
@@ -82,7 +86,35 @@ m.def("_label_bounding_box", &cle::tier4::label_bounding_box_func, "Call cle::ti
     py::return_value_policy::automatic_reference,
     py::arg("device"), py::arg("src"), py::arg("labels"), py::arg("dst"));
 
+    m.def("_touching_neighbor_count_map", &cle::tier4::touching_neighbor_count_map_func, "Call cle::tier4::touching_neighbor_count_map_func from C++ CLIc.",
+    py::return_value_policy::automatic_reference,
+    py::arg("device"), py::arg("labels"), py::arg("dst"));
+
     m.def("_percentile", &cle::tier4::percentile_func, "Call cle::tier4::percentile_func from C++ CLIc.",
     py::return_value_policy::automatic_reference,
     py::arg("device"), py::arg("src"), py::arg("percentile"));
+
+    m.def("_mean_of_touching_neighbors_map", &cle::tier4::mean_of_touching_neighbors_map_func, "Call cle::tier4::mean_of_touching_neighbors_map_func from C++ CLIc.",
+    py::return_value_policy::automatic_reference,
+    py::arg("device"), py::arg("map"), py::arg("labels"), py::arg("dst"), py::arg("radius"), py::arg("ignore_background"));
+
+    m.def("_median_of_touching_neighbors_map", &cle::tier4::median_of_touching_neighbors_map_func, "Call cle::tier4::median_of_touching_neighbors_map_func from C++ CLIc.",
+    py::return_value_policy::automatic_reference,
+    py::arg("device"), py::arg("map"), py::arg("labels"), py::arg("dst"), py::arg("radius"), py::arg("ignore_background"));
+
+    m.def("_minimum_of_touching_neighbors_map", &cle::tier4::minimum_of_touching_neighbors_map_func, "Call cle::tier4::minimum_of_touching_neighbors_map_func from C++ CLIc.",
+    py::return_value_policy::automatic_reference,
+    py::arg("device"), py::arg("map"), py::arg("labels"), py::arg("dst"), py::arg("radius"), py::arg("ignore_background"));
+
+    m.def("_maximum_of_touching_neighbors_map", &cle::tier4::maximum_of_touching_neighbors_map_func, "Call cle::tier4::maximum_of_touching_neighbors_map_func from C++ CLIc.",
+    py::return_value_policy::automatic_reference,
+    py::arg("device"), py::arg("map"), py::arg("labels"), py::arg("dst"), py::arg("radius"), py::arg("ignore_background"));
+
+    m.def("_standard_deviation_of_touching_neighbors_map", &cle::tier4::standard_deviation_of_touching_neighbors_map_func, "Call cle::tier4::standard_deviation_of_touching_neighbors_map_func from C++ CLIc.",
+    py::return_value_policy::automatic_reference,
+    py::arg("device"), py::arg("map"), py::arg("labels"), py::arg("dst"), py::arg("radius"), py::arg("ignore_background"));
+
+    m.def("_mode_of_touching_neighbors_map", &cle::tier4::mode_of_touching_neighbors_map_func, "Call cle::tier4::mode_of_touching_neighbors_map_func from C++ CLIc.",
+    py::return_value_policy::automatic_reference,
+    py::arg("device"), py::arg("map"), py::arg("labels"), py::arg("dst"), py::arg("radius"), py::arg("ignore_background"));
 }

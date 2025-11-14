@@ -4,7 +4,7 @@
 
 import importlib
 import warnings
-from typing import List, Optional
+from typing import Optional
 
 import numpy as np
 
@@ -19,14 +19,14 @@ clic = importlib.import_module("._pyclesperanto", package="pyclesperanto")
 def affine_transform(
     input_image: Image,
     output_image: Optional[Image] = None,
-    transform_matrix: Optional[List] = None,
+    transform_matrix: Optional[list] = None,
     interpolate: bool = False,
     resize: bool = False,
     device: Optional[Device] = None,
 ) -> Image:
-    """Apply an affine transformation matrix to an array and return the result.  The
-    transformation matrix must be 3x3 or 4x4 stored as a 1D array.  The matrix
-    should be row-major, i.e. the first 3 elements are the first row of the matrix.
+    """Applies an affine transformation matrix to an array and returns the result.  The
+    transformation matrix must be 3×3 or 4×4, stored as a 1D array.  The matrix
+    should be row-major, i.e., the first 3 elements are the first row of the matrix.
     If no matrix is given, the identity matrix will be used.
 
     Parameters
@@ -35,8 +35,8 @@ def affine_transform(
         Input image to be transformed.
     output_image: Optional[Image] (= None)
         Output image.
-    transform_matrix: Optional[List] (= None)
-        Affine transformation matrix (3x3 or 4x4).
+    transform_matrix: Optional[list] (= None)
+        Affine transformation matrix (3×3 or 4×4).
     interpolate: bool (= False)
         If true, bi/trilinear interpolation will be applied, if hardware allows.
     resize: bool (= False)
@@ -61,15 +61,15 @@ def eroded_otsu_labeling(
     outline_sigma: float = 2,
     device: Optional[Device] = None,
 ) -> Image:
-    """Segments and labels an image using blurring, Otsu-thresholding, binary erosion
-    and  masked Voronoi-labeling.  After bluring and Otsu-thresholding the image,
-    iterative binary erosion is applied.  Objects in the eroded image are labeled
+    """Segments and labels an image using blurring, Otsu thresholding, binary erosion,
+    and  masked Voronoi labeling.  After blurring and Otsu thresholding the image,
+    iterative binary erosion is applied.  Objects in the eroded image are labeled,
     and the labels are extended to fit again into  the initial binary image using
-    masked-Voronoi labeling.  This function is similar to voronoi_otsu_labeling. It
-    is intended to deal better in  case labels of objects swapping into each other
-    if objects are dense. Like when using  Voronoi-Otsu-labeling, small objects may
-    disappear when applying this operation.  This function is inspired by a similar
-    implementation in Java by Jan Brocher (Biovoxxel) [0] [1]
+    masked Voronoi labeling.  This function is similar to voronoi_otsu_labeling. It
+    is intended to deal better with  cases where labels of objects swap into each
+    other when objects are dense. As when using  Voronoi-Otsu labeling, small
+    objects may disappear when applying this operation.  This function is inspired
+    by a similar implementation in Java by Jan Brocher (Biovoxxel).
 
     Parameters
     ----------
@@ -78,7 +78,7 @@ def eroded_otsu_labeling(
     output_image: Optional[Image] (= None)
         Output label image.
     number_of_erosions: int (= 5)
-        Number of iteration of erosion.
+        Number of erosion iterations.
     outline_sigma: float (= 2)
         Gaussian blur sigma applied before Otsu thresholding.
     device: Optional[Device] (= None)
@@ -113,9 +113,9 @@ def rigid_transform(
     resize: bool = False,
     device: Optional[Device] = None,
 ) -> Image:
-    """Translate the image by a given vector and rotate it by given angles. Angles are
-    given in degrees. To convert radians to degrees, use this formula:
-    angle_in_degrees = angle_in_radians / numpy.pi * 180.0
+    """Translates the image by a given vector and rotates it by given angles. Angles
+    are given in radians. To convert degrees to radians, use this formula:
+    angle_in_radians = angle_in_degrees × π / 180.0
 
     Parameters
     ----------
@@ -136,7 +136,7 @@ def rigid_transform(
     angle_z: float (= 0)
         Rotation around z axis in radians.
     centered: bool (= True)
-        If true, rotate image around center, else around the origin.
+        If true, rotate image around center; otherwise, around the origin.
     interpolate: bool (= False)
         If true, bi/trilinear interpolation will be applied, if hardware allows.
     resize: bool (= False)
@@ -176,9 +176,9 @@ def rotate(
     resize: bool = False,
     device: Optional[Device] = None,
 ) -> Image:
-    """Rotate the image by given angles. Angles are given in degrees. To convert
-    radians to degrees, use this formula: angle_in_degrees = angle_in_radians /
-    numpy.pi * 180.0
+    """Rotates the image by given angles. Angles are given in degrees. To convert
+    radians to degrees, use this formula: angle_in_degrees = angle_in_radians ×
+    180.0 / π
 
     Parameters
     ----------
@@ -193,7 +193,7 @@ def rotate(
     angle_z: float (= 0)
         Rotation around z axis in degrees.
     centered: bool (= True)
-        If true, rotate image around center, else around the origin.
+        If true, rotate image around center; otherwise, around the origin.
     interpolate: bool (= False)
         If true, bi/trilinear interpolation will be applied, if hardware allows.
     resize: bool (= False)
@@ -230,7 +230,7 @@ def scale(
     resize: bool = False,
     device: Optional[Device] = None,
 ) -> Image:
-    """Scale the image by given factors.
+    """Scales the image by given factors.
 
     Parameters
     ----------
@@ -239,17 +239,17 @@ def scale(
     output_image: Optional[Image] (= None)
         Output image.
     factor_x: float (= 1)
-        Scaling along x axis.
+        Scaling factor along x axis.
     factor_y: float (= 1)
-        Scaling along y axis.
+        Scaling factor along y axis.
     factor_z: float (= 1)
-        Scaling along z axis.
+        Scaling factor along z axis.
     centered: bool (= True)
-        If true, the image will be scaled to the center of the image.
+        If true, the image will be scaled around the center of the image.
     interpolate: bool (= False)
-        If true, bi/trilinear interplation will be applied.
+        If true, bi/trilinear interpolation will be applied.
     resize: bool (= False)
-        Automatically determines output size image.
+        Automatically determines the output image size.
     device: Optional[Device] (= None)
         Device to perform the operation on.
 
@@ -280,7 +280,7 @@ def translate(
     interpolate: bool = False,
     device: Optional[Device] = None,
 ) -> Image:
-    """Translate the image by a given vector.
+    """Translates the image by a given vector.
 
     Parameters
     ----------
@@ -295,7 +295,7 @@ def translate(
     translate_z: float (= 0)
         Translation along z axis in pixels.
     interpolate: bool (= False)
-        If true, bi/trilinear interplation will be applied.
+        If true, bi/trilinear interpolation will be applied.
     device: Optional[Device] (= None)
         Device to perform the operation on.
 
@@ -325,8 +325,8 @@ def deskew_x(
     scale_factor: float = 1.0,
     device: Optional[Device] = None,
 ) -> Image:
-    """Deskew a volume as acquired with oblique plane light-sheet microscopy with skew
-    in the X direction.
+    """Deskews a volume as acquired with oblique plane light-sheet microscopy with skew
+    in the x direction.
 
     Parameters
     ----------
@@ -335,15 +335,15 @@ def deskew_x(
     output_image: Optional[Image] (= None)
         Output image.
     angle: float (= 30)
-        Angle (in degree)
+        Angle in degrees.
     voxel_size_x: float (= 1.0)
-        Voxel size in x direction
+        Voxel size in x direction.
     voxel_size_y: float (= 1.0)
-        Voxel size in y direction
+        Voxel size in y direction.
     voxel_size_z: float (= 1.0)
-        Voxel size in z direction
+        Voxel size in z direction.
     scale_factor: float (= 1.0)
-        Downscaling factor after deskewing
+        Downscaling factor after deskewing.
     device: Optional[Device] (= None)
         Device to perform the operation on.
 
@@ -374,8 +374,8 @@ def deskew_y(
     scale_factor: float = 1.0,
     device: Optional[Device] = None,
 ) -> Image:
-    """Deskew a volume as acquired with oblique plane light-sheet microscopy with skew
-    in the Y direction.
+    """Deskews a volume as acquired with oblique plane light-sheet microscopy with skew
+    in the y direction.
 
     Parameters
     ----------
@@ -384,15 +384,15 @@ def deskew_y(
     output_image: Optional[Image] (= None)
         Output image.
     angle: float (= 30)
-        Angle (in degree)
+        Angle in degrees.
     voxel_size_x: float (= 1.0)
-        Voxel size in x direction
+        Voxel size in x direction.
     voxel_size_y: float (= 1.0)
-        Voxel size in y direction
+        Voxel size in y direction.
     voxel_size_z: float (= 1.0)
-        Voxel size in z direction
+        Voxel size in z direction.
     scale_factor: float (= 1.0)
-        Downscaling factor after deskewing
+        Downscaling factor after deskewing.
     device: Optional[Device] (= None)
         Device to perform the operation on.
 
@@ -419,11 +419,11 @@ def closing_labels(
     radius: int = 0,
     device: Optional[Device] = None,
 ) -> Image:
-    """Apply a morphological closing operation to a label image. The operation consists
-    of iterative dilation and erosion of the labels. With every iteration, box and
-    diamond/sphere structuring elements are used and thus, the operation has an
-    octagon as structuring element. Notes * This operation assumes input images are
-    isotropic.
+    """Applies a morphological closing operation to a label image. The operation
+    consists of iterative dilation and erosion of the labels. With every iteration,
+    box and diamond/sphere structuring elements are used; thus, the operation has an
+    octagon as the structuring element. Note: This operation assumes input images
+    are isotropic.
 
     Parameters
     ----------
@@ -457,11 +457,11 @@ def erode_connected_labels(
     Parameters
     ----------
     input_image: Image
-        Input image to process
+        Input image to process.
     output_image: Optional[Image] (= None)
-        Output label image
+        Output label image.
     radius: int (= 1)
-
+        Erosion
     device: Optional[Device] (= None)
         Device to perform the operation on.
 
@@ -479,11 +479,11 @@ def opening_labels(
     radius: int = 0,
     device: Optional[Device] = None,
 ) -> Image:
-    """Apply a morphological opening operation to a label image. The operation consists
-    of iterative erosion and dilation of the labels. With every iteration, box and
-    diamond/sphere structuring elements are used and thus, the operation has an
-    octagon as structuring element. Notes * This operation assumes input images are
-    isotropic.
+    """Applies a morphological opening operation to a label image. The operation
+    consists of iterative erosion and dilation of the labels. With every iteration,
+    box and diamond/sphere structuring elements are used; thus, the operation has an
+    octagon as the structuring element. Note: This operation assumes input images
+    are isotropic.
 
     Parameters
     ----------
@@ -511,12 +511,11 @@ def voronoi_otsu_labeling(
     outline_sigma: float = 2,
     device: Optional[Device] = None,
 ) -> Image:
-    """Labels objects directly from greyvalue images. The two sigma parameters allow
+    """Labels objects directly from gray-value images. The two sigma parameters allow
     tuning the segmentation result. Under the hood, this filter applies two Gaussian
-    blurs, spot detection, Otsuthresholding [2] and Voronoilabeling [3]. The
-    thresholded binary image is flooded using the Voronoi tesselation approach
-    starting from the found local maxima. Notes * This operation assumes input
-    images are isotropic.
+    blurs, spot detection, Otsu thresholding, and Voronoi labeling. The thresholded
+    binary image is flooded using the Voronoi tessellation approach starting from
+    the found local maxima. Note: This operation assumes input images are isotropic.
 
     Parameters
     ----------
@@ -527,7 +526,7 @@ def voronoi_otsu_labeling(
     spot_sigma: float (= 2)
         Controls how close detected cells can be.
     outline_sigma: float (= 2)
-        Controls how precise segmented objects are outlined.
+        Controls how precisely segmented objects are outlined.
     device: Optional[Device] (= None)
         Device to perform the operation on.
 
@@ -544,3 +543,19 @@ def voronoi_otsu_labeling(
     return clic._voronoi_otsu_labeling(
         device, input_image, output_image, float(spot_sigma), float(outline_sigma)
     )
+
+
+__all__ = [
+    "affine_transform",
+    "eroded_otsu_labeling",
+    "rigid_transform",
+    "rotate",
+    "scale",
+    "translate",
+    "deskew_x",
+    "deskew_y",
+    "closing_labels",
+    "erode_connected_labels",
+    "opening_labels",
+    "voronoi_otsu_labeling",
+]

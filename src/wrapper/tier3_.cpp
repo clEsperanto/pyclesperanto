@@ -60,7 +60,7 @@ m.def("_bounding_box", &cle::tier3::bounding_box_func, "Call cle::tier3::boundin
 
     m.def("_labelled_spots_to_pointlist", &cle::tier3::labelled_spots_to_pointlist_func, "Call cle::tier3::labelled_spots_to_pointlist_func from C++ CLIc.",
     py::return_value_policy::automatic_reference,
-    py::arg("device"), py::arg("label"), py::arg("pointlist"));
+    py::arg("device"), py::arg("label"), py::arg("dspointlistt"));
 
     m.def("_maximum_position", &cle::tier3::maximum_position_func, "Call cle::tier3::maximum_position_func from C++ CLIc.",
     py::return_value_policy::automatic_reference,
@@ -93,4 +93,12 @@ m.def("_bounding_box", &cle::tier3::bounding_box_func, "Call cle::tier3::boundin
     m.def("_tubeness", &cle::tier3::tubeness_func, "Call cle::tier3::tubeness_func from C++ CLIc.",
     py::return_value_policy::automatic_reference,
     py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("sigma"));
+
+    m.def("_artificial_tissue", &cle::tier3::artificial_tissue_func, "Call cle::tier3::artificial_tissue_func from C++ CLIc.",
+    py::return_value_policy::automatic_reference,
+    py::arg("device"), py::arg("width"), py::arg("height"), py::arg("depth"), py::arg("delta_x"), py::arg("delta_y"), py::arg("delta_z"), py::arg("sigma_x"), py::arg("sigma_y"), py::arg("sigma_z"));
+
+    m.def("_read_intensities_from_map", &cle::tier3::read_intensities_from_map_func, "Call cle::tier3::read_intensities_from_map_func from C++ CLIc.",
+    py::return_value_policy::automatic_reference,
+    py::arg("device"), py::arg("label"), py::arg("map"), py::arg("dst"));
 }

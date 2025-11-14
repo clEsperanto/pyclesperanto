@@ -4,7 +4,7 @@
 
 import importlib
 import warnings
-from typing import List, Optional
+from typing import Optional
 
 import numpy as np
 
@@ -19,16 +19,16 @@ clic = importlib.import_module("._pyclesperanto", package="pyclesperanto")
 def array_equal(
     input_image0: Image, input_image1: Image, device: Optional[Device] = None
 ) -> bool:
-    """Compares if all pixels of two images are identical. If shape of the images or
-    any pixel are different, returns False. True otherwise This function is supposed
-    to work similarly like its counterpart in numpy [1].
+    """Compares if all pixels of two images are identical. If the shape of the images
+    or any pixel are different, returns false; true otherwise. This function works
+    similarly to its counterpart in NumPy.
 
     Parameters
     ----------
     input_image0: Image
-        First array to compare
+        First array to compare.
     input_image1: Image
-        Second array to compare
+        Second array to compare.
     device: Optional[Device] (= None)
         Device to perform the operation on.
 
@@ -57,16 +57,16 @@ def combine_labels(
     output_image: Optional[Image] = None,
     device: Optional[Device] = None,
 ) -> Image:
-    """Combines two label images by adding labels of a given label image to another.
-    Labels in the second image overwrite labels in the first passed image.
-    Afterwards, labels are relabeled sequentially.
+    """Combines two label images by adding labels from one label image to another.
+    Labels in the second image overwrite labels in the first image. Afterward,
+    labels are relabeled sequentially.
 
     Parameters
     ----------
     input_image0: Image
-        label image to add labels to.
+        Label image to add labels to.
     input_image1: Image
-        label image to add labels from.
+        Label image to add labels from.
     output_image: Optional[Image] (= None)
         Output label image.
     device: Optional[Device] (= None)
@@ -86,8 +86,8 @@ def connected_components_labeling(
     connectivity: str = "box",
     device: Optional[Device] = None,
 ) -> Image:
-    """Performs connected components analysis inspecting the box neighborhood of every
-    pixel to a binary image and generates a label map.
+    """Performs connected components analysis by inspecting the neighborhood of every
+    pixel in a binary image and generates a label map.
 
     Parameters
     ----------
@@ -120,8 +120,8 @@ def connected_component_labeling(
     connectivity: str = "box",
     device: Optional[Device] = None,
 ) -> Image:
-    """Performs connected components analysis inspecting the box neighborhood of every
-    pixel to a binary image and generates a label map.
+    """Performs connected components analysis by inspecting the neighborhood of every
+    pixel in a binary image and generates a label map.
 
     Parameters
     ----------
@@ -153,7 +153,7 @@ def reduce_labels_to_centroids(
     output_image: Optional[Image] = None,
     device: Optional[Device] = None,
 ) -> Image:
-    """Take a label map and reduce each label to its centroid.
+    """Takes a label map and reduces each label to its centroid.
 
     Parameters
     ----------
@@ -183,7 +183,7 @@ def filter_label_by_size(
     maximum_size: float = 100,
     device: Optional[Device] = None,
 ) -> Image:
-    """Filter labelled objects outside of the min/max size range value.
+    """Filters labelled objects outside the min/max size range.
 
     Parameters
     ----------
@@ -219,7 +219,7 @@ def exclude_labels_outside_size_range(
     maximum_size: float = 100,
     device: Optional[Device] = None,
 ) -> Image:
-    """Filter labelled objects outside of the min/max size range value.
+    """Filters labelled objects outside the min/max size range.
 
     Parameters
     ----------
@@ -253,7 +253,7 @@ def merge_touching_labels(
     output_image: Optional[Image] = None,
     device: Optional[Device] = None,
 ) -> Image:
-    """Merge touching labels of a label image and relabel the result sequentially.
+    """Merges touching labels of a label image and relabels the result sequentially.
 
     Parameters
     ----------
@@ -273,3 +273,87 @@ def merge_touching_labels(
     [1] https://clij.github.io/clij2-docs/reference_excludeLabelsOutsideSizeRange
     """
     return clic._merge_touching_labels(device, input_image, output_image)
+
+
+@plugin_function(categories=["label measurement"])
+def proximal_neighbor_count(
+    input_image: Image,
+    output_image: Optional[Image] = None,
+    min_distance: float = -1,
+    max_distance: float = -1,
+    device: Optional[Device] = None,
+) -> Image:
+    """From a label map, determines which labels are whithin a given distance range of
+    each other and returns the number of those in vector.
+
+    Parameters
+    ----------
+    input_image: Image
+        Input label image.
+    output_image: Optional[Image] (= None)
+        Output parametric image.
+    min_distance: float (= -1)
+        Minimum distance to consider a neighbor.
+    max_distance: float (= -1)
+        Maximum distance to consider a neighbor.
+    device: Optional[Device] (= None)
+        Device to perform the operation on.
+
+    Returns
+    -------
+    Image
+    """
+    return clic._proximal_neighbor_count(
+        device, input_image, output_image, float(min_distance), float(max_distance)
+    )
+
+
+@plugin_function
+def normalize(
+    input_image: Image,
+    output_image: Optional[Image] = None,
+    low_percentile: float = -1,
+    high_percentile: float = -1,
+    device: Optional[Device] = None,
+) -> Image:
+    """Normalizes the pixel values of an image to the range [0, 1]. This function
+    normalize the pixel values between [0, 1] following the linear normalization
+    formula: <pre>I_normalized = (I - I_min) * (new_max - new_min) / (I_max - I_min)
+    + new_min</pre> where the I_min and I_max are determined by the low_percentile
+    and high_percentile parameters, respectively. If not specified, the minimum and
+    maximum pixel values of the image are used.
+
+    Parameters
+    ----------
+    input_image: Image
+        Input image to normalize.
+    output_image: Optional[Image] (= None)
+        Output normalized image.
+    low_percentile: float (= -1)
+        Low percentile to determine the minimum pixel value.
+    high_percentile: float (= -1)
+        High percentile to determine the maximum pixel value.
+    device: Optional[Device] (= None)
+        Device to perform the operation on.
+
+    Returns
+    -------
+    Image
+    """
+    return clic._normalize(
+        device, input_image, output_image, float(low_percentile), float(high_percentile)
+    )
+
+
+__all__ = [
+    "array_equal",
+    "combine_labels",
+    "connected_components_labeling",
+    "connected_component_labeling",
+    "reduce_labels_to_centroids",
+    "filter_label_by_size",
+    "exclude_labels_outside_size_range",
+    "merge_touching_labels",
+    "proximal_neighbor_count",
+    "normalize",
+]

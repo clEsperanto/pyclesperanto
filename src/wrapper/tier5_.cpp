@@ -37,4 +37,12 @@ m.def("_array_equal", &cle::tier5::array_equal_func, "Call cle::tier5::array_equ
     m.def("_merge_touching_labels", &cle::tier5::merge_touching_labels_func, "Call cle::tier5::merge_touching_labels_func from C++ CLIc.",
     py::return_value_policy::automatic_reference,
     py::arg("device"), py::arg("src"), py::arg("dst"));
+
+    m.def("_proximal_neighbor_count", &cle::tier5::proximal_neighbor_count_func, "Call cle::tier5::proximal_neighbor_count_func from C++ CLIc.",
+    py::return_value_policy::automatic_reference,
+    py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("min_distance"), py::arg("max_distance"));
+
+    m.def("_normalize", &cle::tier5::normalize_func, "Call cle::tier5::normalize_func from C++ CLIc.",
+    py::return_value_policy::automatic_reference,
+    py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("low_percentile"), py::arg("high_percentile"));
 }

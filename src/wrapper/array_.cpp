@@ -277,6 +277,7 @@ auto array_(py::module_ &m) -> void
                return array->height();
           case 3:
                return array->depth();
-               ;
+          default:
+               throw std::invalid_argument("Invalid dimension value");
           } });
 }

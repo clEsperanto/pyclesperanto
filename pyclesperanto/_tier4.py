@@ -4,7 +4,7 @@
 
 import importlib
 import warnings
-from typing import List, Optional
+from typing import Optional
 
 import numpy as np
 
@@ -18,23 +18,23 @@ clic = importlib.import_module("._pyclesperanto", package="pyclesperanto")
 @plugin_function
 def label_bounding_box(
     input_image: Image, label_id: int, device: Optional[Device] = None
-) -> List:
+) -> list:
     """Determines the bounding box of the specified label from a label image. The
-    positions are returned in  an array of 6 values as follows: minX, minY, minZ,
+    positions are returned in  an array of six values as follows: minX, minY, minZ,
     maxX, maxY, maxZ.
 
     Parameters
     ----------
     input_image: Image
-        Label image
+        Label image.
     label_id: int
-        Identifier of label
+        Identifier of the label.
     device: Optional[Device] (= None)
         Device to perform the operation on.
 
     Returns
     -------
-    List
+    list
 
     References
     ----------
@@ -47,15 +47,14 @@ def label_bounding_box(
 def mean_squared_error(
     input_image0: Image, input_image1: Image, device: Optional[Device] = None
 ) -> float:
-    """Determines the mean squared error (MSE) between two images. The MSE will be
-    stored in a new row of ImageJs Results table in the column 'MSE'.
+    """Determines the mean squared error (MSE) between two images.
 
     Parameters
     ----------
     input_image0: Image
-        First image to compare
+        First image to compare.
     input_image1: Image
-        Second image to compare
+        Second image to compare.
     device: Optional[Device] (= None)
         Device to perform the operation on.
 
@@ -76,16 +75,16 @@ def spots_to_pointlist(
     output_image: Optional[Image] = None,
     device: Optional[Device] = None,
 ) -> Image:
-    """Transforms a spots image as resulting from maximum/minimum detection in an image
-    where every column contains d pixels (with d = dimensionality of the original
-    image) with the coordinates of the maxima/minima.
+    """Transforms a spots image (e.g., from maxima/minima detection) into an image
+    where every column contains d entries (with d = dimensionality of the original
+    image) holding the coordinates of the maxima/minima.
 
     Parameters
     ----------
     input_image: Image
-        Input binary image of spots
+        Input binary image of spots.
     output_image: Optional[Image] (= None)
-        Output coordinate list of spots
+        Output coordinate list of spots.
     device: Optional[Device] (= None)
         Device to perform the operation on.
 
@@ -107,8 +106,8 @@ def relabel_sequential(
     blocksize: int = 4096,
     device: Optional[Device] = None,
 ) -> Image:
-    """Analyses a label map and if there are gaps in the indexing (e.g. label 5 is not
-    present) all subsequent labels will be relabelled. Thus, afterwards number of
+    """Analyzes a label map and if there are gaps in the indexing (e.g., label 5 is not
+    present), all subsequent labels will be relabeled. Afterward, the number of
     labels and maximum label index are equal. This operation is mostly performed on
     the CPU.
 
@@ -140,8 +139,8 @@ def threshold_otsu(
     output_image: Optional[Image] = None,
     device: Optional[Device] = None,
 ) -> Image:
-    """Binarizes an image using Otsu's threshold method [3] implemented in
-    scikit-image[2] using a histogram determined on the GPU to create binary images.
+    """Binarizes an image using Otsu's threshold method, implemented in scikit-image,
+    using a histogram determined on the GPU to create binary images.
 
     Parameters
     ----------
@@ -173,17 +172,17 @@ def mean_intensity_map(
     device: Optional[Device] = None,
 ) -> Image:
     """Takes an image and a corresponding label map, determines the mean   intensity
-    per label and replaces every label with the that number. This results in a
+    per label, and replaces every label with that number. This results in a
     parametric image expressing mean object intensity.
 
     Parameters
     ----------
     input_image: Image
-        intensity image
+        Intensity image.
     labels: Image
-        label image
+        Label image.
     output_image: Optional[Image] (= None)
-        Parametric image computed
+        Parametric image computed.
     device: Optional[Device] (= None)
         Device to perform the operation on.
 
@@ -198,22 +197,55 @@ def mean_intensity_map(
     return clic._mean_intensity_map(device, input_image, labels, output_image)
 
 
+@plugin_function(categories=["label measurement", "map", "in assistant", "combine"])
+def label_mean_intensity_map(
+    input_image: Image,
+    labels: Image,
+    output_image: Optional[Image] = None,
+    device: Optional[Device] = None,
+) -> Image:
+    """Takes an image and a corresponding label map, determines the mean   intensity
+    per label, and replaces every label with that number. This results in a
+    parametric image expressing mean object intensity.
+
+    Parameters
+    ----------
+    input_image: Image
+        Intensity image.
+    labels: Image
+        Label image.
+    output_image: Optional[Image] (= None)
+        Parametric image computed.
+    device: Optional[Device] (= None)
+        Device to perform the operation on.
+
+    Returns
+    -------
+    Image
+
+    References
+    ----------
+    [1] https://clij.github.io/clij2-docs/reference_meanIntensityMap
+    """
+    return clic._label_mean_intensity_map(device, input_image, labels, output_image)
+
+
 @plugin_function(categories=["label measurement", "map", "in assistant"])
 def pixel_count_map(
     input_image: Image,
     output_image: Optional[Image] = None,
     device: Optional[Device] = None,
 ) -> Image:
-    """Takes a label map, determines the number of pixels per label and replaces every
-    label with the that number. This results in a parametric image expressing area
-    or volume.
+    """Takes a label map, determines the number of pixels per label, and replaces every
+    label with that number. This results in a parametric image expressing area or
+    volume.
 
     Parameters
     ----------
     input_image: Image
-        Label image to measure
+        Label image to measure.
     output_image: Optional[Image] (= None)
-        Parametric image computed
+        Parametric image computed.
     device: Optional[Device] (= None)
         Device to perform the operation on.
 
@@ -234,16 +266,16 @@ def label_pixel_count_map(
     output_image: Optional[Image] = None,
     device: Optional[Device] = None,
 ) -> Image:
-    """Takes a label map, determines the number of pixels per label and replaces every
-    label with the that number. This results in a parametric image expressing area
-    or volume.
+    """Takes a label map, determines the number of pixels per label, and replaces every
+    label with that number. This results in a parametric image expressing area or
+    volume.
 
     Parameters
     ----------
     input_image: Image
-        Label image to measure
+        Label image to measure.
     output_image: Optional[Image] (= None)
-        Parametric image computed
+        Parametric image computed.
     device: Optional[Device] (= None)
         Device to perform the operation on.
 
@@ -266,16 +298,16 @@ def centroids_of_labels(
     device: Optional[Device] = None,
 ) -> Image:
     """Determines the centroids of all labels in a label image or image stack. It
-    writes the resulting coordinates in point list image of dimensions n * d where n
-    is the number of labels and d=3 the dimensionality (x,y,z) of the original
-    image.
+    writes the resulting coordinates into a point list image of dimensions n × d
+    where n is the number of labels and d = 3 is the dimensionality (x, y, z) of the
+    original image.
 
     Parameters
     ----------
     label_image: Image
-        Label image where the centroids will be determined from.
+        Label image from which the centroids will be determined.
     centroids_coordinates: Image
-        Output list of coordinates where the centroids will be written to.
+        Output list of coordinates where the centroids will be written.
     include_background: bool (= False)
         Determines if the background label should be included.
     device: Optional[Device] (= None)
@@ -470,10 +502,10 @@ def extension_ratio_map(
     output_image: Optional[Image] = None,
     device: Optional[Device] = None,
 ) -> Image:
-    """Determines the ratio of the extension for every label in a label map and returns
-    it as a parametric map. The extension ration is defined as the maximum distance
-    of any pixel in the label to the label's centroid divided by the average
-    distance of all pixels in the label to the centroid.
+    """Determines the extension ratio for every label in a label map and returns it as
+    a parametric map. The extension ratio is defined as the maximum distance of any
+    pixel in the label to the label's centroid divided by the average distance of
+    all pixels in the label to the centroid.
 
     Parameters
     ----------
@@ -501,10 +533,8 @@ def mean_extension_map(
     output_image: Optional[Image] = None,
     device: Optional[Device] = None,
 ) -> Image:
-    """Determines for every label the mean distance of any pixel to the centroid in a
-    label map and returns it as a parametric map. The extension ration is defined as
-    the maximum distance of any pixel in the label to the label's centroid divided
-    by the average distance of all pixels in the label to the centroid.
+    """Determines, for every label, the mean distance of all pixels to the centroid in
+    a label map and returns it as a parametric map.
 
     Parameters
     ----------
@@ -532,10 +562,8 @@ def maximum_extension_map(
     output_image: Optional[Image] = None,
     device: Optional[Device] = None,
 ) -> Image:
-    """Determines for every label the maximum distance of any pixel to the centroid in
-    a label map and returns it as a parametric map. The extension ration is defined
-    as the maximum distance of any pixel in the label to the label's centroid
-    divided by the average distance of all pixels in the label to the centroid.
+    """Determines, for every label, the maximum distance of any pixel to the centroid
+    in a label map and returns it as a parametric map.
 
     Parameters
     ----------
@@ -565,17 +593,17 @@ def minimum_intensity_map(
     device: Optional[Device] = None,
 ) -> Image:
     """Takes an image and a corresponding label map, determines the minimum   intensity
-    per label and replaces every label with the that number. This results in a
+    per label, and replaces every label with that number. This results in a
     parametric image expressing minimum object intensity.
 
     Parameters
     ----------
     input_image: Image
-        intensity image
+        Intensity image.
     labels: Image
-        label image
+        Label image.
     output_image: Optional[Image] (= None)
-        Parametric image computed
+        Parametric image computed.
     device: Optional[Device] (= None)
         Device to perform the operation on.
 
@@ -598,17 +626,17 @@ def maximum_intensity_map(
     device: Optional[Device] = None,
 ) -> Image:
     """Takes an image and a corresponding label map, determines the maximum   intensity
-    per label and replaces every label with the that number. This results in a
+    per label, and replaces every label with that number. This results in a
     parametric image expressing maximum object intensity.
 
     Parameters
     ----------
     input_image: Image
-        intensity image
+        Intensity image.
     labels: Image
-        label image
+        Label image.
     output_image: Optional[Image] (= None)
-        Parametric image computed
+        Parametric image computed.
     device: Optional[Device] (= None)
         Device to perform the operation on.
 
@@ -631,17 +659,17 @@ def standard_deviation_intensity_map(
     device: Optional[Device] = None,
 ) -> Image:
     """Takes an image and a corresponding label map, determines the standard deviation
-    intensity per label and replaces every label with the that number. This results
-    in a parametric image expressing std object intensity.
+    of the   intensity per label, and replaces every label with that number. This
+    results in a parametric image expressing standard deviation of object intensity.
 
     Parameters
     ----------
     input_image: Image
-        intensity image
+        Intensity image.
     labels: Image
-        label image
+        Label image.
     output_image: Optional[Image] (= None)
-        Parametric image computed
+        Parametric image computed.
     device: Optional[Device] (= None)
         Device to perform the operation on.
 
@@ -656,6 +684,33 @@ def standard_deviation_intensity_map(
     return clic._standard_deviation_intensity_map(
         device, input_image, labels, output_image
     )
+
+
+@plugin_function(categories=["label processing", "in assistant", "map"])
+def touching_neighbor_count_map(
+    labels: Image, output_image: Optional[Image] = None, device: Optional[Device] = None
+) -> Image:
+    """For each label in a label map, determines how many other labels it is touching
+    and creates a parametric map where each label is replaced by that number.
+
+    Parameters
+    ----------
+    labels: Image
+        Input label image.
+    output_image: Optional[Image] (= None)
+        Output parametric image.
+    device: Optional[Device] (= None)
+        Device to perform the operation on.
+
+    Returns
+    -------
+    Image
+
+    References
+    ----------
+    [1] https://clij.github.io/clij2-docs/reference_touchingNeighborCountMap
+    """
+    return clic._touching_neighbor_count_map(device, labels, output_image)
 
 
 @plugin_function
@@ -678,3 +733,269 @@ def percentile(
     float
     """
     return clic._percentile(device, input_image, float(percentile))
+
+
+@plugin_function
+def mean_of_touching_neighbors_map(
+    map: Image,
+    labels: Image,
+    output_image: Optional[Image] = None,
+    radius: int = 1,
+    ignore_background: bool = True,
+    device: Optional[Device] = None,
+) -> Image:
+    """Compute the mean value of touching neighbors from a parametric map and a label
+    image. Generates a new parametric map where each label is replaced by the mean
+    value of its touching neighbors. The radius parameter allows considering
+    neighbors of neighbors (e.g. radius 1 = direct neighbors, radius 2 = neighbors
+    of neighbors, etc.).
+
+    Parameters
+    ----------
+    map: Image
+        Input parametric
+    labels: Image
+        Input vector image.
+    output_image: Optional[Image] (= None)
+        Output parametric image.
+    radius: int (= 1)
+        Radius of touching neighbors to consider.
+    ignore_background: bool (= True)
+        Whether to ignore the background label.
+    device: Optional[Device] (= None)
+        Device to perform the operation on.
+
+    Returns
+    -------
+    Image
+    """
+    return clic._mean_of_touching_neighbors_map(
+        device, map, labels, output_image, int(radius), ignore_background
+    )
+
+
+@plugin_function
+def median_of_touching_neighbors_map(
+    map: Image,
+    labels: Image,
+    output_image: Optional[Image] = None,
+    radius: int = 1,
+    ignore_background: bool = True,
+    device: Optional[Device] = None,
+) -> Image:
+    """Computes the median value of touching neighbors from a parametric map and a
+    label image. Generates a new parametric map where each label is replaced by the
+    mean value of its touching neighbors. The radius parameter allows considering
+    neighbors of neighbors (e.g. radius 1 = direct neighbors, radius 2 = neighbors
+    of neighbors, etc.).
+
+    Parameters
+    ----------
+    map: Image
+        Input parametric
+    labels: Image
+        Input label image.
+    output_image: Optional[Image] (= None)
+        Output parametric image.
+    radius: int (= 1)
+        Radius of touching neighbors to consider.
+    ignore_background: bool (= True)
+        Whether to ignore the background label.
+    device: Optional[Device] (= None)
+        Device to perform the operation on.
+
+    Returns
+    -------
+    Image
+    """
+    return clic._median_of_touching_neighbors_map(
+        device, map, labels, output_image, int(radius), ignore_background
+    )
+
+
+@plugin_function
+def minimum_of_touching_neighbors_map(
+    map: Image,
+    labels: Image,
+    output_image: Optional[Image] = None,
+    radius: int = 1,
+    ignore_background: bool = True,
+    device: Optional[Device] = None,
+) -> Image:
+    """Computes the minimum value of touching neighbors from a parametric map and a
+    label image. Generates a new parametric map where each label is replaced by the
+    mean value of its touching neighbors. The radius parameter allows considering
+    neighbors of neighbors (e.g. radius 1 = direct neighbors, radius 2 = neighbors
+    of neighbors, etc.).
+
+    Parameters
+    ----------
+    map: Image
+        Input parametric
+    labels: Image
+        Input label image.
+    output_image: Optional[Image] (= None)
+        Output parametric image.
+    radius: int (= 1)
+        Radius of touching neighbors to consider.
+    ignore_background: bool (= True)
+        Whether to ignore the background label.
+    device: Optional[Device] (= None)
+        Device to perform the operation on.
+
+    Returns
+    -------
+    Image
+    """
+    return clic._minimum_of_touching_neighbors_map(
+        device, map, labels, output_image, int(radius), ignore_background
+    )
+
+
+@plugin_function
+def maximum_of_touching_neighbors_map(
+    map: Image,
+    labels: Image,
+    output_image: Optional[Image] = None,
+    radius: int = 1,
+    ignore_background: bool = True,
+    device: Optional[Device] = None,
+) -> Image:
+    """Computes the maximum value of touching neighbors from a parametric map and a
+    label image. Generates a new parametric map where each label is replaced by the
+    mean value of its touching neighbors. The radius parameter allows considering
+    neighbors of neighbors (e.g. radius 1 = direct neighbors, radius 2 = neighbors
+    of neighbors, etc.).
+
+    Parameters
+    ----------
+    map: Image
+        Input parametric
+    labels: Image
+        Input label image.
+    output_image: Optional[Image] (= None)
+        Output parametric image.
+    radius: int (= 1)
+        Radius of touching neighbors to consider.
+    ignore_background: bool (= True)
+        Whether to ignore the background label.
+    device: Optional[Device] (= None)
+        Device to perform the operation on.
+
+    Returns
+    -------
+    Image
+    """
+    return clic._maximum_of_touching_neighbors_map(
+        device, map, labels, output_image, int(radius), ignore_background
+    )
+
+
+@plugin_function
+def standard_deviation_of_touching_neighbors_map(
+    map: Image,
+    labels: Image,
+    output_image: Optional[Image] = None,
+    radius: int = 1,
+    ignore_background: bool = True,
+    device: Optional[Device] = None,
+) -> Image:
+    """Computes the standard deviation of touching neighbors from a parametric map and
+    a label image. Generates a new parametric map where each label is replaced by
+    the mean value of its touching neighbors. The radius parameter allows
+    considering neighbors of neighbors (e.g. radius 1 = direct neighbors, radius 2 =
+    neighbors of neighbors, etc.).
+
+    Parameters
+    ----------
+    map: Image
+        Input parametric
+    labels: Image
+        Input label image.
+    output_image: Optional[Image] (= None)
+        Output parametric image.
+    radius: int (= 1)
+        Radius of touching neighbors to consider.
+    ignore_background: bool (= True)
+        Whether to ignore the background label.
+    device: Optional[Device] (= None)
+        Device to perform the operation on.
+
+    Returns
+    -------
+    Image
+    """
+    return clic._standard_deviation_of_touching_neighbors_map(
+        device, map, labels, output_image, int(radius), ignore_background
+    )
+
+
+@plugin_function
+def mode_of_touching_neighbors_map(
+    map: Image,
+    labels: Image,
+    output_image: Optional[Image] = None,
+    radius: int = 1,
+    ignore_background: bool = True,
+    device: Optional[Device] = None,
+) -> Image:
+    """Computes the mode value of touching neighbors from a parametric map and a label
+    image. Generates a new parametric map where each label is replaced by the mean
+    value of its touching neighbors. The radius parameter allows considering
+    neighbors of neighbors (e.g. radius 1 = direct neighbors, radius 2 = neighbors
+    of neighbors, etc.).
+
+    Parameters
+    ----------
+    map: Image
+        Input parametric
+    labels: Image
+        Input label image.
+    output_image: Optional[Image] (= None)
+        Output parametric image.
+    radius: int (= 1)
+        Radius of touching neighbors to consider.
+    ignore_background: bool (= True)
+        Whether to ignore the background label.
+    device: Optional[Device] (= None)
+        Device to perform the operation on.
+
+    Returns
+    -------
+    Image
+    """
+    return clic._mode_of_touching_neighbors_map(
+        device, map, labels, output_image, int(radius), ignore_background
+    )
+
+
+__all__ = [
+    "label_bounding_box",
+    "mean_squared_error",
+    "spots_to_pointlist",
+    "relabel_sequential",
+    "threshold_otsu",
+    "mean_intensity_map",
+    "label_mean_intensity_map",
+    "pixel_count_map",
+    "label_pixel_count_map",
+    "centroids_of_labels",
+    "remove_labels_with_map_values_out_of_range",
+    "remove_labels_with_map_values_within_range",
+    "exclude_labels_with_map_values_out_of_range",
+    "exclude_labels_with_map_values_within_range",
+    "extension_ratio_map",
+    "mean_extension_map",
+    "maximum_extension_map",
+    "minimum_intensity_map",
+    "maximum_intensity_map",
+    "standard_deviation_intensity_map",
+    "touching_neighbor_count_map",
+    "percentile",
+    "mean_of_touching_neighbors_map",
+    "median_of_touching_neighbors_map",
+    "minimum_of_touching_neighbors_map",
+    "maximum_of_touching_neighbors_map",
+    "standard_deviation_of_touching_neighbors_map",
+    "mode_of_touching_neighbors_map",
+]

@@ -4,7 +4,7 @@
 
 import importlib
 import warnings
-from typing import List, Optional
+from typing import Optional
 
 import numpy as np
 
@@ -361,8 +361,8 @@ def binary_supinf(
     output_image: Optional[Image] = None,
     device: Optional[Device] = None,
 ) -> Image:
-    """Compute the maximum of the erosion with plannar structuring elements. Warning:
-    This operation is only supported BINARY data type images.
+    """Computes the maximum of erosions with planar structuring elements. Note: This
+    operation supports only binary image data types.
 
     Parameters
     ----------
@@ -386,8 +386,8 @@ def binary_infsup(
     output_image: Optional[Image] = None,
     device: Optional[Device] = None,
 ) -> Image:
-    """Compute the minimum of the dilation with plannar structuring elements. Warning:
-    This operation is only supported BINARY data type images.
+    """Computes the minimum of dilations with planar structuring elements. Note: This
+    operation supports only binary image data types.
 
     Parameters
     ----------
@@ -413,13 +413,11 @@ def block_enumerate(
     blocksize: int = 256,
     device: Optional[Device] = None,
 ) -> Image:
-    """Enumerates pixels with value 1 in a onedimensional image For example handing
-    over the image [0, 1, 1, 0, 1, 0, 1, 1] would be processed to an image [0, 1, 2,
-    0, 3, 0, 4, 5] This functionality is important in connected component neccessary
-    (see also sum_reduction_x). In the above example, with blocksize 4, that would
-    be the sum array: [2, 3] labeling. Processing is accelerated by paralellization
-    in blocks. Therefore, handing over precomputed block sums is Note that the block
-    size when calling this function and sum_reduction must be identical
+    """Enumerates pixels with value 1 in a one-dimensional image. For example, [0, 1,
+    1, 0, 1, 0, 1, 1] becomes [0, 1, 2, 0, 3, 0, 4, 5]. This functionality is
+    important in connected-component labeling and is accelerated by parallelization
+    in blocks. Hand over precomputed block sums from sum_reduction_x using the same
+    block size.
 
     Parameters
     ----------
@@ -548,11 +546,8 @@ def copy_slice(
     device: Optional[Device] = None,
 ) -> Image:
     """This method has two purposes: It copies a 2D image to a given slice_index z
-    position in a 3D image stack or It copies a given slice_index at position z in
-    an image stack to a 2D image. The first case is only available via ImageJ macro.
-    If you are using it, it is recommended that the target 3D image already
-    preexists in GPU memory before calling this method. Otherwise, CLIJ create the
-    image stack with z planes.
+    position in a 3D image stack or it copies a given slice_index at position z in
+    an image stack to a 2D image.
 
     Parameters
     ----------
@@ -659,7 +654,7 @@ def crop(
     device: Optional[Device] = None,
 ) -> Image:
     """Crops a given substack out of a given image stack. Note: If the destination
-    image preexists already, it will be overwritten and keep it's dimensions.
+    image already exists, it will be overwritten and keep its dimensions.
 
     Parameters
     ----------
@@ -668,11 +663,11 @@ def crop(
     output_image: Optional[Image] (= None)
         Output result image.
     start_x: int (= 0)
-        Starting index coordicante x.
+        Starting index coordinate x.
     start_y: int (= 0)
-        Starting index coordicante y.
+        Starting index coordinate y.
     start_z: int (= 0)
-        Starting index coordicante z.
+        Starting index coordinate z.
     width: int (= 1)
         Width size of the region to crop.
     height: int (= 1)
@@ -768,7 +763,7 @@ def dilation(
     """Computes the dilation operation between an image and a structuring element. The
     operation is applied in grayscale if the image is in grayscale. The structuring
     element is a binary image with pixel values 0 and 1, and must have the same
-    dimensionality as the image (3D is the image is 3D, 2D if the image is 2D).
+    dimensionality as the image (3D if the image is 3D, 2D if the image is 2D).
 
     Parameters
     ----------
@@ -808,9 +803,9 @@ def dilate_box(
     Parameters
     ----------
     input_image: Image
-        Input image to process. Input image to process.
+        Input image to process.
     output_image: Optional[Image] (= None)
-        Output result image. Output result image.
+        Output result image.
     device: Optional[Device] (= None)
         Device to perform the operation on.
 
@@ -839,9 +834,9 @@ def dilate_sphere(
     Parameters
     ----------
     input_image: Image
-        Input image to process. Input image to process.
+        Input image to process.
     output_image: Optional[Image] (= None)
-        Output result image. Output result image.
+        Output result image.
     device: Optional[Device] (= None)
         Device to perform the operation on.
 
@@ -1016,7 +1011,7 @@ def equal_constant(
     Parameters
     ----------
     input_image: Image
-        Input omage where every pixel is compared to the constant.
+        Input image where every pixel is compared to the constant.
     output_image: Optional[Image] (= None)
         Output binary image.
     scalar: float (= 0)
@@ -1193,8 +1188,7 @@ def exponential(
     output_image: Optional[Image] = None,
     device: Optional[Device] = None,
 ) -> Image:
-    """Computes base exponential of all pixels values. f(x) = exp(x) Author(s): Peter
-    Haub, Robert Haase
+    """Computes the base-e exponential of all pixel values. f(x) = exp(x)
 
     Parameters
     ----------
@@ -1311,8 +1305,8 @@ def gaussian_derivative(
     order_z: int = 0,
     device: Optional[Device] = None,
 ) -> Image:
-    """Convolve the image with a gaussian derivate. The filter kernel can have
-    nonisotropic sigma and order. The implementation is done separable. In case a
+    """Convolves the image with a Gaussian derivative. The filter kernel can have
+    anisotropic sigma and order. The implementation is done separable. In case a
     sigma equals zero, the direction is not filtered. If all orders are zero, the
     filtering is equivalent to a Gaussian blur.
 
@@ -1361,15 +1355,13 @@ def generate_distance_matrix(
     distance_matrix_destination: Optional[Image] = None,
     device: Optional[Device] = None,
 ) -> Image:
-    """Computes the distance between all point coordinates given in two point lists.
-    Takes two images containing pointlists (dimensionality n * d, n: number of
-    points and d: dimensionality) and builds up a matrix containing the distances
-    between these points. Convention: Given two point lists with dimensionality n *
-    d and m * d, the distance matrix will be of size(n + 1) * (m + 1). The first row
-    and column contain zeros. They represent the distance of the (see
-    generateTouchMatrix). Thus, one can threshold a distance matrix to generate a
-    touch matrix out of it for drawing objects to a theoretical background object.
-    In that way, distance matrices are of the same size as touch matrices meshes.
+    """Computes distances between all points in two point lists. Takes two images
+    containing point lists with shape n×d and m×d (n/m: number of points; d:
+    dimensionality) and builds a matrix of pairwise distances. By convention, the
+    distance matrix has size (n + 1) × (m + 1); the first row and column contain
+    zeros representing distances to a background object. This matches touch-matrix
+    conventions (see generateTouchMatrix), allowing thresholding the distance matrix
+    to obtain a touch matrix.
 
     Parameters
     ----------
@@ -1402,8 +1394,8 @@ def gradient_x(
     device: Optional[Device] = None,
 ) -> Image:
     """Computes the gradient of gray values along X. Assuming a, b and c are three
-    adjacent pixels in X direction. In the target image will be saved as: <pre>b' =
-    c a;</pre>
+    adjacent pixels in X direction, the gradient at b is computed as: <pre>b' = c -
+    a;</pre>
 
     Parameters
     ----------
@@ -1432,8 +1424,8 @@ def gradient_y(
     device: Optional[Device] = None,
 ) -> Image:
     """Computes the gradient of gray values along Y. Assuming a, b and c are three
-    adjacent pixels in Y direction. In the target image will be saved as: <pre>b' =
-    c a;</pre>
+    adjacent pixels in Y direction, the gradient at b is computed as: <pre>b' = c -
+    a;</pre>
 
     Parameters
     ----------
@@ -1462,8 +1454,8 @@ def gradient_z(
     device: Optional[Device] = None,
 ) -> Image:
     """Computes the gradient of gray values along Z. Assuming a, b and c are three
-    adjacent pixels in Z direction. In the target image will be saved as: <pre>b' =
-    c a;</pre>
+    adjacent pixels in Z direction, the gradient at b is computed as: <pre>b' = c -
+    a;</pre>
 
     Parameters
     ----------
@@ -1622,7 +1614,7 @@ def hessian_eigenvalues(
     middle_eigenvalue: Optional[Image] = None,
     large_eigenvalue: Optional[Image] = None,
     device: Optional[Device] = None,
-) -> List[Image]:
+) -> Image:
     """Computes the eigenvalues of the hessian matrix of a 2d or 3d image. Hessian
     matrix or 2D images: [Ixx, Ixy] [Ixy, Iyy] Hessian matrix for 3D images: [Ixx,
     Ixy, Ixz] [Ixy, Iyy, Iyz] [Ixz, Iyz, Izz], Ixx denotes the second derivative in
@@ -1649,7 +1641,7 @@ def hessian_eigenvalues(
 
     Returns
     -------
-    List[Image]
+    Image
     """
     return clic._hessian_eigenvalues(
         device, input_image, small_eigenvalue, middle_eigenvalue, large_eigenvalue
@@ -1729,7 +1721,7 @@ def laplace(
     output_image: Optional[Image] (= None)
         Output result image.
     connectivity: str (= "box")
-        Filter neigborhood
+        Filter neighborhood
     device: Optional[Device] (= None)
         Device to perform the operation on.
 
@@ -2011,7 +2003,7 @@ def maximum_filter(
     radius_z: float (= 1)
         Radius size along z axis.
     connectivity: str (= "box")
-        Filter neigborhood
+        Filter neighborhood
     device: Optional[Device] (= None)
         Device to perform the operation on.
 
@@ -2064,7 +2056,7 @@ def grayscale_dilate(
     radius_z: float (= 1)
         Radius size along z axis.
     connectivity: str (= "box")
-        Filter neigborhood
+        Filter neighborhood
     device: Optional[Device] (= None)
         Device to perform the operation on.
 
@@ -2289,7 +2281,7 @@ def mean_filter(
     radius_z: float (= 1)
         Radius size along z axis.
     connectivity: str (= "box")
-        Filter neigborhood
+        Filter neighborhood
     device: Optional[Device] (= None)
         Device to perform the operation on.
 
@@ -2516,7 +2508,7 @@ def median(
     radius_z: float (= 1)
         Radius size along z axis.
     connectivity: str (= "box")
-        Filter neigborhood
+        Filter neighborhood
     device: Optional[Device] (= None)
         Device to perform the operation on.
 
@@ -2610,7 +2602,7 @@ def minimum_filter(
     radius_z: float (= 1)
         Radius size along z axis.
     connectivity: str (= "box")
-        Filter neigborhood
+        Filter neighborhood
     device: Optional[Device] (= None)
         Device to perform the operation on.
 
@@ -2663,7 +2655,7 @@ def grayscale_erode(
     radius_z: float (= 1)
         Radius size along z axis.
     connectivity: str (= "box")
-        Filter neigborhood
+        Filter neighborhood
     device: Optional[Device] (= None)
         Device to perform the operation on.
 
@@ -2955,7 +2947,7 @@ def mode(
     radius_z: float (= 1)
         Radius size along z axis.
     connectivity: str (= "box")
-        Filter neigborhood
+        Filter neighborhood
     device: Optional[Device] (= None)
         Device to perform the operation on.
 
@@ -3237,7 +3229,7 @@ def nonzero_maximum(
     output_image1: Optional[Image] (= None)
         Output image where results are written into.
     connectivity: str (= "box")
-        Filter neigborhood
+        Filter neighborhood
     device: Optional[Device] (= None)
         Device to perform the operation on.
 
@@ -5300,3 +5292,329 @@ def z_position_projection(
     [1] https://clij.github.io/clij2-docs/reference_zPositionProjection
     """
     return clic._z_position_projection(device, input_image, position, output_image)
+
+
+@plugin_function
+def mean_of_touching_neighbors(
+    vector: Image,
+    matrix: Image,
+    output_image: Optional[Image] = None,
+    device: Optional[Device] = None,
+) -> Image:
+    """Compute the mean_of_touching_neighbors
+
+    Parameters
+    ----------
+    vector: Image
+        Input
+    matrix: Image
+        Input adjacency
+    output_image: Optional[Image] (= None)
+        Output result vector.
+    device: Optional[Device] (= None)
+        Device to perform the operation on.
+
+    Returns
+    -------
+    Image
+    """
+    return clic._mean_of_touching_neighbors(device, vector, matrix, output_image)
+
+
+@plugin_function
+def median_of_touching_neighbors(
+    vector: Image,
+    matrix: Image,
+    output_image: Optional[Image] = None,
+    device: Optional[Device] = None,
+) -> Image:
+    """Compute the median_of_touching_neighbors
+
+    Parameters
+    ----------
+    vector: Image
+        Input
+    matrix: Image
+        Input adjacency
+    output_image: Optional[Image] (= None)
+        Output result vector.
+    device: Optional[Device] (= None)
+        Device to perform the operation on.
+
+    Returns
+    -------
+    Image
+    """
+    return clic._median_of_touching_neighbors(device, vector, matrix, output_image)
+
+
+@plugin_function
+def minimum_of_touching_neighbors(
+    vector: Image,
+    matrix: Image,
+    output_image: Optional[Image] = None,
+    device: Optional[Device] = None,
+) -> Image:
+    """Compute the minimum_of_touching_neighbors
+
+    Parameters
+    ----------
+    vector: Image
+        Input
+    matrix: Image
+        Input adjacency
+    output_image: Optional[Image] (= None)
+        Output result vector.
+    device: Optional[Device] (= None)
+        Device to perform the operation on.
+
+    Returns
+    -------
+    Image
+    """
+    return clic._minimum_of_touching_neighbors(device, vector, matrix, output_image)
+
+
+@plugin_function
+def maximum_of_touching_neighbors(
+    vector: Image,
+    matrix: Image,
+    output_image: Optional[Image] = None,
+    device: Optional[Device] = None,
+) -> Image:
+    """Compute the maximum_of_touching_neighbors
+
+    Parameters
+    ----------
+    vector: Image
+        Input
+    matrix: Image
+        Input adjacency
+    output_image: Optional[Image] (= None)
+        Output result vector.
+    device: Optional[Device] (= None)
+        Device to perform the operation on.
+
+    Returns
+    -------
+    Image
+    """
+    return clic._maximum_of_touching_neighbors(device, vector, matrix, output_image)
+
+
+@plugin_function
+def standard_deviation_of_touching_neighbors(
+    vector: Image,
+    matrix: Image,
+    output_image: Optional[Image] = None,
+    device: Optional[Device] = None,
+) -> Image:
+    """Compute the standard_deviation_of_touching_neighbors
+
+    Parameters
+    ----------
+    vector: Image
+        Input
+    matrix: Image
+        Input adjacency
+    output_image: Optional[Image] (= None)
+        Output result vector.
+    device: Optional[Device] (= None)
+        Device to perform the operation on.
+
+    Returns
+    -------
+    Image
+    """
+    return clic._standard_deviation_of_touching_neighbors(
+        device, vector, matrix, output_image
+    )
+
+
+@plugin_function
+def mode_of_touching_neighbors(
+    vector: Image,
+    matrix: Image,
+    output_image: Optional[Image] = None,
+    device: Optional[Device] = None,
+) -> Image:
+    """Compute the mode_of_touching_neighbors
+
+    Parameters
+    ----------
+    vector: Image
+        Input
+    matrix: Image
+        Input adjacency
+    output_image: Optional[Image] (= None)
+        Output result vector.
+    device: Optional[Device] (= None)
+        Device to perform the operation on.
+
+    Returns
+    -------
+    Image
+    """
+    return clic._mode_of_touching_neighbors(device, vector, matrix, output_image)
+
+
+__all__ = [
+    "absolute",
+    "add_images_weighted",
+    "add_image_and_scalar",
+    "binary_and",
+    "binary_edge_detection",
+    "binary_not",
+    "binary_or",
+    "binary_subtract",
+    "binary_xor",
+    "binary_supinf",
+    "binary_infsup",
+    "block_enumerate",
+    "circular_shift",
+    "convolve",
+    "copy",
+    "copy_slice",
+    "copy_horizontal_slice",
+    "copy_vertical_slice",
+    "crop",
+    "cubic_root",
+    "detect_label_edges",
+    "dilation",
+    "dilate_box",
+    "dilate_sphere",
+    "binary_dilate",
+    "divide_images",
+    "divide_scalar_by_image",
+    "equal",
+    "equal_constant",
+    "erosion",
+    "erode_box",
+    "erode_sphere",
+    "binary_erode",
+    "exponential",
+    "flip",
+    "gaussian_blur",
+    "gaussian_derivative",
+    "generate_distance_matrix",
+    "gradient_x",
+    "gradient_y",
+    "gradient_z",
+    "greater",
+    "greater_constant",
+    "greater_or_equal",
+    "greater_or_equal_constant",
+    "hessian_eigenvalues",
+    "laplace_box",
+    "laplace_diamond",
+    "laplace",
+    "local_cross_correlation",
+    "logarithm",
+    "mask",
+    "mask_label",
+    "maximum_image_and_scalar",
+    "maximum_images",
+    "maximum_box",
+    "maximum_filter",
+    "grayscale_dilate",
+    "maximum_x_projection",
+    "maximum_y_projection",
+    "maximum_z_projection",
+    "mean_box",
+    "mean_sphere",
+    "mean_filter",
+    "mean_x_projection",
+    "mean_y_projection",
+    "mean_z_projection",
+    "median_box",
+    "median_sphere",
+    "median",
+    "minimum_box",
+    "minimum_filter",
+    "grayscale_erode",
+    "minimum_image_and_scalar",
+    "minimum_images",
+    "minimum_x_projection",
+    "minimum_y_projection",
+    "minimum_z_projection",
+    "mode_box",
+    "mode_sphere",
+    "mode",
+    "modulo_images",
+    "multiply_image_and_position",
+    "multiply_image_and_scalar",
+    "multiply_images",
+    "nan_to_num",
+    "nonzero_maximum_box",
+    "nonzero_maximum_diamond",
+    "nonzero_maximum",
+    "nonzero_minimum_box",
+    "nonzero_minimum_diamond",
+    "nonzero_minimum",
+    "not_equal",
+    "not_equal_constant",
+    "paste",
+    "onlyzero_overwrite_maximum_box",
+    "onlyzero_overwrite_maximum_diamond",
+    "onlyzero_overwrite_maximum",
+    "power",
+    "power_images",
+    "range",
+    "read_values_from_positions",
+    "replace_values",
+    "replace_value",
+    "replace_intensity",
+    "replace_intensities",
+    "maximum_sphere",
+    "minimum_sphere",
+    "multiply_matrix",
+    "pad",
+    "unpad",
+    "reciprocal",
+    "set",
+    "set_column",
+    "set_image_borders",
+    "set_plane",
+    "set_ramp_x",
+    "set_ramp_y",
+    "set_ramp_z",
+    "set_row",
+    "set_nonzero_pixels_to_pixelindex",
+    "set_where_x_equals_y",
+    "set_where_x_greater_than_y",
+    "set_where_x_smaller_than_y",
+    "sign",
+    "smaller",
+    "smaller_constant",
+    "smaller_or_equal",
+    "smaller_or_equal_constant",
+    "sobel",
+    "square_root",
+    "std_z_projection",
+    "subtract_image_from_scalar",
+    "sum_reduction_x",
+    "sum_x_projection",
+    "sum_y_projection",
+    "sum_z_projection",
+    "transpose_xy",
+    "transpose_xz",
+    "transpose_yz",
+    "undefined_to_zero",
+    "variance_box",
+    "variance_sphere",
+    "variance_filter",
+    "write_values_to_positions",
+    "x_position_of_maximum_x_projection",
+    "x_position_of_minimum_x_projection",
+    "y_position_of_maximum_y_projection",
+    "y_position_of_minimum_y_projection",
+    "z_position_of_maximum_z_projection",
+    "z_position_of_minimum_z_projection",
+    "z_position_projection",
+    "mean_of_touching_neighbors",
+    "median_of_touching_neighbors",
+    "minimum_of_touching_neighbors",
+    "maximum_of_touching_neighbors",
+    "standard_deviation_of_touching_neighbors",
+    "mode_of_touching_neighbors",
+]

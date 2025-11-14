@@ -700,6 +700,7 @@ def percentile(
 
 @plugin_function
 def mean_of_touching_neighbors_map(
+    map: Image,
     labels: Image,
     output_image: Optional[Image] =None,
     radius: int =1,
@@ -714,6 +715,8 @@ def mean_of_touching_neighbors_map(
 
     Parameters
     ----------
+    map: Image 
+        Input parametric
     labels: Image 
         Input vector image.
     output_image: Optional[Image] (= None)
@@ -729,7 +732,7 @@ def mean_of_touching_neighbors_map(
     -------
     Image
     """
-    return clic._mean_of_touching_neighbors_map(device, labels, output_image, int(radius), ignore_background)
+    return clic._mean_of_touching_neighbors_map(device, map, labels, output_image, int(radius), ignore_background)
 
 @plugin_function
 def median_of_touching_neighbors_map(

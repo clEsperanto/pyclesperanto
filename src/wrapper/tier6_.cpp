@@ -1,5 +1,5 @@
 // this code is auto-generated, do not edit manually
-
+    
 #include "pycle_wrapper.hpp"
 #include "tier6.hpp"
 
@@ -41,4 +41,8 @@ m.def("_dilate_labels", &cle::tier6::dilate_labels_func, "Call cle::tier6::dilat
     m.def("_exclude_large_labels", &cle::tier6::exclude_large_labels_func, "Call cle::tier6::exclude_large_labels_func from C++ CLIc.",
     py::return_value_policy::automatic_reference,
     py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("minimum_size"));
+
+    m.def("_proximal_neighbor_count_map", &cle::tier6::proximal_neighbor_count_map_func, "Call cle::tier6::proximal_neighbor_count_map_func from C++ CLIc.",
+    py::return_value_policy::automatic_reference,
+    py::arg("device"), py::arg("labels"), py::arg("dst"), py::arg("min_distance"), py::arg("max_distance"));
 }

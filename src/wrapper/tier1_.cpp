@@ -1,5 +1,5 @@
 // this code is auto-generated, do not edit manually
-
+    
 #include "pycle_wrapper.hpp"
 #include "tier1.hpp"
 
@@ -613,4 +613,28 @@ m.def("_absolute", &cle::tier1::absolute_func, "Call cle::tier1::absolute_func f
     m.def("_z_position_projection", &cle::tier1::z_position_projection_func, "Call cle::tier1::z_position_projection_func from C++ CLIc.",
     py::return_value_policy::automatic_reference,
     py::arg("device"), py::arg("src"), py::arg("position"), py::arg("dst"));
+
+    m.def("_mean_of_touching_neighbors", &cle::tier1::mean_of_touching_neighbors_func, "Call cle::tier1::mean_of_touching_neighbors_func from C++ CLIc.",
+    py::return_value_policy::automatic_reference,
+    py::arg("device"), py::arg("vector"), py::arg("matrix"), py::arg("dst"));
+
+    m.def("_median_of_touching_neighbors", &cle::tier1::median_of_touching_neighbors_func, "Call cle::tier1::median_of_touching_neighbors_func from C++ CLIc.",
+    py::return_value_policy::automatic_reference,
+    py::arg("device"), py::arg("vector"), py::arg("matrix"), py::arg("dst"));
+
+    m.def("_minimum_of_touching_neighbors", &cle::tier1::minimum_of_touching_neighbors_func, "Call cle::tier1::minimum_of_touching_neighbors_func from C++ CLIc.",
+    py::return_value_policy::automatic_reference,
+    py::arg("device"), py::arg("vector"), py::arg("matrix"), py::arg("dst"));
+
+    m.def("_maximum_of_touching_neighbors", &cle::tier1::maximum_of_touching_neighbors_func, "Call cle::tier1::maximum_of_touching_neighbors_func from C++ CLIc.",
+    py::return_value_policy::automatic_reference,
+    py::arg("device"), py::arg("vector"), py::arg("matrix"), py::arg("dst"));
+
+    m.def("_standard_deviation_of_touching_neighbors", &cle::tier1::standard_deviation_of_touching_neighbors_func, "Call cle::tier1::standard_deviation_of_touching_neighbors_func from C++ CLIc.",
+    py::return_value_policy::automatic_reference,
+    py::arg("device"), py::arg("vector"), py::arg("matrix"), py::arg("dst"));
+
+    m.def("_mode_of_touching_neighbors", &cle::tier1::mode_of_touching_neighbors_func, "Call cle::tier1::mode_of_touching_neighbors_func from C++ CLIc.",
+    py::return_value_policy::automatic_reference,
+    py::arg("device"), py::arg("vector"), py::arg("matrix"), py::arg("dst"));
 }

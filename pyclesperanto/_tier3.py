@@ -717,7 +717,7 @@ def tubeness(
 
 @plugin_function
 def artificial_tissue(
-    width: int =256),
+    width: int =256,
     height: int =256,
     depth: int =1,
     delta_x: float =1.0,
@@ -733,7 +733,7 @@ def artificial_tissue(
 
     Parameters
     ----------
-    width: int (= 256))
+    width: int (= 256)
         Width of the generated image.
     height: int (= 256)
         Height of the generated image.

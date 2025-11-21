@@ -1,3 +1,7 @@
+# =============================================================================
+# Build System Configuration
+# =============================================================================
+
 [build-system]
 build-backend = "scikit_build_core.build"
 requires = ["setuptools", "wheel", "scikit-build-core", "pybind11"]
@@ -11,7 +15,6 @@ make-fallback = false
 [tool.scikit-build.cmake]
 build-type = "Release"
 
-
 [tool.scikit-build.metadata.version]
 provider = "scikit_build_core.metadata.regex"
 regex = 'VERSION = "(?P<value>\d+\.\d+\.\d+)"'
@@ -19,6 +22,10 @@ input = "pyclesperanto/_version.py"
 
 [tool.scikit-build.sdist]
 exclude = [".flake8", ".git*", "*.yaml", "*.ipynb", "*.yml", "docs"]
+
+# =============================================================================
+# Project Metadata
+# =============================================================================
 
 [project]
 authors = [
@@ -46,12 +53,18 @@ dynamic = ["version"]
 license = { file = "LICENSE" }
 keywords = ["image processing", "GPU", "OpenCL", "scientific computing"]
 
-
 [project.urls]
 Documentation = "https://clesperanto.github.io/pyclesperanto/"
 Examples = "https://clesperanto.github.io/pyclesperanto/demos/"
 Issues = "https://github.com/clEsperanto/pyclesperanto/issues"
 Source = "https://github.com/clEsperanto/pyclesperanto/"
+
+[project.entry-points."bia_bob_plugins"]
+plugin_pyclesperanto = "pyclesperanto._bia_bob_plugins:list_bia_bob_plugins"
+
+# =============================================================================
+# Tool Configuration
+# =============================================================================
 
 [tool.pytest.ini_options]
 addopts = "-ra -q"
@@ -78,6 +91,3 @@ environment = { MACOSX_DEPLOYMENT_TARGET = '10.14' }
 
 [tool.isort]
 profile = "black"
-
-[project.entry-points."bia_bob_plugins"]
-plugin_pyclesperanto = "pyclesperanto._bia_bob_plugins:list_bia_bob_plugins"

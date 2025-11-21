@@ -1,0 +1,39 @@
+[workspace]
+channels = ["conda-forge"]
+platforms = ["linux-64", "osx-64", "osx-arm64", "win-64"]
+
+[dependencies]
+python = ">=3.8"
+pip = "*"
+setuptools = "*"
+wheel = "*"
+scikit-build-core = "*"
+pybind11 = "*"
+cmake = "*"
+ninja = "*"
+pre-commit = ">=4.4.0,<5"
+
+[feature.dev.dependencies]
+pytest = "*"
+pytest-cov = "*"
+pytest-benchmark = "*"
+scikit-image = "*"
+isort = "*"
+jupyter = "*"
+pandas = "*"
+
+[feature.dev.pypi-dependencies]
+napari = { extras = ["all"], version = "*" }
+
+[feature.build.dependencies]
+python-build = "*"
+cibuildwheel = "*"
+
+[tasks]
+install-dev = "pip install -e . -v"
+test = "pytest -v"
+build-wheel = "python -m build"
+
+[environments]
+default = { features = ["dev"], solve-group = "default" }
+build = { features = ["build"], solve-group = "default" }

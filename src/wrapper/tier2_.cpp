@@ -1,5 +1,5 @@
 // this code is auto-generated, do not edit manually
-
+    
 #include "pycle_wrapper.hpp"
 #include "tier2.hpp"
 
@@ -49,6 +49,10 @@ m.def("_absolute_difference", &cle::tier2::absolute_difference_func, "Call cle::
     m.def("_binary_closing", &cle::tier2::binary_closing_func, "Call cle::tier2::binary_closing_func from C++ CLIc.",
     py::return_value_policy::automatic_reference,
     py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("radius_x"), py::arg("radius_y"), py::arg("radius_z"), py::arg("connectivity"));
+
+    m.def("_concatenate", &cle::tier2::concatenate_func, "Call cle::tier2::concatenate_func from C++ CLIc.",
+    py::return_value_policy::automatic_reference,
+    py::arg("device"), py::arg("src0"), py::arg("src1"), py::arg("dst"), py::arg("axis"));
 
     m.def("_concatenate_along_x", &cle::tier2::concatenate_along_x_func, "Call cle::tier2::concatenate_along_x_func from C++ CLIc.",
     py::return_value_policy::automatic_reference,

@@ -12,24 +12,23 @@ from ._array import Image
 from ._core import Device
 from ._decorators import plugin_function
 
-clic = importlib.import_module("._pyclesperanto", package="pyclesperanto")
-
+clic = importlib.import_module('._pyclesperanto', package='pyclesperanto')
 
 @plugin_function(categories=["combine", "in assistant"])
 def absolute_difference(
     input_image0: Image,
     input_image1: Image,
-    output_image: Optional[Image] = None,
-    device: Optional[Device] = None,
+    output_image: Optional[Image] =None,
+    device: Optional[Device] =None
 ) -> Image:
     """Determines the absolute difference, pixel-by-pixel, between two images.
     <pre>f(x, y) = |x - y|</pre>
 
     Parameters
     ----------
-    input_image0: Image
+    input_image0: Image 
         The input image to be subtracted from.
-    input_image1: Image
+    input_image1: Image 
         The input image which is subtracted.
     output_image: Optional[Image] (= None)
         The output image where results are written into.
@@ -46,22 +45,21 @@ def absolute_difference(
     """
     return clic._absolute_difference(device, input_image0, input_image1, output_image)
 
-
 @plugin_function(categories=["combine", "in assistant"])
 def add_images(
     input_image0: Image,
     input_image1: Image,
-    output_image: Optional[Image] = None,
-    device: Optional[Device] = None,
+    output_image: Optional[Image] =None,
+    device: Optional[Device] =None
 ) -> Image:
     """Calculates the sum of pairs of pixels x and y of two images X and Y. <pre>f(x,
     y) = x + y</pre>
 
     Parameters
     ----------
-    input_image0: Image
+    input_image0: Image 
         The first input image to be added.
-    input_image1: Image
+    input_image1: Image 
         The second image to be added.
     output_image: Optional[Image] (= None)
         The output image where results are written into.
@@ -78,21 +76,20 @@ def add_images(
     """
     return clic._add_images(device, input_image0, input_image1, output_image)
 
-
 @plugin_function(categories=["filter", "background removal", "in assistant"])
 def bottom_hat_box(
     input_image: Image,
-    output_image: Optional[Image] = None,
-    radius_x: float = 1,
-    radius_y: float = 1,
-    radius_z: float = 1,
-    device: Optional[Device] = None,
+    output_image: Optional[Image] =None,
+    radius_x: float =1,
+    radius_y: float =1,
+    radius_z: float =1,
+    device: Optional[Device] =None
 ) -> Image:
     """Applies a bottom-hat filter for background subtraction to the input image.
 
     Parameters
     ----------
-    input_image: Image
+    input_image: Image 
         The input image where the background is subtracted from.
     output_image: Optional[Image] (= None)
         The output image where results are written into.
@@ -113,30 +110,22 @@ def bottom_hat_box(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_bottomHatBox
     """
-    return clic._bottom_hat_box(
-        device,
-        input_image,
-        output_image,
-        float(radius_x),
-        float(radius_y),
-        float(radius_z),
-    )
-
+    return clic._bottom_hat_box(device, input_image, output_image, float(radius_x), float(radius_y), float(radius_z))
 
 @plugin_function(categories=["filter", "background removal", "in assistant"])
 def bottom_hat_sphere(
     input_image: Image,
-    output_image: Optional[Image] = None,
-    radius_x: float = 1,
-    radius_y: float = 1,
-    radius_z: float = 1,
-    device: Optional[Device] = None,
+    output_image: Optional[Image] =None,
+    radius_x: float =1,
+    radius_y: float =1,
+    radius_z: float =1,
+    device: Optional[Device] =None
 ) -> Image:
     """Applies a bottom-hat filter for background subtraction to the input image.
 
     Parameters
     ----------
-    input_image: Image
+    input_image: Image 
         The input image where the background is subtracted from.
     output_image: Optional[Image] (= None)
         The output image where results are written into.
@@ -157,31 +146,23 @@ def bottom_hat_sphere(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_bottomHatSphere
     """
-    return clic._bottom_hat_sphere(
-        device,
-        input_image,
-        output_image,
-        float(radius_x),
-        float(radius_y),
-        float(radius_z),
-    )
-
+    return clic._bottom_hat_sphere(device, input_image, output_image, float(radius_x), float(radius_y), float(radius_z))
 
 @plugin_function(categories=["filter", "background removal", "in assistant"])
 def bottom_hat(
     input_image: Image,
-    output_image: Optional[Image] = None,
-    radius_x: float = 1,
-    radius_y: float = 1,
-    radius_z: float = 1,
-    connectivity: str = "box",
-    device: Optional[Device] = None,
+    output_image: Optional[Image] =None,
+    radius_x: float =1,
+    radius_y: float =1,
+    radius_z: float =1,
+    connectivity: str ="box",
+    device: Optional[Device] =None
 ) -> Image:
     """Applies a bottom-hat filter for background subtraction to the input image.
 
     Parameters
     ----------
-    input_image: Image
+    input_image: Image 
         The input image where the background is subtracted from.
     output_image: Optional[Image] (= None)
         The output image where results are written into.
@@ -205,37 +186,28 @@ def bottom_hat(
     [1] https://clij.github.io/clij2-docs/reference_bottomHatBox
     [2] https://clij.github.io/clij2-docs/reference_bottomHatSphere
     """
-    return clic._bottom_hat(
-        device,
-        input_image,
-        output_image,
-        float(radius_x),
-        float(radius_y),
-        float(radius_z),
-        str(connectivity),
-    )
-
+    return clic._bottom_hat(device, input_image, output_image, float(radius_x), float(radius_y), float(radius_z), str(connectivity))
 
 @plugin_function(categories=["combine", "in assistant"])
 def clip(
     input_image: Image,
-    output_image: Optional[Image] = None,
-    min_intensity: Optional[float] = None,
-    max_intensity: Optional[float] = None,
-    device: Optional[Device] = None,
+    output_image: Optional[Image] =None,
+    min_intensity: float =float('nan'),
+    max_intensity: float =float('nan'),
+    device: Optional[Device] =None
 ) -> Image:
     """Limits the range of values in an image. This function works similarly to its
     counterpart in NumPy.
 
     Parameters
     ----------
-    input_image: Image
+    input_image: Image 
         Input image to process.
     output_image: Optional[Image] (= None)
         Output image.
-    min_intensity: Optional[float] (= None)
+    min_intensity: float (= float('nan'))
         New lower limit of the intensity range.
-    max_intensity: Optional[float] (= None)
+    max_intensity: float (= float('nan'))
         New upper limit of the intensity range.
     device: Optional[Device] (= None)
         Device to perform the operation on.
@@ -248,24 +220,23 @@ def clip(
     ----------
     [1] https://numpy.org/doc/stable/reference/generated/numpy.clip.html
     """
-    return clic._clip(device, input_image, output_image, min_intensity, max_intensity)
-
+    return clic._clip(device, input_image, output_image, float(min_intensity), float(max_intensity))
 
 @plugin_function(categories=["filter", "in assistant"])
 def closing_box(
     input_image: Image,
-    output_image: Optional[Image] = None,
-    radius_x: float = 1,
-    radius_y: float = 1,
-    radius_z: float = 1,
-    device: Optional[Device] = None,
+    output_image: Optional[Image] =None,
+    radius_x: float =1,
+    radius_y: float =1,
+    radius_z: float =1,
+    device: Optional[Device] =None
 ) -> Image:
     """Closing operator, applies grayscale morphological closing to intensity images
     using a box-shaped footprint. This operator also works with binary images.
 
     Parameters
     ----------
-    input_image: Image
+    input_image: Image 
         Input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
@@ -282,31 +253,23 @@ def closing_box(
     -------
     Image
     """
-    return clic._closing_box(
-        device,
-        input_image,
-        output_image,
-        float(radius_x),
-        float(radius_y),
-        float(radius_z),
-    )
-
+    return clic._closing_box(device, input_image, output_image, float(radius_x), float(radius_y), float(radius_z))
 
 @plugin_function(categories=["filter", "in assistant", "bia-bob-suggestion"])
 def closing_sphere(
     input_image: Image,
-    output_image: Optional[Image] = None,
-    radius_x: float = 1,
-    radius_y: float = 1,
-    radius_z: float = 1,
-    device: Optional[Device] = None,
+    output_image: Optional[Image] =None,
+    radius_x: float =1,
+    radius_y: float =1,
+    radius_z: float =1,
+    device: Optional[Device] =None
 ) -> Image:
     """Closing operator, applies grayscale morphological closing to intensity images
     using a sphere-shaped footprint. This operator also works with binary images.
 
     Parameters
     ----------
-    input_image: Image
+    input_image: Image 
         Input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
@@ -323,25 +286,17 @@ def closing_sphere(
     -------
     Image
     """
-    return clic._closing_sphere(
-        device,
-        input_image,
-        output_image,
-        float(radius_x),
-        float(radius_y),
-        float(radius_z),
-    )
-
+    return clic._closing_sphere(device, input_image, output_image, float(radius_x), float(radius_y), float(radius_z))
 
 @plugin_function(categories=["filter", "in assistant"])
 def grayscale_closing(
     input_image: Image,
-    output_image: Optional[Image] = None,
-    radius_x: float = 1,
-    radius_y: float = 1,
-    radius_z: float = 1,
-    connectivity: str = "box",
-    device: Optional[Device] = None,
+    output_image: Optional[Image] =None,
+    radius_x: float =1,
+    radius_y: float =1,
+    radius_z: float =1,
+    connectivity: str ="box",
+    device: Optional[Device] =None
 ) -> Image:
     """Closing operator, applies grayscale morphological closing to intensity images
     using a box- or sphere-shaped footprint. This operator also works with binary
@@ -349,7 +304,7 @@ def grayscale_closing(
 
     Parameters
     ----------
-    input_image: Image
+    input_image: Image 
         Input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
@@ -368,23 +323,14 @@ def grayscale_closing(
     -------
     Image
     """
-    return clic._grayscale_closing(
-        device,
-        input_image,
-        output_image,
-        float(radius_x),
-        float(radius_y),
-        float(radius_z),
-        str(connectivity),
-    )
-
+    return clic._grayscale_closing(device, input_image, output_image, float(radius_x), float(radius_y), float(radius_z), str(connectivity))
 
 @plugin_function(categories=["filter", "in assistant"])
 def closing(
     input_image: Image,
     footprint: Image,
-    output_image: Optional[Image] = None,
-    device: Optional[Device] = None,
+    output_image: Optional[Image] =None,
+    device: Optional[Device] =None
 ) -> Image:
     """Closing operator, applies morphological closing to intensity images using a
     custom structuring element provided as input. This operator also works with
@@ -392,9 +338,9 @@ def closing(
 
     Parameters
     ----------
-    input_image: Image
+    input_image: Image 
         Input image to process.
-    footprint: Image
+    footprint: Image 
         Structuring element for the operation.
     output_image: Optional[Image] (= None)
         Output result image.
@@ -407,23 +353,22 @@ def closing(
     """
     return clic._closing(device, input_image, footprint, output_image)
 
-
 @plugin_function(categories=["filter", "in assistant"])
 def binary_closing(
     input_image: Image,
-    output_image: Optional[Image] = None,
-    radius_x: float = 1,
-    radius_y: float = 1,
-    radius_z: float = 1,
-    connectivity: str = "box",
-    device: Optional[Device] = None,
+    output_image: Optional[Image] =None,
+    radius_x: float =1,
+    radius_y: float =1,
+    radius_z: float =1,
+    connectivity: str ="box",
+    device: Optional[Device] =None
 ) -> Image:
     """Closing operator, applies binary morphological closing to intensity images using
     a sphere- or box-shaped footprint. This operator also works with binary images.
 
     Parameters
     ----------
-    input_image: Image
+    input_image: Image 
         Input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
@@ -442,33 +387,55 @@ def binary_closing(
     -------
     Image
     """
-    return clic._binary_closing(
-        device,
-        input_image,
-        output_image,
-        float(radius_x),
-        float(radius_y),
-        float(radius_z),
-        str(connectivity),
-    )
+    return clic._binary_closing(device, input_image, output_image, float(radius_x), float(radius_y), float(radius_z), str(connectivity))
 
+@plugin_function(categories=["combine", "transform", "in assistant", "bia-bob-suggestion"])
+def concatenate(
+    input_image0: Image,
+    input_image1: Image,
+    output_image: Optional[Image] =None,
+    axis: int =0,
+    device: Optional[Device] =None
+) -> Image:
+    """Concatenates two arrays along a specified axis (0:x, 1:y, 2:z).
 
-@plugin_function(
-    categories=["combine", "transform", "in assistant", "bia-bob-suggestion"]
-)
+    Parameters
+    ----------
+    input_image0: Image 
+        First input array.
+    input_image1: Image 
+        Second input array.
+    output_image: Optional[Image] (= None)
+        Output result array.
+    axis: int (= 0)
+        Axis along which to concatenate (0:x, 1:y, 2:z).
+    device: Optional[Device] (= None)
+        Device to perform the operation on.
+
+    Returns
+    -------
+    Image
+
+    References
+    ----------
+    [1] https://clij.github.io/clij2-docs/reference_combineHorizontally
+    """
+    return clic._concatenate(device, input_image0, input_image1, output_image, int(axis))
+
+@plugin_function(categories=["combine", "transform", "in assistant", "bia-bob-suggestion"])
 def concatenate_along_x(
     input_image0: Image,
     input_image1: Image,
-    output_image: Optional[Image] = None,
-    device: Optional[Device] = None,
+    output_image: Optional[Image] =None,
+    device: Optional[Device] =None
 ) -> Image:
     """Concatenates two images or stacks along the x axis.
 
     Parameters
     ----------
-    input_image0: Image
+    input_image0: Image 
         First input image.
-    input_image1: Image
+    input_image1: Image 
         Second input image.
     output_image: Optional[Image] (= None)
         Output result image.
@@ -485,23 +452,20 @@ def concatenate_along_x(
     """
     return clic._concatenate_along_x(device, input_image0, input_image1, output_image)
 
-
-@plugin_function(
-    categories=["combine", "transform", "in assistant", "bia-bob-suggestion"]
-)
+@plugin_function(categories=["combine", "transform", "in assistant", "bia-bob-suggestion"])
 def concatenate_along_y(
     input_image0: Image,
     input_image1: Image,
-    output_image: Optional[Image] = None,
-    device: Optional[Device] = None,
+    output_image: Optional[Image] =None,
+    device: Optional[Device] =None
 ) -> Image:
     """Concatenates two images or stacks along the y axis.
 
     Parameters
     ----------
-    input_image0: Image
+    input_image0: Image 
         First input image.
-    input_image1: Image
+    input_image1: Image 
         Second input image.
     output_image: Optional[Image] (= None)
         Output result image.
@@ -518,23 +482,20 @@ def concatenate_along_y(
     """
     return clic._concatenate_along_y(device, input_image0, input_image1, output_image)
 
-
-@plugin_function(
-    categories=["combine", "transform", "in assistant", "bia-bob-suggestion"]
-)
+@plugin_function(categories=["combine", "transform", "in assistant", "bia-bob-suggestion"])
 def concatenate_along_z(
     input_image0: Image,
     input_image1: Image,
-    output_image: Optional[Image] = None,
-    device: Optional[Device] = None,
+    output_image: Optional[Image] =None,
+    device: Optional[Device] =None
 ) -> Image:
     """Concatenates two images or stacks along the z axis.
 
     Parameters
     ----------
-    input_image0: Image
+    input_image0: Image 
         First input image.
-    input_image1: Image
+    input_image1: Image 
         Second input image.
     output_image: Optional[Image] (= None)
         Output result image.
@@ -551,13 +512,12 @@ def concatenate_along_z(
     """
     return clic._concatenate_along_z(device, input_image0, input_image1, output_image)
 
-
 @plugin_function
 def count_touching_neighbors(
     touch_matrix: Image,
-    touching_neighbors_count_destination: Optional[Image] = None,
-    ignore_background: bool = True,
-    device: Optional[Device] = None,
+    touching_neighbors_count_destination: Optional[Image] =None,
+    ignore_background: bool =True,
+    device: Optional[Device] =None
 ) -> Image:
     """Takes a touch matrix as input and returns a vector containing the number of
     touching neighbors per label. Note: Background is considered touchable. To
@@ -566,12 +526,12 @@ def count_touching_neighbors(
 
     Parameters
     ----------
-    touch_matrix: Image
+    touch_matrix: Image 
         Input touch matrix to process.
     touching_neighbors_count_destination: Optional[Image] (= None)
         Output vector of touch count.
     ignore_background: bool (= True)
-
+        
     device: Optional[Device] (= None)
         Device to perform the operation on.
 
@@ -583,24 +543,21 @@ def count_touching_neighbors(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_countTouchingNeighbors
     """
-    return clic._count_touching_neighbors(
-        device, touch_matrix, touching_neighbors_count_destination, ignore_background
-    )
-
+    return clic._count_touching_neighbors(device, touch_matrix, touching_neighbors_count_destination, ignore_background)
 
 @plugin_function
 def crop_border(
     input_image: Image,
-    output_image: Optional[Image] = None,
-    border_size: int = 1,
-    device: Optional[Device] = None,
+    output_image: Optional[Image] =None,
+    border_size: int =1,
+    device: Optional[Device] =None
 ) -> Image:
     """Crops an image by removing the outer pixels (default: 1). To ensure the output
     image has the expected size, set dst = None.
 
     Parameters
     ----------
-    input_image: Image
+    input_image: Image 
         Input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
@@ -615,21 +572,20 @@ def crop_border(
     """
     return clic._crop_border(device, input_image, output_image, int(border_size))
 
-
 @plugin_function(categories=["filter", "background removal", "in assistant"])
 def divide_by_gaussian_background(
     input_image: Image,
-    output_image: Optional[Image] = None,
-    sigma_x: float = 2,
-    sigma_y: float = 2,
-    sigma_z: float = 2,
-    device: Optional[Device] = None,
+    output_image: Optional[Image] =None,
+    sigma_x: float =2,
+    sigma_y: float =2,
+    sigma_z: float =2,
+    device: Optional[Device] =None
 ) -> Image:
     """Applies Gaussian blur to the input image and divides the original by the result.
 
     Parameters
     ----------
-    input_image: Image
+    input_image: Image 
         Input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
@@ -650,27 +606,19 @@ def divide_by_gaussian_background(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_divideByGaussianBackground
     """
-    return clic._divide_by_gaussian_background(
-        device,
-        input_image,
-        output_image,
-        float(sigma_x),
-        float(sigma_y),
-        float(sigma_z),
-    )
-
+    return clic._divide_by_gaussian_background(device, input_image, output_image, float(sigma_x), float(sigma_y), float(sigma_z))
 
 @plugin_function
 def degrees_to_radians(
     input_image: Image,
-    output_image: Optional[Image] = None,
-    device: Optional[Device] = None,
+    output_image: Optional[Image] =None,
+    device: Optional[Device] =None
 ) -> Image:
     """Converts degrees to radians.
 
     Parameters
     ----------
-    input_image: Image
+    input_image: Image 
         Input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
@@ -683,15 +631,14 @@ def degrees_to_radians(
     """
     return clic._degrees_to_radians(device, input_image, output_image)
 
-
 @plugin_function(categories=["binarize", "in assistant"])
 def detect_maxima_box(
     input_image: Image,
-    output_image: Optional[Image] = None,
-    radius_x: float = 0,
-    radius_y: float = 0,
-    radius_z: float = 0,
-    device: Optional[Device] = None,
+    output_image: Optional[Image] =None,
+    radius_x: float =0,
+    radius_y: float =0,
+    radius_z: float =0,
+    device: Optional[Device] =None
 ) -> Image:
     """Detects local maxima in a given square/cubic neighborhood. Pixels in the
     resulting image are set to 1 if there is no other pixel in a given radius which
@@ -699,7 +646,7 @@ def detect_maxima_box(
 
     Parameters
     ----------
-    input_image: Image
+    input_image: Image 
         Input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
@@ -720,25 +667,17 @@ def detect_maxima_box(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_detectMaximaBox
     """
-    return clic._detect_maxima_box(
-        device,
-        input_image,
-        output_image,
-        float(radius_x),
-        float(radius_y),
-        float(radius_z),
-    )
-
+    return clic._detect_maxima_box(device, input_image, output_image, float(radius_x), float(radius_y), float(radius_z))
 
 @plugin_function(categories=["binarize", "in assistant"])
 def detect_maxima(
     input_image: Image,
-    output_image: Optional[Image] = None,
-    radius_x: float = 0,
-    radius_y: float = 0,
-    radius_z: float = 0,
-    connectivity: str = "box",
-    device: Optional[Device] = None,
+    output_image: Optional[Image] =None,
+    radius_x: float =0,
+    radius_y: float =0,
+    radius_z: float =0,
+    connectivity: str ="box",
+    device: Optional[Device] =None
 ) -> Image:
     """Detects local maxima in a given square/cubic neighborhood. Pixels in the
     resulting image are set to 1 if there is no other pixel in a given radius which
@@ -746,7 +685,7 @@ def detect_maxima(
 
     Parameters
     ----------
-    input_image: Image
+    input_image: Image 
         Input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
@@ -770,25 +709,16 @@ def detect_maxima(
     [1] https://clij.github.io/clij2-docs/reference_detectMaximaBox
     [2] https://clij.github.io/clij2-docs/reference_detectMaximaSphere
     """
-    return clic._detect_maxima(
-        device,
-        input_image,
-        output_image,
-        float(radius_x),
-        float(radius_y),
-        float(radius_z),
-        str(connectivity),
-    )
-
+    return clic._detect_maxima(device, input_image, output_image, float(radius_x), float(radius_y), float(radius_z), str(connectivity))
 
 @plugin_function(categories=["binarize", "in assistant"])
 def detect_minima_box(
     input_image: Image,
-    output_image: Optional[Image] = None,
-    radius_x: float = 0,
-    radius_y: float = 0,
-    radius_z: float = 0,
-    device: Optional[Device] = None,
+    output_image: Optional[Image] =None,
+    radius_x: float =0,
+    radius_y: float =0,
+    radius_z: float =0,
+    device: Optional[Device] =None
 ) -> Image:
     """Detects local minima in a given square/cubic neighborhood. Pixels in the
     resulting image are set to 1 if there is no other pixel in a given radius which
@@ -796,7 +726,7 @@ def detect_minima_box(
 
     Parameters
     ----------
-    input_image: Image
+    input_image: Image 
         Input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
@@ -817,25 +747,17 @@ def detect_minima_box(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_detectMinimaBox
     """
-    return clic._detect_minima_box(
-        device,
-        input_image,
-        output_image,
-        float(radius_x),
-        float(radius_y),
-        float(radius_z),
-    )
-
+    return clic._detect_minima_box(device, input_image, output_image, float(radius_x), float(radius_y), float(radius_z))
 
 @plugin_function(categories=["binarize", "in assistant"])
 def detect_minima(
     input_image: Image,
-    output_image: Optional[Image] = None,
-    radius_x: float = 0,
-    radius_y: float = 0,
-    radius_z: float = 0,
-    connectivity: str = "box",
-    device: Optional[Device] = None,
+    output_image: Optional[Image] =None,
+    radius_x: float =0,
+    radius_y: float =0,
+    radius_z: float =0,
+    connectivity: str ="box",
+    device: Optional[Device] =None
 ) -> Image:
     """Detects local minima in a given square/cubic neighborhood. Pixels in the
     resulting image are set to 1 if there is no other pixel in a given radius which
@@ -843,7 +765,7 @@ def detect_minima(
 
     Parameters
     ----------
-    input_image: Image
+    input_image: Image 
         Input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
@@ -867,28 +789,19 @@ def detect_minima(
     [1] https://clij.github.io/clij2-docs/reference_detectMinimaBox
     [2] https://clij.github.io/clij2-docs/reference_detectMinimaSphere
     """
-    return clic._detect_minima(
-        device,
-        input_image,
-        output_image,
-        float(radius_x),
-        float(radius_y),
-        float(radius_z),
-        str(connectivity),
-    )
-
+    return clic._detect_minima(device, input_image, output_image, float(radius_x), float(radius_y), float(radius_z), str(connectivity))
 
 @plugin_function(categories=["filter", "background removal", "bia-bob-suggestion"])
 def difference_of_gaussian(
     input_image: Image,
-    output_image: Optional[Image] = None,
-    sigma1_x: float = 2,
-    sigma1_y: float = 2,
-    sigma1_z: float = 2,
-    sigma2_x: float = 2,
-    sigma2_y: float = 2,
-    sigma2_z: float = 2,
-    device: Optional[Device] = None,
+    output_image: Optional[Image] =None,
+    sigma1_x: float =2,
+    sigma1_y: float =2,
+    sigma1_z: float =2,
+    sigma2_x: float =2,
+    sigma2_y: float =2,
+    sigma2_z: float =2,
+    device: Optional[Device] =None
 ) -> Image:
     """Applies Gaussian blur to the input image twice with different sigma values,
     producing two images, one of which is subtracted from the other. It is
@@ -897,7 +810,7 @@ def difference_of_gaussian(
 
     Parameters
     ----------
-    input_image: Image
+    input_image: Image 
         The input image to be processed.
     output_image: Optional[Image] (= None)
         The output image where results are written into.
@@ -924,31 +837,20 @@ def difference_of_gaussian(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_differenceOfGaussian3D
     """
-    return clic._difference_of_gaussian(
-        device,
-        input_image,
-        output_image,
-        float(sigma1_x),
-        float(sigma1_y),
-        float(sigma1_z),
-        float(sigma2_x),
-        float(sigma2_y),
-        float(sigma2_z),
-    )
-
+    return clic._difference_of_gaussian(device, input_image, output_image, float(sigma1_x), float(sigma1_y), float(sigma1_z), float(sigma2_x), float(sigma2_y), float(sigma2_z))
 
 @plugin_function(categories=["label processing", "in assistant"])
 def extend_labeling_via_voronoi(
     input_image: Image,
-    output_image: Optional[Image] = None,
-    device: Optional[Device] = None,
+    output_image: Optional[Image] =None,
+    device: Optional[Device] =None
 ) -> Image:
     """Takes a label map image and dilates the regions using an octagon shape until
     they touch. The resulting label map is written to the output.
 
     Parameters
     ----------
-    input_image: Image
+    input_image: Image 
         Input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
@@ -965,12 +867,11 @@ def extend_labeling_via_voronoi(
     """
     return clic._extend_labeling_via_voronoi(device, input_image, output_image)
 
-
 @plugin_function(categories=["filter"])
 def invert(
     input_image: Image,
-    output_image: Optional[Image] = None,
-    device: Optional[Device] = None,
+    output_image: Optional[Image] =None,
+    device: Optional[Device] =None
 ) -> Image:
     """Computes the negative value of all pixels in a given image. It is recommended to
     convert images to 32-bit float before applying this operation. <pre>f(x) =
@@ -978,7 +879,7 @@ def invert(
 
     Parameters
     ----------
-    input_image: Image
+    input_image: Image 
         Input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
@@ -995,12 +896,11 @@ def invert(
     """
     return clic._invert(device, input_image, output_image)
 
-
 @plugin_function(categories=["label", "in assistant"])
 def label_spots(
     input_image: Image,
-    output_image: Optional[Image] = None,
-    device: Optional[Device] = None,
+    output_image: Optional[Image] =None,
+    device: Optional[Device] =None
 ) -> Image:
     """Transforms a binary image with single pixels set to 1 into a labeled spots
     image. Converts a spots image (e.g., from maxima/minima detection) into a label
@@ -1008,7 +908,7 @@ def label_spots(
 
     Parameters
     ----------
-    input_image: Image
+    input_image: Image 
         Input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
@@ -1025,18 +925,17 @@ def label_spots(
     """
     return clic._label_spots(device, input_image, output_image)
 
-
 @plugin_function
 def pointlist_to_labelled_spots(
     input_image: Image,
-    output_image: Optional[Image] = None,
-    device: Optional[Device] = None,
+    output_image: Optional[Image] =None,
+    device: Optional[Device] =None
 ) -> Image:
     """Converts a pointlist image (x,y,z) into a labelled spots in a label image.
 
     Parameters
     ----------
-    input_image: Image
+    input_image: Image 
         Input pointlist image to process.
     output_image: Optional[Image] (= None)
         Output result label image.
@@ -1053,18 +952,17 @@ def pointlist_to_labelled_spots(
     """
     return clic._pointlist_to_labelled_spots(device, input_image, output_image)
 
-
 @plugin_function(categories=["filter", "in assistant"])
 def large_hessian_eigenvalue(
     input_image: Image,
-    output_image: Optional[Image] = None,
-    device: Optional[Device] = None,
+    output_image: Optional[Image] =None,
+    device: Optional[Device] =None
 ) -> Image:
     """Determines the Hessian eigenvalues and returns the large eigenvalue image.
 
     Parameters
     ----------
-    input_image: Image
+    input_image: Image 
         Input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
@@ -1077,14 +975,16 @@ def large_hessian_eigenvalue(
     """
     return clic._large_hessian_eigenvalue(device, input_image, output_image)
 
-
 @plugin_function
-def maximum_of_all_pixels(input_image: Image, device: Optional[Device] = None) -> float:
+def maximum_of_all_pixels(
+    input_image: Image,
+    device: Optional[Device] =None
+) -> float:
     """Determines the maximum of all pixels in a given image.
 
     Parameters
     ----------
-    input_image: Image
+    input_image: Image 
         Input image to process.
     device: Optional[Device] (= None)
         Device to perform the operation on.
@@ -1099,14 +999,16 @@ def maximum_of_all_pixels(input_image: Image, device: Optional[Device] = None) -
     """
     return clic._maximum_of_all_pixels(device, input_image)
 
-
 @plugin_function
-def minimum_of_all_pixels(input_image: Image, device: Optional[Device] = None) -> float:
+def minimum_of_all_pixels(
+    input_image: Image,
+    device: Optional[Device] =None
+) -> float:
     """Determines the minimum of all pixels in a given image.
 
     Parameters
     ----------
-    input_image: Image
+    input_image: Image 
         Input image to process.
     device: Optional[Device] (= None)
         Device to perform the operation on.
@@ -1121,19 +1023,20 @@ def minimum_of_all_pixels(input_image: Image, device: Optional[Device] = None) -
     """
     return clic._minimum_of_all_pixels(device, input_image)
 
-
 @plugin_function
 def minimum_of_masked_pixels(
-    input_image: Image, mask: Image, device: Optional[Device] = None
+    input_image: Image,
+    mask: Image,
+    device: Optional[Device] =None
 ) -> float:
     """Determines the minimum intensity in a masked image, but only over pixels that
     have nonzero values in a separate mask image.
 
     Parameters
     ----------
-    input_image: Image
+    input_image: Image 
         Input image to process.
-    mask: Image
+    mask: Image 
         Input
     device: Optional[Device] (= None)
         Device to perform the operation on.
@@ -1148,22 +1051,21 @@ def minimum_of_masked_pixels(
     """
     return clic._minimum_of_masked_pixels(device, input_image, mask)
 
-
 @plugin_function(categories=["filter", "in assistant"])
 def opening_box(
     input_image: Image,
-    output_image: Optional[Image] = None,
-    radius_x: float = 1,
-    radius_y: float = 1,
-    radius_z: float = 1,
-    device: Optional[Device] = None,
+    output_image: Optional[Image] =None,
+    radius_x: float =1,
+    radius_y: float =1,
+    radius_z: float =1,
+    device: Optional[Device] =None
 ) -> Image:
     """Opening operator, applies morphological opening to intensity images using a
     box-shaped footprint. This operator also works with binary images.
 
     Parameters
     ----------
-    input_image: Image
+    input_image: Image 
         Input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
@@ -1180,31 +1082,23 @@ def opening_box(
     -------
     Image
     """
-    return clic._opening_box(
-        device,
-        input_image,
-        output_image,
-        float(radius_x),
-        float(radius_y),
-        float(radius_z),
-    )
-
+    return clic._opening_box(device, input_image, output_image, float(radius_x), float(radius_y), float(radius_z))
 
 @plugin_function(categories=["filter", "in assistant"])
 def opening_sphere(
     input_image: Image,
-    output_image: Optional[Image] = None,
-    radius_x: float = 1,
-    radius_y: float = 1,
-    radius_z: float = 1,
-    device: Optional[Device] = None,
+    output_image: Optional[Image] =None,
+    radius_x: float =1,
+    radius_y: float =1,
+    radius_z: float =1,
+    device: Optional[Device] =None
 ) -> Image:
     """Opening operator, applies morphological opening to intensity images using a
     sphere-shaped footprint. This operator also works with binary images.
 
     Parameters
     ----------
-    input_image: Image
+    input_image: Image 
         Input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
@@ -1221,32 +1115,24 @@ def opening_sphere(
     -------
     Image
     """
-    return clic._opening_sphere(
-        device,
-        input_image,
-        output_image,
-        float(radius_x),
-        float(radius_y),
-        float(radius_z),
-    )
-
+    return clic._opening_sphere(device, input_image, output_image, float(radius_x), float(radius_y), float(radius_z))
 
 @plugin_function(categories=["filter", "in assistant"])
 def grayscale_opening(
     input_image: Image,
-    output_image: Optional[Image] = None,
-    radius_x: float = 1,
-    radius_y: float = 1,
-    radius_z: float = 1,
-    connectivity: str = "box",
-    device: Optional[Device] = None,
+    output_image: Optional[Image] =None,
+    radius_x: float =1,
+    radius_y: float =1,
+    radius_z: float =1,
+    connectivity: str ="box",
+    device: Optional[Device] =None
 ) -> Image:
     """Opening operator, applies morphological opening to intensity images using a
     sphere- or box-shaped footprint. This operator also works with binary images.
 
     Parameters
     ----------
-    input_image: Image
+    input_image: Image 
         Input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
@@ -1265,23 +1151,14 @@ def grayscale_opening(
     -------
     Image
     """
-    return clic._grayscale_opening(
-        device,
-        input_image,
-        output_image,
-        float(radius_x),
-        float(radius_y),
-        float(radius_z),
-        str(connectivity),
-    )
-
+    return clic._grayscale_opening(device, input_image, output_image, float(radius_x), float(radius_y), float(radius_z), str(connectivity))
 
 @plugin_function(categories=["filter", "in assistant"])
 def opening(
     input_image: Image,
     footprint: Image,
-    output_image: Optional[Image] = None,
-    device: Optional[Device] = None,
+    output_image: Optional[Image] =None,
+    device: Optional[Device] =None
 ) -> Image:
     """Opening operator, applies morphological opening to intensity images using a
     custom structuring element provided as input. This operator also works with
@@ -1289,9 +1166,9 @@ def opening(
 
     Parameters
     ----------
-    input_image: Image
+    input_image: Image 
         Input image to process.
-    footprint: Image
+    footprint: Image 
         Structuring element for the operation.
     output_image: Optional[Image] (= None)
         Output result image.
@@ -1304,23 +1181,22 @@ def opening(
     """
     return clic._opening(device, input_image, footprint, output_image)
 
-
 @plugin_function(categories=["filter", "in assistant"])
 def binary_opening(
     input_image: Image,
-    output_image: Optional[Image] = None,
-    radius_x: float = 1,
-    radius_y: float = 1,
-    radius_z: float = 1,
-    connectivity: str = "box",
-    device: Optional[Device] = None,
+    output_image: Optional[Image] =None,
+    radius_x: float =1,
+    radius_y: float =1,
+    radius_z: float =1,
+    connectivity: str ="box",
+    device: Optional[Device] =None
 ) -> Image:
     """Opening operator, applies binary morphological opening to intensity images using
     a sphere- or box-shaped footprint. This operator also works with binary images.
 
     Parameters
     ----------
-    input_image: Image
+    input_image: Image 
         Input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
@@ -1339,28 +1215,19 @@ def binary_opening(
     -------
     Image
     """
-    return clic._binary_opening(
-        device,
-        input_image,
-        output_image,
-        float(radius_x),
-        float(radius_y),
-        float(radius_z),
-        str(connectivity),
-    )
-
+    return clic._binary_opening(device, input_image, output_image, float(radius_x), float(radius_y), float(radius_z), str(connectivity))
 
 @plugin_function
 def radians_to_degrees(
     input_image: Image,
-    output_image: Optional[Image] = None,
-    device: Optional[Device] = None,
+    output_image: Optional[Image] =None,
+    device: Optional[Device] =None
 ) -> Image:
     """Converts radians to degrees.
 
     Parameters
     ----------
-    input_image: Image
+    input_image: Image 
         Input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
@@ -1373,19 +1240,18 @@ def radians_to_degrees(
     """
     return clic._radians_to_degrees(device, input_image, output_image)
 
-
 @plugin_function(categories=["label processing", "in assistant", "bia-bob-suggestion"])
 def reduce_labels_to_label_edges(
     input_image: Image,
-    output_image: Optional[Image] = None,
-    device: Optional[Device] = None,
+    output_image: Optional[Image] =None,
+    device: Optional[Device] =None
 ) -> Image:
     """Takes a label map and reduces all labels to their edges. Label IDs stay and
     background will be zero.
 
     Parameters
     ----------
-    input_image: Image
+    input_image: Image 
         Input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
@@ -1402,18 +1268,17 @@ def reduce_labels_to_label_edges(
     """
     return clic._reduce_labels_to_label_edges(device, input_image, output_image)
 
-
 @plugin_function(categories=["filter", "in assistant"])
 def small_hessian_eigenvalue(
     input_image: Image,
-    output_image: Optional[Image] = None,
-    device: Optional[Device] = None,
+    output_image: Optional[Image] =None,
+    device: Optional[Device] =None
 ) -> Image:
     """Determines the Hessian eigenvalues and returns the small eigenvalue image.
 
     Parameters
     ----------
-    input_image: Image
+    input_image: Image 
         Input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
@@ -1426,19 +1291,18 @@ def small_hessian_eigenvalue(
     """
     return clic._small_hessian_eigenvalue(device, input_image, output_image)
 
-
 @plugin_function(categories=["filter"])
 def square(
     input_image: Image,
-    output_image: Optional[Image] = None,
-    device: Optional[Device] = None,
+    output_image: Optional[Image] =None,
+    device: Optional[Device] =None
 ) -> Image:
     """Returns the element-wise square of the input. This function is similar to its
     counterpart in NumPy.
 
     Parameters
     ----------
-    input_image: Image
+    input_image: Image 
         Input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
@@ -1455,21 +1319,20 @@ def square(
     """
     return clic._square(device, input_image, output_image)
 
-
 @plugin_function(categories=["combine", "in assistant"])
 def squared_difference(
     input_image0: Image,
     input_image1: Image,
-    output_image: Optional[Image] = None,
-    device: Optional[Device] = None,
+    output_image: Optional[Image] =None,
+    device: Optional[Device] =None
 ) -> Image:
     """Determines the squared difference pixel by pixel between two images.
 
     Parameters
     ----------
-    input_image0: Image
+    input_image0: Image 
         First input image.
-    input_image1: Image
+    input_image1: Image 
         Second input image.
     output_image: Optional[Image] (= None)
         Output result image.
@@ -1486,15 +1349,14 @@ def squared_difference(
     """
     return clic._squared_difference(device, input_image0, input_image1, output_image)
 
-
 @plugin_function(categories=["filter", "edge detection", "in assistant"])
 def standard_deviation_box(
     input_image: Image,
-    output_image: Optional[Image] = None,
-    radius_x: float = 1,
-    radius_y: float = 1,
-    radius_z: float = 1,
-    device: Optional[Device] = None,
+    output_image: Optional[Image] =None,
+    radius_x: float =1,
+    radius_y: float =1,
+    radius_z: float =1,
+    device: Optional[Device] =None
 ) -> Image:
     """Computes the local standard deviation of each pixel's box neighborhood. The box
     size is specified by its half-width, half-height, and half-depth (radius). If 2D
@@ -1502,7 +1364,7 @@ def standard_deviation_box(
 
     Parameters
     ----------
-    input_image: Image
+    input_image: Image 
         Input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
@@ -1523,24 +1385,16 @@ def standard_deviation_box(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_standardDeviationBox
     """
-    return clic._standard_deviation_box(
-        device,
-        input_image,
-        output_image,
-        float(radius_x),
-        float(radius_y),
-        float(radius_z),
-    )
-
+    return clic._standard_deviation_box(device, input_image, output_image, float(radius_x), float(radius_y), float(radius_z))
 
 @plugin_function(categories=["filter", "edge detection", "in assistant"])
 def standard_deviation_sphere(
     input_image: Image,
-    output_image: Optional[Image] = None,
-    radius_x: float = 1,
-    radius_y: float = 1,
-    radius_z: float = 1,
-    device: Optional[Device] = None,
+    output_image: Optional[Image] =None,
+    radius_x: float =1,
+    radius_y: float =1,
+    radius_z: float =1,
+    device: Optional[Device] =None
 ) -> Image:
     """Computes the local standard deviation of each pixel's spherical neighborhood.
     The neighborhood size is specified by its half-width, half-height, and
@@ -1548,7 +1402,7 @@ def standard_deviation_sphere(
 
     Parameters
     ----------
-    input_image: Image
+    input_image: Image 
         Input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
@@ -1569,25 +1423,17 @@ def standard_deviation_sphere(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_standardDeviationSphere
     """
-    return clic._standard_deviation_sphere(
-        device,
-        input_image,
-        output_image,
-        float(radius_x),
-        float(radius_y),
-        float(radius_z),
-    )
-
+    return clic._standard_deviation_sphere(device, input_image, output_image, float(radius_x), float(radius_y), float(radius_z))
 
 @plugin_function(categories=["filter", "edge detection", "in assistant"])
 def standard_deviation(
     input_image: Image,
-    output_image: Optional[Image] = None,
-    radius_x: float = 1,
-    radius_y: float = 1,
-    radius_z: float = 1,
-    connectivity: str = "box",
-    device: Optional[Device] = None,
+    output_image: Optional[Image] =None,
+    radius_x: float =1,
+    radius_y: float =1,
+    radius_z: float =1,
+    connectivity: str ="box",
+    device: Optional[Device] =None
 ) -> Image:
     """Computes the local standard deviation of each pixel's neighborhood. The
     neighborhood size is specified by its half-width, half-height, and half-depth
@@ -1595,7 +1441,7 @@ def standard_deviation(
 
     Parameters
     ----------
-    input_image: Image
+    input_image: Image 
         Input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
@@ -1619,34 +1465,23 @@ def standard_deviation(
     [1] https://clij.github.io/clij2-docs/reference_standardDeviationBox
     [2] https://clij.github.io/clij2-docs/reference_standardDeviationSphere
     """
-    return clic._standard_deviation(
-        device,
-        input_image,
-        output_image,
-        float(radius_x),
-        float(radius_y),
-        float(radius_z),
-        str(connectivity),
-    )
+    return clic._standard_deviation(device, input_image, output_image, float(radius_x), float(radius_y), float(radius_z), str(connectivity))
 
-
-@plugin_function(
-    categories=["filter", "background removal", "in assistant", "bia-bob-suggestion"]
-)
+@plugin_function(categories=["filter", "background removal", "in assistant", "bia-bob-suggestion"])
 def subtract_gaussian_background(
     input_image: Image,
-    output_image: Optional[Image] = None,
-    sigma_x: float = 2,
-    sigma_y: float = 2,
-    sigma_z: float = 2,
-    device: Optional[Device] = None,
+    output_image: Optional[Image] =None,
+    sigma_x: float =2,
+    sigma_y: float =2,
+    sigma_z: float =2,
+    device: Optional[Device] =None
 ) -> Image:
     """Applies Gaussian blur to the input image and subtracts the result from the
     original.
 
     Parameters
     ----------
-    input_image: Image
+    input_image: Image 
         Input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
@@ -1667,31 +1502,23 @@ def subtract_gaussian_background(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_subtractGaussianBackground
     """
-    return clic._subtract_gaussian_background(
-        device,
-        input_image,
-        output_image,
-        float(sigma_x),
-        float(sigma_y),
-        float(sigma_z),
-    )
-
+    return clic._subtract_gaussian_background(device, input_image, output_image, float(sigma_x), float(sigma_y), float(sigma_z))
 
 @plugin_function(categories=["combine", "in assistant"])
 def subtract_images(
     input_image0: Image,
     input_image1: Image,
-    output_image: Optional[Image] = None,
-    device: Optional[Device] = None,
+    output_image: Optional[Image] =None,
+    device: Optional[Device] =None
 ) -> Image:
     """Subtracts one image X from another image Y pixel-wise. <pre>f(x, y) = x -
     y</pre>
 
     Parameters
     ----------
-    input_image0: Image
+    input_image0: Image 
         First input image.
-    input_image1: Image
+    input_image1: Image 
         Second input image.
     output_image: Optional[Image] (= None)
         Output result image.
@@ -1708,20 +1535,19 @@ def subtract_images(
     """
     return clic._subtract_images(device, input_image0, input_image1, output_image)
 
-
 @plugin_function(categories=["transform", "in assistant"])
 def sub_stack(
     input_image: Image,
-    output_image: Optional[Image] = None,
-    start_z: int = 0,
-    end_z: int = 0,
-    device: Optional[Device] = None,
+    output_image: Optional[Image] =None,
+    start_z: int =0,
+    end_z: int =0,
+    device: Optional[Device] =None
 ) -> Image:
     """Crop a volume into a new volume, along the z-axis.
 
     Parameters
     ----------
-    input_image: Image
+    input_image: Image 
         Input image.
     output_image: Optional[Image] (= None)
         Output image.
@@ -1742,14 +1568,13 @@ def sub_stack(
     """
     return clic._sub_stack(device, input_image, output_image, int(start_z), int(end_z))
 
-
 @plugin_function(categories=["transform", "in assistant"])
 def reduce_stack(
     input_image: Image,
-    output_image: Optional[Image] = None,
-    reduction_factor: int = 2,
-    offset: int = 0,
-    device: Optional[Device] = None,
+    output_image: Optional[Image] =None,
+    reduction_factor: int =2,
+    offset: int =0,
+    device: Optional[Device] =None
 ) -> Image:
     """Reduces the number of z-slices in a stack by a given factor. With the offset you
     have control over which slices stay: with factor 3 and offset 0, slices 0, 3, 6,
@@ -1757,7 +1582,7 @@ def reduce_stack(
 
     Parameters
     ----------
-    input_image: Image
+    input_image: Image 
         Input image.
     output_image: Optional[Image] (= None)
         Output image.
@@ -1776,14 +1601,12 @@ def reduce_stack(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_reduceStack
     """
-    return clic._reduce_stack(
-        device, input_image, output_image, int(reduction_factor), int(offset)
-    )
-
+    return clic._reduce_stack(device, input_image, output_image, int(reduction_factor), int(offset))
 
 @plugin_function
 def sum_of_all_pixels(
-    input_image: Optional[Image] = None, device: Optional[Device] = None
+    input_image: Optional[Image] =None,
+    device: Optional[Device] =None
 ) -> float:
     """Determines the sum of all pixels in a given image.
 
@@ -1804,21 +1627,20 @@ def sum_of_all_pixels(
     """
     return clic._sum_of_all_pixels(device, input_image)
 
-
 @plugin_function(categories=["filter", "background removal", "in assistant"])
 def top_hat_box(
     input_image: Image,
-    output_image: Optional[Image] = None,
-    radius_x: float = 1,
-    radius_y: float = 1,
-    radius_z: float = 1,
-    device: Optional[Device] = None,
+    output_image: Optional[Image] =None,
+    radius_x: float =1,
+    radius_y: float =1,
+    radius_z: float =1,
+    device: Optional[Device] =None
 ) -> Image:
     """Applies a top-hat filter for background subtraction to the input image.
 
     Parameters
     ----------
-    input_image: Image
+    input_image: Image 
         The input image where the background is subtracted from.
     output_image: Optional[Image] (= None)
         The output image where results are written into.
@@ -1839,32 +1661,22 @@ def top_hat_box(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_topHatBox
     """
-    return clic._top_hat_box(
-        device,
-        input_image,
-        output_image,
-        float(radius_x),
-        float(radius_y),
-        float(radius_z),
-    )
+    return clic._top_hat_box(device, input_image, output_image, float(radius_x), float(radius_y), float(radius_z))
 
-
-@plugin_function(
-    categories=["filter", "background removal", "in assistant", "bia-bob-suggestion"]
-)
+@plugin_function(categories=["filter", "background removal", "in assistant", "bia-bob-suggestion"])
 def top_hat_sphere(
     input_image: Image,
-    output_image: Optional[Image] = None,
-    radius_x: float = 1,
-    radius_y: float = 1,
-    radius_z: float = 1,
-    device: Optional[Device] = None,
+    output_image: Optional[Image] =None,
+    radius_x: float =1,
+    radius_y: float =1,
+    radius_z: float =1,
+    device: Optional[Device] =None
 ) -> Image:
     """Applies a top-hat filter for background subtraction to the input image.
 
     Parameters
     ----------
-    input_image: Image
+    input_image: Image 
         The input image where the background is subtracted from.
     output_image: Optional[Image] (= None)
         The output image where results are written into.
@@ -1885,31 +1697,23 @@ def top_hat_sphere(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_topHatSphere
     """
-    return clic._top_hat_sphere(
-        device,
-        input_image,
-        output_image,
-        float(radius_x),
-        float(radius_y),
-        float(radius_z),
-    )
-
+    return clic._top_hat_sphere(device, input_image, output_image, float(radius_x), float(radius_y), float(radius_z))
 
 @plugin_function(categories=["filter", "background removal", "in assistant"])
 def top_hat(
     input_image: Image,
-    output_image: Optional[Image] = None,
-    radius_x: float = 1,
-    radius_y: float = 1,
-    radius_z: float = 1,
-    connectivity: str = "box",
-    device: Optional[Device] = None,
+    output_image: Optional[Image] =None,
+    radius_x: float =1,
+    radius_y: float =1,
+    radius_z: float =1,
+    connectivity: str ="box",
+    device: Optional[Device] =None
 ) -> Image:
     """Applies a top-hat filter for background subtraction to the input image.
 
     Parameters
     ----------
-    input_image: Image
+    input_image: Image 
         The input image where the background is subtracted from.
     output_image: Optional[Image] (= None)
         The output image where results are written into.
@@ -1933,25 +1737,16 @@ def top_hat(
     [1] https://clij.github.io/clij2-docs/reference_topHatBox
     [2] https://clij.github.io/clij2-docs/reference_topHatSphere
     """
-    return clic._top_hat(
-        device,
-        input_image,
-        output_image,
-        float(radius_x),
-        float(radius_y),
-        float(radius_z),
-        str(connectivity),
-    )
-
+    return clic._top_hat(device, input_image, output_image, float(radius_x), float(radius_y), float(radius_z), str(connectivity))
 
 @plugin_function(categories=["projection"])
 def extended_depth_of_focus_variance_projection(
     input_image: Image,
-    output_image: Optional[Image] = None,
-    radius_x: float = 10,
-    radius_y: float = 10,
-    sigma: float = 5,
-    device: Optional[Device] = None,
+    output_image: Optional[Image] =None,
+    radius_x: float =10,
+    radius_y: float =10,
+    sigma: float =5,
+    device: Optional[Device] =None
 ) -> Image:
     """Depth projection using the local variance maxima to determine the best focus
     plane. The radius parameter controls the local variance calculation, and sigma
@@ -1959,7 +1754,7 @@ def extended_depth_of_focus_variance_projection(
 
     Parameters
     ----------
-    input_image: Image
+    input_image: Image 
         Input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
@@ -1976,22 +1771,14 @@ def extended_depth_of_focus_variance_projection(
     -------
     Image
     """
-    return clic._extended_depth_of_focus_variance_projection(
-        device,
-        input_image,
-        output_image,
-        float(radius_x),
-        float(radius_y),
-        float(sigma),
-    )
-
+    return clic._extended_depth_of_focus_variance_projection(device, input_image, output_image, float(radius_x), float(radius_y), float(sigma))
 
 @plugin_function(categories=["projection"])
 def extended_depth_of_focus_sobel_projection(
     input_image: Image,
-    output_image: Optional[Image] = None,
-    sigma: float = 5,
-    device: Optional[Device] = None,
+    output_image: Optional[Image] =None,
+    sigma: float =5,
+    device: Optional[Device] =None
 ) -> Image:
     """Depth projection using the local Sobel gradient magnitude maxima to determine
     the best focus plane. Sigma applies a Gaussian blur for smoothness of the
@@ -1999,7 +1786,7 @@ def extended_depth_of_focus_sobel_projection(
 
     Parameters
     ----------
-    input_image: Image
+    input_image: Image 
         Input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
@@ -2012,19 +1799,16 @@ def extended_depth_of_focus_sobel_projection(
     -------
     Image
     """
-    return clic._extended_depth_of_focus_sobel_projection(
-        device, input_image, output_image, float(sigma)
-    )
-
+    return clic._extended_depth_of_focus_sobel_projection(device, input_image, output_image, float(sigma))
 
 @plugin_function
 def hessian_gaussian_eigenvalues(
     input_image: Image,
-    small_eigenvalue: Optional[Image] = None,
-    middle_eigenvalue: Optional[Image] = None,
-    large_eigenvalue: Optional[Image] = None,
-    sigma: float = 1,
-    device: Optional[Device] = None,
+    small_eigenvalue: Optional[Image] =None,
+    middle_eigenvalue: Optional[Image] =None,
+    large_eigenvalue: Optional[Image] =None,
+    sigma: float =1,
+    device: Optional[Device] =None
 ) -> Image:
     """Determines the Hessian matrix eigenvalues using the Gaussian-derivative method
     and returns the small, middle and large eigenvalue images. The function returns
@@ -2033,7 +1817,7 @@ def hessian_gaussian_eigenvalues(
 
     Parameters
     ----------
-    input_image: Image
+    input_image: Image 
         Input image to process.
     small_eigenvalue: Optional[Image] (= None)
         Output result image for the small eigenvalue.
@@ -2050,23 +1834,15 @@ def hessian_gaussian_eigenvalues(
     -------
     Image
     """
-    return clic._hessian_gaussian_eigenvalues(
-        device,
-        input_image,
-        small_eigenvalue,
-        middle_eigenvalue,
-        large_eigenvalue,
-        float(sigma),
-    )
-
+    return clic._hessian_gaussian_eigenvalues(device, input_image, small_eigenvalue, middle_eigenvalue, large_eigenvalue, float(sigma))
 
 @plugin_function
 def generate_proximal_neighbors_matrix(
     input_image_matrix: Image,
-    output_image_matrix: Optional[Image] = None,
-    min_distance: float = -1,
-    max_distance: float = -1,
-    device: Optional[Device] = None,
+    output_image_matrix: Optional[Image] =None,
+    min_distance: float =-1,
+    max_distance: float =-1,
+    device: Optional[Device] =None
 ) -> Image:
     """Generates a touch-matrix where the neighbors within a given distance range are
     marked as touching. It take as input a distance matrix (e.g. from a pointlist of
@@ -2076,7 +1852,7 @@ def generate_proximal_neighbors_matrix(
 
     Parameters
     ----------
-    input_image_matrix: Image
+    input_image_matrix: Image 
         Input distance matrix.
     output_image_matrix: Optional[Image] (= None)
         Output touch-matrix.
@@ -2091,70 +1867,6 @@ def generate_proximal_neighbors_matrix(
     -------
     Image
     """
-    return clic._generate_proximal_neighbors_matrix(
-        device,
-        input_image_matrix,
-        output_image_matrix,
-        float(min_distance),
-        float(max_distance),
-    )
+    return clic._generate_proximal_neighbors_matrix(device, input_image_matrix, output_image_matrix, float(min_distance), float(max_distance))
 
-
-__all__ = [
-    "absolute_difference",
-    "add_images",
-    "bottom_hat_box",
-    "bottom_hat_sphere",
-    "bottom_hat",
-    "clip",
-    "closing_box",
-    "closing_sphere",
-    "grayscale_closing",
-    "closing",
-    "binary_closing",
-    "concatenate_along_x",
-    "concatenate_along_y",
-    "concatenate_along_z",
-    "count_touching_neighbors",
-    "crop_border",
-    "divide_by_gaussian_background",
-    "degrees_to_radians",
-    "detect_maxima_box",
-    "detect_maxima",
-    "detect_minima_box",
-    "detect_minima",
-    "difference_of_gaussian",
-    "extend_labeling_via_voronoi",
-    "invert",
-    "label_spots",
-    "pointlist_to_labelled_spots",
-    "large_hessian_eigenvalue",
-    "maximum_of_all_pixels",
-    "minimum_of_all_pixels",
-    "minimum_of_masked_pixels",
-    "opening_box",
-    "opening_sphere",
-    "grayscale_opening",
-    "opening",
-    "binary_opening",
-    "radians_to_degrees",
-    "reduce_labels_to_label_edges",
-    "small_hessian_eigenvalue",
-    "square",
-    "squared_difference",
-    "standard_deviation_box",
-    "standard_deviation_sphere",
-    "standard_deviation",
-    "subtract_gaussian_background",
-    "subtract_images",
-    "sub_stack",
-    "reduce_stack",
-    "sum_of_all_pixels",
-    "top_hat_box",
-    "top_hat_sphere",
-    "top_hat",
-    "extended_depth_of_focus_variance_projection",
-    "extended_depth_of_focus_sobel_projection",
-    "hessian_gaussian_eigenvalues",
-    "generate_proximal_neighbors_matrix",
-]
+__all__ = ["absolute_difference", "add_images", "bottom_hat_box", "bottom_hat_sphere", "bottom_hat", "clip", "closing_box", "closing_sphere", "grayscale_closing", "closing", "binary_closing", "concatenate", "concatenate_along_x", "concatenate_along_y", "concatenate_along_z", "count_touching_neighbors", "crop_border", "divide_by_gaussian_background", "degrees_to_radians", "detect_maxima_box", "detect_maxima", "detect_minima_box", "detect_minima", "difference_of_gaussian", "extend_labeling_via_voronoi", "invert", "label_spots", "pointlist_to_labelled_spots", "large_hessian_eigenvalue", "maximum_of_all_pixels", "minimum_of_all_pixels", "minimum_of_masked_pixels", "opening_box", "opening_sphere", "grayscale_opening", "opening", "binary_opening", "radians_to_degrees", "reduce_labels_to_label_edges", "small_hessian_eigenvalue", "square", "squared_difference", "standard_deviation_box", "standard_deviation_sphere", "standard_deviation", "subtract_gaussian_background", "subtract_images", "sub_stack", "reduce_stack", "sum_of_all_pixels", "top_hat_box", "top_hat_sphere", "top_hat", "extended_depth_of_focus_variance_projection", "extended_depth_of_focus_sobel_projection", "hessian_gaussian_eigenvalues", "generate_proximal_neighbors_matrix"]

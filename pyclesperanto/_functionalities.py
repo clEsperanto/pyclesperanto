@@ -17,6 +17,7 @@ def execute(
     kernel_source: str = "",
     kernel_name: str = "",
     global_size: tuple = (1, 1, 1),
+    local_size: tuple = (0, 0, 0),
     parameters: dict = {},
     constants: dict = {},
     device: Device = None,
@@ -74,7 +75,22 @@ def execute(
         else:
             global_size = (global_size,)
 
-    _execute(device, kernel_name, kernel_source, parameters, global_size, constants)
+    # manage local range
+    if not isinstance(local_size, tuple):
+        if isinstance(local_size, list) or isinstance(local_size, np.ndarray):
+            local_size = tuple(local_size)
+        else:
+            local_size = (local_size,)
+
+    _execute(
+        device,
+        kernel_name,
+        kernel_source,
+        parameters,
+        global_size,
+        local_size,
+        constants,
+    )
 
 
 def native_execute(
@@ -82,7 +98,7 @@ def native_execute(
     kernel_source: str = "",
     kernel_name: str = "",
     global_size: tuple = (1, 1, 1),
-    local_size: tuple = (1, 1, 1),
+    local_size: tuple = (0, 0, 0),
     parameters: dict = {},
     device: Device = None,
 ):

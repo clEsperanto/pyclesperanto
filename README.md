@@ -127,7 +127,7 @@ imsave("result.tif", output_image)
 <img src="https://github.com/clEsperanto/pyclesperanto/blob/main/demos/images/segmentation_3d.png?raw=true" width="300"/>
 </td><td>
 
-* [Segment and analyse blobs](https://github.com/clEsperanto/pyclesperanto/tree/main/demos/examples/analyse_blobs.ipynb)
+* [Segment and analyse blobs](https://github.com/clEsperanto/pyclesperanto/tree/main/demos/examples/thresholding.ipynb)
 * [Voronoi-Otsu labeling](https://github.com/clEsperanto/pyclesperanto/tree/main/demos/examples/voronoi_otsu_labeling.ipynb)
 * [Cell segmentation based on membrane](https://github.com/clEsperanto/pyclesperanto/tree/main/demos/examples/membrane_segmentation_2d.ipynb)
 * [Cell segmentation in 3D](https://github.com/clEsperanto/pyclesperanto/tree/main/demos/examples/Segmentation_3D.ipynb)

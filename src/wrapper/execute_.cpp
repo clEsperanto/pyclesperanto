@@ -12,25 +12,45 @@
 
 namespace py = pybind11;
 
-auto py_execute(const cle::Device::Pointer &device, const std::string &kernel_name, const std::string &kernel_source, const py::dict &parameters, const py::tuple &range, const py::dict &constants) -> void
+auto py_execute(const cle::Device::Pointer &device, const std::string &kernel_name, const std::string &kernel_source, const py::dict &parameters, const py::tuple &global, const py::tuple &local, const py::dict &constants) -> void
 {
      cle::RangeArray global_range = {1, 1, 1};
-     switch (range.size())
+     switch (global.size())
      {
      case 1:
-          global_range[0] = range[0].cast<size_t>();
+          global_range[0] = global[0].cast<size_t>();
           break;
      case 2:
-          global_range[0] = range[1].cast<size_t>();
-          global_range[1] = range[0].cast<size_t>();
+          global_range[0] = global[1].cast<size_t>();
+          global_range[1] = global[0].cast<size_t>();
           break;
      case 3:
-          global_range[0] = range[2].cast<size_t>();
-          global_range[1] = range[1].cast<size_t>();
-          global_range[2] = range[0].cast<size_t>();
+          global_range[0] = global[2].cast<size_t>();
+          global_range[1] = global[1].cast<size_t>();
+          global_range[2] = global[0].cast<size_t>();
           break;
      default:
-          throw std::invalid_argument("Error: range tuple must have 3 elements or less. Received " + std::to_string(range.size()) + " elements.");
+          throw std::invalid_argument("Error: range tuple must have 3 elements or less. Received " + std::to_string(global.size()) + " elements.");
+          break;
+     }
+
+     cle::RangeArray local_range = {1, 1, 1};
+     switch (local.size())
+     {
+     case 1:
+          local_range[0] = local[0].cast<size_t>();
+          break;
+     case 2:
+          local_range[0] = local[1].cast<size_t>();
+          local_range[1] = local[0].cast<size_t>();
+          break;
+     case 3:
+          local_range[0] = local[2].cast<size_t>();
+          local_range[1] = local[1].cast<size_t>();
+          local_range[2] = local[0].cast<size_t>();
+          break;
+     default:
+          throw std::invalid_argument("Error: range tuple must have 3 elements or less. Received " + std::to_string(local.size()) + " elements.");
           break;
      }
 
@@ -73,7 +93,7 @@ auto py_execute(const cle::Device::Pointer &device, const std::string &kernel_na
      }
 
      // execute
-     cle::execute(device, kernel_info, clic_parameters, global_range, clic_constants);
+     cle::execute(device, kernel_info, clic_parameters, global_range, local_range, clic_constants);
 }
 
 auto py_native_execute(const cle::Device::Pointer &device, const std::string &kernel_name, const std::string &kernel_source, const py::dict &parameters, const py::tuple &global, const py::tuple &local) -> void
@@ -153,7 +173,7 @@ auto py_native_execute(const cle::Device::Pointer &device, const std::string &ke
 auto execute_(py::module_ &m) -> void
 {
      m.def("_execute", &py_execute, "Call execute function from C++.",
-           py::arg("device"), py::arg("kernel_name"), py::arg("kernel_source"), py::arg("parameters"), py::arg("range"), py::arg("constants"));
+           py::arg("device"), py::arg("kernel_name"), py::arg("kernel_source"), py::arg("parameters"),  py::arg("global"), py::arg("local"), py::arg("constants"));
 
      m.def("_native_execute", &py_native_execute, "Call native_execute function from C++.",
            py::arg("device"), py::arg("kernel_name"), py::arg("kernel_source"), py::arg("parameters"), py::arg("global"), py::arg("local"));

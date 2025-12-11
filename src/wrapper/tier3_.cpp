@@ -1,5 +1,5 @@
 // this code is auto-generated, do not edit manually
-
+    
 #include "pycle_wrapper.hpp"
 #include "tier3.hpp"
 
@@ -97,6 +97,10 @@ m.def("_bounding_box", &cle::tier3::bounding_box_func, "Call cle::tier3::boundin
     m.def("_artificial_tissue", &cle::tier3::artificial_tissue_func, "Call cle::tier3::artificial_tissue_func from C++ CLIc.",
     py::return_value_policy::automatic_reference,
     py::arg("device"), py::arg("width"), py::arg("height"), py::arg("depth"), py::arg("delta_x"), py::arg("delta_y"), py::arg("delta_z"), py::arg("sigma_x"), py::arg("sigma_y"), py::arg("sigma_z"));
+
+    m.def("_read_map_values", &cle::tier3::read_map_values_func, "Call cle::tier3::read_map_values_func from C++ CLIc.",
+    py::return_value_policy::automatic_reference,
+    py::arg("device"), py::arg("map"), py::arg("label"), py::arg("dst"));
 
     m.def("_read_intensities_from_map", &cle::tier3::read_intensities_from_map_func, "Call cle::tier3::read_intensities_from_map_func from C++ CLIc.",
     py::return_value_policy::automatic_reference,

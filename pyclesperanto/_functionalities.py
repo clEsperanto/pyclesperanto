@@ -82,7 +82,15 @@ def execute(
         else:
             local_size = (local_size,)
 
-    _execute(device, kernel_name, kernel_source, parameters, global_size, local_size, constants)
+    _execute(
+        device,
+        kernel_name,
+        kernel_source,
+        parameters,
+        global_size,
+        local_size,
+        constants,
+    )
 
 
 def native_execute(

@@ -10,6 +10,42 @@ m.def("_absolute", &cle::tier1::absolute_func, "Call cle::tier1::absolute_func f
     py::return_value_policy::automatic_reference,
     py::arg("device"), py::arg("src"), py::arg("dst"));
 
+    m.def("_sin", &cle::tier1::sin_func, "Call cle::tier1::sin_func from C++ CLIc.",
+    py::return_value_policy::automatic_reference,
+    py::arg("device"), py::arg("src"), py::arg("dst"));
+
+    m.def("_cos", &cle::tier1::cos_func, "Call cle::tier1::cos_func from C++ CLIc.",
+    py::return_value_policy::automatic_reference,
+    py::arg("device"), py::arg("src"), py::arg("dst"));
+
+    m.def("_tan", &cle::tier1::tan_func, "Call cle::tier1::tan_func from C++ CLIc.",
+    py::return_value_policy::automatic_reference,
+    py::arg("device"), py::arg("src"), py::arg("dst"));
+
+    m.def("_asin", &cle::tier1::asin_func, "Call cle::tier1::asin_func from C++ CLIc.",
+    py::return_value_policy::automatic_reference,
+    py::arg("device"), py::arg("src"), py::arg("dst"));
+
+    m.def("_acos", &cle::tier1::acos_func, "Call cle::tier1::acos_func from C++ CLIc.",
+    py::return_value_policy::automatic_reference,
+    py::arg("device"), py::arg("src"), py::arg("dst"));
+
+    m.def("_atan", &cle::tier1::atan_func, "Call cle::tier1::atan_func from C++ CLIc.",
+    py::return_value_policy::automatic_reference,
+    py::arg("device"), py::arg("src"), py::arg("dst"));
+
+    m.def("_sinh", &cle::tier1::sinh_func, "Call cle::tier1::sinh_func from C++ CLIc.",
+    py::return_value_policy::automatic_reference,
+    py::arg("device"), py::arg("src"), py::arg("dst"));
+
+    m.def("_cosh", &cle::tier1::cosh_func, "Call cle::tier1::cosh_func from C++ CLIc.",
+    py::return_value_policy::automatic_reference,
+    py::arg("device"), py::arg("src"), py::arg("dst"));
+
+    m.def("_tanh", &cle::tier1::tanh_func, "Call cle::tier1::tanh_func from C++ CLIc.",
+    py::return_value_policy::automatic_reference,
+    py::arg("device"), py::arg("src"), py::arg("dst"));
+
     m.def("_add_images_weighted", &cle::tier1::add_images_weighted_func, "Call cle::tier1::add_images_weighted_func from C++ CLIc.",
     py::return_value_policy::automatic_reference,
     py::arg("device"), py::arg("src0"), py::arg("src1"), py::arg("dst"), py::arg("factor1"), py::arg("factor2"));
@@ -108,7 +144,7 @@ m.def("_absolute", &cle::tier1::absolute_func, "Call cle::tier1::absolute_func f
 
     m.def("_divide_images", &cle::tier1::divide_images_func, "Call cle::tier1::divide_images_func from C++ CLIc.",
     py::return_value_policy::automatic_reference,
-    py::arg("device"), py::arg("dividend"), py::arg("divisor"), py::arg("dst"));
+    py::arg("device"), py::arg("src0"), py::arg("src1"), py::arg("dst"));
 
     m.def("_divide_scalar_by_image", &cle::tier1::divide_scalar_by_image_func, "Call cle::tier1::divide_scalar_by_image_func from C++ CLIc.",
     py::return_value_policy::automatic_reference,
@@ -139,6 +175,14 @@ m.def("_absolute", &cle::tier1::absolute_func, "Call cle::tier1::absolute_func f
     py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("radius_x"), py::arg("radius_y"), py::arg("radius_z"), py::arg("connectivity"));
 
     m.def("_exponential", &cle::tier1::exponential_func, "Call cle::tier1::exponential_func from C++ CLIc.",
+    py::return_value_policy::automatic_reference,
+    py::arg("device"), py::arg("src"), py::arg("dst"));
+
+    m.def("_exponential2", &cle::tier1::exponential2_func, "Call cle::tier1::exponential2_func from C++ CLIc.",
+    py::return_value_policy::automatic_reference,
+    py::arg("device"), py::arg("src"), py::arg("dst"));
+
+    m.def("_exponential10", &cle::tier1::exponential10_func, "Call cle::tier1::exponential10_func from C++ CLIc.",
     py::return_value_policy::automatic_reference,
     py::arg("device"), py::arg("src"), py::arg("dst"));
 
@@ -207,6 +251,14 @@ m.def("_absolute", &cle::tier1::absolute_func, "Call cle::tier1::absolute_func f
     py::arg("device"), py::arg("src"), py::arg("kernel"), py::arg("dst"));
 
     m.def("_logarithm", &cle::tier1::logarithm_func, "Call cle::tier1::logarithm_func from C++ CLIc.",
+    py::return_value_policy::automatic_reference,
+    py::arg("device"), py::arg("src"), py::arg("dst"));
+
+    m.def("_logarithm2", &cle::tier1::logarithm2_func, "Call cle::tier1::logarithm2_func from C++ CLIc.",
+    py::return_value_policy::automatic_reference,
+    py::arg("device"), py::arg("src"), py::arg("dst"));
+
+    m.def("_logarithm10", &cle::tier1::logarithm10_func, "Call cle::tier1::logarithm10_func from C++ CLIc.",
     py::return_value_policy::automatic_reference,
     py::arg("device"), py::arg("src"), py::arg("dst"));
 
@@ -637,4 +689,20 @@ m.def("_absolute", &cle::tier1::absolute_func, "Call cle::tier1::absolute_func f
     m.def("_mode_of_touching_neighbors", &cle::tier1::mode_of_touching_neighbors_func, "Call cle::tier1::mode_of_touching_neighbors_func from C++ CLIc.",
     py::return_value_policy::automatic_reference,
     py::arg("device"), py::arg("vector"), py::arg("matrix"), py::arg("dst"));
+
+    m.def("_ceil", &cle::tier1::ceil_func, "Call cle::tier1::ceil_func from C++ CLIc.",
+    py::return_value_policy::automatic_reference,
+    py::arg("device"), py::arg("src"), py::arg("dst"));
+
+    m.def("_floor", &cle::tier1::floor_func, "Call cle::tier1::floor_func from C++ CLIc.",
+    py::return_value_policy::automatic_reference,
+    py::arg("device"), py::arg("src"), py::arg("dst"));
+
+    m.def("_round", &cle::tier1::round_func, "Call cle::tier1::round_func from C++ CLIc.",
+    py::return_value_policy::automatic_reference,
+    py::arg("device"), py::arg("src"), py::arg("dst"));
+
+    m.def("_truncate", &cle::tier1::truncate_func, "Call cle::tier1::truncate_func from C++ CLIc.",
+    py::return_value_policy::automatic_reference,
+    py::arg("device"), py::arg("src"), py::arg("dst"));
 }

@@ -220,8 +220,8 @@ def bottom_hat(
 def clip(
     input_image: Image,
     output_image: Optional[Image] = None,
-    min_intensity: Optional[float] = None,
-    max_intensity: Optional[float] = None,
+    min_intensity: float = float("nan"),
+    max_intensity: float = float("nan"),
     device: Optional[Device] = None,
 ) -> Image:
     """Limits the range of values in an image. This function works similarly to its
@@ -233,9 +233,9 @@ def clip(
         Input image to process.
     output_image: Optional[Image] (= None)
         Output image.
-    min_intensity: Optional[float] (= None)
+    min_intensity: float (= float('nan'))
         New lower limit of the intensity range.
-    max_intensity: Optional[float] (= None)
+    max_intensity: float (= float('nan'))
         New upper limit of the intensity range.
     device: Optional[Device] (= None)
         Device to perform the operation on.
@@ -248,7 +248,9 @@ def clip(
     ----------
     [1] https://numpy.org/doc/stable/reference/generated/numpy.clip.html
     """
-    return clic._clip(device, input_image, output_image, min_intensity, max_intensity)
+    return clic._clip(
+        device, input_image, output_image, float(min_intensity), float(max_intensity)
+    )
 
 
 @plugin_function(categories=["filter", "in assistant"])
@@ -450,6 +452,44 @@ def binary_closing(
         float(radius_y),
         float(radius_z),
         str(connectivity),
+    )
+
+
+@plugin_function(
+    categories=["combine", "transform", "in assistant", "bia-bob-suggestion"]
+)
+def concatenate(
+    input_image0: Image,
+    input_image1: Image,
+    output_image: Optional[Image] = None,
+    axis: int = 0,
+    device: Optional[Device] = None,
+) -> Image:
+    """Concatenates two arrays along a specified axis (0:x, 1:y, 2:z).
+
+    Parameters
+    ----------
+    input_image0: Image
+        First input array.
+    input_image1: Image
+        Second input array.
+    output_image: Optional[Image] (= None)
+        Output result array.
+    axis: int (= 0)
+        Axis along which to concatenate (0:x, 1:y, 2:z).
+    device: Optional[Device] (= None)
+        Device to perform the operation on.
+
+    Returns
+    -------
+    Image
+
+    References
+    ----------
+    [1] https://clij.github.io/clij2-docs/reference_combineHorizontally
+    """
+    return clic._concatenate(
+        device, input_image0, input_image1, output_image, int(axis)
     )
 
 
@@ -2112,6 +2152,7 @@ __all__ = [
     "grayscale_closing",
     "closing",
     "binary_closing",
+    "concatenate",
     "concatenate_along_x",
     "concatenate_along_y",
     "concatenate_along_z",

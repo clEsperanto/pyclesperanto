@@ -813,6 +813,34 @@ def artificial_tissue(
 
 
 @plugin_function
+def read_map_values(
+    map: Image,
+    label: Image,
+    output_image: Optional[Image] = None,
+    device: Optional[Device] = None,
+) -> Image:
+    """Reads values from a parametric map using its corresponding labels and return it
+    as a vector of values.
+
+    Parameters
+    ----------
+    map: Image
+        Input
+    label: Image
+        Input
+    output_image: Optional[Image] (= None)
+        Output result image.
+    device: Optional[Device] (= None)
+        Device to perform the operation on.
+
+    Returns
+    -------
+    Image
+    """
+    return clic._read_map_values(device, map, label, output_image)
+
+
+@plugin_function
 def read_intensities_from_map(
     label: Image,
     map: Image,
@@ -864,5 +892,6 @@ __all__ = [
     "sato_filter",
     "tubeness",
     "artificial_tissue",
+    "read_map_values",
     "read_intensities_from_map",
 ]

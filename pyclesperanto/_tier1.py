@@ -44,6 +44,222 @@ def absolute(
     return clic._absolute(device, input_image, output_image)
 
 
+@plugin_function
+def sin(
+    input_image: Image,
+    output_image: Optional[Image] = None,
+    device: Optional[Device] = None,
+) -> Image:
+    """Compute the sin(x) for each element x in the array.
+
+    Parameters
+    ----------
+    input_image: Image
+        The input image to be processed.
+    output_image: Optional[Image] (= None)
+        Output image where results are written into.
+    device: Optional[Device] (= None)
+        Device to perform the operation on.
+
+    Returns
+    -------
+    Image
+    """
+    return clic._sin(device, input_image, output_image)
+
+
+@plugin_function
+def cos(
+    input_image: Image,
+    output_image: Optional[Image] = None,
+    device: Optional[Device] = None,
+) -> Image:
+    """Compute the cos(x) for each element x in the array.
+
+    Parameters
+    ----------
+    input_image: Image
+        The input image to be processed.
+    output_image: Optional[Image] (= None)
+        Output image where results are written into.
+    device: Optional[Device] (= None)
+        Device to perform the operation on.
+
+    Returns
+    -------
+    Image
+    """
+    return clic._cos(device, input_image, output_image)
+
+
+@plugin_function
+def tan(
+    input_image: Image,
+    output_image: Optional[Image] = None,
+    device: Optional[Device] = None,
+) -> Image:
+    """Compute the tan(x) for each element x in the array.
+
+    Parameters
+    ----------
+    input_image: Image
+        The input image to be processed.
+    output_image: Optional[Image] (= None)
+        Output image where results are written into.
+    device: Optional[Device] (= None)
+        Device to perform the operation on.
+
+    Returns
+    -------
+    Image
+    """
+    return clic._tan(device, input_image, output_image)
+
+
+@plugin_function
+def asin(
+    input_image: Image,
+    output_image: Optional[Image] = None,
+    device: Optional[Device] = None,
+) -> Image:
+    """Compute the asin(x) for each element x in the array.
+
+    Parameters
+    ----------
+    input_image: Image
+        The input image to be processed.
+    output_image: Optional[Image] (= None)
+        Output image where results are written into.
+    device: Optional[Device] (= None)
+        Device to perform the operation on.
+
+    Returns
+    -------
+    Image
+    """
+    return clic._asin(device, input_image, output_image)
+
+
+@plugin_function
+def acos(
+    input_image: Image,
+    output_image: Optional[Image] = None,
+    device: Optional[Device] = None,
+) -> Image:
+    """Compute the acos(x) for each element x in the array.
+
+    Parameters
+    ----------
+    input_image: Image
+        The input image to be processed.
+    output_image: Optional[Image] (= None)
+        Output image where results are written into.
+    device: Optional[Device] (= None)
+        Device to perform the operation on.
+
+    Returns
+    -------
+    Image
+    """
+    return clic._acos(device, input_image, output_image)
+
+
+@plugin_function
+def atan(
+    input_image: Image,
+    output_image: Optional[Image] = None,
+    device: Optional[Device] = None,
+) -> Image:
+    """Compute the atan(x) for each element x in the array.
+
+    Parameters
+    ----------
+    input_image: Image
+        The input image to be processed.
+    output_image: Optional[Image] (= None)
+        Output image where results are written into.
+    device: Optional[Device] (= None)
+        Device to perform the operation on.
+
+    Returns
+    -------
+    Image
+    """
+    return clic._atan(device, input_image, output_image)
+
+
+@plugin_function
+def sinh(
+    input_image: Image,
+    output_image: Optional[Image] = None,
+    device: Optional[Device] = None,
+) -> Image:
+    """Compute the sinh(x) for each element x in the array.
+
+    Parameters
+    ----------
+    input_image: Image
+        The input image to be processed.
+    output_image: Optional[Image] (= None)
+        Output image where results are written into.
+    device: Optional[Device] (= None)
+        Device to perform the operation on.
+
+    Returns
+    -------
+    Image
+    """
+    return clic._sinh(device, input_image, output_image)
+
+
+@plugin_function
+def cosh(
+    input_image: Image,
+    output_image: Optional[Image] = None,
+    device: Optional[Device] = None,
+) -> Image:
+    """Compute the cosh(x) for each element x in the array.
+
+    Parameters
+    ----------
+    input_image: Image
+        The input image to be processed.
+    output_image: Optional[Image] (= None)
+        Output image where results are written into.
+    device: Optional[Device] (= None)
+        Device to perform the operation on.
+
+    Returns
+    -------
+    Image
+    """
+    return clic._cosh(device, input_image, output_image)
+
+
+@plugin_function
+def tanh(
+    input_image: Image,
+    output_image: Optional[Image] = None,
+    device: Optional[Device] = None,
+) -> Image:
+    """Compute the tanh(x) for each element x in the array.
+
+    Parameters
+    ----------
+    input_image: Image
+        The input image to be processed.
+    output_image: Optional[Image] (= None)
+        Output image where results are written into.
+    device: Optional[Device] (= None)
+        Device to perform the operation on.
+
+    Returns
+    -------
+    Image
+    """
+    return clic._tanh(device, input_image, output_image)
+
+
 @plugin_function(categories=["combine", "in assistant"])
 def add_images_weighted(
     input_image0: Image,
@@ -908,8 +1124,8 @@ def binary_dilate(
 
 @plugin_function(categories=["combine", "in assistant"])
 def divide_images(
-    dividend: Image,
-    divisor: Image,
+    input_image0: Image,
+    input_image1: Image,
     output_image: Optional[Image] = None,
     device: Optional[Device] = None,
 ) -> Image:
@@ -917,10 +1133,10 @@ def divide_images(
 
     Parameters
     ----------
-    dividend: Image
-        Input image to process.
-    divisor: Image
-        Second input image to process.
+    input_image0: Image
+        The dividend input image to process.
+    input_image1: Image
+        The divisor input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
     device: Optional[Device] (= None)
@@ -934,7 +1150,7 @@ def divide_images(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_divideImages
     """
-    return clic._divide_images(device, dividend, divisor, output_image)
+    return clic._divide_images(device, input_image0, input_image1, output_image)
 
 
 @plugin_function(categories=["filter", "in assistant"])
@@ -1206,8 +1422,67 @@ def exponential(
     References
     ----------
     [1] https://clij.github.io/clij2-docs/reference_exponential
+    [2] https://registry.khronos.org/OpenCL/sdk/3.0/docs/man/html/exp.html
     """
     return clic._exponential(device, input_image, output_image)
+
+
+@plugin_function(categories=["filter", "in assistant"])
+def exponential2(
+    input_image: Image,
+    output_image: Optional[Image] = None,
+    device: Optional[Device] = None,
+) -> Image:
+    """Computes the base-2 exponential of all pixel values. f(x) = exp2(x)
+
+    Parameters
+    ----------
+    input_image: Image
+        Input image to process.
+    output_image: Optional[Image] (= None)
+        Output result image.
+    device: Optional[Device] (= None)
+        Device to perform the operation on.
+
+    Returns
+    -------
+    Image
+
+    References
+    ----------
+    [1] https://clij.github.io/clij2-docs/reference_exponential
+    [2] https://registry.khronos.org/OpenCL/sdk/3.0/docs/man/html/exp.html
+    """
+    return clic._exponential2(device, input_image, output_image)
+
+
+@plugin_function(categories=["filter", "in assistant"])
+def exponential10(
+    input_image: Image,
+    output_image: Optional[Image] = None,
+    device: Optional[Device] = None,
+) -> Image:
+    """Computes the base-10 exponential of all pixel values. f(x) = exp10(x)
+
+    Parameters
+    ----------
+    input_image: Image
+        Input image to process.
+    output_image: Optional[Image] (= None)
+        Output result image.
+    device: Optional[Device] (= None)
+        Device to perform the operation on.
+
+    Returns
+    -------
+    Image
+
+    References
+    ----------
+    [1] https://clij.github.io/clij2-docs/reference_exponential
+    [2] https://registry.khronos.org/OpenCL/sdk/3.0/docs/man/html/exp.html
+    """
+    return clic._exponential10(device, input_image, output_image)
 
 
 @plugin_function
@@ -1788,8 +2063,69 @@ def logarithm(
     References
     ----------
     [1] https://clij.github.io/clij2-docs/reference_logarithm
+    [2] https://registry.khronos.org/OpenCL/sdk/3.0/docs/man/html/log.html
     """
     return clic._logarithm(device, input_image, output_image)
+
+
+@plugin_function(categories=["filter", "in assistant"])
+def logarithm2(
+    input_image: Image,
+    output_image: Optional[Image] = None,
+    device: Optional[Device] = None,
+) -> Image:
+    """Computes base 2 logarithm of all pixels values. f(x) = log2(x) Author(s): Peter
+    Haub, Robert Haase
+
+    Parameters
+    ----------
+    input_image: Image
+        Input image to process.
+    output_image: Optional[Image] (= None)
+        Output result image.
+    device: Optional[Device] (= None)
+        Device to perform the operation on.
+
+    Returns
+    -------
+    Image
+
+    References
+    ----------
+    [1] https://clij.github.io/clij2-docs/reference_logarithm
+    [2] https://registry.khronos.org/OpenCL/sdk/3.0/docs/man/html/log.html
+    """
+    return clic._logarithm2(device, input_image, output_image)
+
+
+@plugin_function(categories=["filter", "in assistant"])
+def logarithm10(
+    input_image: Image,
+    output_image: Optional[Image] = None,
+    device: Optional[Device] = None,
+) -> Image:
+    """Computes base 10 logarithm of all pixels values. f(x) = log10(x) Author(s):
+    Peter Haub, Robert Haase
+
+    Parameters
+    ----------
+    input_image: Image
+        Input image to process.
+    output_image: Optional[Image] (= None)
+        Output result image.
+    device: Optional[Device] (= None)
+        Device to perform the operation on.
+
+    Returns
+    -------
+    Image
+
+    References
+    ----------
+    [1] https://clij.github.io/clij2-docs/reference_logarithm
+    [2] https://registry.khronos.org/OpenCL/sdk/3.0/docs/man/html/log.html
+    """
+    return clic._logarithm10(device, input_image, output_image)
 
 
 @plugin_function
@@ -4086,8 +4422,7 @@ def reciprocal(
     output_image: Optional[Image] = None,
     device: Optional[Device] = None,
 ) -> Image:
-    """Computes 1/x for every pixel value This function is supposed to work similarly
-    to its counter part in numpy [1]
+    """Computes 1/x for every pixel value x in a given image X. <pre>f(x) = 1 / x</pre>
 
     Parameters
     ----------
@@ -5458,8 +5793,116 @@ def mode_of_touching_neighbors(
     return clic._mode_of_touching_neighbors(device, vector, matrix, output_image)
 
 
+@plugin_function(categories=["filter", "in assistant"])
+def ceil(
+    input_image: Image,
+    output_image: Optional[Image] = None,
+    device: Optional[Device] = None,
+) -> Image:
+    """Computes each values to integral values using the round to positive infinity
+    rounding mode.
+
+    Parameters
+    ----------
+    input_image: Image
+        Input image to process.
+    output_image: Optional[Image] (= None)
+        Output result image.
+    device: Optional[Device] (= None)
+        Device to perform the operation on.
+
+    Returns
+    -------
+    Image
+    """
+    return clic._ceil(device, input_image, output_image)
+
+
+@plugin_function(categories=["filter", "in assistant"])
+def floor(
+    input_image: Image,
+    output_image: Optional[Image] = None,
+    device: Optional[Device] = None,
+) -> Image:
+    """Computes each values to integral values using the round to negative infinity
+    rounding mode.
+
+    Parameters
+    ----------
+    input_image: Image
+        Input image to process.
+    output_image: Optional[Image] (= None)
+        Output result image.
+    device: Optional[Device] (= None)
+        Device to perform the operation on.
+
+    Returns
+    -------
+    Image
+    """
+    return clic._floor(device, input_image, output_image)
+
+
+@plugin_function(categories=["filter", "in assistant"])
+def round(
+    input_image: Image,
+    output_image: Optional[Image] = None,
+    device: Optional[Device] = None,
+) -> Image:
+    """Computes each values to integral values using the round to nearest integer
+    rounding mode.
+
+    Parameters
+    ----------
+    input_image: Image
+        Input image to process.
+    output_image: Optional[Image] (= None)
+        Output result image.
+    device: Optional[Device] (= None)
+        Device to perform the operation on.
+
+    Returns
+    -------
+    Image
+    """
+    return clic._round(device, input_image, output_image)
+
+
+@plugin_function(categories=["filter", "in assistant"])
+def truncate(
+    input_image: Image,
+    output_image: Optional[Image] = None,
+    device: Optional[Device] = None,
+) -> Image:
+    """Computes each values to integral values by removing the fractional part.
+
+    Parameters
+    ----------
+    input_image: Image
+        Input image to process.
+    output_image: Optional[Image] (= None)
+        Output result image.
+    device: Optional[Device] (= None)
+        Device to perform the operation on.
+
+    Returns
+    -------
+    Image
+    """
+    return clic._truncate(device, input_image, output_image)
+
+
 __all__ = [
     "absolute",
+    "sin",
+    "cos",
+    "tan",
+    "asin",
+    "acos",
+    "atan",
+    "sinh",
+    "cosh",
+    "tanh",
     "add_images_weighted",
     "add_image_and_scalar",
     "binary_and",
@@ -5493,6 +5936,8 @@ __all__ = [
     "erode_sphere",
     "binary_erode",
     "exponential",
+    "exponential2",
+    "exponential10",
     "flip",
     "gaussian_blur",
     "gaussian_derivative",
@@ -5510,6 +5955,8 @@ __all__ = [
     "laplace",
     "local_cross_correlation",
     "logarithm",
+    "logarithm2",
+    "logarithm10",
     "mask",
     "mask_label",
     "maximum_image_and_scalar",
@@ -5617,4 +6064,8 @@ __all__ = [
     "maximum_of_touching_neighbors",
     "standard_deviation_of_touching_neighbors",
     "mode_of_touching_neighbors",
+    "ceil",
+    "floor",
+    "round",
+    "truncate",
 ]

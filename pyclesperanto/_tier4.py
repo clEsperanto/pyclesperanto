@@ -139,8 +139,7 @@ def threshold_otsu(
     output_image: Optional[Image] = None,
     device: Optional[Device] = None,
 ) -> Image:
-    """Binarizes an image using Otsu's threshold method, implemented in scikit-image,
-    using a histogram determined on the GPU to create binary images.
+    """Binarizes an image using Otsu's threshold method (Otsu et. al. 1979)
 
     Parameters
     ----------
@@ -162,6 +161,100 @@ def threshold_otsu(
     [3] https://ieeexplore.ieee.org/document/4310076
     """
     return clic._threshold_otsu(device, input_image, output_image)
+
+
+@plugin_function(categories=["binarize", "in assistant", "bia-bob-suggestion"])
+def threshold_yen(
+    input_image: Image,
+    output_image: Optional[Image] = None,
+    device: Optional[Device] = None,
+) -> Image:
+    """Binarizes an image using Yen's threshold method (Yen et. al. 1995)
+
+    Parameters
+    ----------
+    input_image: Image
+        Input image to threshold.
+    output_image: Optional[Image] (= None)
+        Output binary image.
+    device: Optional[Device] (= None)
+        Device to perform the operation on.
+
+    Returns
+    -------
+    Image
+
+    References
+    ----------
+    [1] https://scikit-image.org/docs/dev/api/skimage.filters.html#skimage.filters.threshold_yen
+    [2] https://ieeexplore.ieee.org/document/366472
+    """
+    return clic._threshold_yen(device, input_image, output_image)
+
+
+@plugin_function(categories=["binarize", "in assistant", "bia-bob-suggestion"])
+def threshold_mean(
+    input_image: Image,
+    output_image: Optional[Image] = None,
+    device: Optional[Device] = None,
+) -> Image:
+    """Binarizes an image using the global average intensity in the image
+
+    Parameters
+    ----------
+    input_image: Image
+        Input image to threshold.
+    output_image: Optional[Image] (= None)
+        Output binary image.
+    device: Optional[Device] (= None)
+        Device to perform the operation on.
+
+    Returns
+    -------
+    Image
+    """
+    return clic._threshold_mean(device, input_image, output_image)
+
+
+@plugin_function(categories=["label measurement", "map", "in assistant", "combine"])
+def parametric_map(
+    labels: Image,
+    intensity: Optional[Image] = None,
+    property: str = "label",
+    output_image: Optional[Image] = None,
+    device: Optional[Device] = None,
+) -> Image:
+    """Takes an image, a corresponding label map, and maps a specified property (e.g.,
+    'mean_intensity') determined per label onto a new image where every label is
+    replaced by the corresponding property value. The property name must be
+    available from the statistics_labelled_pixels function.
+
+    Parameters
+    ----------
+    labels: Image
+        Label image.
+    intensity: Optional[Image] (= None)
+        Intensity image.
+    property: str (= "label")
+        Name of the
+    output_image: Optional[Image] (= None)
+        Parametric image computed.
+    device: Optional[Device] (= None)
+        Device to perform the operation on.
+
+    Returns
+    -------
+    Image
+
+    References
+    ----------
+    [1] https://clij.github.io/clij2-docs/reference_meanIntensityMap
+    [2] https://clij.github.io/clij2-docs/reference_pixelCountMap
+    [3] https://clij.github.io/clij2-docs/reference_minimumIntensityMap
+    [4] https://clij.github.io/clij2-docs/reference_maximumIntensityMap
+    [5] https://clij.github.io/clij2-docs/reference_standardDeviationIntensityMap
+    """
+    return clic._parametric_map(device, labels, intensity, str(property), output_image)
 
 
 @plugin_function(categories=["label measurement", "map", "in assistant", "combine"])
@@ -969,12 +1062,35 @@ def mode_of_touching_neighbors_map(
     )
 
 
+@plugin_function
+def standard_deviation_of_all_pixels(
+    input_image: Image, device: Optional[Device] = None
+) -> float:
+    """Computes the standard deviation of all pixel values in an image.
+
+    Parameters
+    ----------
+    input_image: Image
+        Input image.
+    device: Optional[Device] (= None)
+        Device to perform the operation on.
+
+    Returns
+    -------
+    float
+    """
+    return clic._standard_deviation_of_all_pixels(device, input_image)
+
+
 __all__ = [
     "label_bounding_box",
     "mean_squared_error",
     "spots_to_pointlist",
     "relabel_sequential",
     "threshold_otsu",
+    "threshold_yen",
+    "threshold_mean",
+    "parametric_map",
     "mean_intensity_map",
     "label_mean_intensity_map",
     "pixel_count_map",
@@ -998,4 +1114,5 @@ __all__ = [
     "maximum_of_touching_neighbors_map",
     "standard_deviation_of_touching_neighbors_map",
     "mode_of_touching_neighbors_map",
+    "standard_deviation_of_all_pixels",
 ]

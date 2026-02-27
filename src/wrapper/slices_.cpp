@@ -96,20 +96,20 @@ py_to_slice_vector(const py::object & key) -> std::vector<cle::Slice>
 
 auto slice_(py::module &m) -> void
 {
-  // ── Bind cle::cle::Slice ───────────────────────────────────────────────────
+  // ── Bind cle::Slice ───────────────────────────────────────────────────
 
-  py::class_<cle::Slice>(m, "_cle::Slice", R"doc(
+  py::class_<cle::Slice>(m, "_Slice", R"doc(
       Single-axis cle::slice specification, analogous to Python's ``cle::slice(start, stop, step)``.
 
       Examples::
 
-          cle::Slice()              # [:]      full axis
-          cle::Slice(5)             # [5]      single index (collapses axis)
-          cle::Slice(1, 10)         # [1:10]   range
-          cle::Slice(1, 10, 2)      # [1:10:2] range with step
-          cle::Slice(None, 5)       # [:5]     from start
-          cle::Slice(3, None)       # [3:]     to end
-          cle::Slice(-3, None)      # [-3:]    negative index
+          _Slice()              # [:]      full axis
+          _Slice(5)             # [5]      single index (collapses axis)
+          _Slice(1, 10)         # [1:10]   range
+          _Slice(1, 10, 2)      # [1:10:2] range with step
+          _Slice(None, 5)       # [:5]     from start
+          _Slice(3, None)       # [3:]     to end
+          _Slice(-3, None)      # [-3:]    negative index
   )doc")
     // Default: full axis [:]
     .def(py::init<>(), "Full axis ``[:]``.")
@@ -178,10 +178,10 @@ auto slice_(py::module &m) -> void
       return r;
     });
 
-  // ── Bind free-function cle::cle::slice ─────────────────────────────────────
+  // ── Bind free-function _slice ─────────────────────────────────────
 
   m.def(
-    "slice",
+    "_slice",
     [](const cle::Array::Pointer & src, const py::args & args) -> cle::Array::Pointer {
       std::vector<cle::Slice> slices;
       for (auto item : args)
@@ -196,22 +196,54 @@ auto slice_(py::module &m) -> void
 
         Each positional argument can be:
           - ``int``          — single index (collapses that axis)
-          - ``cle::slice(...)``   — Python cle::slice object
-          - ``cle::Slice(...)``   — explicit cle.cle::Slice
+          - ``_slice(...)``   — Python cle::slice object
+          - ``_Slice(...)``   — explicit cle.cle::Slice
           - ``None``         — full axis ``[:]``
 
         Examples::
 
             # Single z-plane (returns 2-D)
-            cle.cle::slice(img, cle::slice(None), cle::slice(None), 50)
+            cle._slice(img, cle::slice(None), cle::slice(None), 50)
 
             # Crop
-            cle.cle::slice(img, cle::slice(0, 100), cle::slice(0, 100), cle::slice(0, 100))
+            cle._slice(img, cle::slice(0, 100), cle::slice(0, 100), cle::slice(0, 100))
 
             # Every other column
-            cle.cle::slice(img, cle::slice(None, None, 2))
+            cle._slice(img, cle::slice(None, None, 2))
 
             # Last 10 z-planes
-            cle.cle::slice(img, cle::slice(None), cle::slice(None), cle::slice(-10, None))
+            cle._slice(img, cle::slice(None), cle::slice(None), cle::slice(-10, None))
     )doc");
+
+    // ── Bind free-function _paste ─────────────────────────────────────
+    m.def(
+      "_paste",
+      [](const cle::Array::Pointer & src,
+        const cle::Array::Pointer & dst,
+        const py::args & args) {
+        std::vector<cle::Slice> slices;
+        for (auto item : args)
+        {
+          slices.push_back(py_to_slice(py::reinterpret_borrow<py::object>(item)));
+        }
+        cle::paste(src, dst, slices);
+      },
+      py::arg("src"), py::arg("dst"),
+      R"doc(
+          Paste a sub-array into ``dst`` at the location described by up to 3 cle::slice specs (x, y, z order).
+
+          Each positional argument can be:
+            - ``int``          — single index (collapses that axis)
+            - ``_slice(...)``   — Python cle::slice object
+            - ``_Slice(...)``   — explicit cle.cle::Slice
+            - ``None``         — full axis ``[:]``
+
+          Examples::
+
+              # Paste a 2-D image into a z-plane of a 3-D stack
+              cle._paste(stack, img, cle::slice(None), cle::slice(None), 50)
+
+              # Paste a cropped region into another image
+              cle._paste(dst, src, cle::slice(10, 110), cle::slice(10, 110), cle::slice(10, 110))
+      )doc");
 }

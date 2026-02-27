@@ -215,5 +215,3 @@ auto slice_(py::module &m) -> void
             cle.cle::slice(img, cle::slice(None), cle::slice(None), cle::slice(-10, None))
     )doc");
 }
-
-

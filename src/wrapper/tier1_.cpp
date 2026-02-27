@@ -1,5 +1,5 @@
 // this code is auto-generated, do not edit manually
-
+    
 #include "pycle_wrapper.hpp"
 #include "tier1.hpp"
 
@@ -579,6 +579,14 @@ m.def("_absolute", &cle::tier1::absolute_func, "Call cle::tier1::absolute_func f
     py::arg("device"), py::arg("src"), py::arg("dst"));
 
     m.def("_square_root", &cle::tier1::square_root_func, "Call cle::tier1::square_root_func from C++ CLIc.",
+    py::return_value_policy::automatic_reference,
+    py::arg("device"), py::arg("src"), py::arg("dst"));
+
+    m.def("_std_x_projection", &cle::tier1::std_x_projection_func, "Call cle::tier1::std_x_projection_func from C++ CLIc.",
+    py::return_value_policy::automatic_reference,
+    py::arg("device"), py::arg("src"), py::arg("dst"));
+
+    m.def("_std_y_projection", &cle::tier1::std_y_projection_func, "Call cle::tier1::std_y_projection_func from C++ CLIc.",
     py::return_value_policy::automatic_reference,
     py::arg("device"), py::arg("src"), py::arg("dst"));
 

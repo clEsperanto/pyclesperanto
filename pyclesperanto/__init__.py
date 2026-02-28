@@ -12,8 +12,8 @@ from ._core import (
     select_device,
     wait_for_kernel_to_finish,
 )
-from ._execute import execute, native_execute, evaluate
-from ._functionalities import operation, operations, imshow
+from ._execute import evaluate, execute, native_execute
+from ._functionalities import imshow, operation, operations
 from ._memory import create, create_like, pull, push
 from ._tier1 import *
 from ._tier2 import *

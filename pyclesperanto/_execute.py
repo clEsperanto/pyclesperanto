@@ -1,7 +1,6 @@
-
+import re
 from os import path
 from pathlib import Path
-import re
 from typing import Callable, Optional, Union
 
 import numpy as np
@@ -9,8 +8,8 @@ import numpy as np
 from ._array import Array, Image, to_device
 from ._core import Device, get_device
 from ._memory import create, pull, push
+from ._pyclesperanto import _evaluate, _execute, _native_execute
 
-from ._pyclesperanto import _execute, _native_execute, _evaluate
 
 def execute(
     anchor=None,
@@ -169,10 +168,8 @@ def native_execute(
         device, kernel_name, kernel_source, parameters, global_size, local_size
     )
 
-def evaluate(
-    expression: str,
-    parameters: dict = {}
-) -> Array:
+
+def evaluate(expression: str, parameters: dict = {}) -> Array:
     """Evaluate an arithmetic expression on the GPU. The expression can contain parameters which must be passed as a dictionary.
     The expression will only process element-wise operations.
 
@@ -212,11 +209,11 @@ def evaluate(
                 out_shape = value.shape
             elif out_shape != value.shape:
                 raise ValueError("All Array parameters must have the same shape")
-    
+
     # Default to (1, 1) shape if no Array parameters found (all scalar)
     if out_shape is None:
         out_shape = (1, 1)
-    
+
     out = create(out_shape, dtype=np.float32, device=device)
     _evaluate(device=device, expression=expression, parameters=parameters, output=out)
     return out

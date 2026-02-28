@@ -8,6 +8,7 @@ from matplotlib.colors import ListedColormap
 
 from ._memory import pull
 
+
 def imshow(
     image,
     title: Optional[str] = None,

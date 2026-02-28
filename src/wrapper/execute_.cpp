@@ -22,7 +22,7 @@ size_t tuple_to_size_t(const py::tuple &t, size_t index)
     catch (const py::cast_error &e)
     {
         throw std::invalid_argument(
-            "Error: Failed to convert range element at index " + 
+            "Error: Failed to convert range element at index " +
             std::to_string(index) + " to size_t. " + std::string(e.what()));
     }
 }
@@ -38,13 +38,13 @@ cle::RangeArray parse_range(const py::tuple &range_tuple, const std::string &ran
     }
 
     cle::RangeArray range = {1, 1, 1};
-    
+
     // Reverse indexing: Python uses [x, y, z], OpenCL uses [z, y, x]
     for (size_t i = 0; i < range_tuple.size(); ++i)
     {
         range[range_tuple.size() - 1 - i] = tuple_to_size_t(range_tuple, i);
     }
-    
+
     return range;
 }
 
@@ -53,11 +53,11 @@ cle::ParameterList convert_parameters(const py::dict &parameters)
 {
     cle::ParameterList clic_parameters;
     clic_parameters.reserve(parameters.size());
-    
+
     for (auto [key, value] : parameters)
     {
         std::string param_name = key.cast<std::string>();
-        
+
         try
         {
             if (py::isinstance<cle::Array>(value))
@@ -78,19 +78,19 @@ cle::ParameterList convert_parameters(const py::dict &parameters)
             else
             {
                 throw std::invalid_argument(
-                    "Parameter '" + param_name + 
-                    "' has unsupported type: " + 
+                    "Parameter '" + param_name +
+                    "' has unsupported type: " +
                     std::string(py::str(py::type::of(value)).cast<std::string>()));
             }
         }
         catch (const py::cast_error &e)
         {
             throw std::invalid_argument(
-                "Error converting parameter '" + param_name + "': " + 
+                "Error converting parameter '" + param_name + "': " +
                 std::string(e.what()));
         }
     }
-    
+
     return clic_parameters;
 }
 
@@ -98,14 +98,14 @@ cle::ParameterList convert_parameters(const py::dict &parameters)
 cle::ConstantList convert_constants(const py::dict &constants)
 {
     cle::ConstantList clic_constants;
-    
+
     if (constants.empty())
     {
         return clic_constants;
     }
-    
+
     clic_constants.reserve(constants.size());
-    
+
     for (auto [key, value] : constants)
     {
         try
@@ -116,12 +116,12 @@ cle::ConstantList convert_constants(const py::dict &constants)
         catch (const py::cast_error &e)
         {
             throw std::invalid_argument(
-                "Error converting constant '" + 
-                key.cast<std::string>() + "': " + 
+                "Error converting constant '" +
+                key.cast<std::string>() + "': " +
                 std::string(e.what()));
         }
     }
-    
+
     return clic_constants;
 }
 
@@ -138,13 +138,13 @@ auto py_execute(
     {
         cle::RangeArray global_range = parse_range(global, "global");
         cle::RangeArray local_range = parse_range(local, "local");
-        
+
         cle::KernelInfo kernel_info = {kernel_name, kernel_source};
-        
+
         cle::ParameterList clic_parameters = convert_parameters(parameters);
         cle::ConstantList clic_constants = convert_constants(constants);
-        
-        cle::execute(device, kernel_info, clic_parameters, 
+
+        cle::execute(device, kernel_info, clic_parameters,
                     global_range, local_range, clic_constants);
     }
     catch (const std::exception &e)
@@ -165,12 +165,12 @@ auto py_native_execute(
     {
         cle::RangeArray global_range = parse_range(global, "global");
         cle::RangeArray local_range = parse_range(local, "local");
-        
+
         cle::KernelInfo kernel_info = {kernel_name, kernel_source};
-        
+
         cle::ParameterList clic_parameters = convert_parameters(parameters);
-        
-        cle::native_execute(device, kernel_info, clic_parameters, 
+
+        cle::native_execute(device, kernel_info, clic_parameters,
                            global_range, local_range);
     }
     catch (const std::exception &e)
@@ -184,11 +184,11 @@ std::vector<cle::ParameterType> convert_evaluate_parameters(const py::dict &para
 {
     std::vector<cle::ParameterType> param_vector;
     param_vector.reserve(parameters.size());
-    
+
     for (auto [key, value] : parameters)
     {
         std::string param_name = key.cast<std::string>();
-        
+
         try
         {
             if (py::isinstance<cle::Array>(value))
@@ -206,19 +206,19 @@ std::vector<cle::ParameterType> convert_evaluate_parameters(const py::dict &para
             else
             {
                 throw std::invalid_argument(
-                    "Parameter '" + param_name + 
-                    "' has unsupported type: " + 
+                    "Parameter '" + param_name +
+                    "' has unsupported type: " +
                     std::string(py::str(py::type::of(value)).cast<std::string>()));
             }
         }
         catch (const py::cast_error &e)
         {
             throw std::invalid_argument(
-                "Error converting parameter '" + param_name + "': " + 
+                "Error converting parameter '" + param_name + "': " +
                 std::string(e.what()));
         }
     }
-    
+
     return param_vector;
 }
 
@@ -231,9 +231,9 @@ auto py_evaluate(
 {
     try
     {
-        std::vector<cle::ParameterType> param_vector = 
+        std::vector<cle::ParameterType> param_vector =
             convert_evaluate_parameters(parameters);
-        
+
         cle::evaluate(device, expression, param_vector, output);
     }
     catch (const std::exception &e)
@@ -244,8 +244,8 @@ auto py_evaluate(
 
 auto execute_(py::module_ &m) -> void
 {
-    m.def("_execute", 
-          &py_execute, 
+    m.def("_execute",
+          &py_execute,
           "Execute a kernel with parameters, global/local ranges, and constants.",
           py::arg("device"),
           py::arg("kernel_name"),

@@ -96,11 +96,12 @@ class TestEvaluate:
 
     def test_evaluate_trigonometric(self):
         """Test expression with trigonometric functions"""
-        a = cle.push(np.zeros((5, 5)))  # cos(0) = 1
-        b = cle.push(np.zeros((5, 5)))  # sin(0) = 0
 
-        result = cle.evaluate("cos(a) + sin(b)", {"a": a, "b": b})
-        result_np = cle.pull(result)
-
-        # cos(0) + sin(0) = 1 + 0 = 1
-        assert np.allclose(result_np, 1.0)
+        a = np.ones((3, 3)) * 1  # cos(1)
+        b = np.ones((3, 3)) * 2  # sin(2)
+        
+        result = cle.evaluate("pow(cos(a),2) + pow(sin(b),2)", {"a": a, "b": b})
+        
+        reference = np.power(np.cos(a), 2) + np.power(np.sin(b), 2)
+    
+        assert np.allclose(result.get(), reference)

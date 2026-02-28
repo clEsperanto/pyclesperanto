@@ -168,15 +168,11 @@ def native_execute(
         device, kernel_name, kernel_source, parameters, global_size, local_size
     )
 
-<<<<<<< Updated upstream
 
-def evaluate(expression: str, parameters: dict = {}) -> Array:
-=======
 def evaluate(
     expression: str,
     parameters: dict
 ) -> Array:
->>>>>>> Stashed changes
     """Evaluate an arithmetic expression on the GPU. The expression can contain parameters which must be passed as a dictionary.
     The expression will only process element-wise operations.
 

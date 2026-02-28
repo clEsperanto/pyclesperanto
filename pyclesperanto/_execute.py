@@ -169,10 +169,7 @@ def native_execute(
     )
 
 
-def evaluate(
-    expression: str,
-    parameters: dict
-) -> Array:
+def evaluate(expression: str, parameters: dict) -> Array:
     """Evaluate an arithmetic expression on the GPU. The expression can contain parameters which must be passed as a dictionary.
     The expression will only process element-wise operations.
 

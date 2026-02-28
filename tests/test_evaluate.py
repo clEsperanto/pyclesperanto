@@ -99,9 +99,9 @@ class TestEvaluate:
 
         a = np.ones((3, 3)) * 1  # cos(1)
         b = np.ones((3, 3)) * 2  # sin(2)
-        
+
         result = cle.evaluate("pow(cos(a),2) + pow(sin(b),2)", {"a": a, "b": b})
-        
+
         reference = np.power(np.cos(a), 2) + np.power(np.sin(b), 2)
-    
+
         assert np.allclose(result.get(), reference)

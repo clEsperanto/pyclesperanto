@@ -12,7 +12,8 @@ from ._core import (
     select_device,
     wait_for_kernel_to_finish,
 )
-from ._functionalities import execute, imshow, native_execute, operation, operations
+from ._execute import execute, native_execute, evaluate
+from ._functionalities import operation, operations, imshow
 from ._memory import create, create_like, pull, push
 from ._tier1 import *
 from ._tier2 import *
@@ -46,6 +47,9 @@ __all__ = [
     "create_like",
     "pull",
     "push",
+    "evaluate",
+    "execute",
+    "native_execute",
     "fft_smooth_shape",
     "__clic_version__",
     "__common_alias__",

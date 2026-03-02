@@ -9,6 +9,7 @@ cle.select_device("TX")
 # GRADIENT TESTS
 # ============================================================================
 
+
 def test_gradient_x():
     test = cle.push(
         np.asarray(
@@ -213,6 +214,7 @@ def test_laplace_sphere():
 # HESSIAN EIGENVALUES TESTS
 # ============================================================================
 
+
 def test_hessian_eigenvalues_2d():
     test = np.asarray([[1, -1], [1, -1]])
 
@@ -288,6 +290,7 @@ def test_hessian_eigenvalues_3d():
 # LARGE HESSIAN EIGENVALUE TESTS
 # ============================================================================
 
+
 def test_large_hessian_eigenvalue_2d():
     test = np.asarray([[1, -1], [1, -1]])
 
@@ -327,6 +330,7 @@ def test_large_hessian_eigenvalue_3d():
 # ============================================================================
 # SMALL HESSIAN EIGENVALUE TESTS
 # ============================================================================
+
 
 def test_small_hessian_eigenvalue_2d():
     test = np.asarray([[1, -1], [1, -1]])

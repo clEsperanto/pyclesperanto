@@ -9,6 +9,7 @@ cle.select_device("TX")
 # MAXIMUM PROJECTIONS
 # ============================================================================
 
+
 def test_maximum_x_projection():
     test1 = cle.push(
         np.asarray(
@@ -303,6 +304,7 @@ def test_maximum_z_projection_creator_passing_none():
 # MEAN PROJECTIONS
 # ============================================================================
 
+
 def test_mean_x_projection():
     test1 = cle.push(
         np.asarray(
@@ -507,6 +509,7 @@ def test_mean_z_projection():
 # MINIMUM PROJECTIONS
 # ============================================================================
 
+
 def test_minimum_x_projection():
     test1 = cle.push(
         np.asarray(
@@ -709,6 +712,7 @@ def test_minimum_z_projection():
 # ============================================================================
 # SUM PROJECTIONS
 # ============================================================================
+
 
 def test_sum_x_projection():
     test1 = cle.push(
@@ -935,7 +939,7 @@ def test_sum_z_projection2():
     result = cle.sum_z_projection(test1)
 
     a = cle.pull(result)
-    
+
     # Expected values (note: may be different shape due to projection)
     expected = np.asarray([2, 6])
 

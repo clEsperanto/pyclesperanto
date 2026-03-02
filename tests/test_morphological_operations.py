@@ -73,6 +73,7 @@ test_square_eroded_expected = cle.push(
 # DILATE BOX TESTS
 # ============================================================================
 
+
 def test_dilate_old():
     result = cle.create(test_simple)
     cle.dilate_box(test_simple, result)
@@ -98,6 +99,7 @@ def test_dilate():
 # ============================================================================
 # DILATE SPHERE TESTS
 # ============================================================================
+
 
 def test_dilate_sphere_old():
     result = cle.create(test_simple)
@@ -125,6 +127,7 @@ def test_dilate_sphere():
 # ERODE BOX TESTS
 # ============================================================================
 
+
 def test_erode_box_old():
     result = cle.create(test_square)
     cle.erode_box(test_square, result)
@@ -150,6 +153,7 @@ def test_erode_box():
 # ============================================================================
 # ERODE SPHERE TESTS
 # ============================================================================
+
 
 def test_erode_sphere_old():
     result = cle.create(test_square)
@@ -189,6 +193,7 @@ gpu_complex_input = cle.push(
         ]
     )
 )
+
 
 def test_opening_box_old():
     gpu_input = cle.push(
@@ -505,6 +510,7 @@ def test_closing_sphere():
 # TOP HAT TESTS
 # ============================================================================
 
+
 def test_top_hat_box():
     gpu_input = cle.push(
         np.asarray(
@@ -569,6 +575,7 @@ def test_top_hat_sphere():
 # ============================================================================
 # BOTTOM HAT TESTS
 # ============================================================================
+
 
 def test_bottom_hat_box():
     test = cle.push(

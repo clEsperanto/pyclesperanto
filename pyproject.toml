@@ -75,7 +75,7 @@ build = ["cp38-*", "cp39-*", "cp310-*", "cp311-*", "cp312-*", "cp313-*"]
 skip = ["*-win32", "*-musllinux*", "*_i686", "*_universal2"]
 build-frontend = "build"
 build-verbosity = 1
-test-command = "pytest {project}/tests/test_import.py"
+test-command = "pytest {project}/tests/api/test_import.py"
 test-requires = ["pytest", "pytest-cov", "pytest-benchmark", "scikit-image"]
 
 [tool.cibuildwheel.linux]

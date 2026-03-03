@@ -25,12 +25,6 @@ def plugin_function(
     ----------
     function : callable
         The function to be executed on the GPU.
-    output_creator : callable, optional
-        A function to create an output cleImage given an input cleImage. By
-        default, we create output images of the same shape and type as input
-        images.
-    device_selector : callable, optional
-        A function to select a device. By default, we use the current device instance.
     categories : list of str, optional
         A list of category names the function is associated with
 
@@ -41,65 +35,46 @@ def plugin_function(
         output arguments of the correct type.
     """
 
-    # function.fullargspec = inspect.getfullargspec(function)
-    function.categories = categories
-    # function.priority = priority
+    sig = inspect.signature(function)  # cached once at decoration time
 
     @wraps(function)
     def worker_function(*args, **kwargs):
-        sig = inspect.signature(function)
         bound = sig.bind(*args, **kwargs)
         bound.apply_defaults()
 
-        # Get the device to use from the arguments or the input image or the current device
-        input_device = next(
-            (value for value in bound.arguments.values() if isinstance(value, Device)),
-            None,
-        )
-        input_image = next(
-            (value for value in bound.arguments.values() if is_image(value)), None
-        )
-        input_image_device = (
-            getattr(input_image, "device", None) if input_image is not None else None
-        )
+        # Single pass: find explicit Device arg and first image arg
+        input_device = None
+        input_image = None
+        for value in bound.arguments.values():
+            if input_device is None and isinstance(value, Device):
+                input_device = value
+            if input_image is None and is_image(value):
+                input_image = value
+            if input_device is not None and input_image is not None:
+                break
 
-        if not isinstance(input_device, Device):
-            input_device = None
-
+        # Device resolution: explicit arg > image's device > global default
+        input_image_device = getattr(input_image, "device", None)
         if not isinstance(input_image_device, Device):
             input_image_device = None
-
-        # Use input_device if available, else use the device of the input_image if it has the attribute device, else None
         use_device = input_device or input_image_device or get_device()
 
-        # loop on all argument and if it is an image, push it to the device
-        # if it is a device, set it to the use_device
-        # if it is any other argument, do nothing
+        # Push images to device, fill in missing device args
         for key, value in bound.arguments.items():
-            if (
-                is_image(value)
-                and key in sig.parameters
-                and (
-                    sig.parameters[key].annotation is Image
-                    or Array in get_args(sig.parameters[key].annotation)
-                )
+            param = sig.parameters[key]
+            ann = param.annotation
+            if is_image(value) and (
+                ann is Image or Array in get_args(ann)
             ):
                 bound.arguments[key] = push(value, device=use_device)
-            if (
-                key in sig.parameters
-                and (
-                    sig.parameters[key].annotation is Device
-                    or Device in get_args(sig.parameters[key].annotation)
-                )
-                and value is None
+            elif value is None and (
+                ann is Device or Device in get_args(ann)
             ):
                 bound.arguments[key] = use_device
 
-        # call the decorated function
-        result = function(*bound.args, **bound.kwargs)
+        return function(*bound.args, **bound.kwargs)
 
-        return result
-
+    worker_function.categories = categories
     worker_function.__module__ = "pyclesperanto"
 
     return worker_function

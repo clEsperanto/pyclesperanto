@@ -115,6 +115,7 @@ def _sum(self, axis: Optional[int] = None, out=None):
             np.copyto(out, result.get().astype(out.dtype))
     return result
 
+
 def _std(self, axis: Optional[int] = None, out=None):
     """Return the std of the Array, or along an axis if specified."""
     from ._tier1 import std_x_projection, std_y_projection, std_z_projection
@@ -134,6 +135,7 @@ def _std(self, axis: Optional[int] = None, out=None):
         if isinstance(out, (Array, np.ndarray)):
             np.copyto(out, result.get().astype(out.dtype))
     return result
+
 
 def __pos__(x1):
     """Unary plus, propagates the sign of the argument."""

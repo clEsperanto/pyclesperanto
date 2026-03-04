@@ -63,13 +63,9 @@ def plugin_function(
         for key, value in bound.arguments.items():
             param = sig.parameters[key]
             ann = param.annotation
-            if is_image(value) and (
-                ann is Image or Array in get_args(ann)
-            ):
+            if is_image(value) and (ann is Image or Array in get_args(ann)):
                 bound.arguments[key] = push(value, device=use_device)
-            elif value is None and (
-                ann is Device or Device in get_args(ann)
-            ):
+            elif value is None and (ann is Device or Device in get_args(ann)):
                 bound.arguments[key] = use_device
 
         return function(*bound.args, **bound.kwargs)

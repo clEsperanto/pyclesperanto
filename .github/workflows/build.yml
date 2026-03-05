@@ -26,14 +26,6 @@ jobs:
           python-version: ${{ matrix.python-version }}
           activate-environment: "true"
 
-      - name: Cache uv dependencies
-        uses: actions/cache@v4
-        with:
-          path: ${{ env.UV_CACHE_DIR }}
-          key: uv-${{ runner.os }}-${{ matrix.python-version }}-${{ hashFiles('**/pyproject.toml') }}
-          restore-keys: |
-            uv-${{ runner.os }}-${{ matrix.python-version }}-
-
       - name: Install dependencies (Linux)
         if: runner.os == 'Linux'
         run: |

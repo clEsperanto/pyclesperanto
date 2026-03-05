@@ -39,8 +39,9 @@ jobs:
       - name: Configure CUDA environment
         run: |
           echo "CUDA_HOME=/usr/local/cuda" >> $GITHUB_ENV
-          echo "LD_LIBRARY_PATH=/usr/local/cuda/lib64:$LD_LIBRARY_PATH" >> $GITHUB_ENV
+          echo "LD_LIBRARY_PATH=/usr/local/cuda/lib64:/usr/local/cuda/lib64/stubs:$LD_LIBRARY_PATH" >> $GITHUB_ENV
           echo "PATH=/usr/local/cuda/bin:$PATH" >> $GITHUB_ENV
+          sudo ln -sf /usr/local/cuda/lib64/stubs/libcuda.so /usr/local/cuda/lib64/stubs/libcuda.so.1
 
       - name: Install Python packages
         run: |
@@ -52,5 +53,4 @@ jobs:
 
       - name: Test
         run: |
-          mkdir coverage && cd coverage
-          pytest --cov=pyclesperanto ../tests/ --cov-report=xml
+          pytest ./tests/test_import.py

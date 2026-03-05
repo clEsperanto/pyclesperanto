@@ -36,6 +36,10 @@ jobs:
           non-cuda-sub-packages: '["libnvjitlink","libnvjitlink-dev"]'
           use-local-cache: true
 
+      - name: Configure CUDA environment
+        run: |
+          echo "LD_LIBRARY_PATH=/usr/local/cuda/lib64:$LD_LIBRARY_PATH" >> $GITHUB_ENV
+
       - name: Install Python packages
         run: |
           uv pip install pytest pytest-cov pytest-benchmark scikit-image
@@ -49,10 +53,3 @@ jobs:
           mkdir coverage && cd coverage
           pytest --cov=pyclesperanto ../tests/ --cov-report=xml
 
-      # - name: Upload coverage
-      #   if: github.actor != 'dependabot[bot]'
-      #   uses: codecov/codecov-action@v5.5.2
-      #   with:
-      #     token: ${{ secrets.CODECOV_TOKEN }}
-      #     files: ./coverage/coverage.xml
-      #     fail_ci_if_error: true

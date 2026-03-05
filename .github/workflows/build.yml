@@ -50,7 +50,7 @@ jobs:
 
       - name: Build
         run: |
-          uv pip install . -v 
+          uv pip install . -v
 
       - name: Test
         if: runner.os == 'Linux'

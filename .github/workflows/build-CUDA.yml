@@ -52,4 +52,3 @@ jobs:
         run: |
           mkdir coverage && cd coverage
           pytest --cov=pyclesperanto ../tests/ --cov-report=xml
-

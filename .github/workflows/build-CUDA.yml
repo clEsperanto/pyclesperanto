@@ -44,15 +44,15 @@ jobs:
         run: |
           uv pip install . -v --config-settings=cmake.define.CLE_BACKEND_TYPE=CUDA
 
-      # - name: Test
-      #   run: |
-      #     mkdir coverage && cd coverage
-      #     pytest --cov=pyclesperanto ../tests/ --cov-report=xml
+      - name: Test
+        run: |
+          mkdir coverage && cd coverage
+          pytest --cov=pyclesperanto ../tests/ --cov-report=xml
 
-      - name: Upload coverage
-        if: github.actor != 'dependabot[bot]'
-        uses: codecov/codecov-action@v5.5.2
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          files: ./coverage/coverage.xml
-          fail_ci_if_error: true
+      # - name: Upload coverage
+      #   if: github.actor != 'dependabot[bot]'
+      #   uses: codecov/codecov-action@v5.5.2
+      #   with:
+      #     token: ${{ secrets.CODECOV_TOKEN }}
+      #     files: ./coverage/coverage.xml
+      #     fail_ci_if_error: true

@@ -43,7 +43,7 @@ jobs:
 
       - name: Build
         run: |
-          uv pip install . -v
+          uv pip install . -v --config-settings=cmake.define.CLE_BACKEND_TYPE=OPENCL
 
       - name: Test
         if: runner.os == 'Linux'

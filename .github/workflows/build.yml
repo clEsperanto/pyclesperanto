@@ -7,9 +7,7 @@ on:
     branches: [ main ]
 
 jobs:
-
   build:
-
     name: ${{ matrix.platform }} (${{ matrix.python-version }})
     runs-on: ${{ matrix.platform }}
     strategy:
@@ -17,70 +15,53 @@ jobs:
       matrix:
         python-version: ["3.9", "3.13"]
         platform: [ubuntu-latest, macos-latest]
-    defaults:
-      run:
-        shell: "bash -l {0}"
 
     steps:
       - name: Checkout
-        id: checkout
         uses: actions/checkout@v6
 
-      # - name: setup micromamba
-      #   id: setup-micromamba
-      #   uses: mamba-org/setup-micromamba@v2.0.1
-      #   with:
-      #     environment-name: test
-      #     cache-environment: true
-      #     post-cleanup: 'all'
-      #     create-args: >-
-      #       python=${{ matrix.python-version }}
-      #       pytest pytest-cov pytest-benchmark scikit-image
-
-
-      - name: Get conda - ${{ matrix.python-version }}
-        id: get-conda
-        uses: conda-incubator/setup-miniconda@v3
+      - name: Setup Python with uv
+        uses: astral-sh/setup-uv@v3
         with:
           python-version: ${{ matrix.python-version }}
-          miniforge-version: latest
-          activate-environment: test
-          use-mamba: true
 
-      - name: Dependencies
-        id: install-dependencies
-        run: |
-          mamba install -y pytest pytest-cov pytest-benchmark scikit-image
+      - name: Cache uv dependencies
+        uses: actions/cache@v4
+        with:
+          path: ${{ env.UV_CACHE_DIR }}
+          key: uv-${{ runner.os }}-${{ matrix.python-version }}-${{ hashFiles('**/pyproject.toml') }}
+          restore-keys: |
+            uv-${{ runner.os }}-${{ matrix.python-version }}-
 
-      - name: Install OpenCL (pocl)
-        id: install-pocl
-        if: matrix.platform != 'windows-latest'
+      - name: Install dependencies (Linux)
+        if: runner.os == 'Linux'
         run: |
-          mamba install -y pocl
+          sudo apt-get update
+          sudo apt-get install -y pocl-opencl-icd ocl-icd-opencl-dev ocl-icd-libocl1
 
-      - name: Install OpenCL (oclgrind)
-        id: install-oclgrind
-        if: matrix.platform == 'windows-latest'
+      - name: Install dependencies (macOS)
+        if: runner.os == 'macOS'
         run: |
-          mamba install -y oclgrind
+          brew install pocl
+
+      - name: Install Python packages
+        run: |
+          uv pip install pytest pytest-cov pytest-benchmark scikit-image
 
       - name: Build
-        id: build
         run: |
-          pip install . -v --config-settings=cmake.define.CMAKE_PREFIX_PATH=$CONDA_PREFIX
+          uv pip install . -v 
 
       - name: Test
-        id: test
-        if: matrix.platform == 'ubuntu-latest'
+        if: runner.os == 'Linux'
         run: |
           mkdir coverage && cd coverage
           pytest --cov=pyclesperanto ../tests/ --cov-report=xml
 
-      - name: Coverage
-        id: coverage
-        if: matrix.platform == 'ubuntu-latest' && github.actor != 'dependabot[bot]' && github.actor != 'dependabot-preview[bot]'
+      - name: Upload coverage
+        if: runner.os == 'Linux' && github.actor != 'dependabot[bot]'
         uses: codecov/codecov-action@v5.5.2
         with:
-          token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos
+          token: ${{ secrets.CODECOV_TOKEN }}
           files: ./coverage/coverage.xml
-          fail_ci_if_error: true # optional (default = false)
+          fail_ci_if_error: true

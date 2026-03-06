@@ -1,5 +1,8 @@
+"""Test that pyclesperanto can be imported successfully."""
+
+
 def test_import():
-    try:
-        import pyclesperanto as cle
-    except ImportError as e:
-        print(f"ImportError: {e}")
+    """Test basic import of pyclesperanto."""
+    import pyclesperanto as cle
+
+    assert hasattr(cle, "__version__")

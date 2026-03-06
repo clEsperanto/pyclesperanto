@@ -28,8 +28,10 @@ string(REGEX MATCH "CLIC_VERSION = \"([^\"]+)\"" _ ${VERSION_FILE_CONTENT})
 # set(CLIC_REPO_TAG ${CMAKE_MATCH_1})
 set(CLIC_REPO_TAG "master")
 set(CLIC_REPO_URL "https://github.com/clEsperanto/CLIc.git")
-set(BUILD_OPENCL_BACKEND ON CACHE BOOL "Build with OCL if FOUND" FORCE)
-set(BUILD_CUDA_BACKEND ON CACHE BOOL "Build with CUDA if FOUND" FORCE)
+# if not set, set the default build type to Release
+if(NOT CLE_BACKEND_TYPE)
+    set(CLE_BACKEND_TYPE "OPENCL" CACHE STRING "Backend to use (CUDA or OCL)")
+endif()
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/src/clic EXCLUDE_FROM_ALL)
 
 

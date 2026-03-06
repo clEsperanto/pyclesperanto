@@ -1,19 +1,10 @@
 name: Deploy
 
-# Build on every branch push, tag push, and pull request change:
+# Run on release, or when 'ready-to-deploy' label is added to PR:
 on:
-  push:
-    branches: [main]
-    paths-ignore:
-      - 'docs/**'
-      - 'benchmarking/**'
-      - 'demos/**'
   pull_request:
     branches: [main]
-    paths-ignore:
-      - 'docs/**'
-      - 'benchmarking/**'
-      - 'demos/**'
+    types: [labeled]
   release:
     types: [created]
 
@@ -21,6 +12,7 @@ jobs:
   build_wheels:
     name: build (${{ matrix.os }})
     runs-on: ${{ matrix.os }}
+    if: github.event_name == 'release' || contains(github.event.pull_request.labels.*.name, 'ready-to-deploy')
     strategy:
       fail-fast: true
       matrix:
@@ -43,6 +35,7 @@ jobs:
   build_sdist:
     name: build dist
     runs-on: ubuntu-latest
+    if: github.event_name == 'release' || contains(github.event.pull_request.labels.*.name, 'ready-to-deploy')
     steps:
       - name: Checkout
         uses: actions/checkout@v6

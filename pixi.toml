@@ -30,8 +30,8 @@ python-build = "*"
 cibuildwheel = "*"
 
 [tasks]
-build-ocl = "pip install -e . -v --config-settings=cmake.define.CLE_BACKEND_TYPE=OPENCL"
-build-cuda = "pip install -e . -v --config-settings=cmake.define.CLE_BACKEND_TYPE=CUDA"
+build-ocl = "pip install -e . -v --config-settings=cmake.define.CLE_BACKEND=OPENCL"
+build-cuda = "pip install -e . -v --config-settings=cmake.define.CLE_BACKEND=CUDA"
 test = "pytest -v"
 
 [environments]

@@ -58,7 +58,7 @@ jobs:
 
       - name: Build
         run: |
-          uv pip install . -v --config-settings=cmake.define.CLE_BACKEND_TYPE=${{ matrix.backend }}
+          uv pip install . -v --config-settings=cmake.define.CLE_BACKEND=${{ matrix.backend }}
 
       - name: Test (CUDA)
         if: matrix.backend == 'CUDA'
@@ -149,7 +149,7 @@ jobs:
 
 #       - name: Build
 #         run: |
-#           uv pip install . -v --config-settings=cmake.define.CLE_BACKEND_TYPE=${{ matrix.backend }}
+#           uv pip install . -v --config-settings=cmake.define.CLE_BACKEND=${{ matrix.backend }}
 
 #       - name: Test (CUDA)
 #         if: matrix.backend == 'CUDA'

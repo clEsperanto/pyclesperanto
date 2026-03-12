@@ -102,7 +102,8 @@ jobs:
     name: publish (PyPI)
     needs: [build_opencl_wheels, build_cuda_wheels, build_main]
     runs-on: ubuntu-latest
-    if: github.event_name == 'release' && success()
+    if: success()
+    # if: github.event_name == 'release' && success()
     steps:
       - uses: actions/setup-python@v6
         with:
@@ -114,8 +115,21 @@ jobs:
           path: dist
           merge-multiple: true
 
-      - uses: pypa/gh-action-pypi-publish@v1.13.0
+      # TestPyPI on PR with 'ready-to-deploy' label
+      - name: Publish to TestPyPI
+        if: github.event_name == 'pull_request'
+        uses: pypa/gh-action-pypi-publish@v1.13.0
         with:
-          password: ${{ secrets.PYPI_API_TOKEN }}
+          password: ${{ secrets.TEST_PYPI_TOKEN }}
+          repository-url: https://test.pypi.org/legacy/
           skip-existing: true
           verbose: true
+
+      # # Real PyPI on release
+      # - name: Publish to PyPI
+      #   if: github.event_name == 'release'
+      #   uses: pypa/gh-action-pypi-publish@v1.13.0
+      #   with:
+      #     password: ${{ secrets.PYPI_API_TOKEN }}
+      #     skip-existing: true
+      #     verbose: true

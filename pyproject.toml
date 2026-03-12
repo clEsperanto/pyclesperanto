@@ -95,5 +95,3 @@ environment = { SKBUILD_CMAKE_ARGS = "-DOpenCL_LIBRARIES:FILEPATH='C:/Program Fi
 
 [tool.cibuildwheel.macos]
 environment = { MACOSX_DEPLOYMENT_TARGET = '10.14' }
-
-

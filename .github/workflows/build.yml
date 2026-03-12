@@ -28,7 +28,7 @@ jobs:
           activate-environment: "true"
 
       - name: Install OpenCL dependencies (Linux)
-        if: runner.os == 'Linux' && matrix.backend == 'OPENCL'
+        if: matrix.backend == 'OPENCL'
         run: |
           sudo apt-get update
           sudo apt-get install -y pocl-opencl-icd ocl-icd-opencl-dev
@@ -60,112 +60,20 @@ jobs:
         run: |
           uv pip install . -v --config-settings=cmake.define.CLE_BACKEND=${{ matrix.backend }}
 
-      - name: Test (CUDA)
-        if: matrix.backend == 'CUDA'
+      - name: Import Test
         run: |
           pytest ./tests/test_import.py
 
-      - name: Test (OpenCL)
-        if: matrix.backend == 'OPENCL' && runner.os == 'Linux'
+      - name: Test & Coverage (OpenCL)
+        if: matrix.backend == 'OPENCL'
         run: |
           mkdir coverage && cd coverage
           pytest --cov=pyclesperanto ../tests/ --cov-report=xml
 
       - name: Upload coverage
-        if: matrix.backend == 'OPENCL' && runner.os == 'Linux' && github.actor != 'dependabot[bot]'
+        if: matrix.backend == 'OPENCL' && github.actor != 'dependabot[bot]'
         uses: codecov/codecov-action@v5.5.2
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           files: ./coverage/coverage.xml
           fail_ci_if_error: true
-
-
-
-# name: Build
-
-# on:
-#   push:
-#     branches: [ main ]
-#   pull_request:
-#     branches: [ main ]
-
-# jobs:
-#   build:
-#     name: ${{ matrix.platform }} (${{ matrix.python-version }}, ${{ matrix.backend }})
-#     runs-on: ${{ matrix.platform }}
-#     strategy:
-#       fail-fast: false
-#       matrix:
-#         python-version: ["3.9", "3.13"]
-#         platform: [ubuntu-latest, macos-latest]
-#         backend: [OPENCL, CUDA]
-#         exclude:
-#           - platform: macos-latest
-#             backend: CUDA
-
-#     steps:
-#       - name: Checkout
-#         uses: actions/checkout@v6
-
-#       - name: Setup Python with uv
-#         uses: astral-sh/setup-uv@v7.3.1
-#         with:
-#           python-version: ${{ matrix.python-version }}
-#           activate-environment: "true"
-
-#       - name: Install OpenCL dependencies (Linux)
-#         if: runner.os == 'Linux' && matrix.backend == 'OPENCL'
-#         run: |
-#           sudo apt-get update
-#           sudo apt-get install -y pocl-opencl-icd ocl-icd-opencl-dev
-
-#       - name: Install OpenCL dependencies (macOS)
-#         if: runner.os == 'macOS'
-#         run: |
-#           brew install pocl
-
-#       - name: Install CUDA Toolkit
-#         if: matrix.backend == 'CUDA'
-#         id: cuda-toolkit-linux
-#         uses: Jimver/cuda-toolkit@v0.2.21
-#         with:
-#           cuda: '12.6.0'
-#           method: 'network'
-#           sub-packages: '["nvcc","cudart","cudart-dev","nvrtc","nvrtc-dev"]'
-#           non-cuda-sub-packages: '["libnvjitlink","libnvjitlink-dev"]'
-#           use-local-cache: true
-
-#       - name: Configure CUDA environment
-#         if: matrix.backend == 'CUDA'
-#         run: |
-#           echo "CUDA_HOME=/usr/local/cuda" >> $GITHUB_ENV
-#           echo "LD_LIBRARY_PATH=/usr/local/cuda/lib64:/usr/local/cuda/lib64/stubs:$LD_LIBRARY_PATH" >> $GITHUB_ENV
-#           echo "PATH=/usr/local/cuda/bin:$PATH" >> $GITHUB_ENV
-#           sudo ln -sf /usr/local/cuda/lib64/stubs/libcuda.so /usr/local/cuda/lib64/stubs/libcuda.so.1
-
-#       - name: Install Python packages
-#         run: |
-#           uv pip install pytest pytest-cov pytest-benchmark scikit-image
-
-#       - name: Build
-#         run: |
-#           uv pip install . -v --config-settings=cmake.define.CLE_BACKEND=${{ matrix.backend }}
-
-#       - name: Test (CUDA)
-#         if: matrix.backend == 'CUDA'
-#         run: |
-#           pytest ./tests/test_import.py
-
-#       - name: Test (OpenCL)
-#         if: matrix.backend == 'OPENCL' && runner.os == 'Linux'
-#         run: |
-#           mkdir coverage && cd coverage
-#           pytest --cov=pyclesperanto ../tests/ --cov-report=xml
-
-#       - name: Upload coverage
-#         if: matrix.backend == 'OPENCL' && runner.os == 'Linux' && github.actor != 'dependabot[bot]'
-#         uses: codecov/codecov-action@v5.5.2
-#         with:
-#           token: ${{ secrets.CODECOV_TOKEN }}
-#           files: ./coverage/coverage.xml
-#           fail_ci_if_error: true

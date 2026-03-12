@@ -14,7 +14,7 @@ def _lazy_init():
     Called on first actual use. Safe to call multiple times.
     """
     try:
-        backend = get_backend()
+        get_backend()
     except RuntimeError:
         warnings.warn(
             "No pyclesperanto backend installed.\n"

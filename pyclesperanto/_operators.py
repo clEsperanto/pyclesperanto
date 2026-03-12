@@ -2,14 +2,19 @@ from typing import Optional, Union
 
 import numpy as np
 
-# from ._array import Array
-from ._pyclesperanto import _Array as Array
 from ._utils import (
     _assert_supported_dtype,
     _compute_range,
     _process_ellipsis_into_slice,
     _trim_index_to_shape,
 )
+
+
+def _get_array_class():
+    """Late import to avoid circular dependency with _array.py."""
+    from ._backend import get_backend
+
+    return get_backend()._Array
 
 cl_buffer_datatype_dict = {
     bool: "bool",
@@ -67,7 +72,7 @@ def _max(self, axis: Optional[int] = None, out=None):
     else:
         raise ValueError("Axis " + str(axis) + " not supported")
     if out is not None:
-        if isinstance(out, (Array, np.ndarray)):
+        if isinstance(out, (_get_array_class(), np.ndarray)):
             np.copyto(out, result.get().astype(out.dtype))
         else:
             out = result
@@ -90,7 +95,7 @@ def _min(self, axis: Optional[int] = None, out=None):
     else:
         raise ValueError("Axis " + str(axis) + " not supported")
     if out is not None:
-        if isinstance(out, (Array, np.ndarray)):
+        if isinstance(out, (_get_array_class(), np.ndarray)):
             np.copyto(out, result.get().astype(out.dtype))
     return result
 
@@ -111,7 +116,7 @@ def _sum(self, axis: Optional[int] = None, out=None):
     else:
         raise ValueError("Axis " + str(axis) + " not supported")
     if out is not None:
-        if isinstance(out, (Array, np.ndarray)):
+        if isinstance(out, (_get_array_class(), np.ndarray)):
             np.copyto(out, result.get().astype(out.dtype))
     return result
 
@@ -132,7 +137,7 @@ def _std(self, axis: Optional[int] = None, out=None):
     else:
         raise ValueError("Axis " + str(axis) + " not supported")
     if out is not None:
-        if isinstance(out, (Array, np.ndarray)):
+        if isinstance(out, (_get_array_class(), np.ndarray)):
             np.copyto(out, result.get().astype(out.dtype))
     return result
 
@@ -521,7 +526,7 @@ def __setitem__(self, index, value):
                 write_values_to_positions(values_and_positions, self)
             return
 
-    if not isinstance(value, (Array, np.ndarray)):
+    if not isinstance(value, (_get_array_class(), np.ndarray)):
         value = np.array(value)
 
     if not isinstance(index, tuple):
@@ -584,7 +589,7 @@ def __setitem__(self, index, value):
         )
         return
 
-    if isinstance(value, Array):
+    if isinstance(value, _get_array_class()):
         if self.dtype == value.dtype:
             self.copy(value, origin, (0, 0, 0), region)
         else:

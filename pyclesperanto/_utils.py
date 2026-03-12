@@ -1,9 +1,8 @@
-import importlib
 from typing import Tuple
 
 import numpy as np
 
-clic = importlib.import_module("._pyclesperanto", package="pyclesperanto")
+from ._backend import get_backend
 
 cl_buffer_datatype_dict = {
     bool: "bool",
@@ -134,4 +133,4 @@ def fft_smooth_shape(
     if len(shape) < 3:
         shape = shape + [0] * (3 - len(shape))
 
-    return clic._fft_smooth_shape(shape)[:length]
+    return get_backend()._fft_smooth_shape(shape)[:length]

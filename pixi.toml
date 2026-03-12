@@ -7,6 +7,7 @@ python = ">=3.8,<3.14"
 pip = "*"
 setuptools = "*"
 wheel = "*"
+hatchling = "*"
 scikit-build-core = "*"
 pybind11 = "*"
 cmake = "*"
@@ -30,8 +31,8 @@ python-build = "*"
 cibuildwheel = "*"
 
 [tasks]
-build-ocl = "pip install -e . -v --config-settings=cmake.define.CLE_BACKEND=OPENCL"
-build-cuda = "pip install -e . -v --config-settings=cmake.define.CLE_BACKEND=CUDA"
+build-ocl = "pip install -e . && pip install -e ./backends/opencl -v"
+build-cuda = "pip install -e . && pip install -e ./backends/cuda -v"
 test = "pytest -v"
 
 [environments]

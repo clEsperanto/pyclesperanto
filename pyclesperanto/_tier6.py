@@ -2,7 +2,6 @@
 # This code is auto-generated from CLIc 'cle::tier6.hpp' file, do not edit manually.
 #
 
-import importlib
 import warnings
 from typing import Optional
 
@@ -12,8 +11,7 @@ from ._array import Image
 from ._core import Device
 from ._decorators import plugin_function
 
-clic = importlib.import_module("._pyclesperanto", package="pyclesperanto")
-
+from ._backend import get_backend
 
 @plugin_function(categories=["label processing", "in assistant", "bia-bob-suggestion"])
 def dilate_labels(
@@ -41,7 +39,7 @@ def dilate_labels(
     -------
     Image
     """
-    return clic._dilate_labels(device, input_image, output_image, int(radius))
+    return get_backend()._dilate_labels(device, input_image, output_image, int(radius))
 
 
 @plugin_function(categories=["label processing", "in assistant"])
@@ -74,7 +72,7 @@ def erode_labels(
     -------
     Image
     """
-    return clic._erode_labels(device, input_image, output_image, int(radius), relabel)
+    return get_backend()._erode_labels(device, input_image, output_image, int(radius), relabel)
 
 
 @plugin_function(categories=["label", "in assistant"])
@@ -110,7 +108,7 @@ def gauss_otsu_labeling(
     [1] https://ieeexplore.ieee.org/document/4310076
     [2] https://en.wikipedia.org/wiki/Connected-component_labeling
     """
-    return clic._gauss_otsu_labeling(
+    return get_backend()._gauss_otsu_labeling(
         device, input_image0, output_image, float(outline_sigma)
     )
 
@@ -145,7 +143,7 @@ def masked_voronoi_labeling(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_maskedVoronoiLabeling
     """
-    return clic._masked_voronoi_labeling(device, input_image, mask, output_image)
+    return get_backend()._masked_voronoi_labeling(device, input_image, mask, output_image)
 
 
 @plugin_function(categories=["label", "in assistant", "bia-bob-suggestion"])
@@ -175,7 +173,7 @@ def voronoi_labeling(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_voronoiLabeling
     """
-    return clic._voronoi_labeling(device, input_binary, output_labels)
+    return get_backend()._voronoi_labeling(device, input_binary, output_labels)
 
 
 @plugin_function(categories=["label processing", "in assistant", "bia-bob-suggestion"])
@@ -206,7 +204,7 @@ def remove_small_labels(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_excludeLabelsOutsideSizeRange
     """
-    return clic._remove_small_labels(
+    return get_backend()._remove_small_labels(
         device, input_image, output_image, float(minimum_size)
     )
 
@@ -239,7 +237,7 @@ def exclude_small_labels(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_excludeLabelsOutsideSizeRange
     """
-    return clic._exclude_small_labels(
+    return get_backend()._exclude_small_labels(
         device, input_image, output_image, float(maximum_size)
     )
 
@@ -272,7 +270,7 @@ def remove_large_labels(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_excludeLabelsOutsideSizeRange
     """
-    return clic._remove_large_labels(
+    return get_backend()._remove_large_labels(
         device, input_image, output_image, float(maximum_size)
     )
 
@@ -305,7 +303,7 @@ def exclude_large_labels(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_excludeLabelsOutsideSizeRange
     """
-    return clic._exclude_large_labels(
+    return get_backend()._exclude_large_labels(
         device, input_image, output_image, float(minimum_size)
     )
 
@@ -342,7 +340,7 @@ def proximal_neighbor_count_map(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_proximalNeighborCountMap
     """
-    return clic._proximal_neighbor_count_map(
+    return get_backend()._proximal_neighbor_count_map(
         device, labels, output_image, float(min_distance), float(max_distance)
     )
 

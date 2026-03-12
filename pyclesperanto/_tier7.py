@@ -2,7 +2,6 @@
 # This code is auto-generated from CLIc 'cle::tier7.hpp' file, do not edit manually.
 #
 
-import importlib
 import warnings
 from typing import Optional
 
@@ -12,8 +11,7 @@ from ._array import Image
 from ._core import Device
 from ._decorators import plugin_function
 
-clic = importlib.import_module("._pyclesperanto", package="pyclesperanto")
-
+from ._backend import get_backend
 
 @plugin_function
 def affine_transform(
@@ -48,7 +46,7 @@ def affine_transform(
     -------
     Image
     """
-    return clic._affine_transform(
+    return get_backend()._affine_transform(
         device, input_image, output_image, transform_matrix, interpolate, resize
     )
 
@@ -93,7 +91,7 @@ def eroded_otsu_labeling(
     [1] https://github.com/biovoxxel/bv3dbox
     [2] https://zenodo.org/badge/latestdoi/434949702
     """
-    return clic._eroded_otsu_labeling(
+    return get_backend()._eroded_otsu_labeling(
         device, input_image, output_image, int(number_of_erosions), float(outline_sigma)
     )
 
@@ -148,7 +146,7 @@ def rigid_transform(
     -------
     Image
     """
-    return clic._rigid_transform(
+    return get_backend()._rigid_transform(
         device,
         input_image,
         output_image,
@@ -205,7 +203,7 @@ def rotate(
     -------
     Image
     """
-    return clic._rotate(
+    return get_backend()._rotate(
         device,
         input_image,
         output_image,
@@ -257,7 +255,7 @@ def scale(
     -------
     Image
     """
-    return clic._scale(
+    return get_backend()._scale(
         device,
         input_image,
         output_image,
@@ -303,7 +301,7 @@ def translate(
     -------
     Image
     """
-    return clic._translate(
+    return get_backend()._translate(
         device,
         input_image,
         output_image,
@@ -351,7 +349,7 @@ def deskew_x(
     -------
     Image
     """
-    return clic._deskew_x(
+    return get_backend()._deskew_x(
         device,
         input_image,
         output_image,
@@ -400,7 +398,7 @@ def deskew_y(
     -------
     Image
     """
-    return clic._deskew_y(
+    return get_backend()._deskew_y(
         device,
         input_image,
         output_image,
@@ -440,7 +438,7 @@ def closing_labels(
     -------
     Image
     """
-    return clic._closing_labels(device, input_image, output_image, int(radius))
+    return get_backend()._closing_labels(device, input_image, output_image, int(radius))
 
 
 @plugin_function(categories=["label processing", "in assistant"])
@@ -469,7 +467,7 @@ def erode_connected_labels(
     -------
     Image
     """
-    return clic._erode_connected_labels(device, input_image, output_image, int(radius))
+    return get_backend()._erode_connected_labels(device, input_image, output_image, int(radius))
 
 
 @plugin_function(categories=["label processing", "in assistant"])
@@ -500,7 +498,7 @@ def opening_labels(
     -------
     Image
     """
-    return clic._opening_labels(device, input_image, output_image, int(radius))
+    return get_backend()._opening_labels(device, input_image, output_image, int(radius))
 
 
 @plugin_function(categories=["label", "in assistant", "bia-bob-suggestion"])
@@ -540,7 +538,7 @@ def voronoi_otsu_labeling(
     [2] https://ieeexplore.ieee.org/document/4310076
     [3] https://en.wikipedia.org/wiki/Voronoi_diagram
     """
-    return clic._voronoi_otsu_labeling(
+    return get_backend()._voronoi_otsu_labeling(
         device, input_image, output_image, float(spot_sigma), float(outline_sigma)
     )
 

@@ -56,9 +56,19 @@ jobs:
         run: |
           uv pip install pytest pytest-cov pytest-benchmark scikit-image
 
-      - name: Build
+      - name: Build root package
         run: |
-          uv pip install . -v --config-settings=cmake.define.CLE_BACKEND=${{ matrix.backend }}
+          uv pip install . -v
+
+      - name: Build OpenCL backend
+        if: matrix.backend == 'OPENCL'
+        run: |
+          uv pip install ./backends/opencl -v
+
+      - name: Build CUDA backend
+        if: matrix.backend == 'CUDA'
+        run: |
+          uv pip install ./backends/cuda -v
 
       - name: Import Test
         run: |

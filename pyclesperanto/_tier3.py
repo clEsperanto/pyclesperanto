@@ -2,7 +2,6 @@
 # This code is auto-generated from CLIc 'cle::tier3.hpp' file, do not edit manually.
 #
 
-import importlib
 import warnings
 from typing import Optional
 
@@ -12,8 +11,7 @@ from ._array import Image
 from ._core import Device
 from ._decorators import plugin_function
 
-clic = importlib.import_module("._pyclesperanto", package="pyclesperanto")
-
+from ._backend import get_backend
 
 @plugin_function
 def bounding_box(input_image: Image, device: Optional[Device] = None) -> list:
@@ -36,7 +34,7 @@ def bounding_box(input_image: Image, device: Optional[Device] = None) -> list:
     ----------
     [1] https://clij.github.io/clij2-docs/reference_boundingBox
     """
-    return clic._bounding_box(device, input_image)
+    return get_backend()._bounding_box(device, input_image)
 
 
 @plugin_function
@@ -59,7 +57,7 @@ def center_of_mass(input_image: Image, device: Optional[Device] = None) -> list:
     ----------
     [1] https://clij.github.io/clij2-docs/reference_centerOfMass
     """
-    return clic._center_of_mass(device, input_image)
+    return get_backend()._center_of_mass(device, input_image)
 
 
 @plugin_function
@@ -97,7 +95,7 @@ def clahe(
     -------
     Image
     """
-    return clic._clahe(
+    return get_backend()._clahe(
         device,
         input_image,
         output_image,
@@ -140,7 +138,7 @@ def remove_labels(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_excludeLabels
     """
-    return clic._remove_labels(device, input_image, list, output_image)
+    return get_backend()._remove_labels(device, input_image, list, output_image)
 
 
 @plugin_function
@@ -175,7 +173,7 @@ def exclude_labels(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_excludeLabels
     """
-    return clic._exclude_labels(device, input_image, list, output_image)
+    return get_backend()._exclude_labels(device, input_image, list, output_image)
 
 
 @plugin_function(categories=["label processing", "in assistant", "bia-bob-suggestion"])
@@ -213,7 +211,7 @@ def remove_labels_on_edges(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_excludeLabelsOnEdges
     """
-    return clic._remove_labels_on_edges(
+    return get_backend()._remove_labels_on_edges(
         device, input_image, output_image, exclude_x, exclude_y, exclude_z
     )
 
@@ -253,7 +251,7 @@ def exclude_labels_on_edges(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_excludeLabelsOnEdges
     """
-    return clic._exclude_labels_on_edges(
+    return get_backend()._exclude_labels_on_edges(
         device, input_image, output_image, exclude_x, exclude_y, exclude_z
     )
 
@@ -281,7 +279,7 @@ def flag_existing_labels(
     -------
     Image
     """
-    return clic._flag_existing_labels(device, input_image, output_image)
+    return get_backend()._flag_existing_labels(device, input_image, output_image)
 
 
 @plugin_function(categories=["filter", "in assistant"])
@@ -314,7 +312,7 @@ def gamma_correction(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_gammaCorrection
     """
-    return clic._gamma_correction(device, input_image, output_image, float(gamma))
+    return get_backend()._gamma_correction(device, input_image, output_image, float(gamma))
 
 
 @plugin_function
@@ -348,7 +346,7 @@ def generate_binary_overlap_matrix(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_generateBinaryOverlapMatrix
     """
-    return clic._generate_binary_overlap_matrix(
+    return get_backend()._generate_binary_overlap_matrix(
         device, input_image0, input_image1, output_image
     )
 
@@ -382,7 +380,7 @@ def generate_touch_matrix(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_generateTouchMatrix
     """
-    return clic._generate_touch_matrix(device, input_image, output_image_matrix)
+    return get_backend()._generate_touch_matrix(device, input_image, output_image_matrix)
 
 
 @plugin_function
@@ -435,7 +433,7 @@ def histogram(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_histogram
     """
-    return clic._histogram(
+    return get_backend()._histogram(
         device,
         input_image,
         output_image,
@@ -472,7 +470,7 @@ def jaccard_index(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_jaccardIndex
     """
-    return clic._jaccard_index(device, input_image0, input_image1)
+    return get_backend()._jaccard_index(device, input_image0, input_image1)
 
 
 @plugin_function
@@ -502,7 +500,7 @@ def labelled_spots_to_pointlist(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_labelledSpotsToPointList
     """
-    return clic._labelled_spots_to_pointlist(device, label, dspointlistt)
+    return get_backend()._labelled_spots_to_pointlist(device, label, dspointlistt)
 
 
 @plugin_function
@@ -520,7 +518,7 @@ def maximum_position(input_image: Image, device: Optional[Device] = None) -> lis
     -------
     list
     """
-    return clic._maximum_position(device, input_image)
+    return get_backend()._maximum_position(device, input_image)
 
 
 @plugin_function
@@ -542,7 +540,7 @@ def mean_of_all_pixels(input_image: Image, device: Optional[Device] = None) -> f
     ----------
     [1] https://clij.github.io/clij2-docs/reference_meanOfAllPixels
     """
-    return clic._mean_of_all_pixels(device, input_image)
+    return get_backend()._mean_of_all_pixels(device, input_image)
 
 
 @plugin_function
@@ -560,7 +558,7 @@ def minimum_position(input_image: Image, device: Optional[Device] = None) -> lis
     -------
     list
     """
-    return clic._minimum_position(device, input_image)
+    return get_backend()._minimum_position(device, input_image)
 
 
 @plugin_function
@@ -598,7 +596,7 @@ def morphological_chan_vese(
     -------
     Image
     """
-    return clic._morphological_chan_vese(
+    return get_backend()._morphological_chan_vese(
         device,
         input_image,
         output_image,
@@ -638,7 +636,7 @@ def statistics_of_labelled_pixels(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_statisticsOfLabelledPixels
     """
-    return clic._statistics_of_labelled_pixels(device, intensity, label)
+    return get_backend()._statistics_of_labelled_pixels(device, intensity, label)
 
 
 @plugin_function
@@ -671,7 +669,7 @@ def statistics_of_background_and_labelled_pixels(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_statisticsOfBackgroundAndLabelledPixels
     """
-    return clic._statistics_of_background_and_labelled_pixels(device, intensity, label)
+    return get_backend()._statistics_of_background_and_labelled_pixels(device, intensity, label)
 
 
 @plugin_function(categories=["filter", "in assistant"])
@@ -710,7 +708,7 @@ def sato_filter(
     ----------
     [1] https://doi.org/10.1016/S1361-8415(98)80009-1
     """
-    return clic._sato_filter(
+    return get_backend()._sato_filter(
         device,
         input_image,
         output_image,
@@ -752,7 +750,7 @@ def tubeness(
     [1] https://imagej.net/plugins/tubeness
     [2] https://doi.org/10.1016/S1361-8415(98)80009-1
     """
-    return clic._tubeness(device, input_image, output_image, float(sigma))
+    return get_backend()._tubeness(device, input_image, output_image, float(sigma))
 
 
 @plugin_function
@@ -798,7 +796,7 @@ def artificial_tissue(
     -------
     Image
     """
-    return clic._artificial_tissue(
+    return get_backend()._artificial_tissue(
         device,
         int(width),
         int(height),
@@ -837,7 +835,7 @@ def read_map_values(
     -------
     Image
     """
-    return clic._read_map_values(device, map, label, output_image)
+    return get_backend()._read_map_values(device, map, label, output_image)
 
 
 @plugin_function
@@ -865,7 +863,7 @@ def read_intensities_from_map(
     -------
     Image
     """
-    return clic._read_intensities_from_map(device, label, map, output_image)
+    return get_backend()._read_intensities_from_map(device, label, map, output_image)
 
 
 __all__ = [

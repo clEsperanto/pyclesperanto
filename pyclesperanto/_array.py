@@ -4,8 +4,45 @@ import numpy as np
 
 from . import _operators
 from ._core import Device, get_device
-from ._pyclesperanto import _Array as Array
+from ._backend import get_backend
 from ._utils import _assert_supported_dtype
+
+
+def _get_array_class():
+    """Get the _Array class from the active backend (lazy)."""
+    return get_backend()._Array
+
+
+# We need Array to be importable at module level for type hints,
+# but it must resolve lazily from the backend.
+class _ArrayMeta(type):
+    """Metaclass that makes isinstance/issubclass work with the backend _Array."""
+
+    def __instancecheck__(cls, instance):
+        try:
+            return isinstance(instance, _get_array_class())
+        except RuntimeError:
+            return False
+
+    def __subclasscheck__(cls, subclass):
+        try:
+            return issubclass(subclass, _get_array_class())
+        except RuntimeError:
+            return False
+
+
+class Array(metaclass=_ArrayMeta):
+    """Lazy proxy for the backend Array class.
+
+    The actual class methods are patched onto the real backend _Array class
+    at the end of this module via _patch_array_class().
+    """
+
+    pass
+
+
+# Flag to track if we already patched
+_array_patched = False
 
 
 def _prepare_array(arr) -> np.ndarray:
@@ -275,59 +312,69 @@ def reshape(self, shape):
     return self.get().reshape(shape)
 
 
-# missing operators:
-# __array_interface__
-# __array_ufunc__
+def _patch_array_class():
+    """Patch the backend _Array class with Python methods. Called once on first use."""
+    global Array, _array_patched, Image
+    if _array_patched:
+        return
+    _array_patched = True
 
-# Add class methods, properties and magic methods
-setattr(Array, "T", property(T))
-setattr(Array, "set", set)
-setattr(Array, "get", get)
-setattr(Array, "__array_ufunc__", __array_ufunc__)
-setattr(Array, "__str__", __str__)
-setattr(Array, "__repr__", __repr__)
-setattr(Array, "__array__", __array__)
-setattr(Array, "from_array", classmethod(from_array))
-setattr(Array, "empty", classmethod(empty))
-setattr(Array, "empty_like", classmethod(empty_like))
-setattr(Array, "zeros", classmethod(zeros))
-setattr(Array, "zeros_like", classmethod(zeros_like))
-setattr(Array, "to_device", classmethod(to_device))
-setattr(Array, "reshape", reshape)
+    # Replace the proxy Array with the real backend class
+    Array = _get_array_class()
 
-# Add operations and class methods from _operators module
-setattr(Array, "astype", _operators._astype)
-setattr(Array, "max", _operators._max)
-setattr(Array, "min", _operators._min)
-setattr(Array, "sum", _operators._sum)
-setattr(Array, "std", _operators._std)
-setattr(Array, "__pos__", _operators.__pos__)
-setattr(Array, "__neg__", _operators.__neg__)
-setattr(Array, "__add__", _operators.__add__)
-setattr(Array, "__iadd__", _operators.__iadd__)
-setattr(Array, "__sub__", _operators.__sub__)
-setattr(Array, "__div__", _operators.__div__)
-setattr(Array, "__truediv__", _operators.__truediv__)
-setattr(Array, "__idiv__", _operators.__idiv__)
-setattr(Array, "__itruediv__", _operators.__itruediv__)
-setattr(Array, "__mul__", _operators.__mul__)
-setattr(Array, "__imul__", _operators.__imul__)
-setattr(Array, "__gt__", _operators.__gt__)
-setattr(Array, "__ge__", _operators.__ge__)
-setattr(Array, "__lt__", _operators.__lt__)
-setattr(Array, "__le__", _operators.__le__)
-setattr(Array, "__eq__", _operators.__eq__)
-setattr(Array, "__ne__", _operators.__ne__)
-setattr(Array, "__pow__", _operators.__pow__)
-setattr(Array, "__ipow__", _operators.__ipow__)
-setattr(Array, "_plt_to_png", _operators.__plt_to_png__)
-setattr(Array, "_png_to_html", _operators.__png_to_html__)
-setattr(Array, "_repr_html_", _operators.__repr_html__)
-setattr(Array, "__iter__", _operators.__iter__)
-setattr(Array, "__setitem__", _operators.__setitem__)
-setattr(Array, "__getitem__", _operators.__getitem__)
+    # Add class methods, properties and magic methods
+    setattr(Array, "T", property(T))
+    setattr(Array, "set", set)
+    setattr(Array, "get", get)
+    setattr(Array, "__array_ufunc__", __array_ufunc__)
+    setattr(Array, "__str__", __str__)
+    setattr(Array, "__repr__", __repr__)
+    setattr(Array, "__array__", __array__)
+    setattr(Array, "from_array", classmethod(from_array))
+    setattr(Array, "empty", classmethod(empty))
+    setattr(Array, "empty_like", classmethod(empty_like))
+    setattr(Array, "zeros", classmethod(zeros))
+    setattr(Array, "zeros_like", classmethod(zeros_like))
+    setattr(Array, "to_device", classmethod(to_device))
+    setattr(Array, "reshape", reshape)
 
-# Create Image type
+    # Add operations and class methods from _operators module
+    setattr(Array, "astype", _operators._astype)
+    setattr(Array, "max", _operators._max)
+    setattr(Array, "min", _operators._min)
+    setattr(Array, "sum", _operators._sum)
+    setattr(Array, "std", _operators._std)
+    setattr(Array, "__pos__", _operators.__pos__)
+    setattr(Array, "__neg__", _operators.__neg__)
+    setattr(Array, "__add__", _operators.__add__)
+    setattr(Array, "__iadd__", _operators.__iadd__)
+    setattr(Array, "__sub__", _operators.__sub__)
+    setattr(Array, "__div__", _operators.__div__)
+    setattr(Array, "__truediv__", _operators.__truediv__)
+    setattr(Array, "__idiv__", _operators.__idiv__)
+    setattr(Array, "__itruediv__", _operators.__itruediv__)
+    setattr(Array, "__mul__", _operators.__mul__)
+    setattr(Array, "__imul__", _operators.__imul__)
+    setattr(Array, "__gt__", _operators.__gt__)
+    setattr(Array, "__ge__", _operators.__ge__)
+    setattr(Array, "__lt__", _operators.__lt__)
+    setattr(Array, "__le__", _operators.__le__)
+    setattr(Array, "__eq__", _operators.__eq__)
+    setattr(Array, "__ne__", _operators.__ne__)
+    setattr(Array, "__pow__", _operators.__pow__)
+    setattr(Array, "__ipow__", _operators.__ipow__)
+    setattr(Array, "_plt_to_png", _operators.__plt_to_png__)
+    setattr(Array, "_png_to_html", _operators.__png_to_html__)
+    setattr(Array, "_repr_html_", _operators.__repr_html__)
+    setattr(Array, "__iter__", _operators.__iter__)
+    setattr(Array, "__setitem__", _operators.__setitem__)
+    setattr(Array, "__getitem__", _operators.__getitem__)
+
+    # Update module-level Image type
+    Image = Union[np.ndarray, Array]
+
+
+# Create Image type (uses proxy initially, updated after patching)
 Image = Union[np.ndarray, Array]
 
 

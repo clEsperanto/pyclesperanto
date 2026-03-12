@@ -1,0 +1,69 @@
+# =============================================================================
+# Build System Configuration
+# =============================================================================
+
+[build-system]
+build-backend = "scikit_build_core.build"
+requires = ["setuptools", "wheel", "scikit-build-core", "pybind11"]
+
+[tool.scikit-build]
+build-dir = "build/{wheel_tag}"
+
+[tool.scikit-build.ninja]
+make-fallback = false
+
+[tool.scikit-build.cmake]
+build-type = "Release"
+
+[tool.scikit-build.metadata.version]
+provider = "scikit_build_core.metadata.regex"
+regex = 'VERSION = "(?P<value>\d+\.\d+\.\d+)"'
+input = "../../pyclesperanto/_version.py"
+
+[tool.scikit-build.sdist]
+exclude = [".git*"]
+
+# =============================================================================
+# Package Metadata
+# =============================================================================
+
+[project]
+authors = [
+  { name = "Stephane Rigaud", email = "stephane.rigaud@pasteur.fr" },
+  { name = "Robert Haase", email = "robert.haase@uni-leipzig.de" },
+]
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Programming Language :: C++",
+  "Programming Language :: Python :: 3",
+  "License :: OSI Approved :: BSD License",
+]
+description = "OpenCL backend for pyclesperanto, a Python library for GPU-accelerated image processing"
+name = "pyclesperanto-opencl"
+requires-python = ">=3.8"
+dynamic = ["version"]
+license = { file = "../../LICENSE" }
+keywords = ["image processing", "GPU", "OpenCL", "scientific computing"]
+
+# =============================================================================
+# cibuildwheel Configuration
+# =============================================================================
+
+[tool.cibuildwheel]
+build = ["cp38-*", "cp39-*", "cp310-*", "cp311-*", "cp312-*", "cp313-*"]
+skip = ["*-win32", "*-musllinux*", "*_i686", "*_universal2"]
+build-frontend = "build"
+build-verbosity = 1
+test-command = "pytest {project}/../../tests/test_import.py"
+test-requires = ["pytest", "pytest-cov", "pytest-benchmark", "scikit-image"]
+
+[tool.cibuildwheel.linux]
+before-all = "bash {package}/../../scripts/build-opencl-linux.sh"
+repair-wheel-command = "auditwheel show {wheel} && auditwheel repair --lib-sdir .libs -w {dest_dir} {wheel}"
+
+[tool.cibuildwheel.windows]
+before-all = "bash {package}/../../scripts/build-opencl-windows.sh"
+environment = { SKBUILD_CMAKE_ARGS = "-DOpenCL_LIBRARIES:FILEPATH='C:/Program Files/OpenCL-ICD-Loader/lib/OpenCL.lib';-DOpenCL_INCLUDE_DIRS:PATH='C:/Program Files/OpenCL-ICD-Loader/include/'" }
+
+[tool.cibuildwheel.macos]
+environment = { MACOSX_DEPLOYMENT_TARGET = '10.14' }

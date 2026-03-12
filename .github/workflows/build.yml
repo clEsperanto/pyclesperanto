@@ -54,11 +54,7 @@ jobs:
 
       - name: Install Python packages
         run: |
-          uv pip install pytest pytest-cov pytest-benchmark scikit-image
-
-      - name: Build root package
-        run: |
-          uv pip install . -v
+          uv pip install numpy toolz matplotlib pytest pytest-cov pytest-benchmark scikit-image
 
       - name: Build OpenCL backend
         if: matrix.backend == 'OPENCL'
@@ -69,6 +65,10 @@ jobs:
         if: matrix.backend == 'CUDA'
         run: |
           uv pip install ./backends/cuda -v
+
+      - name: Build root package
+        run: |
+          uv pip install --no-deps . -v
 
       - name: Import Test
         run: |

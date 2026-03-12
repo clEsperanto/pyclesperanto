@@ -16,7 +16,7 @@ authors = [
   { name = "Robert Haase", email = "robert.haase@uni-leipzig.de" },
 ]
 classifiers = [
-  "Development Status :: 4 - Beta",
+  "Development Status :: 3 - Alpha",
   "Programming Language :: C++",
   "Programming Language :: Python :: 3",
   "License :: OSI Approved :: BSD License",

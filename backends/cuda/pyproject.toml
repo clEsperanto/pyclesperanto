@@ -33,10 +33,15 @@ authors = [
   { name = "Robert Haase", email = "robert.haase@uni-leipzig.de" },
 ]
 classifiers = [
-  "Development Status :: 4 - Beta",
+  "Development Status :: 3 - Alpha",
   "Programming Language :: C++",
   "Programming Language :: Python :: 3",
   "License :: OSI Approved :: BSD License",
+  "Operating System :: POSIX :: Linux",
+  "Operating System :: Microsoft :: Windows",
+  "Intended Audience :: Science/Research",
+  "Intended Audience :: Developers",
+  "Topic :: Scientific/Engineering :: Image Processing",
 ]
 description = "CUDA backend for pyclesperanto, a Python library for GPU-accelerated image processing"
 name = "pyclesperanto-cuda"
@@ -54,16 +59,15 @@ build = ["cp38-*", "cp39-*", "cp310-*", "cp311-*", "cp312-*", "cp313-*"]
 skip = ["*-win32", "*-musllinux*", "*_i686", "*_universal2", "*-macosx*"]
 build-frontend = "build"
 build-verbosity = 1
-test-command = "pytest {project}/../../tests/test_import.py"
-test-requires = ["pytest", "pytest-cov", "pytest-benchmark", "scikit-image"]
+test-command = "python -c \"import pyclesperanto_cuda; print('CUDA backend OK')\""
 
 [tool.cibuildwheel.linux]
 before-all = "bash {package}/../../scripts/build-cuda-linux.sh"
 repair-wheel-command = "auditwheel show {wheel} && auditwheel repair --lib-sdir .libs -w {dest_dir} {wheel}"
+environment = { CUDA_HOME="/usr/local/cuda", PATH="/usr/local/cuda/bin:$PATH", LD_LIBRARY_PATH="/usr/local/cuda/lib64:/usr/local/cuda/lib64/stubs:$LD_LIBRARY_PATH" }
 
 [tool.cibuildwheel.windows]
-before-all = "bash {package}/../../scripts/build-cuda-windows.sh"
-environment = { SKBUILD_CMAKE_ARGS = "-DCUDA_TOOLKIT_ROOT_DIR='C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v12.6';-DcuBLAS_INCLUDE_DIRS:PATH='C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v12.6/include';-DcuBLAS_LIBRARIES:FILEPATH='C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v12.6/lib/x64/cublas.lib'" }
+environment = { SKBUILD_CMAKE_ARGS = "-DCUDA_TOOLKIT_ROOT_DIR='C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v12.6'" }
 
 [tool.cibuildwheel.macos]
 # CUDA is not supported on macOS — builds are skipped via the skip pattern above

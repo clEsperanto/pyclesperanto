@@ -33,10 +33,14 @@ authors = [
   { name = "Robert Haase", email = "robert.haase@uni-leipzig.de" },
 ]
 classifiers = [
-  "Development Status :: 4 - Beta",
+  "Development Status :: 3 - Alpha",
   "Programming Language :: C++",
   "Programming Language :: Python :: 3",
   "License :: OSI Approved :: BSD License",
+  "Operating System :: OS Independent",
+  "Intended Audience :: Science/Research",
+  "Intended Audience :: Developers",
+  "Topic :: Scientific/Engineering :: Image Processing",
 ]
 description = "OpenCL backend for pyclesperanto, a Python library for GPU-accelerated image processing"
 name = "pyclesperanto-opencl"
@@ -54,8 +58,7 @@ build = ["cp38-*", "cp39-*", "cp310-*", "cp311-*", "cp312-*", "cp313-*"]
 skip = ["*-win32", "*-musllinux*", "*_i686", "*_universal2"]
 build-frontend = "build"
 build-verbosity = 1
-test-command = "pytest {project}/../../tests/test_import.py"
-test-requires = ["pytest", "pytest-cov", "pytest-benchmark", "scikit-image"]
+test-command = "python -c \"import pyclesperanto_opencl; print('OpenCL backend OK')\""
 
 [tool.cibuildwheel.linux]
 before-all = "bash {package}/../../scripts/build-opencl-linux.sh"

@@ -9,8 +9,11 @@ on:
     types: [created]
 
 jobs:
-  build_wheels:
-    name: build (${{ matrix.os }})
+  # =========================================================================
+  # Build pyclesperanto-opencl wheels (Linux, macOS, Windows)
+  # =========================================================================
+  build_opencl_wheels:
+    name: build opencl (${{ matrix.os }})
     runs-on: ${{ matrix.os }}
     if: github.event_name == 'release' || contains(github.event.pull_request.labels.*.name, 'ready-to-deploy')
     strategy:
@@ -23,36 +26,82 @@ jobs:
         uses: actions/checkout@v6
 
       - name: Build wheels
-        uses: pypa/cibuildwheel@v3.4.0 #2.19.2
+        uses: pypa/cibuildwheel@v3.4.0
+        with:
+          package-dir: backends/opencl
         env:
           CIBW_ARCHS_MACOS: x86_64 arm64
 
       - uses: actions/upload-artifact@v7
         with:
           path: ./wheelhouse/*.whl
-          name: artifacts-${{ matrix.os }}
+          name: artifacts-opencl-${{ matrix.os }}
 
-  build_sdist:
-    name: build dist
+  # =========================================================================
+  # Build pyclesperanto-cuda wheels (Linux, Windows — no macOS)
+  # =========================================================================
+  build_cuda_wheels:
+    name: build cuda (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    if: github.event_name == 'release' || contains(github.event.pull_request.labels.*.name, 'ready-to-deploy')
+    strategy:
+      fail-fast: true
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Install CUDA Toolkit (Windows)
+        if: matrix.os == 'windows-latest'
+        uses: Jimver/cuda-toolkit@v0.2.21
+        with:
+          cuda: '12.6.0'
+          method: 'network'
+          sub-packages: '["nvcc","cudart","cudart-dev","nvrtc","nvrtc-dev"]'
+          non-cuda-sub-packages: '["nvJitLink","nvJitLink-dev"]'
+          use-local-cache: true
+
+      - name: Build wheels
+        uses: pypa/cibuildwheel@v3.4.0
+        with:
+          package-dir: backends/cuda
+        env:
+          # On Windows, CUDA is already installed by the action above; skip before-all
+          CIBW_BEFORE_ALL_WINDOWS: ""
+
+      - uses: actions/upload-artifact@v7
+        with:
+          path: ./wheelhouse/*.whl
+          name: artifacts-cuda-${{ matrix.os }}
+
+  # =========================================================================
+  # Build pyclesperanto pure Python package (sdist + wheel)
+  # =========================================================================
+  build_main:
+    name: build pyclesperanto
     runs-on: ubuntu-latest
     if: github.event_name == 'release' || contains(github.event.pull_request.labels.*.name, 'ready-to-deploy')
     steps:
       - name: Checkout
         uses: actions/checkout@v6
 
-      - name: Build sdist
-        run: pipx run build --sdist
+      - name: Build sdist and wheel
+        run: pipx run build
 
       - uses: actions/upload-artifact@v7
         with:
-          path: dist/*.tar.gz
-          name: artifacts-sdist
+          path: dist/*
+          name: artifacts-main
 
+  # =========================================================================
+  # Publish all packages to PyPI
+  # =========================================================================
   upload_all:
     name: publish (PyPI)
-    needs: [build_wheels, build_sdist]
+    needs: [build_opencl_wheels, build_cuda_wheels, build_main]
     runs-on: ubuntu-latest
-    # upload to PyPI on release event
     if: github.event_name == 'release' && success()
     steps:
       - uses: actions/setup-python@v6

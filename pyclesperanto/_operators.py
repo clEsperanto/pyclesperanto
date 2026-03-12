@@ -116,6 +116,27 @@ def _sum(self, axis: Optional[int] = None, out=None):
     return result
 
 
+def _std(self, axis: Optional[int] = None, out=None):
+    """Return the std of the Array, or along an axis if specified."""
+    from ._tier1 import std_x_projection, std_y_projection, std_z_projection
+    from ._tier4 import standard_deviation_of_all_pixels
+
+    if axis == 0:
+        result = std_z_projection(self)
+    elif axis == 1:
+        result = std_y_projection(self)
+    elif axis == 2:
+        result = std_x_projection(self)
+    elif axis is None:
+        result = standard_deviation_of_all_pixels(self)
+    else:
+        raise ValueError("Axis " + str(axis) + " not supported")
+    if out is not None:
+        if isinstance(out, (Array, np.ndarray)):
+            np.copyto(out, result.get().astype(out.dtype))
+    return result
+
+
 def __pos__(x1):
     """Unary plus, propagates the sign of the argument."""
     return x1.__mul__(1)

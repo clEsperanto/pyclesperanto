@@ -7,80 +7,73 @@ on:
     branches: [ main ]
 
 jobs:
-
   build:
-
-    name: ${{ matrix.platform }} (${{ matrix.python-version }})
+    name: ${{ matrix.platform }} (${{ matrix.python-version }}, ${{ matrix.backend }})
     runs-on: ${{ matrix.platform }}
     strategy:
       fail-fast: false
       matrix:
-        python-version: ["3.9", "3.13"]
-        platform: [ubuntu-latest, macos-latest]
-    defaults:
-      run:
-        shell: "bash -l {0}"
+        python-version: ["3.9"]
+        platform: [ubuntu-latest]
+        backend: [OPENCL, CUDA]
 
     steps:
       - name: Checkout
-        id: checkout
         uses: actions/checkout@v6
 
-      # - name: setup micromamba
-      #   id: setup-micromamba
-      #   uses: mamba-org/setup-micromamba@v2.0.1
-      #   with:
-      #     environment-name: test
-      #     cache-environment: true
-      #     post-cleanup: 'all'
-      #     create-args: >-
-      #       python=${{ matrix.python-version }}
-      #       pytest pytest-cov pytest-benchmark scikit-image
-
-
-      - name: Get conda - ${{ matrix.python-version }}
-        id: get-conda
-        uses: conda-incubator/setup-miniconda@v3
+      - name: Setup Python with uv
+        uses: astral-sh/setup-uv@v7.3.1
         with:
           python-version: ${{ matrix.python-version }}
-          miniforge-version: latest
-          activate-environment: test
-          use-mamba: true
+          activate-environment: "true"
 
-      - name: Dependencies
-        id: install-dependencies
+      - name: Install OpenCL dependencies (Linux)
+        if: matrix.backend == 'OPENCL'
         run: |
-          mamba install -y pytest pytest-cov pytest-benchmark scikit-image
+          sudo apt-get update
+          sudo apt-get install -y pocl-opencl-icd ocl-icd-opencl-dev
 
-      - name: Install OpenCL (pocl)
-        id: install-pocl
-        if: matrix.platform != 'windows-latest'
-        run: |
-          mamba install -y pocl
+      - name: Install CUDA Toolkit
+        if: matrix.backend == 'CUDA'
+        id: cuda-toolkit-linux
+        uses: Jimver/cuda-toolkit@v0.2.21
+        with:
+          cuda: '12.6.0'
+          method: 'network'
+          sub-packages: '["nvcc","cudart","cudart-dev","nvrtc","nvrtc-dev"]'
+          non-cuda-sub-packages: '["libnvjitlink","libnvjitlink-dev"]'
+          use-local-cache: true
 
-      - name: Install OpenCL (oclgrind)
-        id: install-oclgrind
-        if: matrix.platform == 'windows-latest'
+      - name: Configure CUDA environment
+        if: matrix.backend == 'CUDA'
         run: |
-          mamba install -y oclgrind
+          echo "CUDA_HOME=/usr/local/cuda" >> $GITHUB_ENV
+          echo "LD_LIBRARY_PATH=/usr/local/cuda/lib64:/usr/local/cuda/lib64/stubs:$LD_LIBRARY_PATH" >> $GITHUB_ENV
+          echo "PATH=/usr/local/cuda/bin:$PATH" >> $GITHUB_ENV
+          sudo ln -sf /usr/local/cuda/lib64/stubs/libcuda.so /usr/local/cuda/lib64/stubs/libcuda.so.1
+
+      - name: Install Python packages
+        run: |
+          uv pip install pytest pytest-cov pytest-benchmark scikit-image
 
       - name: Build
-        id: build
         run: |
-          pip install . -v --config-settings=cmake.define.CMAKE_PREFIX_PATH=$CONDA_PREFIX
+          uv pip install . -v --config-settings=cmake.define.CLE_BACKEND=${{ matrix.backend }}
 
-      - name: Test
-        id: test
-        if: matrix.platform == 'ubuntu-latest'
+      - name: Import Test
+        run: |
+          pytest ./tests/test_import.py
+
+      - name: Test & Coverage (OpenCL)
+        if: matrix.backend == 'OPENCL'
         run: |
           mkdir coverage && cd coverage
           pytest --cov=pyclesperanto ../tests/ --cov-report=xml
 
-      - name: Coverage
-        id: coverage
-        if: matrix.platform == 'ubuntu-latest' && github.actor != 'dependabot[bot]' && github.actor != 'dependabot-preview[bot]'
+      - name: Upload coverage
+        if: matrix.backend == 'OPENCL' && github.actor != 'dependabot[bot]'
         uses: codecov/codecov-action@v5.5.2
         with:
-          token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos
+          token: ${{ secrets.CODECOV_TOKEN }}
           files: ./coverage/coverage.xml
-          fail_ci_if_error: true # optional (default = false)
+          fail_ci_if_error: true

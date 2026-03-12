@@ -30,9 +30,9 @@ python-build = "*"
 cibuildwheel = "*"
 
 [tasks]
-install-dev = "pip install -e . -v"
+build-ocl = "pip install -e . -v --config-settings=cmake.define.CLE_BACKEND=OPENCL"
+build-cuda = "pip install -e . -v --config-settings=cmake.define.CLE_BACKEND=CUDA"
 test = "pytest -v"
-build-wheel = "python -m build"
 
 [environments]
 default = { features = ["dev"], solve-group = "default" }

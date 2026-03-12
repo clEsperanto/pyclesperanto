@@ -6,16 +6,12 @@
 [![Development Status](https://img.shields.io/pypi/status/pyclesperanto.svg)](https://en.wikipedia.org/wiki/Software_release_life_cycle#Alpha)
 [![Build](https://github.com/clEsperanto/pyclesperanto/actions/workflows/build.yml/badge.svg)](https://github.com/clEsperanto/pyclesperanto/actions/workflows/build.yml)
 [![codecov](https://codecov.io/gh/clesperanto/pyclesperanto/branch/main/graph/badge.svg)](https://codecov.io/gh/clesperanto/pyclesperanto)
-[![Python Version](https://img.shields.io/pypi/pyversions/pyclesperanto.svg?color=green)](https://python.org)
-[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
-[![GitHub stars](https://img.shields.io/github/stars/clEsperanto/pyclesperanto?style=social)](https://github.com/clEsperanto/pyclesperanto)
-[![GitHub forks](https://img.shields.io/github/forks/clEsperanto/pyclesperanto?style=social)](https://github.com/clEsperanto/pyclesperanto)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.13853800.svg)](https://doi.org/10.5281/zenodo.13853800)
 
 
-pyclesperanto is the python package of [clEsperanto] - a multi-language framework for GPU-accelerated image processing.
+__pyclEsperanto__ is the python package of [clEsperanto] - a multi-language framework for GPU-accelerated image processing.
 It relies on a familly of [OpenCL kernels] originated from [CLIJ].
-This package is developped in python and C++ wrapped using [PyBind11], and uses the C++ [CLIc] library as a processing backend.
+This python package uses [PyBind11] to wrap the C++ [CLIc] library as a processing backend.
 
 ### Reference and examples
 
@@ -163,10 +159,8 @@ More usage and example can be found as notebooks in the [demos](https://github.c
 
 # __Contributing and Feedback__
 
-clEsperanto is developed in the open because we believe in the [open source community].
-Feel free to drop feedback as [github issue] or via [image.sc forum].
-Contribution are also very welcome. Please read our [community guidelines] before you start and get in touch with us so that we can help you get started.
-If you liked our work, star the repository, share it with your friends, and use it to make cool stuff!
+[clEsperanto](https://github.com/clEsperanto) is developed in the open because we believe in the [open source community](https://clij.github.io/clij2-docs/community_guidelines).
+Feel free to drop feedback as [github issue](https://github.com/clEsperanto/CLIc/issues) or via [image.sc](https://image.sc). Contributions, of any kind, are very welcome. Feel free to reach out to us. And if you liked our work, star the repository, share it with your friends, and use it to make cool stuff!
 
 ## Acknowledgements
 

@@ -3,7 +3,7 @@ from typing import Optional
 from pyclesperanto._array import Array, Image
 from pyclesperanto._core import Device
 from pyclesperanto._decorators import plugin_function
-from pyclesperanto._functionalities import execute
+from pyclesperanto._execute import execute
 from pyclesperanto._tier2 import maximum_of_all_pixels, minimum_of_all_pixels
 
 

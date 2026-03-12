@@ -760,12 +760,12 @@ def artificial_tissue(
     width: int = 256,
     height: int = 256,
     depth: int = 1,
-    delta_x: float = 1.0,
-    delta_y: float = 1.0,
-    delta_z: float = 1.0,
-    sigma_x: float = 1.0,
-    sigma_y: float = 1.0,
-    sigma_z: float = 1.0,
+    delta_x: float = 10.0,
+    delta_y: float = 10.0,
+    delta_z: float = 0.0,
+    sigma_x: float = 3.0,
+    sigma_y: float = 3.0,
+    sigma_z: float = 0.0,
     device: Optional[Device] = None,
 ) -> Image:
     """Generates 2D or 3D artificial tissue-like image by generating a regular grid
@@ -779,17 +779,17 @@ def artificial_tissue(
         Height of the generated image.
     depth: int (= 1)
         Depth of the generated image.
-    delta_x: float (= 1.0)
+    delta_x: float (= 10.0)
         Spacing between pixels in x.
-    delta_y: float (= 1.0)
+    delta_y: float (= 10.0)
         Spacing between pixels in y.
-    delta_z: float (= 1.0)
+    delta_z: float (= 0.0)
         Spacing between pixels in z.
-    sigma_x: float (= 1.0)
+    sigma_x: float (= 3.0)
         Standard deviation of the Gaussian noise in x.
-    sigma_y: float (= 1.0)
+    sigma_y: float (= 3.0)
         Standard deviation of the Gaussian noise in y.
-    sigma_z: float (= 1.0)
+    sigma_z: float (= 0.0)
         Standard deviation of the Gaussian noise in z.
     device: Optional[Device] (= None)
         Device to perform the operation on.
@@ -810,6 +810,34 @@ def artificial_tissue(
         float(sigma_y),
         float(sigma_z),
     )
+
+
+@plugin_function
+def read_map_values(
+    map: Image,
+    label: Image,
+    output_image: Optional[Image] = None,
+    device: Optional[Device] = None,
+) -> Image:
+    """Reads values from a parametric map using its corresponding labels and return it
+    as a vector of values.
+
+    Parameters
+    ----------
+    map: Image
+        Input
+    label: Image
+        Input
+    output_image: Optional[Image] (= None)
+        Output result image.
+    device: Optional[Device] (= None)
+        Device to perform the operation on.
+
+    Returns
+    -------
+    Image
+    """
+    return clic._read_map_values(device, map, label, output_image)
 
 
 @plugin_function
@@ -864,5 +892,6 @@ __all__ = [
     "sato_filter",
     "tubeness",
     "artificial_tissue",
+    "read_map_values",
     "read_intensities_from_map",
 ]

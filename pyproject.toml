@@ -24,7 +24,7 @@ input = "pyclesperanto/_version.py"
 exclude = [".flake8", ".git*", "*.yaml", "*.ipynb", "*.yml", "docs"]
 
 # =============================================================================
-# Project Metadata
+# Package Metadata
 # =============================================================================
 
 [project]
@@ -33,7 +33,7 @@ authors = [
   { name = "Robert Haase", email = "robert.haase@uni-leipzig.de" },
 ]
 classifiers = [
-  "Development Status :: 3 - Alpha",
+  "Development Status :: 4 - Beta",
   "Programming Language :: C++",
   "Programming Language :: Python :: 3",
   "License :: OSI Approved :: BSD License",
@@ -44,7 +44,7 @@ classifiers = [
   "Topic :: Scientific/Engineering :: Image Processing",
   "Topic :: Scientific/Engineering :: Information Analysis",
 ]
-dependencies = ["numpy", "toolz", "matplotlib", "toml"]
+dependencies = ["numpy", "toolz", "matplotlib"]
 description = "GPU-accelerated image processing in python using OpenCL"
 name = "pyclesperanto"
 readme = "README.md"
@@ -70,6 +70,13 @@ plugin_pyclesperanto = "pyclesperanto._bia_bob_plugins:list_bia_bob_plugins"
 addopts = "-ra -q"
 testpaths = ["tests"]
 
+[tool.isort]
+profile = "black"
+
+# =============================================================================
+# cibuildwheel Configuration
+# =============================================================================
+
 [tool.cibuildwheel]
 build = ["cp38-*", "cp39-*", "cp310-*", "cp311-*", "cp312-*", "cp313-*"]
 skip = ["*-win32", "*-musllinux*", "*_i686", "*_universal2"]
@@ -89,5 +96,4 @@ environment = { SKBUILD_CMAKE_ARGS = "-DOpenCL_LIBRARIES:FILEPATH='C:/Program Fi
 [tool.cibuildwheel.macos]
 environment = { MACOSX_DEPLOYMENT_TARGET = '10.14' }
 
-[tool.isort]
-profile = "black"
+

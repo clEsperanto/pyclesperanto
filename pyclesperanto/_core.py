@@ -108,7 +108,9 @@ def list_available_devices(device_type: str = "all") -> list:
     -------
     name list : list[str]
     """
-    dev_list = list(_get_backend_manager().get_backend().getDevicesList(type=device_type))
+    dev_list = list(
+        _get_backend_manager().get_backend().getDevicesList(type=device_type)
+    )
     if not dev_list:
         warnings.warn(
             "No device available. Please check your system installation.",
@@ -169,5 +171,3 @@ def _default_initialisation():
             "No GPU device found. Please check your system installation.",
             RuntimeWarning,
         )
-
-

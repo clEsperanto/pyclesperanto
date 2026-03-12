@@ -8,10 +8,10 @@ from typing import Optional
 import numpy as np
 
 from ._array import Image
+from ._backend import get_backend
 from ._core import Device
 from ._decorators import plugin_function
 
-from ._backend import get_backend
 
 @plugin_function
 def label_bounding_box(
@@ -128,7 +128,9 @@ def relabel_sequential(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_closeIndexGapsInLabelMap
     """
-    return get_backend()._relabel_sequential(device, input_image, output_image, int(blocksize))
+    return get_backend()._relabel_sequential(
+        device, input_image, output_image, int(blocksize)
+    )
 
 
 @plugin_function(categories=["binarize", "in assistant", "bia-bob-suggestion"])
@@ -252,7 +254,9 @@ def parametric_map(
     [4] https://clij.github.io/clij2-docs/reference_maximumIntensityMap
     [5] https://clij.github.io/clij2-docs/reference_standardDeviationIntensityMap
     """
-    return get_backend()._parametric_map(device, labels, intensity, str(property), output_image)
+    return get_backend()._parametric_map(
+        device, labels, intensity, str(property), output_image
+    )
 
 
 @plugin_function(categories=["label measurement", "map", "in assistant", "combine"])
@@ -318,7 +322,9 @@ def label_mean_intensity_map(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_meanIntensityMap
     """
-    return get_backend()._label_mean_intensity_map(device, input_image, labels, output_image)
+    return get_backend()._label_mean_intensity_map(
+        device, input_image, labels, output_image
+    )
 
 
 @plugin_function(categories=["label measurement", "map", "in assistant"])
@@ -706,7 +712,9 @@ def minimum_intensity_map(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_minimumIntensityMap
     """
-    return get_backend()._minimum_intensity_map(device, input_image, labels, output_image)
+    return get_backend()._minimum_intensity_map(
+        device, input_image, labels, output_image
+    )
 
 
 @plugin_function(categories=["label measurement", "map", "in assistant", "combine"])
@@ -739,7 +747,9 @@ def maximum_intensity_map(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_maximumIntensityMap
     """
-    return get_backend()._maximum_intensity_map(device, input_image, labels, output_image)
+    return get_backend()._maximum_intensity_map(
+        device, input_image, labels, output_image
+    )
 
 
 @plugin_function(categories=["label measurement", "map", "in assistant", "combine"])

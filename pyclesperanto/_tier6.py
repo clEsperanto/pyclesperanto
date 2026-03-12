@@ -8,10 +8,10 @@ from typing import Optional
 import numpy as np
 
 from ._array import Image
+from ._backend import get_backend
 from ._core import Device
 from ._decorators import plugin_function
 
-from ._backend import get_backend
 
 @plugin_function(categories=["label processing", "in assistant", "bia-bob-suggestion"])
 def dilate_labels(
@@ -72,7 +72,9 @@ def erode_labels(
     -------
     Image
     """
-    return get_backend()._erode_labels(device, input_image, output_image, int(radius), relabel)
+    return get_backend()._erode_labels(
+        device, input_image, output_image, int(radius), relabel
+    )
 
 
 @plugin_function(categories=["label", "in assistant"])
@@ -143,7 +145,9 @@ def masked_voronoi_labeling(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_maskedVoronoiLabeling
     """
-    return get_backend()._masked_voronoi_labeling(device, input_image, mask, output_image)
+    return get_backend()._masked_voronoi_labeling(
+        device, input_image, mask, output_image
+    )
 
 
 @plugin_function(categories=["label", "in assistant", "bia-bob-suggestion"])

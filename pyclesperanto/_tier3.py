@@ -8,10 +8,10 @@ from typing import Optional
 import numpy as np
 
 from ._array import Image
+from ._backend import get_backend
 from ._core import Device
 from ._decorators import plugin_function
 
-from ._backend import get_backend
 
 @plugin_function
 def bounding_box(input_image: Image, device: Optional[Device] = None) -> list:
@@ -312,7 +312,9 @@ def gamma_correction(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_gammaCorrection
     """
-    return get_backend()._gamma_correction(device, input_image, output_image, float(gamma))
+    return get_backend()._gamma_correction(
+        device, input_image, output_image, float(gamma)
+    )
 
 
 @plugin_function
@@ -380,7 +382,9 @@ def generate_touch_matrix(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_generateTouchMatrix
     """
-    return get_backend()._generate_touch_matrix(device, input_image, output_image_matrix)
+    return get_backend()._generate_touch_matrix(
+        device, input_image, output_image_matrix
+    )
 
 
 @plugin_function
@@ -669,7 +673,9 @@ def statistics_of_background_and_labelled_pixels(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_statisticsOfBackgroundAndLabelledPixels
     """
-    return get_backend()._statistics_of_background_and_labelled_pixels(device, intensity, label)
+    return get_backend()._statistics_of_background_and_labelled_pixels(
+        device, intensity, label
+    )
 
 
 @plugin_function(categories=["filter", "in assistant"])

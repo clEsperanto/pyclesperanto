@@ -8,10 +8,10 @@ from typing import Optional
 import numpy as np
 
 from ._array import Image
+from ._backend import get_backend
 from ._core import Device
 from ._decorators import plugin_function
 
-from ._backend import get_backend
 
 @plugin_function(categories=["label processing", "in assistant", "bia-bob-suggestion"])
 def smooth_labels(
@@ -69,7 +69,9 @@ def smooth_connected_labels(
     -------
     Image
     """
-    return get_backend()._smooth_connected_labels(device, input_image, output_image, int(radius))
+    return get_backend()._smooth_connected_labels(
+        device, input_image, output_image, int(radius)
+    )
 
 
 @plugin_function
@@ -151,7 +153,9 @@ def convolve_fft(
     -------
     Image
     """
-    return get_backend()._convolve_fft(device, input_image, kernel, output_image, correlate)
+    return get_backend()._convolve_fft(
+        device, input_image, kernel, output_image, correlate
+    )
 
 
 @plugin_function

@@ -3,8 +3,8 @@ from typing import Optional, Union
 import numpy as np
 
 from . import _operators
-from ._core import Device, get_device
 from ._backend import get_backend
+from ._core import Device, get_device
 from ._utils import _assert_supported_dtype
 
 

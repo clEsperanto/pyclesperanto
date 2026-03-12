@@ -322,5 +322,5 @@ build-cuda = "pip install -e . && pip install -e ./backends/cuda -v --config-set
 2. **CUDA runtime dependency**: Bundle CUDA libs in wheel vs. require `nvidia-*` pip packages as dependencies? <-- we are not responsible for the CUDA lib, it should be already install on the user system
 3. **sdist for backend packages**: Support building from sdist, or wheels-only? (Wheels-only is simpler for C++ packages) <-- use what is the best and simple, wheels-only
 4. **Root CMakeLists.txt**: Keep for dev convenience or remove to avoid confusion? <-- remove to avoid confusion
-5. **`cle-roboto` updates**: Update the tool's template before or after this migration? (Before is cleaner but adds a dependency) <-- I will deal with that 
+5. **`cle-roboto` updates**: Update the tool's template before or after this migration? (Before is cleaner but adds a dependency) <-- I will deal with that
 6. **Minimum CUDA version**: Which CUDA versions to support? (12.x only, or also 11.x?) <-- 12.x only

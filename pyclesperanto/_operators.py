@@ -16,6 +16,7 @@ def _get_array_class():
 
     return get_backend()._Array
 
+
 cl_buffer_datatype_dict = {
     bool: "bool",
     np.uint8: "uchar",

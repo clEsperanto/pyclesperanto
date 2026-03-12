@@ -6,9 +6,9 @@ from typing import Callable, Optional, Union
 import numpy as np
 
 from ._array import Array, Image, to_device
+from ._backend import get_backend
 from ._core import Device, get_device
 from ._memory import create, pull, push
-from ._backend import get_backend
 
 
 def execute(
@@ -220,5 +220,7 @@ def evaluate(expression: str, parameters: dict) -> Array:
         out_shape = (1, 1)
 
     out = create(out_shape, dtype=np.float32, device=device)
-    get_backend()._evaluate(device=device, expression=expression, parameters=parameters, output=out)
+    get_backend()._evaluate(
+        device=device, expression=expression, parameters=parameters, output=out
+    )
     return out

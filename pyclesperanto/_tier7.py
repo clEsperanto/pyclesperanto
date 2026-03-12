@@ -8,10 +8,10 @@ from typing import Optional
 import numpy as np
 
 from ._array import Image
+from ._backend import get_backend
 from ._core import Device
 from ._decorators import plugin_function
 
-from ._backend import get_backend
 
 @plugin_function
 def affine_transform(
@@ -467,7 +467,9 @@ def erode_connected_labels(
     -------
     Image
     """
-    return get_backend()._erode_connected_labels(device, input_image, output_image, int(radius))
+    return get_backend()._erode_connected_labels(
+        device, input_image, output_image, int(radius)
+    )
 
 
 @plugin_function(categories=["label processing", "in assistant"])

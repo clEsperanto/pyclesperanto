@@ -81,9 +81,7 @@ def select_backend(name):
             )
         _active_backend = _cuda_module
     else:
-        raise ValueError(
-            f"'{name}' is not a valid backend. Use 'opencl' or 'cuda'."
-        )
+        raise ValueError(f"'{name}' is not a valid backend. Use 'opencl' or 'cuda'.")
 
 
 def list_available_backends():
@@ -95,4 +93,3 @@ def list_available_backends():
     if _cuda_module is not None:
         backends.append("cuda")
     return backends
-

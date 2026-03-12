@@ -8,10 +8,10 @@ from typing import Optional
 import numpy as np
 
 from ._array import Image
+from ._backend import get_backend
 from ._core import Device
 from ._decorators import plugin_function
 
-from ._backend import get_backend
 
 @plugin_function(categories=["combine"])
 def array_equal(
@@ -74,7 +74,9 @@ def combine_labels(
     -------
     Image
     """
-    return get_backend()._combine_labels(device, input_image0, input_image1, output_image)
+    return get_backend()._combine_labels(
+        device, input_image0, input_image1, output_image
+    )
 
 
 @plugin_function(categories=["label", "in assistant"])

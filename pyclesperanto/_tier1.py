@@ -8,10 +8,9 @@ from typing import Optional
 import numpy as np
 
 from ._array import Image
+from ._backend import get_backend
 from ._core import Device
 from ._decorators import plugin_function
-
-from ._backend import get_backend
 
 
 @plugin_function(categories=["filter", "in assistant"])
@@ -328,7 +327,9 @@ def add_image_and_scalar(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_addImageAndScalar
     """
-    return get_backend()._add_image_and_scalar(device, input_image, output_image, float(scalar))
+    return get_backend()._add_image_and_scalar(
+        device, input_image, output_image, float(scalar)
+    )
 
 
 @plugin_function(
@@ -525,7 +526,9 @@ def binary_subtract(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_binarySubtract
     """
-    return get_backend()._binary_subtract(device, input_image0, input_image1, output_image)
+    return get_backend()._binary_subtract(
+        device, input_image0, input_image1, output_image
+    )
 
 
 @plugin_function(
@@ -783,7 +786,9 @@ def copy_slice(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_copySlice
     """
-    return get_backend()._copy_slice(device, input_image, output_image, int(slice_index))
+    return get_backend()._copy_slice(
+        device, input_image, output_image, int(slice_index)
+    )
 
 
 @plugin_function
@@ -1149,7 +1154,9 @@ def divide_images(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_divideImages
     """
-    return get_backend()._divide_images(device, input_image0, input_image1, output_image)
+    return get_backend()._divide_images(
+        device, input_image0, input_image1, output_image
+    )
 
 
 @plugin_function(categories=["filter", "in assistant"])
@@ -1242,7 +1249,9 @@ def equal_constant(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_equalConstant
     """
-    return get_backend()._equal_constant(device, input_image, output_image, float(scalar))
+    return get_backend()._equal_constant(
+        device, input_image, output_image, float(scalar)
+    )
 
 
 @plugin_function(categories=["binary processing" "filter"])
@@ -1518,7 +1527,9 @@ def flip(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_flip3D
     """
-    return get_backend()._flip(device, input_image, output_image, flip_x, flip_y, flip_z)
+    return get_backend()._flip(
+        device, input_image, output_image, flip_x, flip_y, flip_z
+    )
 
 
 @plugin_function(categories=["filter", "denoise", "in assistant", "bia-bob-suggestion"])
@@ -1812,7 +1823,9 @@ def greater_constant(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_greaterConstant
     """
-    return get_backend()._greater_constant(device, input_image, output_image, float(scalar))
+    return get_backend()._greater_constant(
+        device, input_image, output_image, float(scalar)
+    )
 
 
 @plugin_function(categories=["combine", "binarize", "in assistant"])
@@ -1844,7 +1857,9 @@ def greater_or_equal(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_greaterOrEqual
     """
-    return get_backend()._greater_or_equal(device, input_image0, input_image1, output_image)
+    return get_backend()._greater_or_equal(
+        device, input_image0, input_image1, output_image
+    )
 
 
 @plugin_function(categories=["binarize", "in assistant"])
@@ -2034,7 +2049,9 @@ def local_cross_correlation(
     -------
     Image
     """
-    return get_backend()._local_cross_correlation(device, input_image, kernel, output_image)
+    return get_backend()._local_cross_correlation(
+        device, input_image, kernel, output_image
+    )
 
 
 @plugin_function(categories=["filter", "in assistant"])
@@ -2263,7 +2280,9 @@ def maximum_images(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_maximumImages
     """
-    return get_backend()._maximum_images(device, input_image0, input_image1, output_image)
+    return get_backend()._maximum_images(
+        device, input_image0, input_image1, output_image
+    )
 
 
 @plugin_function(categories=["filter", "in assistant"])
@@ -3077,7 +3096,9 @@ def minimum_images(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_minimumImages
     """
-    return get_backend()._minimum_images(device, input_image0, input_image1, output_image)
+    return get_backend()._minimum_images(
+        device, input_image0, input_image1, output_image
+    )
 
 
 @plugin_function(categories=["projection"])
@@ -3325,7 +3346,9 @@ def modulo_images(
     -------
     Image
     """
-    return get_backend()._modulo_images(device, input_image0, input_image1, output_image)
+    return get_backend()._modulo_images(
+        device, input_image0, input_image1, output_image
+    )
 
 
 @plugin_function
@@ -3425,7 +3448,9 @@ def multiply_images(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_multiplyImages
     """
-    return get_backend()._multiply_images(device, input_image0, input_image1, output_image)
+    return get_backend()._multiply_images(
+        device, input_image0, input_image1, output_image
+    )
 
 
 @plugin_function
@@ -3502,7 +3527,9 @@ def nonzero_maximum_box(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_nonzeroMaximumBox
     """
-    return get_backend()._nonzero_maximum_box(device, input_image, output_image0, output_image1)
+    return get_backend()._nonzero_maximum_box(
+        device, input_image, output_image0, output_image1
+    )
 
 
 @plugin_function
@@ -3613,7 +3640,9 @@ def nonzero_minimum_box(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_nonzeroMinimumBox
     """
-    return get_backend()._nonzero_minimum_box(device, input_image, output_image0, output_image1)
+    return get_backend()._nonzero_minimum_box(
+        device, input_image, output_image0, output_image1
+    )
 
 
 @plugin_function
@@ -3754,7 +3783,9 @@ def not_equal_constant(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_notEqualConstant
     """
-    return get_backend()._not_equal_constant(device, input_image, output_image, float(scalar))
+    return get_backend()._not_equal_constant(
+        device, input_image, output_image, float(scalar)
+    )
 
 
 @plugin_function(categories=["combine", "in assistant"])
@@ -3830,7 +3861,9 @@ def onlyzero_overwrite_maximum_box(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_onlyzeroOverwriteMaximumBox
     """
-    return get_backend()._onlyzero_overwrite_maximum_box(device, input_image, flag, output_image)
+    return get_backend()._onlyzero_overwrite_maximum_box(
+        device, input_image, flag, output_image
+    )
 
 
 @plugin_function
@@ -4058,7 +4091,9 @@ def read_values_from_positions(
     -------
     Image
     """
-    return get_backend()._read_values_from_positions(device, input_image, list, output_image)
+    return get_backend()._read_values_from_positions(
+        device, input_image, list, output_image
+    )
 
 
 @plugin_function(categories=["bia-bob-suggestion"])
@@ -4091,7 +4126,9 @@ def replace_values(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_replaceIntensities
     """
-    return get_backend()._replace_values(device, input_image0, input_image1, output_image)
+    return get_backend()._replace_values(
+        device, input_image0, input_image1, output_image
+    )
 
 
 @plugin_function
@@ -4204,7 +4241,9 @@ def replace_intensities(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_replaceIntensities
     """
-    return get_backend()._replace_intensities(device, input_image0, input_image1, output_image)
+    return get_backend()._replace_intensities(
+        device, input_image0, input_image1, output_image
+    )
 
 
 @plugin_function(categories=["filter", "in assistant", "bia-bob-suggestion"])
@@ -4498,7 +4537,9 @@ def set_column(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_setColumn
     """
-    return get_backend()._set_column(device, input_image, int(column_index), float(value))
+    return get_backend()._set_column(
+        device, input_image, int(column_index), float(value)
+    )
 
 
 @plugin_function
@@ -4855,7 +4896,9 @@ def smaller_constant(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_smallerConstant
     """
-    return get_backend()._smaller_constant(device, input_image, output_image, float(scalar))
+    return get_backend()._smaller_constant(
+        device, input_image, output_image, float(scalar)
+    )
 
 
 @plugin_function(categories=["combine", "binarize", "in assistant"])
@@ -4887,7 +4930,9 @@ def smaller_or_equal(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_smallerOrEqual
     """
-    return get_backend()._smaller_or_equal(device, input_image0, input_image1, output_image)
+    return get_backend()._smaller_or_equal(
+        device, input_image0, input_image1, output_image
+    )
 
 
 @plugin_function(categories=["binarize", "in assistant"])
@@ -5125,7 +5170,9 @@ def sum_reduction_x(
     -------
     Image
     """
-    return get_backend()._sum_reduction_x(device, input_image, output_image, int(blocksize))
+    return get_backend()._sum_reduction_x(
+        device, input_image, output_image, int(blocksize)
+    )
 
 
 @plugin_function(categories=["projection"])
@@ -5521,7 +5568,9 @@ def x_position_of_maximum_x_projection(
     -------
     Image
     """
-    return get_backend()._x_position_of_maximum_x_projection(device, input_image, output_image)
+    return get_backend()._x_position_of_maximum_x_projection(
+        device, input_image, output_image
+    )
 
 
 @plugin_function(categories=["projection", "in assistant"])
@@ -5547,7 +5596,9 @@ def x_position_of_minimum_x_projection(
     -------
     Image
     """
-    return get_backend()._x_position_of_minimum_x_projection(device, input_image, output_image)
+    return get_backend()._x_position_of_minimum_x_projection(
+        device, input_image, output_image
+    )
 
 
 @plugin_function(categories=["projection", "in assistant"])
@@ -5573,7 +5624,9 @@ def y_position_of_maximum_y_projection(
     -------
     Image
     """
-    return get_backend()._y_position_of_maximum_y_projection(device, input_image, output_image)
+    return get_backend()._y_position_of_maximum_y_projection(
+        device, input_image, output_image
+    )
 
 
 @plugin_function(categories=["projection", "in assistant"])
@@ -5599,7 +5652,9 @@ def y_position_of_minimum_y_projection(
     -------
     Image
     """
-    return get_backend()._y_position_of_minimum_y_projection(device, input_image, output_image)
+    return get_backend()._y_position_of_minimum_y_projection(
+        device, input_image, output_image
+    )
 
 
 @plugin_function(categories=["projection", "in assistant"])
@@ -5625,7 +5680,9 @@ def z_position_of_maximum_z_projection(
     -------
     Image
     """
-    return get_backend()._z_position_of_maximum_z_projection(device, input_image, output_image)
+    return get_backend()._z_position_of_maximum_z_projection(
+        device, input_image, output_image
+    )
 
 
 @plugin_function(categories=["projection", "in assistant"])
@@ -5651,7 +5708,9 @@ def z_position_of_minimum_z_projection(
     -------
     Image
     """
-    return get_backend()._z_position_of_minimum_z_projection(device, input_image, output_image)
+    return get_backend()._z_position_of_minimum_z_projection(
+        device, input_image, output_image
+    )
 
 
 @plugin_function(categories=["projection"])
@@ -5683,7 +5742,9 @@ def z_position_projection(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_zPositionProjection
     """
-    return get_backend()._z_position_projection(device, input_image, position, output_image)
+    return get_backend()._z_position_projection(
+        device, input_image, position, output_image
+    )
 
 
 @plugin_function
@@ -5710,7 +5771,9 @@ def mean_of_touching_neighbors(
     -------
     Image
     """
-    return get_backend()._mean_of_touching_neighbors(device, vector, matrix, output_image)
+    return get_backend()._mean_of_touching_neighbors(
+        device, vector, matrix, output_image
+    )
 
 
 @plugin_function
@@ -5737,7 +5800,9 @@ def median_of_touching_neighbors(
     -------
     Image
     """
-    return get_backend()._median_of_touching_neighbors(device, vector, matrix, output_image)
+    return get_backend()._median_of_touching_neighbors(
+        device, vector, matrix, output_image
+    )
 
 
 @plugin_function
@@ -5764,7 +5829,9 @@ def minimum_of_touching_neighbors(
     -------
     Image
     """
-    return get_backend()._minimum_of_touching_neighbors(device, vector, matrix, output_image)
+    return get_backend()._minimum_of_touching_neighbors(
+        device, vector, matrix, output_image
+    )
 
 
 @plugin_function
@@ -5791,7 +5858,9 @@ def maximum_of_touching_neighbors(
     -------
     Image
     """
-    return get_backend()._maximum_of_touching_neighbors(device, vector, matrix, output_image)
+    return get_backend()._maximum_of_touching_neighbors(
+        device, vector, matrix, output_image
+    )
 
 
 @plugin_function
@@ -5847,7 +5916,9 @@ def mode_of_touching_neighbors(
     -------
     Image
     """
-    return get_backend()._mode_of_touching_neighbors(device, vector, matrix, output_image)
+    return get_backend()._mode_of_touching_neighbors(
+        device, vector, matrix, output_image
+    )
 
 
 @plugin_function(categories=["filter", "in assistant"])

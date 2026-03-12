@@ -1,7 +1,7 @@
 import warnings
 
+from ._array import Array, Image, _patch_array_class, is_image
 from ._backend import get_backend, list_available_backends, select_backend
-from ._array import Array, Image, is_image, _patch_array_class
 from ._categories import categories
 from ._version import CLIC_VERSION as __clic_version__
 from ._version import COMMON_ALIAS as __common_alias__
@@ -34,8 +34,14 @@ _backend_available = _lazy_init()
 
 if _backend_available:
     from . import __experimental__
+
+    # Re-import Array/Image after patching so that cle.Array has the real class
+    from ._array import Array, Image  # noqa: F811
+
+    # Auto-select a default device
     from ._core import (
         Device,
+        _default_initialisation,
         get_device,
         info,
         list_available_devices,
@@ -56,12 +62,6 @@ if _backend_available:
     from ._utils import fft_smooth_shape
 
     from ._interroperability import *  # isort:skip
-
-    # Re-import Array/Image after patching so that cle.Array has the real class
-    from ._array import Array, Image  # noqa: F811
-
-    # Auto-select a default device
-    from ._core import _default_initialisation
 
     _default_initialisation()
 
@@ -114,4 +114,3 @@ if _backend_available:
         if hasattr(_tier_module, "__all__"):
             __all__ += _tier_module.__all__
     del _importlib, _tier_name, _tier_module
-

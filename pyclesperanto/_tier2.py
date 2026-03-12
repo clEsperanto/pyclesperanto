@@ -8,10 +8,10 @@ from typing import Optional
 import numpy as np
 
 from ._array import Image
+from ._backend import get_backend
 from ._core import Device
 from ._decorators import plugin_function
 
-from ._backend import get_backend
 
 @plugin_function(categories=["combine", "in assistant"])
 def absolute_difference(
@@ -42,7 +42,9 @@ def absolute_difference(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_absoluteDifference
     """
-    return get_backend()._absolute_difference(device, input_image0, input_image1, output_image)
+    return get_backend()._absolute_difference(
+        device, input_image0, input_image1, output_image
+    )
 
 
 @plugin_function(categories=["combine", "in assistant"])
@@ -521,7 +523,9 @@ def concatenate_along_x(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_combineHorizontally
     """
-    return get_backend()._concatenate_along_x(device, input_image0, input_image1, output_image)
+    return get_backend()._concatenate_along_x(
+        device, input_image0, input_image1, output_image
+    )
 
 
 @plugin_function(
@@ -554,7 +558,9 @@ def concatenate_along_y(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_combineVertically
     """
-    return get_backend()._concatenate_along_y(device, input_image0, input_image1, output_image)
+    return get_backend()._concatenate_along_y(
+        device, input_image0, input_image1, output_image
+    )
 
 
 @plugin_function(
@@ -587,7 +593,9 @@ def concatenate_along_z(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_concatenateStacks
     """
-    return get_backend()._concatenate_along_z(device, input_image0, input_image1, output_image)
+    return get_backend()._concatenate_along_z(
+        device, input_image0, input_image1, output_image
+    )
 
 
 @plugin_function
@@ -651,7 +659,9 @@ def crop_border(
     -------
     Image
     """
-    return get_backend()._crop_border(device, input_image, output_image, int(border_size))
+    return get_backend()._crop_border(
+        device, input_image, output_image, int(border_size)
+    )
 
 
 @plugin_function(categories=["filter", "background removal", "in assistant"])
@@ -1438,7 +1448,9 @@ def reduce_labels_to_label_edges(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_reduceLabelsToLabelEdges
     """
-    return get_backend()._reduce_labels_to_label_edges(device, input_image, output_image)
+    return get_backend()._reduce_labels_to_label_edges(
+        device, input_image, output_image
+    )
 
 
 @plugin_function(categories=["filter", "in assistant"])
@@ -1522,7 +1534,9 @@ def squared_difference(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_squaredDifference
     """
-    return get_backend()._squared_difference(device, input_image0, input_image1, output_image)
+    return get_backend()._squared_difference(
+        device, input_image0, input_image1, output_image
+    )
 
 
 @plugin_function(categories=["filter", "edge detection", "in assistant"])
@@ -1744,7 +1758,9 @@ def subtract_images(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_subtractImages
     """
-    return get_backend()._subtract_images(device, input_image0, input_image1, output_image)
+    return get_backend()._subtract_images(
+        device, input_image0, input_image1, output_image
+    )
 
 
 @plugin_function(categories=["transform", "in assistant"])
@@ -1778,7 +1794,9 @@ def sub_stack(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_subStack
     """
-    return get_backend()._sub_stack(device, input_image, output_image, int(start_z), int(end_z))
+    return get_backend()._sub_stack(
+        device, input_image, output_image, int(start_z), int(end_z)
+    )
 
 
 @plugin_function(categories=["transform", "in assistant"])

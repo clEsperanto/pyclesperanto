@@ -27,7 +27,7 @@ classifiers = [
   "Topic :: Scientific/Engineering :: Image Processing",
   "Topic :: Scientific/Engineering :: Information Analysis",
 ]
-dependencies = ["numpy", "toolz", "matplotlib"]
+dependencies = ["numpy", "toolz", "matplotlib", "pyclesperanto-opencl"]
 description = "GPU-accelerated image processing in python using OpenCL or CUDA"
 name = "pyclesperanto"
 readme = "README.md"
@@ -46,9 +46,8 @@ Source = "https://github.com/clEsperanto/pyclesperanto/"
 plugin_pyclesperanto = "pyclesperanto._bia_bob_plugins:list_bia_bob_plugins"
 
 [project.optional-dependencies]
-opencl = ["pyclesperanto-opencl"]
 cuda = ["pyclesperanto-cuda"]
-all = ["pyclesperanto-opencl", "pyclesperanto-cuda"]
+all = ["pyclesperanto-cuda; sys_platform != 'darwin'"]
 
 # =============================================================================
 # Hatch Configuration

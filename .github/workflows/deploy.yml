@@ -4,7 +4,7 @@ name: Deploy
 on:
   pull_request:
     branches: [main]
-    types: [labeled]
+    # types: [labeled]
   release:
     types: [created]
 

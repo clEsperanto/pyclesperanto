@@ -1,9 +1,7 @@
 import pyclesperanto as cle
-
-cle.select_device("TX")
-
-
-def test_mode_sphere_2d():
+import pytest
+@pytest.mark.backend
+def test_mode_sphere_2d(gpu_backend):
     image = cle.asarray(
         [
             [0, 0, 0, 1, 1, 1],
@@ -31,7 +29,8 @@ def test_mode_sphere_2d():
     assert cle.array_equal(result, reference)
 
 
-def test_mode_sphere_3d():
+@pytest.mark.backend
+def test_mode_sphere_3d(gpu_backend):
     image = cle.asarray(
         [
             [

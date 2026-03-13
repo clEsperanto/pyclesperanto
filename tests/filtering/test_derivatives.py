@@ -1,16 +1,14 @@
 import numpy as np
 
 import pyclesperanto as cle
-
-cle.select_device("TX")
-
-
+import pytest
 # ============================================================================
 # GRADIENT TESTS
 # ============================================================================
 
 
-def test_gradient_x():
+@pytest.mark.backend
+def test_gradient_x(gpu_backend):
     test = cle.push(
         np.asarray(
             [
@@ -44,7 +42,8 @@ def test_gradient_x():
     assert np.array_equal(a, b)
 
 
-def test_gradient_y():
+@pytest.mark.backend
+def test_gradient_y(gpu_backend):
     test = cle.push(
         np.asarray(
             [
@@ -78,7 +77,8 @@ def test_gradient_y():
     assert np.array_equal(a, b)
 
 
-def test_gradient_z():
+@pytest.mark.backend
+def test_gradient_z(gpu_backend):
     test = cle.push(
         np.asarray(
             [
@@ -186,7 +186,8 @@ laplace_sphere_reference = cle.push(
 )
 
 
-def test_laplace_box():
+@pytest.mark.backend
+def test_laplace_box(gpu_backend):
     result = cle.create(test_laplace_input)
     cle.laplace(test_laplace_input, result)
 
@@ -198,7 +199,8 @@ def test_laplace_box():
     assert np.array_equal(a, b)
 
 
-def test_laplace_sphere():
+@pytest.mark.backend
+def test_laplace_sphere(gpu_backend):
     result = cle.create(test_laplace_input)
     cle.laplace(test_laplace_input, result, connectivity="sphere")
 
@@ -215,7 +217,8 @@ def test_laplace_sphere():
 # ============================================================================
 
 
-def test_hessian_eigenvalues_2d():
+@pytest.mark.backend
+def test_hessian_eigenvalues_2d(gpu_backend):
     test = np.asarray([[1, -1], [1, -1]])
 
     reference_small_hessian_eigenvalue = np.asarray([[-2, 0], [-2, 0]])
@@ -231,7 +234,8 @@ def test_hessian_eigenvalues_2d():
     assert np.allclose(reference_large_hessian_eigenvalue, large_hessian_eigenvalue)
 
 
-def test_hessian_eigenvalues_3d():
+@pytest.mark.backend
+def test_hessian_eigenvalues_3d(gpu_backend):
     test = np.asarray(
         [
             [[1, -1], [1, -1]],
@@ -291,7 +295,8 @@ def test_hessian_eigenvalues_3d():
 # ============================================================================
 
 
-def test_large_hessian_eigenvalue_2d():
+@pytest.mark.backend
+def test_large_hessian_eigenvalue_2d(gpu_backend):
     test = np.asarray([[1, -1], [1, -1]])
 
     reference_large_hessian_eigenvalue = np.asarray([[0, 2], [0, 2]])
@@ -303,7 +308,8 @@ def test_large_hessian_eigenvalue_2d():
     assert np.allclose(reference_large_hessian_eigenvalue, large_hessian_eigenvalue)
 
 
-def test_large_hessian_eigenvalue_3d():
+@pytest.mark.backend
+def test_large_hessian_eigenvalue_3d(gpu_backend):
     test = np.asarray(
         [
             [[1, -1], [1, -1]],
@@ -332,7 +338,8 @@ def test_large_hessian_eigenvalue_3d():
 # ============================================================================
 
 
-def test_small_hessian_eigenvalue_2d():
+@pytest.mark.backend
+def test_small_hessian_eigenvalue_2d(gpu_backend):
     test = np.asarray([[1, -1], [1, -1]])
 
     reference_small_hessian_eigenvalue = np.asarray([[-2, 0], [-2, 0]])
@@ -344,7 +351,8 @@ def test_small_hessian_eigenvalue_2d():
     assert np.allclose(reference_small_hessian_eigenvalue, small_hessian_eigenvalue)
 
 
-def test_small_hessian_eigenvalue_3d():
+@pytest.mark.backend
+def test_small_hessian_eigenvalue_3d(gpu_backend):
     test = np.asarray(
         [
             [[1, -1], [1, -1]],

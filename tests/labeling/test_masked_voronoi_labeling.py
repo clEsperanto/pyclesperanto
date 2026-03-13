@@ -1,11 +1,9 @@
 import numpy as np
 
 import pyclesperanto as cle
-
-cle.select_device("TX")
-
-
-def test_masked_voronoi_labeling():
+import pytest
+@pytest.mark.backend
+def test_masked_voronoi_labeling(gpu_backend):
     gpu_input = cle.push(
         np.asarray(
             [

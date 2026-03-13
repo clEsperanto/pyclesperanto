@@ -1,11 +1,9 @@
 import numpy as np
 
 import pyclesperanto as cle
-
-cle.select_device("TX")
-
-
-def test_variance_sphere():
+import pytest
+@pytest.mark.backend
+def test_variance_sphere(gpu_backend):
     test1 = cle.push(
         np.asarray(
             [

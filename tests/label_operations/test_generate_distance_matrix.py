@@ -1,11 +1,9 @@
 import numpy as np
 
 import pyclesperanto as cle
-
-cle.select_device("TX")
-
-
-def test_generate_distance_matrix():
+import pytest
+@pytest.mark.backend
+def test_generate_distance_matrix(gpu_backend):
     gpu_input = cle.push(
         np.asarray(
             [

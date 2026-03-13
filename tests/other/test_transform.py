@@ -1,9 +1,11 @@
 import numpy as np
 
 import pyclesperanto as cle
+import pytest
 
 
-def test_rotate():
+@pytest.mark.backend
+def test_rotate(gpu_backend):
     source = cle.push(
         np.asarray(
             [
@@ -43,7 +45,8 @@ def test_rotate():
     assert np.array_equal(a, b)
 
 
-def test_rotate_around_center():
+@pytest.mark.backend
+def test_rotate_around_center(gpu_backend):
     source = cle.push(
         np.asarray(
             [
@@ -83,7 +86,8 @@ def test_rotate_around_center():
     assert np.array_equal(a, b)
 
 
-def test_rotation_auto_size():
+@pytest.mark.backend
+def test_rotation_auto_size(gpu_backend):
     source = cle.push(
         np.asarray(
             [
@@ -125,7 +129,8 @@ def test_rotation_auto_size():
     assert np.array_equal(a, b)
 
 
-def test_scale_centered():
+@pytest.mark.backend
+def test_scale_centered(gpu_backend):
     source = cle.push(
         np.asarray(
             [
@@ -165,7 +170,8 @@ def test_scale_centered():
     assert np.array_equal(a, b)
 
 
-def test_scale_not_centered():
+@pytest.mark.backend
+def test_scale_not_centered(gpu_backend):
     source = cle.push(
         np.asarray(
             [
@@ -205,7 +211,8 @@ def test_scale_not_centered():
     assert np.array_equal(a, b)
 
 
-def test_scale_auto_size():
+@pytest.mark.backend
+def test_scale_auto_size(gpu_backend):
     source = cle.push(
         np.asarray(
             [
@@ -250,7 +257,8 @@ def test_scale_auto_size():
     assert np.array_equal(a, b)
 
 
-def test_translate():
+@pytest.mark.backend
+def test_translate(gpu_backend):
     source = cle.push(
         np.asarray(
             [

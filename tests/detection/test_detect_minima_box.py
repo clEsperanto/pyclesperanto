@@ -1,11 +1,9 @@
 import numpy as np
 
 import pyclesperanto as cle
-
-cle.select_device("TX")
-
-
-def test_detect_minima_box():
+import pytest
+@pytest.mark.backend
+def test_detect_minima_box(gpu_backend):
     gpu_input = cle.push(
         np.asarray(
             [

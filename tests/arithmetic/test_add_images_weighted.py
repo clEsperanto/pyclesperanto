@@ -1,11 +1,9 @@
 import numpy as np
 
 import pyclesperanto as cle
-
-cle.select_device("TX")
-
-
-def test_add_images_weighted_missing_parameters():
+import pytest
+@pytest.mark.backend
+def test_add_images_weighted_missing_parameters(gpu_backend):
     input1 = np.asarray([1, 2, 3])
     input2 = np.asarray([4, 5, 6])
 
@@ -18,7 +16,8 @@ def test_add_images_weighted_missing_parameters():
     assert np.array_equal(result, reference)
 
 
-def test_add_images_weighted_none_output():
+@pytest.mark.backend
+def test_add_images_weighted_none_output(gpu_backend):
     input1 = np.asarray([1, 2, 3])
     input2 = np.asarray([4, 5, 6])
 
@@ -31,7 +30,8 @@ def test_add_images_weighted_none_output():
     assert np.array_equal(result, reference)
 
 
-def test_add_images_weighted_named_parameters():
+@pytest.mark.backend
+def test_add_images_weighted_named_parameters(gpu_backend):
     input1 = np.asarray([1, 2, 3])
     input2 = np.asarray([4, 5, 6])
 
@@ -44,7 +44,8 @@ def test_add_images_weighted_named_parameters():
     assert np.array_equal(result, reference)
 
 
-def test_add_images_weighted_wrong_parameter_order():
+@pytest.mark.backend
+def test_add_images_weighted_wrong_parameter_order(gpu_backend):
     input1 = np.asarray([1, 2, 3])
     input2 = np.asarray([4, 5, 6])
 
@@ -57,7 +58,8 @@ def test_add_images_weighted_wrong_parameter_order():
     assert np.array_equal(result, reference)
 
 
-def test_add_images_weighted_parameters_wrong_order_and_missing():
+@pytest.mark.backend
+def test_add_images_weighted_parameters_wrong_order_and_missing(gpu_backend):
     input1 = np.asarray([1, 2, 3])
     input2 = np.asarray([4, 5, 6])
 

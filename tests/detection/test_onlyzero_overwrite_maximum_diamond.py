@@ -1,10 +1,7 @@
 import numpy as np
 
 import pyclesperanto as cle
-
-cle.select_device("TX")
-
-
+import pytest
 def onlyzero_overwrite_maximum_sphere():
     test1 = cle.push(
         np.asarray(

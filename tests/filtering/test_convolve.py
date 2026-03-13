@@ -1,11 +1,9 @@
 import numpy as np
 
 import pyclesperanto as cle
-
-cle.select_device("TX")
-
-
-def test_convolve():
+import pytest
+@pytest.mark.backend
+def test_convolve(gpu_backend):
     test = cle.push(np.asarray([[0, 0, 0], [0, 1, 0], [0, 0, 0]]))
 
     test1 = cle.push(np.asarray([[0, 1, 0], [1, 2, 1], [0, 1, 0]]))

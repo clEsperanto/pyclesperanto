@@ -2,11 +2,9 @@ import numpy as np
 from skimage.io import imread
 
 import pyclesperanto as cle
-
-cle.select_device("TX")
-
-
-def test_connected_components_labeling_box():
+import pytest
+@pytest.mark.backend
+def test_connected_components_labeling_box(gpu_backend):
     gpu_input = cle.push(np.asarray([[[1, 0, 1], [1, 0, 0], [0, 0, 1]]]))
 
     gpu_reference = cle.push(np.asarray([[[1, 0, 2], [1, 0, 0], [0, 0, 3]]]))
@@ -22,7 +20,8 @@ def test_connected_components_labeling_box():
     assert np.array_equal(a, b)
 
 
-def test_connected_components_labeling_sphere():
+@pytest.mark.backend
+def test_connected_components_labeling_sphere(gpu_backend):
     gpu_input = cle.push(np.asarray([[0, 1, 0, 1], [0, 1, 0, 0], [1, 0, 0, 1]]))
 
     gpu_reference = cle.push(np.asarray([[0, 1, 0, 2], [0, 1, 0, 0], [3, 0, 0, 4]]))
@@ -38,7 +37,8 @@ def test_connected_components_labeling_sphere():
     assert np.array_equal(a, b)
 
 
-def test_connected_components_labeling_box_blobs():
+@pytest.mark.backend
+def test_connected_components_labeling_box_blobs(gpu_backend):
     # initialize GPU
     print("Used GPU: " + cle.get_device().name)
 

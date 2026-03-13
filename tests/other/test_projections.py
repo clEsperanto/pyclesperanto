@@ -1,16 +1,14 @@
 import numpy as np
 
 import pyclesperanto as cle
-
-cle.select_device("TX")
-
-
+import pytest
 # ============================================================================
 # MAXIMUM PROJECTIONS
 # ============================================================================
 
 
-def test_maximum_x_projection():
+@pytest.mark.backend
+def test_maximum_x_projection(gpu_backend):
     test1 = cle.push(
         np.asarray(
             [
@@ -76,7 +74,8 @@ def test_maximum_x_projection():
     assert np.array_equal(a, b)
 
 
-def test_maximum_x_projection_of_pointlist():
+@pytest.mark.backend
+def test_maximum_x_projection_of_pointlist(gpu_backend):
     positions_and_values = cle.push(np.asarray([[0, 0, 2, 3, 5], [0, 1, 3, 2, 6]]))
 
     reference = cle.push(np.asarray([[5], [6]]))
@@ -92,7 +91,8 @@ def test_maximum_x_projection_of_pointlist():
     assert np.array_equal(a, b)
 
 
-def test_maximum_y_projection():
+@pytest.mark.backend
+def test_maximum_y_projection(gpu_backend):
     test1 = cle.push(
         np.asarray(
             [
@@ -158,7 +158,8 @@ def test_maximum_y_projection():
     assert np.array_equal(a, b)
 
 
-def test_maximum_y_projection2():
+@pytest.mark.backend
+def test_maximum_y_projection2(gpu_backend):
     test1 = cle.push(
         np.asarray(
             [
@@ -181,7 +182,8 @@ def test_maximum_y_projection2():
     assert np.array_equal(a, b)
 
 
-def test_maximum_y_projection_against_numpy():
+@pytest.mark.backend
+def test_maximum_y_projection_against_numpy(gpu_backend):
     from skimage.data import camera
 
     image = camera()
@@ -195,7 +197,8 @@ def test_maximum_y_projection_against_numpy():
     assert np.array_equal(max_cle.get(), max_np)
 
 
-def test_maximum_y_projection_against_numpy_small():
+@pytest.mark.backend
+def test_maximum_y_projection_against_numpy_small(gpu_backend):
     from skimage.data import camera
 
     image = camera()[0:2, 0:10]
@@ -265,7 +268,8 @@ reference_z = cle.push(
 )
 
 
-def test_maximum_z_projection():
+@pytest.mark.backend
+def test_maximum_z_projection(gpu_backend):
     result = cle.create(reference_z)
 
     cle.maximum_z_projection(test1_z, result)
@@ -278,7 +282,8 @@ def test_maximum_z_projection():
     assert np.array_equal(a, b)
 
 
-def test_maximum_z_projection_creator():
+@pytest.mark.backend
+def test_maximum_z_projection_creator(gpu_backend):
     result = cle.maximum_z_projection(test1_z)
 
     a = cle.pull(result)
@@ -289,7 +294,8 @@ def test_maximum_z_projection_creator():
     assert np.array_equal(a, b)
 
 
-def test_maximum_z_projection_creator_passing_none():
+@pytest.mark.backend
+def test_maximum_z_projection_creator_passing_none(gpu_backend):
     result = cle.maximum_z_projection(test1_z, None)
 
     a = cle.pull(result)
@@ -305,7 +311,8 @@ def test_maximum_z_projection_creator_passing_none():
 # ============================================================================
 
 
-def test_mean_x_projection():
+@pytest.mark.backend
+def test_mean_x_projection(gpu_backend):
     test1 = cle.push(
         np.asarray(
             [
@@ -372,7 +379,8 @@ def test_mean_x_projection():
     assert np.allclose(a, b, 0.001)
 
 
-def test_mean_y_projection():
+@pytest.mark.backend
+def test_mean_y_projection(gpu_backend):
     test1 = cle.push(
         np.asarray(
             [
@@ -439,7 +447,8 @@ def test_mean_y_projection():
     assert np.allclose(a, b, 0.001)
 
 
-def test_mean_z_projection():
+@pytest.mark.backend
+def test_mean_z_projection(gpu_backend):
     test1 = cle.push(
         np.asarray(
             [
@@ -510,7 +519,8 @@ def test_mean_z_projection():
 # ============================================================================
 
 
-def test_minimum_x_projection():
+@pytest.mark.backend
+def test_minimum_x_projection(gpu_backend):
     test1 = cle.push(
         np.asarray(
             [
@@ -576,7 +586,8 @@ def test_minimum_x_projection():
     assert np.allclose(a, b, 0.001)
 
 
-def test_minimum_y_projection():
+@pytest.mark.backend
+def test_minimum_y_projection(gpu_backend):
     test1 = cle.push(
         np.asarray(
             [
@@ -642,7 +653,8 @@ def test_minimum_y_projection():
     assert np.allclose(a, b, 0.001)
 
 
-def test_minimum_z_projection():
+@pytest.mark.backend
+def test_minimum_z_projection(gpu_backend):
     test1 = cle.push(
         np.asarray(
             [
@@ -714,7 +726,8 @@ def test_minimum_z_projection():
 # ============================================================================
 
 
-def test_sum_x_projection():
+@pytest.mark.backend
+def test_sum_x_projection(gpu_backend):
     test1 = cle.push(
         np.asarray(
             [
@@ -780,7 +793,8 @@ def test_sum_x_projection():
     assert np.allclose(a, b, 0.01)
 
 
-def test_sum_y_projection():
+@pytest.mark.backend
+def test_sum_y_projection(gpu_backend):
     test1 = cle.push(
         np.asarray(
             [
@@ -846,7 +860,8 @@ def test_sum_y_projection():
     assert np.allclose(a, b, 0.01)
 
 
-def test_sum_z_projection():
+@pytest.mark.backend
+def test_sum_z_projection(gpu_backend):
     test1 = cle.push(
         np.asarray(
             [
@@ -913,7 +928,8 @@ def test_sum_z_projection():
     assert np.allclose(a, b, 0.01)
 
 
-def test_sum_z_projection2():
+@pytest.mark.backend
+def test_sum_z_projection2(gpu_backend):
     test1 = cle.push(
         np.asarray(
             [

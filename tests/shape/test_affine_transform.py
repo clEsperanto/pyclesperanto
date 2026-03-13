@@ -1,9 +1,11 @@
 import numpy as np
 
 import pyclesperanto as cle
+import pytest
 
 
-def test_affine_transform_translate():
+@pytest.mark.backend
+def test_affine_transform_translate(gpu_backend):
     source = cle.push(
         np.asarray(
             [

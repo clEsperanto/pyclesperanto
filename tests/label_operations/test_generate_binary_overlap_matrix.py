@@ -1,11 +1,9 @@
 import numpy as np
 
 import pyclesperanto as cle
-
-cle.select_device("TX")
-
-
-def test_generate_binary_overlap_matrix_2d():
+import pytest
+@pytest.mark.backend
+def test_generate_binary_overlap_matrix_2d(gpu_backend):
     gpu_input1 = cle.push(
         np.asarray(
             [
@@ -47,7 +45,8 @@ def test_generate_binary_overlap_matrix_2d():
     assert np.allclose(a, b, 0.01)
 
 
-def test_generate_binary_overlap_matrix_3d():
+@pytest.mark.backend
+def test_generate_binary_overlap_matrix_3d(gpu_backend):
     gpu_input1 = cle.push(
         np.asarray(
             [

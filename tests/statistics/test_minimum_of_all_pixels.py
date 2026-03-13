@@ -1,11 +1,9 @@
 import numpy as np
 
 import pyclesperanto as cle
-
-cle.select_device("TX")
-
-
-def test_minimum_of_all_pixels():
+import pytest
+@pytest.mark.backend
+def test_minimum_of_all_pixels(gpu_backend):
     np_input = np.asarray(
         [
             [[1, 2, 3, 10], [4, 5, 6, 11], [7, 8, 9, 12]],

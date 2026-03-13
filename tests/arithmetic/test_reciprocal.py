@@ -1,11 +1,9 @@
 import numpy as np
 
 import pyclesperanto as cle
-
-cle.select_device("TX")
-
-
-def test_reciprocal():
+import pytest
+@pytest.mark.backend
+def test_reciprocal(gpu_backend):
     test = [[0.2, 0.1], [10, 20]]
     reference = [[5, 10], [0.1, 0.05]]
 

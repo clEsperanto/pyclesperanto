@@ -1,11 +1,9 @@
 import numpy as np
 
 import pyclesperanto as cle
-
-cle.select_device("TX")
-
-
-def test_divide_scalar_by_image():
+import pytest
+@pytest.mark.backend
+def test_divide_scalar_by_image(gpu_backend):
     test1 = cle.push(np.asarray([[5, 5], [1, 1], [2, 2]]))
 
     reference = cle.push(np.asarray([[2, 2], [10, 10], [5, 5]]))

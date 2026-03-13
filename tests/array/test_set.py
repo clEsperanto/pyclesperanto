@@ -1,11 +1,9 @@
 import numpy as np
 
 import pyclesperanto as cle
-
-cle.select_device("TX")
-
-
-def test_set():
+import pytest
+@pytest.mark.backend
+def test_set(gpu_backend):
     result = cle.create((5, 5))
 
     reference = cle.push(

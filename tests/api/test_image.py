@@ -1,10 +1,7 @@
 import numpy as np
-import pytest
 
 import pyclesperanto as cle
-
-cle.select_device("TX")
-
+import pytest
 dtypes = {
     "int8",
     "int16",
@@ -29,6 +26,7 @@ def dtype(request):
 @pytest.mark.parametrize(
     "shape", [(256, 256), (3, 256, 256), (256, 256, 3), (10, 256, 256)]
 )
-def test_create_image(dtype, shape):
+@pytest.mark.backend
+def test_create_image(gpu_backend, dtype, shape):
     array = np.random.randint(0, 255, shape).astype(dtype)
     cle.create(array, mtype="image")

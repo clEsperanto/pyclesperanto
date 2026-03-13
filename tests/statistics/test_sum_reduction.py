@@ -1,9 +1,7 @@
 import numpy as np
 
 import pyclesperanto as cle
-
-cle.select_device("TX")
-
+import pytest
 source = np.asarray([0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 1, 0])
 reference_4 = np.asarray([2, 2, 1])
 reference_2 = np.asarray([1, 1, 0, 2, 0, 1])
@@ -17,7 +15,8 @@ def sum_reduction(source, blocksize):
     return cle.pull(block_sums)
 
 
-def test_sum_reduction():
+@pytest.mark.backend
+def test_sum_reduction(gpu_backend):
     result = sum_reduction(source, 4)
     print(result)
     print(reference_4)

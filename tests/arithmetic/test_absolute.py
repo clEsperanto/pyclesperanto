@@ -1,11 +1,10 @@
 import numpy as np
 
 import pyclesperanto as cle
-
-cle.select_device("TX")
-
-
-def test_absolute():
+import pytest
+@pytest.mark.backend
+def test_absolute(gpu_backend):
+    """Test absolute operation across all available backends."""
     test = cle.push(np.asarray([[1, -1], [1, -1]]))
 
     test2 = cle.create(test)
@@ -19,7 +18,9 @@ def test_absolute():
     assert np.mean(a) == 1
 
 
-def test_absolute1():
+@pytest.mark.backend
+def test_absolute1(gpu_backend):
+    """Test absolute operation (alternative implementation) across all available backends."""
     gpu_a = cle.push(np.asarray([[1, -1], [1, -1]]))
     gpu_b = cle.create(gpu_a)
     cle.absolute(gpu_a, gpu_b)

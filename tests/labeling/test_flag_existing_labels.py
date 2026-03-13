@@ -1,11 +1,9 @@
 import numpy as np
 
 import pyclesperanto as cle
-
-cle.select_device("TX")
-
-
-def test_flag_existing_labels():
+import pytest
+@pytest.mark.backend
+def test_flag_existing_labels(gpu_backend):
     gpu_input = cle.push(np.asarray([[1, 2, 3], [1, 6, 6], [7, 8, 9]]))
 
     gpu_reference = cle.push(np.asarray([0, 1, 1, 1, 0, 0, 1, 1, 1, 1]))

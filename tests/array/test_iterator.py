@@ -1,11 +1,9 @@
 import numpy as np
 
 import pyclesperanto as cle
-
-cle.select_device("TX")
-
-
-def test_iterator():
+import pytest
+@pytest.mark.backend
+def test_iterator(gpu_backend):
     image = np.random.random((3, 2, 5))
     cle_image = cle.asarray(image)
     print(image)
@@ -18,7 +16,8 @@ def test_iterator():
         assert cle.array_equal(i, j)
 
 
-def test_enumerate():
+@pytest.mark.backend
+def test_enumerate(gpu_backend):
     cle_array = cle.create((2, 10))
     cle.set_ramp_x(cle_array)
 
@@ -30,7 +29,8 @@ def test_enumerate():
     assert sum_ == 45
 
 
-def test_zip():
+@pytest.mark.backend
+def test_zip(gpu_backend):
     cle_array = cle.create((2, 10))
     cle.set_ramp_x(cle_array)
 

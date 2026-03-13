@@ -1,12 +1,10 @@
 import numpy as np
 
 import pyclesperanto as cle
-
-cle.select_device("TX")
-
-
+import pytest
 # this test may only work on a machine with multiple GPUs
-def test_gpu_switch():
+@pytest.mark.backend
+def test_gpu_switch(gpu_backend):
     image = np.random.random((100, 100))
 
     # select NVidia

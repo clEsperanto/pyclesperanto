@@ -1,11 +1,9 @@
 import numpy as np
 
 import pyclesperanto as cle
-
-cle.select_device("TX")
-
-
-def test_square_root():
+import pytest
+@pytest.mark.backend
+def test_square_root(gpu_backend):
     test = np.asarray([[25, 16]])
     reference = np.asarray([[5, 4]])
 

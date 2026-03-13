@@ -1,11 +1,9 @@
 import numpy as np
 
 import pyclesperanto as cle
-
-cle.select_device("TX")
-
-
-def test_subtract_image_from_scalar():
+import pytest
+@pytest.mark.backend
+def test_subtract_image_from_scalar(gpu_backend):
     test1 = cle.push(np.asarray([[0, 0], [1, 1], [2, 2]]))
 
     reference = cle.push(np.asarray([[5, 5], [4, 4], [3, 3]]))

@@ -1,9 +1,7 @@
 import numpy as np
 
 import pyclesperanto as cle
-
-cle.select_device("TX")
-
+import pytest
 source = np.asarray([0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 1, 0])
 reference = np.asarray([0, 1, 0, 2, 0, 0, 3, 4, 0, 0, 5, 0])
 
@@ -22,7 +20,8 @@ def block_enum(source, blocksize):
     return cle.pull(new_indices)
 
 
-def test_block_enumerate():
+@pytest.mark.backend
+def test_block_enumerate(gpu_backend):
     result = block_enum(source, 4)
     print(result)
     print(reference)

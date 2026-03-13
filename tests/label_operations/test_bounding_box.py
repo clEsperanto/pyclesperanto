@@ -1,9 +1,11 @@
 import numpy as np
 
 import pyclesperanto as cle
+import pytest
 
 
-def test_bounding_box_2d():
+@pytest.mark.backend
+def test_bounding_box_2d(gpu_backend):
 
     test = cle.push(
         np.asarray(
@@ -27,7 +29,8 @@ def test_bounding_box_2d():
     assert bb[3] == 2
 
 
-def test_bounding_box_3d():
+@pytest.mark.backend
+def test_bounding_box_3d(gpu_backend):
 
     test = cle.push(
         np.asarray(

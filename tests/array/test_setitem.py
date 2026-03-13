@@ -1,11 +1,9 @@
 import numpy as np
 
 import pyclesperanto as cle
-
-cle.select_device("TX")
-
-
-def test_setitem_single_value():
+import pytest
+@pytest.mark.backend
+def test_setitem_single_value(gpu_backend):
     image = cle.create([10, 20, 30])
     image[5, 10, 15] = 42
 
@@ -13,7 +11,8 @@ def test_setitem_single_value():
     assert result[5, 10, 15] == 42
 
 
-def test_setitem_array():
+@pytest.mark.backend
+def test_setitem_array(gpu_backend):
     image = cle.create([10, 20, 30])
     data = np.ones((5, 10, 15))
     image[2:7, 5:15, 10:25] = data
@@ -22,7 +21,8 @@ def test_setitem_array():
     assert np.array_equal(result[2:7, 5:15, 10:25], data)
 
 
-def test_setitem_invalid_value():
+@pytest.mark.backend
+def test_setitem_invalid_value(gpu_backend):
     image = cle.create([10, 20, 30])
     invalid_value = "invalid"
 
@@ -34,7 +34,8 @@ def test_setitem_invalid_value():
         assert False, "Expected TypeError to be raised"
 
 
-def test_setitem_invalid_region():
+@pytest.mark.backend
+def test_setitem_invalid_region(gpu_backend):
     image = cle.create([10, 20, 30])
     data = np.ones((5, 10, 15))
 
@@ -46,7 +47,8 @@ def test_setitem_invalid_region():
         assert False, "Expected ValueError to be raised"
 
 
-def test_setitem_out_of_bounds():
+@pytest.mark.backend
+def test_setitem_out_of_bounds(gpu_backend):
     image = cle.create([10, 20, 30])
     data = np.ones((5, 10, 15))
 
@@ -58,7 +60,8 @@ def test_setitem_out_of_bounds():
         assert False, "Expected IndexError to be raised"
 
 
-def test_setitem_negative_indices():
+@pytest.mark.backend
+def test_setitem_negative_indices(gpu_backend):
     image = cle.create([10, 20, 30])
     data = np.ones((5, 10, 15))
 
@@ -70,7 +73,8 @@ def test_setitem_negative_indices():
         assert False, "Expected IndexError to be raised"
 
 
-def test_setitem_every_2_rows():
+@pytest.mark.backend
+def test_setitem_every_2_rows(gpu_backend):
     image = cle.create([10, 20, 30])
     data = np.ones((5, 20, 30))
     image[::2, :, :] = data
@@ -79,7 +83,8 @@ def test_setitem_every_2_rows():
     assert np.array_equal(result[::2, :, :], data)
 
 
-def test_setitem_negative_step():
+@pytest.mark.backend
+def test_setitem_negative_step(gpu_backend):
     image = cle.create([10, 20, 30])
     data = np.ones((5, 20, 30))
     image[2:7:-1, :, :] = data

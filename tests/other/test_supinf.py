@@ -2,11 +2,9 @@ import numpy as np
 from skimage.segmentation.morphsnakes import inf_sup, sup_inf
 
 import pyclesperanto as cle
-
-cle.select_device("TX")
-
-
-def test_superior_inferior_2d():
+import pytest
+@pytest.mark.backend
+def test_superior_inferior_2d(gpu_backend):
     test = cle.push(
         np.asarray(
             [
@@ -54,7 +52,8 @@ def test_superior_inferior_2d():
     assert cle.array_equal(result, reference2)
 
 
-def test_superior_inferior_2d_compare_with_skimage_x():
+@pytest.mark.backend
+def test_superior_inferior_2d_compare_with_skimage_x(gpu_backend):
 
     array = np.zeros((100, 85), dtype=np.uint8)
     array[15:85, 15:85] = 1
@@ -69,7 +68,8 @@ def test_superior_inferior_2d_compare_with_skimage_x():
     assert cle.array_equal(result, reference)
 
 
-def test_superior_inferior_2d_compare_with_skimage_y():
+@pytest.mark.backend
+def test_superior_inferior_2d_compare_with_skimage_y(gpu_backend):
 
     array = np.zeros((85, 100), dtype=np.uint8)
     array[15:85, 15:85] = 1
@@ -84,7 +84,8 @@ def test_superior_inferior_2d_compare_with_skimage_y():
     assert cle.array_equal(result, reference)
 
 
-def test_superior_inferior_3d():
+@pytest.mark.backend
+def test_superior_inferior_3d(gpu_backend):
     test = cle.push(
         np.asarray(
             [
@@ -139,7 +140,8 @@ def test_superior_inferior_3d():
     assert np.array_equal(a, b)
 
 
-def test_superior_inferior_3d_compare_with_skimage_x():
+@pytest.mark.backend
+def test_superior_inferior_3d_compare_with_skimage_x(gpu_backend):
 
     array = np.zeros((5, 5, 4), dtype=np.uint8)
     array[1:4, 1:4, 1:4] = 1
@@ -154,7 +156,8 @@ def test_superior_inferior_3d_compare_with_skimage_x():
     assert cle.array_equal(result, reference)
 
 
-def test_superior_inferior_3d_compare_with_skimage_y():
+@pytest.mark.backend
+def test_superior_inferior_3d_compare_with_skimage_y(gpu_backend):
 
     array = np.zeros((5, 4, 5), dtype=np.uint8)
     array[1:4, 1:4, 1:4] = 1
@@ -169,7 +172,8 @@ def test_superior_inferior_3d_compare_with_skimage_y():
     assert cle.array_equal(result, reference)
 
 
-def test_superior_inferior_3d_compare_with_skimage_z():
+@pytest.mark.backend
+def test_superior_inferior_3d_compare_with_skimage_z(gpu_backend):
 
     array = np.zeros((4, 5, 5), dtype=np.uint8)
     array[1:4, 1:4, 1:4] = 1

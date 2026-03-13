@@ -1,11 +1,9 @@
 import numpy as np
 
 import pyclesperanto as cle
-
-cle.select_device("TX")
-
-
-def test_transpose_yz():
+import pytest
+@pytest.mark.backend
+def test_transpose_yz(gpu_backend):
     test1 = cle.push(np.asarray([[[0, 1], [2, 3]], [[4, 5], [6, 7]]]))
 
     reference = cle.push(np.asarray([[[0, 1], [4, 5]], [[2, 3], [6, 7]]]))
@@ -22,7 +20,8 @@ def test_transpose_yz():
     assert np.array_equal(a, b)
 
 
-def test_transpose_yz_3d_generate_output():
+@pytest.mark.backend
+def test_transpose_yz_3d_generate_output(gpu_backend):
     test1 = cle.push(np.asarray([[[1, 2, 6], [3, 4, 5]]]))
 
     result = cle.transpose_yz(test1)
@@ -34,7 +33,8 @@ def test_transpose_yz_3d_generate_output():
     assert np.mean(a) == 3.5
 
 
-def test_transpose_yz_2d_generate_output():
+@pytest.mark.backend
+def test_transpose_yz_2d_generate_output(gpu_backend):
     test1 = cle.push(np.asarray([[1, 2, 6], [3, 4, 5]]))
 
     result = cle.transpose_yz(test1)
@@ -48,7 +48,8 @@ def test_transpose_yz_2d_generate_output():
     assert np.mean(a) == 3.5
 
 
-def test_transpose_yz_1d_generate_output():
+@pytest.mark.backend
+def test_transpose_yz_1d_generate_output(gpu_backend):
     test1 = cle.push(np.asarray([1, 2, 6, 3, 4, 5]))
 
     result = cle.transpose_yz(test1)

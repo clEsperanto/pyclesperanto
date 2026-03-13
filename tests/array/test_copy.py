@@ -1,11 +1,9 @@
 import numpy as np
 
 import pyclesperanto as cle
-
-cle.select_device("TX")
-
-
-def test_copy():
+import pytest
+@pytest.mark.backend
+def test_copy(gpu_backend):
     test1 = cle.push(np.asarray([[1, 1], [1, 0]]))
 
     test2 = cle.create(test1)

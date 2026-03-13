@@ -24,7 +24,7 @@ The test suite has been organized into 12 functional categories for easier manag
 ## Running Tests
 
 ```bash
-# Run all tests
+# Run all tests (parametrized tests run on all available backends)
 pixi run test
 
 # Run tests from a specific category
@@ -32,7 +32,20 @@ pixi run test tests/arithmetic/
 
 # Run a specific test file
 pixi run test tests/arithmetic/test_add_images.py
+
+# Run only on OpenCL backend
+pixi run test -k opencl
+
+# Run only on CUDA backend
+pixi run test -k cuda
+
+# Run with verbose output to see which backend each test uses
+pixi run test -v
 ```
+
+## Multi-Backend Testing
+
+Tests marked with `@pytest.mark.backend` are automatically parametrized to run on all available GPU backends. See [BACKENDS.md](BACKENDS.md) for detailed information on how to use backend fixtures and markers.
 
 ## Structure
 

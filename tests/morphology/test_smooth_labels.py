@@ -1,9 +1,11 @@
 import numpy as np
 
 import pyclesperanto as cle
+import pytest
 
 
-def test_smooth_labels_2d():
+@pytest.mark.backend
+def test_smooth_labels_2d(gpu_backend):
 
     gpu_input = cle.push(
         np.asarray(

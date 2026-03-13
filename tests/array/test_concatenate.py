@@ -1,9 +1,11 @@
 import numpy as np
 
 import pyclesperanto as cle
+import pytest
 
 
-def test_concate_along_x():
+@pytest.mark.backend
+def test_concate_along_x(gpu_backend):
     test1 = cle.push(np.asarray([[1, 1], [1, 1]]))
     test2 = cle.push(np.asarray([[2, 2, 2], [2, 2, 2]]))
 
@@ -20,7 +22,8 @@ def test_concate_along_x():
     assert np.allclose(a, b, 0.01)
 
 
-def test_concate_along_y():
+@pytest.mark.backend
+def test_concate_along_y(gpu_backend):
     test1 = cle.push(np.asarray([[1, 1], [1, 1]]))
     test2 = cle.push(np.asarray([[2, 2], [2, 2]]))
 
@@ -37,7 +40,8 @@ def test_concate_along_y():
     assert np.allclose(a, b, 0.01)
 
 
-def test_concate_along_z():
+@pytest.mark.backend
+def test_concate_along_z(gpu_backend):
     test1 = cle.push(
         np.asarray(
             [

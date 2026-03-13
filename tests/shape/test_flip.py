@@ -1,11 +1,9 @@
 import numpy as np
 
 import pyclesperanto as cle
-
-cle.select_device("TX")
-
-
-def test_flip():
+import pytest
+@pytest.mark.backend
+def test_flip(gpu_backend):
     test = cle.push(
         np.asarray(
             [

@@ -1,11 +1,9 @@
 import numpy as np
 
 import pyclesperanto as cle
-
-cle.select_device("TX")
-
-
-def test_grreater_or_equal():
+import pytest
+@pytest.mark.backend
+def test_grreater_or_equal(gpu_backend):
     test = cle.push(
         np.asarray(
             [

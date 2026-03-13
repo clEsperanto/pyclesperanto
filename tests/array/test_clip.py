@@ -1,11 +1,9 @@
 import numpy as np
 
 import pyclesperanto as cle
-
-cle.select_device("TX")
-
-
-def test_clip_min_max():
+import pytest
+@pytest.mark.backend
+def test_clip_min_max(gpu_backend):
     test = [[0, 1], [2, 3]]
     reference = [[1, 1], [2, 2]]
 
@@ -14,7 +12,8 @@ def test_clip_min_max():
     assert np.array_equal(result, reference)
 
 
-def test_clip_max():
+@pytest.mark.backend
+def test_clip_max(gpu_backend):
     test = [[0, 1], [2, 3]]
     reference = [[0, 1], [2, 2]]
 
@@ -23,7 +22,8 @@ def test_clip_max():
     assert np.array_equal(result, reference)
 
 
-def test_clip_min():
+@pytest.mark.backend
+def test_clip_min(gpu_backend):
     test = [[0, 1], [2, 3]]
     reference = [[1, 1], [2, 3]]
 

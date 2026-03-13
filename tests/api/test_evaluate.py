@@ -1,11 +1,7 @@
 import numpy as np
-import pytest
 
 import pyclesperanto as cle
-
-cle.select_device("TX")
-
-
+import pytest
 class TestEvaluate:
     """Test suite for the evaluate function"""
 

@@ -1,9 +1,11 @@
 import numpy as np
 
 import pyclesperanto as cle
+import pytest
 
 
-def test_eroded_otsu_labeling():
+@pytest.mark.backend
+def test_eroded_otsu_labeling(gpu_backend):
 
     gpu_input = cle.push(
         np.asarray(

@@ -1,11 +1,9 @@
 import numpy as np
 
 import pyclesperanto as cle
-
-cle.select_device("TX")
-
-
-def test_modulo_images():
+import pytest
+@pytest.mark.backend
+def test_modulo_images(gpu_backend):
     test = [[2, 5], [2, 3]]
     test_div = [[2, 2], [2, 2]]
     reference = [[0, 1], [0, 1]]

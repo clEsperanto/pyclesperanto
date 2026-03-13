@@ -1,12 +1,9 @@
 import numpy as np
-import pytest
 
 import pyclesperanto as cle
-
-cle.select_device("TX")
-
-
-def test_dask_compatibility():
+import pytest
+@pytest.mark.backend
+def test_dask_compatibility(gpu_backend):
     array = pytest.importorskip("dask.array")
 
     np_arr = np.random.random((100, 100))

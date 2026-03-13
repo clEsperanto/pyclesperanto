@@ -1,11 +1,9 @@
 import numpy as np
 
 import pyclesperanto as cle
-
-cle.select_device("TX")
-
-
-def test_push_np():
+import pytest
+@pytest.mark.backend
+def test_push_np(gpu_backend):
     reference = np.asarray([[1, 2], [-3, 4]])
 
     image = cle.push(reference)
@@ -15,7 +13,8 @@ def test_push_np():
     assert np.allclose(result, reference)
 
 
-def test_push_list():
+@pytest.mark.backend
+def test_push_list(gpu_backend):
     reference = [[1, 2], [-3, 4]]
 
     image = cle.push(reference)
@@ -25,7 +24,8 @@ def test_push_list():
     assert np.allclose(result, reference)
 
 
-def test_push_tuple():
+@pytest.mark.backend
+def test_push_tuple(gpu_backend):
     reference = ([1, 2], [-3, 4])
 
     image = cle.push(reference)

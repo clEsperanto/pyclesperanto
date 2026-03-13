@@ -1,11 +1,9 @@
 import numpy as np
 
 import pyclesperanto as cle
-
-cle.select_device("TX")
-
-
-def test_set_where_x_greater_than_y():
+import pytest
+@pytest.mark.backend
+def test_set_where_x_greater_than_y(gpu_backend):
     result = cle.push(
         np.asarray([[0, 0, 0, 1], [0, 0, 3, 1], [0, 0, 3, 1], [1, 1, 1, 1]])
     )

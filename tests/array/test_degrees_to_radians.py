@@ -1,11 +1,9 @@
 import numpy as np
 
 import pyclesperanto as cle
-
-cle.select_device("TX")
-
-
-def test_degrees_to_radians():
+import pytest
+@pytest.mark.backend
+def test_degrees_to_radians(gpu_backend):
     test = cle.push(np.asarray([[180, 0, -90]]))
 
     reference = cle.push(np.asarray([[np.pi, 0, -0.5 * np.pi]]))

@@ -33,6 +33,9 @@ cibuildwheel = "*"
 [tasks]
 build-ocl = "pip install -e . && pip install -e ./backends/opencl -v"
 build-cuda = "pip install -e . && pip install -e ./backends/cuda -v"
+build-all = "pip install -e . && pip install -e ./backends/opencl -v && pip install -e ./backends/cuda -v"
+test-cuda = "pytest -k cuda -v"
+test-opencl = "pytest -k opencl -v"
 test = "pytest -v"
 
 [environments]

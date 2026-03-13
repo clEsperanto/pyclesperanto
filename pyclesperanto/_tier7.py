@@ -438,7 +438,9 @@ def closing_labels(
     -------
     Image
     """
-    return _get_backend()._closing_labels(device, input_image, output_image, int(radius))
+    return _get_backend()._closing_labels(
+        device, input_image, output_image, int(radius)
+    )
 
 
 @plugin_function(categories=["label processing", "in assistant"])
@@ -500,7 +502,9 @@ def opening_labels(
     -------
     Image
     """
-    return _get_backend()._opening_labels(device, input_image, output_image, int(radius))
+    return _get_backend()._opening_labels(
+        device, input_image, output_image, int(radius)
+    )
 
 
 @plugin_function(categories=["label", "in assistant", "bia-bob-suggestion"])

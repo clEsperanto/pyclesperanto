@@ -3998,7 +3998,9 @@ def power_images(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_powerImages
     """
-    return _get_backend()._power_images(device, input_image0, input_image1, output_image)
+    return _get_backend()._power_images(
+        device, input_image0, input_image1, output_image
+    )
 
 
 @plugin_function(categories=["transform", "in assistant"])
@@ -4596,7 +4598,9 @@ def set_plane(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_setPlane
     """
-    return _get_backend()._set_plane(device, input_image, int(plane_index), float(value))
+    return _get_backend()._set_plane(
+        device, input_image, int(plane_index), float(value)
+    )
 
 
 @plugin_function

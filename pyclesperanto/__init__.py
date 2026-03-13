@@ -2,7 +2,6 @@ import warnings
 
 from ._array import Array, Image, _patch_array_class, is_image
 from ._backend import (
-    get_backend_name,
     _get_backend,
     get_backend_name,
     list_available_backends,

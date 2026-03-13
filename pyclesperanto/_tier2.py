@@ -1011,7 +1011,9 @@ def extend_labeling_via_voronoi(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_extendLabelingViaVoronoi
     """
-    return _get_backend()._extend_labeling_via_voronoi(device, input_image, output_image)
+    return _get_backend()._extend_labeling_via_voronoi(
+        device, input_image, output_image
+    )
 
 
 @plugin_function(categories=["filter"])
@@ -1099,7 +1101,9 @@ def pointlist_to_labelled_spots(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_pointlistToLabelledSpots
     """
-    return _get_backend()._pointlist_to_labelled_spots(device, input_image, output_image)
+    return _get_backend()._pointlist_to_labelled_spots(
+        device, input_image, output_image
+    )
 
 
 @plugin_function(categories=["filter", "in assistant"])

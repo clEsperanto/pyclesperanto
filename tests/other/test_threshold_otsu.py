@@ -1,9 +1,11 @@
 import numpy as np
+import pytest
 from skimage.data import camera
 from skimage.filters import threshold_otsu
 
 import pyclesperanto as cle
-import pytest
+
+
 @pytest.mark.backend
 def test_threshold_otsu_against_scikit_image(gpu_backend):
     image = camera()

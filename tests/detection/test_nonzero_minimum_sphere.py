@@ -1,7 +1,9 @@
 import numpy as np
+import pytest
 
 import pyclesperanto as cle
-import pytest
+
+
 @pytest.mark.backend
 def test_nonzero_minimum_sphere(gpu_backend):
     test = cle.push(

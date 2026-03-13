@@ -1,7 +1,9 @@
 import numpy as np
+import pytest
 
 import pyclesperanto as cle
-import pytest
+
+
 @pytest.mark.backend
 def test_divide_scalar_by_image(gpu_backend):
     test1 = cle.push(np.asarray([[5, 5], [1, 1], [2, 2]]))

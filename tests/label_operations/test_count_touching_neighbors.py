@@ -1,7 +1,9 @@
 import numpy as np
+import pytest
 
 import pyclesperanto as cle
-import pytest
+
+
 @pytest.mark.backend
 def test_count_touching_neighbors(gpu_backend):
     labels = cle.push(

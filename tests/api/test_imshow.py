@@ -2,9 +2,9 @@ from unittest.mock import patch
 
 import matplotlib.pyplot as plt
 import numpy as np
+import pytest
 
 import pyclesperanto as cle
-import pytest
 
 
 @pytest.mark.backend

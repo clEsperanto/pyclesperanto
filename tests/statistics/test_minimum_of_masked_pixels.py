@@ -1,7 +1,9 @@
 import numpy as np
+import pytest
 
 import pyclesperanto as cle
-import pytest
+
+
 @pytest.mark.backend
 def test_minimum_of_masked_pixels_mini_x(gpu_backend):
     np_input = np.asarray([1, 2, 3, 4])

@@ -1,7 +1,9 @@
 import numpy as np
+import pytest
 
 import pyclesperanto as cle
-import pytest
+
+
 @pytest.mark.backend
 def test_range1(gpu_backend):
     image = cle.push(np.asarray([[0, 1, 2], [2, 3, 4], [5, 6, 7]]))

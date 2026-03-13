@@ -1,7 +1,9 @@
 import numpy as np
+import pytest
 
 import pyclesperanto as cle
-import pytest
+
+
 @pytest.mark.backend
 def test_voronoi_otsu_labeling(gpu_backend):
     gpu_input = cle.push(

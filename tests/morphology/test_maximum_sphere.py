@@ -1,7 +1,9 @@
 import numpy as np
+import pytest
 
 import pyclesperanto as cle
-import pytest
+
+
 @pytest.mark.backend
 def test_maximum_sphere_1(gpu_backend):
     test = cle.push(np.asarray([[1, 1, 1], [1, 2, 1], [1, 1, 1]]))

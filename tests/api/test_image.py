@@ -1,7 +1,8 @@
 import numpy as np
+import pytest
 
 import pyclesperanto as cle
-import pytest
+
 dtypes = {
     "int8",
     "int16",

@@ -1,8 +1,10 @@
 import numpy as np
+import pytest
 from skimage.segmentation.morphsnakes import inf_sup, sup_inf
 
 import pyclesperanto as cle
-import pytest
+
+
 @pytest.mark.backend
 def test_superior_inferior_2d(gpu_backend):
     test = cle.push(

@@ -1,7 +1,9 @@
 import numpy as np
+import pytest
 
 import pyclesperanto as cle
-import pytest
+
+
 @pytest.mark.backend
 def test_generate_binary_overlap_matrix_2d(gpu_backend):
     gpu_input1 = cle.push(

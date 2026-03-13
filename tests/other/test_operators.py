@@ -1,7 +1,9 @@
 import numpy as np
+import pytest
 
 import pyclesperanto as cle
-import pytest
+
+
 @pytest.mark.backend
 def test_add(gpu_backend):
     input1 = cle.push(np.asarray([1, 2, 3]))

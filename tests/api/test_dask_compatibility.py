@@ -1,7 +1,9 @@
 import numpy as np
+import pytest
 
 import pyclesperanto as cle
-import pytest
+
+
 @pytest.mark.backend
 def test_dask_compatibility(gpu_backend):
     array = pytest.importorskip("dask.array")

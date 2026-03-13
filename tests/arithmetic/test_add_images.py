@@ -1,7 +1,8 @@
 import numpy as np
+import pytest
 
 import pyclesperanto as cle
-import pytest
+
 input1 = np.asarray([1, 2, 3])
 input2 = np.asarray([4, 5, 6])
 

@@ -1,7 +1,9 @@
 import numpy as np
+import pytest
 
 import pyclesperanto as cle
-import pytest
+
+
 @pytest.mark.backend
 def test_array_equal(gpu_backend):
     input1 = np.asarray([1, 2, 3])

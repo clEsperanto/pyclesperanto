@@ -1,8 +1,10 @@
 import numpy as np
+import pytest
 from skimage.io import imread
 
 import pyclesperanto as cle
-import pytest
+
+
 @pytest.mark.backend
 def test_exclude_labels_on_edges_2d(gpu_backend):
     gpu_input = cle.push(

@@ -1,7 +1,8 @@
 import numpy as np
+import pytest
 
 import pyclesperanto as cle
-import pytest
+
 # @pytest.mark.parametrize("shape", 2 ** np.arange(9, 11), ids=lambda x: f"{x}x{x}")
 # @pytest.mark.parametrize("target", ["cpu", "gpu"])
 # def test_multiply_matrix(shape, benchmark, target):

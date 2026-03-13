@@ -1,7 +1,9 @@
 import numpy as np
+import pytest
 
 import pyclesperanto as cle
-import pytest
+
+
 @pytest.mark.backend
 def test_modulo_images(gpu_backend):
     test = [[2, 5], [2, 3]]

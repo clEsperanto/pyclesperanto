@@ -1,7 +1,8 @@
 import numpy as np
+import pytest
 
 import pyclesperanto as cle
-import pytest
+
 source = np.asarray([0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 1, 0])
 reference_4 = np.asarray([2, 2, 1])
 reference_2 = np.asarray([1, 1, 0, 2, 0, 1])

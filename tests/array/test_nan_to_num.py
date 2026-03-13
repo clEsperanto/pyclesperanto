@@ -1,7 +1,9 @@
 import numpy as np
+import pytest
 
 import pyclesperanto as cle
-import pytest
+
+
 @pytest.mark.backend
 def test_nan_to_num(gpu_backend):
     data = np.asarray([[-np.inf], [np.inf], [np.nan], [0], [1]])

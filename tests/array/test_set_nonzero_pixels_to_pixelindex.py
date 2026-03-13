@@ -1,7 +1,9 @@
 import numpy as np
+import pytest
 
 import pyclesperanto as cle
-import pytest
+
+
 @pytest.mark.backend
 def test_set_nonzero_pixels_to_pixelindex(gpu_backend):
     test1 = cle.push(

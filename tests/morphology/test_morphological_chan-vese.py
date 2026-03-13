@@ -1,8 +1,8 @@
 import numpy as np
+import pytest
 from skimage import morphology, segmentation
 
 import pyclesperanto as cle
-import pytest
 
 # def test_morphological_chan_vese():
 #     image = generate_disk((25, 25), 5).astype(np.float32)

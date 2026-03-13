@@ -1,7 +1,9 @@
 import numpy as np
+import pytest
 
 import pyclesperanto as cle
-import pytest
+
+
 @pytest.mark.backend
 def test_relabel_sequential(gpu_backend):
     gpu_input = cle.push(np.asarray([[1, 2, 3], [1, 6, 6], [7, 8, 9]]))

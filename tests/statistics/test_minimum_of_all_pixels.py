@@ -1,7 +1,9 @@
 import numpy as np
+import pytest
 
 import pyclesperanto as cle
-import pytest
+
+
 @pytest.mark.backend
 def test_minimum_of_all_pixels(gpu_backend):
     np_input = np.asarray(

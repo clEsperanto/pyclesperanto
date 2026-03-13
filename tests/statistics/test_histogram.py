@@ -1,7 +1,9 @@
 import numpy as np
+import pytest
 
 import pyclesperanto as cle
-import pytest
+
+
 @pytest.mark.backend
 def test_histogram(gpu_backend):
     test = cle.push(np.asarray([[1, 2, 4, 4, 2, 3], [3, 3, 4, 4, 5, 5]]))

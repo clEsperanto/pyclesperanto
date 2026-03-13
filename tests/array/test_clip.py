@@ -1,7 +1,9 @@
 import numpy as np
+import pytest
 
 import pyclesperanto as cle
-import pytest
+
+
 @pytest.mark.backend
 def test_clip_min_max(gpu_backend):
     test = [[0, 1], [2, 3]]

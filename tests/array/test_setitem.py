@@ -1,7 +1,9 @@
 import numpy as np
+import pytest
 
 import pyclesperanto as cle
-import pytest
+
+
 @pytest.mark.backend
 def test_setitem_single_value(gpu_backend):
     image = cle.create([10, 20, 30])

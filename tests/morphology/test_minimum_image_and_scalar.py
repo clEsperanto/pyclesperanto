@@ -1,7 +1,9 @@
 import numpy as np
+import pytest
 
 import pyclesperanto as cle
-import pytest
+
+
 @pytest.mark.backend
 def test_minimum_image_and_scalar(gpu_backend):
     test1 = cle.push(np.asarray([[0, 3, 4, 5, 0], [0, 2, 1, 6, 0], [0, 0, 8, 7, 0]]))

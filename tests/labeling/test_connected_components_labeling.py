@@ -1,8 +1,10 @@
 import numpy as np
+import pytest
 from skimage.io import imread
 
 import pyclesperanto as cle
-import pytest
+
+
 @pytest.mark.backend
 def test_connected_components_labeling_box(gpu_backend):
     gpu_input = cle.push(np.asarray([[[1, 0, 1], [1, 0, 0], [0, 0, 1]]]))

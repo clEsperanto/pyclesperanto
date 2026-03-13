@@ -1,7 +1,9 @@
 import numpy as np
+import pytest
 
 import pyclesperanto as cle
-import pytest
+
+
 # this test may only work on a machine with multiple GPUs
 @pytest.mark.backend
 def test_gpu_switch(gpu_backend):

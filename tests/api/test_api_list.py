@@ -1,5 +1,6 @@
-import pyclesperanto as cle
 import pytest
+
+import pyclesperanto as cle
 
 
 @pytest.mark.backend

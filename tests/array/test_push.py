@@ -1,7 +1,9 @@
 import numpy as np
+import pytest
 
 import pyclesperanto as cle
-import pytest
+
+
 @pytest.mark.backend
 def test_push_np(gpu_backend):
     reference = np.asarray([[1, 2], [-3, 4]])

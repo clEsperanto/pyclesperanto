@@ -1,7 +1,9 @@
 import numpy as np
+import pytest
 
 import pyclesperanto as cle
-import pytest
+
+
 def onlyzero_overwrite_maximum_sphere():
     test1 = cle.push(
         np.asarray(

@@ -1,7 +1,9 @@
 import numpy as np
+import pytest
 
 import pyclesperanto as cle
-import pytest
+
+
 @pytest.mark.backend
 def test_cubic_root(gpu_backend):
     test = np.asarray([[125, 64]])

@@ -1,5 +1,8 @@
-import pyclesperanto as cle
 import pytest
+
+import pyclesperanto as cle
+
+
 @pytest.mark.backend
 def test_mode_sphere_2d(gpu_backend):
     image = cle.asarray(

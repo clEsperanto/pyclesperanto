@@ -113,8 +113,8 @@ jobs:
     name: publish (PyPI)
     needs: [build_opencl_wheels, build_cuda_wheels, build_main]
     runs-on: ubuntu-latest
-    if: success()
-    # if: github.event_name == 'release' && success()
+    # if: success()
+    if: github.event_name == 'release' && success()
     steps:
       - uses: actions/setup-python@v6
         with:

@@ -58,10 +58,11 @@ jobs:
         uses: Jimver/cuda-toolkit@v0.2.21
         with:
           cuda: '12.6.0'
-          method: 'network'
+          method: 'local'
           sub-packages: '["nvcc","cudart","cudart-dev","nvrtc","nvrtc-dev"]'
           non-cuda-sub-packages: '["nvJitLink","nvJitLink-dev"]'
           use-local-cache: false
+          use-github-cache: false
 
       - name: Build wheels
         uses: pypa/cibuildwheel@v3.4.0

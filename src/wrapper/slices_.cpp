@@ -98,7 +98,7 @@ auto slice_(py::module &m) -> void
 {
   // ── Bind cle::Slice ───────────────────────────────────────────────────
 
-  py::class_<cle::Slice>(m, "_Slice", R"doc(
+  py::class_<cle::Slice>(m, "_Slice", py::module_local(), R"doc(
       Single-axis cle::slice specification, analogous to Python's ``cle::slice(start, stop, step)``.
 
       Examples::

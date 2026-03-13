@@ -235,7 +235,7 @@ cle::Array::Pointer create_array(py::tuple shape, py::object dtype, std::string 
 
 auto array_(py::module_ &m) -> void
 {
-     py::class_<cle::Array, std::shared_ptr<cle::Array>>(m, "_Array")
+     py::class_<cle::Array, std::shared_ptr<cle::Array>>(m, "_Array", py::module_local())
          .def_static("create", &create_array, py::return_value_policy::automatic_reference, py::arg("shape"), py::arg("dtype"), py::arg("mtype"), py::arg("device"))
 
          .def("_write", &write_region<float>, py::arg("value"), py::arg("origin") = py::none(), py::arg("region") = py::none())

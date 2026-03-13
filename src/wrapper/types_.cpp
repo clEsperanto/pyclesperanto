@@ -9,7 +9,7 @@ namespace py = pybind11;
 
 auto types_(py::module_ &m) -> void
 {
-    py::enum_<cle::dType> dtype(m, "_DataType");
+    py::enum_<cle::dType> dtype(m, "_DataType", py::module_local());
     dtype.value("float32", cle::dType::FLOAT);
     // dtype.value("int64", cle::dType::INT64);
     dtype.value("int32", cle::dType::INT32);
@@ -21,7 +21,7 @@ auto types_(py::module_ &m) -> void
     dtype.value("uint8", cle::dType::UINT8);
     dtype.export_values();
 
-    py::enum_<cle::mType> mtype(m, "_MemoryType");
+    py::enum_<cle::mType> mtype(m, "_MemoryType", py::module_local());
     mtype.value("buffer", cle::mType::BUFFER);
     mtype.value("image", cle::mType::IMAGE);
     mtype.export_values();

@@ -12,15 +12,15 @@ namespace py = pybind11;
 
 auto core_(pybind11::module_ &m) -> void
 {
-    py::enum_<cle::Backend::Type>(m, "_BackendType")
+    py::enum_<cle::Backend::Type>(m, "_BackendType", py::module_local())
         .value("OpenCL", cle::Backend::Type::OPENCL)
         .value("CUDA", cle::Backend::Type::CUDA);
 
-    py::enum_<cle::Device::Type>(m, "_DeviceType")
+    py::enum_<cle::Device::Type>(m, "_DeviceType", py::module_local())
         .value("OpenCL", cle::Device::Type::OPENCL)
         .value("CUDA", cle::Device::Type::CUDA);
 
-    py::class_<cle::Device, std::shared_ptr<cle::Device>>(m, "_Device")
+    py::class_<cle::Device, std::shared_ptr<cle::Device>>(m, "_Device", py::module_local())
         // .def_property_readonly("name", &cle::Device::getName, py::arg("lowercase"))
         .def_property_readonly("name", [](const cle::Device &device)
                                { return device.getName(false); })
@@ -38,7 +38,7 @@ auto core_(pybind11::module_ &m) -> void
         oss << device.getInfo();
         return oss.str(); });
 
-    py::class_<cle::Backend, std::shared_ptr<cle::Backend>>(m, "_Backend")
+    py::class_<cle::Backend, std::shared_ptr<cle::Backend>>(m, "_Backend", py::module_local())
         .def_property_readonly("type", &cle::Backend::getType)
         .def("getDevicesList", &cle::Backend::getDevicesList, py::return_value_policy::automatic_reference, py::arg("type"))
         .def("getDevices", &cle::Backend::getDevices, py::return_value_policy::automatic_reference)
@@ -55,7 +55,7 @@ auto core_(pybind11::module_ &m) -> void
         oss << Backend;
         return oss.str(); });
 
-    py::class_<cle::BackendManager, std::shared_ptr<cle::BackendManager>>(m, "_BackendManager")
+    py::class_<cle::BackendManager, std::shared_ptr<cle::BackendManager>>(m, "_BackendManager", py::module_local())
         .def_static("get_backends_list", &cle::BackendManager::getBackendsList, py::return_value_policy::automatic_reference)
         .def_static(
             "set_backend", [](const std::string &backend)

@@ -68,6 +68,8 @@ before-all = "bash {package}/../../scripts/build-cuda-linux.sh"
 repair-wheel-command = "auditwheel show {wheel} && auditwheel repair --lib-sdir .libs -w {dest_dir} {wheel}"
 environment = { CUDA_HOME="/usr/local/cuda", PATH="/usr/local/cuda/bin:$PATH", LD_LIBRARY_PATH="/usr/local/cuda/lib64:/usr/local/cuda/lib64/stubs:$LD_LIBRARY_PATH" }
 
+## IMPORTRANT: cuda version must match the one used to build the wheel
+## Current version is 12.6
 [tool.cibuildwheel.windows]
 repair-wheel-command = "delvewheel show {wheel} && delvewheel repair --add-path \"C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v12.6/bin\" --no-dll \"nvcuda.dll;msvcp140.dll;vcruntime140_1.dll\" -w {dest_dir} {wheel}"
 before-build = "pip install delvewheel"

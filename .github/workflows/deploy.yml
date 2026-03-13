@@ -45,7 +45,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     if: github.event_name == 'release' || contains(github.event.pull_request.labels.*.name, 'ready-to-deploy')
     strategy:
-      fail-fast: true
+      fail-fast: false
       matrix:
         os: [ubuntu-latest, windows-latest]
 

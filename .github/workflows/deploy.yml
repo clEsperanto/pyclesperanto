@@ -15,7 +15,7 @@ jobs:
   build_opencl_wheels:
     name: build opencl (${{ matrix.os }})
     runs-on: ${{ matrix.os }}
-    if: github.event_name == 'release' || contains(github.event.pull_request.labels.*.name, 'ready-to-deploy')
+    # if: github.event_name == 'release' || contains(github.event.pull_request.labels.*.name, 'ready-to-deploy')
     strategy:
       fail-fast: true
       matrix:
@@ -43,7 +43,7 @@ jobs:
   build_cuda_wheels:
     name: build cuda (${{ matrix.os }})
     runs-on: ${{ matrix.os }}
-    if: github.event_name == 'release' || contains(github.event.pull_request.labels.*.name, 'ready-to-deploy')
+    # if: github.event_name == 'release' || contains(github.event.pull_request.labels.*.name, 'ready-to-deploy')
     strategy:
       fail-fast: false
       matrix:
@@ -83,7 +83,7 @@ jobs:
   build_main:
     name: build pyclesperanto
     runs-on: ubuntu-latest
-    if: github.event_name == 'release' || contains(github.event.pull_request.labels.*.name, 'ready-to-deploy')
+    # if: github.event_name == 'release' || contains(github.event.pull_request.labels.*.name, 'ready-to-deploy')
     steps:
       - name: Checkout
         uses: actions/checkout@v6

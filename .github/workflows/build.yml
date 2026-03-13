@@ -36,13 +36,14 @@ jobs:
       - name: Install CUDA Toolkit
         if: matrix.backend == 'CUDA'
         id: cuda-toolkit-linux
-        uses: Jimver/cuda-toolkit@v0.2.21
+        uses: Jimver/cuda-toolkit@v0.2.30
         with:
           cuda: '12.6.0'
           method: 'network'
           sub-packages: '["nvcc","cudart","cudart-dev","nvrtc","nvrtc-dev"]'
           non-cuda-sub-packages: '["libnvjitlink","libnvjitlink-dev"]'
           use-local-cache: true
+          use-github-cache: false
 
       - name: Configure CUDA environment
         if: matrix.backend == 'CUDA'

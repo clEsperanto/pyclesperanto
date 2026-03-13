@@ -59,7 +59,9 @@ build = ["cp38-*", "cp39-*", "cp310-*", "cp311-*", "cp312-*", "cp313-*"]
 skip = ["*-win32", "*-musllinux*", "*_i686", "*_universal2", "*-macosx*"]
 build-frontend = "build"
 build-verbosity = 1
-test-command = "python -c \"import pyclesperanto_cuda; print('CUDA backend OK')\""
+# CUDA import requires nvcuda.dll (NVIDIA driver), which is absent on CI runners (no GPU).
+# Instead, we verify the wheel was built correctly by checking the native extension is present.
+test-command = "python -c \"from importlib.metadata import distribution; files = [str(f) for f in distribution('pyclesperanto-cuda').files]; assert any('_pyclesperanto' in f for f in files), f'Native extension not found in wheel: {files}'\""
 
 [tool.cibuildwheel.linux]
 before-all = "bash {package}/../../scripts/build-cuda-linux.sh"

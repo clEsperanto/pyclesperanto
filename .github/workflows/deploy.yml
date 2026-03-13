@@ -61,7 +61,7 @@ jobs:
           method: 'network'
           sub-packages: '["nvcc","cudart","cudart-dev","nvrtc","nvrtc-dev"]'
           non-cuda-sub-packages: '["nvJitLink","nvJitLink-dev"]'
-          use-local-cache: true
+          use-local-cache: false
 
       - name: Build wheels
         uses: pypa/cibuildwheel@v3.4.0

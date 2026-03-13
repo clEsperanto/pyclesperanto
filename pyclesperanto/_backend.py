@@ -47,7 +47,7 @@ def _warn_backend_failure(dist_name, backend_name, error):
     )
 
 
-def get_backend():
+def _get_backend():
     """Return the active compiled backend module.
 
     On first call, auto-detects installed backends and selects the first available one.
@@ -72,7 +72,7 @@ def get_backend():
     return _active_backend
 
 
-def get_active_backend_name():
+def get_backend_name() -> str:
     """Return the name of the active backend ('opencl' or 'cuda'), or None."""
     if _active_backend is _opencl_module and _opencl_module is not None:
         return "opencl"
@@ -81,7 +81,7 @@ def get_active_backend_name():
     return None
 
 
-def select_backend(name):
+def select_backend(name: str):
     """Switch between 'opencl' and 'cuda' backends.
 
     Parameters
@@ -110,7 +110,7 @@ def select_backend(name):
     _activate_clic_backend(name)
 
 
-def _activate_clic_backend(name):
+def _activate_clic_backend(name: str):
     """Tell CLIc's C++ BackendManager singleton to select the given backend,
     and reset the Python-side current device."""
     from ._core import _current_device

@@ -3,14 +3,14 @@ from typing import Optional, Union
 import numpy as np
 
 from . import _operators
-from ._backend import get_backend
+from ._backend import _get_backend
 from ._core import Device, get_device
 from ._utils import _assert_supported_dtype
 
 
 def _get_array_class():
     """Get the _Array class from the active backend (lazy)."""
-    return get_backend()._Array
+    return _get_backend()._Array
 
 
 # We need Array to be importable at module level for type hints,

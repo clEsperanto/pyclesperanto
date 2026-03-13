@@ -3,15 +3,15 @@ from typing import Optional, Union
 
 import numpy as np
 
-from ._backend import get_backend
+from ._backend import _get_backend
 
 
 def _get_backend_manager():
-    return get_backend()._BackendManager
+    return _get_backend()._BackendManager
 
 
 def _get_device_class():
-    return get_backend()._Device
+    return _get_backend()._Device
 
 
 # Re-export Device type for type annotations
@@ -153,7 +153,7 @@ def _default_initialisation():
     try:
         # The C++ BackendManager must be told which backend to use
         # before any device can be selected.
-        backend_mod = get_backend()
+        backend_mod = _get_backend()
         backend_name = getattr(
             __import__(backend_mod.__name__.rsplit(".", 1)[0]),
             "__backend__",

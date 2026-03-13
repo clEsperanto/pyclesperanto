@@ -8,7 +8,7 @@ from typing import Optional
 import numpy as np
 
 from ._array import Image
-from ._backend import get_backend
+from ._backend import _get_backend
 from ._core import Device
 from ._decorators import plugin_function
 
@@ -39,7 +39,7 @@ def dilate_labels(
     -------
     Image
     """
-    return get_backend()._dilate_labels(device, input_image, output_image, int(radius))
+    return _get_backend()._dilate_labels(device, input_image, output_image, int(radius))
 
 
 @plugin_function(categories=["label processing", "in assistant"])
@@ -72,7 +72,7 @@ def erode_labels(
     -------
     Image
     """
-    return get_backend()._erode_labels(
+    return _get_backend()._erode_labels(
         device, input_image, output_image, int(radius), relabel
     )
 
@@ -110,7 +110,7 @@ def gauss_otsu_labeling(
     [1] https://ieeexplore.ieee.org/document/4310076
     [2] https://en.wikipedia.org/wiki/Connected-component_labeling
     """
-    return get_backend()._gauss_otsu_labeling(
+    return _get_backend()._gauss_otsu_labeling(
         device, input_image0, output_image, float(outline_sigma)
     )
 
@@ -145,7 +145,7 @@ def masked_voronoi_labeling(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_maskedVoronoiLabeling
     """
-    return get_backend()._masked_voronoi_labeling(
+    return _get_backend()._masked_voronoi_labeling(
         device, input_image, mask, output_image
     )
 
@@ -177,7 +177,7 @@ def voronoi_labeling(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_voronoiLabeling
     """
-    return get_backend()._voronoi_labeling(device, input_binary, output_labels)
+    return _get_backend()._voronoi_labeling(device, input_binary, output_labels)
 
 
 @plugin_function(categories=["label processing", "in assistant", "bia-bob-suggestion"])
@@ -208,7 +208,7 @@ def remove_small_labels(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_excludeLabelsOutsideSizeRange
     """
-    return get_backend()._remove_small_labels(
+    return _get_backend()._remove_small_labels(
         device, input_image, output_image, float(minimum_size)
     )
 
@@ -241,7 +241,7 @@ def exclude_small_labels(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_excludeLabelsOutsideSizeRange
     """
-    return get_backend()._exclude_small_labels(
+    return _get_backend()._exclude_small_labels(
         device, input_image, output_image, float(maximum_size)
     )
 
@@ -274,7 +274,7 @@ def remove_large_labels(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_excludeLabelsOutsideSizeRange
     """
-    return get_backend()._remove_large_labels(
+    return _get_backend()._remove_large_labels(
         device, input_image, output_image, float(maximum_size)
     )
 
@@ -307,7 +307,7 @@ def exclude_large_labels(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_excludeLabelsOutsideSizeRange
     """
-    return get_backend()._exclude_large_labels(
+    return _get_backend()._exclude_large_labels(
         device, input_image, output_image, float(minimum_size)
     )
 
@@ -344,7 +344,7 @@ def proximal_neighbor_count_map(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_proximalNeighborCountMap
     """
-    return get_backend()._proximal_neighbor_count_map(
+    return _get_backend()._proximal_neighbor_count_map(
         device, labels, output_image, float(min_distance), float(max_distance)
     )
 

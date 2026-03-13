@@ -2,7 +2,7 @@ from typing import Tuple
 
 import numpy as np
 
-from ._backend import get_backend
+from ._backend import _get_backend
 
 cl_buffer_datatype_dict = {
     bool: "bool",
@@ -133,4 +133,4 @@ def fft_smooth_shape(
     if len(shape) < 3:
         shape = shape + [0] * (3 - len(shape))
 
-    return get_backend()._fft_smooth_shape(shape)[:length]
+    return _get_backend()._fft_smooth_shape(shape)[:length]

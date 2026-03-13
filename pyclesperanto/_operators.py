@@ -12,9 +12,9 @@ from ._utils import (
 
 def _get_array_class():
     """Late import to avoid circular dependency with _array.py."""
-    from ._backend import get_backend
+    from ._backend import _get_backend
 
-    return get_backend()._Array
+    return _get_backend()._Array
 
 
 cl_buffer_datatype_dict = {

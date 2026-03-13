@@ -8,7 +8,7 @@ from typing import Optional
 import numpy as np
 
 from ._array import Image
-from ._backend import get_backend
+from ._backend import _get_backend
 from ._core import Device
 from ._decorators import plugin_function
 
@@ -46,7 +46,7 @@ def affine_transform(
     -------
     Image
     """
-    return get_backend()._affine_transform(
+    return _get_backend()._affine_transform(
         device, input_image, output_image, transform_matrix, interpolate, resize
     )
 
@@ -91,7 +91,7 @@ def eroded_otsu_labeling(
     [1] https://github.com/biovoxxel/bv3dbox
     [2] https://zenodo.org/badge/latestdoi/434949702
     """
-    return get_backend()._eroded_otsu_labeling(
+    return _get_backend()._eroded_otsu_labeling(
         device, input_image, output_image, int(number_of_erosions), float(outline_sigma)
     )
 
@@ -146,7 +146,7 @@ def rigid_transform(
     -------
     Image
     """
-    return get_backend()._rigid_transform(
+    return _get_backend()._rigid_transform(
         device,
         input_image,
         output_image,
@@ -203,7 +203,7 @@ def rotate(
     -------
     Image
     """
-    return get_backend()._rotate(
+    return _get_backend()._rotate(
         device,
         input_image,
         output_image,
@@ -255,7 +255,7 @@ def scale(
     -------
     Image
     """
-    return get_backend()._scale(
+    return _get_backend()._scale(
         device,
         input_image,
         output_image,
@@ -301,7 +301,7 @@ def translate(
     -------
     Image
     """
-    return get_backend()._translate(
+    return _get_backend()._translate(
         device,
         input_image,
         output_image,
@@ -349,7 +349,7 @@ def deskew_x(
     -------
     Image
     """
-    return get_backend()._deskew_x(
+    return _get_backend()._deskew_x(
         device,
         input_image,
         output_image,
@@ -398,7 +398,7 @@ def deskew_y(
     -------
     Image
     """
-    return get_backend()._deskew_y(
+    return _get_backend()._deskew_y(
         device,
         input_image,
         output_image,
@@ -438,7 +438,7 @@ def closing_labels(
     -------
     Image
     """
-    return get_backend()._closing_labels(device, input_image, output_image, int(radius))
+    return _get_backend()._closing_labels(device, input_image, output_image, int(radius))
 
 
 @plugin_function(categories=["label processing", "in assistant"])
@@ -467,7 +467,7 @@ def erode_connected_labels(
     -------
     Image
     """
-    return get_backend()._erode_connected_labels(
+    return _get_backend()._erode_connected_labels(
         device, input_image, output_image, int(radius)
     )
 
@@ -500,7 +500,7 @@ def opening_labels(
     -------
     Image
     """
-    return get_backend()._opening_labels(device, input_image, output_image, int(radius))
+    return _get_backend()._opening_labels(device, input_image, output_image, int(radius))
 
 
 @plugin_function(categories=["label", "in assistant", "bia-bob-suggestion"])
@@ -540,7 +540,7 @@ def voronoi_otsu_labeling(
     [2] https://ieeexplore.ieee.org/document/4310076
     [3] https://en.wikipedia.org/wiki/Voronoi_diagram
     """
-    return get_backend()._voronoi_otsu_labeling(
+    return _get_backend()._voronoi_otsu_labeling(
         device, input_image, output_image, float(spot_sigma), float(outline_sigma)
     )
 

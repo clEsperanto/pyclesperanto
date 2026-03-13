@@ -2,8 +2,9 @@ import warnings
 
 from ._array import Array, Image, _patch_array_class, is_image
 from ._backend import (
-    get_active_backend_name,
-    get_backend,
+    get_backend_name,
+    _get_backend,
+    get_backend_name,
     list_available_backends,
     select_backend,
 )
@@ -19,7 +20,7 @@ def _lazy_init():
     Called on first actual use. Safe to call multiple times.
     """
     try:
-        get_backend()
+        _get_backend()
     except RuntimeError:
         warnings.warn(
             "No pyclesperanto backend installed.\n"
@@ -76,8 +77,7 @@ __all__ = [
     "is_image",
     "select_backend",
     "list_available_backends",
-    "get_backend",
-    "get_active_backend_name",
+    "get_backend_name",
     "__clic_version__",
     "__common_alias__",
     "__version__",

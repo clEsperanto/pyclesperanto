@@ -8,7 +8,7 @@ from typing import Optional
 import numpy as np
 
 from ._array import Image
-from ._backend import get_backend
+from ._backend import _get_backend
 from ._core import Device
 from ._decorators import plugin_function
 
@@ -38,7 +38,7 @@ def array_equal(
     ----------
     [1] https://numpy.org/doc/stable/reference/generated/numpy.array_equal.html
     """
-    return get_backend()._array_equal(device, input_image0, input_image1)
+    return _get_backend()._array_equal(device, input_image0, input_image1)
 
 
 @plugin_function(
@@ -74,7 +74,7 @@ def combine_labels(
     -------
     Image
     """
-    return get_backend()._combine_labels(
+    return _get_backend()._combine_labels(
         device, input_image0, input_image1, output_image
     )
 
@@ -108,7 +108,7 @@ def connected_components_labeling(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_connectedComponentsLabelingBox
     """
-    return get_backend()._connected_components_labeling(
+    return _get_backend()._connected_components_labeling(
         device, input_image, output_image, str(connectivity)
     )
 
@@ -142,7 +142,7 @@ def connected_component_labeling(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_connectedComponentsLabelingBox
     """
-    return get_backend()._connected_component_labeling(
+    return _get_backend()._connected_component_labeling(
         device, input_image, output_image, str(connectivity)
     )
 
@@ -172,7 +172,7 @@ def reduce_labels_to_centroids(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_reduceLabelsToCentroids
     """
-    return get_backend()._reduce_labels_to_centroids(device, input_image, output_image)
+    return _get_backend()._reduce_labels_to_centroids(device, input_image, output_image)
 
 
 @plugin_function(categories=["label processing", "in assistant"])
@@ -206,7 +206,7 @@ def filter_label_by_size(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_excludeLabelsOutsideSizeRange
     """
-    return get_backend()._filter_label_by_size(
+    return _get_backend()._filter_label_by_size(
         device, input_image, output_image, float(minimum_size), float(maximum_size)
     )
 
@@ -242,7 +242,7 @@ def exclude_labels_outside_size_range(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_excludeLabelsOutsideSizeRange
     """
-    return get_backend()._exclude_labels_outside_size_range(
+    return _get_backend()._exclude_labels_outside_size_range(
         device, input_image, output_image, float(minimum_size), float(maximum_size)
     )
 
@@ -272,7 +272,7 @@ def merge_touching_labels(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_excludeLabelsOutsideSizeRange
     """
-    return get_backend()._merge_touching_labels(device, input_image, output_image)
+    return _get_backend()._merge_touching_labels(device, input_image, output_image)
 
 
 @plugin_function(categories=["label measurement"])
@@ -303,7 +303,7 @@ def proximal_neighbor_count(
     -------
     Image
     """
-    return get_backend()._proximal_neighbor_count(
+    return _get_backend()._proximal_neighbor_count(
         device, input_image, output_image, float(min_distance), float(max_distance)
     )
 
@@ -340,7 +340,7 @@ def normalize(
     -------
     Image
     """
-    return get_backend()._normalize(
+    return _get_backend()._normalize(
         device, input_image, output_image, float(low_percentile), float(high_percentile)
     )
 

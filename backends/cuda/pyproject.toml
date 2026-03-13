@@ -67,7 +67,7 @@ repair-wheel-command = "auditwheel show {wheel} && auditwheel repair --lib-sdir 
 environment = { CUDA_HOME="/usr/local/cuda", PATH="/usr/local/cuda/bin:$PATH", LD_LIBRARY_PATH="/usr/local/cuda/lib64:/usr/local/cuda/lib64/stubs:$LD_LIBRARY_PATH" }
 
 [tool.cibuildwheel.windows]
-repair-wheel-command = "delvewheel show {wheel} && delvewheel repair --add-path \"C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v12.6/bin\" -w {dest_dir} {wheel}"
+repair-wheel-command = "delvewheel show {wheel} && delvewheel repair --add-path \"C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v12.6/bin\" --no-dll \"nvcuda.dll;msvcp140.dll;vcruntime140_1.dll\" -w {dest_dir} {wheel}"
 before-build = "pip install delvewheel"
 environment = { SKBUILD_CMAKE_ARGS = "-DCUDA_TOOLKIT_ROOT_DIR='C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v12.6'", PATH = "C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v12.6\\bin;$PATH" }
 

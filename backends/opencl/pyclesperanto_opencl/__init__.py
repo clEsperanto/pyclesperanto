@@ -1,10 +1,11 @@
 import os
 import platform
 
+
 # fetch and set OCL_ICD_VENDORS to ensure OpenCL ICD discovery works in isolated environments (pixi, conda)
 def _ensure_opencl_icd():
     """Ensure OpenCL ICD vendors are discoverable in isolated environments (pixi, conda)."""
-    
+
     if platform.system() == "Windows":
         return  # Windows uses registry-based discovery, not affected
 
@@ -46,6 +47,7 @@ def _ensure_opencl_icd():
 
     if vendor_dirs:
         os.environ["OCL_ICD_VENDORS"] = ":".join(vendor_dirs)
+
 
 from ._pyclesperanto import *
 

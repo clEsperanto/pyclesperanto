@@ -72,6 +72,15 @@ def get_backend():
     return _active_backend
 
 
+def get_active_backend_name():
+    """Return the name of the active backend ('opencl' or 'cuda'), or None."""
+    if _active_backend is _opencl_module and _opencl_module is not None:
+        return "opencl"
+    if _active_backend is _cuda_module and _cuda_module is not None:
+        return "cuda"
+    return None
+
+
 def select_backend(name):
     """Switch between 'opencl' and 'cuda' backends.
 
@@ -97,6 +106,17 @@ def select_backend(name):
         _active_backend = _cuda_module
     else:
         raise ValueError(f"'{name}' is not a valid backend. Use 'opencl' or 'cuda'.")
+    # Tell CLIc's C++ BackendManager to switch and reset the current device
+    _activate_clic_backend(name)
+
+
+def _activate_clic_backend(name):
+    """Tell CLIc's C++ BackendManager singleton to select the given backend,
+    and reset the Python-side current device."""
+    from ._core import _current_device
+
+    _active_backend._BackendManager.set_backend(name)
+    _current_device._instance = None
 
 
 def list_available_backends():

@@ -1,7 +1,7 @@
 import warnings
 
 from ._array import Array, Image, _patch_array_class, is_image
-from ._backend import get_backend, list_available_backends, select_backend
+from ._backend import get_active_backend_name, get_backend, list_available_backends, select_backend
 from ._categories import categories
 from ._version import CLIC_VERSION as __clic_version__
 from ._version import COMMON_ALIAS as __common_alias__
@@ -72,6 +72,7 @@ __all__ = [
     "select_backend",
     "list_available_backends",
     "get_backend",
+    "get_active_backend_name",
     "__clic_version__",
     "__common_alias__",
     "__version__",

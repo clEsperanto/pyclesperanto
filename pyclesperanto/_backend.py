@@ -22,14 +22,29 @@ def _detect_backends():
         import pyclesperanto_opencl._pyclesperanto as _ocl
 
         _opencl_module = _ocl
-    except ImportError:
-        pass
+    except ImportError as e:
+        _warn_backend_failure("pyclesperanto-opencl", "opencl", e)
     try:
         import pyclesperanto_cuda._pyclesperanto as _cu
 
         _cuda_module = _cu
-    except ImportError:
-        pass
+    except ImportError as e:
+        _warn_backend_failure("pyclesperanto-cuda", "cuda", e)
+
+
+def _warn_backend_failure(dist_name, backend_name, error):
+    """Emit a warning if a backend package is installed but failed to load."""
+    try:
+        from importlib.metadata import distribution
+
+        distribution(dist_name)
+    except Exception:
+        return  # not installed, nothing to warn about
+    warnings.warn(
+        f"'{backend_name}' backend package is installed but failed to load: {error}",
+        RuntimeWarning,
+        stacklevel=3,
+    )
 
 
 def get_backend():

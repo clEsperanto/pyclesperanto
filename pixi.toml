@@ -8,10 +8,10 @@ pip = "*"
 setuptools = "*"
 wheel = "*"
 hatchling = "*"
-scikit-build-core = "*"
-pybind11 = "*"
-cmake = "*"
-ninja = "*"
+scikit-build-core = ">=0.10,<1"
+pybind11 = ">=3,<4"
+cmake = ">=3.20,<4"
+ninja = ">=0.13.2,<2"
 pre-commit = ">=4.4.0,<5"
 
 [feature.dev.dependencies]
@@ -35,7 +35,7 @@ build-ocl = "pip install -e . && pip install -e ./backends/opencl -v"
 build-cuda = "pip install -e . && pip install -e ./backends/cuda -v"
 build-all = "pip install -e . && pip install -e ./backends/opencl -v && pip install -e ./backends/cuda -v"
 test-cuda = "pytest -k cuda -v"
-test-opencl = "pytest -k opencl -v"
+test-ocl = "pytest -k opencl -v"
 test = "pytest -v"
 
 [environments]

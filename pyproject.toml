@@ -27,7 +27,12 @@ classifiers = [
   "Topic :: Scientific/Engineering :: Image Processing",
   "Topic :: Scientific/Engineering :: Information Analysis",
 ]
-dependencies = ["numpy", "toolz", "matplotlib", "pyclesperanto-opencl"]
+dependencies = [
+    "numpy>=1.20,<3",
+    "toolz>=1.1,<2",
+    "matplotlib>=3.5,<4",
+    "pyclesperanto-opencl"
+]
 description = "GPU-accelerated image processing in python using OpenCL or CUDA"
 name = "pyclesperanto"
 readme = "README.md"

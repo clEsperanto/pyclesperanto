@@ -13,6 +13,7 @@ yum install -y \
     cuda-nvcc-${CUDA_VERSION} \
     cuda-cudart-devel-${CUDA_VERSION} \
     cuda-nvrtc-devel-${CUDA_VERSION} \
+    cuda-driver-devel-${CUDA_VERSION} \
     libnvjitlink-devel-${CUDA_VERSION}
 
 # Create stub symlink for linking

@@ -4,7 +4,7 @@ name: Deploy
 on:
   pull_request:
     branches: [main]
-    # types: [labeled]
+    types: [labeled]
   release:
     types: [created]
 
@@ -18,7 +18,7 @@ jobs:
   build_opencl_wheels:
     name: build opencl (${{ matrix.os }})
     runs-on: ${{ matrix.os }}
-    # if: github.event_name == 'release' || contains(github.event.pull_request.labels.*.name, 'ready-to-deploy')
+    if: github.event_name == 'release' || contains(github.event.pull_request.labels.*.name, 'ready-to-deploy')
     strategy:
       fail-fast: true
       matrix:
@@ -46,7 +46,7 @@ jobs:
   build_cuda_wheels:
     name: build cuda (${{ matrix.os }})
     runs-on: ${{ matrix.os }}
-    # if: github.event_name == 'release' || contains(github.event.pull_request.labels.*.name, 'ready-to-deploy')
+    if: github.event_name == 'release' || contains(github.event.pull_request.labels.*.name, 'ready-to-deploy')
     strategy:
       fail-fast: false
       matrix:
@@ -96,7 +96,7 @@ jobs:
   build_main:
     name: build pyclesperanto
     runs-on: ubuntu-latest
-    # if: github.event_name == 'release' || contains(github.event.pull_request.labels.*.name, 'ready-to-deploy')
+    if: github.event_name == 'release' || contains(github.event.pull_request.labels.*.name, 'ready-to-deploy')
     steps:
       - name: Checkout
         uses: actions/checkout@v6
@@ -129,21 +129,21 @@ jobs:
           path: dist
           merge-multiple: true
 
-      # TestPyPI on PR with 'ready-to-deploy' label
-      - name: Publish to TestPyPI
-        if: github.event_name == 'pull_request'
-        uses: pypa/gh-action-pypi-publish@v1.13.0
-        with:
-          password: ${{ secrets.TEST_PYPI_TOKEN }}
-          repository-url: https://test.pypi.org/legacy/
-          skip-existing: true
-          verbose: true
-
-      # # Real PyPI on release
-      # - name: Publish to PyPI
-      #   if: github.event_name == 'release'
+      # # TestPyPI on PR with 'ready-to-deploy' label
+      # - name: Publish to TestPyPI
+      #   if: github.event_name == 'pull_request'
       #   uses: pypa/gh-action-pypi-publish@v1.13.0
       #   with:
-      #     password: ${{ secrets.PYPI_API_TOKEN }}
+      #     password: ${{ secrets.TEST_PYPI_TOKEN }}
+      #     repository-url: https://test.pypi.org/legacy/
       #     skip-existing: true
       #     verbose: true
+
+      # Real PyPI on release
+      - name: Publish to PyPI
+        if: github.event_name == 'release'
+        uses: pypa/gh-action-pypi-publish@v1.13.0
+        with:
+          password: ${{ secrets.PYPI_API_TOKEN }}
+          skip-existing: true
+          verbose: true

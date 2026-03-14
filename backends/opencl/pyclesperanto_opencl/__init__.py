@@ -49,7 +49,9 @@ def _ensure_opencl_icd():
         os.environ["OCL_ICD_VENDORS"] = ":".join(vendor_dirs)
 
 
-from ._pyclesperanto import *
+_ensure_opencl_icd()
+
+from ._pyclesperanto import *  # noqa: E402
 
 __backend__ = "opencl"
 

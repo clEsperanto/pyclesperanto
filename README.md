@@ -1,4 +1,5 @@
-# py-clesperanto
+# pyclEsperanto
+
 [![Image.sc Forum](https://img.shields.io/badge/dynamic/json.svg?label=forum&amp;url=https%3A%2F%2Fforum.image.sc%2Ftags%2Fpyclesperanto.json&amp;query=%24.topic_list.tags.0.topic_count&amp;colorB=green&amp;&amp;suffix=%20topics&amp;logo=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAOCAYAAAAfSC3RAAABPklEQVR42m3SyyqFURTA8Y2BER0TDyExZ+aSPIKUlPIITFzKeQWXwhBlQrmFgUzMMFLKZeguBu5y+//17dP3nc5vuPdee6299gohUYYaDGOyyACq4JmQVoFujOMR77hNfOAGM+hBOQqB9TjHD36xhAa04RCuuXeKOvwHVWIKL9jCK2bRiV284QgL8MwEjAneeo9VNOEaBhzALGtoRy02cIcWhE34jj5YxgW+E5Z4iTPkMYpPLCNY3hdOYEfNbKYdmNngZ1jyEzw7h7AIb3fRTQ95OAZ6yQpGYHMMtOTgouktYwxuXsHgWLLl+4x++Kx1FJrjLTagA77bTPvYgw1rRqY56e+w7GNYsqX6JfPwi7aR+Y5SA+BXtKIRfkfJAYgj14tpOF6+I46c4/cAM3UhM3JxyKsxiOIhH0IO6SH/A1Kb1WBeUjbkAAAAAElFTkSuQmCC)](https://forum.image.sc/tag/pyclesperanto)
 [![Conda Version](https://img.shields.io/conda/vn/conda-forge/pyclesperanto.svg)](https://anaconda.org/conda-forge/pyclesperanto)
 [![PyPI](https://img.shields.io/pypi/v/pyclesperanto.svg?color=green)](https://pypi.org/project/pyclesperanto)
@@ -8,58 +9,14 @@
 [![codecov](https://codecov.io/gh/clesperanto/pyclesperanto/branch/main/graph/badge.svg)](https://codecov.io/gh/clesperanto/pyclesperanto)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.13853800.svg)](https://doi.org/10.5281/zenodo.13853800)
 
-
 __pyclEsperanto__ is the python package of [clEsperanto] - a multi-language framework for GPU-accelerated image processing.
 It relies on a familly of [OpenCL kernels] originated from [CLIJ].
 This python package uses [PyBind11] to wrap the C++ [CLIc] library as a processing backend.
 
-### Reference and examples
+## Installation and Uses
 
-An in-depth API reference and package documentation can be found [here](https://clesperanto.github.io/pyclesperanto/), and several demonstration notebook on how to use the library and major functionnality are available in the [demos folder](https://github.com/clEsperanto/pyclesperanto/tree/main/demos)
-
-## __Installation__
-
-* Get a conda/python environment, e.g. via [__mamba-forge__](https://github.com/conda-forge/miniforge#mambaforge).
-    * If you never used python/conda environments before, please follow [these instructions](https://biapol.github.io/blog/mara_lampert/getting_started_with_mambaforge_and_python/readme.html) first.
-* Create a new environment and activate it:
-
-```
-mamba create --name cle
-mamba activate cle
-```
-
-* Install pyclesperanto using [__mamba / conda__](https://focalplane.biologists.com/2022/12/08/managing-scientific-python-environments-using-conda-mamba-and-friends/):
-
-```
-mamba install -c conda-forge pyclesperanto
-```
-
-> [!WARNING]
-> * __MacOS__ users may need to install the following package:
->    * `mamba install -c conda-forge ocl_icd_wrapper_apple`
-> * __Linux__ users may need to install the following package:
->    * `mamba install -c conda-forge ocl-icd-system`
-
-> [!NOTE]
-> pyclesperanto package is also available on `PyPI` and can be install with the command:
-> * `pip install pyclesperanto`
-
-## Troubleshooting: Graphics cards drivers
-
-In case you encounter one of the following error messages indicate a wrong OpenCL setup on your system:
-* `"clGetPlatformIDs failed: PLATFORM_NOT_FOUND_KHR"`
-* `"No backend available. Please install either OpenCL or CUDA on your system."`
-
-Please install recent drivers for your graphics card and/or OpenCL device. Select the right driver source depending on your hardware from this list:
-* [AMD drivers](https://www.amd.com/en/support)
-* [NVidia drivers](https://www.nvidia.com/download/index.aspx)
-* [Intel GPU drivers](https://www.intel.com/content/www/us/en/download/726609/intel-arc-graphics-windows-dch-driver.html)
-* [Microsoft Windows OpenCL support](https://www.microsoft.com/en-us/p/opencl-and-opengl-compatibility-pack/9nqpsl29bfff)
-
-And make sure that your OpenCL library are accessible in you `PATH`.
-
-> [!TIP]
-> __Linux__ users may install packages such as `intel-opencl-icd` or `rocm-opencl-runtime` depending on their GPU.
+See the [documentation] for full installation instructions, guides, and examples.
+You can also find additional information in the [image.sc forum] under the tag `clesperanto`
 
 ## __Code Example__
 
@@ -100,9 +57,9 @@ imsave("result.tif", output_image)
 <img src="https://github.com/clEsperanto/pyclesperanto/blob/main/demos/images/select_device.png?raw=true" width="300"/>
 </td><td>
 
-* [Select and Manage devices](https://github.com/clEsperanto/pyclesperanto/tree/main/demos/api/select_devices.ipynb)
-* [Host-Device memory management](https://github.com/clEsperanto/pyclesperanto/tree/main/demos/api/push_pull_create.ipynb)
-* [Process an image](https://github.com/clEsperanto/pyclesperanto/tree/main/demos/api/process_image.ipynb)
+* [Select and Manage devices](https://github.com/clEsperanto/pyclesperanto/tree/main/docs/demos/api/select_devices.ipynb)
+* [Host-Device memory management](https://github.com/clEsperanto/pyclesperanto/tree/main/docs/demos/api/push_pull_create.ipynb)
+* [Process an image](https://github.com/clEsperanto/pyclesperanto/tree/main/docs/demos/api/process_image.ipynb)
 
 </td></tr>
 
@@ -110,11 +67,11 @@ imsave("result.tif", output_image)
 <img src="https://github.com/clEsperanto/pyclesperanto/blob/main/demos/images/crop_and_paste_images.png?raw=true" width="300"/>
 </td><td>
 
-* [Crop, Flip, Paste arrays](https://github.com/clEsperanto/pyclesperanto/tree/main/demos/basics/crop_flip_paste.ipynb)
-* [Math operations](https://github.com/clEsperanto/pyclesperanto/tree/main/demos/basics/arithmetic_operators.ipynb)
-* [Matrix operations](https://github.com/clEsperanto/pyclesperanto/tree/main/demos/basics/matrices_operations.ipynb)
-* [Vector and Matrix operations](https://github.com/clEsperanto/pyclesperanto/tree/main/demos/basics/vectors_and_matrices_operations.ipynb)
-* [How to inspecting 3D image](https://github.com/clEsperanto/pyclesperanto/tree/main/demos/basics/inspecting_3d_images.ipynb)
+* [Crop, Flip, Paste arrays](https://github.com/clEsperanto/pyclesperanto/tree/main/docs/demos/basics/crop_flip_paste.ipynb)
+* [Math operations](https://github.com/clEsperanto/pyclesperanto/tree/main/docs/demos/basics/arithmetic_operators.ipynb)
+* [Matrix operations](https://github.com/clEsperanto/pyclesperanto/tree/main/docs/demos/basics/matrices_operations.ipynb)
+* [Vector and Matrix operations](https://github.com/clEsperanto/pyclesperanto/tree/main/docs/demos/basics/vectors_and_matrices_operations.ipynb)
+* [How to inspecting 3D image](https://github.com/clEsperanto/pyclesperanto/tree/main/docs/demos/basics/inspecting_3d_images.ipynb)
 
 </td></tr>
 
@@ -123,10 +80,10 @@ imsave("result.tif", output_image)
 <img src="https://github.com/clEsperanto/pyclesperanto/blob/main/demos/images/segmentation_3d.png?raw=true" width="300"/>
 </td><td>
 
-* [Segment and analyse blobs](https://github.com/clEsperanto/pyclesperanto/tree/main/demos/examples/thresholding.ipynb)
-* [Voronoi-Otsu labeling](https://github.com/clEsperanto/pyclesperanto/tree/main/demos/examples/voronoi_otsu_labeling.ipynb)
-* [Cell segmentation based on membrane](https://github.com/clEsperanto/pyclesperanto/tree/main/demos/examples/membrane_segmentation_2d.ipynb)
-* [Cell segmentation in 3D](https://github.com/clEsperanto/pyclesperanto/tree/main/demos/examples/Segmentation_3D.ipynb)
+* [Segment and analyse blobs](https://github.com/clEsperanto/pyclesperanto/tree/main/docs/demos/examples/thresholding.ipynb)
+* [Voronoi-Otsu labeling](https://github.com/clEsperanto/pyclesperanto/tree/main/docs/demos/examples/voronoi_otsu_labeling.ipynb)
+* [Cell segmentation based on membrane](https://github.com/clEsperanto/pyclesperanto/tree/main/docs/demos/examples/membrane_segmentation_2d.ipynb)
+* [Cell segmentation in 3D](https://github.com/clEsperanto/pyclesperanto/tree/main/docs/demos/examples/Segmentation_3D.ipynb)
 
 </td></tr>
 
@@ -135,27 +92,26 @@ imsave("result.tif", output_image)
 <img src="https://github.com/clEsperanto/pyclesperanto/blob/main/demos/images/affine_transforms.png?raw=true" width="300"/>
 </td><td>
 
-* [Edge detection](https://github.com/clEsperanto/pyclesperanto/tree/main/demos/examples/edge_detection_and_enhancement.ipynb)
-* [Ridge and Tube detection](https://github.com/clEsperanto/pyclesperanto/tree/main/demos/examples/ridge_detection.ipynb)
-* [Parametric maps](https://github.com/clEsperanto/pyclesperanto/tree/main/demos/examples/parametric_maps.ipynb)
-* [Rotation, scaling, translation, and affine transform](https://github.com/clEsperanto/pyclesperanto/tree/main/demos/examples/affine_transforms.ipynb)
-<!-- * [Morphomathic operations](https://github.com/clEsperanto/pyclesperanto/tree/main/demos/examples/morphomath_operation.ipynb)   -->
+* [Edge detection](https://github.com/clEsperanto/pyclesperanto/tree/main/docs/demos/examples/edge_detection_and_enhancement.ipynb)
+* [Ridge and Tube detection](https://github.com/clEsperanto/pyclesperanto/tree/main/docs/demos/examples/ridge_detection.ipynb)
+* [Parametric maps](https://github.com/clEsperanto/pyclesperanto/tree/main/docs/demos/examples/parametric_maps.ipynb)
+* [Rotation, scaling, translation, and affine transform](https://github.com/clEsperanto/pyclesperanto/tree/main/docs/demos/examples/affine_transforms.ipynb)
+<!-- * [Morphomathic operations](https://github.com/clEsperanto/pyclesperanto/tree/main/docs/demos/examples/morphomath_operation.ipynb)   -->
 
 </td></tr>
-
 
 <tr><td>
 <img src="https://github.com/clEsperanto/pyclesperanto/blob/main/demos/images/multi-device-tiling.png?raw=true" width="300"/>
 </td><td>
 
-* [Multi-device tile processing](https://github.com/clEsperanto/pyclesperanto/tree/main/demos/examples/multi-gpu_tile_processing_with_dask.ipynb)
-* [Ask Bia-Bob example](https://github.com/clEsperanto/pyclesperanto/tree/main/demos/interoperability/biabob-example.ipynb)
+* [Multi-device tile processing](https://github.com/clEsperanto/pyclesperanto/tree/main/docs/demos/examples/multi-gpu_tile_processing_with_dask.ipynb)
+* [Ask Bia-Bob example](https://github.com/clEsperanto/pyclesperanto/tree/main/docs/demos/interoperability/biabob-example.ipynb)
 
 </td></tr>
 
 </table>
 
-More usage and example can be found as notebooks in the [demos](https://github.com/clEsperanto/pyclesperanto/tree/main/demos) folder. As well as in the [documentation](https://clesperanto.github.io/pyclesperanto/).
+More usage and example can be found as notebooks in the [demos](https://github.com/clEsperanto/pyclesperanto/tree/main/docs/demos) folder.
 
 # __Contributing and Feedback__
 
@@ -166,12 +122,12 @@ Feel free to drop feedback as [github issue](https://github.com/clEsperanto/CLIc
 
 We acknowledge support by the Deutsche Forschungsgemeinschaft under Germany’s Excellence Strategy (EXC2068) Cluster of Excellence Physics of Life of TU Dresden and by the [Institut Pasteur, Paris](https://www.pasteur.fr/en). This project has been made possible in part by grant number 2021-237734 ([GPU-accelerating Fiji and friends using distributed CLIJ, NEUBIAS-style, EOSS4](https://chanzuckerberg.com/eoss/proposals/gpu-accelerating-fiji-and-friends-using-distributed-clij-neubias-style/)) from the Chan Zuckerberg Initiative DAF, an advised fund of the Silicon Valley Community Foundation, and by support from the French National Research Agency via the [France BioImaging research infrastructure](https://france-bioimaging.org/) (ANR-24-INBS-0005 FBI BIOGEN).
 
-
 [clEsperanto]: http://clesperanto.net/
 [OpenCL kernels]: https://github.com/clEsperanto/clij-opencl-kernels/tree/clesperanto_kernels
 [CLIJ]: http://clij.github.io/
 [CLIc]: https://github.com/clEsperanto/CLIc
 [community guidelines]: https://clij.github.io/clij2-docs/community_guidelines
 [github issue]: https://github.com/clEsperanto/pyclesperanto/issues
-[image.sc forum]: https://forum.image.sc/
+[image.sc forum]: https://forum.image.sc/tag/clesperanto/1556
 [PyBind11]: https://github.com/pybind
+[documentation]: https://clesperanto-doc.readthedocs.io/en/latest/docs/pyclesperanto/index.html

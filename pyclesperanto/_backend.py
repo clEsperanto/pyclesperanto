@@ -4,12 +4,39 @@ Discovers installed backend packages (pyclesperanto_opencl, pyclesperanto_cuda)
 and provides a lazy accessor to the active compiled module.
 """
 
+import platform
+import sys
 import warnings
 
 _opencl_module = None
 _cuda_module = None
 _active_backend = None
 _backends_detected = False
+
+
+def _import_isolated(module_name):
+    """Import a compiled backend module with symbol isolation.
+
+    On Linux, both backend .so files statically link the CLIc C++ library,
+    producing identical symbol names (e.g. cle::BackendManager::getInstance).
+    Without isolation, the dynamic linker can resolve the second-loaded .so's
+    internal CLIc calls to the first-loaded .so's symbols (interposition),
+    causing the wrong C++ BackendManager singleton to be used.
+
+    RTLD_DEEPBIND (Linux-only) forces each .so to resolve symbols from its
+    own scope first, preventing this interposition.
+    """
+    if platform.system() == "Linux":
+        RTLD_DEEPBIND = 0x00008
+        old_flags = sys.getdlopenflags()
+        try:
+            sys.setdlopenflags(old_flags | RTLD_DEEPBIND)
+            mod = __import__(module_name, fromlist=[module_name.rsplit(".", 1)[-1]])
+        finally:
+            sys.setdlopenflags(old_flags)
+    else:
+        mod = __import__(module_name, fromlist=[module_name.rsplit(".", 1)[-1]])
+    return mod
 
 
 def _detect_backends():
@@ -19,15 +46,11 @@ def _detect_backends():
         return
     _backends_detected = True
     try:
-        import pyclesperanto_opencl._pyclesperanto as _ocl
-
-        _opencl_module = _ocl
+        _opencl_module = _import_isolated("pyclesperanto_opencl._pyclesperanto")
     except ImportError as e:
         _warn_backend_failure("pyclesperanto-opencl", "opencl", e)
     try:
-        import pyclesperanto_cuda._pyclesperanto as _cu
-
-        _cuda_module = _cu
+        _cuda_module = _import_isolated("pyclesperanto_cuda._pyclesperanto")
     except ImportError as e:
         _warn_backend_failure("pyclesperanto-cuda", "cuda", e)
 
@@ -115,37 +138,36 @@ def _activate_clic_backend(name: str):
     and reset the Python-side current device."""
     from ._core import _current_device
 
-    # Map backend name to the expected C++ BackendType enum value
-    expected_types = {"opencl": "OpenCL", "cuda": "CUDA"}
-    expected = expected_types.get(name)
-
     try:
         _active_backend._BackendManager.set_backend(name)
     except RuntimeError as e:
+        error_msg = str(e)
+        # CLIc's setBackend() has a fallback path: if the requested backend's
+        # runtime check fails (e.g. no CUDA GPU), it tries to create an
+        # OpenCLBackend as fallback.  In the split-package model, the other
+        # backend is compiled as a stub that throws "OpenCL/CUDA is not enabled".
+        if "is not enabled" in error_msg:
+            other = "opencl" if name == "cuda" else "cuda"
+            raise RuntimeError(
+                f"Failed to activate '{name}' backend.\n"
+                f"The '{name}' runtime could not find a compatible device, and the "
+                f"fallback to '{other}' is unavailable in this package.\n"
+                "Make sure you have:\n"
+                + (
+                    "  1. An NVIDIA GPU available in this environment\n"
+                    "  2. NVIDIA drivers installed (check with: nvidia-smi)\n"
+                    "  3. A CUDA toolkit version compatible with the installed driver\n"
+                    if name == "cuda"
+                    else "  1. An OpenCL-compatible device available\n"
+                    "  2. OpenCL ICD drivers installed\n"
+                )
+            ) from e
         raise RuntimeError(
             f"Failed to activate '{name}' backend: {e}\n"
             "This typically means the backend was not compiled into the CLIc C++ library.\n"
             f"Available backends: {list_available_backends()}\n"
             "Try reinstalling or using a different backend."
         ) from e
-
-    # Verify the backend actually switched — catches C++ symbol interposition
-    # where the other backend's BackendManager singleton is used instead.
-    if expected is not None:
-        try:
-            actual_type = str(_active_backend._BackendManager.get_backend().type)
-            if expected not in actual_type:
-                raise RuntimeError(
-                    f"Backend switch to '{name}' appeared to succeed but the active "
-                    f"C++ backend is '{actual_type}' instead of '{expected}'.\n"
-                    "This is caused by C++ symbol interposition between backend shared libraries.\n"
-                    "Please upgrade pyclesperanto-opencl and pyclesperanto-cuda to the latest version:\n"
-                    "  pip install --upgrade pyclesperanto-opencl pyclesperanto-cuda"
-                )
-        except RuntimeError:
-            raise
-        except Exception:
-            pass  # If we can't verify, proceed anyway
 
     _current_device._instance = None
 

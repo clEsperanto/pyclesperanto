@@ -60,7 +60,7 @@ all = ["pyclesperanto-opencl", "pyclesperanto-cuda; sys_platform != 'darwin'"]
 
 [tool.hatch.version]
 path = "pyclesperanto/_version.py"
-pattern = 'VERSION = "(?P<version>[^"]+)"'
+pattern = 'VERSION = "(?P<version>[0-9]+\.[0-9]+\.[0-9]+[a-z0-9.]*)"'
 
 # =============================================================================
 # Tool Configuration

@@ -115,7 +115,15 @@ def _activate_clic_backend(name: str):
     and reset the Python-side current device."""
     from ._core import _current_device
 
-    _active_backend._BackendManager.set_backend(name)
+    try:
+        _active_backend._BackendManager.set_backend(name)
+    except RuntimeError as e:
+        raise RuntimeError(
+            f"Failed to activate '{name}' backend: {e}\n"
+            "This typically means the backend was not compiled into the CLIc C++ library.\n"
+            f"Available backends: {list_available_backends()}\n"
+            "Try reinstalling or using a different backend."
+        ) from e
     _current_device._instance = None
 
 

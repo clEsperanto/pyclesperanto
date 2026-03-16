@@ -116,8 +116,8 @@ jobs:
     name: publish (PyPI)
     needs: [build_opencl_wheels, build_cuda_wheels, build_main]
     runs-on: ubuntu-latest
-    # if: success()
-    if: github.event_name == 'release' && success()
+    if: success()
+    # if: github.event_name == 'release' && success()
     steps:
       - uses: actions/setup-python@v6
         with:
@@ -139,11 +139,11 @@ jobs:
           skip-existing: true
           verbose: true
 
-      # # Real PyPI on release
-      # - name: Publish to PyPI
-      #   if: github.event_name == 'release'
-      #   uses: pypa/gh-action-pypi-publish@v1.13.0
-      #   with:
-      #     password: ${{ secrets.PYPI_API_TOKEN }}
-      #     skip-existing: true
-      #     verbose: true
+      # Real PyPI on release
+      - name: Publish to PyPI
+        if: github.event_name == 'release'
+        uses: pypa/gh-action-pypi-publish@v1.13.0
+        with:
+          password: ${{ secrets.PYPI_API_TOKEN }}
+          skip-existing: true
+          verbose: true

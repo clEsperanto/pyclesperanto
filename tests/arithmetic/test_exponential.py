@@ -1,11 +1,11 @@
 import numpy as np
+import pytest
 
 import pyclesperanto as cle
 
-cle.select_device("TX")
 
-
-def test_exponential():
+@pytest.mark.backend
+def test_exponential(gpu_backend):
     test = cle.push(
         np.asarray(
             [

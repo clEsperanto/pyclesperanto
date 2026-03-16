@@ -2,17 +2,15 @@
 # This code is auto-generated from CLIc 'cle::tier4.hpp' file, do not edit manually.
 #
 
-import importlib
 import warnings
 from typing import Optional
 
 import numpy as np
 
 from ._array import Image
+from ._backend import _get_backend
 from ._core import Device
 from ._decorators import plugin_function
-
-clic = importlib.import_module("._pyclesperanto", package="pyclesperanto")
 
 
 @plugin_function
@@ -40,7 +38,7 @@ def label_bounding_box(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_boundingBox
     """
-    return clic._label_bounding_box(device, input_image, int(label_id))
+    return _get_backend()._label_bounding_box(device, input_image, int(label_id))
 
 
 @plugin_function(categories=["in assistant", "combine", "bia-bob-suggestion"])
@@ -66,7 +64,7 @@ def mean_squared_error(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_meanSquaredError
     """
-    return clic._mean_squared_error(device, input_image0, input_image1)
+    return _get_backend()._mean_squared_error(device, input_image0, input_image1)
 
 
 @plugin_function
@@ -96,7 +94,7 @@ def spots_to_pointlist(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_spotsToPointList
     """
-    return clic._spots_to_pointlist(device, input_image, output_image)
+    return _get_backend()._spots_to_pointlist(device, input_image, output_image)
 
 
 @plugin_function(categories=["label processing", "in assistant", "bia-bob-suggestion"])
@@ -130,7 +128,9 @@ def relabel_sequential(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_closeIndexGapsInLabelMap
     """
-    return clic._relabel_sequential(device, input_image, output_image, int(blocksize))
+    return _get_backend()._relabel_sequential(
+        device, input_image, output_image, int(blocksize)
+    )
 
 
 @plugin_function(categories=["binarize", "in assistant", "bia-bob-suggestion"])
@@ -160,7 +160,7 @@ def threshold_otsu(
     [2] https://scikit-image.org/docs/dev/api/skimage.filters.html#skimage.filters.threshold_otsu
     [3] https://ieeexplore.ieee.org/document/4310076
     """
-    return clic._threshold_otsu(device, input_image, output_image)
+    return _get_backend()._threshold_otsu(device, input_image, output_image)
 
 
 @plugin_function(categories=["binarize", "in assistant", "bia-bob-suggestion"])
@@ -189,7 +189,7 @@ def threshold_yen(
     [1] https://scikit-image.org/docs/dev/api/skimage.filters.html#skimage.filters.threshold_yen
     [2] https://ieeexplore.ieee.org/document/366472
     """
-    return clic._threshold_yen(device, input_image, output_image)
+    return _get_backend()._threshold_yen(device, input_image, output_image)
 
 
 @plugin_function(categories=["binarize", "in assistant", "bia-bob-suggestion"])
@@ -213,7 +213,7 @@ def threshold_mean(
     -------
     Image
     """
-    return clic._threshold_mean(device, input_image, output_image)
+    return _get_backend()._threshold_mean(device, input_image, output_image)
 
 
 @plugin_function(categories=["label measurement", "map", "in assistant", "combine"])
@@ -254,7 +254,9 @@ def parametric_map(
     [4] https://clij.github.io/clij2-docs/reference_maximumIntensityMap
     [5] https://clij.github.io/clij2-docs/reference_standardDeviationIntensityMap
     """
-    return clic._parametric_map(device, labels, intensity, str(property), output_image)
+    return _get_backend()._parametric_map(
+        device, labels, intensity, str(property), output_image
+    )
 
 
 @plugin_function(categories=["label measurement", "map", "in assistant", "combine"])
@@ -287,7 +289,7 @@ def mean_intensity_map(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_meanIntensityMap
     """
-    return clic._mean_intensity_map(device, input_image, labels, output_image)
+    return _get_backend()._mean_intensity_map(device, input_image, labels, output_image)
 
 
 @plugin_function(categories=["label measurement", "map", "in assistant", "combine"])
@@ -320,7 +322,9 @@ def label_mean_intensity_map(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_meanIntensityMap
     """
-    return clic._label_mean_intensity_map(device, input_image, labels, output_image)
+    return _get_backend()._label_mean_intensity_map(
+        device, input_image, labels, output_image
+    )
 
 
 @plugin_function(categories=["label measurement", "map", "in assistant"])
@@ -350,7 +354,7 @@ def pixel_count_map(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_pixelCountMap
     """
-    return clic._pixel_count_map(device, input_image, output_image)
+    return _get_backend()._pixel_count_map(device, input_image, output_image)
 
 
 @plugin_function(categories=["label measurement", "map", "in assistant"])
@@ -380,7 +384,7 @@ def label_pixel_count_map(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_pixelCountMap
     """
-    return clic._label_pixel_count_map(device, input_image, output_image)
+    return _get_backend()._label_pixel_count_map(device, input_image, output_image)
 
 
 @plugin_function
@@ -414,7 +418,7 @@ def centroids_of_labels(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_centroidsOfLabels
     """
-    return clic._centroids_of_labels(
+    return _get_backend()._centroids_of_labels(
         device, label_image, centroids_coordinates, include_background
     )
 
@@ -454,7 +458,7 @@ def remove_labels_with_map_values_out_of_range(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_excludeLabelsWithValuesOutOfRange
     """
-    return clic._remove_labels_with_map_values_out_of_range(
+    return _get_backend()._remove_labels_with_map_values_out_of_range(
         device, input_image, values, output_image, float(min_value), float(max_value)
     )
 
@@ -494,7 +498,7 @@ def remove_labels_with_map_values_within_range(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_excludeLabelsWithValuesWithinRange
     """
-    return clic._remove_labels_with_map_values_within_range(
+    return _get_backend()._remove_labels_with_map_values_within_range(
         device, input_image, values, output_image, float(min_value), float(max_value)
     )
 
@@ -534,7 +538,7 @@ def exclude_labels_with_map_values_out_of_range(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_excludeLabelsWithValuesOutOfRange
     """
-    return clic._exclude_labels_with_map_values_out_of_range(
+    return _get_backend()._exclude_labels_with_map_values_out_of_range(
         device,
         values_map,
         label_map_input,
@@ -579,7 +583,7 @@ def exclude_labels_with_map_values_within_range(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_excludeLabelsWithValuesWithinRange
     """
-    return clic._exclude_labels_with_map_values_within_range(
+    return _get_backend()._exclude_labels_with_map_values_within_range(
         device,
         values_map,
         label_map_input,
@@ -617,7 +621,7 @@ def extension_ratio_map(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_extensionRatioMap
     """
-    return clic._extension_ratio_map(device, input_image, output_image)
+    return _get_backend()._extension_ratio_map(device, input_image, output_image)
 
 
 @plugin_function(categories=["label processing", "in assistant", "map"])
@@ -646,7 +650,7 @@ def mean_extension_map(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_meanExtensionMap
     """
-    return clic._mean_extension_map(device, input_image, output_image)
+    return _get_backend()._mean_extension_map(device, input_image, output_image)
 
 
 @plugin_function(categories=["label processing", "in assistant", "map"])
@@ -675,7 +679,7 @@ def maximum_extension_map(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_meanExtensionMap
     """
-    return clic._maximum_extension_map(device, input_image, output_image)
+    return _get_backend()._maximum_extension_map(device, input_image, output_image)
 
 
 @plugin_function(categories=["label measurement", "map", "in assistant", "combine"])
@@ -708,7 +712,9 @@ def minimum_intensity_map(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_minimumIntensityMap
     """
-    return clic._minimum_intensity_map(device, input_image, labels, output_image)
+    return _get_backend()._minimum_intensity_map(
+        device, input_image, labels, output_image
+    )
 
 
 @plugin_function(categories=["label measurement", "map", "in assistant", "combine"])
@@ -741,7 +747,9 @@ def maximum_intensity_map(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_maximumIntensityMap
     """
-    return clic._maximum_intensity_map(device, input_image, labels, output_image)
+    return _get_backend()._maximum_intensity_map(
+        device, input_image, labels, output_image
+    )
 
 
 @plugin_function(categories=["label measurement", "map", "in assistant", "combine"])
@@ -774,7 +782,7 @@ def standard_deviation_intensity_map(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_standardDeviationIntensityMap
     """
-    return clic._standard_deviation_intensity_map(
+    return _get_backend()._standard_deviation_intensity_map(
         device, input_image, labels, output_image
     )
 
@@ -803,7 +811,7 @@ def touching_neighbor_count_map(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_touchingNeighborCountMap
     """
-    return clic._touching_neighbor_count_map(device, labels, output_image)
+    return _get_backend()._touching_neighbor_count_map(device, labels, output_image)
 
 
 @plugin_function
@@ -825,7 +833,7 @@ def percentile(
     -------
     float
     """
-    return clic._percentile(device, input_image, float(percentile))
+    return _get_backend()._percentile(device, input_image, float(percentile))
 
 
 @plugin_function
@@ -862,7 +870,7 @@ def mean_of_touching_neighbors_map(
     -------
     Image
     """
-    return clic._mean_of_touching_neighbors_map(
+    return _get_backend()._mean_of_touching_neighbors_map(
         device, map, labels, output_image, int(radius), ignore_background
     )
 
@@ -901,7 +909,7 @@ def median_of_touching_neighbors_map(
     -------
     Image
     """
-    return clic._median_of_touching_neighbors_map(
+    return _get_backend()._median_of_touching_neighbors_map(
         device, map, labels, output_image, int(radius), ignore_background
     )
 
@@ -940,7 +948,7 @@ def minimum_of_touching_neighbors_map(
     -------
     Image
     """
-    return clic._minimum_of_touching_neighbors_map(
+    return _get_backend()._minimum_of_touching_neighbors_map(
         device, map, labels, output_image, int(radius), ignore_background
     )
 
@@ -979,7 +987,7 @@ def maximum_of_touching_neighbors_map(
     -------
     Image
     """
-    return clic._maximum_of_touching_neighbors_map(
+    return _get_backend()._maximum_of_touching_neighbors_map(
         device, map, labels, output_image, int(radius), ignore_background
     )
 
@@ -1018,7 +1026,7 @@ def standard_deviation_of_touching_neighbors_map(
     -------
     Image
     """
-    return clic._standard_deviation_of_touching_neighbors_map(
+    return _get_backend()._standard_deviation_of_touching_neighbors_map(
         device, map, labels, output_image, int(radius), ignore_background
     )
 
@@ -1057,7 +1065,7 @@ def mode_of_touching_neighbors_map(
     -------
     Image
     """
-    return clic._mode_of_touching_neighbors_map(
+    return _get_backend()._mode_of_touching_neighbors_map(
         device, map, labels, output_image, int(radius), ignore_background
     )
 
@@ -1079,7 +1087,7 @@ def standard_deviation_of_all_pixels(
     -------
     float
     """
-    return clic._standard_deviation_of_all_pixels(device, input_image)
+    return _get_backend()._standard_deviation_of_all_pixels(device, input_image)
 
 
 __all__ = [

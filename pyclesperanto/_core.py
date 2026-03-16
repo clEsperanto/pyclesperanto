@@ -3,12 +3,37 @@ from typing import Optional, Union
 
 import numpy as np
 
-from ._pyclesperanto import _BackendManager as BackendManager
-from ._pyclesperanto import _Device as Device
+from ._backend import _get_backend
+
+
+def _get_backend_manager():
+    return _get_backend()._BackendManager
+
+
+def _get_device_class():
+    return _get_backend()._Device
+
+
+# Re-export Device type for type annotations
+# This is a lazy property — actual class comes from whichever backend is active
+class _DeviceProxy(type):
+    """Metaclass so that `Device` can be used as a type hint before backend is loaded."""
+
+    def __instancecheck__(cls, instance):
+        try:
+            return isinstance(instance, _get_device_class())
+        except RuntimeError:
+            return False
+
+
+class Device(metaclass=_DeviceProxy):
+    """Type alias for the backend Device class."""
+
+    pass
 
 
 class _current_device:
-    _instance: Optional[Device] = None
+    _instance = None
 
 
 def get_device() -> Device:
@@ -43,10 +68,11 @@ def select_device(device_id: Union[str, int] = "", device_type: str = "all") -> 
     -------
     device : Device
     """
+    backend_mgr = _get_backend_manager()
     if isinstance(device_id, str):
-        device = BackendManager.get_backend().getDeviceFromName(device_id, device_type)
+        device = backend_mgr.get_backend().getDeviceFromName(device_id, device_type)
     elif isinstance(device_id, int):
-        device = BackendManager.get_backend().getDeviceFromIndex(device_id, device_type)
+        device = backend_mgr.get_backend().getDeviceFromIndex(device_id, device_type)
     else:
         raise ValueError(
             f"'{device_id}' is not a supported device_id. Please use either a string or an integer."
@@ -82,61 +108,15 @@ def list_available_devices(device_type: str = "all") -> list:
     -------
     name list : list[str]
     """
-    dev_list = list(BackendManager.get_backend().getDevicesList(type=device_type))
+    dev_list = list(
+        _get_backend_manager().get_backend().getDevicesList(type=device_type)
+    )
     if not dev_list:
         warnings.warn(
-            "No device available. Please install either OpenCL or CUDA on your system.",
+            "No device available. Please check your system installation.",
             RuntimeWarning,
         )
     return dev_list
-
-
-def list_available_backends() -> list:
-    """Retrieve a list of names of available backends
-
-    Will test system for available backends installed and return a list of their names.
-
-    Returns
-    -------
-    name list : list[str]
-    """
-    back_list = list(BackendManager.get_backends_list())
-    if not back_list:
-        warnings.warn(
-            "No backend available. Please install either OpenCL or CUDA on your system.",
-            RuntimeWarning,
-        )
-    return back_list
-
-
-def select_backend(backend: str = "opencl") -> str:
-    """select backend
-
-    Select the backend used by pyclesperanto, OpenCL or CUDA.
-    Default is OpenCL.
-
-    Parameters
-    ----------
-    type : str, default = "opencl"
-        determine the backend to use between opencl and cuda
-    """
-    # enforce lowercase for backend_type
-    backend = backend.lower()
-    # is backend_type is different than "cuda" or "opencl", raise an error
-    if backend not in ["cuda", "opencl"]:
-        raise ValueError(
-            f"'{backend}' is not a supported Backend. Please use either 'opencl' or 'cuda'."
-        )
-    BackendManager.set_backend(backend=backend)
-    # reset current device to default one
-    select_device()
-
-    if _current_device._instance is None:
-        raise RuntimeError(
-            "No device available. Please check your system installation."
-        )
-
-    return f"{BackendManager.get_backend()} selected."
 
 
 def wait_for_kernel_to_finish(wait: bool = True, device: Device = None):
@@ -159,28 +139,6 @@ def wait_for_kernel_to_finish(wait: bool = True, device: Device = None):
         device.set_wait_to_finish(wait)
 
 
-def default_initialisation():
-    """Set default backend and device"""
-
-    try:
-        backends = list_available_backends()
-        if backends:
-            _ = select_backend(backends[-1])
-        else:
-            raise RuntimeError("No backend available.")
-    except Exception as e:
-        warnings.warn(
-            f"Error while initialising pyclesperanto: {e}\n\n"
-            "No GPU Backend found.\n\n"
-            "pyclesperanto requires either CUDA or OpenCL libraries to be installed on your system to work.\n"
-            "Please ensure you have the appropriate drivers installed and up-to-date.\n\n"
-            "Alternatively, you may need to install the following additional package:\n"
-            "- MacOS: `conda install -c conda-forge ocl_icd_wrapper_apple`\n"
-            "- Linux: `conda install -c conda-forge ocl-icd-system`",
-            RuntimeWarning,
-        )
-
-
 def info():
     """Print information about the devices available on the system"""
     device_info = [
@@ -188,3 +146,28 @@ def info():
         for idx, device in enumerate(list_available_devices())
     ]
     print("".join(device_info))
+
+
+def _default_initialisation():
+    """Select a default device on the active backend."""
+    try:
+        # The C++ BackendManager must be told which backend to use
+        # before any device can be selected.
+        backend_mod = _get_backend()
+        backend_name = getattr(
+            __import__(backend_mod.__name__.rsplit(".", 1)[0]),
+            "__backend__",
+            None,
+        )
+        if backend_name is None:
+            # Fallback: infer from module name
+            pkg = backend_mod.__name__.rsplit(".", 1)[0]  # e.g. "pyclesperanto_opencl"
+            backend_name = pkg.replace("pyclesperanto_", "")  # e.g. "opencl"
+        _get_backend_manager().set_backend(backend_name)
+        select_device()
+    except Exception as e:
+        warnings.warn(
+            f"Error during device initialisation: {e}\n"
+            "No GPU device found. Please check your system installation.",
+            RuntimeWarning,
+        )

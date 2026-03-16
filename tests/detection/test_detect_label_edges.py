@@ -1,11 +1,11 @@
 import numpy as np
+import pytest
 
 import pyclesperanto as cle
 
-cle.select_device("TX")
 
-
-def test_detect_label_edges():
+@pytest.mark.backend
+def test_detect_label_edges(gpu_backend):
     test = cle.push(
         np.asarray(
             [

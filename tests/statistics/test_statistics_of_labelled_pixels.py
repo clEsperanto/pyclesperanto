@@ -1,9 +1,11 @@
 import numpy as np
+import pytest
 
 import pyclesperanto as cle
 
 
-def test_statistics_of_labelled_pixels():
+@pytest.mark.backend
+def test_statistics_of_labelled_pixels(gpu_backend):
 
     labels = cle.push(
         np.asarray(

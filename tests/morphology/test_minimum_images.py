@@ -1,11 +1,11 @@
 import numpy as np
+import pytest
 
 import pyclesperanto as cle
 
-cle.select_device("TX")
 
-
-def test_minimum_images():
+@pytest.mark.backend
+def test_minimum_images(gpu_backend):
     test1 = cle.push(
         np.asarray(
             [
@@ -51,7 +51,8 @@ def test_minimum_images():
     assert np.array_equal(a, b)
 
 
-def test_minimum_images_with_types():
+@pytest.mark.backend
+def test_minimum_images_with_types(gpu_backend):
     test1 = cle.push(
         np.asarray(
             [

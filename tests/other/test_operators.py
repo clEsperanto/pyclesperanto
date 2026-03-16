@@ -1,11 +1,11 @@
 import numpy as np
+import pytest
 
 import pyclesperanto as cle
 
-cle.select_device("TX")
 
-
-def test_add():
+@pytest.mark.backend
+def test_add(gpu_backend):
     input1 = cle.push(np.asarray([1, 2, 3]))
     input2 = cle.push(np.asarray([4, 5, 6]))
     reference = cle.push(np.asarray([5, 7, 9]))
@@ -18,7 +18,8 @@ def test_add():
     assert np.array_equal(result, reference)
 
 
-def test_add_with_scalar():
+@pytest.mark.backend
+def test_add_with_scalar(gpu_backend):
     input1 = cle.push(np.asarray([[1, 2, 3]]))
     input2 = 5
     reference = cle.push(np.asarray([[6, 7, 8]]))
@@ -31,7 +32,8 @@ def test_add_with_scalar():
     assert np.array_equal(result, reference)
 
 
-def test_add_with_np():
+@pytest.mark.backend
+def test_add_with_np(gpu_backend):
     input1 = cle.push(np.asarray([[4, 2, -8]]))
     input2 = np.asarray([[2, 2, 2]])
     reference = cle.push(np.asarray([[6, 4, -6]]))
@@ -44,7 +46,8 @@ def test_add_with_np():
     assert np.array_equal(result, reference)
 
 
-def test_iadd():
+@pytest.mark.backend
+def test_iadd(gpu_backend):
     input1 = cle.push(np.asarray([[1, 2, 3]]))
     input2 = cle.push(np.asarray([[4, 5, 6]]))
     reference = cle.push(np.asarray([[5, 7, 9]]))
@@ -57,7 +60,8 @@ def test_iadd():
     assert np.array_equal(result, reference)
 
 
-def test_iadd_with_scalar():
+@pytest.mark.backend
+def test_iadd_with_scalar(gpu_backend):
     input1 = cle.push(np.asarray([[1, 2, 3]]))
     input2 = 5
     reference = cle.push(np.asarray([[6, 7, 8]]))
@@ -70,7 +74,8 @@ def test_iadd_with_scalar():
     assert np.array_equal(result, reference)
 
 
-def test_iadd_with_np():
+@pytest.mark.backend
+def test_iadd_with_np(gpu_backend):
     input1 = cle.push(np.asarray([[4, 2, -8]]))
     input2 = np.asarray([[2, 2, 2]])
     reference = cle.push(np.asarray([[6, 4, -6]]))
@@ -83,7 +88,8 @@ def test_iadd_with_np():
     assert np.array_equal(result, reference)
 
 
-def test_subtract():
+@pytest.mark.backend
+def test_subtract(gpu_backend):
     input1 = cle.push(np.asarray([[4, 2, 3]]))
     input2 = cle.push(np.asarray([[1, 5, 6]]))
     reference = cle.push(np.asarray([[3, -3, -3]]))
@@ -96,7 +102,8 @@ def test_subtract():
     assert np.array_equal(result, reference)
 
 
-def test_subtract_with_scalar():
+@pytest.mark.backend
+def test_subtract_with_scalar(gpu_backend):
     input1 = cle.push(np.asarray([[4, 2, 3]]))
     input2 = 5
     reference = cle.push(np.asarray([[-1, -3, -2]]))
@@ -109,7 +116,8 @@ def test_subtract_with_scalar():
     assert np.array_equal(result, reference)
 
 
-def test_subtract_with_np():
+@pytest.mark.backend
+def test_subtract_with_np(gpu_backend):
     input1 = cle.push(np.asarray([[4, 2, 3]]))
     input2 = np.asarray([[1, 5, 6]])
     reference = cle.push(np.asarray([[3, -3, -3]]))
@@ -122,7 +130,8 @@ def test_subtract_with_np():
     assert np.array_equal(result, reference)
 
 
-def test_isubtract():
+@pytest.mark.backend
+def test_isubtract(gpu_backend):
     input1 = cle.push(np.asarray([[4, 2, 3]]))
     input2 = cle.push(np.asarray([[1, 5, 6]]))
     reference = cle.push(np.asarray([[3, -3, -3]]))
@@ -135,7 +144,8 @@ def test_isubtract():
     assert np.array_equal(result, reference)
 
 
-def test_isubtract_with_scalar():
+@pytest.mark.backend
+def test_isubtract_with_scalar(gpu_backend):
     input1 = cle.push(np.asarray([[4, 2, 3]]))
     input2 = 5
     reference = cle.push(np.asarray([[-1, -3, -2]]))
@@ -148,7 +158,8 @@ def test_isubtract_with_scalar():
     assert np.array_equal(result, reference)
 
 
-def test_isubtract_with_np():
+@pytest.mark.backend
+def test_isubtract_with_np(gpu_backend):
     input1 = cle.push(np.asarray([[4, 2, 3]]))
     input2 = np.asarray([[1, 5, 6]])
     reference = cle.push(np.asarray([[3, -3, -3]]))
@@ -161,7 +172,8 @@ def test_isubtract_with_np():
     assert np.array_equal(result, reference)
 
 
-def test_divide():
+@pytest.mark.backend
+def test_divide(gpu_backend):
     input1 = cle.push(np.asarray([[4, 2, -8]]))
     input2 = cle.push(np.asarray([[2, 2, 2]]))
     reference = cle.push(np.asarray([[2, 1, -4]]))
@@ -174,7 +186,8 @@ def test_divide():
     assert np.array_equal(result, reference)
 
 
-def test_divide_with_scalar():
+@pytest.mark.backend
+def test_divide_with_scalar(gpu_backend):
     input1 = cle.push(np.asarray([[4, 2, -8]]))
     input2 = 2
     reference = cle.push(np.asarray([[2, 1, -4]]))
@@ -187,7 +200,8 @@ def test_divide_with_scalar():
     assert np.array_equal(result, reference)
 
 
-def test_divide_with_np():
+@pytest.mark.backend
+def test_divide_with_np(gpu_backend):
     input1 = cle.push(np.asarray([[4, 2, -8]]))
     input2 = np.asarray([[2, 2, 2]])
     reference = cle.push(np.asarray([[2, 1, -4]]))
@@ -200,7 +214,8 @@ def test_divide_with_np():
     assert np.array_equal(result, reference)
 
 
-def test_idivide():
+@pytest.mark.backend
+def test_idivide(gpu_backend):
     input1 = cle.push(np.asarray([[4, 2, -8]]))
     input2 = cle.push(np.asarray([[2, 2, 2]]))
     reference = cle.push(np.asarray([[2, 1, -4]]))
@@ -213,7 +228,8 @@ def test_idivide():
     assert np.array_equal(result, reference)
 
 
-def test_idivide_with_scalar():
+@pytest.mark.backend
+def test_idivide_with_scalar(gpu_backend):
     input1 = cle.push(np.asarray([[4, 2, -8]]))
     input2 = 2
     reference = cle.push(np.asarray([[2, 1, -4]]))
@@ -226,7 +242,8 @@ def test_idivide_with_scalar():
     assert np.array_equal(result, reference)
 
 
-def test_idivide_with_np():
+@pytest.mark.backend
+def test_idivide_with_np(gpu_backend):
     input1 = cle.push(np.asarray([[4, 2, -8]]))
     input2 = np.asarray([[2, 2, 2]])
     reference = cle.push(np.asarray([[2, 1, -4]]))
@@ -239,7 +256,8 @@ def test_idivide_with_np():
     assert np.array_equal(result, reference)
 
 
-def test_multiply():
+@pytest.mark.backend
+def test_multiply(gpu_backend):
     input1 = cle.push(np.asarray([[4, 2, -8]]))
     input2 = cle.push(np.asarray([[2, 2, 2]]))
     reference = cle.push(np.asarray([[8, 4, -16]]))
@@ -252,7 +270,8 @@ def test_multiply():
     assert np.array_equal(result, reference)
 
 
-def test_multiply_with_scalar():
+@pytest.mark.backend
+def test_multiply_with_scalar(gpu_backend):
     input1 = cle.push(np.asarray([[4, 2, -8]]))
     input2 = 2
     reference = cle.push(np.asarray([[8, 4, -16]]))
@@ -265,7 +284,8 @@ def test_multiply_with_scalar():
     assert np.array_equal(result, reference)
 
 
-def test_multiply_with_np():
+@pytest.mark.backend
+def test_multiply_with_np(gpu_backend):
     input1 = cle.push(np.asarray([[4, 2, -8]]))
     input2 = np.asarray([[2, 2, 2]])
     reference = cle.push(np.asarray([[8, 4, -16]]))
@@ -278,7 +298,8 @@ def test_multiply_with_np():
     assert np.array_equal(result, reference)
 
 
-def test_imultiply():
+@pytest.mark.backend
+def test_imultiply(gpu_backend):
     input1 = cle.push(np.asarray([[4, 2, -8]]))
     input2 = cle.push(np.asarray([[2, 2, 2]]))
     reference = cle.push(np.asarray([[8, 4, -16]]))
@@ -291,7 +312,8 @@ def test_imultiply():
     assert np.array_equal(result, reference)
 
 
-def test_imultiply_with_scalar():
+@pytest.mark.backend
+def test_imultiply_with_scalar(gpu_backend):
     input1 = cle.push(np.asarray([[4, 2, -8]]))
     input2 = 2
     reference = cle.push(np.asarray([[8, 4, -16]]))
@@ -304,7 +326,8 @@ def test_imultiply_with_scalar():
     assert np.array_equal(result, reference)
 
 
-def test_imultiply_with_np():
+@pytest.mark.backend
+def test_imultiply_with_np(gpu_backend):
     input1 = cle.push(np.asarray([[4, 2, -8]]))
     input2 = np.asarray([[2, 2, 2]])
     reference = cle.push(np.asarray([[8, 4, -16]]))
@@ -317,7 +340,8 @@ def test_imultiply_with_np():
     assert np.array_equal(result, reference)
 
 
-def test_gt():
+@pytest.mark.backend
+def test_gt(gpu_backend):
     input1 = cle.push(np.asarray([[4, 2, -8]]))
     input2 = cle.push(np.asarray([[2, 2, 2]]))
     reference = cle.push(np.asarray([[1, 0, 0]]))
@@ -330,7 +354,8 @@ def test_gt():
     assert np.array_equal(result, reference)
 
 
-def test_gt_with_scalar():
+@pytest.mark.backend
+def test_gt_with_scalar(gpu_backend):
     input1 = cle.push(np.asarray([[4, 2, -8]]))
     input2 = 2
     reference = cle.push(np.asarray([[1, 0, 0]]))
@@ -343,7 +368,8 @@ def test_gt_with_scalar():
     assert np.array_equal(result, reference)
 
 
-def test_gt_with_np():
+@pytest.mark.backend
+def test_gt_with_np(gpu_backend):
     input1 = cle.push(np.asarray([[4, 2, -8]]))
     input2 = np.asarray([[2, 2, 2]])
     reference = cle.push(np.asarray([[1, 0, 0]]))
@@ -356,7 +382,8 @@ def test_gt_with_np():
     assert np.array_equal(result, reference)
 
 
-def test_ge():
+@pytest.mark.backend
+def test_ge(gpu_backend):
     input1 = cle.push(np.asarray([[4, 2, -8]]))
     input2 = cle.push(np.asarray([[2, 2, 2]]))
     reference = cle.push(np.asarray([[1, 1, 0]]))
@@ -369,7 +396,8 @@ def test_ge():
     assert np.array_equal(result, reference)
 
 
-def test_ge_with_scalar():
+@pytest.mark.backend
+def test_ge_with_scalar(gpu_backend):
     input1 = cle.push(np.asarray([[4, 2, -8]]))
     input2 = 2
     reference = cle.push(np.asarray([[1, 1, 0]]))
@@ -382,7 +410,8 @@ def test_ge_with_scalar():
     assert np.array_equal(result, reference)
 
 
-def test_ge_with_np():
+@pytest.mark.backend
+def test_ge_with_np(gpu_backend):
     input1 = cle.push(np.asarray([[4, 2, -8]]))
     input2 = np.asarray([[2, 2, 2]])
     reference = cle.push(np.asarray([[1, 1, 0]]))
@@ -395,7 +424,8 @@ def test_ge_with_np():
     assert np.array_equal(result, reference)
 
 
-def test_lt():
+@pytest.mark.backend
+def test_lt(gpu_backend):
     input1 = cle.push(np.asarray([[4, 2, -8]]))
     input2 = cle.push(np.asarray([[2, 2, 2]]))
     reference = cle.push(np.asarray([[0, 0, 1]]))
@@ -408,7 +438,8 @@ def test_lt():
     assert np.array_equal(result, reference)
 
 
-def test_lt_with_scalar():
+@pytest.mark.backend
+def test_lt_with_scalar(gpu_backend):
     input1 = cle.push(np.asarray([[4, 2, -8]]))
     input2 = 2
     reference = cle.push(np.asarray([[0, 0, 1]]))
@@ -421,7 +452,8 @@ def test_lt_with_scalar():
     assert np.array_equal(result, reference)
 
 
-def test_lt_with_np():
+@pytest.mark.backend
+def test_lt_with_np(gpu_backend):
     input1 = cle.push(np.asarray([[4, 2, -8]]))
     input2 = np.asarray([[2, 2, 2]])
     reference = cle.push(np.asarray([[0, 0, 1]]))
@@ -434,7 +466,8 @@ def test_lt_with_np():
     assert np.array_equal(result, reference)
 
 
-def test_le():
+@pytest.mark.backend
+def test_le(gpu_backend):
     input1 = cle.push(np.asarray([[4, 2, -8]]))
     input2 = cle.push(np.asarray([[2, 2, 2]]))
     reference = cle.push(np.asarray([[0, 1, 1]]))
@@ -447,7 +480,8 @@ def test_le():
     assert np.array_equal(result, reference)
 
 
-def test_le_with_scalar():
+@pytest.mark.backend
+def test_le_with_scalar(gpu_backend):
     input1 = cle.push(np.asarray([[4, 2, -8]]))
     input2 = 2
     reference = cle.push(np.asarray([[0, 1, 1]]))
@@ -460,7 +494,8 @@ def test_le_with_scalar():
     assert np.array_equal(result, reference)
 
 
-def test_le_with_np():
+@pytest.mark.backend
+def test_le_with_np(gpu_backend):
     input1 = cle.push(np.asarray([[4, 2, -8]]))
     input2 = np.asarray([[2, 2, 2]])
     reference = cle.push(np.asarray([[0, 1, 1]]))
@@ -473,7 +508,8 @@ def test_le_with_np():
     assert np.array_equal(result, reference)
 
 
-def test_eq():
+@pytest.mark.backend
+def test_eq(gpu_backend):
     input1 = cle.push(np.asarray([[4, 2, -8]]))
     input2 = cle.push(np.asarray([[2, 2, 2]]))
     reference = cle.push(np.asarray([[0, 1, 0]]))
@@ -486,7 +522,8 @@ def test_eq():
     assert np.array_equal(result, reference)
 
 
-def test_eq_with_scalar():
+@pytest.mark.backend
+def test_eq_with_scalar(gpu_backend):
     input1 = cle.push(np.asarray([[4, 2, -8]]))
     input2 = 2
     reference = cle.push(np.asarray([[0, 1, 0]]))
@@ -499,7 +536,8 @@ def test_eq_with_scalar():
     assert np.array_equal(result, reference)
 
 
-def test_eq_with_np():
+@pytest.mark.backend
+def test_eq_with_np(gpu_backend):
     input1 = cle.push(np.asarray([[4, 2, -8]]))
     input2 = np.asarray([[2, 2, 2]])
     reference = cle.push(np.asarray([[0, 1, 0]]))
@@ -512,7 +550,8 @@ def test_eq_with_np():
     assert np.array_equal(result, reference)
 
 
-def test_ne():
+@pytest.mark.backend
+def test_ne(gpu_backend):
     input1 = cle.push(np.asarray([[4, 2, -8]]))
     input2 = cle.push(np.asarray([[2, 2, 2]]))
     reference = cle.push(np.asarray([[1, 0, 1]]))
@@ -525,7 +564,8 @@ def test_ne():
     assert np.array_equal(result, reference)
 
 
-def test_ne_with_scalar():
+@pytest.mark.backend
+def test_ne_with_scalar(gpu_backend):
     input1 = cle.push(np.asarray([[4, 2, -8]]))
     input2 = 2
     reference = cle.push(np.asarray([[1, 0, 1]]))
@@ -538,7 +578,8 @@ def test_ne_with_scalar():
     assert np.array_equal(result, reference)
 
 
-def test_ne_with_np():
+@pytest.mark.backend
+def test_ne_with_np(gpu_backend):
     input1 = cle.push(np.asarray([[4, 2, -8]]))
     input2 = np.asarray([[2, 2, 2]])
     reference = cle.push(np.asarray([[1, 0, 1]]))
@@ -551,7 +592,8 @@ def test_ne_with_np():
     assert np.array_equal(result, reference)
 
 
-def test_pos():
+@pytest.mark.backend
+def test_pos(gpu_backend):
     input1 = cle.push(np.asarray([[4, 2, -8]]))
     reference = cle.push(np.asarray([[4, 2, -8]]))
 
@@ -563,7 +605,8 @@ def test_pos():
     assert np.array_equal(result, reference)
 
 
-def test_neg():
+@pytest.mark.backend
+def test_neg(gpu_backend):
     input1 = cle.push(np.asarray([[4, 2, -8]]))
     reference = cle.push(np.asarray([[-4, -2, 8]]))
 
@@ -575,7 +618,8 @@ def test_neg():
     assert np.array_equal(result, reference)
 
 
-def test_power():
+@pytest.mark.backend
+def test_power(gpu_backend):
     input1 = cle.push(np.asarray([[4, 2, -8]]))
     input2 = cle.push(np.asarray([[2, 2, 2]]))
     reference = cle.push(np.asarray([[16, 4, 64]]))
@@ -588,7 +632,8 @@ def test_power():
     assert np.array_equal(result, reference)
 
 
-def test_power_with_scalar():
+@pytest.mark.backend
+def test_power_with_scalar(gpu_backend):
     input1 = cle.push(np.asarray([[4, 2, -8]]))
     input2 = 2
     reference = cle.push(np.asarray([[16, 4, 64]]))
@@ -601,7 +646,8 @@ def test_power_with_scalar():
     assert np.array_equal(result, reference)
 
 
-def test_power_with_np():
+@pytest.mark.backend
+def test_power_with_np(gpu_backend):
     input1 = cle.push(np.asarray([[4, 2, -8]]))
     input2 = np.asarray([[2, 2, 2]])
     reference = cle.push(np.asarray([[16, 4, 64]]))
@@ -614,7 +660,8 @@ def test_power_with_np():
     assert np.array_equal(result, reference)
 
 
-def test_ipower():
+@pytest.mark.backend
+def test_ipower(gpu_backend):
     input1 = cle.push(np.asarray([[4, 2, -8]]))
     input2 = cle.push(np.asarray([[2, 2, 2]]))
     reference = cle.push(np.asarray([[16, 4, 64]]))
@@ -627,7 +674,8 @@ def test_ipower():
     assert np.array_equal(result, reference)
 
 
-def test_ipower_with_scalar():
+@pytest.mark.backend
+def test_ipower_with_scalar(gpu_backend):
     input1 = cle.push(np.asarray([[4, 2, -8]]))
     input2 = 2
     reference = cle.push(np.asarray([[16, 4, 64]]))
@@ -640,7 +688,8 @@ def test_ipower_with_scalar():
     assert np.array_equal(result, reference)
 
 
-def test_ipower_with_np():
+@pytest.mark.backend
+def test_ipower_with_np(gpu_backend):
     input1 = cle.push(np.asarray([[4, 2, -8]]))
     input2 = np.asarray([[2, 2, 2]])
     reference = cle.push(np.asarray([[16, 4, 64]]))
@@ -653,7 +702,8 @@ def test_ipower_with_np():
     assert np.array_equal(result, reference)
 
 
-def test_ipow_with_types():
+@pytest.mark.backend
+def test_ipow_with_types(gpu_backend):
     scalars = [
         2,
         int(2),

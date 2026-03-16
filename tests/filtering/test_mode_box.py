@@ -1,9 +1,10 @@
+import pytest
+
 import pyclesperanto as cle
 
-cle.select_device("TX")
 
-
-def test_mode_box_2d():
+@pytest.mark.backend
+def test_mode_box_2d(gpu_backend):
     image = cle.asarray(
         [
             [0, 0, 0, 1, 1, 1],
@@ -31,7 +32,8 @@ def test_mode_box_2d():
     assert cle.array_equal(result, reference)
 
 
-def test_mode_box_3d():
+@pytest.mark.backend
+def test_mode_box_3d(gpu_backend):
     image = cle.asarray(
         [
             [

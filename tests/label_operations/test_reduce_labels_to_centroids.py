@@ -1,9 +1,11 @@
 import numpy as np
+import pytest
 
 import pyclesperanto as cle
 
 
-def test_reduce_labels_to_centroids():
+@pytest.mark.backend
+def test_reduce_labels_to_centroids(gpu_backend):
     test = np.asarray(
         [
             [0, 0, 0, 1, 1, 1],

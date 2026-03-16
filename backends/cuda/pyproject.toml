@@ -1,0 +1,79 @@
+# =============================================================================
+# Build System Configuration
+# =============================================================================
+
+[build-system]
+build-backend = "scikit_build_core.build"
+requires = ["setuptools", "wheel", "scikit-build-core", "pybind11"]
+
+[tool.scikit-build]
+build-dir = "build/{wheel_tag}"
+
+[tool.scikit-build.ninja]
+make-fallback = false
+
+[tool.scikit-build.cmake]
+build-type = "Release"
+
+[tool.scikit-build.metadata.version]
+provider = "scikit_build_core.metadata.regex"
+regex = 'VERSION = "(?P<value>\d+\.\d+\.\d+)"'
+input = "../../pyclesperanto/_version.py"
+
+[tool.scikit-build.sdist]
+exclude = [".git*"]
+
+# =============================================================================
+# Package Metadata
+# =============================================================================
+
+[project]
+authors = [
+  { name = "Stephane Rigaud", email = "stephane.rigaud@pasteur.fr" },
+  { name = "Robert Haase", email = "robert.haase@uni-leipzig.de" },
+]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Programming Language :: C++",
+  "Programming Language :: Python :: 3",
+  "License :: OSI Approved :: BSD License",
+  "Operating System :: POSIX :: Linux",
+  "Operating System :: Microsoft :: Windows",
+  "Intended Audience :: Science/Research",
+  "Intended Audience :: Developers",
+  "Topic :: Scientific/Engineering :: Image Processing",
+]
+description = "CUDA backend for pyclesperanto, a Python library for GPU-accelerated image processing"
+name = "pyclesperanto-cuda"
+requires-python = ">=3.8"
+dynamic = ["version"]
+license = { file = "../../LICENSE" }
+keywords = ["image processing", "GPU", "CUDA", "scientific computing"]
+
+# =============================================================================
+# cibuildwheel Configuration
+# =============================================================================
+
+[tool.cibuildwheel]
+build = ["cp38-*", "cp39-*", "cp310-*", "cp311-*", "cp312-*", "cp313-*"]
+skip = ["*-win32", "*-musllinux*", "*_i686", "*_universal2", "*-macosx*"]
+build-frontend = "build"
+build-verbosity = 1
+# CUDA import requires nvcuda.dll (NVIDIA driver), which is absent on CI runners (no GPU).
+# Instead, we verify the wheel was built correctly by checking the native extension is present.
+test-command = "python -c \"from importlib.metadata import distribution; files = [str(f) for f in distribution('pyclesperanto-cuda').files]; assert any('_pyclesperanto' in f for f in files), f'Native extension not found in wheel: {files}'\""
+
+[tool.cibuildwheel.linux]
+before-all = "bash {package}/../../scripts/build-cuda-linux.sh"
+repair-wheel-command = "auditwheel show {wheel} && auditwheel repair --lib-sdir .libs -w {dest_dir} {wheel}"
+environment = { CUDA_HOME="/usr/local/cuda", PATH="/usr/local/cuda/bin:$PATH", LD_LIBRARY_PATH="/usr/local/cuda/lib64:/usr/local/cuda/lib64/stubs:$LD_LIBRARY_PATH" }
+
+## IMPORTRANT: cuda version must match the one used to build the wheel
+## Current version is 12.6
+[tool.cibuildwheel.windows]
+repair-wheel-command = "delvewheel show {wheel} && delvewheel repair --add-path \"C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v12.6/bin\" --no-dll \"nvcuda.dll;msvcp140.dll;vcruntime140_1.dll\" -w {dest_dir} {wheel}"
+before-build = "pip install delvewheel"
+environment = { SKBUILD_CMAKE_ARGS = "-DCUDA_TOOLKIT_ROOT_DIR='C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v12.6'", PATH = "C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v12.6\\bin;$PATH" }
+
+[tool.cibuildwheel.macos]
+# CUDA is not supported on macOS — builds are skipped via the skip pattern above

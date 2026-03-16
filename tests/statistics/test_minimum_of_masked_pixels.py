@@ -1,11 +1,11 @@
 import numpy as np
+import pytest
 
 import pyclesperanto as cle
 
-cle.select_device("TX")
 
-
-def test_minimum_of_masked_pixels_mini_x():
+@pytest.mark.backend
+def test_minimum_of_masked_pixels_mini_x(gpu_backend):
     np_input = np.asarray([1, 2, 3, 4])
     np_mask = np.asarray([0, 1, 1, 0])
 
@@ -17,7 +17,8 @@ def test_minimum_of_masked_pixels_mini_x():
     assert result == 2
 
 
-def test_minimum_of_masked_pixels_mini_y():
+@pytest.mark.backend
+def test_minimum_of_masked_pixels_mini_y(gpu_backend):
     np_input = np.asarray([[1], [2], [3], [4]])
     np_mask = np.asarray([[0], [1], [1], [0]])
 
@@ -29,7 +30,8 @@ def test_minimum_of_masked_pixels_mini_y():
     assert result == 2
 
 
-def test_minimum_of_masked_pixels():
+@pytest.mark.backend
+def test_minimum_of_masked_pixels(gpu_backend):
     np_input = np.asarray(
         [
             [[1, 2, 3, 10], [4, 5, 6, 11], [7, 8, 9, 12]],

@@ -1,11 +1,11 @@
 import numpy as np
+import pytest
 
 import pyclesperanto as cle
 
-cle.select_device("TX")
 
-
-def test_median():
+@pytest.mark.backend
+def test_median(gpu_backend):
     test1 = cle.push(
         np.asarray(
             [

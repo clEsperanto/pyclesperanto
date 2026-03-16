@@ -1,4 +1,5 @@
 import numpy as np
+import pytest
 from skimage import morphology, segmentation
 
 import pyclesperanto as cle

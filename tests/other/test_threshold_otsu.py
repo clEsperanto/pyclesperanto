@@ -1,13 +1,13 @@
 import numpy as np
+import pytest
 from skimage.data import camera
 from skimage.filters import threshold_otsu
 
 import pyclesperanto as cle
 
-cle.select_device("TX")
 
-
-def test_threshold_otsu_against_scikit_image():
+@pytest.mark.backend
+def test_threshold_otsu_against_scikit_image(gpu_backend):
     image = camera()
     thresh = threshold_otsu(image)
     binary = image > thresh
@@ -32,7 +32,8 @@ def test_threshold_otsu_against_scikit_image():
     assert np.allclose(binary, (cle.pull(gpu_binary) > 0))
 
 
-def test_threshold_otsu_low_values():
+@pytest.mark.backend
+def test_threshold_otsu_low_values(gpu_backend):
     input = np.asarray([[0, 0, 0], [0, 0.003, 0], [0, 0, 0]])
 
     reference = np.asarray([[0, 0, 0], [0, 1, 0], [0, 0, 0]])

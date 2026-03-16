@@ -1,11 +1,11 @@
 import numpy as np
+import pytest
 
 import pyclesperanto as cle
 
-cle.select_device("TX")
 
-
-def test_ellipsis():
+@pytest.mark.backend
+def test_ellipsis(gpu_backend):
     image = cle.asarray(
         [
             [[1, 2], [3, 4]],

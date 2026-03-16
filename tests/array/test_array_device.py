@@ -1,9 +1,11 @@
 import numpy as np
+import pytest
 
 import pyclesperanto as cle
 
 
-def test_zeros_arrays():
+@pytest.mark.backend
+def test_zeros_arrays(gpu_backend):
     gpu_arr = cle.Array.zeros((10, 10))
 
     assert gpu_arr.shape == (10, 10)
@@ -12,14 +14,16 @@ def test_zeros_arrays():
     assert gpu_arr.min() == 0
 
 
-def test_empty_like():
+@pytest.mark.backend
+def test_empty_like(gpu_backend):
     arr = np.zeros((10, 10))
     gpu_arr = cle.Array.empty_like(arr)
 
     assert gpu_arr.shape == arr.shape
 
 
-def test_zeros_like():
+@pytest.mark.backend
+def test_zeros_like(gpu_backend):
     arr = np.zeros((10, 10))
     gpu_arr = cle.Array.zeros_like(arr)
 
@@ -29,7 +33,8 @@ def test_zeros_like():
     assert gpu_arr.min() == 0
 
 
-def test_to_device():
+@pytest.mark.backend
+def test_to_device(gpu_backend):
     arr = np.zeros((10, 10))
     gpu_arr = cle.Array.to_device(arr)
 
@@ -39,7 +44,8 @@ def test_to_device():
     assert gpu_arr.min() == 0
 
 
-def test_from_array():
+@pytest.mark.backend
+def test_from_array(gpu_backend):
     arr = np.zeros((10, 10))
     gpu_arr = cle.Array.from_array(arr)
 
@@ -49,7 +55,8 @@ def test_from_array():
     assert gpu_arr.min() == 0
 
 
-def test_array_ufunc_add():
+@pytest.mark.backend
+def test_array_ufunc_add(gpu_backend):
     array1 = cle.push(np.ones((10, 10)))
     array2 = cle.push(np.ones((10, 10)))
     result = np.add(array1, array2)  # This should call array1.__array_ufunc__
@@ -58,7 +65,8 @@ def test_array_ufunc_add():
     assert np.all(res == 2)
 
 
-def test_repr():
+@pytest.mark.backend
+def test_repr(gpu_backend):
     array = cle.Array.zeros((10, 10))
     result = repr(array)
 

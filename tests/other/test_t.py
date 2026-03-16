@@ -1,11 +1,11 @@
 import numpy as np
+import pytest
 
 import pyclesperanto as cle
 
-cle.select_device("TX")
 
-
-def test_t_2d():
+@pytest.mark.backend
+def test_t_2d(gpu_backend):
     image = np.random.random((3, 2))
 
     cle_image = cle.asarray(image)
@@ -13,7 +13,8 @@ def test_t_2d():
     assert cle.array_equal(cle_image.T, image.T)
 
 
-def test_t_3d():
+@pytest.mark.backend
+def test_t_3d(gpu_backend):
     image = np.random.random((3, 2, 5))
 
     cle_image = cle.asarray(image)

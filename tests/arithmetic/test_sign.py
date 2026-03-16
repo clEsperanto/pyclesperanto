@@ -3,11 +3,10 @@ import pytest
 
 import pyclesperanto as cle
 
-cle.select_device("TX")
-
 
 # @pytest.mark.skip(reason="Fails on github CI but passes locally")
-def test_sign():
+@pytest.mark.backend
+def test_sign(gpu_backend):
     data = np.asarray([-np.inf, np.inf, 0, 1, -1, np.nan])
 
     print(np.sign(data))

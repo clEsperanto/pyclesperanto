@@ -1,9 +1,11 @@
 import numpy as np
+import pytest
 
 import pyclesperanto as cle
 
 
-def test_gauss_otsu_labeling():
+@pytest.mark.backend
+def test_gauss_otsu_labeling(gpu_backend):
 
     gpu_input = cle.push(
         np.asarray(

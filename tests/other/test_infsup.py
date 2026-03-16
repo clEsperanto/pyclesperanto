@@ -1,12 +1,12 @@
 import numpy as np
+import pytest
 from skimage.segmentation.morphsnakes import inf_sup, sup_inf
 
 import pyclesperanto as cle
 
-cle.select_device("TX")
 
-
-def test_inferior_superior_2d():
+@pytest.mark.backend
+def test_inferior_superior_2d(gpu_backend):
     test = cle.push(
         np.asarray(
             [
@@ -51,7 +51,8 @@ def test_inferior_superior_2d():
     assert np.array_equal(a, b)
 
 
-def test_inferior_superior_3d():
+@pytest.mark.backend
+def test_inferior_superior_3d(gpu_backend):
     test = cle.push(
         np.asarray(
             [

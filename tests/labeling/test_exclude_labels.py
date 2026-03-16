@@ -1,11 +1,11 @@
 import numpy as np
+import pytest
 
 import pyclesperanto as cle
 
-cle.select_device("TX")
 
-
-def test_exclude_labels_2d():
+@pytest.mark.backend
+def test_exclude_labels_2d(gpu_backend):
     gpu_input = cle.push(
         np.asarray(
             [
@@ -45,7 +45,8 @@ def test_exclude_labels_2d():
     assert np.array_equal(a, b)
 
 
-def test_exclude_labels_3d():
+@pytest.mark.backend
+def test_exclude_labels_3d(gpu_backend):
     gpu_input = cle.push(
         np.asarray(
             [

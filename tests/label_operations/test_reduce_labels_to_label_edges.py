@@ -1,9 +1,11 @@
 import numpy as np
+import pytest
 
 import pyclesperanto as cle
 
 
-def test_reduce_labels_to_label_edges():
+@pytest.mark.backend
+def test_reduce_labels_to_label_edges(gpu_backend):
     test = np.asarray(
         [
             [0, 0, 0, 0, 0, 0, 0, 0],

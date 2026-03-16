@@ -1,11 +1,11 @@
 import numpy as np
+import pytest
 
 import pyclesperanto as cle
 
-cle.select_device("TX")
 
-
-def test_histogram():
+@pytest.mark.backend
+def test_histogram(gpu_backend):
     test = cle.push(np.asarray([[1, 2, 4, 4, 2, 3], [3, 3, 4, 4, 5, 5]]))
 
     ref_histogram = [1, 2, 3, 4, 2]
@@ -20,7 +20,8 @@ def test_histogram():
     assert np.allclose(a, ref_histogram)
 
 
-def test_histogram_3d():
+@pytest.mark.backend
+def test_histogram_3d(gpu_backend):
     test = cle.push(np.asarray([[1, 2, 4, 4, 2, 3], [3, 3, 4, 4, 5, 5]]))
 
     ref_histogram = [1, 2, 3, 4, 2]
@@ -35,7 +36,8 @@ def test_histogram_3d():
     assert np.allclose(a, ref_histogram)
 
 
-def test_histogram_3d_2():
+@pytest.mark.backend
+def test_histogram_3d_2(gpu_backend):
     test = cle.push(np.asarray([[[1, 2, 4], [4, 2, 3]], [[3, 3, 4], [4, 5, 5]]]))
 
     ref_histogram = [1, 2, 3, 4, 2]

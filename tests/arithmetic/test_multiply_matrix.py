@@ -3,9 +3,6 @@ import pytest
 
 import pyclesperanto as cle
 
-cle.select_device("TX")
-
-
 # @pytest.mark.parametrize("shape", 2 ** np.arange(9, 11), ids=lambda x: f"{x}x{x}")
 # @pytest.mark.parametrize("target", ["cpu", "gpu"])
 # def test_multiply_matrix(shape, benchmark, target):
@@ -28,7 +25,8 @@ cle.select_device("TX")
 
 
 # make a test for matrix multiplication
-def test_multiply_matrix():
+@pytest.mark.backend
+def test_multiply_matrix(gpu_backend):
     matrix_a = np.random.rand(3, 3).astype("float32")
     matrix_b = np.random.rand(3, 3).astype("float32")
 

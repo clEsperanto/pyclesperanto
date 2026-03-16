@@ -1,11 +1,11 @@
 import numpy as np
+import pytest
 
 import pyclesperanto as cle
 
-cle.select_device("TX")
 
-
-def test_maximum_sphere_1():
+@pytest.mark.backend
+def test_maximum_sphere_1(gpu_backend):
     test = cle.push(np.asarray([[1, 1, 1], [1, 2, 1], [1, 1, 1]]))
 
     test2 = cle.create(test)
@@ -25,7 +25,8 @@ def test_maximum_sphere_1():
     assert np.mean(a) == 5
 
 
-def test_maximum_sphere_2():
+@pytest.mark.backend
+def test_maximum_sphere_2(gpu_backend):
     gpu_a = cle.push(np.asarray([[1, 1, 1], [1, 2, 1], [1, 1, 1]]))
     gpu_b = cle.create(gpu_a)
     cle.maximum_filter(gpu_a, gpu_b, 1, 1, 1, "sphere")

@@ -1,11 +1,11 @@
 import numpy as np
+import pytest
 
 import pyclesperanto as cle
 
-cle.select_device("TX")
 
-
-def test_maximum_of_all_pixels():
+@pytest.mark.backend
+def test_maximum_of_all_pixels(gpu_backend):
     np_input = np.asarray(
         [
             [[1, 2, 3, 10], [4, 5, 6, 11], [7, 8, 9, 12]],
@@ -24,7 +24,8 @@ def test_maximum_of_all_pixels():
     assert result == 15
 
 
-def test_maximum_of_all_pixels_against_numpy():
+@pytest.mark.backend
+def test_maximum_of_all_pixels_against_numpy(gpu_backend):
     from skimage.data import camera
 
     image = camera()

@@ -3,8 +3,6 @@ import pytest
 
 import pyclesperanto as cle
 
-cle.select_device("TX")
-
 
 class TestEvaluate:
     """Test suite for the evaluate function"""

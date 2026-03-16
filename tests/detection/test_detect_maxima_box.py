@@ -1,11 +1,11 @@
 import numpy as np
+import pytest
 
 import pyclesperanto as cle
 
-cle.select_device("TX")
 
-
-def test_detect_maxima_box():
+@pytest.mark.backend
+def test_detect_maxima_box(gpu_backend):
     gpu_input = cle.push(
         np.asarray(
             [

@@ -1,11 +1,11 @@
 import numpy as np
+import pytest
 
 import pyclesperanto as cle
 
-cle.select_device("TX")
 
-
-def test_set_image_borders():
+@pytest.mark.backend
+def test_set_image_borders(gpu_backend):
     result = cle.push(
         np.asarray(
             [

@@ -1,11 +1,11 @@
 import numpy as np
+import pytest
 
 import pyclesperanto as cle
 
-cle.select_device("TX")
 
-
-def test_array_equal():
+@pytest.mark.backend
+def test_array_equal(gpu_backend):
     input1 = np.asarray([1, 2, 3])
     input2 = np.asarray([4, 5, 7])
     input3 = np.asarray([1, 2, 3, 3])

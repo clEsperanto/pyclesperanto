@@ -1,9 +1,11 @@
 import numpy as np
+import pytest
 
 import pyclesperanto as cle
 
 
-def test_label_bounding_box_2d():
+@pytest.mark.backend
+def test_label_bounding_box_2d(gpu_backend):
 
     test = cle.push(
         np.asarray(

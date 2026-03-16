@@ -2,17 +2,15 @@
 # This code is auto-generated from CLIc 'cle::tier2.hpp' file, do not edit manually.
 #
 
-import importlib
 import warnings
 from typing import Optional
 
 import numpy as np
 
 from ._array import Image
+from ._backend import _get_backend
 from ._core import Device
 from ._decorators import plugin_function
-
-clic = importlib.import_module("._pyclesperanto", package="pyclesperanto")
 
 
 @plugin_function(categories=["combine", "in assistant"])
@@ -44,7 +42,9 @@ def absolute_difference(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_absoluteDifference
     """
-    return clic._absolute_difference(device, input_image0, input_image1, output_image)
+    return _get_backend()._absolute_difference(
+        device, input_image0, input_image1, output_image
+    )
 
 
 @plugin_function(categories=["combine", "in assistant"])
@@ -76,7 +76,7 @@ def add_images(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_addImages
     """
-    return clic._add_images(device, input_image0, input_image1, output_image)
+    return _get_backend()._add_images(device, input_image0, input_image1, output_image)
 
 
 @plugin_function(categories=["filter", "background removal", "in assistant"])
@@ -113,7 +113,7 @@ def bottom_hat_box(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_bottomHatBox
     """
-    return clic._bottom_hat_box(
+    return _get_backend()._bottom_hat_box(
         device,
         input_image,
         output_image,
@@ -157,7 +157,7 @@ def bottom_hat_sphere(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_bottomHatSphere
     """
-    return clic._bottom_hat_sphere(
+    return _get_backend()._bottom_hat_sphere(
         device,
         input_image,
         output_image,
@@ -205,7 +205,7 @@ def bottom_hat(
     [1] https://clij.github.io/clij2-docs/reference_bottomHatBox
     [2] https://clij.github.io/clij2-docs/reference_bottomHatSphere
     """
-    return clic._bottom_hat(
+    return _get_backend()._bottom_hat(
         device,
         input_image,
         output_image,
@@ -248,7 +248,7 @@ def clip(
     ----------
     [1] https://numpy.org/doc/stable/reference/generated/numpy.clip.html
     """
-    return clic._clip(
+    return _get_backend()._clip(
         device, input_image, output_image, float(min_intensity), float(max_intensity)
     )
 
@@ -284,7 +284,7 @@ def closing_box(
     -------
     Image
     """
-    return clic._closing_box(
+    return _get_backend()._closing_box(
         device,
         input_image,
         output_image,
@@ -325,7 +325,7 @@ def closing_sphere(
     -------
     Image
     """
-    return clic._closing_sphere(
+    return _get_backend()._closing_sphere(
         device,
         input_image,
         output_image,
@@ -370,7 +370,7 @@ def grayscale_closing(
     -------
     Image
     """
-    return clic._grayscale_closing(
+    return _get_backend()._grayscale_closing(
         device,
         input_image,
         output_image,
@@ -407,7 +407,7 @@ def closing(
     -------
     Image
     """
-    return clic._closing(device, input_image, footprint, output_image)
+    return _get_backend()._closing(device, input_image, footprint, output_image)
 
 
 @plugin_function(categories=["filter", "in assistant"])
@@ -444,7 +444,7 @@ def binary_closing(
     -------
     Image
     """
-    return clic._binary_closing(
+    return _get_backend()._binary_closing(
         device,
         input_image,
         output_image,
@@ -488,7 +488,7 @@ def concatenate(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_combineHorizontally
     """
-    return clic._concatenate(
+    return _get_backend()._concatenate(
         device, input_image0, input_image1, output_image, int(axis)
     )
 
@@ -523,7 +523,9 @@ def concatenate_along_x(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_combineHorizontally
     """
-    return clic._concatenate_along_x(device, input_image0, input_image1, output_image)
+    return _get_backend()._concatenate_along_x(
+        device, input_image0, input_image1, output_image
+    )
 
 
 @plugin_function(
@@ -556,7 +558,9 @@ def concatenate_along_y(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_combineVertically
     """
-    return clic._concatenate_along_y(device, input_image0, input_image1, output_image)
+    return _get_backend()._concatenate_along_y(
+        device, input_image0, input_image1, output_image
+    )
 
 
 @plugin_function(
@@ -589,7 +593,9 @@ def concatenate_along_z(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_concatenateStacks
     """
-    return clic._concatenate_along_z(device, input_image0, input_image1, output_image)
+    return _get_backend()._concatenate_along_z(
+        device, input_image0, input_image1, output_image
+    )
 
 
 @plugin_function
@@ -623,7 +629,7 @@ def count_touching_neighbors(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_countTouchingNeighbors
     """
-    return clic._count_touching_neighbors(
+    return _get_backend()._count_touching_neighbors(
         device, touch_matrix, touching_neighbors_count_destination, ignore_background
     )
 
@@ -653,7 +659,9 @@ def crop_border(
     -------
     Image
     """
-    return clic._crop_border(device, input_image, output_image, int(border_size))
+    return _get_backend()._crop_border(
+        device, input_image, output_image, int(border_size)
+    )
 
 
 @plugin_function(categories=["filter", "background removal", "in assistant"])
@@ -690,7 +698,7 @@ def divide_by_gaussian_background(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_divideByGaussianBackground
     """
-    return clic._divide_by_gaussian_background(
+    return _get_backend()._divide_by_gaussian_background(
         device,
         input_image,
         output_image,
@@ -721,7 +729,7 @@ def degrees_to_radians(
     -------
     Image
     """
-    return clic._degrees_to_radians(device, input_image, output_image)
+    return _get_backend()._degrees_to_radians(device, input_image, output_image)
 
 
 @plugin_function(categories=["binarize", "in assistant"])
@@ -760,7 +768,7 @@ def detect_maxima_box(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_detectMaximaBox
     """
-    return clic._detect_maxima_box(
+    return _get_backend()._detect_maxima_box(
         device,
         input_image,
         output_image,
@@ -810,7 +818,7 @@ def detect_maxima(
     [1] https://clij.github.io/clij2-docs/reference_detectMaximaBox
     [2] https://clij.github.io/clij2-docs/reference_detectMaximaSphere
     """
-    return clic._detect_maxima(
+    return _get_backend()._detect_maxima(
         device,
         input_image,
         output_image,
@@ -857,7 +865,7 @@ def detect_minima_box(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_detectMinimaBox
     """
-    return clic._detect_minima_box(
+    return _get_backend()._detect_minima_box(
         device,
         input_image,
         output_image,
@@ -907,7 +915,7 @@ def detect_minima(
     [1] https://clij.github.io/clij2-docs/reference_detectMinimaBox
     [2] https://clij.github.io/clij2-docs/reference_detectMinimaSphere
     """
-    return clic._detect_minima(
+    return _get_backend()._detect_minima(
         device,
         input_image,
         output_image,
@@ -964,7 +972,7 @@ def difference_of_gaussian(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_differenceOfGaussian3D
     """
-    return clic._difference_of_gaussian(
+    return _get_backend()._difference_of_gaussian(
         device,
         input_image,
         output_image,
@@ -1003,7 +1011,9 @@ def extend_labeling_via_voronoi(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_extendLabelingViaVoronoi
     """
-    return clic._extend_labeling_via_voronoi(device, input_image, output_image)
+    return _get_backend()._extend_labeling_via_voronoi(
+        device, input_image, output_image
+    )
 
 
 @plugin_function(categories=["filter"])
@@ -1033,7 +1043,7 @@ def invert(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_invert
     """
-    return clic._invert(device, input_image, output_image)
+    return _get_backend()._invert(device, input_image, output_image)
 
 
 @plugin_function(categories=["label", "in assistant"])
@@ -1063,7 +1073,7 @@ def label_spots(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_labelSpots
     """
-    return clic._label_spots(device, input_image, output_image)
+    return _get_backend()._label_spots(device, input_image, output_image)
 
 
 @plugin_function
@@ -1091,7 +1101,9 @@ def pointlist_to_labelled_spots(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_pointlistToLabelledSpots
     """
-    return clic._pointlist_to_labelled_spots(device, input_image, output_image)
+    return _get_backend()._pointlist_to_labelled_spots(
+        device, input_image, output_image
+    )
 
 
 @plugin_function(categories=["filter", "in assistant"])
@@ -1115,7 +1127,7 @@ def large_hessian_eigenvalue(
     -------
     Image
     """
-    return clic._large_hessian_eigenvalue(device, input_image, output_image)
+    return _get_backend()._large_hessian_eigenvalue(device, input_image, output_image)
 
 
 @plugin_function
@@ -1137,7 +1149,7 @@ def maximum_of_all_pixels(input_image: Image, device: Optional[Device] = None) -
     ----------
     [1] https://clij.github.io/clij2-docs/reference_maximumOfAllPixels
     """
-    return clic._maximum_of_all_pixels(device, input_image)
+    return _get_backend()._maximum_of_all_pixels(device, input_image)
 
 
 @plugin_function
@@ -1159,7 +1171,7 @@ def minimum_of_all_pixels(input_image: Image, device: Optional[Device] = None) -
     ----------
     [1] https://clij.github.io/clij2-docs/reference_minimumOfAllPixels
     """
-    return clic._minimum_of_all_pixels(device, input_image)
+    return _get_backend()._minimum_of_all_pixels(device, input_image)
 
 
 @plugin_function
@@ -1186,7 +1198,7 @@ def minimum_of_masked_pixels(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_minimumOfMaskedPixels
     """
-    return clic._minimum_of_masked_pixels(device, input_image, mask)
+    return _get_backend()._minimum_of_masked_pixels(device, input_image, mask)
 
 
 @plugin_function(categories=["filter", "in assistant"])
@@ -1220,7 +1232,7 @@ def opening_box(
     -------
     Image
     """
-    return clic._opening_box(
+    return _get_backend()._opening_box(
         device,
         input_image,
         output_image,
@@ -1261,7 +1273,7 @@ def opening_sphere(
     -------
     Image
     """
-    return clic._opening_sphere(
+    return _get_backend()._opening_sphere(
         device,
         input_image,
         output_image,
@@ -1305,7 +1317,7 @@ def grayscale_opening(
     -------
     Image
     """
-    return clic._grayscale_opening(
+    return _get_backend()._grayscale_opening(
         device,
         input_image,
         output_image,
@@ -1342,7 +1354,7 @@ def opening(
     -------
     Image
     """
-    return clic._opening(device, input_image, footprint, output_image)
+    return _get_backend()._opening(device, input_image, footprint, output_image)
 
 
 @plugin_function(categories=["filter", "in assistant"])
@@ -1379,7 +1391,7 @@ def binary_opening(
     -------
     Image
     """
-    return clic._binary_opening(
+    return _get_backend()._binary_opening(
         device,
         input_image,
         output_image,
@@ -1411,7 +1423,7 @@ def radians_to_degrees(
     -------
     Image
     """
-    return clic._radians_to_degrees(device, input_image, output_image)
+    return _get_backend()._radians_to_degrees(device, input_image, output_image)
 
 
 @plugin_function(categories=["label processing", "in assistant", "bia-bob-suggestion"])
@@ -1440,7 +1452,9 @@ def reduce_labels_to_label_edges(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_reduceLabelsToLabelEdges
     """
-    return clic._reduce_labels_to_label_edges(device, input_image, output_image)
+    return _get_backend()._reduce_labels_to_label_edges(
+        device, input_image, output_image
+    )
 
 
 @plugin_function(categories=["filter", "in assistant"])
@@ -1464,7 +1478,7 @@ def small_hessian_eigenvalue(
     -------
     Image
     """
-    return clic._small_hessian_eigenvalue(device, input_image, output_image)
+    return _get_backend()._small_hessian_eigenvalue(device, input_image, output_image)
 
 
 @plugin_function(categories=["filter"])
@@ -1493,7 +1507,7 @@ def square(
     ----------
     [1] https://numpy.org/doc/stable/reference/generated/numpy.square.html
     """
-    return clic._square(device, input_image, output_image)
+    return _get_backend()._square(device, input_image, output_image)
 
 
 @plugin_function(categories=["combine", "in assistant"])
@@ -1524,7 +1538,9 @@ def squared_difference(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_squaredDifference
     """
-    return clic._squared_difference(device, input_image0, input_image1, output_image)
+    return _get_backend()._squared_difference(
+        device, input_image0, input_image1, output_image
+    )
 
 
 @plugin_function(categories=["filter", "edge detection", "in assistant"])
@@ -1563,7 +1579,7 @@ def standard_deviation_box(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_standardDeviationBox
     """
-    return clic._standard_deviation_box(
+    return _get_backend()._standard_deviation_box(
         device,
         input_image,
         output_image,
@@ -1609,7 +1625,7 @@ def standard_deviation_sphere(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_standardDeviationSphere
     """
-    return clic._standard_deviation_sphere(
+    return _get_backend()._standard_deviation_sphere(
         device,
         input_image,
         output_image,
@@ -1659,7 +1675,7 @@ def standard_deviation(
     [1] https://clij.github.io/clij2-docs/reference_standardDeviationBox
     [2] https://clij.github.io/clij2-docs/reference_standardDeviationSphere
     """
-    return clic._standard_deviation(
+    return _get_backend()._standard_deviation(
         device,
         input_image,
         output_image,
@@ -1707,7 +1723,7 @@ def subtract_gaussian_background(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_subtractGaussianBackground
     """
-    return clic._subtract_gaussian_background(
+    return _get_backend()._subtract_gaussian_background(
         device,
         input_image,
         output_image,
@@ -1746,7 +1762,9 @@ def subtract_images(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_subtractImages
     """
-    return clic._subtract_images(device, input_image0, input_image1, output_image)
+    return _get_backend()._subtract_images(
+        device, input_image0, input_image1, output_image
+    )
 
 
 @plugin_function(categories=["transform", "in assistant"])
@@ -1780,7 +1798,9 @@ def sub_stack(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_subStack
     """
-    return clic._sub_stack(device, input_image, output_image, int(start_z), int(end_z))
+    return _get_backend()._sub_stack(
+        device, input_image, output_image, int(start_z), int(end_z)
+    )
 
 
 @plugin_function(categories=["transform", "in assistant"])
@@ -1816,7 +1836,7 @@ def reduce_stack(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_reduceStack
     """
-    return clic._reduce_stack(
+    return _get_backend()._reduce_stack(
         device, input_image, output_image, int(reduction_factor), int(offset)
     )
 
@@ -1842,7 +1862,7 @@ def sum_of_all_pixels(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_sumOfAllPixels
     """
-    return clic._sum_of_all_pixels(device, input_image)
+    return _get_backend()._sum_of_all_pixels(device, input_image)
 
 
 @plugin_function(categories=["filter", "background removal", "in assistant"])
@@ -1879,7 +1899,7 @@ def top_hat_box(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_topHatBox
     """
-    return clic._top_hat_box(
+    return _get_backend()._top_hat_box(
         device,
         input_image,
         output_image,
@@ -1925,7 +1945,7 @@ def top_hat_sphere(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_topHatSphere
     """
-    return clic._top_hat_sphere(
+    return _get_backend()._top_hat_sphere(
         device,
         input_image,
         output_image,
@@ -1973,7 +1993,7 @@ def top_hat(
     [1] https://clij.github.io/clij2-docs/reference_topHatBox
     [2] https://clij.github.io/clij2-docs/reference_topHatSphere
     """
-    return clic._top_hat(
+    return _get_backend()._top_hat(
         device,
         input_image,
         output_image,
@@ -2016,7 +2036,7 @@ def extended_depth_of_focus_variance_projection(
     -------
     Image
     """
-    return clic._extended_depth_of_focus_variance_projection(
+    return _get_backend()._extended_depth_of_focus_variance_projection(
         device,
         input_image,
         output_image,
@@ -2052,7 +2072,7 @@ def extended_depth_of_focus_sobel_projection(
     -------
     Image
     """
-    return clic._extended_depth_of_focus_sobel_projection(
+    return _get_backend()._extended_depth_of_focus_sobel_projection(
         device, input_image, output_image, float(sigma)
     )
 
@@ -2090,7 +2110,7 @@ def hessian_gaussian_eigenvalues(
     -------
     Image
     """
-    return clic._hessian_gaussian_eigenvalues(
+    return _get_backend()._hessian_gaussian_eigenvalues(
         device,
         input_image,
         small_eigenvalue,
@@ -2131,7 +2151,7 @@ def generate_proximal_neighbors_matrix(
     -------
     Image
     """
-    return clic._generate_proximal_neighbors_matrix(
+    return _get_backend()._generate_proximal_neighbors_matrix(
         device,
         input_image_matrix,
         output_image_matrix,

@@ -2,17 +2,15 @@
 # This code is auto-generated from CLIc 'cle::tier8.hpp' file, do not edit manually.
 #
 
-import importlib
 import warnings
 from typing import Optional
 
 import numpy as np
 
 from ._array import Image
+from ._backend import _get_backend
 from ._core import Device
 from ._decorators import plugin_function
-
-clic = importlib.import_module("._pyclesperanto", package="pyclesperanto")
 
 
 @plugin_function(categories=["label processing", "in assistant", "bia-bob-suggestion"])
@@ -42,7 +40,7 @@ def smooth_labels(
     -------
     Image
     """
-    return clic._smooth_labels(device, input_image, output_image, int(radius))
+    return _get_backend()._smooth_labels(device, input_image, output_image, int(radius))
 
 
 @plugin_function(categories=["label processing", "in assistant", "bia-bob-suggestion"])
@@ -71,7 +69,9 @@ def smooth_connected_labels(
     -------
     Image
     """
-    return clic._smooth_connected_labels(device, input_image, output_image, int(radius))
+    return _get_backend()._smooth_connected_labels(
+        device, input_image, output_image, int(radius)
+    )
 
 
 @plugin_function
@@ -95,7 +95,7 @@ def fft(
     -------
     Image
     """
-    return clic._fft(device, input_image, output_image)
+    return _get_backend()._fft(device, input_image, output_image)
 
 
 @plugin_function
@@ -119,7 +119,7 @@ def ifft(
     -------
     Image
     """
-    return clic._ifft(device, input_image, output_image)
+    return _get_backend()._ifft(device, input_image, output_image)
 
 
 @plugin_function
@@ -153,7 +153,9 @@ def convolve_fft(
     -------
     Image
     """
-    return clic._convolve_fft(device, input_image, kernel, output_image, correlate)
+    return _get_backend()._convolve_fft(
+        device, input_image, kernel, output_image, correlate
+    )
 
 
 @plugin_function
@@ -196,7 +198,7 @@ def deconvolve_fft(
     -------
     Image
     """
-    return clic._deconvolve_fft(
+    return _get_backend()._deconvolve_fft(
         device,
         input_image,
         psf,

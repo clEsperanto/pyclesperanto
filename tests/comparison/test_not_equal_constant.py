@@ -1,11 +1,11 @@
 import numpy as np
+import pytest
 
 import pyclesperanto as cle
 
-cle.select_device("TX")
 
-
-def test_not_equal_constant():
+@pytest.mark.backend
+def test_not_equal_constant(gpu_backend):
     test1 = cle.push(
         np.asarray(
             [

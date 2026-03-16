@@ -1,11 +1,11 @@
 import numpy as np
+import pytest
 
 import pyclesperanto as cle
 
-cle.select_device("TX")
 
-
-def test_min():
+@pytest.mark.backend
+def test_min(gpu_backend):
     example = np.asarray(
         [
             [
@@ -21,7 +21,8 @@ def test_min():
     assert gpu_example.min() == example.min()
 
 
-def test_min_max_xyz():
+@pytest.mark.backend
+def test_min_max_xyz(gpu_backend):
     example = np.asarray(
         [
             [
@@ -68,7 +69,8 @@ def test_min_max_xyz():
     assert np.allclose(gpu_example.sum(), example.sum())
 
 
-def test_min_out():
+@pytest.mark.backend
+def test_min_out(gpu_backend):
     example = np.asarray(
         [
             [
@@ -97,7 +99,8 @@ def test_min_out():
     assert np.allclose(minimum, copy)
 
 
-def test_max_out():
+@pytest.mark.backend
+def test_max_out(gpu_backend):
     example = np.asarray(
         [
             [
@@ -126,7 +129,8 @@ def test_max_out():
     assert np.allclose(maximum, copy)
 
 
-def test_sum_out():
+@pytest.mark.backend
+def test_sum_out(gpu_backend):
     example = np.asarray(
         [
             [

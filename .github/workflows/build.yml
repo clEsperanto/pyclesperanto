@@ -6,6 +6,9 @@ on:
   pull_request:
     branches: [ main ]
 
+env:
+  CUDA_VERSION: "12.6.0"
+
 jobs:
   build:
     name: ${{ matrix.platform }} (${{ matrix.python-version }}, ${{ matrix.backend }})
@@ -36,13 +39,14 @@ jobs:
       - name: Install CUDA Toolkit
         if: matrix.backend == 'CUDA'
         id: cuda-toolkit-linux
-        uses: Jimver/cuda-toolkit@v0.2.21
+        uses: Jimver/cuda-toolkit@v0.2.30
         with:
-          cuda: '12.6.0'
+          cuda: ${{ env.CUDA_VERSION }}
           method: 'network'
           sub-packages: '["nvcc","cudart","cudart-dev","nvrtc","nvrtc-dev"]'
           non-cuda-sub-packages: '["libnvjitlink","libnvjitlink-dev"]'
           use-local-cache: true
+          use-github-cache: false
 
       - name: Configure CUDA environment
         if: matrix.backend == 'CUDA'
@@ -54,11 +58,21 @@ jobs:
 
       - name: Install Python packages
         run: |
-          uv pip install pytest pytest-cov pytest-benchmark scikit-image
+          uv pip install numpy toolz matplotlib pytest pytest-cov pytest-benchmark scikit-image
 
-      - name: Build
+      - name: Build OpenCL backend
+        if: matrix.backend == 'OPENCL'
         run: |
-          uv pip install . -v --config-settings=cmake.define.CLE_BACKEND=${{ matrix.backend }}
+          uv pip install ./backends/opencl -v
+
+      - name: Build CUDA backend
+        if: matrix.backend == 'CUDA'
+        run: |
+          uv pip install ./backends/cuda -v
+
+      - name: Build root package
+        run: |
+          uv pip install --no-deps . -v
 
       - name: Import Test
         run: |

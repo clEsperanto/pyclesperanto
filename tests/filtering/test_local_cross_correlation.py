@@ -1,11 +1,11 @@
 import numpy as np
+import pytest
 
 import pyclesperanto as cle
 
-cle.select_device("TX")
 
-
-def test_local_cross_correlation():
+@pytest.mark.backend
+def test_local_cross_correlation(gpu_backend):
     test = cle.push(np.asarray([[0, 0, 0], [0, 1, 0], [0, 0, 0]]))
 
     test1 = cle.push(np.asarray([[0, 1, 0], [1, 2, 1], [0, 1, 0]]))

@@ -2,6 +2,7 @@
 # This code is auto-generated from CLIc 'cle::tier5.hpp' file, do not edit manually.
 #
 
+import importlib
 import warnings
 from typing import Optional
 

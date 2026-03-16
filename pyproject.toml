@@ -52,6 +52,7 @@ plugin_pyclesperanto = "pyclesperanto._bia_bob_plugins:list_bia_bob_plugins"
 
 [project.optional-dependencies]
 cuda = ["pyclesperanto-cuda; sys_platform != 'darwin'"]
+all = ["pyclesperanto-opencl", "pyclesperanto-cuda; sys_platform != 'darwin'"]
 
 # =============================================================================
 # Hatch Configuration

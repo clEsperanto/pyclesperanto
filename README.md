@@ -1,4 +1,4 @@
-# pyclEsperanto
+# pyclesperanto
 
 [![Image.sc Forum](https://img.shields.io/badge/dynamic/json.svg?label=forum&amp;url=https%3A%2F%2Fforum.image.sc%2Ftags%2Fpyclesperanto.json&amp;query=%24.topic_list.tags.0.topic_count&amp;colorB=green&amp;&amp;suffix=%20topics&amp;logo=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAOCAYAAAAfSC3RAAABPklEQVR42m3SyyqFURTA8Y2BER0TDyExZ+aSPIKUlPIITFzKeQWXwhBlQrmFgUzMMFLKZeguBu5y+//17dP3nc5vuPdee6299gohUYYaDGOyyACq4JmQVoFujOMR77hNfOAGM+hBOQqB9TjHD36xhAa04RCuuXeKOvwHVWIKL9jCK2bRiV284QgL8MwEjAneeo9VNOEaBhzALGtoRy02cIcWhE34jj5YxgW+E5Z4iTPkMYpPLCNY3hdOYEfNbKYdmNngZ1jyEzw7h7AIb3fRTQ95OAZ6yQpGYHMMtOTgouktYwxuXsHgWLLl+4x++Kx1FJrjLTagA77bTPvYgw1rRqY56e+w7GNYsqX6JfPwi7aR+Y5SA+BXtKIRfkfJAYgj14tpOF6+I46c4/cAM3UhM3JxyKsxiOIhH0IO6SH/A1Kb1WBeUjbkAAAAAElFTkSuQmCC)](https://forum.image.sc/tag/pyclesperanto)
 [![Conda Version](https://img.shields.io/conda/vn/conda-forge/pyclesperanto.svg)](https://anaconda.org/conda-forge/pyclesperanto)
@@ -9,14 +9,14 @@
 [![codecov](https://codecov.io/gh/clesperanto/pyclesperanto/branch/main/graph/badge.svg)](https://codecov.io/gh/clesperanto/pyclesperanto)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.13853800.svg)](https://doi.org/10.5281/zenodo.13853800)
 
-__pyclEsperanto__ is the python package of [clEsperanto] - a multi-language framework for GPU-accelerated image processing.
+__pyclesperanto__ is the python package of [clEsperanto] - a multi-language framework for GPU-accelerated image processing.
 It relies on a familly of [OpenCL kernels] originated from [CLIJ].
 This python package uses [PyBind11] to wrap the C++ [CLIc] library as a processing backend.
 
-## Installation and Uses
+## Installation, Documentation, and Uses
 
-See the [documentation] for full installation instructions, guides, and examples.
-You can also find additional information in the [image.sc forum] under the tag `clesperanto`
+See the [documentation] for full installation instructions, guides, and examples on how to use the pyclesperanto.  
+If you encountering any difficulties or interrogation we encourage you to raise your question in the [image.sc forum] under the tag `clesperanto`.
 
 ## __Code Example__
 
@@ -50,68 +50,7 @@ output_image = cle.pull(labeled)
 imsave("result.tif", output_image)
 ```
 
-## __Examples & Demos__
-
-<table border="0">
-<tr><td>
-<img src="https://github.com/clEsperanto/pyclesperanto/blob/main/demos/images/select_device.png?raw=true" width="300"/>
-</td><td>
-
-* [Select and Manage devices](https://github.com/clEsperanto/pyclesperanto/tree/main/docs/demos/api/select_devices.ipynb)
-* [Host-Device memory management](https://github.com/clEsperanto/pyclesperanto/tree/main/docs/demos/api/push_pull_create.ipynb)
-* [Process an image](https://github.com/clEsperanto/pyclesperanto/tree/main/docs/demos/api/process_image.ipynb)
-
-</td></tr>
-
-<tr><td>
-<img src="https://github.com/clEsperanto/pyclesperanto/blob/main/demos/images/crop_and_paste_images.png?raw=true" width="300"/>
-</td><td>
-
-* [Crop, Flip, Paste arrays](https://github.com/clEsperanto/pyclesperanto/tree/main/docs/demos/basics/crop_flip_paste.ipynb)
-* [Math operations](https://github.com/clEsperanto/pyclesperanto/tree/main/docs/demos/basics/arithmetic_operators.ipynb)
-* [Matrix operations](https://github.com/clEsperanto/pyclesperanto/tree/main/docs/demos/basics/matrices_operations.ipynb)
-* [Vector and Matrix operations](https://github.com/clEsperanto/pyclesperanto/tree/main/docs/demos/basics/vectors_and_matrices_operations.ipynb)
-* [How to inspecting 3D image](https://github.com/clEsperanto/pyclesperanto/tree/main/docs/demos/basics/inspecting_3d_images.ipynb)
-
-</td></tr>
-
-
-<tr><td>
-<img src="https://github.com/clEsperanto/pyclesperanto/blob/main/demos/images/segmentation_3d.png?raw=true" width="300"/>
-</td><td>
-
-* [Segment and analyse blobs](https://github.com/clEsperanto/pyclesperanto/tree/main/docs/demos/examples/thresholding.ipynb)
-* [Voronoi-Otsu labeling](https://github.com/clEsperanto/pyclesperanto/tree/main/docs/demos/examples/voronoi_otsu_labeling.ipynb)
-* [Cell segmentation based on membrane](https://github.com/clEsperanto/pyclesperanto/tree/main/docs/demos/examples/membrane_segmentation_2d.ipynb)
-* [Cell segmentation in 3D](https://github.com/clEsperanto/pyclesperanto/tree/main/docs/demos/examples/Segmentation_3D.ipynb)
-
-</td></tr>
-
-
-<tr><td>
-<img src="https://github.com/clEsperanto/pyclesperanto/blob/main/demos/images/affine_transforms.png?raw=true" width="300"/>
-</td><td>
-
-* [Edge detection](https://github.com/clEsperanto/pyclesperanto/tree/main/docs/demos/examples/edge_detection_and_enhancement.ipynb)
-* [Ridge and Tube detection](https://github.com/clEsperanto/pyclesperanto/tree/main/docs/demos/examples/ridge_detection.ipynb)
-* [Parametric maps](https://github.com/clEsperanto/pyclesperanto/tree/main/docs/demos/examples/parametric_maps.ipynb)
-* [Rotation, scaling, translation, and affine transform](https://github.com/clEsperanto/pyclesperanto/tree/main/docs/demos/examples/affine_transforms.ipynb)
-<!-- * [Morphomathic operations](https://github.com/clEsperanto/pyclesperanto/tree/main/docs/demos/examples/morphomath_operation.ipynb)   -->
-
-</td></tr>
-
-<tr><td>
-<img src="https://github.com/clEsperanto/pyclesperanto/blob/main/demos/images/multi-device-tiling.png?raw=true" width="300"/>
-</td><td>
-
-* [Multi-device tile processing](https://github.com/clEsperanto/pyclesperanto/tree/main/docs/demos/examples/multi-gpu_tile_processing_with_dask.ipynb)
-* [Ask Bia-Bob example](https://github.com/clEsperanto/pyclesperanto/tree/main/docs/demos/interoperability/biabob-example.ipynb)
-
-</td></tr>
-
-</table>
-
-More usage and example can be found as notebooks in the [demos](https://github.com/clEsperanto/pyclesperanto/tree/main/docs/demos) folder.
+More usage and example can be found as notebooks in the [tutorial section](https://clesperanto-doc.readthedocs.io/en/latest/docs/pyclesperanto/tutorials.html) of the documentation as well as in the [docs/demos](https://github.com/clEsperanto/pyclesperanto/tree/main/docs/demos) folder of the repository.
 
 # __Contributing and Feedback__
 

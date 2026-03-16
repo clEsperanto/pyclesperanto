@@ -29,7 +29,7 @@ classifiers = [
 ]
 dependencies = [
     "numpy>=1.20,<3",
-    "toolz>=1.1,<2",
+    "toolz>=0.11,<2",
     "matplotlib>=3.5,<4",
     "pyclesperanto-opencl"
 ]

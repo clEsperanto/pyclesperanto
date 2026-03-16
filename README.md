@@ -15,7 +15,7 @@ This python package uses [PyBind11] to wrap the C++ [CLIc] library as a processi
 
 ## Installation, Documentation, and Uses
 
-See the [documentation] for full installation instructions, guides, and examples on how to use the pyclesperanto.  
+See the [documentation] for full installation instructions, guides, and examples on how to use the pyclesperanto.
 If you encountering any difficulties or interrogation we encourage you to raise your question in the [image.sc forum] under the tag `clesperanto`.
 
 ## __Code Example__

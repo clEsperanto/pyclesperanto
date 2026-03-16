@@ -115,6 +115,10 @@ def _activate_clic_backend(name: str):
     and reset the Python-side current device."""
     from ._core import _current_device
 
+    # Map backend name to the expected C++ BackendType enum value
+    expected_types = {"opencl": "OpenCL", "cuda": "CUDA"}
+    expected = expected_types.get(name)
+
     try:
         _active_backend._BackendManager.set_backend(name)
     except RuntimeError as e:
@@ -124,6 +128,25 @@ def _activate_clic_backend(name: str):
             f"Available backends: {list_available_backends()}\n"
             "Try reinstalling or using a different backend."
         ) from e
+
+    # Verify the backend actually switched — catches C++ symbol interposition
+    # where the other backend's BackendManager singleton is used instead.
+    if expected is not None:
+        try:
+            actual_type = str(_active_backend._BackendManager.get_backend().type)
+            if expected not in actual_type:
+                raise RuntimeError(
+                    f"Backend switch to '{name}' appeared to succeed but the active "
+                    f"C++ backend is '{actual_type}' instead of '{expected}'.\n"
+                    "This is caused by C++ symbol interposition between backend shared libraries.\n"
+                    "Please upgrade pyclesperanto-opencl and pyclesperanto-cuda to the latest version:\n"
+                    "  pip install --upgrade pyclesperanto-opencl pyclesperanto-cuda"
+                )
+        except RuntimeError:
+            raise
+        except Exception:
+            pass  # If we can't verify, proceed anyway
+
     _current_device._instance = None
 
 

@@ -85,14 +85,8 @@ repair-wheel-command = """
 ## Current version is 12.6
 [tool.cibuildwheel.windows]
 before-build = "pip install delvewheel"
-environment = { SKBUILD_CMAKE_ARGS = "-DCLE_BACKEND=CUDA -DCUDA_TOOLKIT_ROOT_DIR=\"C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v12.6\"", PATH = "C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v12.6\\bin;$PATH" }
-repair-wheel-command = """
-  delvewheel show {wheel} && \
-  delvewheel repair \
-    --add-path "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v12.6/bin" \
-    --no-dll "nvcuda.dll;msvcp140.dll;vcruntime140_1.dll;vcruntime140.dll" \
-    -w {dest_dir} {wheel}
-"""
+environment = { SKBUILD_CMAKE_ARGS = "-DCLE_BACKEND=CUDA", CUDA_HOME = "C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v12.6", CUDA_PATH = "C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v12.6", PATH = "C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v12.6\\bin;$PATH"}
+repair-wheel-command = "delvewheel show {wheel} && delvewheel repair --add-path \"C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v12.6/bin\" --no-dll \"nvcuda.dll;msvcp140.dll;vcruntime140_1.dll;vcruntime140.dll\" -w {dest_dir} {wheel}"
 
 [tool.cibuildwheel.macos]
 # CUDA is not supported on macOS — builds are skipped via the skip pattern above

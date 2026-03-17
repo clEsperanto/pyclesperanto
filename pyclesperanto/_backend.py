@@ -1,4 +1,3 @@
-
 import warnings
 
 _opencl_module = None
@@ -39,6 +38,7 @@ def _warn_if_installed(backend_name, error):
     """Warn if a backend package is installed but its native extension failed to load."""
     try:
         from importlib.metadata import distribution
+
         distribution(_DIST_NAMES[backend_name])
     except Exception:
         return  # not installed — nothing to warn about
@@ -94,7 +94,9 @@ def select_backend(name: str):
 
     modules = {"opencl": _opencl_module, "cuda": _cuda_module}
     if name not in modules:
-        raise ValueError(f"Unknown backend '{name}'. Choose from: {', '.join(modules)}.")
+        raise ValueError(
+            f"Unknown backend '{name}'. Choose from: {', '.join(modules)}."
+        )
     if modules[name] is None:
         raise ValueError(
             f"'{name}' backend is not installed. "

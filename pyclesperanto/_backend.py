@@ -26,16 +26,16 @@ def _import_isolated(module_name):
     RTLD_DEEPBIND (Linux-only) forces each .so to resolve symbols from its
     own scope first, preventing this interposition.
     """
-    if platform.system() == "Linux":
-        RTLD_DEEPBIND = 0x00008
-        old_flags = sys.getdlopenflags()
-        try:
-            sys.setdlopenflags(old_flags | RTLD_DEEPBIND)
-            mod = __import__(module_name, fromlist=[module_name.rsplit(".", 1)[-1]])
-        finally:
-            sys.setdlopenflags(old_flags)
-    else:
-        mod = __import__(module_name, fromlist=[module_name.rsplit(".", 1)[-1]])
+    # if platform.system() == "Linux":
+    #     RTLD_DEEPBIND = 0x00008
+    #     old_flags = sys.getdlopenflags()
+    #     try:
+    #         sys.setdlopenflags(old_flags | RTLD_DEEPBIND)
+    #         mod = __import__(module_name, fromlist=[module_name.rsplit(".", 1)[-1]])
+    #     finally:
+    #         sys.setdlopenflags(old_flags)
+    # else:
+    mod = __import__(module_name, fromlist=[module_name.rsplit(".", 1)[-1]])
     return mod
 
 

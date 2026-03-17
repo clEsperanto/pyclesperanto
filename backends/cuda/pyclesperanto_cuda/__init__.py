@@ -1,5 +1,4 @@
 from importlib.metadata import version
-
 from ._pyclesperanto import *
 
 __version__ = version("pyclesperanto-cuda")

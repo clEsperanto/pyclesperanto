@@ -51,7 +51,8 @@ def _ensure_opencl_icd():
 
 _ensure_opencl_icd()
 
-from importlib.metadata import version # noqa: E402
+from importlib.metadata import version  # noqa: E402
+
 from ._pyclesperanto import *  # noqa: E402
 
 __version__ = version("pyclesperanto-opencl")

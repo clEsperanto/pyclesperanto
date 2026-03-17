@@ -27,17 +27,11 @@ classifiers = [
   "Topic :: Scientific/Engineering :: Image Processing",
   "Topic :: Scientific/Engineering :: Information Analysis",
 ]
-dependencies = [
-    "numpy>=1.20,<3",
-    "toolz>=0.11,<2",
-    "matplotlib>=3.5,<4",
-    "pyclesperanto-opencl"
-]
 description = "GPU-accelerated image processing in python using OpenCL or CUDA"
 name = "pyclesperanto"
 readme = "README.md"
 requires-python = ">=3.8"
-dynamic = ["version"]
+dynamic = ["version", "dependencies", "optional-dependencies"]
 license = { file = "LICENSE" }
 keywords = ["image processing", "GPU", "OpenCL", "CUDA", "scientific computing"]
 
@@ -50,20 +44,18 @@ Source = "https://github.com/clEsperanto/pyclesperanto/"
 [project.entry-points."bia_bob_plugins"]
 plugin_pyclesperanto = "pyclesperanto._bia_bob_plugins:list_bia_bob_plugins"
 
-[project.optional-dependencies]
-cuda = ["pyclesperanto-cuda; sys_platform != 'darwin'"]
-all = ["pyclesperanto-opencl", "pyclesperanto-cuda; sys_platform != 'darwin'"]
 
 # =============================================================================
 # Hatch Configuration
 # =============================================================================
-
 [tool.hatch.version]
 path = "pyclesperanto/_version.py"
 pattern = 'VERSION = "(?P<version>[0-9]+\.[0-9]+\.[0-9]+[a-z0-9.]*)"'
 
+[tool.hatch.metadata.hooks.custom]
+
 # =============================================================================
-# Tool Configuration
+# Additional Tool Configuration
 # =============================================================================
 
 [tool.pytest.ini_options]

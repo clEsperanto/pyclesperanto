@@ -15,8 +15,14 @@ This python package uses [PyBind11] to wrap the C++ [CLIc] library as a processi
 
 ## Installation, Documentation, and Uses
 
-See the [documentation] for full installation instructions, guides, and examples on how to use the pyclesperanto.
-If you encountering any difficulties or interrogation we encourage you to raise your question in the [image.sc forum] under the tag `clesperanto`.
+To install pyclesperanto from `pip`:
+```bash
+pip install pyclesperanto
+```
+
+Please, refere to the [documentation] for full installation instructions and options, guides, and examples on how to use the pyclesperanto.
+If you encountering any difficulties or have questions we encourage you to raise them on the [image.sc forum] under the tag `clesperanto`,
+or to open a [github issue](https://github.com/clEsperanto/pyclesperanto/issues).
 
 ## __Code Example__
 
@@ -50,12 +56,74 @@ output_image = cle.pull(labeled)
 imsave("result.tif", output_image)
 ```
 
+## __Examples & Demos__
+
+<table border="0">
+<tr><td>
+<img src="docs/demos/images/select_device.png" width="300"/>
+</td><td>
+
+* [Select and Manage devices](docs/demos/api/select_devices.ipynb)
+* [Host-Device memory management](docs/demos/api/push_pull_create.ipynb)
+* [Process an image](docs/demos/api/process_image.ipynb)
+
+</td></tr>
+
+<tr><td>
+<img src="docs/demos/images/crop_and_paste_images.png" width="300"/>
+</td><td>
+
+* [Crop, Flip, Paste arrays](docs/demos/basics/crop_flip_paste.ipynb)
+* [Math operations](docs/demos/basics/arithmetic_operators.ipynb)
+* [Matrix operations](docs/demos/basics/matrices_operations.ipynb)
+* [Vector and Matrix operations](docs/demos/basics/vectors_and_matrices_operations.ipynb)
+* [How to inspecting 3D image](docs/demos/basics/inspecting_3d_images.ipynb)
+
+</td></tr>
+
+
+<tr><td>
+<img src="docs/demos/images/segmentation_3d.png" width="300"/>
+</td><td>
+
+* [Segment and analyse blobs](docs/demos/examples/analyse_blobs.ipynb)
+* [Voronoi-Otsu labeling](docs/demos/examples/voronoi_otsu_labeling.ipynb)
+* [Cell segmentation based on membrane](docs/demos/examples/membrane_segmentation_2d.ipynb)
+* [Cell segmentation in 3D](docs/demos/examples/Segmentation_3D.ipynb)
+
+</td></tr>
+
+
+<tr><td>
+<img src="docs/demos/images/affine_transforms.png" width="300"/>
+</td><td>
+
+* [Edge detection](docs/demos/examples/edge_detection_and_enhancement.ipynb)
+* [Ridge and Tube detection](docs/demos/examples/ridge_detection.ipynb)
+* [Parametric maps](docs/demos/examples/parametric_maps.ipynb)
+* [Rotation, scaling, translation, and affine transform](docs/demos/examples/affine_transforms.ipynb)
+<!-- * [Morphomathic operations](https://github.com/clEsperanto/pyclesperanto/tree/main/docs/demos/examples/morphomath_operation.ipynb)   -->
+
+</td></tr>
+
+
+<tr><td>
+<img src="docs/demos/images/multi-device-tiling.png" width="300"/>
+</td><td>
+
+* [Multi-device tile processing](docs/demos/examples/multi-gpu_tile_processing_with_dask.ipynb)
+* [Ask Bia-Bob example](docs/demos/interoperability/biabob-example.ipynb)
+
+</td></tr>
+
+</table>
+
 More usage and example can be found as notebooks in the [tutorial section](https://clesperanto-doc.readthedocs.io/en/latest/docs/pyclesperanto/tutorials.html) of the documentation as well as in the [docs/demos](https://github.com/clEsperanto/pyclesperanto/tree/main/docs/demos) folder of the repository.
 
 # __Contributing and Feedback__
 
 [clEsperanto](https://github.com/clEsperanto) is developed in the open because we believe in the [open source community](https://clij.github.io/clij2-docs/community_guidelines).
-Feel free to drop feedback as [github issue](https://github.com/clEsperanto/CLIc/issues) or via [image.sc](https://image.sc). Contributions, of any kind, are very welcome. Feel free to reach out to us. And if you liked our work, star the repository, share it with your friends, and use it to make cool stuff!
+Feel free to drop feedback as [github issue](https://github.com/clEsperanto/pyclesperanto/issues) or via [image.sc](https://image.sc). Contributions, of any kind, are very welcome. Feel free to reach out to us. And if you liked our work, star the repository, share it with your friends, and use it to make cool stuff!
 
 ## Acknowledgements
 

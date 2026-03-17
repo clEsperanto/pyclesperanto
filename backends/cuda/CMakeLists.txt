@@ -22,6 +22,12 @@ option(BUILD_TESTING  OFF)
 option(BUILD_BENCHMARK  OFF)
 option(BUILD_SHARED_LIBS OFF)
 
+# Hide all internal C++ symbols so that CLIc symbols statically linked into this
+# .so do not collide with those in the other backend .so (e.g. opencl).
+# pybind11 already marks PyInit_* with __attribute__((visibility("default"))).
+set(CMAKE_CXX_VISIBILITY_PRESET hidden)
+set(CMAKE_VISIBILITY_INLINES_HIDDEN YES)
+
 
 ## CLIc dependency
 file(READ "${CMAKE_CURRENT_SOURCE_DIR}/../../pyclesperanto/_version.py" VERSION_FILE_CONTENT)
@@ -59,6 +65,12 @@ if(SKBUILD)
   target_link_libraries(${CY_PACKAGE_NAME} PRIVATE CLIc::CLIc pybind11::headers)
   target_include_directories(${CY_PACKAGE_NAME} PUBLIC "$<BUILD_INTERFACE:${WRAPPER_DIR}>")
   target_compile_definitions(${CY_PACKAGE_NAME} PRIVATE VERSION_INFO=${PROJECT_VERSION})
+
+  # On Linux, hide all symbols from static archives and force internal symbol resolution
+  # to prevent cross-module symbol interposition when both backend .so files are loaded.
+  if(UNIX AND NOT APPLE)
+      target_link_options(${CY_PACKAGE_NAME} PRIVATE "LINKER:--exclude-libs,ALL" "LINKER:-Bsymbolic")
+  endif()
 
   # Install the target to the appropriate location
   install(TARGETS ${CY_PACKAGE_NAME} DESTINATION ${PY_PACKAGE_NAME})

@@ -17,7 +17,7 @@ build-type = "Release"
 
 [tool.scikit-build.metadata.version]
 provider = "scikit_build_core.metadata.regex"
-regex = 'VERSION = "(?P<value>\d+\.\d+\.\d+)"'
+regex = 'VERSION = "(?P<value>[0-9]+\.[0-9]+\.[0-9]+[a-z0-9.]*)"'
 input = "../../pyclesperanto/_version.py"
 
 [tool.scikit-build.sdist]
@@ -69,4 +69,4 @@ before-all = "bash {package}/../../scripts/build-opencl-windows.sh"
 environment = { SKBUILD_CMAKE_ARGS = "-DOpenCL_LIBRARIES:FILEPATH='C:/Program Files/OpenCL-ICD-Loader/lib/OpenCL.lib';-DOpenCL_INCLUDE_DIRS:PATH='C:/Program Files/OpenCL-ICD-Loader/include/'" }
 
 [tool.cibuildwheel.macos]
-environment = { MACOSX_DEPLOYMENT_TARGET = '10.14' }
+environment = { MACOSX_DEPLOYMENT_TARGET = '11.0' }

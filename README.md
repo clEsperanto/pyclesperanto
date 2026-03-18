@@ -31,6 +31,7 @@ import pyclesperanto as cle
 from skimage.io import imread, imsave
 
 # initialize GPU
+cle.select_backend("opencl")
 device = cle.select_device()
 print("Used GPU: ", device)
 

@@ -320,7 +320,7 @@ def _reset_array_patch():
     2. Methods are re-patched onto the new class
     3. Module-level bindings are updated so cle.Array points to the new backend
     """
-    global _array_patched, Array, Image
+    global _array_patched
     _array_patched = False
 
     # Re-patch the Array class with the new backend

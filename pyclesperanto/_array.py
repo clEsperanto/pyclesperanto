@@ -314,7 +314,7 @@ def reshape(self, shape):
 
 def _reset_array_patch():
     """Reset the array patch flag and immediately re-patch with the new backend.
-    
+
     Called when the active backend changes. This ensures that:
     1. The Array class is re-bound to the new backend's _Array class
     2. Methods are re-patched onto the new class
@@ -322,18 +322,19 @@ def _reset_array_patch():
     """
     global _array_patched, Array, Image
     _array_patched = False
-    
+
     # Re-patch the Array class with the new backend
     _patch_array_class()
-    
+
     # Update module-level bindings in pyclesperanto/__init__.py
     # so that cle.Array always refers to the current backend's Array class
     import sys
-    init_module = sys.modules.get('pyclesperanto')
+
+    init_module = sys.modules.get("pyclesperanto")
     if init_module is not None:
         try:
-            setattr(init_module, 'Array', Array)
-            setattr(init_module, 'Image', Image)
+            setattr(init_module, "Array", Array)
+            setattr(init_module, "Image", Image)
         except Exception:
             pass  # Ignore any errors updating bindings
 

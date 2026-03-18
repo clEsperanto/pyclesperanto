@@ -109,8 +109,8 @@ def select_backend(name: str):
 
 def _activate_clic_backend(name: str):
     """Tell CLIc's C++ BackendManager to switch, and reset the current device."""
-    from ._core import _current_device
     from ._array import _reset_array_patch
+    from ._core import _current_device
 
     try:
         _active_backend._BackendManager.set_backend(name)
@@ -131,7 +131,7 @@ def _activate_clic_backend(name: str):
             pass  # old module may not support the new backend — that's fine
 
     _current_device._instance = None
-    
+
     # Force Array to re-bind to the new backend class on next use
     _reset_array_patch()
 

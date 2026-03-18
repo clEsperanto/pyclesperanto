@@ -26,9 +26,9 @@ pandas = ">=3.0.1,<4"
 napari = { version = ">=0.6.5, <0.7", extras = ["all"] }
 
 [tasks]
-build-ocl = "pip install -e . && pip install -e ./backends/opencl -v"
-build-cuda = "pip install -e . && pip install -e ./backends/cuda -v"
-build-all = " pip install -e . && pip install -e ./backends/opencl -v && pip install -e ./backends/cuda -v"
+build-ocl = "pip install -e ./backends/opencl -v && pip install -e ."
+build-cuda = "pip install -e ./backends/cuda -v && pip install -e ."
+build-all = "pip install -e ./backends/opencl -v && pip install -e ./backends/cuda -v && pip install -e ."
 test-cuda = "pytest -k cuda -v"
 test-ocl = "pytest -k opencl -v"
 test-all = "pytest -v"

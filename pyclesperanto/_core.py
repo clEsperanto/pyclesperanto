@@ -152,6 +152,7 @@ def _default_initialisation():
     """Select a default device on the active backend."""
     try:
         from ._backend import get_backend_name
+
         backend_name = get_backend_name()
         if backend_name is None:
             # _get_backend() triggers auto-selection; then re-read the name

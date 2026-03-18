@@ -1,3 +1,3 @@
-VERSION = "0.22.0rc1"
+VERSION = "0.22.0rc2"
 CLIC_VERSION = "0.22.0"
 COMMON_ALIAS = "cle"

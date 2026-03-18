@@ -81,13 +81,7 @@ def get_backend_name() -> str:
 
 
 def select_backend(name: str):
-    """Switch the active backend.
-
-    Parameters
-    ----------
-    name : str
-        Backend name: 'opencl' or 'cuda'.
-    """
+    """Switch the active backend."""
     global _active_backend
     _detect_backends()
     name = name.lower()
@@ -106,34 +100,28 @@ def select_backend(name: str):
     _active_backend = modules[name]
     _activate_clic_backend(name)
 
+    # Re-patch Array methods onto the new backend's _Array class
+    from ._array import _patch_array_class
+    _patch_array_class()
+
 
 def _activate_clic_backend(name: str):
-    """Tell CLIc's C++ BackendManager to switch, and reset the current device."""
-    from ._array import _reset_array_patch
+    """Tell CLIc's C++ BackendManager in EVERY loaded backend module to switch,
+    then reset the current device."""
     from ._core import _current_device
 
-    try:
-        _active_backend._BackendManager.set_backend(name)
-    except RuntimeError as e:
-        raise RuntimeError(
-            f"Failed to activate '{name}' backend: {e}\n"
-            "Ensure your GPU drivers are installed and compatible."
-        ) from e
-
-    # Also inform the previously-active module's BackendManager (defensive).
-    # Since each backend module is a separate shared library with its own
-    # BackendManager singleton, we ensure all instances see the new backend.
-    prev_module = _opencl_module if name == "cuda" else _cuda_module
-    if prev_module is not None:
-        try:
-            prev_module._BackendManager.set_backend(name)
-        except RuntimeError:
-            pass  # old module may not support the new backend — that's fine
+    # Notify all loaded backend modules so their singletons stay in sync
+    for mod in (_opencl_module, _cuda_module):
+        if mod is not None:
+            try:
+                mod._BackendManager.set_backend(name)
+            except RuntimeError as e:
+                raise RuntimeError(
+                    f"Failed to activate '{name}' backend in {mod.__name__}: {e}\n"
+                    "Ensure your GPU drivers are installed and compatible."
+                ) from e
 
     _current_device._instance = None
-
-    # Force Array to re-bind to the new backend class on next use
-    _reset_array_patch()
 
 
 def list_available_backends():

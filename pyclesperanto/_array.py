@@ -42,6 +42,7 @@ class Array(metaclass=_ArrayMeta):
     Attribute access is forwarded to the *currently active* backend _Array,
     so switching backends with select_backend() is fully transparent.
     """
+
     pass
 
 

@@ -102,6 +102,7 @@ def select_backend(name: str):
 
     # Re-patch Array methods onto the new backend's _Array class
     from ._array import _patch_array_class
+
     _patch_array_class()
 
 

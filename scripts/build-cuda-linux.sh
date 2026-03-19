@@ -5,7 +5,6 @@ CUDA_VERSION="12-6"
 
 set -e -x
 
-# Install CUDA toolkit in manylinux container (AlmaLinux 8 / CentOS 8)
 yum install -y yum-utils
 yum-config-manager --add-repo https://developer.download.nvidia.com/compute/cuda/repos/rhel8/x86_64/cuda-rhel8.repo
 
@@ -19,8 +18,11 @@ yum install -y \
     libnvjitlink-devel-${CUDA_VERSION} \
     cuda-driver-devel-${CUDA_VERSION}
 
-# Create stub symlink for linking
+# Debug: confirm builtins is installed
+echo "=== Installed nvrtc files ==="
+rpm -ql cuda-nvrtc-${CUDA_VERSION} | grep builtins || true
+find /usr/local/cuda* -name "libnvrtc-builtins*" || true
+
 ln -sf /usr/local/cuda/lib64/stubs/libcuda.so /usr/local/cuda/lib64/stubs/libcuda.so.1
 
-# Append license information
 echo "pyclesperanto-cuda wheel includes NVIDIA CUDA toolkit components subject to the NVIDIA CUDA EULA" >>"${SCRIPT_DIR}/../LICENSE"

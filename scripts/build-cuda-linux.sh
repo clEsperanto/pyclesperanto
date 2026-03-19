@@ -12,9 +12,12 @@ yum-config-manager --add-repo https://developer.download.nvidia.com/compute/cuda
 yum install -y \
     cuda-nvcc-${CUDA_VERSION} \
     cuda-cudart-devel-${CUDA_VERSION} \
+    cuda-cudart-${CUDA_VERSION} \
     cuda-nvrtc-devel-${CUDA_VERSION} \
-    cuda-driver-devel-${CUDA_VERSION} \
-    libnvjitlink-devel-${CUDA_VERSION}
+    cuda-nvrtc-${CUDA_VERSION} \
+    libnvjitlink-${CUDA_VERSION} \
+    libnvjitlink-devel-${CUDA_VERSION} \
+    cuda-driver-devel-${CUDA_VERSION}
 
 # Create stub symlink for linking
 ln -sf /usr/local/cuda/lib64/stubs/libcuda.so /usr/local/cuda/lib64/stubs/libcuda.so.1

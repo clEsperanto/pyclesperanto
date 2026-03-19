@@ -634,7 +634,6 @@ def __repr_html__(self):
 
     from ._functionalities import imshow
 
-
     size_in_pixels = np.prod(self.size)
     size_in_bytes = size_in_pixels * self.dtype.itemsize
     labels = self.dtype == np.uint32

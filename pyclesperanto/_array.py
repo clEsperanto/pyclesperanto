@@ -388,8 +388,8 @@ def _patch_array_class():
     setattr(BackendArray, "__ne__", _operators.__ne__)
     setattr(BackendArray, "__pow__", _operators.__pow__)
     setattr(BackendArray, "__ipow__", _operators.__ipow__)
-    setattr(BackendArray, "_plt_to_png", _operators.__plt_to_png__)
-    setattr(BackendArray, "_png_to_html", _operators.__png_to_html__)
+    # setattr(BackendArray, "_figure_to_png", _operators.__figure_to_png__)
+    # setattr(BackendArray, "_png_to_html", _operators.__png_to_html__)
     setattr(BackendArray, "_repr_html_", _operators.__repr_html__)
     setattr(BackendArray, "__iter__", _operators.__iter__)
     setattr(BackendArray, "__setitem__", _operators.__setitem__)
@@ -401,19 +401,17 @@ Image = Union[np.ndarray, Array]
 
 def is_image(object):
     """Returns True if the given object is an image."""
-    return (
-        isinstance(object, np.ndarray)
-        or isinstance(object, tuple)
-        or isinstance(object, list)
-        or isinstance(object, Array)
-        or str(type(object))
-        in [
-            "<​class 'cupy._core.core.ndarray'>",
-            "<​class 'dask.array.core.Array'>",
-            "<​class 'xarray.core.dataarray.DataArray'>",
-            "<​class 'resource_backed_dask_array.ResourceBackedDaskArray'>",
-            "<​class 'torch.Tensor'>",
-            "<​class 'pyclesperanto_prototype._tier0._pycl.OCLArray'>",
-            "<​class 'napari.layers._multiscale_data.MultiScaleData'>",
-        ]
-    )
+    if isinstance(object, (np.ndarray, tuple, list, Array)):
+        return True
+
+    type_str = type(object).__module__ + "." + type(object).__qualname__
+
+    return type_str in [
+        "cupy._core.core.ndarray",
+        "dask.array.core.Array",
+        "xarray.core.dataarray.DataArray",
+        "resource_backed_dask_array.ResourceBackedDaskArray",
+        "torch.Tensor",
+        "pyclesperanto_prototype._tier0._pycl.OCLArray",
+        "napari.layers._multiscale_data.MultiScaleData",
+    ]

@@ -609,25 +609,18 @@ def __setitem__(self, index, value):
 
 
 # adapted from https://github.com/napari/napari/blob/d6bc683b019c4a3a3c6e936526e29bbd59cca2f4/napari/utils/notebook_display.py#L54-L73
-def __plt_to_png__(self):
-    """PNG representation of the image object for IPython.
-    Returns
-    -------
-    In memory binary stream containing a PNG matplotlib image.
-    """
+def _figure_to_png(fig):
+    """Standalone helper — convert a Figure to PNG bytes."""
     from io import BytesIO
 
-    import matplotlib.pyplot as plt
-
     with BytesIO() as file_obj:
-        plt.savefig(file_obj, format="png")
-        plt.close()  # supress plot output
+        fig.savefig(file_obj, format="png")
         file_obj.seek(0)
-        png = file_obj.read()
-    return png
+        return file_obj.read()
 
 
-def __png_to_html__(self, png):
+def _png_to_html(png):
+    """Standalone helper — convert PNG bytes to an HTML img tag."""
     import base64
 
     url = "data:image/png;base64," + base64.b64encode(png).decode("utf-8")
@@ -635,28 +628,27 @@ def __png_to_html__(self, png):
 
 
 def __repr_html__(self):
-    """HTML representation of the image object for IPython.
-    Returns
-    -------
-    HTML text with the image and some properties.
-    """
+    """HTML representation of the image object for IPython."""
     import matplotlib.pyplot as plt
     import numpy as np
 
     from ._functionalities import imshow
 
+
     size_in_pixels = np.prod(self.size)
     size_in_bytes = size_in_pixels * self.dtype.itemsize
-
     labels = self.dtype == np.uint32
 
-    # In case the image is 2D, 3D and larger than 100 pixels, turn on fancy view
     if len(self.shape) in (2, 3) and size_in_pixels >= 100:
-        imshow(self, labels=labels, continue_drawing=True, colorbar=not labels)
-        image = self._png_to_html(self._plt_to_png())
+        with plt.ioff():
+            imshow(self, labels=labels, continue_drawing=True, colorbar=not labels)
+            fig = plt.gcf()
+            image = _png_to_html(_figure_to_png(fig))
+            plt.close(fig)
     else:
         return "<pre>" + repr(self) + "</pre>"
 
+    raw_size_in_bytes = size_in_bytes
     units = ["B", "kB", "MB", "GB", "TB", "PB"]
     unit_index = 0
     while size_in_bytes > 1024 and unit_index < len(units) - 1:
@@ -664,30 +656,32 @@ def __repr_html__(self):
         unit_index += 1
     size = "{:.1f}".format(size_in_bytes) + " " + units[unit_index]
 
-    histogram = ""
-    if size_in_bytes < 100 * 1024 * 1024:
+    histogram_html = ""
+    if raw_size_in_bytes < 100 * 1024 * 1024:
         if not labels:
+
             from ._tier3 import histogram
 
             num_bins = 32
             h = np.asarray(
                 histogram(
-                    self,
+                    input_image=self,
                     num_bins=num_bins,
                     minimum_intensity=self.min(),
                     maximum_intensity=self.max(),
                 )
             )
-            plt.figure(figsize=(1.8, 1.2))
-            plt.bar(range(0, len(h)), h)
-            # hide axis text
-            # https://stackoverflow.com/questions/2176424/hiding-axis-text-in-matplotlib-plots
-            # https://pythonguides.com/matplotlib-remove-tick-labels
-            frame1 = plt.gca()
-            frame1.axes.xaxis.set_ticklabels([])
-            frame1.axes.yaxis.set_ticklabels([])
-            plt.tick_params(left=False, bottom=False)
-            histogram = self._png_to_html(self._plt_to_png())
+            with plt.ioff():
+                plt.figure(figsize=(1.8, 1.2))
+                plt.bar(range(0, len(h)), h)
+                frame1 = plt.gca()
+                frame1.axes.xaxis.set_ticklabels([])
+                frame1.axes.yaxis.set_ticklabels([])
+                plt.tick_params(left=False, bottom=False)
+                hist_fig = plt.gcf()
+                histogram_html = _png_to_html(_figure_to_png(hist_fig))
+                plt.close(hist_fig)
+
         min_max = (
             "<tr><td>min</td><td>"
             + str(self.min())
@@ -698,6 +692,7 @@ def __repr_html__(self):
         )
     else:
         min_max = ""
+
     all = [
         "<table>",
         "<tr>",
@@ -714,7 +709,7 @@ def __repr_html__(self):
         "<tr><td>size</td><td>" + size + "</td></tr>",
         min_max,
         "</table>",
-        histogram,
+        histogram_html,
         "</td>",
         "</tr>",
         "</table>",

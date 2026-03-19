@@ -14,11 +14,11 @@ WHEEL=$(ls "${DEST_DIR}"/*.whl | head -n1)
 WHEEL_DIR=$(mktemp -d)
 trap "rm -rf ${WHEEL_DIR}" EXIT
 
-python -m wheel unpack "${WHEEL}" -d "${WHEEL_DIR}"
-UNPACKED=$(ls "${WHEEL_DIR}")
+# Wheels are zip files — unzip is always available in manylinux
+unzip -d "${WHEEL_DIR}" "${WHEEL}"
 
-# auditwheel places vendored libs at <package_name>.libs/ (top-level, not inside package)
-LIBS_DIR="${WHEEL_DIR}/${UNPACKED}/pyclesperanto_cuda.libs"
+# auditwheel places vendored libs at <package_name>.libs/ (top-level)
+LIBS_DIR="${WHEEL_DIR}/pyclesperanto_cuda.libs"
 
 if [ ! -d "${LIBS_DIR}" ]; then
   echo "ERROR: ${LIBS_DIR} not found"
@@ -39,5 +39,12 @@ SONAME=$(objdump -p "${BUILTINS}" | awk '/SONAME/{print $2}')
 echo "Copying ${BUILTINS} as ${SONAME} into wheel"
 cp "${BUILTINS}" "${LIBS_DIR}/${SONAME}"
 
+# Update RECORD with the new file's hash and size
+RECORD="${WHEEL_DIR}/pyclesperanto_cuda-"*".dist-info/RECORD"
+HASH=$(sha256sum "${LIBS_DIR}/${SONAME}" | awk '{print $1}' | xxd -r -p | base64 | tr '+/' '-_' | tr -d '=')
+SIZE=$(stat -c%s "${LIBS_DIR}/${SONAME}")
+echo "pyclesperanto_cuda.libs/${SONAME},sha256=${HASH},${SIZE}" >> ${RECORD}
+
+# Repack the wheel (zip from inside the directory to get correct paths)
 rm -f "${WHEEL}"
-python -m wheel pack "${WHEEL_DIR}/${UNPACKED}" -d "${DEST_DIR}"
+(cd "${WHEEL_DIR}" && zip -r "${WHEEL}" .)

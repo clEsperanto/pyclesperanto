@@ -12,6 +12,9 @@ __pycache__/
 # IDE
 .vscode
 
+# pixi
+.pixi/
+
 # Distribution / packaging
 _skbuild
 .Python

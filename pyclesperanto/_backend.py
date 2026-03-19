@@ -81,13 +81,7 @@ def get_backend_name() -> str:
 
 
 def select_backend(name: str):
-    """Switch the active backend.
-
-    Parameters
-    ----------
-    name : str
-        Backend name: 'opencl' or 'cuda'.
-    """
+    """Switch the active backend."""
     global _active_backend
     _detect_backends()
     name = name.lower()
@@ -106,16 +100,35 @@ def select_backend(name: str):
     _active_backend = modules[name]
     _activate_clic_backend(name)
 
+    # Re-patch Array methods onto the new backend's _Array class
+    from ._array import _patch_array_class
+
+    _patch_array_class()
+
 
 def _activate_clic_backend(name: str):
-    """Tell CLIc's C++ BackendManager to switch, and reset the current device."""
+    """Tell CLIc's C++ BackendManager in the *target* backend module to activate,
+    then reset the current device.
+
+    Each backend package ships its own isolated C++ BackendManager singleton that
+    only knows about the backend it was compiled for.  Calling set_backend("cuda")
+    on the OpenCL singleton (or vice-versa) therefore raises a RuntimeError.
+    We must only call set_backend on the module that matches *name*.
+    """
     from ._core import _current_device
 
+    target_mod = _opencl_module if name == "opencl" else _cuda_module
+    if target_mod is None:
+        raise RuntimeError(
+            f"'{name}' backend module is not loaded. "
+            f"Install with: pip install pyclesperanto[{name}]"
+        )
+
     try:
-        _active_backend._BackendManager.set_backend(name)
+        target_mod._BackendManager.set_backend(name)
     except RuntimeError as e:
         raise RuntimeError(
-            f"Failed to activate '{name}' backend: {e}\n"
+            f"Failed to activate '{name}' backend in {target_mod.__name__}: {e}\n"
             "Ensure your GPU drivers are installed and compatible."
         ) from e
 

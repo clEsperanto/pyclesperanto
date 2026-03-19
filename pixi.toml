@@ -3,27 +3,27 @@ channels = ["conda-forge"]
 platforms = ["linux-64", "osx-64", "osx-arm64", "win-64"]
 
 [dependencies]
-python = ">=3.8,<3.14"
-pip = "*"
-wheel = "*"
-hatchling = "*"
-scikit-build-core = ">=0.10,<1"
-pybind11 = ">=3,<4"
-cmake = ">=3.20,<4"
-ninja = ">=0.13.2,<2"
-pre-commit = ">=4.4.0,<5"
+python = ">=3.13.12,<3.14"
+pip = ">=26.0.1,<27"
+wheel = ">=0.46.3,<0.47"
+hatchling = ">=1.29.0,<2"
+scikit-build-core = ">=0.12.1,<0.13"
+pybind11 = ">=3.0.2,<4"
+cmake = ">=4.3.0,<5"
+ninja = ">=1.13.2,<2"
+pre-commit = ">=4.5.1,<5"
 
 [feature.dev.dependencies]
-pytest = "*"
-pytest-cov = "*"
-pytest-benchmark = "*"
-scikit-image = "*"
-isort = "*"
-jupyter = "*"
-pandas = "*"
+pytest = ">=9.0.2,<10"
+pytest-cov = ">=7.0.0,<8"
+pytest-benchmark = ">=5.2.3,<6"
+scikit-image = ">=0.26.0,<0.27"
+isort = ">=8.0.1,<9"
+jupyter = ">=1.1.1,<2"
+pandas = ">=3.0.1,<4"
 
 [feature.dev.pypi-dependencies]
-napari = { extras = ["all"], version = "*" }
+napari = { version = ">=0.6.5, <0.7", extras = ["all"] }
 
 [tasks]
 build-ocl = "pip install -e ./backends/opencl -v && pip install -e ."

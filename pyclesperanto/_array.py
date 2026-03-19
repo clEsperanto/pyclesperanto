@@ -13,10 +13,8 @@ def _get_array_class():
     return _get_backend()._Array
 
 
-# We need Array to be importable at module level for type hints,
-# but it must resolve lazily from the backend.
 class _ArrayMeta(type):
-    """Metaclass that makes isinstance/issubclass work with the backend _Array."""
+    """Metaclass that makes isinstance/issubclass always check the *current* backend."""
 
     def __instancecheck__(cls, instance):
         try:
@@ -30,19 +28,22 @@ class _ArrayMeta(type):
         except RuntimeError:
             return False
 
+    # ------------------------------------------------------------------ #
+    # Forward every attribute access to the *current* backend _Array.     #
+    # This makes cle.Array.create(...) always use the right backend.      #
+    # ------------------------------------------------------------------ #
+    def __getattr__(cls, name):
+        return getattr(_get_array_class(), name)
+
 
 class Array(metaclass=_ArrayMeta):
     """Lazy proxy for the backend Array class.
 
-    The actual class methods are patched onto the real backend _Array class
-    at the end of this module via _patch_array_class().
+    Attribute access is forwarded to the *currently active* backend _Array,
+    so switching backends with select_backend() is fully transparent.
     """
 
     pass
-
-
-# Flag to track if we already patched
-_array_patched = False
 
 
 def _prepare_array(arr) -> np.ndarray:
@@ -312,87 +313,105 @@ def reshape(self, shape):
     return self.get().reshape(shape)
 
 
+def _reset_array_patch():
+    """Reset the array patch flag and immediately re-patch with the new backend.
+
+    Called when the active backend changes. This ensures that:
+    1. The Array class is re-bound to the new backend's _Array class
+    2. Methods are re-patched onto the new class
+    3. Module-level bindings are updated so cle.Array points to the new backend
+    """
+    global _array_patched
+    _array_patched = False
+
+    # Re-patch the Array class with the new backend
+    _patch_array_class()
+
+    # Update module-level bindings in pyclesperanto/__init__.py
+    # so that cle.Array always refers to the current backend's Array class
+    import sys
+
+    init_module = sys.modules.get("pyclesperanto")
+    if init_module is not None:
+        try:
+            setattr(init_module, "Array", Array)
+            setattr(init_module, "Image", Image)
+        except Exception:
+            pass  # Ignore any errors updating bindings
+
+
 def _patch_array_class():
-    """Patch the backend _Array class with Python methods. Called once on first use."""
-    global Array, _array_patched, Image
-    if _array_patched:
-        return
-    _array_patched = True
+    """Patch the *current* backend _Array class with Python methods.
 
-    # Replace the proxy Array with the real backend class
-    Array = _get_array_class()
+    Safe to call multiple times — re-patches whenever the backend changes.
+    """
+    # NOTE: We intentionally do NOT replace the module-level `Array` name.
+    # The _ArrayMeta proxy always delegates to _get_array_class() at runtime.
+    BackendArray = _get_array_class()
 
-    # Add class methods, properties and magic methods
-    setattr(Array, "T", property(T))
-    setattr(Array, "set", set)
-    setattr(Array, "get", get)
-    setattr(Array, "__array_ufunc__", __array_ufunc__)
-    setattr(Array, "__str__", __str__)
-    setattr(Array, "__repr__", __repr__)
-    setattr(Array, "__array__", __array__)
-    setattr(Array, "from_array", classmethod(from_array))
-    setattr(Array, "empty", classmethod(empty))
-    setattr(Array, "empty_like", classmethod(empty_like))
-    setattr(Array, "zeros", classmethod(zeros))
-    setattr(Array, "zeros_like", classmethod(zeros_like))
-    setattr(Array, "to_device", classmethod(to_device))
-    setattr(Array, "reshape", reshape)
+    setattr(BackendArray, "T", property(T))
+    setattr(BackendArray, "set", set)
+    setattr(BackendArray, "get", get)
+    setattr(BackendArray, "__array_ufunc__", __array_ufunc__)
+    setattr(BackendArray, "__str__", __str__)
+    setattr(BackendArray, "__repr__", __repr__)
+    setattr(BackendArray, "__array__", __array__)
+    setattr(BackendArray, "from_array", classmethod(from_array))
+    setattr(BackendArray, "empty", classmethod(empty))
+    setattr(BackendArray, "empty_like", classmethod(empty_like))
+    setattr(BackendArray, "zeros", classmethod(zeros))
+    setattr(BackendArray, "zeros_like", classmethod(zeros_like))
+    setattr(BackendArray, "to_device", classmethod(to_device))
+    setattr(BackendArray, "reshape", reshape)
 
-    # Add operations and class methods from _operators module
-    setattr(Array, "astype", _operators._astype)
-    setattr(Array, "max", _operators._max)
-    setattr(Array, "min", _operators._min)
-    setattr(Array, "sum", _operators._sum)
-    setattr(Array, "std", _operators._std)
-    setattr(Array, "__pos__", _operators.__pos__)
-    setattr(Array, "__neg__", _operators.__neg__)
-    setattr(Array, "__add__", _operators.__add__)
-    setattr(Array, "__iadd__", _operators.__iadd__)
-    setattr(Array, "__sub__", _operators.__sub__)
-    setattr(Array, "__div__", _operators.__div__)
-    setattr(Array, "__truediv__", _operators.__truediv__)
-    setattr(Array, "__idiv__", _operators.__idiv__)
-    setattr(Array, "__itruediv__", _operators.__itruediv__)
-    setattr(Array, "__mul__", _operators.__mul__)
-    setattr(Array, "__imul__", _operators.__imul__)
-    setattr(Array, "__gt__", _operators.__gt__)
-    setattr(Array, "__ge__", _operators.__ge__)
-    setattr(Array, "__lt__", _operators.__lt__)
-    setattr(Array, "__le__", _operators.__le__)
-    setattr(Array, "__eq__", _operators.__eq__)
-    setattr(Array, "__ne__", _operators.__ne__)
-    setattr(Array, "__pow__", _operators.__pow__)
-    setattr(Array, "__ipow__", _operators.__ipow__)
-    setattr(Array, "_plt_to_png", _operators.__plt_to_png__)
-    setattr(Array, "_png_to_html", _operators.__png_to_html__)
-    setattr(Array, "_repr_html_", _operators.__repr_html__)
-    setattr(Array, "__iter__", _operators.__iter__)
-    setattr(Array, "__setitem__", _operators.__setitem__)
-    setattr(Array, "__getitem__", _operators.__getitem__)
-
-    # Update module-level Image type
-    Image = Union[np.ndarray, Array]
+    setattr(BackendArray, "astype", _operators._astype)
+    setattr(BackendArray, "max", _operators._max)
+    setattr(BackendArray, "min", _operators._min)
+    setattr(BackendArray, "sum", _operators._sum)
+    setattr(BackendArray, "std", _operators._std)
+    setattr(BackendArray, "__pos__", _operators.__pos__)
+    setattr(BackendArray, "__neg__", _operators.__neg__)
+    setattr(BackendArray, "__add__", _operators.__add__)
+    setattr(BackendArray, "__iadd__", _operators.__iadd__)
+    setattr(BackendArray, "__sub__", _operators.__sub__)
+    setattr(BackendArray, "__div__", _operators.__div__)
+    setattr(BackendArray, "__truediv__", _operators.__truediv__)
+    setattr(BackendArray, "__idiv__", _operators.__idiv__)
+    setattr(BackendArray, "__itruediv__", _operators.__itruediv__)
+    setattr(BackendArray, "__mul__", _operators.__mul__)
+    setattr(BackendArray, "__imul__", _operators.__imul__)
+    setattr(BackendArray, "__gt__", _operators.__gt__)
+    setattr(BackendArray, "__ge__", _operators.__ge__)
+    setattr(BackendArray, "__lt__", _operators.__lt__)
+    setattr(BackendArray, "__le__", _operators.__le__)
+    setattr(BackendArray, "__eq__", _operators.__eq__)
+    setattr(BackendArray, "__ne__", _operators.__ne__)
+    setattr(BackendArray, "__pow__", _operators.__pow__)
+    setattr(BackendArray, "__ipow__", _operators.__ipow__)
+    # setattr(BackendArray, "_figure_to_png", _operators.__figure_to_png__)
+    # setattr(BackendArray, "_png_to_html", _operators.__png_to_html__)
+    setattr(BackendArray, "_repr_html_", _operators.__repr_html__)
+    setattr(BackendArray, "__iter__", _operators.__iter__)
+    setattr(BackendArray, "__setitem__", _operators.__setitem__)
+    setattr(BackendArray, "__getitem__", _operators.__getitem__)
 
 
-# Create Image type (uses proxy initially, updated after patching)
 Image = Union[np.ndarray, Array]
 
 
 def is_image(object):
     """Returns True if the given object is an image."""
-    return (
-        isinstance(object, np.ndarray)
-        or isinstance(object, tuple)
-        or isinstance(object, list)
-        or isinstance(object, Array)
-        or str(type(object))
-        in [
-            "<class 'cupy._core.core.ndarray'>",
-            "<class 'dask.array.core.Array'>",
-            "<class 'xarray.core.dataarray.DataArray'>",
-            "<class 'resource_backed_dask_array.ResourceBackedDaskArray'>",
-            "<class 'torch.Tensor'>",
-            "<class 'pyclesperanto_prototype._tier0._pycl.OCLArray'>",
-            "<class 'napari.layers._multiscale_data.MultiScaleData'>",
-        ]
-    )
+    if isinstance(object, (np.ndarray, tuple, list, Array)):
+        return True
+
+    type_str = type(object).__module__ + "." + type(object).__qualname__
+
+    return type_str in [
+        "cupy._core.core.ndarray",
+        "dask.array.core.Array",
+        "xarray.core.dataarray.DataArray",
+        "resource_backed_dask_array.ResourceBackedDaskArray",
+        "torch.Tensor",
+        "pyclesperanto_prototype._tier0._pycl.OCLArray",
+        "napari.layers._multiscale_data.MultiScaleData",
+    ]

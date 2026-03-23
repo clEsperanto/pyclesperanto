@@ -34,8 +34,18 @@ cl_buffer_datatype_dict = {
     np.float64: "float",
 }
 
-_INTEGER_TYPES = (int, np.intp, np.int8, np.int16, np.int32, np.int64,
-                  np.uint8, np.uint16, np.uint32, np.uint64)
+_INTEGER_TYPES = (
+    int,
+    np.intp,
+    np.int8,
+    np.int16,
+    np.int32,
+    np.int64,
+    np.uint8,
+    np.uint16,
+    np.uint32,
+    np.uint64,
+)
 
 _supported_numeric_types = tuple(cl_buffer_datatype_dict.keys())
 
@@ -159,7 +169,7 @@ def __neg__(x1):
 def __add__(x1, x2):
     """Addition of two arrays."""
     from ._tier1 import add_image_and_scalar, add_images_weighted
-    
+
     if isinstance(x2, _supported_numeric_types):
         return add_image_and_scalar(x1, scalar=x2)
     return add_images_weighted(x1, x2, factor1=1, factor2=1)
@@ -167,7 +177,7 @@ def __add__(x1, x2):
 
 def __iadd__(x1, x2):
     """Addition of two arrays."""
-    from ._tier1 import copy, add_image_and_scalar, add_images_weighted
+    from ._tier1 import add_image_and_scalar, add_images_weighted, copy
 
     temp = copy(x1)
     if isinstance(x2, _supported_numeric_types):
@@ -178,7 +188,7 @@ def __iadd__(x1, x2):
 def __sub__(x1, x2):
     """Subtraction of two arrays."""
     from ._tier1 import add_image_and_scalar, add_images_weighted
-    
+
     if isinstance(x2, _supported_numeric_types):
         return add_image_and_scalar(x1, scalar=-x2)
     return add_images_weighted(x1, x2, factor1=1, factor2=-1)
@@ -186,8 +196,8 @@ def __sub__(x1, x2):
 
 def __div__(x1, x2):
     """Division of two arrays."""
-    from ._tier1 import multiply_image_and_scalar, divide_images
-    
+    from ._tier1 import divide_images, multiply_image_and_scalar
+
     if isinstance(x2, _supported_numeric_types):
         return multiply_image_and_scalar(x1, scalar=1.0 / x2)
     return divide_images(x1, x2)
@@ -216,7 +226,7 @@ def __itruediv__(x1, x2):
 def __mul__(x1, x2):
     """Multiplication of two arrays."""
     from ._tier1 import multiply_image_and_scalar, multiply_images
-    
+
     if isinstance(x2, _supported_numeric_types):
         return multiply_image_and_scalar(x1, scalar=x2)
     return multiply_images(x1, x2)
@@ -234,7 +244,7 @@ def __imul__(x1, x2):
 
 def __gt__(x1, x2):
     """Greater than comparison of two arrays."""
-    from ._tier1 import greater_constant, greater
+    from ._tier1 import greater, greater_constant
 
     if isinstance(x2, _supported_numeric_types):
         return greater_constant(x1, scalar=x2)
@@ -243,8 +253,8 @@ def __gt__(x1, x2):
 
 def __ge__(x1, x2):
     """Greater than or equal comparison of two arrays."""
-    from ._tier1 import greater_or_equal_constant, greater_or_equal
-    
+    from ._tier1 import greater_or_equal, greater_or_equal_constant
+
     if isinstance(x2, _supported_numeric_types):
         return greater_or_equal_constant(x1, scalar=x2)
     return greater_or_equal(x1, x2)
@@ -252,7 +262,7 @@ def __ge__(x1, x2):
 
 def __lt__(x1, x2):
     """Less than comparison of two arrays."""
-    from ._tier1 import smaller_constant, smaller
+    from ._tier1 import smaller, smaller_constant
 
     if isinstance(x2, _supported_numeric_types):
         return smaller_constant(x1, scalar=x2)
@@ -261,8 +271,8 @@ def __lt__(x1, x2):
 
 def __le__(x1, x2):
     """Less than or equal comparison of two arrays."""
-    from ._tier1 import smaller_or_equal_constant, smaller_or_equal
-    
+    from ._tier1 import smaller_or_equal, smaller_or_equal_constant
+
     if isinstance(x2, _supported_numeric_types):
         return smaller_or_equal_constant(x1, scalar=x2)
     return smaller_or_equal(x1, x2)
@@ -270,7 +280,7 @@ def __le__(x1, x2):
 
 def __eq__(x1, x2):
     """Equal comparison of two arrays."""
-    from ._tier1 import equal_constant, equal
+    from ._tier1 import equal, equal_constant
 
     if isinstance(x2, _supported_numeric_types):
         return equal_constant(x1, scalar=x2)
@@ -279,7 +289,7 @@ def __eq__(x1, x2):
 
 def __ne__(x1, x2):
     """Not equal comparison of two arrays."""
-    from ._tier1 import not_equal_constant, not_equal
+    from ._tier1 import not_equal, not_equal_constant
 
     if isinstance(x2, _supported_numeric_types):
         return not_equal_constant(x1, scalar=x2)
@@ -289,7 +299,7 @@ def __ne__(x1, x2):
 def __pow__(x1, x2):
     """Power function of two arrays."""
     from ._tier1 import power, power_images
-    
+
     if isinstance(x2, _supported_numeric_types):
         return power(x1, scalar=x2)
     return power_images(x1, x2)
@@ -434,14 +444,12 @@ def __repr_html__(self):
     return "\n".join(all)
 
 
-
-
 import numpy as np
-
 
 # ---------------------------------------------------------------------------
 # Helpers (private)
 # ---------------------------------------------------------------------------
+
 
 def _is_fancy_index(index, ndim):
     """Return True if *index* is a sequence of coordinate arrays (fancy indexing)."""
@@ -531,6 +539,7 @@ def _reshape_result(result, dst_shape, region):
 # Fancy-index helpers
 # ---------------------------------------------------------------------------
 
+
 def _swap_first_last(index):
     """Swap first and last coordinate arrays (X↔Z / X↔Y) for clesperanto's X-Y-Z order."""
     index = list(index)
@@ -553,7 +562,7 @@ def _fancy_setitem(self, index, value):
     if len(index[0]) == 0:
         return
 
-    from ._memory import push, create
+    from ._memory import create, push
     from ._tier1 import write_values_to_positions
     from ._tier2 import concatenate_along_y
 
@@ -575,6 +584,7 @@ def _fancy_setitem(self, index, value):
 # Public operators
 # ---------------------------------------------------------------------------
 
+
 def __getitem__(self, index):
     """Get a pixel value or a region of interest from the Array."""
     if _is_fancy_index(index, len(self.shape)):
@@ -591,7 +601,9 @@ def __getitem__(self, index):
             origin[offset + i] = int(idx) if idx >= 0 else self.shape[i] + int(idx)
         return self.get(origin, [1, 1, 1])
 
-    origin, region, steps, squeeze_axes, range_x, range_y, range_z = _parse_index(index, self.shape)
+    origin, region, steps, squeeze_axes, range_x, range_y, range_z = _parse_index(
+        index, self.shape
+    )
 
     total = region[0] * region[1] * region[2]
     if total == 1:
@@ -601,9 +613,15 @@ def __getitem__(self, index):
 
     result = gpu_range(
         self,
-        start_x=range_x[0], stop_x=range_x[1], step_x=range_x[2],
-        start_y=range_y[0], stop_y=range_y[1], step_y=range_y[2],
-        start_z=range_z[0], stop_z=range_z[1], step_z=range_z[2],
+        start_x=range_x[0],
+        stop_x=range_x[1],
+        step_x=range_x[2],
+        start_y=range_y[0],
+        stop_y=range_y[1],
+        step_y=range_y[2],
+        start_z=range_z[0],
+        stop_z=range_z[1],
+        step_z=range_z[2],
     )
 
     dst_shape = _compute_dst_shape(region, steps, squeeze_axes, self.ndim)
@@ -619,7 +637,9 @@ def __setitem__(self, index, value):
     if not isinstance(value, (_get_array_class(), np.ndarray)):
         value = np.asarray(value)
 
-    origin, region, steps, squeeze_axes, range_x, range_y, range_z = _parse_index(index, self.shape)
+    origin, region, steps, squeeze_axes, range_x, range_y, range_z = _parse_index(
+        index, self.shape
+    )
     total = region[0] * region[1] * region[2]
 
     if value.size == 1:
@@ -633,10 +653,17 @@ def __setitem__(self, index, value):
         from ._tier1 import range as gpu_range
 
         gpu_range(
-            value, self,
-            start_x=range_x[0], stop_x=range_x[1], step_x=range_x[2],
-            start_y=range_y[0], stop_y=range_y[1], step_y=range_y[2],
-            start_z=range_z[0], stop_z=range_z[1], step_z=range_z[2],
+            value,
+            self,
+            start_x=range_x[0],
+            stop_x=range_x[1],
+            step_x=range_x[2],
+            start_y=range_y[0],
+            stop_y=range_y[1],
+            step_y=range_y[2],
+            start_z=range_z[0],
+            stop_z=range_z[1],
+            step_z=range_z[2],
         )
         return
 
@@ -647,7 +674,8 @@ def __setitem__(self, index, value):
             from ._tier1 import paste
 
             paste(
-                value, self,
+                value,
+                self,
                 index_x=origin[2],
                 index_y=origin[1],
                 index_z=origin[0],

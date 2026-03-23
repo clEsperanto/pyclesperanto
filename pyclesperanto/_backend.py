@@ -43,6 +43,7 @@ def _warn_if_installed(backend_name, error):
     """Warn if a backend package is installed but its native extension failed to load."""
     try:
         from importlib.metadata import distribution
+
         distribution(_DIST_NAMES[backend_name])
     except Exception:
         return
@@ -83,6 +84,7 @@ def _get_backend():
         # Activate the C++ side and patch Array for the auto-selected backend
         _activate_clic_backend(get_backend_name())
         from ._array import _patch_array_class
+
         _patch_array_class()
     return _active_backend
 
@@ -122,6 +124,7 @@ def select_backend(name: str):
     _activate_clic_backend(name)
 
     from ._array import _patch_array_class
+
     _patch_array_class()
 
 

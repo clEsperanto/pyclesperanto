@@ -444,13 +444,6 @@ def __repr_html__(self):
     return "\n".join(all)
 
 
-import numpy as np
-
-# ---------------------------------------------------------------------------
-# Helpers (private)
-# ---------------------------------------------------------------------------
-
-
 def _is_fancy_index(index, ndim):
     """Return True if *index* is a sequence of coordinate arrays (fancy indexing)."""
     if not isinstance(index, (tuple, list, np.ndarray)):

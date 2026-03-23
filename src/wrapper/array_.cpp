@@ -254,7 +254,9 @@ auto array_(py::module_ &m) -> void
          .def("_read_uint16", &read_region<uint16_t>, py::return_value_policy::move, py::arg("origin") = py::none(), py::arg("region") = py::none())
          .def("_read_uint32", &read_region<uint32_t>, py::return_value_policy::move, py::arg("origin") = py::none(), py::arg("region") = py::none())
 
+
          .def("copy", &copy_region, py::arg("dst"), py::arg("src_origin") = py::none(), py::arg("dst_origin") = py::none(), py::arg("region") = py::none())
+         .def("reshape", &cle::Array::reshape, py::arg("width") =1, py::arg("height") =1, py::arg("depth") =1, py::arg("dimension") = 0)
          .def("fill", &cle::Array::fill, py::arg("value"))
 
          .def_property_readonly("width", &cle::Array::width)

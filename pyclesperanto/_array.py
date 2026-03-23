@@ -308,11 +308,6 @@ def __array_ufunc__(self, ufunc, method, *inputs, **kwargs):
     return NotImplemented
 
 
-def reshape(self, shape):
-    """Reshape the Array."""
-    return self.get().reshape(shape)
-
-
 def _reset_array_patch():
     """Reset the array patch flag and immediately re-patch with the new backend.
 
@@ -362,7 +357,7 @@ def _patch_array_class():
     setattr(BackendArray, "zeros", classmethod(zeros))
     setattr(BackendArray, "zeros_like", classmethod(zeros_like))
     setattr(BackendArray, "to_device", classmethod(to_device))
-    setattr(BackendArray, "reshape", reshape)
+    # setattr(BackendArray, "reshape", reshape)
 
     setattr(BackendArray, "astype", _operators._astype)
     setattr(BackendArray, "max", _operators._max)

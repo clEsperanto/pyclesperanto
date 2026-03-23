@@ -34,6 +34,9 @@ cl_buffer_datatype_dict = {
     np.float64: "float",
 }
 
+_INTEGER_TYPES = (int, np.intp, np.int8, np.int16, np.int32, np.int64,
+                  np.uint8, np.uint16, np.uint32, np.uint64)
+
 _supported_numeric_types = tuple(cl_buffer_datatype_dict.keys())
 
 
@@ -475,7 +478,7 @@ def _parse_index(index, shape):
         idx = index[i]
         if isinstance(idx, slice):
             slice_list[i] = [idx.start, idx.stop, idx.step]
-        elif np.issubdtype(type(idx), np.integer):
+        elif isinstance(idx, _INTEGER_TYPES):
             slice_list[i] = [
                 idx,
                 idx + 1 if idx >= 0 else idx - 1,
@@ -507,22 +510,21 @@ def _compute_dst_shape(region, steps, squeeze_axes, ndim):
 
 
 def _reshape_result(result, dst_shape, region):
-    """Reshape *result* to *dst_shape* by copying into a correctly-shaped buffer."""
     if result.shape == tuple(dst_shape):
         return result
 
-    from ._memory import create
-    from ._tier1 import copy
+    ndim = len(dst_shape)
 
-    tmp = create(
-        dst_shape,
-        dtype=result.dtype,
-        mtype=result.mtype,
-        device=result.device,
+    # Pad to 3D for the C++ reshape call
+    while len(dst_shape) < 3:
+        dst_shape.insert(0, 1)
+
+    return result.reshape(
+        width=int(dst_shape[-1]),
+        height=int(dst_shape[-2]),
+        depth=int(dst_shape[-3]),
+        dimension=ndim,
     )
-
-    copy(result, tmp)
-    return tmp
 
 
 # ---------------------------------------------------------------------------
@@ -577,6 +579,17 @@ def __getitem__(self, index):
     """Get a pixel value or a region of interest from the Array."""
     if _is_fancy_index(index, len(self.shape)):
         return _fancy_getitem(self, index)
+
+    # Fast path: all-integer index → single pixel, skip all parsing
+    if not isinstance(index, tuple):
+        index = (index,)
+    if len(index) == self.ndim and all(isinstance(i, (int, np.integer)) for i in index):
+        # Reverse to x,y,z order for the C++ side
+        origin = [0, 0, 0]
+        offset = 3 - self.ndim
+        for i, idx in enumerate(index):
+            origin[offset + i] = int(idx) if idx >= 0 else self.shape[i] + int(idx)
+        return self.get(origin, [1, 1, 1])
 
     origin, region, steps, squeeze_axes, range_x, range_y, range_z = _parse_index(index, self.shape)
 

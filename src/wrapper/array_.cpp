@@ -3,6 +3,8 @@
 
 #include "array.hpp"
 #include "utils.hpp"
+#include "device.hpp"
+#include "dlpack/dlpack.h"
 
 #include <pybind11/functional.h>
 #include <pybind11/numpy.h>
@@ -10,6 +12,20 @@
 #include <pybind11/stl.h>
 
 namespace py = pybind11;
+
+
+// dlpack device type mapping function
+static int get_dlpack_device_type(const cle::Array::Pointer & array)
+{
+    auto dev_type = array->device()->getType(); // returns DeviceType enum
+    // adjust to your DeviceType enum values
+    switch (dev_type)
+    {
+        case cle::Device::Type::CUDA:   return kDLCUDA;
+        case cle::Device::Type::OPENCL: return kDLOpenCL;
+        default: throw std::runtime_error("Unsupported device type for DLPack");
+    }
+}
 
 // function that takes a py tuple or list, invert it, and store it in a std::array of size 3
 // if the tuple or list is smaller than 3, the remaining values are set to 0
@@ -281,5 +297,53 @@ auto array_(py::module_ &m) -> void
                return array->depth();
           default:
                throw std::invalid_argument("Invalid dimension value");
-          } });
+          } })
+
+          .def("_dlpack",
+               [](const cle::Array::Pointer & arr, py::object /*stream*/) -> py::capsule
+               {
+                    if (arr->mtype() == cle::mType::IMAGE)
+                         throw std::runtime_error("DLPack export not supported for IMAGE memory type");
+
+                    auto * managed = arr->toDLPack();
+
+                    // PyCapsule name must be "dltensor" per the DLPack spec
+                    return py::capsule(managed, "dltensor", [](PyObject * obj)
+                    {
+                         // deleter: called when capsule is consumed or GC'd
+                         auto * m = static_cast<DLManagedTensorVersioned *>(
+                              PyCapsule_GetPointer(obj, "dltensor"));
+                         if (m && m->deleter)
+                              m->deleter(m);
+                    });
+               },
+               py::arg("stream") = py::none())
+
+          .def("_dlpack_device",
+               [](const cle::Array::Pointer & arr) -> py::tuple
+               {
+                    return py::make_tuple(
+                         get_dlpack_device_type(arr),
+                         arr->device()->getDeviceIndex()  // device index / ordinal
+                    );
+               })
+          .def_static("_from_dlpack", [](py::object capsule_or_tensor, cle::Device::Pointer device) {
+               py::object capsule;
+               if (py::hasattr(capsule_or_tensor, "__dlpack__")) {
+                    capsule = capsule_or_tensor.attr("__dlpack__")(py::arg("max_version") = py::make_tuple(1, 0));
+               } else {
+                    capsule = capsule_or_tensor;
+               }
+
+               void * ptr = PyCapsule_GetPointer(capsule.ptr(), "dltensor_versioned");
+               if (!ptr) {
+                    PyErr_Clear();
+                    throw std::runtime_error("Invalid DLPack capsule: expected 'dltensor_versioned'");
+               }
+
+               auto * managed = static_cast<DLManagedTensorVersioned *>(ptr);
+               auto array = cle::Array::fromDLPack(managed, device);
+               PyCapsule_SetName(capsule.ptr(), "used_dltensor_versioned");
+               return array;
+               }, py::arg("capsule_or_tensor"), py::arg("device"));
 }

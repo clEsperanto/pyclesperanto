@@ -335,6 +335,100 @@ def _reset_array_patch():
             pass  # Ignore any errors updating bindings
 
 
+
+
+def __dlpack__(self, stream=None):
+    """Export as DLPack capsule (CUDA and OpenCL BUFFER only)."""
+    return self._dlpack(stream)  # calls the C++ binding
+
+
+def __dlpack_device__(self):
+    """Return (device_type, device_id) tuple per DLPack spec."""
+    return self._dlpack_device()  # calls the C++ binding
+
+
+def from_dlpack(cls, ext_tensor, *, device=None, copy=None):
+    """Create an Array from any object implementing the DLPack protocol.
+
+    The returned Array shares memory with the source tensor. This is zero-copy and efficient if
+    the source tensor is on the same device as the target Array, however ownership is not transferred
+    (the source tensor remains responsible for freeing the memory). 
+    If copy is forced or necessary (e.g. cross-device), the data is copied and ownership is transferred 
+    to the new Array. 
+
+    Parameters
+    ----------
+    ext_tensor : object
+        Any object with ``__dlpack__`` and ``__dlpack_device__`` methods,
+        or a raw DLPack capsule.
+    device : Device, optional
+        Target cle device. If None, uses the current active device.
+    copy : bool or None, optional
+        - None  (default): copy only if necessary (source is on a different device)
+        - True : always copy
+        - False: never copy — raises if source and target devices differ
+
+    Returns
+    -------
+    Array
+        A cle Array sharing or copying the data from ext_tensor.
+    """
+    # DLPack device type constants
+    _DLPACK_DEVICE_CPU    = 1
+    _DLPACK_DEVICE_CUDA   = 2
+    _DLPACK_DEVICE_OPENCL = 7
+
+    target_device = device if device is not None else get_device()
+
+    # --- resolve source device type ---
+    if hasattr(ext_tensor, "__dlpack_device__"):
+        src_device_type, src_device_id = ext_tensor.__dlpack_device__()
+    else:
+        # raw capsule — assume same device
+        src_device_type, src_device_id = None, None
+
+    # Determine whether source is on the same device as target
+    target_is_cuda   = target_device.getType().name.upper() == "CUDA"
+    target_is_opencl = target_device.getType().name.upper() == "OPENCL"
+
+    src_is_cuda   = src_device_type == _DLPACK_DEVICE_CUDA
+    src_is_opencl = src_device_type == _DLPACK_DEVICE_OPENCL
+    src_is_cpu    = src_device_type == _DLPACK_DEVICE_CPU
+
+    same_device = (
+        (target_is_cuda   and src_is_cuda   and src_device_id == target_device.getDeviceIndex()) or
+        (target_is_opencl and src_is_opencl and src_device_id == target_device.getDeviceIndex())
+    )
+
+    needs_copy = (
+        copy is True or          # user forced copy
+        src_is_cpu or            # source is CPU — always need to upload
+        not same_device          # different GPU device
+    )
+
+    if copy is False and needs_copy:
+        raise ValueError(
+            f"copy=False requested but source device ({src_device_type}, {src_device_id}) "
+            f"differs from target device ({target_device.getType()}, {target_device.getDeviceIndex()})"
+        )
+
+    if needs_copy or src_is_cpu:
+        # CPU path: materialise to numpy then upload
+        if src_is_cpu:
+            np_arr = np.from_dlpack(ext_tensor)
+            return cls.from_array(np_arr, device=target_device)
+
+        # GPU→GPU cross-device: export to numpy (host) then re-upload
+        # (no direct peer-to-peer via DLPack in cle yet)
+        np_arr = np.array(ext_tensor)  # triggers device→host copy via __array__
+        return cls.from_array(np_arr, device=target_device)
+
+    # Zero-copy path: same device, wrap the DLPack capsule directly
+    return cls._from_dlpack(ext_tensor)
+
+
+
+
 def _patch_array_class():
     """Patch the *current* backend _Array class with Python methods.
 
@@ -389,6 +483,10 @@ def _patch_array_class():
     setattr(BackendArray, "__iter__", _operators.__iter__)
     setattr(BackendArray, "__setitem__", _operators.__setitem__)
     setattr(BackendArray, "__getitem__", _operators.__getitem__)
+    ## dlpack support
+    setattr(BackendArray, "__dlpack__", __dlpack__)
+    setattr(BackendArray, "__dlpack_device__", __dlpack_device__)
+    setattr(BackendArray, "from_dlpack", classmethod(from_dlpack))
 
 
 Image = Union[np.ndarray, Array]

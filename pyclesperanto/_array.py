@@ -417,11 +417,11 @@ def from_dlpack(cls, ext_tensor, *, device=None, copy=None):
 
         # GPU→GPU cross-device: export to numpy (host) then re-upload
         # (no direct peer-to-peer via DLPack in cle yet)
-        np_arr = np.array(ext_tensor)  # triggers device→host copy via __array__
+        np_arr = np.array(ext_tensor.get())  # triggers device→host copy via __array__
         return cls.from_array(np_arr, device=target_device)
 
     # Zero-copy path: same device, wrap the DLPack capsule directly
-    return cls._from_dlpack(ext_tensor)
+    return cls._from_dlpack(ext_tensor, target_device)
 
 
 def _patch_array_class():

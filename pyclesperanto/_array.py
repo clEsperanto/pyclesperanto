@@ -335,8 +335,6 @@ def _reset_array_patch():
             pass  # Ignore any errors updating bindings
 
 
-
-
 def __dlpack__(self, stream=None):
     """Export as DLPack capsule (CUDA and OpenCL BUFFER only)."""
     return self._dlpack(stream)  # calls the C++ binding
@@ -352,9 +350,9 @@ def from_dlpack(cls, ext_tensor, *, device=None, copy=None):
 
     The returned Array shares memory with the source tensor. This is zero-copy and efficient if
     the source tensor is on the same device as the target Array, however ownership is not transferred
-    (the source tensor remains responsible for freeing the memory). 
-    If copy is forced or necessary (e.g. cross-device), the data is copied and ownership is transferred 
-    to the new Array. 
+    (the source tensor remains responsible for freeing the memory).
+    If copy is forced or necessary (e.g. cross-device), the data is copied and ownership is transferred
+    to the new Array.
 
     Parameters
     ----------
@@ -374,8 +372,8 @@ def from_dlpack(cls, ext_tensor, *, device=None, copy=None):
         A cle Array sharing or copying the data from ext_tensor.
     """
     # DLPack device type constants
-    _DLPACK_DEVICE_CPU    = 1
-    _DLPACK_DEVICE_CUDA   = 2
+    _DLPACK_DEVICE_CPU = 1
+    _DLPACK_DEVICE_CUDA = 2
     _DLPACK_DEVICE_OPENCL = 7
 
     target_device = device if device is not None else get_device()
@@ -388,22 +386,27 @@ def from_dlpack(cls, ext_tensor, *, device=None, copy=None):
         src_device_type, src_device_id = None, None
 
     # Determine whether source is on the same device as target
-    target_is_cuda   = target_device.getType().name.upper() == "CUDA"
+    target_is_cuda = target_device.getType().name.upper() == "CUDA"
     target_is_opencl = target_device.getType().name.upper() == "OPENCL"
 
-    src_is_cuda   = src_device_type == _DLPACK_DEVICE_CUDA
+    src_is_cuda = src_device_type == _DLPACK_DEVICE_CUDA
     src_is_opencl = src_device_type == _DLPACK_DEVICE_OPENCL
-    src_is_cpu    = src_device_type == _DLPACK_DEVICE_CPU
+    src_is_cpu = src_device_type == _DLPACK_DEVICE_CPU
 
     same_device = (
-        (target_is_cuda   and src_is_cuda   and src_device_id == target_device.getDeviceIndex()) or
-        (target_is_opencl and src_is_opencl and src_device_id == target_device.getDeviceIndex())
+        target_is_cuda
+        and src_is_cuda
+        and src_device_id == target_device.getDeviceIndex()
+    ) or (
+        target_is_opencl
+        and src_is_opencl
+        and src_device_id == target_device.getDeviceIndex()
     )
 
     needs_copy = (
-        copy is True or          # user forced copy
-        src_is_cpu or            # source is CPU — always need to upload
-        not same_device          # different GPU device
+        copy is True  # user forced copy
+        or src_is_cpu  # source is CPU — always need to upload
+        or not same_device  # different GPU device
     )
 
     if copy is False and needs_copy:
@@ -425,8 +428,6 @@ def from_dlpack(cls, ext_tensor, *, device=None, copy=None):
 
     # Zero-copy path: same device, wrap the DLPack capsule directly
     return cls._from_dlpack(ext_tensor)
-
-
 
 
 def _patch_array_class():

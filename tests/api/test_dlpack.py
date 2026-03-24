@@ -14,8 +14,9 @@ def device(request):
     return cle.select_device(request.param)
 
 
-@pytest.mark.parametrize("dtype", [np.float32, np.int8, np.int16, np.int32,
-                                    np.uint8, np.uint16, np.uint32])
+@pytest.mark.parametrize(
+    "dtype", [np.float32, np.int8, np.int16, np.int32, np.uint8, np.uint16, np.uint32]
+)
 def test_cle_to_cupy_dtypes(device, dtype):
     data = np.ones((4, 4), dtype=dtype)
     arr = cle.Array.from_array(data, device=device)

@@ -396,11 +396,11 @@ def from_dlpack(cls, ext_tensor, *, device=None, copy=None):
     same_device = (
         target_is_cuda
         and src_is_cuda
-        and src_device_id == target_device.getDeviceIndex()
+        and src_device_id == target_device.index
     ) or (
         target_is_opencl
         and src_is_opencl
-        and src_device_id == target_device.getDeviceIndex()
+        and src_device_id == target_device.index
     )
 
     needs_copy = (
@@ -412,7 +412,7 @@ def from_dlpack(cls, ext_tensor, *, device=None, copy=None):
     if copy is False and needs_copy:
         raise ValueError(
             f"copy=False requested but source device ({src_device_type}, {src_device_id}) "
-            f"differs from target device ({target_device.type}, {target_device.getDeviceIndex()})"
+            f"differs from target device ({target_device.type}, {target_device.index})"
         )
 
     if needs_copy or src_is_cpu:

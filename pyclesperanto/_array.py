@@ -394,14 +394,8 @@ def from_dlpack(cls, ext_tensor, *, device=None, copy=None):
     src_is_cpu = src_device_type == _DLPACK_DEVICE_CPU
 
     same_device = (
-        target_is_cuda
-        and src_is_cuda
-        and src_device_id == target_device.index
-    ) or (
-        target_is_opencl
-        and src_is_opencl
-        and src_device_id == target_device.index
-    )
+        target_is_cuda and src_is_cuda and src_device_id == target_device.index
+    ) or (target_is_opencl and src_is_opencl and src_device_id == target_device.index)
 
     needs_copy = (
         copy is True  # user forced copy

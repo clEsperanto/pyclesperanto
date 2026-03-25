@@ -300,19 +300,24 @@ auto array_(py::module_ &m) -> void
           } })
 
           .def("_dlpack",
-               [](const cle::Array::Pointer & arr, py::object /*stream*/) -> py::capsule
+               [](const cle::Array::Pointer & arr, py::object /*stream*/, py::tuple /*max_version*/) -> py::capsule
                {
                     if (arr->mtype() == cle::mType::IMAGE)
                          throw std::runtime_error("DLPack export not supported for IMAGE memory type");
 
+                    // no strea sync handling for now
+                    // todo later if needed.
                     auto * managed = arr->toDLPack();
 
-                    // PyCapsule name must be "dltensor" per the DLPack spec
-                    return py::capsule(managed, "dltensor", [](PyObject * obj)
+                    std::cout << "Created DLPack capsule for array with device type: " << get_dlpack_device_type(arr) << std::endl;
+                    return py::capsule(managed, "dltensor_versioned", [](PyObject * obj)
                     {
-                         // deleter: called when capsule is consumed or GC'd
+                         // Try both names: consumer renames capsule to "used_dltensor_versioned"
                          auto * m = static_cast<DLManagedTensorVersioned *>(
-                              PyCapsule_GetPointer(obj, "dltensor"));
+                              PyCapsule_GetPointer(obj, "dltensor_versioned"));
+                         if (!m)
+                              m = static_cast<DLManagedTensorVersioned *>(
+                                   PyCapsule_GetPointer(obj, "used_dltensor_versioned"));
                          if (m && m->deleter)
                               m->deleter(m);
                     });
@@ -322,6 +327,10 @@ auto array_(py::module_ &m) -> void
           .def("_dlpack_device",
                [](const cle::Array::Pointer & arr) -> py::tuple
                {
+                    // debug print to check device type and index
+                    std::cout << "Getting DLPack device info for array" << std::endl;
+                    std::cout << "device dlpack type: " << get_dlpack_device_type(arr) << std::endl;
+                    std::cout << "clic device type: " << arr->device()->getType() << ", index: " << arr->device()->getDeviceIndex() << std::endl;
                     return py::make_tuple(
                          get_dlpack_device_type(arr),
                          arr->device()->getDeviceIndex()  // device index / ordinal

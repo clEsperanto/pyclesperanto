@@ -6,6 +6,7 @@ import pyclesperanto as cle
 
 pytestmark = pytest.mark.backend("cuda")
 
+
 @pytest.fixture
 def device(request):
     return cle.select_device(request.param)
@@ -137,5 +138,3 @@ def test_no_copy_same_memory_torch(device):
     tensor_arr = torch.from_dlpack(arr)
     tensor_arr[:] = 42.0
     np.testing.assert_array_equal(arr.get(), np.full((4, 4), 42.0))
-
-

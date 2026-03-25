@@ -1,7 +1,8 @@
 # test_dlpack_cupy.py
-import pyclesperanto as cle
 import numpy as np
 import pytest
+
+import pyclesperanto as cle
 
 cupy = pytest.importorskip("cupy", reason="cupy not installed")
 

@@ -335,9 +335,9 @@ def _reset_array_patch():
             pass  # Ignore any errors updating bindings
 
 
-def __dlpack__(self, stream=None):
+def __dlpack__(self, stream=None, version=(1, 0)):
     """Export as DLPack capsule (CUDA and OpenCL BUFFER only)."""
-    return self._dlpack(stream)  # calls the C++ binding
+    return self._dlpack(stream, version)  # calls the C++ binding
 
 
 def __dlpack_device__(self):

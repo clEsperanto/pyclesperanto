@@ -1,10 +1,9 @@
 # test_dlpack_cupy.py
+import pyclesperanto as cle
 import numpy as np
 import pytest
 
 cupy = pytest.importorskip("cupy", reason="cupy not installed")
-
-import pyclesperanto as cle
 
 pytestmark = pytest.mark.backend("cuda")
 

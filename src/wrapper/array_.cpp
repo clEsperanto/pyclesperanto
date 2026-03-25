@@ -322,7 +322,7 @@ auto array_(py::module_ &m) -> void
                               m->deleter(m);
                     });
                },
-               py::arg("stream") = py::none())
+               py::arg("stream") = py::none(), py::arg("version") = py::make_tuple(1, 0))
 
           .def("_dlpack_device",
                [](const cle::Array::Pointer & arr) -> py::tuple
@@ -336,6 +336,7 @@ auto array_(py::module_ &m) -> void
                          arr->device()->getDeviceIndex()  // device index / ordinal
                     );
                })
+
           .def_static("_from_dlpack", [](py::object capsule_or_tensor, cle::Device::Pointer device) {
                py::object capsule;
                if (py::hasattr(capsule_or_tensor, "__dlpack__")) {

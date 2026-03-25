@@ -390,6 +390,7 @@ def from_dlpack(cls, ext_tensor, *, device=None, copy=None):
     target_is_cuda = target_device.type.name.upper() == "CUDA"
     target_is_opencl = target_device.type.name.upper() == "OPENCL"
 
+    # Determine source device type
     src_is_cuda = src_device_type == _DLPACK_DEVICE_CUDA
     src_is_opencl = src_device_type == _DLPACK_DEVICE_OPENCL
     src_is_cpu = src_device_type == _DLPACK_DEVICE_CPU

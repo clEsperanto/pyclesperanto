@@ -376,6 +376,7 @@ def from_dlpack(cls, ext_tensor, *, device=None, copy=None):
     _DLPACK_DEVICE_CUDA = 2
     _DLPACK_DEVICE_OPENCL = 7
 
+    # get target device (default to current)
     target_device = device if device is not None else get_device()
 
     # --- resolve source device type ---

@@ -306,7 +306,7 @@ auto array_(py::module_ &m) -> void
                          throw std::runtime_error("DLPack export not supported for IMAGE memory type");
 
                     // no strea sync handling for now
-                    // todo later if needed.
+                    // todo: later if needed, to be test
                     auto * managed = arr->toDLPack();
 
                     std::cout << "Created DLPack capsule for array with device type: " << get_dlpack_device_type(arr) << std::endl;

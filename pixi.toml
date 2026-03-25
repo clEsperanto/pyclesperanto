@@ -1,9 +1,9 @@
 [workspace]
 channels = ["conda-forge"]
-platforms = ["linux-64", "osx-64", "osx-arm64", "win-64"]
+platforms = ["linux-64", "win-64"] #"osx-64", "osx-arm64"
 
 [dependencies]
-python = ">=3.13.12,<3.14"
+python = "=3.12.*"
 pip = ">=26.0.1,<27"
 wheel = ">=0.46.3,<0.47"
 hatchling = ">=1.29.0,<2"
@@ -21,6 +21,7 @@ scikit-image = ">=0.26.0,<0.27"
 isort = ">=8.0.1,<9"
 jupyter = ">=1.1.1,<2"
 pandas = ">=3.0.1,<4"
+cupy = ">=14.0.0,<15"
 
 [feature.dev.pypi-dependencies]
 napari = { version = ">=0.6.5, <0.7", extras = ["all"] }

@@ -304,7 +304,10 @@ def __array_ufunc__(self, ufunc, method, *inputs, **kwargs):
     if method == "__call__":
         func = getattr(Array, f"__{ufunc.__name__}__", None)
         if func is not None:
-            return func(*[Array.from_array(i) if isinstance(i, Image) else i for i in inputs], **kwargs)
+            return func(
+                *[Array.from_array(i) if isinstance(i, Image) else i for i in inputs],
+                **kwargs,
+            )
     return NotImplemented
 
 

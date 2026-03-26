@@ -184,9 +184,11 @@ def __iadd__(x1, x2):
         return add_image_and_scalar(temp, output_image=x1, scalar=x2)
     return add_images_weighted(temp, x2, output_image=x1, factor1=1, factor2=1)
 
+
 def __radd__(x1, x2):
     """Addition of two arrays."""
     return x1.__add__(x2)
+
 
 def __sub__(x1, x2):
     """Subtraction of two arrays."""
@@ -196,6 +198,7 @@ def __sub__(x1, x2):
         return add_image_and_scalar(x1, scalar=-x2)
     return add_images_weighted(x1, x2, factor1=1, factor2=-1)
 
+
 def __isub__(x1, x2):
     """Subtraction of two arrays."""
     from ._tier1 import add_image_and_scalar, add_images_weighted, copy
@@ -204,6 +207,7 @@ def __isub__(x1, x2):
     if isinstance(x2, _supported_numeric_types):
         return add_image_and_scalar(temp, output_image=x1, scalar=-x2)
     return add_images_weighted(temp, x2, output_image=x1, factor1=1, factor2=-1)
+
 
 def __rsub__(x1, x2):
     """Subtraction of two arrays."""

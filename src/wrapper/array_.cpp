@@ -299,7 +299,7 @@ auto array_(py::module_ &m) -> void
                throw std::invalid_argument("Invalid dimension value");
           } })
 
-          .def("__dlpack__", [](const cle::Array::Pointer &arr, py::object stream, py::tuple version) {
+          .def("_dlpack", [](const cle::Array::Pointer &arr, py::object stream, py::tuple version) {
                int64_t stream_val = stream.is_none() ? 0 : stream.cast<int64_t>();
                arr->syncToStream(stream_val);
                auto * managed = arr->toDLPack();
@@ -310,7 +310,7 @@ auto array_(py::module_ &m) -> void
                });
                }, py::arg("stream") = py::none(), py::arg("version") = py::make_tuple(1, 0))
 
-          .def("__dlpack_device__", [](const cle::Array::Pointer &arr) {
+          .def("_dlpack_device", [](const cle::Array::Pointer &arr) {
                // returns (device_type, device_id) tuple
                auto managed = arr->toDLPack();
                auto device_type = static_cast<int>(managed->dl_tensor.device.device_type);

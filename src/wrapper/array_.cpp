@@ -301,7 +301,8 @@ auto array_(py::module_ &m) -> void
 
           .def("_dlpack", [](const cle::Array::Pointer &arr, py::object stream, py::tuple version) {
                int64_t stream_val = stream.is_none() ? 0 : stream.cast<int64_t>();
-               arr->syncToStream(stream_val);
+               // arr->syncToStream(stream_val);
+               arr->device()->finish();
                auto * managed = arr->toDLPack();
                return py::capsule(managed, "dltensor_versioned", [](PyObject *obj) {
                     auto * m = static_cast<DLManagedTensor*>(

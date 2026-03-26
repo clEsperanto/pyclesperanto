@@ -241,7 +241,7 @@ def empty_like(cls, arr):
     _assert_supported_dtype(arr.dtype)
     mtype = arr.mtype if isinstance(arr, Array) else "buffer"
     device = arr.device if isinstance(arr, Array) else get_device()
-    return Array.create(arr.shape, arr.dtype, mtype, device)
+    return cls.create(shape=arr.shape, dtype=arr.dtype, mtype=mtype, device=device)
 
 
 def zeros(cls, shape, dtype=float, *args, **kwargs):
@@ -304,7 +304,7 @@ def __array_ufunc__(self, ufunc, method, *inputs, **kwargs):
     if method == "__call__":
         func = getattr(Array, f"__{ufunc.__name__}__", None)
         if func is not None:
-            return func(*[Array.to_device(i) for i in inputs], **kwargs)
+            return func(*[Array.from_array(i) if isinstance(i, Image) else i for i in inputs], **kwargs)
     return NotImplemented
 
 
@@ -459,13 +459,19 @@ def _patch_array_class():
     setattr(BackendArray, "__neg__", _operators.__neg__)
     setattr(BackendArray, "__add__", _operators.__add__)
     setattr(BackendArray, "__iadd__", _operators.__iadd__)
+    setattr(BackendArray, "__radd__", _operators.__radd__)
     setattr(BackendArray, "__sub__", _operators.__sub__)
+    setattr(BackendArray, "__isub__", _operators.__isub__)
+    setattr(BackendArray, "__rsub__", _operators.__rsub__)
     setattr(BackendArray, "__div__", _operators.__div__)
-    setattr(BackendArray, "__truediv__", _operators.__truediv__)
     setattr(BackendArray, "__idiv__", _operators.__idiv__)
+    setattr(BackendArray, "__rdiv__", _operators.__rdiv__)
+    setattr(BackendArray, "__truediv__", _operators.__truediv__)
     setattr(BackendArray, "__itruediv__", _operators.__itruediv__)
+    setattr(BackendArray, "__rtruediv__", _operators.__rtruediv__)
     setattr(BackendArray, "__mul__", _operators.__mul__)
     setattr(BackendArray, "__imul__", _operators.__imul__)
+    setattr(BackendArray, "__rmul__", _operators.__rmul__)
     setattr(BackendArray, "__gt__", _operators.__gt__)
     setattr(BackendArray, "__ge__", _operators.__ge__)
     setattr(BackendArray, "__lt__", _operators.__lt__)

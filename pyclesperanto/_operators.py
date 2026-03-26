@@ -184,6 +184,9 @@ def __iadd__(x1, x2):
         return add_image_and_scalar(temp, output_image=x1, scalar=x2)
     return add_images_weighted(temp, x2, output_image=x1, factor1=1, factor2=1)
 
+def __radd__(x1, x2):
+    """Addition of two arrays."""
+    return x1.__add__(x2)
 
 def __sub__(x1, x2):
     """Subtraction of two arrays."""
@@ -193,12 +196,31 @@ def __sub__(x1, x2):
         return add_image_and_scalar(x1, scalar=-x2)
     return add_images_weighted(x1, x2, factor1=1, factor2=-1)
 
+def __isub__(x1, x2):
+    """Subtraction of two arrays."""
+    from ._tier1 import add_image_and_scalar, add_images_weighted, copy
+
+    temp = copy(x1)
+    if isinstance(x2, _supported_numeric_types):
+        return add_image_and_scalar(temp, output_image=x1, scalar=-x2)
+    return add_images_weighted(temp, x2, output_image=x1, factor1=1, factor2=-1)
+
+def __rsub__(x1, x2):
+    """Subtraction of two arrays."""
+    from ._tier1 import add_images_weighted, subtract_image_from_scalar
+
+    if isinstance(x2, _supported_numeric_types):
+        return subtract_image_from_scalar(x1, scalar=x2)
+    return add_images_weighted(x1, x2, factor1=-1, factor2=1)
+
 
 def __div__(x1, x2):
     """Division of two arrays."""
     from ._tier1 import divide_images, multiply_image_and_scalar
 
     if isinstance(x2, _supported_numeric_types):
+        if x2 == 0:
+            raise ZeroDivisionError("division by zero")
         return multiply_image_and_scalar(x1, scalar=1.0 / x2)
     return divide_images(x1, x2)
 
@@ -214,13 +236,29 @@ def __idiv__(x1, x2):
 
     temp = copy(x1)
     if isinstance(x2, _supported_numeric_types):
+        if x2 == 0:
+            raise ZeroDivisionError("division by zero")
         return multiply_image_and_scalar(temp, x1, scalar=1.0 / x2)
     return divide_images(temp, x2, x1)
+
+
+def __rdiv__(x1, x2):
+    """Division of two arrays."""
+    from ._tier1 import divide_images, divide_scalar_by_image
+
+    if isinstance(x2, _supported_numeric_types):
+        return divide_scalar_by_image(x1, scalar=x2)
+    return divide_images(x2, x1)
 
 
 def __itruediv__(x1, x2):
     """Division of two arrays."""
     return x1.__idiv__(x2)
+
+
+def __rtruediv__(x1, x2):
+    """Division of two arrays."""
+    return x1.__rdiv__(x2)
 
 
 def __mul__(x1, x2):
@@ -230,6 +268,11 @@ def __mul__(x1, x2):
     if isinstance(x2, _supported_numeric_types):
         return multiply_image_and_scalar(x1, scalar=x2)
     return multiply_images(x1, x2)
+
+
+def __rmul__(x1, x2):
+    """Multiplication of two arrays."""
+    return x1.__mul__(x2)
 
 
 def __imul__(x1, x2):
@@ -475,8 +518,7 @@ def _parse_index(index, shape):
     ]
 
     slice_list = [[0, s, 1] for s in shape]
-    for i in range(len(index)):
-        idx = index[i]
+    for i, idx in enumerate(index):
         if isinstance(idx, slice):
             slice_list[i] = [idx.start, idx.stop, idx.step]
         elif isinstance(idx, _INTEGER_TYPES):
@@ -592,7 +634,7 @@ def __getitem__(self, index):
         offset = 3 - self.ndim
         for i, idx in enumerate(index):
             origin[offset + i] = int(idx) if idx >= 0 else self.shape[i] + int(idx)
-        return self.get(origin, [1, 1, 1])
+        return self.get(origin, [1, 1, 1]).item()
 
     origin, region, steps, squeeze_axes, range_x, range_y, range_z = _parse_index(
         index, self.shape
@@ -600,7 +642,7 @@ def __getitem__(self, index):
 
     total = region[0] * region[1] * region[2]
     if total == 1:
-        return self.get(origin, region)
+        return self.get(origin, region).item()
 
     from ._tier1 import range as gpu_range
 

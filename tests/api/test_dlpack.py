@@ -11,7 +11,7 @@ torch = pytest.importorskip("torch", reason="torch not installed")
 @pytest.mark.parametrize(
     "dtype", [np.float32, np.int8, np.int16, np.int32, np.uint8, np.uint16, np.uint32]
 )
-@pytest.mark.only_backend("cuda")
+@pytest.mark.skip_backend("opencl", reason="OpenCL does not support this feature")
 def test_cle_to_cupy_dtypes(device, dtype):
     data = np.ones((4, 4), dtype=dtype)
     arr = cle.Array.from_array(data, device=device)
@@ -20,7 +20,7 @@ def test_cle_to_cupy_dtypes(device, dtype):
     np.testing.assert_array_equal(cupy.asnumpy(cp_arr), data)
 
 
-@pytest.mark.only_backend("cuda")
+@pytest.mark.skip_backend("opencl", reason="OpenCL does not support this feature")
 def test_cle_to_cupy(device):
     data = np.arange(24, dtype=np.float32).reshape(4, 6)
     arr = cle.Array.from_array(data, device=device)
@@ -30,7 +30,7 @@ def test_cle_to_cupy(device):
     np.testing.assert_array_equal(cupy.asnumpy(cp_arr), data)
 
 
-@pytest.mark.only_backend("cuda")
+@pytest.mark.skip_backend("opencl", reason="OpenCL does not support this feature")
 def test_cupy_to_cle(device):
     data = np.arange(24, dtype=np.float32).reshape(4, 6)
     cp_arr = cupy.asarray(data)
@@ -40,7 +40,7 @@ def test_cupy_to_cle(device):
     np.testing.assert_array_equal(arr.get(), data)
 
 
-@pytest.mark.only_backend("cuda")
+@pytest.mark.skip_backend("opencl", reason="OpenCL does not support this feature")
 def test_round_trip_cupy(device):
     data = np.random.rand(8, 8).astype(np.float32)
     arr = cle.Array.from_array(data, device=device)
@@ -49,7 +49,7 @@ def test_round_trip_cupy(device):
     np.testing.assert_array_almost_equal(arr2.get(), data)
 
 
-@pytest.mark.only_backend("cuda")
+@pytest.mark.skip_backend("opencl", reason="OpenCL does not support this feature")
 def test_3d_array(device):
     data = np.arange(60, dtype=np.float32).reshape(3, 4, 5)
     arr = cle.Array.from_array(data, device=device)
@@ -58,7 +58,7 @@ def test_3d_array(device):
     np.testing.assert_array_equal(cupy.asnumpy(cp_arr), data)
 
 
-@pytest.mark.only_backend("cuda")
+@pytest.mark.skip_backend("opencl", reason="OpenCL does not support this feature")
 def test_no_copy_same_memory_cupy(device):
     """Exported CuPy array shares GPU memory — in-place modification reflects in cle."""
     data = np.zeros((4, 4), dtype=np.float32)
@@ -71,7 +71,7 @@ def test_no_copy_same_memory_cupy(device):
 @pytest.mark.parametrize(
     "dtype", [np.float32, np.int8, np.int16, np.int32, np.uint8, np.uint16, np.uint32]
 )
-@pytest.mark.only_backend("cuda")
+@pytest.mark.skip_backend("opencl", reason="OpenCL does not support this feature")
 def test_cle_to_torch_dtypes(device, dtype):
     data = np.ones((4, 4), dtype=dtype)
     arr = cle.Array.from_array(data, device=device)
@@ -80,7 +80,7 @@ def test_cle_to_torch_dtypes(device, dtype):
     np.testing.assert_array_equal(torch.asnumpy(tensor_arr), data)
 
 
-@pytest.mark.only_backend("cuda")
+@pytest.mark.skip_backend("opencl", reason="OpenCL does not support this feature")
 def test_cle_to_torch(device):
     data = np.arange(24, dtype=np.float32).reshape(4, 6)
     arr = cle.Array.from_array(data, device=device)
@@ -90,7 +90,7 @@ def test_cle_to_torch(device):
     np.testing.assert_array_equal(torch.asnumpy(tensor_arr), data)
 
 
-@pytest.mark.only_backend("cuda")
+@pytest.mark.skip_backend("opencl", reason="OpenCL does not support this feature")
 def test_torch_to_cle(device):
     data = np.arange(24, dtype=np.float32).reshape(4, 6)
     tensor_arr = torch.asarray(data)
@@ -100,7 +100,7 @@ def test_torch_to_cle(device):
     np.testing.assert_array_equal(arr.get(), data)
 
 
-@pytest.mark.only_backend("cuda")
+@pytest.mark.skip_backend("opencl", reason="OpenCL does not support this feature")
 def test_round_trip_torch(device):
     data = np.random.rand(8, 8).astype(np.float32)
     arr = cle.Array.from_array(data, device=device)
@@ -109,7 +109,7 @@ def test_round_trip_torch(device):
     np.testing.assert_array_almost_equal(arr2.get(), data)
 
 
-@pytest.mark.only_backend("cuda")
+@pytest.mark.skip_backend("opencl", reason="OpenCL does not support this feature")
 def test_no_copy_same_memory_torch(device):
     """Exported Torch tensor shares GPU memory — in-place modification reflects in cle."""
     data = np.zeros((4, 4), dtype=np.float32)

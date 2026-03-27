@@ -68,11 +68,17 @@ def pytest_generate_tests(metafunc):
         return
     backends = _get_available_backends()
     if backends:
-        metafunc.parametrize("gpu_backend", backends, ids=backends, indirect=True)  # ← add indirect=True
+        metafunc.parametrize(
+            "gpu_backend", backends, ids=backends, indirect=True
+        )  # ← add indirect=True
     else:
         metafunc.parametrize(
             "gpu_backend",
-            [pytest.param("none", marks=pytest.mark.skip(reason="No GPU backend available"))],
+            [
+                pytest.param(
+                    "none", marks=pytest.mark.skip(reason="No GPU backend available")
+                )
+            ],
             indirect=True,  # ← here too
         )
 

@@ -354,6 +354,13 @@ auto array_(py::module_ &m) -> void
                }
 
                auto * managed = static_cast<DLManagedTensorVersioned *>(ptr);
+
+               // check the dtype as we do not support 64bit (int64 or uint64 or float64)
+               if (managed->dl_tensor.dtype.bits == 64) {
+                    throw std::runtime_error("DLPack export not supported for 64-bit dtypes, as cle does not support them. Consumer should cast to a supported dtype before exporting to DLPack.");
+               }
+
+
                auto array = cle::Array::fromDLPack(managed, device);
                PyCapsule_SetName(capsule.ptr(), "used_dltensor_versioned");
                return array;

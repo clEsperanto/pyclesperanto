@@ -4,7 +4,6 @@ import pytest
 import pyclesperanto as cle
 
 
-
 def test_power(gpu_backend):
     test1 = cle.push(
         np.asarray(

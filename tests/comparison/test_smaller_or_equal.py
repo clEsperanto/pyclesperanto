@@ -4,7 +4,6 @@ import pytest
 import pyclesperanto as cle
 
 
-
 def test_smaller_or_equal_2d(gpu_backend):
     test1 = cle.push(
         np.asarray(
@@ -49,7 +48,6 @@ def test_smaller_or_equal_2d(gpu_backend):
     print(a)
 
     assert np.array_equal(a, b)
-
 
 
 def test_smaller_or_equal_3d(gpu_backend):

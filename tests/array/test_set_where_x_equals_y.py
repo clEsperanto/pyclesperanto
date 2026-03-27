@@ -4,7 +4,6 @@ import pytest
 import pyclesperanto as cle
 
 
-
 def test_set_where_x_equals_y(gpu_backend):
     result = cle.push(
         np.asarray([[0, 0, 0, 1], [0, 0, 3, 1], [0, 0, 3, 1], [1, 1, 1, 1]])

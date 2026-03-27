@@ -4,7 +4,6 @@ import pytest
 import pyclesperanto as cle
 
 
-
 def test_concate_along_x(gpu_backend):
     test1 = cle.push(np.asarray([[1, 1], [1, 1]]))
     test2 = cle.push(np.asarray([[2, 2, 2], [2, 2, 2]]))
@@ -22,7 +21,6 @@ def test_concate_along_x(gpu_backend):
     assert np.allclose(a, b, 0.01)
 
 
-
 def test_concate_along_y(gpu_backend):
     test1 = cle.push(np.asarray([[1, 1], [1, 1]]))
     test2 = cle.push(np.asarray([[2, 2], [2, 2]]))
@@ -38,7 +36,6 @@ def test_concate_along_y(gpu_backend):
     print(b)
 
     assert np.allclose(a, b, 0.01)
-
 
 
 def test_concate_along_z(gpu_backend):

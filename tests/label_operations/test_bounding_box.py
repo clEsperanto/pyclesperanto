@@ -4,7 +4,6 @@ import pytest
 import pyclesperanto as cle
 
 
-
 def test_bounding_box_2d(gpu_backend):
 
     test = cle.push(
@@ -27,7 +26,6 @@ def test_bounding_box_2d(gpu_backend):
 
     assert bb[4] == 2
     assert bb[3] == 2
-
 
 
 def test_bounding_box_3d(gpu_backend):

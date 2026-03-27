@@ -4,7 +4,6 @@ import pytest
 import pyclesperanto as cle
 
 
-
 def test_smooth_labels_2d(gpu_backend):
 
     gpu_input = cle.push(

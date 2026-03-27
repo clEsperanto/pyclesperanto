@@ -4,7 +4,6 @@ import pytest
 import pyclesperanto as cle
 
 
-
 def test_exclude_labels_out_of_size_range_2d(gpu_backend):
 
     gpu_input = cle.push(
@@ -42,7 +41,6 @@ def test_exclude_labels_out_of_size_range_2d(gpu_backend):
     assert np.array_equal(a, b)
 
 
-
 def test_exclude_small_labels_2d(gpu_backend):
     gpu_input = cle.push(
         np.asarray(
@@ -77,7 +75,6 @@ def test_exclude_small_labels_2d(gpu_backend):
     print(b)
 
     assert np.array_equal(a, b)
-
 
 
 def test_exclude_large_labels_2d(gpu_backend):

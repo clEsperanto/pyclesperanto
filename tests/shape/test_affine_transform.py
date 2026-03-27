@@ -4,7 +4,6 @@ import pytest
 import pyclesperanto as cle
 
 
-
 def test_affine_transform_translate(gpu_backend):
     source = cle.push(
         np.asarray(

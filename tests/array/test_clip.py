@@ -4,7 +4,6 @@ import pytest
 import pyclesperanto as cle
 
 
-
 def test_clip_min_max(gpu_backend):
     test = [[0, 1], [2, 3]]
     reference = [[1, 1], [2, 2]]
@@ -14,7 +13,6 @@ def test_clip_min_max(gpu_backend):
     assert np.array_equal(result, reference)
 
 
-
 def test_clip_max(gpu_backend):
     test = [[0, 1], [2, 3]]
     reference = [[0, 1], [2, 2]]
@@ -22,7 +20,6 @@ def test_clip_max(gpu_backend):
     result = cle.clip(test, min_intensity=0, max_intensity=2)
 
     assert np.array_equal(result, reference)
-
 
 
 def test_clip_min(gpu_backend):

@@ -4,14 +4,12 @@ import pytest
 import pyclesperanto as cle
 
 
-
 def test_setitem_single_value(gpu_backend):
     image = cle.create([10, 20, 30])
     image[5, 10, 15] = 42
 
     result = cle.pull(image)
     assert result[5, 10, 15] == 42
-
 
 
 def test_setitem_array(gpu_backend):
@@ -21,7 +19,6 @@ def test_setitem_array(gpu_backend):
 
     result = cle.pull(image)
     assert np.array_equal(result[2:7, 5:15, 10:25], data)
-
 
 
 def test_setitem_invalid_value(gpu_backend):
@@ -36,7 +33,6 @@ def test_setitem_invalid_value(gpu_backend):
         assert False, "Expected TypeError to be raised"
 
 
-
 def test_setitem_invalid_region(gpu_backend):
     image = cle.create([10, 20, 30])
     data = np.ones((5, 10, 15))
@@ -47,7 +43,6 @@ def test_setitem_invalid_region(gpu_backend):
         pass
     else:
         assert False, "Expected ValueError to be raised"
-
 
 
 def test_setitem_out_of_bounds(gpu_backend):
@@ -62,7 +57,6 @@ def test_setitem_out_of_bounds(gpu_backend):
         assert False, "Expected IndexError to be raised"
 
 
-
 def test_setitem_negative_indices(gpu_backend):
     image = cle.create([10, 20, 30])
     data = np.ones((5, 10, 15))
@@ -75,7 +69,6 @@ def test_setitem_negative_indices(gpu_backend):
         assert False, "Expected IndexError to be raised"
 
 
-
 def test_setitem_every_2_rows(gpu_backend):
     image = cle.create([10, 20, 30])
     data = np.ones((5, 20, 30))
@@ -83,7 +76,6 @@ def test_setitem_every_2_rows(gpu_backend):
 
     result = cle.pull(image)
     assert np.array_equal(result[::2, :, :], data)
-
 
 
 def test_setitem_negative_step(gpu_backend):

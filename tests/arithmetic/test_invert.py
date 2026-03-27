@@ -4,7 +4,6 @@ import pytest
 import pyclesperanto as cle
 
 
-
 def test_grreater_or_equal(gpu_backend):
     test = cle.push(
         np.asarray(

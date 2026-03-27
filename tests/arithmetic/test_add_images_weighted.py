@@ -4,7 +4,6 @@ import pytest
 import pyclesperanto as cle
 
 
-
 def test_add_images_weighted_missing_parameters(gpu_backend):
     input1 = np.asarray([1, 2, 3])
     input2 = np.asarray([4, 5, 6])
@@ -16,7 +15,6 @@ def test_add_images_weighted_missing_parameters(gpu_backend):
     print(result)
     print(reference)
     assert np.array_equal(result, reference)
-
 
 
 def test_add_images_weighted_none_output(gpu_backend):
@@ -32,7 +30,6 @@ def test_add_images_weighted_none_output(gpu_backend):
     assert np.array_equal(result, reference)
 
 
-
 def test_add_images_weighted_named_parameters(gpu_backend):
     input1 = np.asarray([1, 2, 3])
     input2 = np.asarray([4, 5, 6])
@@ -46,7 +43,6 @@ def test_add_images_weighted_named_parameters(gpu_backend):
     assert np.array_equal(result, reference)
 
 
-
 def test_add_images_weighted_wrong_parameter_order(gpu_backend):
     input1 = np.asarray([1, 2, 3])
     input2 = np.asarray([4, 5, 6])
@@ -58,7 +54,6 @@ def test_add_images_weighted_wrong_parameter_order(gpu_backend):
     print(result)
     print(reference)
     assert np.array_equal(result, reference)
-
 
 
 def test_add_images_weighted_parameters_wrong_order_and_missing(gpu_backend):

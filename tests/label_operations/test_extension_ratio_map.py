@@ -4,7 +4,6 @@ import pytest
 import pyclesperanto as cle
 
 
-
 def test_extension_ratio_map_2d(gpu_backend):
 
     labels = cle.push(np.asarray([[1, 1, 2], [1, 0, 2], [3, 3, 0]]))
@@ -22,7 +21,6 @@ def test_extension_ratio_map_2d(gpu_backend):
     print(b)
 
     assert np.allclose(a, b, 0.001)
-
 
 
 def test_extension_ratio_map_3d(gpu_backend):

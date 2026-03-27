@@ -4,7 +4,6 @@ import pytest
 import pyclesperanto as cle
 
 
-
 def test_cubic_root(gpu_backend):
     test = np.asarray([[125, 64]])
     reference = np.asarray([[5, 4]])

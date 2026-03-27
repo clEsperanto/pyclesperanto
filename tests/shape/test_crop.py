@@ -4,7 +4,6 @@ import pytest
 import pyclesperanto as cle
 
 
-
 def test_crop(gpu_backend):
     test1 = cle.push(
         np.asarray([[0, 0, 0, 1], [0, 0, 3, 1], [0, 0, 3, 1], [1, 1, 1, 1]])
@@ -22,7 +21,6 @@ def test_crop(gpu_backend):
     assert np.array_equal(a, b)
 
 
-
 def test_crop_2d(gpu_backend):
     input_image = cle.create([100, 100])
     print(input_image.shape)
@@ -33,7 +31,6 @@ def test_crop_2d(gpu_backend):
     assert len(output_image.shape) == 2
     assert output_image.shape[0] == 10
     assert output_image.shape[1] == 10
-
 
 
 def test_crop_3d(gpu_backend):

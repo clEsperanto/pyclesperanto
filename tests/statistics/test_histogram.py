@@ -4,7 +4,6 @@ import pytest
 import pyclesperanto as cle
 
 
-
 def test_histogram(gpu_backend):
     test = cle.push(np.asarray([[1, 2, 4, 4, 2, 3], [3, 3, 4, 4, 5, 5]]))
 
@@ -20,7 +19,6 @@ def test_histogram(gpu_backend):
     assert np.allclose(a, ref_histogram)
 
 
-
 def test_histogram_3d(gpu_backend):
     test = cle.push(np.asarray([[1, 2, 4, 4, 2, 3], [3, 3, 4, 4, 5, 5]]))
 
@@ -34,7 +32,6 @@ def test_histogram_3d(gpu_backend):
 
     a = cle.pull(my_histogram)
     assert np.allclose(a, ref_histogram)
-
 
 
 def test_histogram_3d_2(gpu_backend):

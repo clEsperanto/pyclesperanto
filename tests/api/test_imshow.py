@@ -7,12 +7,10 @@ import pytest
 import pyclesperanto as cle
 
 
-
 @patch("matplotlib.pyplot.show")
 def test_imshow(mock_show, gpu_backend):
     image = cle.push(np.random.random((512, 512)))
     cle.imshow(image)
-
 
 
 @patch("matplotlib.pyplot.show")
@@ -21,7 +19,6 @@ def test_imshow_3d(mock_show, gpu_backend):
     cle.imshow(image, colorbar=True)
     plt.show()
     plt.close()
-
 
 
 @patch("matplotlib.pyplot.show")

@@ -4,7 +4,6 @@ import pytest
 import pyclesperanto as cle
 
 
-
 def test_rotate(gpu_backend):
     source = cle.push(
         np.asarray(
@@ -45,7 +44,6 @@ def test_rotate(gpu_backend):
     assert np.array_equal(a, b)
 
 
-
 def test_rotate_around_center(gpu_backend):
     source = cle.push(
         np.asarray(
@@ -84,7 +82,6 @@ def test_rotate_around_center(gpu_backend):
     print(b)
 
     assert np.array_equal(a, b)
-
 
 
 def test_rotation_auto_size(gpu_backend):
@@ -129,7 +126,6 @@ def test_rotation_auto_size(gpu_backend):
     assert np.array_equal(a, b)
 
 
-
 def test_scale_centered(gpu_backend):
     source = cle.push(
         np.asarray(
@@ -170,7 +166,6 @@ def test_scale_centered(gpu_backend):
     assert np.array_equal(a, b)
 
 
-
 def test_scale_not_centered(gpu_backend):
     source = cle.push(
         np.asarray(
@@ -209,7 +204,6 @@ def test_scale_not_centered(gpu_backend):
     print(b)
 
     assert np.array_equal(a, b)
-
 
 
 def test_scale_auto_size(gpu_backend):
@@ -255,7 +249,6 @@ def test_scale_auto_size(gpu_backend):
     print(b)
 
     assert np.array_equal(a, b)
-
 
 
 def test_translate(gpu_backend):

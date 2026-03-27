@@ -8,7 +8,6 @@ import pyclesperanto as cle
 # ============================================================================
 
 
-
 def test_binary_and_1(gpu_backend):
     test = cle.push(np.asarray([[1, 0], [1, 0]]))
 
@@ -23,7 +22,6 @@ def test_binary_and_1(gpu_backend):
     assert np.min(a) == 0
     assert np.max(a) == 1
     assert np.mean(a) == 0.25
-
 
 
 def test_binary_and_2(gpu_backend):
@@ -41,7 +39,6 @@ def test_binary_and_2(gpu_backend):
 # ============================================================================
 # BINARY OR
 # ============================================================================
-
 
 
 def test_binary_or(gpu_backend):
@@ -65,7 +62,6 @@ def test_binary_or(gpu_backend):
 # ============================================================================
 
 
-
 def test_binary_xor(gpu_backend):
     test = cle.push(np.asarray([[1, 0], [1, 0]]))
 
@@ -87,7 +83,6 @@ def test_binary_xor(gpu_backend):
 # ============================================================================
 
 
-
 def test_binary_not(gpu_backend):
     test1 = cle.push(np.asarray([[1, 1], [1, 0]]))
 
@@ -104,7 +99,6 @@ def test_binary_not(gpu_backend):
 # ============================================================================
 # BINARY SUBTRACT
 # ============================================================================
-
 
 
 def test_binary_subtract(gpu_backend):
@@ -126,7 +120,6 @@ def test_binary_subtract(gpu_backend):
 # ============================================================================
 # BINARY EDGE DETECTION
 # ============================================================================
-
 
 
 def test_binary_edge_detection(gpu_backend):

@@ -4,7 +4,6 @@ import pytest
 import pyclesperanto as cle
 
 
-
 def test_logarithm(gpu_backend):
     test1 = cle.push(np.asarray([[1, 10], [1000, 100]]))
 

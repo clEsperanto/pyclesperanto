@@ -4,7 +4,6 @@ import pytest
 import pyclesperanto as cle
 
 
-
 def test_transpose_xy(gpu_backend):
     test1 = cle.push(np.asarray([[[0, 1], [2, 3]], [[4, 5], [6, 7]]]))
 
@@ -22,7 +21,6 @@ def test_transpose_xy(gpu_backend):
     assert np.array_equal(a, b)
 
 
-
 def test_transpose_xy_3d_generate_output(gpu_backend):
     test1 = cle.push(np.asarray([[[1, 2, 6], [3, 4, 5]]]))
 
@@ -33,7 +31,6 @@ def test_transpose_xy_3d_generate_output(gpu_backend):
     assert np.min(a) == 1
     assert np.max(a) == 6
     assert np.mean(a) == 3.5
-
 
 
 def test_transpose_xy_2d_generate_output(gpu_backend):
@@ -48,7 +45,6 @@ def test_transpose_xy_2d_generate_output(gpu_backend):
     assert np.min(a) == 1
     assert np.max(a) == 6
     assert np.mean(a) == 3.5
-
 
 
 def test_transpose_xy_1d_generate_output(gpu_backend):

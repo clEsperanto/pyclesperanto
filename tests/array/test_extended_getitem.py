@@ -4,7 +4,6 @@ import pytest
 import pyclesperanto as cle
 
 
-
 def test_getitem_3d(gpu_backend):
     data = np.asarray([[[1.0, 2.0, 3.0], [1.0, 2.0, 3.0]]]).astype(np.float32)
     ref = np.asarray([[1.0, 2.0, 1.0]]).astype(np.float32)
@@ -16,7 +15,6 @@ def test_getitem_3d(gpu_backend):
     values = cl_data[positions]
 
     assert np.allclose(values, ref)
-
 
 
 def test_getitem_2d(gpu_backend):
@@ -32,7 +30,6 @@ def test_getitem_2d(gpu_backend):
     assert np.allclose(values, ref)
 
 
-
 def test_clamp_to_edge(gpu_backend):
     x = cle.push([[np.arange(10)]])
     print(x.shape)
@@ -40,7 +37,6 @@ def test_clamp_to_edge(gpu_backend):
     positions = (np.asarray([0]), np.asarray([0]), np.asarray([20]))
 
     assert x[positions] == 9
-
 
 
 def test_tuple(gpu_backend):
@@ -52,7 +48,6 @@ def test_tuple(gpu_backend):
     assert x[positions] == 4
 
 
-
 def test_tuple2(gpu_backend):
     x = cle.push([[np.arange(10)]])
     print(x.shape)
@@ -60,7 +55,6 @@ def test_tuple2(gpu_backend):
     positions = (0, 0, 4)
 
     assert x[positions] == 4
-
 
 
 def test_list(gpu_backend):
@@ -72,7 +66,6 @@ def test_list(gpu_backend):
     assert x[positions] == 4
 
 
-
 def test_list2(gpu_backend):
     x = cle.push([[np.arange(10)]])
     print(x.shape)
@@ -82,7 +75,6 @@ def test_list2(gpu_backend):
     assert np.allclose(x[positions], [4, 5])
 
 
-
 def test_list_tuple_mix(gpu_backend):
     x = cle.push([[np.arange(10)]])
     print(x.shape)
@@ -90,7 +82,6 @@ def test_list_tuple_mix(gpu_backend):
     positions = [(0, 0), (0, 0), (4, 5)]
 
     assert np.allclose(x[positions], [4, 5])
-
 
 
 def test_list_tuple_mix2(gpu_backend):

@@ -5,7 +5,6 @@ from skimage.io import imread
 import pyclesperanto as cle
 
 
-
 def test_connected_components_labeling_box(gpu_backend):
     gpu_input = cle.push(np.asarray([[[1, 0, 1], [1, 0, 0], [0, 0, 1]]]))
 
@@ -22,7 +21,6 @@ def test_connected_components_labeling_box(gpu_backend):
     assert np.array_equal(a, b)
 
 
-
 def test_connected_components_labeling_sphere(gpu_backend):
     gpu_input = cle.push(np.asarray([[0, 1, 0, 1], [0, 1, 0, 0], [1, 0, 0, 1]]))
 
@@ -37,7 +35,6 @@ def test_connected_components_labeling_sphere(gpu_backend):
     print(a)
 
     assert np.array_equal(a, b)
-
 
 
 def test_connected_components_labeling_box_blobs(gpu_backend):

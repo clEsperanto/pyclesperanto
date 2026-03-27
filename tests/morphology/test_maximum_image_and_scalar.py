@@ -4,7 +4,6 @@ import pytest
 import pyclesperanto as cle
 
 
-
 def test_maximum_image_and_scalar(gpu_backend):
     test1 = cle.push(np.asarray([[0, 3, 4, 5, 0], [0, 2, 1, 6, 0], [0, 0, 8, 7, 0]]))
 

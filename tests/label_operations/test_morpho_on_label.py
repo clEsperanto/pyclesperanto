@@ -4,7 +4,6 @@ import pytest
 import pyclesperanto as cle
 
 
-
 def test_erode_connected_labels_2d(gpu_backend):
 
     gpu_input = cle.push(
@@ -39,7 +38,6 @@ def test_erode_connected_labels_2d(gpu_backend):
     print(b)
 
     assert np.array_equal(a, b)
-
 
 
 def test_erode_connected_labels_3d(gpu_backend):

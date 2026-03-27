@@ -4,7 +4,6 @@ import pytest
 import pyclesperanto as cle
 
 
-
 def test_detect_maxima_box(gpu_backend):
     gpu_input = cle.push(
         np.asarray(

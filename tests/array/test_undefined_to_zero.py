@@ -4,7 +4,6 @@ import pytest
 import pyclesperanto as cle
 
 
-
 def test_undefined_to_zero(gpu_backend):
     test1 = cle.push(
         np.asarray(

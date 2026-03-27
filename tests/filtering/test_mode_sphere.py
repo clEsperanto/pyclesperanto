@@ -3,7 +3,6 @@ import pytest
 import pyclesperanto as cle
 
 
-
 def test_mode_sphere_2d(gpu_backend):
     image = cle.asarray(
         [
@@ -30,7 +29,6 @@ def test_mode_sphere_2d(gpu_backend):
     result = cle.mode(image, None, 1, 1, 1, "sphere")
 
     assert cle.array_equal(result, reference)
-
 
 
 def test_mode_sphere_3d(gpu_backend):

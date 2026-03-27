@@ -4,7 +4,6 @@ import pytest
 import pyclesperanto as cle
 
 
-
 def test_voronoi_otsu_labeling(gpu_backend):
     gpu_input = cle.push(
         np.asarray(

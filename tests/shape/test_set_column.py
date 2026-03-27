@@ -4,7 +4,6 @@ import pytest
 import pyclesperanto as cle
 
 
-
 def test_set_column(gpu_backend):
     result = cle.push(
         np.asarray(

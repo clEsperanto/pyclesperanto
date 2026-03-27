@@ -5,7 +5,6 @@ from skimage.segmentation.morphsnakes import inf_sup, sup_inf
 import pyclesperanto as cle
 
 
-
 def test_inferior_superior_2d(gpu_backend):
     test = cle.push(
         np.asarray(
@@ -49,7 +48,6 @@ def test_inferior_superior_2d(gpu_backend):
     a = cle.pull(result)
     b = cle.pull(reference)
     assert np.array_equal(a, b)
-
 
 
 def test_inferior_superior_3d(gpu_backend):

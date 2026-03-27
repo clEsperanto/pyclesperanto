@@ -4,7 +4,6 @@ import pytest
 import pyclesperanto as cle
 
 
-
 def test_dask_compatibility(gpu_backend):
     array = pytest.importorskip("dask.array")
 

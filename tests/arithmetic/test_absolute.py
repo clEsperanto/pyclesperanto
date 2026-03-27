@@ -4,7 +4,6 @@ import pytest
 import pyclesperanto as cle
 
 
-
 def test_absolute(gpu_backend):
     """Test absolute operation across all available backends."""
     test = cle.push(np.asarray([[1, -1], [1, -1]]))
@@ -18,7 +17,6 @@ def test_absolute(gpu_backend):
     assert np.min(a) == 1
     assert np.max(a) == 1
     assert np.mean(a) == 1
-
 
 
 def test_absolute1(gpu_backend):

@@ -4,7 +4,6 @@ import pytest
 import pyclesperanto as cle
 
 
-
 def test_ellipsis(gpu_backend):
     image = cle.asarray(
         [

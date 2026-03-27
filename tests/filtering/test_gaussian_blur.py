@@ -4,7 +4,6 @@ import pytest
 import pyclesperanto as cle
 
 
-
 def test_gaussian_blur(gpu_backend):
     test = cle.push(
         np.asarray(

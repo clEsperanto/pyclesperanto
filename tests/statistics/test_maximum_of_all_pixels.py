@@ -4,7 +4,6 @@ import pytest
 import pyclesperanto as cle
 
 
-
 def test_maximum_of_all_pixels(gpu_backend):
     np_input = np.asarray(
         [
@@ -22,7 +21,6 @@ def test_maximum_of_all_pixels(gpu_backend):
     result = cle.maximum_of_all_pixels(gpu_input)
     print(result)
     assert result == 15
-
 
 
 def test_maximum_of_all_pixels_against_numpy(gpu_backend):

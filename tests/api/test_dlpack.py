@@ -7,6 +7,7 @@ import pyclesperanto as cle
 cupy = pytest.importorskip("cupy", reason="cupy not installed")
 torch = pytest.importorskip("torch", reason="torch not installed")
 
+
 @pytest.mark.parametrize(
     "dtype", [np.float32, np.int8, np.int16, np.int32, np.uint8, np.uint16, np.uint32]
 )

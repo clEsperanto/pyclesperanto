@@ -308,7 +308,6 @@ auto array_(py::module_ &m) -> void
                // stream sync handling:
                int64_t stream_val = stream.is_none() ? 0 : stream.cast<int64_t>();
                arr->syncToStream(stream_val);
-               // arr->device()->finish();
 
                // version handling: for now we only support 1.0
                // toDLPack return a DLManagedTensorVersioned
@@ -317,16 +316,9 @@ auto array_(py::module_ &m) -> void
                // we return a capsule with name "dltensor_versioned", and a custom destructor
                return py::capsule(managed, "dltensor_versioned", [](PyObject *obj)
                {
-                    // Only clean up if the capsule was never consumed.
-                    // A consumer (torch, cupy) renames it to "used_dltensor_versioned"
-                    // and takes ownership of calling managed->deleter itself.
-                    const char *name = PyCapsule_GetName(obj);
-                    if (name && std::strcmp(name, "dltensor_versioned") == 0)
-                    {
-                         auto * m = static_cast<DLManagedTensorVersioned*>(
-                              PyCapsule_GetPointer(obj, "dltensor_versioned"));
-                         if (m && m->deleter) m->deleter(m);
-                    }
+                    auto * m = static_cast<DLManagedTensorVersioned*>(
+                         PyCapsule_GetPointer(obj, "dltensor_versioned"));
+                    if (m) m->deleter(m);
                });
                }, py::arg("stream") = py::none(), py::arg("version") = py::make_tuple(1, 0))
 
@@ -360,4 +352,7 @@ auto array_(py::module_ &m) -> void
                return array;
                }, py::arg("capsule_or_tensor"), py::arg("device"));
 
+
 }
+
+                         

@@ -13,9 +13,13 @@ Markers:
     @pytest.mark.skip_if_no_backend                  — skip if no backend available
 """
 
+
 import pytest
 
 import pyclesperanto as cle
+
+print("CONFTEST LOADED")  # add at top level of conftest.py
+
 
 _available_backends = None
 

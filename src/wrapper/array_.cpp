@@ -361,5 +361,3 @@ auto array_(py::module_ &m) -> void
                }, py::arg("capsule_or_tensor"), py::arg("device"));
 
 }
-
-                         

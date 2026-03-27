@@ -304,8 +304,8 @@ auto array_(py::module_ &m) -> void
 
                if (arr->mtype() == cle::mType::IMAGE)
                          throw std::runtime_error("DLPack export not supported for IMAGE memory type");
-                    
-               // stream sync handling: 
+
+               // stream sync handling:
                //
                // int64_t stream_val = stream.is_none() ? 0 : stream.cast<int64_t>();
                // arr->syncToStream(stream_val);
@@ -314,9 +314,9 @@ auto array_(py::module_ &m) -> void
                // version handling: for now we only support 1.0
                // toDLPack return a DLManagedTensorVersioned
                auto * managed = arr->toDLPack();
-               
+
                // we return a capsule with name "dltensor_versioned", and a custom destructor
-               return py::capsule(managed, "dltensor_versioned", [](PyObject *obj) 
+               return py::capsule(managed, "dltensor_versioned", [](PyObject *obj)
                {
                     auto * m = static_cast<DLManagedTensorVersioned*>(
                          PyCapsule_GetPointer(obj, "used_dltensor_versioned"));

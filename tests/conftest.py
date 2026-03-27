@@ -84,24 +84,26 @@ def pytest_generate_tests(metafunc):
 
 @pytest.fixture(scope="function")
 def gpu_backend(request):
-    """Select the GPU backend for this test.
-
-    Usage — just add it as a parameter, no marker needed:
-
-        def test_my_operation(gpu_backend):
-            arr = cle.push(np.ones((10, 10), dtype=np.float32))
-            ...
-
-    The test will automatically run once per available backend,
-    with IDs like test_my_operation[opencl] and test_my_operation[cuda].
-    """
+    """Select the GPU backend for this test."""
     backend_name = request.param
+
+    # Force backend switch AND device selection
     cle.select_backend(backend_name)
+    cle.select_device()
+
+    # Verify it actually switched
+    active = cle.get_backend_name()
+    if active != backend_name:
+        pytest.fail(
+            f"Failed to switch to '{backend_name}', still on '{active}'"
+        )
 
     # Handle skip_backend marker
     for marker in request.node.iter_markers("skip_backend"):
         if backend_name in marker.args:
-            pytest.skip(f"Skipped on {backend_name}: {marker.kwargs.get('reason', '')}")
+            pytest.skip(
+                f"Skipped on {backend_name}: {marker.kwargs.get('reason', '')}"
+            )
 
     # Handle only_backend marker
     for marker in request.node.iter_markers("only_backend"):

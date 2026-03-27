@@ -101,9 +101,9 @@ def gpu_backend(request):
     # ✅ Actually switch the backend here
     cle.select_backend(backend_name)
     cle.select_device()
-    assert cle.get_backend_name() == backend_name, (
-        f"Backend switch failed: wanted {backend_name}, got {cle.get_backend_name()}"
-    )
+    assert (
+        cle.get_backend_name() == backend_name
+    ), f"Backend switch failed: wanted {backend_name}, got {cle.get_backend_name()}"
 
     return backend_name
 

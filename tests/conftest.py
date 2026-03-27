@@ -94,16 +94,12 @@ def gpu_backend(request):
     # Verify it actually switched
     active = cle.get_backend_name()
     if active != backend_name:
-        pytest.fail(
-            f"Failed to switch to '{backend_name}', still on '{active}'"
-        )
+        pytest.fail(f"Failed to switch to '{backend_name}', still on '{active}'")
 
     # Handle skip_backend marker
     for marker in request.node.iter_markers("skip_backend"):
         if backend_name in marker.args:
-            pytest.skip(
-                f"Skipped on {backend_name}: {marker.kwargs.get('reason', '')}"
-            )
+            pytest.skip(f"Skipped on {backend_name}: {marker.kwargs.get('reason', '')}")
 
     # Handle only_backend marker
     for marker in request.node.iter_markers("only_backend"):

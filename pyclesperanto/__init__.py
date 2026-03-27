@@ -1,9 +1,9 @@
 import warnings
 
 from ._array import (
-    Array, 
-    Image, 
-    _patch_array_class, 
+    Array,
+    Image,
+    _patch_array_class,
     is_image,
 )
 from ._backend import (
@@ -61,18 +61,18 @@ if _backend_available:
     from ._execute import evaluate, execute, native_execute
     from ._functionalities import imshow, operation, operations
     from ._memory import (
-        create, 
-        create_like, 
-        pull, 
-        push, 
-        ones,
-        zeros,
+        create,
+        create_like,
         empty,
-        ones_like,
-        zeros_like,
         empty_like,
-        from_dlpack,
         from_array,
+        from_dlpack,
+        ones,
+        ones_like,
+        pull,
+        push,
+        zeros,
+        zeros_like,
     )
     from ._tier1 import *
     from ._tier2 import *

@@ -142,7 +142,6 @@ def pull(array: Image) -> np.ndarray:
     return array
 
 
-
 def from_array(arr, dtype=None, mtype="buffer", device=None):
     """Create an pyclesperanto Array object from a numpy array (same shape, dtype, and memory).
 

@@ -32,6 +32,7 @@ def test_zeros_like(gpu_backend):
     assert gpu_arr.max() == 0
     assert gpu_arr.min() == 0
 
+
 @pytest.mark.backend
 def test_ones_like(gpu_backend):
     arr = np.zeros((10, 10))
@@ -41,6 +42,7 @@ def test_ones_like(gpu_backend):
     assert gpu_arr.sum() == 100
     assert gpu_arr.max() == 1
     assert gpu_arr.min() == 1
+
 
 @pytest.mark.backend
 def test_ones_arrays(gpu_backend):

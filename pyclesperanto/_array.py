@@ -1,6 +1,5 @@
-
-from typing import Optional, Union
 import warnings
+from typing import Optional, Union
 
 import numpy as np
 
@@ -166,7 +165,7 @@ def to_device(cls, arr, *args, **kwargs):
         The array to convert.
     mtype : str, optional
         The memory type, by default "buffer"
-    device : Device, optional           
+    device : Device, optional
         The device, by default None
 
     Returns
@@ -174,7 +173,11 @@ def to_device(cls, arr, *args, **kwargs):
     Array
         The converted array.
     """
-    warnings.warn("Array.to_device is deprecated and will be removed in a future release. Please use Array.from_array instead.", DeprecationWarning, stacklevel=2)
+    warnings.warn(
+        "Array.to_device is deprecated and will be removed in a future release. Please use Array.from_array instead.",
+        DeprecationWarning,
+        stacklevel=2,
+    )
     return cls.from_array(arr, *args, **kwargs)
 
 
@@ -200,21 +203,23 @@ def from_array(cls, arr, dtype=None, mtype="buffer", device=None):
     if isinstance(arr, Array) and dtype is None:
         # nothing to do
         return arr
-    
+
     if isinstance(arr, Array) and dtype != arr.dtype:
         # dtype conversion on device
         return arr.astype(dtype)
-    
+
     # we are not on the device yet, so we can convert dtype with numpy and then upload
     arr = np.asarray(arr, dtype=dtype) if dtype else np.asarray(arr)
-    
+
     _assert_supported_dtype(arr.dtype)
 
     if device is None:
         device = get_device()
 
     if mtype not in ["buffer", "image"]:
-        raise ValueError(f"Invalid memory type: {mtype}. Supported values are 'buffer' and 'image'.")
+        raise ValueError(
+            f"Invalid memory type: {mtype}. Supported values are 'buffer' and 'image'."
+        )
 
     return cls.create(arr.shape, arr.dtype, mtype, device).set(arr)
 
@@ -240,7 +245,9 @@ def empty(cls, shape, dtype=None, mtype="buffer", device=None):
     """
 
     if len(shape) > 3:
-        raise ValueError(f"Invalid shape: {shape}. Only up to 3 dimensions are supported.")
+        raise ValueError(
+            f"Invalid shape: {shape}. Only up to 3 dimensions are supported."
+        )
 
     if dtype is None:
         dtype = np.float32
@@ -249,10 +256,12 @@ def empty(cls, shape, dtype=None, mtype="buffer", device=None):
         device = get_device()
 
     if mtype not in ["buffer", "image"]:
-        raise ValueError(f"Invalid memory type: {mtype}. Supported values are 'buffer' and 'image'.")
+        raise ValueError(
+            f"Invalid memory type: {mtype}. Supported values are 'buffer' and 'image'."
+        )
 
     print(device)
-    
+
     _assert_supported_dtype(dtype)
     return cls.create(shape=shape, dtype=dtype, mtype=mtype, device=device)
 
@@ -587,7 +596,6 @@ def _patch_array_class():
     setattr(BackendArray, "__iter__", _operators.__iter__)
     setattr(BackendArray, "__setitem__", _operators.__setitem__)
     setattr(BackendArray, "__getitem__", _operators.__getitem__)
-
 
 
 Image = Union[np.ndarray, Array]

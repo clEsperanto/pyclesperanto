@@ -90,9 +90,7 @@ def gpu_backend(request):
     # Handle skip_backend marker BEFORE switching
     for marker in request.node.iter_markers("skip_backend"):
         if backend_name in marker.args:
-            pytest.skip(
-                f"Skipped on {backend_name}: {marker.kwargs.get('reason', '')}"
-            )
+            pytest.skip(f"Skipped on {backend_name}: {marker.kwargs.get('reason', '')}")
 
     # Handle only_backend marker BEFORE switching
     for marker in request.node.iter_markers("only_backend"):

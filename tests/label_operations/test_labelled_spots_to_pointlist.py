@@ -4,7 +4,6 @@ import pytest
 import pyclesperanto as cle
 
 
-@pytest.mark.backend
 def test_labelled_spots_to_pointlist(gpu_backend):
     gpu_input = cle.push(
         np.asarray(

@@ -4,7 +4,6 @@ import pytest
 import pyclesperanto as cle
 
 
-@pytest.mark.backend
 def test_set_image_borders(gpu_backend):
     result = cle.push(
         np.asarray(

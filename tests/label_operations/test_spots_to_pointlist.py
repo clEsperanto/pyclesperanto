@@ -4,7 +4,6 @@ import pytest
 import pyclesperanto as cle
 
 
-@pytest.mark.backend
 def test_labelled_spots_to_pointlist(gpu_backend):
     gpu_input = cle.push(
         np.asarray(
@@ -31,7 +30,6 @@ def test_labelled_spots_to_pointlist(gpu_backend):
     assert np.array_equal(a, b)
 
 
-@pytest.mark.backend
 def test_spots_to_pointlist(gpu_backend):
     gpu_input = cle.push(
         np.asarray(

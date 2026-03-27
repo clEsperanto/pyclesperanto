@@ -4,7 +4,6 @@ import pytest
 import pyclesperanto as cle
 
 
-@pytest.mark.backend
 def test_setitem_single_value(gpu_backend):
     image = cle.create([10, 20, 30])
     image[5, 10, 15] = 42
@@ -13,7 +12,6 @@ def test_setitem_single_value(gpu_backend):
     assert result[5, 10, 15] == 42
 
 
-@pytest.mark.backend
 def test_setitem_array(gpu_backend):
     image = cle.create([10, 20, 30])
     data = np.ones((5, 10, 15))
@@ -23,7 +21,6 @@ def test_setitem_array(gpu_backend):
     assert np.array_equal(result[2:7, 5:15, 10:25], data)
 
 
-@pytest.mark.backend
 def test_setitem_invalid_value(gpu_backend):
     image = cle.create([10, 20, 30])
     invalid_value = "invalid"
@@ -36,7 +33,6 @@ def test_setitem_invalid_value(gpu_backend):
         assert False, "Expected TypeError to be raised"
 
 
-@pytest.mark.backend
 def test_setitem_invalid_region(gpu_backend):
     image = cle.create([10, 20, 30])
     data = np.ones((5, 10, 15))
@@ -49,7 +45,6 @@ def test_setitem_invalid_region(gpu_backend):
         assert False, "Expected ValueError to be raised"
 
 
-@pytest.mark.backend
 def test_setitem_out_of_bounds(gpu_backend):
     image = cle.create([10, 20, 30])
     data = np.ones((5, 10, 15))
@@ -62,7 +57,6 @@ def test_setitem_out_of_bounds(gpu_backend):
         assert False, "Expected IndexError to be raised"
 
 
-@pytest.mark.backend
 def test_setitem_negative_indices(gpu_backend):
     image = cle.create([10, 20, 30])
     data = np.ones((5, 10, 15))
@@ -75,7 +69,6 @@ def test_setitem_negative_indices(gpu_backend):
         assert False, "Expected IndexError to be raised"
 
 
-@pytest.mark.backend
 def test_setitem_every_2_rows(gpu_backend):
     image = cle.create([10, 20, 30])
     data = np.ones((5, 20, 30))
@@ -85,7 +78,6 @@ def test_setitem_every_2_rows(gpu_backend):
     assert np.array_equal(result[::2, :, :], data)
 
 
-@pytest.mark.backend
 def test_setitem_negative_step(gpu_backend):
     image = cle.create([10, 20, 30])
     data = np.ones((5, 20, 30))

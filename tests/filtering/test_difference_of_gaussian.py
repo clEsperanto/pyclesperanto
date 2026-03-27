@@ -4,7 +4,6 @@ import pytest
 import pyclesperanto as cle
 
 
-@pytest.mark.backend
 def test_difference_of_gaussian(gpu_backend):
     test = cle.push(
         np.asarray(

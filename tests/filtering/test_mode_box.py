@@ -3,7 +3,6 @@ import pytest
 import pyclesperanto as cle
 
 
-@pytest.mark.backend
 def test_mode_box_2d(gpu_backend):
     image = cle.asarray(
         [
@@ -32,7 +31,6 @@ def test_mode_box_2d(gpu_backend):
     assert cle.array_equal(result, reference)
 
 
-@pytest.mark.backend
 def test_mode_box_3d(gpu_backend):
     image = cle.asarray(
         [

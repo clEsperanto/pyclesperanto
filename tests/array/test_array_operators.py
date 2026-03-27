@@ -15,21 +15,18 @@ arr3 = cle.push(
 )
 
 
-@pytest.mark.backend
 def test_max(gpu_backend):
     assert arr1.max() == 5
     assert arr2.max() == 10
     assert arr3.max() == 20
 
 
-@pytest.mark.backend
 def test_min(gpu_backend):
     assert arr1.min() == 1
     assert arr2.min() == 1
     assert arr3.min() == 1
 
 
-@pytest.mark.backend
 def test_sum(gpu_backend):
     assert arr1.sum() == 15
     assert arr2.sum() == 55

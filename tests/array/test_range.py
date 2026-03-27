@@ -4,7 +4,6 @@ import pytest
 import pyclesperanto as cle
 
 
-@pytest.mark.backend
 def test_range1(gpu_backend):
     image = cle.push(np.asarray([[0, 1, 2], [2, 3, 4], [5, 6, 7]]))
 
@@ -18,7 +17,6 @@ def test_range1(gpu_backend):
     assert np.array_equal(crop, reference)
 
 
-@pytest.mark.backend
 def test_range2(gpu_backend):
     image = cle.push(np.asarray([[0, 1, 2], [2, 3, 4], [5, 6, 7]]))
 
@@ -32,7 +30,6 @@ def test_range2(gpu_backend):
     assert np.array_equal(crop, reference)
 
 
-@pytest.mark.backend
 def test_range3(gpu_backend):
     image = cle.push(np.asarray([[[0, 1, 2], [2, 3, 4], [5, 6, 7]]]))
 
@@ -46,7 +43,6 @@ def test_range3(gpu_backend):
     assert np.array_equal(crop, reference)
 
 
-@pytest.mark.backend
 def test_range4(gpu_backend):
     image = cle.push(np.asarray([[[0, 1, 2], [2, 3, 4], [5, 6, 7]]]))
 
@@ -60,7 +56,6 @@ def test_range4(gpu_backend):
     assert np.array_equal(crop, reference)
 
 
-@pytest.mark.backend
 def test_range5(gpu_backend):
     image = cle.push(np.random.random((10, 20, 30)))
 
@@ -71,7 +66,6 @@ def test_range5(gpu_backend):
     assert crop.shape[2] == 30
 
 
-@pytest.mark.backend
 def test_range6(gpu_backend):
     image = cle.push(np.random.random((10, 20, 30)))
 
@@ -82,7 +76,6 @@ def test_range6(gpu_backend):
     assert len(crop.shape) == 2
 
 
-@pytest.mark.backend
 def test_range7(gpu_backend):
     image = cle.push(np.random.random((10, 20, 30)))
 
@@ -93,7 +86,6 @@ def test_range7(gpu_backend):
     assert len(crop.shape) == 2
 
 
-@pytest.mark.backend
 def test_range8(gpu_backend):
     image = cle.push(np.random.random((10, 20, 30)))
 
@@ -104,7 +96,6 @@ def test_range8(gpu_backend):
     assert len(crop.shape) == 2
 
 
-@pytest.mark.backend
 def test_range9(gpu_backend):
     image = cle.push(np.random.random((10, 20, 30)))
 
@@ -115,7 +106,6 @@ def test_range9(gpu_backend):
     assert len(crop.shape) == 2
 
 
-@pytest.mark.backend
 def test_range_against_numpy_1(gpu_backend):
     input = np.random.random((2, 3, 4))
     input_gpu = cle.push(input)
@@ -129,7 +119,6 @@ def test_range_against_numpy_1(gpu_backend):
     assert np.allclose(reference, result, 0.0001)
 
 
-@pytest.mark.backend
 def test_range_against_numpy_2(gpu_backend):
     input = np.random.random((2, 3, 4))
     input_gpu = cle.push(input)
@@ -143,7 +132,6 @@ def test_range_against_numpy_2(gpu_backend):
     assert np.allclose(reference, result, 0.0001)
 
 
-@pytest.mark.backend
 def test_range_against_numpy_3(gpu_backend):
     input = np.random.random((2, 3, 4))
     input_gpu = cle.push(input)
@@ -157,7 +145,6 @@ def test_range_against_numpy_3(gpu_backend):
     assert np.allclose(reference, result, 0.0001)
 
 
-@pytest.mark.backend
 def test_range_against_numpy_4(gpu_backend):
     input = np.random.random((2, 3, 4))
     input_gpu = cle.push(input)
@@ -171,7 +158,6 @@ def test_range_against_numpy_4(gpu_backend):
     assert np.allclose(reference, result, 0.0001)
 
 
-@pytest.mark.backend
 def test_range_against_numpy_5(gpu_backend):
     input = np.random.random((2, 3, 4))
     input_gpu = cle.push(input)
@@ -185,7 +171,6 @@ def test_range_against_numpy_5(gpu_backend):
     assert np.allclose(reference, result, 0.0001)
 
 
-@pytest.mark.backend
 def test_range_against_numpy_6(gpu_backend):
     input = np.random.random((10, 20, 30))
     input_gpu = cle.push(input)
@@ -199,7 +184,6 @@ def test_range_against_numpy_6(gpu_backend):
     assert np.allclose(reference, result, 0.0001)
 
 
-@pytest.mark.backend
 def test_range_against_numpy_7(gpu_backend):
     input = np.random.random((10, 20, 30))
     input_gpu = cle.push(input)
@@ -213,7 +197,6 @@ def test_range_against_numpy_7(gpu_backend):
     assert np.allclose(reference, result, 0.0001)
 
 
-@pytest.mark.backend
 def test_range_against_numpy_8(gpu_backend):
     input = np.random.random((10, 20, 30))
     input_gpu = cle.push(input)
@@ -227,7 +210,6 @@ def test_range_against_numpy_8(gpu_backend):
     assert np.allclose(reference, result, 0.0001)
 
 
-@pytest.mark.backend
 def test_range_against_numpy_9(gpu_backend):
     input = np.random.random((10, 20, 30))
     input_gpu = cle.push(input)
@@ -241,7 +223,6 @@ def test_range_against_numpy_9(gpu_backend):
     assert np.allclose(reference, result, 0.0001)
 
 
-@pytest.mark.backend
 def test_range_against_numpy_10(gpu_backend):
     input = np.random.random((10, 20, 30))
     input_gpu = cle.push(input)
@@ -255,7 +236,6 @@ def test_range_against_numpy_10(gpu_backend):
     assert np.allclose(reference, result, 0.0001)
 
 
-@pytest.mark.backend
 def test_range_against_numpy_11(gpu_backend):
     input = np.random.random((10, 20, 30))
     input_gpu = cle.push(input)
@@ -269,7 +249,6 @@ def test_range_against_numpy_11(gpu_backend):
     assert np.allclose(reference, result, 0.0001)
 
 
-@pytest.mark.backend
 def test_range_against_numpy_12(gpu_backend):
     input = np.random.random((10, 20, 30))
     input_gpu = cle.push(input)
@@ -283,7 +262,6 @@ def test_range_against_numpy_12(gpu_backend):
     assert np.allclose(reference, result, 0.0001)
 
 
-@pytest.mark.backend
 def test_range_against_numpy_14(gpu_backend):
     input = np.random.random((10, 20, 30))
     input_gpu = cle.push(input)
@@ -297,7 +275,6 @@ def test_range_against_numpy_14(gpu_backend):
     assert np.allclose(reference, result, 0.0001)
 
 
-@pytest.mark.backend
 def test_range_against_numpy_15(gpu_backend):
     input = np.random.random((10, 20, 30))
     input_gpu = cle.push(input)
@@ -311,7 +288,6 @@ def test_range_against_numpy_15(gpu_backend):
     assert np.allclose(reference, result, 0.0001)
 
 
-@pytest.mark.backend
 def test_range_against_numpy_16(gpu_backend):
     input = np.random.random((10, 20, 30))
     input_gpu = cle.push(input)
@@ -325,7 +301,6 @@ def test_range_against_numpy_16(gpu_backend):
     assert np.allclose(reference, result, 0.0001)
 
 
-@pytest.mark.backend
 def test_type_1(gpu_backend):
     input = np.random.random((10, 20, 30)).astype(np.uint16)
     input_gpu = cle.push(input).astype(np.uint16)
@@ -339,7 +314,6 @@ def test_type_1(gpu_backend):
     assert reference.dtype == result.dtype
 
 
-@pytest.mark.backend
 def test_types_2(gpu_backend):
     input = np.random.random((10, 20, 30)).astype(np.uint16)
     input_gpu = cle.push(input).astype(np.uint16)
@@ -353,7 +327,6 @@ def test_types_2(gpu_backend):
     assert np.allclose(reference, result, 0.0001)
 
 
-@pytest.mark.backend
 def test_negative_step_2d(gpu_backend):
     numbers = np.reshape(np.asarray([[i] for i in range(0, 20)]), (2, 10))
 
@@ -376,7 +349,6 @@ def test_negative_step_2d(gpu_backend):
     assert cle.array_equal(numbers[::, 100:-50:-1], cle_numbers[::, 100:-50:-1])
 
 
-@pytest.mark.backend
 def test_negative_step_3d(gpu_backend):
     numbers = np.reshape(np.asarray([[i] for i in range(0, 60)]), (3, 4, 5))
 

@@ -4,7 +4,6 @@ import pytest
 import pyclesperanto as cle
 
 
-@pytest.mark.backend
 def test_convolve(gpu_backend):
     test = cle.push(np.asarray([[0, 0, 0], [0, 1, 0], [0, 0, 0]]))
 

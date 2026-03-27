@@ -4,7 +4,6 @@ import pytest
 import pyclesperanto as cle
 
 
-@pytest.mark.backend
 def test_sum_of_all_pixels_3d(gpu_backend):
     test1 = cle.push(
         np.asarray(
@@ -25,7 +24,6 @@ def test_sum_of_all_pixels_3d(gpu_backend):
     assert s == 20
 
 
-@pytest.mark.backend
 def test_sum_of_all_pixels_2d(gpu_backend):
     test1 = cle.push(
         np.asarray(
@@ -44,7 +42,6 @@ def test_sum_of_all_pixels_2d(gpu_backend):
     assert s == 20
 
 
-@pytest.mark.backend
 def test_sum_of_all_pixels_1d(gpu_backend):
     test1 = cle.push(np.asarray([0, 4, 0, 0, 2]))
 
@@ -53,7 +50,6 @@ def test_sum_of_all_pixels_1d(gpu_backend):
     assert s == 6
 
 
-@pytest.mark.backend
 def test_sum_of_all_pixels_1d_y(gpu_backend):
     test1 = cle.push(np.asarray([[0], [4], [0], [0], [2]]))
 
@@ -62,7 +58,6 @@ def test_sum_of_all_pixels_1d_y(gpu_backend):
     assert s == 6
 
 
-@pytest.mark.backend
 def test_sum_of_all_pixels_1d_z(gpu_backend):
     test1 = cle.push(np.asarray([[[0]], [[4]], [[0]], [[0]], [[2]]]))
 

@@ -27,7 +27,6 @@ def dtype(request):
 @pytest.mark.parametrize(
     "shape", [(256, 256), (3, 256, 256), (256, 256, 3), (10, 256, 256)]
 )
-@pytest.mark.backend
 def test_create_image(gpu_backend, dtype, shape):
     array = np.random.randint(0, 255, shape).astype(dtype)
     cle.create(array, mtype="image")

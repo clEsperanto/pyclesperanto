@@ -26,6 +26,7 @@ auto core_(pybind11::module_ &m) -> void
                                { return device.getName(false); })
         .def_property_readonly("info", &cle::Device::getInfo)
         .def_property_readonly("type", &cle::Device::getType)
+        .def_property_readonly("index", &cle::Device::getDeviceIndex)
         .def("set_wait_to_finish", &cle::Device::setWaitToFinish)
         .def("__str__", [](const cle::Device &device)
              {

@@ -34,6 +34,19 @@ cl_buffer_datatype_dict = {
     np.float64: "float",
 }
 
+_INTEGER_TYPES = (
+    int,
+    np.intp,
+    np.int8,
+    np.int16,
+    np.int32,
+    np.int64,
+    np.uint8,
+    np.uint16,
+    np.uint32,
+    np.uint64,
+)
+
 _supported_numeric_types = tuple(cl_buffer_datatype_dict.keys())
 
 
@@ -155,54 +168,65 @@ def __neg__(x1):
 
 def __add__(x1, x2):
     """Addition of two arrays."""
+    from ._tier1 import add_image_and_scalar, add_images_weighted
+
     if isinstance(x2, _supported_numeric_types):
-        from ._tier1 import add_image_and_scalar
-
         return add_image_and_scalar(x1, scalar=x2)
-    else:
-        from ._tier1 import add_images_weighted
-
-        return add_images_weighted(x1, x2, factor1=1, factor2=1)
+    return add_images_weighted(x1, x2, factor1=1, factor2=1)
 
 
 def __iadd__(x1, x2):
     """Addition of two arrays."""
-    from ._tier1 import copy
+    from ._tier1 import add_image_and_scalar, add_images_weighted, copy
 
     temp = copy(x1)
     if isinstance(x2, _supported_numeric_types):
-        from ._tier1 import add_image_and_scalar
+        return add_image_and_scalar(temp, output_image=x1, scalar=x2)
+    return add_images_weighted(temp, x2, output_image=x1, factor1=1, factor2=1)
 
-        add_image_and_scalar(temp, output_image=x1, scalar=x2)
-    else:
-        from ._tier1 import add_images_weighted
 
-        add_images_weighted(temp, x2, output_image=x1, factor1=1, factor2=1)
-    return x1
+def __radd__(x1, x2):
+    """Addition of two arrays."""
+    return x1.__add__(x2)
 
 
 def __sub__(x1, x2):
     """Subtraction of two arrays."""
+    from ._tier1 import add_image_and_scalar, add_images_weighted
+
     if isinstance(x2, _supported_numeric_types):
-        from ._tier1 import add_image_and_scalar
-
         return add_image_and_scalar(x1, scalar=-x2)
-    else:
-        from ._tier1 import add_images_weighted
+    return add_images_weighted(x1, x2, factor1=1, factor2=-1)
 
-        return add_images_weighted(x1, x2, factor1=1, factor2=-1)
+
+def __isub__(x1, x2):
+    """Subtraction of two arrays."""
+    from ._tier1 import add_image_and_scalar, add_images_weighted, copy
+
+    temp = copy(x1)
+    if isinstance(x2, _supported_numeric_types):
+        return add_image_and_scalar(temp, output_image=x1, scalar=-x2)
+    return add_images_weighted(temp, x2, output_image=x1, factor1=1, factor2=-1)
+
+
+def __rsub__(x1, x2):
+    """Subtraction of two arrays."""
+    from ._tier1 import add_images_weighted, subtract_image_from_scalar
+
+    if isinstance(x2, _supported_numeric_types):
+        return subtract_image_from_scalar(x1, scalar=x2)
+    return add_images_weighted(x1, x2, factor1=-1, factor2=1)
 
 
 def __div__(x1, x2):
     """Division of two arrays."""
+    from ._tier1 import divide_images, multiply_image_and_scalar
+
     if isinstance(x2, _supported_numeric_types):
-        from ._tier1 import multiply_image_and_scalar
-
+        if x2 == 0:
+            raise ZeroDivisionError("division by zero")
         return multiply_image_and_scalar(x1, scalar=1.0 / x2)
-    else:
-        from ._tier1 import divide_images
-
-        return divide_images(x1, x2)
+    return divide_images(x1, x2)
 
 
 def __truediv__(x1, x2):
@@ -212,17 +236,23 @@ def __truediv__(x1, x2):
 
 def __idiv__(x1, x2):
     """Division of two arrays."""
-    from ._tier1 import copy
+    from ._tier1 import copy, divide_images, multiply_image_and_scalar
 
     temp = copy(x1)
     if isinstance(x2, _supported_numeric_types):
-        from ._tier1 import multiply_image_and_scalar
-
+        if x2 == 0:
+            raise ZeroDivisionError("division by zero")
         return multiply_image_and_scalar(temp, x1, scalar=1.0 / x2)
-    else:
-        from ._tier1 import divide_images
+    return divide_images(temp, x2, x1)
 
-        return divide_images(temp, x2, x1)
+
+def __rdiv__(x1, x2):
+    """Division of two arrays."""
+    from ._tier1 import divide_images, divide_scalar_by_image
+
+    if isinstance(x2, _supported_numeric_types):
+        return divide_scalar_by_image(x1, scalar=x2)
+    return divide_images(x2, x1)
 
 
 def __itruediv__(x1, x2):
@@ -230,130 +260,106 @@ def __itruediv__(x1, x2):
     return x1.__idiv__(x2)
 
 
+def __rtruediv__(x1, x2):
+    """Division of two arrays."""
+    return x1.__rdiv__(x2)
+
+
 def __mul__(x1, x2):
     """Multiplication of two arrays."""
+    from ._tier1 import multiply_image_and_scalar, multiply_images
+
     if isinstance(x2, _supported_numeric_types):
-        from ._tier1 import multiply_image_and_scalar
-
         return multiply_image_and_scalar(x1, scalar=x2)
-    else:
-        from ._tier1 import multiply_images
+    return multiply_images(x1, x2)
 
-        return multiply_images(x1, x2)
+
+def __rmul__(x1, x2):
+    """Multiplication of two arrays."""
+    return x1.__mul__(x2)
 
 
 def __imul__(x1, x2):
     """Multiplication of two arrays."""
-    from ._tier1 import copy
+    from ._tier1 import copy, multiply_image_and_scalar, multiply_images
 
     temp = copy(x1)
     if isinstance(x2, _supported_numeric_types):
-        from ._tier1 import multiply_image_and_scalar
-
         return multiply_image_and_scalar(temp, x1, scalar=x2)
-    else:
-        from ._tier1 import multiply_images
-
-        return multiply_images(temp, x2, x1)
+    return multiply_images(temp, x2, x1)
 
 
 def __gt__(x1, x2):
     """Greater than comparison of two arrays."""
+    from ._tier1 import greater, greater_constant
+
     if isinstance(x2, _supported_numeric_types):
-        from ._tier1 import greater_constant
-
         return greater_constant(x1, scalar=x2)
-    else:
-        from ._tier1 import greater
-
-        return greater(x1, x2)
+    return greater(x1, x2)
 
 
 def __ge__(x1, x2):
     """Greater than or equal comparison of two arrays."""
+    from ._tier1 import greater_or_equal, greater_or_equal_constant
+
     if isinstance(x2, _supported_numeric_types):
-        from ._tier1 import greater_or_equal_constant
-
         return greater_or_equal_constant(x1, scalar=x2)
-    else:
-        from ._tier1 import greater_or_equal
-
-        return greater_or_equal(x1, x2)
+    return greater_or_equal(x1, x2)
 
 
 def __lt__(x1, x2):
     """Less than comparison of two arrays."""
+    from ._tier1 import smaller, smaller_constant
+
     if isinstance(x2, _supported_numeric_types):
-        from ._tier1 import smaller_constant
-
         return smaller_constant(x1, scalar=x2)
-    else:
-        from ._tier1 import smaller
-
-        return smaller(x1, x2)
+    return smaller(x1, x2)
 
 
 def __le__(x1, x2):
     """Less than or equal comparison of two arrays."""
+    from ._tier1 import smaller_or_equal, smaller_or_equal_constant
+
     if isinstance(x2, _supported_numeric_types):
-        from ._tier1 import smaller_or_equal_constant
-
         return smaller_or_equal_constant(x1, scalar=x2)
-    else:
-        from ._tier1 import smaller_or_equal
-
-        return smaller_or_equal(x1, x2)
+    return smaller_or_equal(x1, x2)
 
 
 def __eq__(x1, x2):
     """Equal comparison of two arrays."""
+    from ._tier1 import equal, equal_constant
+
     if isinstance(x2, _supported_numeric_types):
-        from ._tier1 import equal_constant
-
         return equal_constant(x1, scalar=x2)
-    else:
-        from ._tier1 import equal
-
-        return equal(x1, x2)
+    return equal(x1, x2)
 
 
 def __ne__(x1, x2):
     """Not equal comparison of two arrays."""
+    from ._tier1 import not_equal, not_equal_constant
+
     if isinstance(x2, _supported_numeric_types):
-        from ._tier1 import not_equal_constant
-
         return not_equal_constant(x1, scalar=x2)
-    else:
-        from ._tier1 import not_equal
-
-        return not_equal(x1, x2)
+    return not_equal(x1, x2)
 
 
 def __pow__(x1, x2):
     """Power function of two arrays."""
+    from ._tier1 import power, power_images
+
     if isinstance(x2, _supported_numeric_types):
-        from ._tier1 import power
-
         return power(x1, scalar=x2)
-    else:
-        from ._tier1 import power_images
-
-        return power_images(x1, x2)
+    return power_images(x1, x2)
 
 
 def __ipow__(x1, x2):
     """Power function of two arrays."""
-    from ._tier1 import copy
+    from ._tier1 import copy, power, power_images
 
     temp = copy(x1)
     if isinstance(x2, _supported_numeric_types):
-        from ._tier1 import power
-
         return power(temp, x1, scalar=x2)
-    else:
-        from ._tier1 import power_images
-
-        return power_images(temp, x2, x1)
+    return power_images(temp, x2, x1)
 
 
 def __iter__(self):
@@ -377,76 +383,271 @@ def __iter__(self):
     return MyIterator(self)
 
 
-def __getitem__(self, index):
-    """Get a pixel value or a region of interest from the Array."""
-    if (
-        isinstance(index, (tuple, list, np.ndarray))
-        and index[0] is not None
-        and isinstance(index[0], (tuple, list, np.ndarray))
-    ):
-        if len(index) == len(self.shape):
-            if len(index[0]) > 0:
-                # switch xy in 2D / xz in 3D, because clesperanto expects an X-Y-Z array;
-                # see also https://github.com/clEsperanto/pyclesperanto_prototype/issues/49
-                index = list(index)
-                index[0], index[-1] = index[-1], index[0]
+# adapted from https://github.com/napari/napari/blob/d6bc683b019c4a3a3c6e936526e29bbd59cca2f4/napari/utils/notebook_display.py#L54-L73
+def _figure_to_png(fig):
+    """Standalone helper — convert a Figure to PNG bytes."""
+    from io import BytesIO
 
-                # send positions to GPU
-                from ._memory import push
+    with BytesIO() as file_obj:
+        fig.savefig(file_obj, format="png")
+        file_obj.seek(0)
+        return file_obj.read()
 
-                positions = push(np.asarray(index))
 
-                # read values from positions
-                from ._tier1 import read_values_from_positions
+def _png_to_html(png):
+    """Standalone helper — convert PNG bytes to an HTML img tag."""
+    import base64
 
-                return read_values_from_positions(self, positions)
-            else:
-                return []
+    url = "data:image/png;base64," + base64.b64encode(png).decode("utf-8")
+    return f'<img src="{url}"></img>'
+
+
+def __repr_html__(self):
+    """HTML representation of the image object for IPython."""
+    import matplotlib.pyplot as plt
+    import numpy as np
+
+    from ._functionalities import imshow
+
+    size_in_pixels = np.prod(self.size)
+    size_in_bytes = size_in_pixels * self.dtype.itemsize
+    labels = self.dtype == np.uint32
+
+    if len(self.shape) in (2, 3) and size_in_pixels >= 100:
+        with plt.ioff():
+            imshow(self, labels=labels, continue_drawing=True, colorbar=not labels)
+            fig = plt.gcf()
+            image = _png_to_html(_figure_to_png(fig))
+            plt.close(fig)
+    else:
+        return "<pre>" + repr(self) + "</pre>"
+
+    raw_size_in_bytes = size_in_bytes
+    units = ["B", "kB", "MB", "GB", "TB", "PB"]
+    unit_index = 0
+    while size_in_bytes > 1024 and unit_index < len(units) - 1:
+        size_in_bytes /= 1024
+        unit_index += 1
+    size = "{:.1f}".format(size_in_bytes) + " " + units[unit_index]
+
+    histogram_html = ""
+    if raw_size_in_bytes < 100 * 1024 * 1024:
+        if not labels:
+
+            from ._tier3 import histogram
+
+            num_bins = 32
+            h = np.asarray(
+                histogram(
+                    input_image=self,
+                    num_bins=num_bins,
+                    minimum_intensity=self.min(),
+                    maximum_intensity=self.max(),
+                )
+            )
+            with plt.ioff():
+                plt.figure(figsize=(1.8, 1.2))
+                plt.bar(range(0, len(h)), h)
+                frame1 = plt.gca()
+                frame1.axes.xaxis.set_ticklabels([])
+                frame1.axes.yaxis.set_ticklabels([])
+                plt.tick_params(left=False, bottom=False)
+                hist_fig = plt.gcf()
+                histogram_html = _png_to_html(_figure_to_png(hist_fig))
+                plt.close(hist_fig)
+
+        min_max = (
+            "<tr><td>min</td><td>"
+            + str(self.min())
+            + "</td></tr>"
+            + "<tr><td>max</td><td>"
+            + str(self.max())
+            + "</td></tr>"
+        )
+    else:
+        min_max = ""
+
+    all = [
+        "<table>",
+        "<tr>",
+        "<td>",
+        image,
+        "</td>",
+        '<td style="text-align: center; vertical-align: top;">',
+        '<b><a href="https://github.com/clEsperanto/pyclesperanto" target="_blank">cle._</a> image</b><br/>',
+        "<table>",
+        "<tr><td>shape</td><td>"
+        + str(self.shape).replace(" ", "&nbsp;")
+        + "</td></tr>",
+        "<tr><td>dtype</td><td>" + str(self.dtype) + "</td></tr>",
+        "<tr><td>size</td><td>" + size + "</td></tr>",
+        min_max,
+        "</table>",
+        histogram_html,
+        "</td>",
+        "</tr>",
+        "</table>",
+    ]
+    return "\n".join(all)
+
+
+def _is_fancy_index(index, ndim):
+    """Return True if *index* is a sequence of coordinate arrays (fancy indexing)."""
+    if not isinstance(index, (tuple, list, np.ndarray)):
+        return False
+    if len(index) != ndim:
+        return False
+    first = index[0]
+    return first is not None and isinstance(first, (tuple, list, np.ndarray))
+
+
+def _parse_index(index, shape):
+    ndim = len(shape)
 
     if not isinstance(index, tuple):
         index = (index,)
 
-    if len(index) > self.ndim:
+    if len(index) > ndim:
         raise IndexError(
-            f"too many indices for array: array is {self.ndim}-dimensional, but {len(index)} were indexed"
+            f"too many indices for array: array is {ndim}-dimensional, "
+            f"but {len(index)} were indexed"
         )
 
-    dst_dim = sum(1 for i in index if not isinstance(i, (int, float)))
+    # Expand ellipsis BEFORE determining which axes are scalar-indexed
+    index = _process_ellipsis_into_slice(index, shape)
+    index = _trim_index_to_shape(index, shape)
 
-    index = _process_ellipsis_into_slice(index, self.shape)
-    index = _trim_index_to_shape(index, self.shape)
-    slice_list = [[0, x, 1] for x in self.shape]
-    for x in range(len(index)):
-        if isinstance(index[x], slice):
-            slice_list[x] = [index[x].start, index[x].stop, index[x].step]
-        elif np.issubdtype(type(index[x]), np.integer):
-            slice_list[x] = [
-                index[x],
-                index[x] + 1 if index[x] >= 0 else index[x] - 1,
+    squeeze_axes = [
+        i for i, idx in enumerate(index) if isinstance(idx, (int, float, np.integer))
+    ]
+
+    slice_list = [[0, s, 1] for s in shape]
+    for i, idx in enumerate(index):
+        if isinstance(idx, slice):
+            slice_list[i] = [idx.start, idx.stop, idx.step]
+        elif isinstance(idx, _INTEGER_TYPES):
+            slice_list[i] = [
+                idx,
+                idx + 1 if idx >= 0 else idx - 1,
                 None,
             ]
 
-    # manage range for (x,y,z), with nothing that we deal with a z,y,x order
-    _, range_x, range_y, range_z = _compute_range(slice_list, self.shape)
+    _, range_x, range_y, range_z = _compute_range(slice_list, shape)
+
     origin = [range_z[0], range_y[0], range_x[0]]
     region = [
-        range_z[1] - range_z[0],
-        range_y[1] - range_y[0],
-        range_x[1] - range_x[0],
+        abs(range_z[1] - range_z[0]) or 1,
+        abs(range_y[1] - range_y[0]) or 1,
+        abs(range_x[1] - range_x[0]) or 1,
     ]
-    region = [abs(x) if x != 0 else 1 for x in region]
     steps = [range_z[2], range_y[2], range_x[2]]
 
-    trimmed_region = [int(abs(x / s)) for x, s in zip(region, steps) if x > 1]
-    dst_shape = [1] * dst_dim
-    dst_shape[-len(trimmed_region) :] = trimmed_region
+    return origin, region, steps, squeeze_axes, range_x, range_y, range_z
 
-    # we are dealing with a single pixel operation
-    if np.prod(region) == 1:
-        # TODO: return a float or return a buffer of one?
-        return self.get(origin, region)
 
-    # a specific step was provided, we are dealing with a range operation
+def _compute_dst_shape(region, steps, squeeze_axes, ndim):
+    """Compute the output shape after slicing, honouring squeezed (scalar-indexed) axes."""
+    # Full 3-D stepped shape
+    full = [int(abs(r / s)) for r, s in zip(region, steps)]
+    # Map back to the original ndim (region is always 3-D internally)
+    offset = 3 - ndim
+    out = full[offset:]
+    # Drop axes that were scalar-indexed
+    return [s for i, s in enumerate(out) if i not in squeeze_axes]
+
+
+def _reshape_result(result, dst_shape, region):
+    if result.shape == tuple(dst_shape):
+        return result
+
+    ndim = len(dst_shape)
+
+    # Pad to 3D for the C++ reshape call
+    while len(dst_shape) < 3:
+        dst_shape.insert(0, 1)
+
+    return result.reshape(
+        width=int(dst_shape[-1]),
+        height=int(dst_shape[-2]),
+        depth=int(dst_shape[-3]),
+        dimension=ndim,
+    )
+
+
+# ---------------------------------------------------------------------------
+# Fancy-index helpers
+# ---------------------------------------------------------------------------
+
+
+def _swap_first_last(index):
+    """Swap first and last coordinate arrays (X↔Z / X↔Y) for clesperanto's X-Y-Z order."""
+    index = list(index)
+    index[0], index[-1] = index[-1], index[0]
+    return index
+
+
+def _fancy_getitem(self, index):
+    if len(index[0]) == 0:
+        return []
+
+    from ._memory import push
+    from ._tier1 import read_values_from_positions
+
+    positions = push(np.asarray(_swap_first_last(index)))
+    return read_values_from_positions(self, positions)
+
+
+def _fancy_setitem(self, index, value):
+    if len(index[0]) == 0:
+        return
+
+    from ._memory import create, push
+    from ._tier1 import write_values_to_positions
+    from ._tier2 import concatenate_along_y
+
+    positions = push(np.asarray(_swap_first_last(index)))
+    num_positions = positions.shape[-1]
+
+    if isinstance(value, (int, float)):
+        scalar = value  # save before reassigning
+        value_shape = [1] * len(self.shape)
+        value_shape[-1] = num_positions
+        value = create(value_shape)
+        value.fill(scalar)
+
+    values_and_positions = concatenate_along_y(positions, value)
+    write_values_to_positions(values_and_positions, self)
+
+
+# ---------------------------------------------------------------------------
+# Public operators
+# ---------------------------------------------------------------------------
+
+
+def __getitem__(self, index):
+    """Get a pixel value or a region of interest from the Array."""
+    if _is_fancy_index(index, len(self.shape)):
+        return _fancy_getitem(self, index)
+
+    # Fast path: all-integer index → single pixel, skip all parsing
+    if not isinstance(index, tuple):
+        index = (index,)
+    if len(index) == self.ndim and all(isinstance(i, (int, np.integer)) for i in index):
+        # Reverse to x,y,z order for the C++ side
+        origin = [0, 0, 0]
+        offset = 3 - self.ndim
+        for i, idx in enumerate(index):
+            origin[offset + i] = int(idx) if idx >= 0 else self.shape[i] + int(idx)
+        return self.get(origin, [1, 1, 1]).item()
+
+    origin, region, steps, squeeze_axes, range_x, range_y, range_z = _parse_index(
+        index, self.shape
+    )
+
+    total = region[0] * region[1] * region[2]
+    if total == 1:
+        return self.get(origin, region).item()
+
     from ._tier1 import range as gpu_range
 
     result = gpu_range(
@@ -462,117 +663,32 @@ def __getitem__(self, index):
         step_z=range_z[2],
     )
 
-    # if result is an Array, and one of the dimension is equal to 1
-    if result.shape != tuple(dst_shape):
-        from ._memory import create
-        from ._tier1 import transpose_xy, transpose_yz
-
-        tmp = create(
-            dst_shape,
-            dtype=self.dtype,
-            mtype=self.mtype,
-            device=self.device,
-        )
-
-        transpose = [x == 1 for x in region]
-        if transpose[2]:  # x is empty
-            result = transpose_xy(result)
-            transpose_yz(result, tmp)
-        elif transpose[1]:  # y is empty
-            transpose_yz(result, tmp)
-        else:
-            result.copy(tmp)
-
-        result = tmp
-
-    return result
+    dst_shape = _compute_dst_shape(region, steps, squeeze_axes, self.ndim)
+    return _reshape_result(result, dst_shape, region)
 
 
 def __setitem__(self, index, value):
     """Set a pixel value or a region of interest in the Array."""
-    if (
-        isinstance(index, (tuple, np.ndarray))
-        and index[0] is not None
-        and isinstance(index[0], (tuple, list, np.ndarray))
-    ):
-        if len(index) == len(self.shape):
-            if len(index[0]) > 0:
-                # switch xy in 2D / xz in 3D, because clesperanto expects an X-Y-Z array;
-                # see also https://github.com/clEsperanto/pyclesperanto_prototype/issues/49
-                index = list(index)
-                index[0], index[-1] = index[-1], index[0]
-
-                # send positions to GPU
-                from ._memory import push
-
-                positions = push(np.asarray(index))
-
-                num_positions = positions.shape[-1]
-                if isinstance(value, (int, float)):
-                    # make an array containing new values for every pixel
-                    number = value
-
-                    from ._memory import create
-
-                    value_shape = [1] * len(self.shape)
-                    value_shape[-1] = num_positions
-                    value = create(value_shape)
-                    value.fill(number)
-
-                # overwrite pixels
-                from ._tier1 import write_values_to_positions
-                from ._tier2 import concatenate_along_y
-
-                values_and_positions = concatenate_along_y(positions, value)
-                write_values_to_positions(values_and_positions, self)
-            return
+    if _is_fancy_index(index, len(self.shape)):
+        _fancy_setitem(self, index, value)
+        return
 
     if not isinstance(value, (_get_array_class(), np.ndarray)):
-        value = np.array(value)
+        value = np.asarray(value)
 
-    if not isinstance(index, tuple):
-        index = (index,)
-
-    dst_dim = sum(1 for i in index if not isinstance(i, (int, float)))
-
-    index = _process_ellipsis_into_slice(index, self.shape)
-    index = _trim_index_to_shape(index, self.shape)
-    slice_list = [[0, x, 1] for x in self.shape]
-    for x in range(len(index)):
-        if isinstance(index[x], slice):
-            slice_list[x] = [index[x].start, index[x].stop, index[x].step]
-        elif np.issubdtype(type(index[x]), np.integer):
-            slice_list[x] = [
-                index[x],
-                index[x] + 1 if index[x] >= 0 else index[x] - 1,
-                None,
-            ]
-
-    # manage range for (x,y,z), with nothing that we deal with a z,y,x order
-    _, range_x, range_y, range_z = _compute_range(slice_list, self.shape)
-    origin = [range_z[0], range_y[0], range_x[0]]
-    region = [
-        range_z[1] - range_z[0],
-        range_y[1] - range_y[0],
-        range_x[1] - range_x[0],
-    ]
-    region = [abs(x) if x != 0 else 1 for x in region]
-    steps = [range_z[2], range_y[2], range_x[2]]
-
-    trimmed_region = [int(abs(x / s)) for x, s in zip(region, steps) if x > 1]
-    dst_shape = [1] * dst_dim
-    dst_shape[-len(trimmed_region) :] = trimmed_region
+    origin, region, steps, squeeze_axes, range_x, range_y, range_z = _parse_index(
+        index, self.shape
+    )
+    total = region[0] * region[1] * region[2]
 
     if value.size == 1:
-        if np.prod(region) > 1:
-            value = np.repeat(value, np.prod(region))
+        if total > 1:
+            value = np.broadcast_to(np.asarray(value).ravel(), total)
             value = value.reshape(region)
-
         self.set(value, origin, region)
         return
 
-    if any([x != 1 for x in steps]):
-        # TODO: not sure it work properly
+    if any(s != 1 for s in steps):
         from ._tier1 import range as gpu_range
 
         gpu_range(
@@ -594,129 +710,14 @@ def __setitem__(self, index, value):
         if self.dtype == value.dtype:
             self.copy(value, origin, (0, 0, 0), region)
         else:
-            # otherwise we copy with cast using paste
             from ._tier1 import paste
 
             paste(
                 value,
                 self,
-                index_x=origin[-1] if len(origin) > 0 else 0,
-                index_y=origin[-2] if len(origin) > 1 else 0,
-                index_z=origin[-3] if len(origin) > 2 else 0,
+                index_x=origin[2],
+                index_y=origin[1],
+                index_z=origin[0],
             )
     else:
         self.set(value, origin, region)
-
-
-# adapted from https://github.com/napari/napari/blob/d6bc683b019c4a3a3c6e936526e29bbd59cca2f4/napari/utils/notebook_display.py#L54-L73
-def __plt_to_png__(self):
-    """PNG representation of the image object for IPython.
-    Returns
-    -------
-    In memory binary stream containing a PNG matplotlib image.
-    """
-    from io import BytesIO
-
-    import matplotlib.pyplot as plt
-
-    with BytesIO() as file_obj:
-        plt.savefig(file_obj, format="png")
-        plt.close()  # supress plot output
-        file_obj.seek(0)
-        png = file_obj.read()
-    return png
-
-
-def __png_to_html__(self, png):
-    import base64
-
-    url = "data:image/png;base64," + base64.b64encode(png).decode("utf-8")
-    return f'<img src="{url}"></img>'
-
-
-def __repr_html__(self):
-    """HTML representation of the image object for IPython.
-    Returns
-    -------
-    HTML text with the image and some properties.
-    """
-    import matplotlib.pyplot as plt
-    import numpy as np
-
-    from ._functionalities import imshow
-
-    size_in_pixels = np.prod(self.size)
-    size_in_bytes = size_in_pixels * self.dtype.itemsize
-
-    labels = self.dtype == np.uint32
-
-    # In case the image is 2D, 3D and larger than 100 pixels, turn on fancy view
-    if len(self.shape) in (2, 3) and size_in_pixels >= 100:
-        imshow(self, labels=labels, continue_drawing=True, colorbar=not labels)
-        image = self._png_to_html(self._plt_to_png())
-    else:
-        return "<pre>" + repr(self) + "</pre>"
-
-    units = ["B", "kB", "MB", "GB", "TB", "PB"]
-    unit_index = 0
-    while size_in_bytes > 1024 and unit_index < len(units) - 1:
-        size_in_bytes /= 1024
-        unit_index += 1
-    size = "{:.1f}".format(size_in_bytes) + " " + units[unit_index]
-
-    histogram = ""
-    if size_in_bytes < 100 * 1024 * 1024:
-        if not labels:
-            from ._tier3 import histogram
-
-            num_bins = 32
-            h = np.asarray(
-                histogram(
-                    self,
-                    num_bins=num_bins,
-                    minimum_intensity=self.min(),
-                    maximum_intensity=self.max(),
-                )
-            )
-            plt.figure(figsize=(1.8, 1.2))
-            plt.bar(range(0, len(h)), h)
-            # hide axis text
-            # https://stackoverflow.com/questions/2176424/hiding-axis-text-in-matplotlib-plots
-            # https://pythonguides.com/matplotlib-remove-tick-labels
-            frame1 = plt.gca()
-            frame1.axes.xaxis.set_ticklabels([])
-            frame1.axes.yaxis.set_ticklabels([])
-            plt.tick_params(left=False, bottom=False)
-            histogram = self._png_to_html(self._plt_to_png())
-        min_max = (
-            "<tr><td>min</td><td>"
-            + str(self.min())
-            + "</td></tr>"
-            + "<tr><td>max</td><td>"
-            + str(self.max())
-            + "</td></tr>"
-        )
-    else:
-        min_max = ""
-    all = [
-        "<table>",
-        "<tr>",
-        "<td>",
-        image,
-        "</td>",
-        '<td style="text-align: center; vertical-align: top;">',
-        '<b><a href="https://github.com/clEsperanto/pyclesperanto" target="_blank">cle._</a> image</b><br/>',
-        "<table>",
-        "<tr><td>shape</td><td>"
-        + str(self.shape).replace(" ", "&nbsp;")
-        + "</td></tr>",
-        "<tr><td>dtype</td><td>" + str(self.dtype) + "</td></tr>",
-        "<tr><td>size</td><td>" + size + "</td></tr>",
-        min_max,
-        "</table>",
-        histogram,
-        "</td>",
-        "</tr>",
-        "</table>",
-    ]
-    return "\n".join(all)

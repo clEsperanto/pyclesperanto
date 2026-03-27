@@ -4,7 +4,6 @@ import pytest
 import pyclesperanto as cle
 
 
-@pytest.mark.backend
 def test_create_3d(gpu_backend):
     size = [2, 3, 4]
 
@@ -20,7 +19,6 @@ def test_create_3d(gpu_backend):
     assert image2.shape[2] == 4
 
 
-@pytest.mark.backend
 def test_create_2d(gpu_backend):
     size = [2, 3]
 
@@ -34,7 +32,6 @@ def test_create_2d(gpu_backend):
     assert image2.shape[1] == 3
 
 
-@pytest.mark.backend
 def test_create_uint8(gpu_backend):
     image = cle.push([[-1, 1.5], [2000, -7.8]])
     reference = np.asarray([[0, 1], [255, 0]])
@@ -48,7 +45,6 @@ def test_create_uint8(gpu_backend):
     assert np.allclose(target, reference)
 
 
-@pytest.mark.backend
 def test_create_uint16(gpu_backend):
     image = cle.push([[-1, 1.5], [2000, -7.8]])
     reference = np.asarray([[0, 1], [2000, 0]])
@@ -62,7 +58,6 @@ def test_create_uint16(gpu_backend):
     assert np.allclose(target, reference)
 
 
-@pytest.mark.backend
 def test_create_uint32(gpu_backend):
     image = cle.push([[-1, 1.5], [2000, -7.8]])
     reference = np.asarray([[0, 1], [2000, 0]])
@@ -76,7 +71,6 @@ def test_create_uint32(gpu_backend):
     assert np.allclose(target, reference)
 
 
-@pytest.mark.backend
 def test_create_uint64(gpu_backend):
     image = cle.push([[-1, 1.5], [2000, -7.8]])
     reference = np.asarray([[0, 1], [2000, 0]])
@@ -90,7 +84,6 @@ def test_create_uint64(gpu_backend):
     assert np.allclose(target, reference)
 
 
-@pytest.mark.backend
 def test_create_int8(gpu_backend):
     image = cle.push([[-1, 1.5], [2000, -7.8]])
     reference = np.asarray([[-1, 1], [127, -7]])
@@ -104,7 +97,6 @@ def test_create_int8(gpu_backend):
     assert np.allclose(target, reference)
 
 
-@pytest.mark.backend
 def test_create_int16(gpu_backend):
     image = cle.push([[-1, 1.5], [2000, -7.8]])
     reference = np.asarray([[-1, 1], [2000, -7]])
@@ -118,7 +110,6 @@ def test_create_int16(gpu_backend):
     assert np.allclose(target, reference)
 
 
-@pytest.mark.backend
 def test_create_int32(gpu_backend):
     image = cle.push([[-1, 1.5], [200000, -7.8]])
     reference = np.asarray([[-1, 1], [200000, -7]])
@@ -132,7 +123,6 @@ def test_create_int32(gpu_backend):
     assert np.allclose(target, reference)
 
 
-@pytest.mark.backend
 def test_create_int64(gpu_backend):
     image = cle.push([[-1, 1.5], [2000, -7.8]])
     reference = np.asarray([[-1, 1], [2000, -7]])
@@ -146,7 +136,6 @@ def test_create_int64(gpu_backend):
     assert np.allclose(target, reference)
 
 
-@pytest.mark.backend
 def test_create_like_numpy(gpu_backend):
     image = np.random.random((10, 20))
 

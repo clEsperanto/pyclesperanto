@@ -1,3 +1,4 @@
+import warnings
 from typing import Optional, Union
 
 import numpy as np
@@ -13,10 +14,8 @@ def _get_array_class():
     return _get_backend()._Array
 
 
-# We need Array to be importable at module level for type hints,
-# but it must resolve lazily from the backend.
 class _ArrayMeta(type):
-    """Metaclass that makes isinstance/issubclass work with the backend _Array."""
+    """Metaclass that makes isinstance/issubclass always check the *current* backend."""
 
     def __instancecheck__(cls, instance):
         try:
@@ -30,19 +29,22 @@ class _ArrayMeta(type):
         except RuntimeError:
             return False
 
+    # ------------------------------------------------------------------ #
+    # Forward every attribute access to the *current* backend _Array.     #
+    # This makes cle.Array.create(...) always use the right backend.      #
+    # ------------------------------------------------------------------ #
+    def __getattr__(cls, name):
+        return getattr(_get_array_class(), name)
+
 
 class Array(metaclass=_ArrayMeta):
     """Lazy proxy for the backend Array class.
 
-    The actual class methods are patched onto the real backend _Array class
-    at the end of this module via _patch_array_class().
+    Attribute access is forwarded to the *currently active* backend _Array,
+    so switching backends with select_backend() is fully transparent.
     """
 
     pass
-
-
-# Flag to track if we already patched
-_array_patched = False
 
 
 def _prepare_array(arr) -> np.ndarray:
@@ -75,16 +77,17 @@ def __repr__(self) -> str:
 
 def set(
     self,
-    array: np.ndarray,
+    arr: Union[np.ndarray, Array, list, tuple],
     origin: Optional[tuple] = None,
     region: Optional[tuple] = None,
 ) -> None:
-    """Set the content of the Array to the given numpy array.
+    """Store an array-like structure into the Array. This is a host→device transfer.
+    The memory size of the input array must match the size of the Array, or the size of the targeted region if origin and region are specified.
 
     Parameters
     ----------
-    array : np.ndarray
-        The array to set from.
+    arr : Union[np.ndarray, Array, list, tuple]
+        The memory to set from.
     origin : tuple, optional
         The origin of the region of interest, by default None
     region : tuple, optional
@@ -95,29 +98,29 @@ def set(
     Array
         The array itself.
     """
-    if not isinstance(array, (np.ndarray, Array)):
-        array = np.array(array)
+    if not isinstance(arr, (np.ndarray, Array)):
+        arr = np.array(arr)
 
-    if array.dtype != self.dtype:
-        array = array.astype(self.dtype)
+    if arr.dtype != self.dtype:
+        arr = arr.astype(self.dtype)
 
-    if region and array.size != np.prod(region):
+    if region and arr.size != np.prod(region):
         raise IndexError(
-            f"Value size mismatch the targeted region: {array.size} != {np.prod(region)} ({array.shape} != {tuple(np.squeeze(region))})"
+            f"Value size mismatch the targeted region: {arr.size} != {np.prod(region)} ({arr.shape} != {tuple(np.squeeze(region))})"
         )
-    elif not region and self.size != array.size:
+    elif not region and self.size != arr.size:
         raise IndexError(
-            f"Value size mismatch the targeted region: {self.size} != {array.size} ({self.shape} != {array.shape})"
+            f"Value size mismatch the targeted region: {self.size} != {arr.size} ({self.shape} != {arr.shape})"
         )
 
-    self._write(_prepare_array(array), origin, region)
+    self._write(_prepare_array(arr), origin, region)
     return self
 
 
 def get(
     self, origin: Optional[tuple] = None, region: Optional[tuple] = None
 ) -> np.ndarray:
-    """Get the content of the Array into a numpy array.
+    """Convert the Array to a numpy array. This is a device→host transfer.
 
     Parameters
     ----------
@@ -170,43 +173,66 @@ def to_device(cls, arr, *args, **kwargs):
     Array
         The converted array.
     """
-    if isinstance(arr, Array):
-        return arr
-    mtype = kwargs.get("mtype", "buffer")
-    device = kwargs.get("device", get_device())
-    return cls.create(arr.shape, arr.dtype, mtype, device).set(arr)
+    warnings.warn(
+        "Array.to_device is deprecated and will be removed in a future release. Please use Array.from_array instead.",
+        DeprecationWarning,
+        stacklevel=2,
+    )
+    return cls.from_array(arr, *args, **kwargs)
 
 
-def from_array(cls, arr, *args, **kwargs):
-    """Create an Array object from a numpy array (same shape, dtype, and memory).
+def from_array(cls, arr, dtype=None, mtype="buffer", device=None):
+    """Create an pyclesperanto Array object from a numpy array (same shape, dtype, and memory).
 
     Parameters
     ----------
     arr : np.ndarray
         The array to convert.
+    dtype : np.dtype, optional
+        Override the dtype of the created Array.
     mtype : str, optional
-        The memory type, by default "buffer"
+        The memory type. By default "buffer".
     device : Device, optional
-        The device, by default None
+        The device on which to create the Array. If None, uses the current active device.
 
     Returns
     -------
     Array
         The converted array.
     """
+    if isinstance(arr, Array) and dtype is None:
+        # nothing to do
+        return arr
+
+    if isinstance(arr, Array) and dtype != arr.dtype:
+        # dtype conversion on device
+        return arr.astype(dtype)
+
+    # we are not on the device yet, so we can convert dtype with numpy and then upload
+    arr = np.asarray(arr, dtype=dtype) if dtype else np.asarray(arr)
+
     _assert_supported_dtype(arr.dtype)
-    return cls.to_device(arr, *args, **kwargs)
+
+    if device is None:
+        device = get_device()
+
+    if mtype not in ["buffer", "image"]:
+        raise ValueError(
+            f"Invalid memory type: {mtype}. Supported values are 'buffer' and 'image'."
+        )
+
+    return cls.create(arr.shape, arr.dtype, mtype, device).set(arr)
 
 
-def empty(cls, shape, dtype=float, *args, **kwargs):
+def empty(cls, shape, dtype=None, mtype="buffer", device=None):
     """Create an empty Array object from a shape.
 
     Parameters
     ----------
     shape : tuple, list or np.ndarray
         The shape of the array, maximum 3 elements.
-    dtype : np.dtype, default float
-        The dtype of the array.
+    dtype : np.dtype, optional
+        The dtype of the array. If None, uses float32.
     mtype : str, optional
         The memory type, by default "buffer"
     device : Device, optional
@@ -217,41 +243,62 @@ def empty(cls, shape, dtype=float, *args, **kwargs):
     Array
         A new Array object.
     """
-    _assert_supported_dtype(dtype)
-    mtype = kwargs.get("mtype", "buffer")
-    device = kwargs.get("device", get_device())
 
+    if len(shape) > 3:
+        raise ValueError(
+            f"Invalid shape: {shape}. Only up to 3 dimensions are supported."
+        )
+
+    if dtype is None:
+        dtype = np.float32
+
+    if device is None:
+        device = get_device()
+
+    if mtype not in ["buffer", "image"]:
+        raise ValueError(
+            f"Invalid memory type: {mtype}. Supported values are 'buffer' and 'image'."
+        )
+
+    print(device)
+
+    _assert_supported_dtype(dtype)
     return cls.create(shape=shape, dtype=dtype, mtype=mtype, device=device)
 
 
-def empty_like(cls, arr):
+def empty_like(cls, arr, dtype=None, mtype="buffer", device=None):
     """Create an empty Array object from an other array.
 
     Parameters
     ----------
     arr : np.ndarray or Array or other array-like structure
         The array to create like.
+    dtype : np.dtype, optional
+        Override the dtype of the created Array.
+    mtype : str, optional
+        The memory type. By default "buffer".
+    device : Device, optional
+        The device on which to create the Array. If None, uses the current active device.
 
     Returns
     -------
     Array
         The created array.
     """
-    _assert_supported_dtype(arr.dtype)
-    mtype = arr.mtype if isinstance(arr, Array) else "buffer"
-    device = arr.device if isinstance(arr, Array) else get_device()
-    return Array.create(arr.shape, arr.dtype, mtype, device)
+    if dtype is None:
+        dtype = arr.dtype
+    return cls.empty(shape=arr.shape, dtype=dtype, mtype=mtype, device=device)
 
 
-def zeros(cls, shape, dtype=float, *args, **kwargs):
+def zeros(cls, shape, dtype=None, mtype="buffer", device=None):
     """Create an Array object full of zeros from a shape.
 
     Parameters
     ----------
     shape : tuple, list or np.ndarray
         The shape of the array, maximum 3 elements.
-    dtype : np.dtype, default float
-        The dtype of the array.
+    dtype : np.dtype, optional
+        The dtype of the array. If None, uses float32.
     mtype : str, optional
         The memory type, by default "buffer"
     device : Device, optional
@@ -262,29 +309,83 @@ def zeros(cls, shape, dtype=float, *args, **kwargs):
     Array
         The created array.
     """
-    _assert_supported_dtype(dtype)
-    new_array = cls.empty(shape=shape, dtype=dtype, *args, **kwargs)
+    new_array = cls.empty(shape=shape, dtype=dtype, mtype=mtype, device=device)
     new_array.fill(0)
     return new_array
 
 
-def zeros_like(cls, arr):
+def zeros_like(cls, arr, dtype=None, mtype="buffer", device=None):
     """Create an Array object filled with zeros from an other array.
 
     Parameters
     ----------
     arr : np.ndarray or Array or other array-like structure
         The array to create like.
+    dtype : np.dtype, optional
+        Override the dtype of the created Array.
+    mtype : str, optional
+        The memory type. By default "buffer".
+    device : Device, optional
+        The device on which to create the Array. If None, uses the current active device.
+
 
     Returns
     -------
     Array
         The created array.
     """
-    _assert_supported_dtype(arr.dtype)
-    mtype = arr.mtype if isinstance(arr, Array) else "buffer"
-    device = arr.device if isinstance(arr, Array) else get_device()
-    return cls.zeros(shape=arr.shape, dtype=arr.dtype, mtype=mtype, device=device)
+    if dtype is None:
+        dtype = arr.dtype
+    return cls.zeros(shape=arr.shape, dtype=dtype, mtype=mtype, device=device)
+
+
+def ones(cls, shape, dtype=None, *, mtype="buffer", device=None):
+    """Create an Array object full of ones from a shape.
+
+    Parameters
+    ----------
+    shape : tuple, list or np.ndarray
+        The shape of the array, maximum 3 elements.
+    dtype : np.dtype, optional
+        The dtype of the array. If None, uses float32.
+    mtype : str, optional
+        The memory type, by default "buffer"
+    device : Device, optional
+        The device, by default None
+
+    Returns
+    -------
+    Array
+        The created array.
+    """
+    new_array = cls.empty(shape=shape, dtype=dtype, mtype=mtype, device=device)
+    new_array.fill(1)
+    return new_array
+
+
+def ones_like(cls, arr, dtype=None, mtype="buffer", device=None):
+    """Create an Array object filled with ones from an other array.
+
+    Parameters
+    ----------
+    arr : np.ndarray or Array or other array-like structure
+        The array to create like.
+    dtype : np.dtype, optional
+        Override the dtype of the created Array.
+    mtype : str, optional
+        The memory type. By default "buffer".
+    device : Device, optional
+        The device on which to create the Array. If None, uses the current active device.
+
+
+    Returns
+    -------
+    Array
+        The created array.
+    """
+    if dtype is None:
+        dtype = arr.dtype
+    return cls.ones(shape=arr.shape, dtype=dtype, mtype=mtype, device=device)
 
 
 def T(self):
@@ -303,96 +404,216 @@ def __array_ufunc__(self, ufunc, method, *inputs, **kwargs):
     if method == "__call__":
         func = getattr(Array, f"__{ufunc.__name__}__", None)
         if func is not None:
-            return func(*[Array.to_device(i) for i in inputs], **kwargs)
+            return func(
+                *[Array.from_array(i) for i in inputs],
+                **kwargs,
+            )
     return NotImplemented
 
 
-def reshape(self, shape):
-    """Reshape the Array."""
-    return self.get().reshape(shape)
+def _reset_array_patch():
+    """Reset the array patch flag and immediately re-patch with the new backend.
+
+    Called when the active backend changes. This ensures that:
+    1. The Array class is re-bound to the new backend's _Array class
+    2. Methods are re-patched onto the new class
+    3. Module-level bindings are updated so cle.Array points to the new backend
+    """
+    global _array_patched
+    _array_patched = False
+
+    # Re-patch the Array class with the new backend
+    _patch_array_class()
+
+    # Update module-level bindings in pyclesperanto/__init__.py
+    # so that cle.Array always refers to the current backend's Array class
+    import sys
+
+    init_module = sys.modules.get("pyclesperanto")
+    if init_module is not None:
+        try:
+            setattr(init_module, "Array", Array)
+            setattr(init_module, "Image", Image)
+        except Exception:
+            pass  # Ignore any errors updating bindings
+
+
+def __dlpack__(self, stream=None, version=(1, 0)):
+    """Export as DLPack capsule (CUDA and OpenCL BUFFER only)."""
+    return self._dlpack(stream, version)  # calls the C++ binding
+
+
+def __dlpack_device__(self):
+    """Return (device_type, device_id) tuple per DLPack spec."""
+    return self._dlpack_device()  # calls the C++ binding
+
+
+def from_dlpack(cls, ext_tensor, *, device=None, copy=None):
+    """Create an Array from any object implementing the DLPack protocol.
+
+    The returned Array shares memory with the source tensor. This is zero-copy and efficient if
+    the source tensor is on the same device as the target Array, however ownership is not transferred
+    (the source tensor remains responsible for freeing the memory).
+    If copy is forced or necessary (e.g. cross-device), the data is copied and ownership is transferred
+    to the new Array.
+
+    Parameters
+    ----------
+    ext_tensor : object
+        Any object with ``__dlpack__`` and ``__dlpack_device__`` methods,
+        or a raw DLPack capsule.
+    device : Device, optional
+        Target cle device. If None, uses the current active device.
+    copy : bool or None, optional
+        - None  (default): copy only if necessary (source is on a different device)
+        - True : always copy
+        - False: never copy — raises if source and target devices differ
+
+    Returns
+    -------
+    Array
+        A cle Array sharing or copying the data from ext_tensor.
+    """
+    # DLPack device type constants
+    _DLPACK_DEVICE_CPU = 1
+    _DLPACK_DEVICE_CUDA = 2
+    _DLPACK_DEVICE_OPENCL = 7
+
+    # get target device (default to current)
+    target_device = device if device is not None else get_device()
+
+    # --- resolve source device type ---
+    if hasattr(ext_tensor, "__dlpack_device__"):
+        src_device_type, src_device_id = ext_tensor.__dlpack_device__()
+    else:
+        # raw capsule — assume same device
+        src_device_type, src_device_id = None, None
+
+    # Determine whether source is on the same device as target
+    target_is_cuda = target_device.type.name.upper() == "CUDA"
+    target_is_opencl = target_device.type.name.upper() == "OPENCL"
+
+    # Determine source device type
+    src_is_cuda = src_device_type == _DLPACK_DEVICE_CUDA
+    src_is_opencl = src_device_type == _DLPACK_DEVICE_OPENCL
+    src_is_cpu = src_device_type == _DLPACK_DEVICE_CPU
+
+    same_device = (
+        target_is_cuda and src_is_cuda and src_device_id == target_device.index
+    ) or (target_is_opencl and src_is_opencl and src_device_id == target_device.index)
+
+    needs_copy = (
+        copy is True  # user forced copy
+        or src_is_cpu  # source is CPU — always need to upload
+        or not same_device  # different GPU device
+    )
+
+    if copy is False and needs_copy:
+        raise ValueError(
+            f"copy=False requested but source device ({src_device_type}, {src_device_id}) "
+            f"differs from target device ({target_device.type}, {target_device.index})"
+        )
+
+    if needs_copy or src_is_cpu:
+        # CPU path: materialise to numpy then upload
+        if src_is_cpu:
+            np_arr = np.from_dlpack(ext_tensor)
+            return cls.from_array(np_arr, device=target_device)
+
+        # GPU→GPU cross-device: export to numpy (host) then re-upload
+        # (no direct peer-to-peer via DLPack in cle yet)
+        np_arr = np.array(ext_tensor.get())  # triggers device→host copy via __array__
+        return cls.from_array(np_arr, device=target_device)
+
+    # Zero-copy path: same device, wrap the DLPack capsule directly
+    return cls._from_dlpack(ext_tensor, target_device)
 
 
 def _patch_array_class():
-    """Patch the backend _Array class with Python methods. Called once on first use."""
-    global Array, _array_patched, Image
-    if _array_patched:
-        return
-    _array_patched = True
+    """Patch the *current* backend _Array class with Python methods.
 
-    # Replace the proxy Array with the real backend class
-    Array = _get_array_class()
+    Safe to call multiple times — re-patches whenever the backend changes.
+    """
+    # NOTE: We intentionally do NOT replace the module-level `Array` name.
+    # The _ArrayMeta proxy always delegates to _get_array_class() at runtime.
+    BackendArray = _get_array_class()
 
-    # Add class methods, properties and magic methods
-    setattr(Array, "T", property(T))
-    setattr(Array, "set", set)
-    setattr(Array, "get", get)
-    setattr(Array, "__array_ufunc__", __array_ufunc__)
-    setattr(Array, "__str__", __str__)
-    setattr(Array, "__repr__", __repr__)
-    setattr(Array, "__array__", __array__)
-    setattr(Array, "from_array", classmethod(from_array))
-    setattr(Array, "empty", classmethod(empty))
-    setattr(Array, "empty_like", classmethod(empty_like))
-    setattr(Array, "zeros", classmethod(zeros))
-    setattr(Array, "zeros_like", classmethod(zeros_like))
-    setattr(Array, "to_device", classmethod(to_device))
-    setattr(Array, "reshape", reshape)
+    setattr(BackendArray, "T", property(T))
+    setattr(BackendArray, "set", set)
+    setattr(BackendArray, "get", get)
+    setattr(BackendArray, "__array_ufunc__", __array_ufunc__)
+    setattr(BackendArray, "__str__", __str__)
+    setattr(BackendArray, "__repr__", __repr__)
+    setattr(BackendArray, "__array__", __array__)
+    setattr(BackendArray, "from_array", classmethod(from_array))
+    setattr(BackendArray, "empty", classmethod(empty))
+    setattr(BackendArray, "empty_like", classmethod(empty_like))
+    setattr(BackendArray, "zeros", classmethod(zeros))
+    setattr(BackendArray, "zeros_like", classmethod(zeros_like))
+    setattr(BackendArray, "ones", classmethod(ones))
+    setattr(BackendArray, "ones_like", classmethod(ones_like))
+    setattr(BackendArray, "to_device", classmethod(to_device))
+    ## dlpack support
+    setattr(BackendArray, "__dlpack__", __dlpack__)
+    setattr(BackendArray, "__dlpack_device__", __dlpack_device__)
+    setattr(BackendArray, "from_dlpack", classmethod(from_dlpack))
+    ## copy-free reshape
+    # setattr(BackendArray, "reshape", reshape)
 
-    # Add operations and class methods from _operators module
-    setattr(Array, "astype", _operators._astype)
-    setattr(Array, "max", _operators._max)
-    setattr(Array, "min", _operators._min)
-    setattr(Array, "sum", _operators._sum)
-    setattr(Array, "std", _operators._std)
-    setattr(Array, "__pos__", _operators.__pos__)
-    setattr(Array, "__neg__", _operators.__neg__)
-    setattr(Array, "__add__", _operators.__add__)
-    setattr(Array, "__iadd__", _operators.__iadd__)
-    setattr(Array, "__sub__", _operators.__sub__)
-    setattr(Array, "__div__", _operators.__div__)
-    setattr(Array, "__truediv__", _operators.__truediv__)
-    setattr(Array, "__idiv__", _operators.__idiv__)
-    setattr(Array, "__itruediv__", _operators.__itruediv__)
-    setattr(Array, "__mul__", _operators.__mul__)
-    setattr(Array, "__imul__", _operators.__imul__)
-    setattr(Array, "__gt__", _operators.__gt__)
-    setattr(Array, "__ge__", _operators.__ge__)
-    setattr(Array, "__lt__", _operators.__lt__)
-    setattr(Array, "__le__", _operators.__le__)
-    setattr(Array, "__eq__", _operators.__eq__)
-    setattr(Array, "__ne__", _operators.__ne__)
-    setattr(Array, "__pow__", _operators.__pow__)
-    setattr(Array, "__ipow__", _operators.__ipow__)
-    setattr(Array, "_plt_to_png", _operators.__plt_to_png__)
-    setattr(Array, "_png_to_html", _operators.__png_to_html__)
-    setattr(Array, "_repr_html_", _operators.__repr_html__)
-    setattr(Array, "__iter__", _operators.__iter__)
-    setattr(Array, "__setitem__", _operators.__setitem__)
-    setattr(Array, "__getitem__", _operators.__getitem__)
+    setattr(BackendArray, "astype", _operators._astype)
+    setattr(BackendArray, "max", _operators._max)
+    setattr(BackendArray, "min", _operators._min)
+    setattr(BackendArray, "sum", _operators._sum)
+    setattr(BackendArray, "std", _operators._std)
+    setattr(BackendArray, "__pos__", _operators.__pos__)
+    setattr(BackendArray, "__neg__", _operators.__neg__)
+    setattr(BackendArray, "__add__", _operators.__add__)
+    setattr(BackendArray, "__iadd__", _operators.__iadd__)
+    setattr(BackendArray, "__radd__", _operators.__radd__)
+    setattr(BackendArray, "__sub__", _operators.__sub__)
+    setattr(BackendArray, "__isub__", _operators.__isub__)
+    setattr(BackendArray, "__rsub__", _operators.__rsub__)
+    setattr(BackendArray, "__div__", _operators.__div__)
+    setattr(BackendArray, "__idiv__", _operators.__idiv__)
+    setattr(BackendArray, "__rdiv__", _operators.__rdiv__)
+    setattr(BackendArray, "__truediv__", _operators.__truediv__)
+    setattr(BackendArray, "__itruediv__", _operators.__itruediv__)
+    setattr(BackendArray, "__rtruediv__", _operators.__rtruediv__)
+    setattr(BackendArray, "__mul__", _operators.__mul__)
+    setattr(BackendArray, "__imul__", _operators.__imul__)
+    setattr(BackendArray, "__rmul__", _operators.__rmul__)
+    setattr(BackendArray, "__gt__", _operators.__gt__)
+    setattr(BackendArray, "__ge__", _operators.__ge__)
+    setattr(BackendArray, "__lt__", _operators.__lt__)
+    setattr(BackendArray, "__le__", _operators.__le__)
+    setattr(BackendArray, "__eq__", _operators.__eq__)
+    setattr(BackendArray, "__ne__", _operators.__ne__)
+    setattr(BackendArray, "__pow__", _operators.__pow__)
+    setattr(BackendArray, "__ipow__", _operators.__ipow__)
+    # setattr(BackendArray, "_figure_to_png", _operators.__figure_to_png__)
+    # setattr(BackendArray, "_png_to_html", _operators.__png_to_html__)
+    setattr(BackendArray, "_repr_html_", _operators.__repr_html__)
+    setattr(BackendArray, "__iter__", _operators.__iter__)
+    setattr(BackendArray, "__setitem__", _operators.__setitem__)
+    setattr(BackendArray, "__getitem__", _operators.__getitem__)
 
-    # Update module-level Image type
-    Image = Union[np.ndarray, Array]
 
-
-# Create Image type (uses proxy initially, updated after patching)
 Image = Union[np.ndarray, Array]
 
 
 def is_image(object):
     """Returns True if the given object is an image."""
-    return (
-        isinstance(object, np.ndarray)
-        or isinstance(object, tuple)
-        or isinstance(object, list)
-        or isinstance(object, Array)
-        or str(type(object))
-        in [
-            "<class 'cupy._core.core.ndarray'>",
-            "<class 'dask.array.core.Array'>",
-            "<class 'xarray.core.dataarray.DataArray'>",
-            "<class 'resource_backed_dask_array.ResourceBackedDaskArray'>",
-            "<class 'torch.Tensor'>",
-            "<class 'pyclesperanto_prototype._tier0._pycl.OCLArray'>",
-            "<class 'napari.layers._multiscale_data.MultiScaleData'>",
-        ]
-    )
+    if isinstance(object, (np.ndarray, tuple, list, Array)):
+        return True
+
+    type_str = type(object).__module__ + "." + type(object).__qualname__
+
+    return type_str in [
+        "cupy._core.core.ndarray",
+        "dask.array.core.Array",
+        "xarray.core.dataarray.DataArray",
+        "resource_backed_dask_array.ResourceBackedDaskArray",
+        "torch.Tensor",
+        "pyclesperanto_prototype._tier0._pycl.OCLArray",
+        "napari.layers._multiscale_data.MultiScaleData",
+    ]

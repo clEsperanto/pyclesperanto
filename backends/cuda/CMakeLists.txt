@@ -32,7 +32,8 @@ set(CMAKE_VISIBILITY_INLINES_HIDDEN YES)
 ## CLIc dependency
 file(READ "${CMAKE_CURRENT_SOURCE_DIR}/../../pyclesperanto/_version.py" VERSION_FILE_CONTENT)
 string(REGEX MATCH "CLIC_VERSION = \"([^\"]+)\"" _ ${VERSION_FILE_CONTENT})
-set(CLIC_REPO_TAG ${CMAKE_MATCH_1})
+# set(CLIC_REPO_TAG ${CMAKE_MATCH_1})
+set(CLIC_REPO_TAG "DLPack-protocol")
 set(CLIC_REPO_URL "https://github.com/clEsperanto/CLIc.git")
 # if not set, set the default build type to Release
 set(CLE_BACKEND "CUDA" CACHE STRING "Backend to use (CUDA or OCL)")

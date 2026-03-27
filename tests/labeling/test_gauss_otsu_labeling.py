@@ -4,7 +4,6 @@ import pytest
 import pyclesperanto as cle
 
 
-@pytest.mark.backend
 def test_gauss_otsu_labeling(gpu_backend):
 
     gpu_input = cle.push(

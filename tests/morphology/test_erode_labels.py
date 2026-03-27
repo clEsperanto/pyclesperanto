@@ -4,7 +4,6 @@ import pytest
 import pyclesperanto as cle
 
 
-@pytest.mark.backend
 def test_erode_labels_2d(gpu_backend):
     gpu_input = cle.push(
         np.asarray(
@@ -42,7 +41,6 @@ def test_erode_labels_2d(gpu_backend):
     assert np.array_equal(a, b)
 
 
-@pytest.mark.backend
 def test_erode_labels_2d_1(gpu_backend):
     gpu_input = cle.push(
         np.asarray(
@@ -71,7 +69,6 @@ def test_erode_labels_2d_1(gpu_backend):
         assert np.array_equal(gpu_output, gpu_reference)
 
 
-@pytest.mark.backend
 def test_erode_labels_3d(gpu_backend):
     gpu_input = cle.push(
         np.asarray(

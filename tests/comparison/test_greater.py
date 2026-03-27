@@ -4,7 +4,6 @@ import pytest
 import pyclesperanto as cle
 
 
-@pytest.mark.backend
 def test_greater_2d(gpu_backend):
     test1 = cle.push(
         np.asarray(
@@ -52,7 +51,6 @@ def test_greater_2d(gpu_backend):
     print("ok greater_or_equal")
 
 
-@pytest.mark.backend
 def test_greater_3d(gpu_backend):
     test1 = cle.push(
         np.asarray(

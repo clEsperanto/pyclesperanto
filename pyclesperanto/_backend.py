@@ -15,6 +15,11 @@ _DIST_NAMES = {
     "cuda": "pyclesperanto-cuda",
 }
 
+_MODULES = {
+    "opencl": "_opencl_module",
+    "cuda": "_cuda_module",
+}
+
 
 def _detect_backends():
     """Try importing each backend package. Only runs once."""
@@ -41,12 +46,21 @@ def _warn_if_installed(backend_name, error):
 
         distribution(_DIST_NAMES[backend_name])
     except Exception:
-        return  # not installed — nothing to warn about
+        return
     warnings.warn(
         f"'{backend_name}' backend is installed but failed to load: {error}",
         RuntimeWarning,
         stacklevel=3,
     )
+
+
+def _get_module(name):
+    """Return the module for a given backend name, or None."""
+    if name == "opencl":
+        return _opencl_module
+    if name == "cuda":
+        return _cuda_module
+    return None
 
 
 def _get_backend():
@@ -67,55 +81,70 @@ def _get_backend():
                 "  pip install pyclesperanto[cuda]\n"
                 "  pip install pyclesperanto[all]"
             )
+        # Activate the C++ side and patch Array for the auto-selected backend
+        _activate_clic_backend(get_backend_name())
+        from ._array import _patch_array_class
+
+        _patch_array_class()
     return _active_backend
 
 
 def get_backend_name() -> str:
     """Return the name of the active backend ('opencl' or 'cuda'), or None."""
-    if _active_backend is not None:
-        if _active_backend is _opencl_module:
-            return "opencl"
-        if _active_backend is _cuda_module:
-            return "cuda"
+    if _active_backend is _opencl_module and _opencl_module is not None:
+        return "opencl"
+    if _active_backend is _cuda_module and _cuda_module is not None:
+        return "cuda"
     return None
 
 
 def select_backend(name: str):
-    """Switch the active backend.
-
-    Parameters
-    ----------
-    name : str
-        Backend name: 'opencl' or 'cuda'.
-    """
+    """Switch the active backend. No-op if already active."""
     global _active_backend
     _detect_backends()
     name = name.lower()
 
-    modules = {"opencl": _opencl_module, "cuda": _cuda_module}
-    if name not in modules:
+    if name not in _BACKENDS:
         raise ValueError(
-            f"Unknown backend '{name}'. Choose from: {', '.join(modules)}."
+            f"Unknown backend '{name}'. Choose from: {', '.join(_BACKENDS)}."
         )
-    if modules[name] is None:
+
+    mod = _get_module(name)
+    if mod is None:
         raise ValueError(
             f"'{name}' backend is not installed. "
             f"Install with: pip install pyclesperanto[{name}]"
         )
 
-    _active_backend = modules[name]
+    # Already active — nothing to do
+    if _active_backend is mod:
+        return
+
+    _active_backend = mod
     _activate_clic_backend(name)
+
+    from ._array import _patch_array_class
+
+    _patch_array_class()
 
 
 def _activate_clic_backend(name: str):
-    """Tell CLIc's C++ BackendManager to switch, and reset the current device."""
+    """Tell CLIc's C++ BackendManager in the target backend module to activate,
+    then reset the current device."""
     from ._core import _current_device
 
+    target_mod = _get_module(name)
+    if target_mod is None:
+        raise RuntimeError(
+            f"'{name}' backend module is not loaded. "
+            f"Install with: pip install pyclesperanto[{name}]"
+        )
+
     try:
-        _active_backend._BackendManager.set_backend(name)
+        target_mod._BackendManager.set_backend(name)
     except RuntimeError as e:
         raise RuntimeError(
-            f"Failed to activate '{name}' backend: {e}\n"
+            f"Failed to activate '{name}' backend in {target_mod.__name__}: {e}\n"
             "Ensure your GPU drivers are installed and compatible."
         ) from e
 
@@ -125,9 +154,4 @@ def _activate_clic_backend(name: str):
 def list_available_backends():
     """Return list of installed backend names."""
     _detect_backends()
-    available = []
-    if _opencl_module is not None:
-        available.append("opencl")
-    if _cuda_module is not None:
-        available.append("cuda")
-    return available
+    return [name for name in _BACKENDS if _get_module(name) is not None]

@@ -13,7 +13,6 @@ Markers:
     @pytest.mark.skip_if_no_backend                  — skip if no backend available
 """
 
-
 import pytest
 
 import pyclesperanto as cle

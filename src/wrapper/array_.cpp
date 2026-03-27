@@ -307,9 +307,9 @@ auto array_(py::module_ &m) -> void
 
                // stream sync handling:
                //
-               // int64_t stream_val = stream.is_none() ? 0 : stream.cast<int64_t>();
-               // arr->syncToStream(stream_val);
-               arr->device()->finish();
+               int64_t stream_val = stream.is_none() ? 0 : stream.cast<int64_t>();
+               arr->syncToStream(stream_val);
+               // arr->device()->finish();
 
                // version handling: for now we only support 1.0
                // toDLPack return a DLManagedTensorVersioned

@@ -24,5 +24,8 @@ def test_backend_switching(gpu_backend):
     """Test switching between available backends."""
     # Test that we can get the active backend name
     active = cle.get_backend_name()
+    print(f"Active backend: {active}")
+    print(f"Available backends: {cle.list_available_backends()}")
+    print(f"Requested backend: {gpu_backend}")
     assert active == gpu_backend
     assert active in cle.list_available_backends()

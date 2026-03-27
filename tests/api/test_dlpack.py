@@ -13,7 +13,7 @@ torch = pytest.importorskip("torch", reason="torch not installed")
 )
 @pytest.mark.only_backend("cuda")
 def test_cle_to_cupy_dtypes(gpu_backend, dtype):
-    print(cle.get_device().name)
+    print(cle.get_device().info)
     data = np.ones((4, 4), dtype=dtype)
     print("NumPy Data dtype:", data.dtype)
     arr = cle.Array.from_array(data)

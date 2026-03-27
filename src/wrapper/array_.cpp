@@ -316,9 +316,16 @@ auto array_(py::module_ &m) -> void
                // we return a capsule with name "dltensor_versioned", and a custom destructor
                return py::capsule(managed, "dltensor_versioned", [](PyObject *obj)
                {
-                    auto * m = static_cast<DLManagedTensorVersioned*>(
-                         PyCapsule_GetPointer(obj, "dltensor_versioned"));
-                    if (m) m->deleter(m);
+                    // Check the capsule's current name:
+                    //  - "dltensor_versioned"      → nobody consumed it, WE must clean up
+                    //  - "used_dltensor_versioned"  → consumer took ownership, do nothing
+                    const char *name = PyCapsule_GetName(obj);
+                    if (name && std::strcmp(name, "dltensor_versioned") == 0)
+                    {
+                         auto *m = static_cast<DLManagedTensorVersioned *>(
+                              PyCapsule_GetPointer(obj, "dltensor_versioned"));
+                         if (m) m->deleter(m);
+                    }
                });
                }, py::arg("stream") = py::none(), py::arg("version") = py::make_tuple(1, 0))
 

@@ -306,7 +306,6 @@ auto array_(py::module_ &m) -> void
                          throw std::runtime_error("DLPack export not supported for IMAGE memory type");
 
                // stream sync handling:
-               //
                int64_t stream_val = stream.is_none() ? 0 : stream.cast<int64_t>();
                arr->syncToStream(stream_val);
                // arr->device()->finish();
@@ -319,7 +318,7 @@ auto array_(py::module_ &m) -> void
                return py::capsule(managed, "dltensor_versioned", [](PyObject *obj)
                {
                     auto * m = static_cast<DLManagedTensorVersioned*>(
-                         PyCapsule_GetPointer(obj, "used_dltensor_versioned"));
+                         PyCapsule_GetPointer(obj, "dltensor_versioned"));
                     if (m) m->deleter(m);
                });
                }, py::arg("stream") = py::none(), py::arg("version") = py::make_tuple(1, 0))
@@ -328,14 +327,6 @@ auto array_(py::module_ &m) -> void
           .def("_dlpack_device",
                [](const cle::Array::Pointer & arr) -> py::tuple
                {
-                    // init approach, get DLManagedTensor to extract device info, then clean up immediately:
-                    //
-                    // auto managed = arr->toDLPack();
-                    // auto device_type = static_cast<int>(managed->dl_tensor.device.device_type);
-                    // auto device_id   = managed->dl_tensor.device.device_id;
-                    // managed->deleter(managed); // clean up immediately, we only needed device info
-                    // return py::make_tuple(device_type, device_id);
-
                     return py::make_tuple( // avoid creating a DLManagedTensor just to get device info
                          get_dlpack_device_type(arr),
                          arr->device()->getDeviceIndex()  // device index / ordinal
@@ -362,35 +353,6 @@ auto array_(py::module_ &m) -> void
                return array;
                }, py::arg("capsule_or_tensor"), py::arg("device"));
 
-
-
-
-
-
-          //  // rc6
-          //      .def("_dlpack", [](const cle::Array::Pointer & arr, py::object /*stream*/, py::tuple /*max_version*/) -> py::capsule
-          //      {
-          //           if (arr->mtype() == cle::mType::IMAGE)
-          //                throw std::runtime_error("DLPack export not supported for IMAGE memory type");
-
-          //           // no strea sync handling for now
-          //           // todo: later if needed, to be test
-          //           auto * managed = arr->toDLPack();
-
-          //           return py::capsule(managed, "dltensor_versioned", [](PyObject * obj)
-          //           {
-          //                // Try both names: consumer renames capsule to "used_dltensor_versioned"
-          //                auto * m = static_cast<DLManagedTensorVersioned *>(
-          //                     PyCapsule_GetPointer(obj, "dltensor_versioned"));
-          //                if (!m)
-          //                     m = static_cast<DLManagedTensorVersioned *>(
-          //                          PyCapsule_GetPointer(obj, "used_dltensor_versioned"));
-          //                if (m && m->deleter)
-          //                     m->deleter(m);
-          //           });
-          //      },
-          //      py::arg("stream") = py::none(), py::arg("version") = py::make_tuple(1, 0))
-
-
-
 }
+
+                         

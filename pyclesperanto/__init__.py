@@ -1,6 +1,11 @@
 import warnings
 
-from ._array import Array, Image, _patch_array_class, is_image
+from ._array import (
+    Array, 
+    Image, 
+    _patch_array_class, 
+    is_image,
+)
 from ._backend import (
     _get_backend,
     get_backend_name,
@@ -55,7 +60,20 @@ if _backend_available:
     )
     from ._execute import evaluate, execute, native_execute
     from ._functionalities import imshow, operation, operations
-    from ._memory import create, create_like, pull, push
+    from ._memory import (
+        create, 
+        create_like, 
+        pull, 
+        push, 
+        ones,
+        zeros,
+        empty,
+        ones_like,
+        zeros_like,
+        empty_like,
+        from_dlpack,
+        from_array,
+    )
     from ._tier1 import *
     from ._tier2 import *
     from ._tier3 import *

@@ -1,4 +1,6 @@
+
 from typing import Optional, Union
+import warnings
 
 import numpy as np
 
@@ -76,16 +78,17 @@ def __repr__(self) -> str:
 
 def set(
     self,
-    array: np.ndarray,
+    arr: Union[np.ndarray, Array, list, tuple],
     origin: Optional[tuple] = None,
     region: Optional[tuple] = None,
 ) -> None:
-    """Set the content of the Array to the given numpy array.
+    """Store an array-like structure into the Array. This is a host→device transfer.
+    The memory size of the input array must match the size of the Array, or the size of the targeted region if origin and region are specified.
 
     Parameters
     ----------
-    array : np.ndarray
-        The array to set from.
+    arr : Union[np.ndarray, Array, list, tuple]
+        The memory to set from.
     origin : tuple, optional
         The origin of the region of interest, by default None
     region : tuple, optional
@@ -96,29 +99,29 @@ def set(
     Array
         The array itself.
     """
-    if not isinstance(array, (np.ndarray, Array)):
-        array = np.array(array)
+    if not isinstance(arr, (np.ndarray, Array)):
+        arr = np.array(arr)
 
-    if array.dtype != self.dtype:
-        array = array.astype(self.dtype)
+    if arr.dtype != self.dtype:
+        arr = arr.astype(self.dtype)
 
-    if region and array.size != np.prod(region):
+    if region and arr.size != np.prod(region):
         raise IndexError(
-            f"Value size mismatch the targeted region: {array.size} != {np.prod(region)} ({array.shape} != {tuple(np.squeeze(region))})"
+            f"Value size mismatch the targeted region: {arr.size} != {np.prod(region)} ({arr.shape} != {tuple(np.squeeze(region))})"
         )
-    elif not region and self.size != array.size:
+    elif not region and self.size != arr.size:
         raise IndexError(
-            f"Value size mismatch the targeted region: {self.size} != {array.size} ({self.shape} != {array.shape})"
+            f"Value size mismatch the targeted region: {self.size} != {arr.size} ({self.shape} != {arr.shape})"
         )
 
-    self._write(_prepare_array(array), origin, region)
+    self._write(_prepare_array(arr), origin, region)
     return self
 
 
 def get(
     self, origin: Optional[tuple] = None, region: Optional[tuple] = None
 ) -> np.ndarray:
-    """Get the content of the Array into a numpy array.
+    """Convert the Array to a numpy array. This is a device→host transfer.
 
     Parameters
     ----------
@@ -163,7 +166,7 @@ def to_device(cls, arr, *args, **kwargs):
         The array to convert.
     mtype : str, optional
         The memory type, by default "buffer"
-    device : Device, optional
+    device : Device, optional           
         The device, by default None
 
     Returns
@@ -171,43 +174,60 @@ def to_device(cls, arr, *args, **kwargs):
     Array
         The converted array.
     """
-    if isinstance(arr, Array):
-        return arr
-    mtype = kwargs.get("mtype", "buffer")
-    device = kwargs.get("device", get_device())
-    return cls.create(arr.shape, arr.dtype, mtype, device).set(arr)
+    warnings.warn("Array.to_device is deprecated and will be removed in a future release. Please use Array.from_array instead.", DeprecationWarning, stacklevel=2)
+    return cls.from_array(arr, *args, **kwargs)
 
 
-def from_array(cls, arr, *args, **kwargs):
-    """Create an Array object from a numpy array (same shape, dtype, and memory).
+def from_array(cls, arr, dtype=None, mtype="buffer", device=None):
+    """Create an pyclesperanto Array object from a numpy array (same shape, dtype, and memory).
 
     Parameters
     ----------
     arr : np.ndarray
         The array to convert.
+    dtype : np.dtype, optional
+        Override the dtype of the created Array.
     mtype : str, optional
-        The memory type, by default "buffer"
+        The memory type. By default "buffer".
     device : Device, optional
-        The device, by default None
+        The device on which to create the Array. If None, uses the current active device.
 
     Returns
     -------
     Array
         The converted array.
     """
+    if isinstance(arr, Array) and dtype is None:
+        # nothing to do
+        return arr
+    
+    if isinstance(arr, Array) and dtype != arr.dtype:
+        # dtype conversion on device
+        return arr.astype(dtype)
+    
+    # we are not on the device yet, so we can convert dtype with numpy and then upload
+    arr = np.asarray(arr, dtype=dtype) if dtype else np.asarray(arr)
+    
     _assert_supported_dtype(arr.dtype)
-    return cls.to_device(arr, *args, **kwargs)
+
+    if device is None:
+        device = get_device()
+
+    if mtype not in ["buffer", "image"]:
+        raise ValueError(f"Invalid memory type: {mtype}. Supported values are 'buffer' and 'image'.")
+
+    return cls.create(arr.shape, arr.dtype, mtype, device).set(arr)
 
 
-def empty(cls, shape, dtype=float, *args, **kwargs):
+def empty(cls, shape, dtype=None, mtype="buffer", device=None):
     """Create an empty Array object from a shape.
 
     Parameters
     ----------
     shape : tuple, list or np.ndarray
         The shape of the array, maximum 3 elements.
-    dtype : np.dtype, default float
-        The dtype of the array.
+    dtype : np.dtype, optional
+        The dtype of the array. If None, uses float32.
     mtype : str, optional
         The memory type, by default "buffer"
     device : Device, optional
@@ -218,41 +238,58 @@ def empty(cls, shape, dtype=float, *args, **kwargs):
     Array
         A new Array object.
     """
-    _assert_supported_dtype(dtype)
-    mtype = kwargs.get("mtype", "buffer")
-    device = kwargs.get("device", get_device())
 
+    if len(shape) > 3:
+        raise ValueError(f"Invalid shape: {shape}. Only up to 3 dimensions are supported.")
+
+    if dtype is None:
+        dtype = np.float32
+
+    if device is None:
+        device = get_device()
+
+    if mtype not in ["buffer", "image"]:
+        raise ValueError(f"Invalid memory type: {mtype}. Supported values are 'buffer' and 'image'.")
+
+    print(device)
+    
+    _assert_supported_dtype(dtype)
     return cls.create(shape=shape, dtype=dtype, mtype=mtype, device=device)
 
 
-def empty_like(cls, arr):
+def empty_like(cls, arr, dtype=None, mtype="buffer", device=None):
     """Create an empty Array object from an other array.
 
     Parameters
     ----------
     arr : np.ndarray or Array or other array-like structure
         The array to create like.
+    dtype : np.dtype, optional
+        Override the dtype of the created Array.
+    mtype : str, optional
+        The memory type. By default "buffer".
+    device : Device, optional
+        The device on which to create the Array. If None, uses the current active device.
 
     Returns
     -------
     Array
         The created array.
     """
-    _assert_supported_dtype(arr.dtype)
-    mtype = arr.mtype if isinstance(arr, Array) else "buffer"
-    device = arr.device if isinstance(arr, Array) else get_device()
-    return cls.create(shape=arr.shape, dtype=arr.dtype, mtype=mtype, device=device)
+    if dtype is None:
+        dtype = arr.dtype
+    return cls.empty(shape=arr.shape, dtype=dtype, mtype=mtype, device=device)
 
 
-def zeros(cls, shape, dtype=float, *args, **kwargs):
+def zeros(cls, shape, dtype=None, mtype="buffer", device=None):
     """Create an Array object full of zeros from a shape.
 
     Parameters
     ----------
     shape : tuple, list or np.ndarray
         The shape of the array, maximum 3 elements.
-    dtype : np.dtype, default float
-        The dtype of the array.
+    dtype : np.dtype, optional
+        The dtype of the array. If None, uses float32.
     mtype : str, optional
         The memory type, by default "buffer"
     device : Device, optional
@@ -263,29 +300,83 @@ def zeros(cls, shape, dtype=float, *args, **kwargs):
     Array
         The created array.
     """
-    _assert_supported_dtype(dtype)
-    new_array = cls.empty(shape=shape, dtype=dtype, *args, **kwargs)
+    new_array = cls.empty(shape=shape, dtype=dtype, mtype=mtype, device=device)
     new_array.fill(0)
     return new_array
 
 
-def zeros_like(cls, arr):
+def zeros_like(cls, arr, dtype=None, mtype="buffer", device=None):
     """Create an Array object filled with zeros from an other array.
 
     Parameters
     ----------
     arr : np.ndarray or Array or other array-like structure
         The array to create like.
+    dtype : np.dtype, optional
+        Override the dtype of the created Array.
+    mtype : str, optional
+        The memory type. By default "buffer".
+    device : Device, optional
+        The device on which to create the Array. If None, uses the current active device.
+
 
     Returns
     -------
     Array
         The created array.
     """
-    _assert_supported_dtype(arr.dtype)
-    mtype = arr.mtype if isinstance(arr, Array) else "buffer"
-    device = arr.device if isinstance(arr, Array) else get_device()
-    return cls.zeros(shape=arr.shape, dtype=arr.dtype, mtype=mtype, device=device)
+    if dtype is None:
+        dtype = arr.dtype
+    return cls.zeros(shape=arr.shape, dtype=dtype, mtype=mtype, device=device)
+
+
+def ones(cls, shape, dtype=None, *, mtype="buffer", device=None):
+    """Create an Array object full of ones from a shape.
+
+    Parameters
+    ----------
+    shape : tuple, list or np.ndarray
+        The shape of the array, maximum 3 elements.
+    dtype : np.dtype, optional
+        The dtype of the array. If None, uses float32.
+    mtype : str, optional
+        The memory type, by default "buffer"
+    device : Device, optional
+        The device, by default None
+
+    Returns
+    -------
+    Array
+        The created array.
+    """
+    new_array = cls.empty(shape=shape, dtype=dtype, mtype=mtype, device=device)
+    new_array.fill(1)
+    return new_array
+
+
+def ones_like(cls, arr, dtype=None, mtype="buffer", device=None):
+    """Create an Array object filled with ones from an other array.
+
+    Parameters
+    ----------
+    arr : np.ndarray or Array or other array-like structure
+        The array to create like.
+    dtype : np.dtype, optional
+        Override the dtype of the created Array.
+    mtype : str, optional
+        The memory type. By default "buffer".
+    device : Device, optional
+        The device on which to create the Array. If None, uses the current active device.
+
+
+    Returns
+    -------
+    Array
+        The created array.
+    """
+    if dtype is None:
+        dtype = arr.dtype
+    return cls.ones(shape=arr.shape, dtype=dtype, mtype=mtype, device=device)
 
 
 def T(self):
@@ -305,7 +396,7 @@ def __array_ufunc__(self, ufunc, method, *inputs, **kwargs):
         func = getattr(Array, f"__{ufunc.__name__}__", None)
         if func is not None:
             return func(
-                *[Array.to_device(i) for i in inputs],
+                *[Array.from_array(i) for i in inputs],
                 **kwargs,
             )
     return NotImplemented
@@ -450,7 +541,14 @@ def _patch_array_class():
     setattr(BackendArray, "empty_like", classmethod(empty_like))
     setattr(BackendArray, "zeros", classmethod(zeros))
     setattr(BackendArray, "zeros_like", classmethod(zeros_like))
+    setattr(BackendArray, "ones", classmethod(ones))
+    setattr(BackendArray, "ones_like", classmethod(ones_like))
     setattr(BackendArray, "to_device", classmethod(to_device))
+    ## dlpack support
+    setattr(BackendArray, "__dlpack__", __dlpack__)
+    setattr(BackendArray, "__dlpack_device__", __dlpack_device__)
+    setattr(BackendArray, "from_dlpack", classmethod(from_dlpack))
+    ## copy-free reshape
     # setattr(BackendArray, "reshape", reshape)
 
     setattr(BackendArray, "astype", _operators._astype)
@@ -489,10 +587,7 @@ def _patch_array_class():
     setattr(BackendArray, "__iter__", _operators.__iter__)
     setattr(BackendArray, "__setitem__", _operators.__setitem__)
     setattr(BackendArray, "__getitem__", _operators.__getitem__)
-    ## dlpack support
-    setattr(BackendArray, "__dlpack__", __dlpack__)
-    setattr(BackendArray, "__dlpack_device__", __dlpack_device__)
-    setattr(BackendArray, "from_dlpack", classmethod(from_dlpack))
+
 
 
 Image = Union[np.ndarray, Array]

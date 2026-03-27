@@ -140,3 +140,188 @@ def pull(array: Image) -> np.ndarray:
     if isinstance(array, Array):
         return array.get()
     return array
+
+
+
+def from_array(arr, dtype=None, mtype="buffer", device=None):
+    """Create an pyclesperanto Array object from a numpy array (same shape, dtype, and memory).
+
+    Parameters
+    ----------
+    arr : np.ndarray
+        The array to convert.
+    dtype : np.dtype, optional
+        Override the dtype of the created Array.
+    mtype : str, optional
+        The memory type. By default "buffer".
+    device : Device, optional
+        The device on which to create the Array. If None, uses the current active device.
+
+    Returns
+    -------
+    Array
+        The converted array.
+    """
+    return Array.from_array(arr, dtype=dtype, mtype=mtype, device=device)
+
+
+def empty(shape, dtype=None, mtype="buffer", device=None):
+    """Create an empty Array object from a shape.
+
+    Parameters
+    ----------
+    shape : tuple, list or np.ndarray
+        The shape of the array, maximum 3 elements.
+    dtype : np.dtype, optional
+        The dtype of the array. If None, uses float32.
+    mtype : str, optional
+        The memory type, by default "buffer"
+    device : Device, optional
+        The device, by default None
+
+    Returns
+    -------
+    Array
+        A new Array object.
+    """
+    return Array.empty(shape, dtype=dtype, mtype=mtype, device=device)
+
+
+def empty_like(arr, dtype=None, mtype="buffer", device=None):
+    """Create an empty Array object from an other array.
+
+    Parameters
+    ----------
+    arr : np.ndarray or Array or other array-like structure
+        The array to create like.
+    dtype : np.dtype, optional
+        Override the dtype of the created Array.
+    mtype : str, optional
+        The memory type. By default "buffer".
+    device : Device, optional
+        The device on which to create the Array. If None, uses the current active device.
+
+    Returns
+    -------
+    Array
+        The created array.
+    """
+    return Array.empty_like(arr, dtype=dtype, mtype=mtype, device=device)
+
+
+def zeros(shape, dtype=None, mtype="buffer", device=None):
+    """Create an Array object full of zeros from a shape.
+
+    Parameters
+    ----------
+    shape : tuple, list or np.ndarray
+        The shape of the array, maximum 3 elements.
+    dtype : np.dtype, optional
+        The dtype of the array. If None, uses float32.
+    mtype : str, optional
+        The memory type, by default "buffer"
+    device : Device, optional
+        The device, by default None
+
+    Returns
+    -------
+    Array
+        The created array.
+    """
+    return Array.zeros(shape, dtype=dtype, mtype=mtype, device=device)
+
+
+def zeros_like(arr, dtype=None, mtype="buffer", device=None):
+    """Create an Array object filled with zeros from an other array.
+
+    Parameters
+    ----------
+    arr : np.ndarray or Array or other array-like structure
+        The array to create like.
+    dtype : np.dtype, optional
+        Override the dtype of the created Array.
+    mtype : str, optional
+        The memory type. By default "buffer".
+    device : Device, optional
+        The device on which to create the Array. If None, uses the current active device.
+
+    Returns
+    -------
+    Array
+        The created array.
+    """
+    return Array.zeros_like(arr, dtype=dtype, mtype=mtype, device=device)
+
+
+def ones(shape, dtype=None, mtype="buffer", device=None):
+    """Create an Array object full of ones from a shape.
+
+    Parameters
+    ----------
+    shape : tuple, list or np.ndarray
+        The shape of the array, maximum 3 elements.
+    dtype : np.dtype, optional
+        The dtype of the array. If None, uses float32.
+    mtype : str, optional
+        The memory type, by default "buffer"
+    device : Device, optional
+        The device, by default None
+
+    Returns
+    -------
+    Array
+        The created array.
+    """
+    return Array.ones(shape, dtype=dtype, mtype=mtype, device=device)
+
+
+def ones_like(arr, dtype=None, mtype="buffer", device=None):
+    """Create an Array object filled with ones from an other array.
+
+    Parameters
+    ----------
+    arr : np.ndarray or Array or other array-like structure
+        The array to create like.
+    dtype : np.dtype, optional
+        Override the dtype of the created Array.
+    mtype : str, optional
+        The memory type. By default "buffer".
+    device : Device, optional
+        The device on which to create the Array. If None, uses the current active device.
+
+
+    Returns
+    -------
+    Array
+        The created array.
+    """
+    return Array.ones_like(arr, dtype=dtype, mtype=mtype, device=device)
+
+
+def from_dlpack(object, *, device=None, copy=None):
+    """Create an Array from any object implementing a compatible DLPack protocol.
+
+    The returned Array shares memory with the source tensor. This is copy-free transfer if
+    the source tensor shares compatible features such as device or data type.
+
+    If copy is forced or necessary (e.g. host-device), the data is copied and ownership is transferred
+    to the new Array.
+
+    Parameters
+    ----------
+    object : object
+        Any object with ``__dlpack__`` and ``__dlpack_device__`` methods,
+        or a raw DLPack capsule.
+    device : Device, optional
+        Target cle device. If None, uses the current active device.
+    copy : bool or None, optional
+        - None  (default): copy only if necessary (source is on a different device)
+        - True : always copy
+        - False: never copy — raises if source and target devices differ
+
+    Returns
+    -------
+    Array
+        A cle Array sharing or copying the data from ext_tensor.
+    """
+    return Array.from_dlpack(object, device=device, copy=copy)

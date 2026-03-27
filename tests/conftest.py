@@ -68,18 +68,12 @@ def pytest_generate_tests(metafunc):
         return
     backends = _get_available_backends()
     if backends:
-        metafunc.parametrize(
-            "gpu_backend", backends, ids=backends, indirect=True
-        )  # ← add indirect=True
+        metafunc.parametrize("gpu_backend", backends, ids=backends, indirect=True)
     else:
         metafunc.parametrize(
             "gpu_backend",
-            [
-                pytest.param(
-                    "none", marks=pytest.mark.skip(reason="No GPU backend available")
-                )
-            ],
-            indirect=True,  # ← here too
+            [pytest.param("none", marks=pytest.mark.skip(reason="No GPU backend available"))],
+            indirect=True,
         )
 
 
@@ -98,12 +92,8 @@ def gpu_backend(request):
         if backend_name not in marker.args:
             pytest.skip(f"Only runs on {', '.join(marker.args)}")
 
-    print(f"\n[FIXTURE] Requested backend: {backend_name}")
-    print(f"[FIXTURE] Before switch: {cle.get_backend_name()}")
     cle.select_backend(backend_name)
-    print(f"[FIXTURE] After select_backend: {cle.get_backend_name()}")
     cle.select_device()
-    print(f"[FIXTURE] After select_device: {cle.get_backend_name()}")
 
     return backend_name
 

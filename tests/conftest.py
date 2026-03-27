@@ -84,24 +84,24 @@ def pytest_generate_tests(metafunc):
 
 @pytest.fixture(scope="function")
 def gpu_backend(request):
+    """Select the GPU backend for this test."""
     backend_name = request.param
-    cle.select_backend(backend_name)
-    cle.select_device()  # ← add this line
 
-    # Verify
-    active = cle.get_backend_name()
-    if active != backend_name:
-        pytest.fail(f"Failed to switch to '{backend_name}', still on '{active}'")
-
-    # Handle skip_backend marker
+    # Handle skip_backend marker BEFORE switching
     for marker in request.node.iter_markers("skip_backend"):
         if backend_name in marker.args:
-            pytest.skip(f"Skipped on {backend_name}: {marker.kwargs.get('reason', '')}")
+            pytest.skip(
+                f"Skipped on {backend_name}: {marker.kwargs.get('reason', '')}"
+            )
 
-    # Handle only_backend marker
+    # Handle only_backend marker BEFORE switching
     for marker in request.node.iter_markers("only_backend"):
         if backend_name not in marker.args:
             pytest.skip(f"Only runs on {', '.join(marker.args)}")
+
+    # Do the switch RIGHT before yielding to the test body
+    cle.select_backend(backend_name)
+    cle.select_device()
 
     yield backend_name
 

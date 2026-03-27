@@ -4,7 +4,7 @@ import pytest
 import pyclesperanto as cle
 
 
-@pytest.mark.backend
+
 def test_setitem_3d(gpu_backend):
     data = np.asarray([[[1.0, 2.0, 3.0], [1.0, 2.0, 3.0]]]).astype(np.float32)
     ref = np.asarray([[[4.0, 2.0, 3.0], [4.0, 4.0, 3.0]]]).astype(np.float32)
@@ -18,7 +18,7 @@ def test_setitem_3d(gpu_backend):
     assert np.allclose(cl_data, ref)
 
 
-@pytest.mark.backend
+
 def test_setitem_2d(gpu_backend):
     data = np.asarray([[1.0, 2.0, 3.0], [1.0, 2.0, 3.0]]).astype(np.float32)
     ref = np.asarray([[4.0, 2.0, 3.0], [4.0, 4.0, 3.0]]).astype(np.float32)

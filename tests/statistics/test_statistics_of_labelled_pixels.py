@@ -4,7 +4,7 @@ import pytest
 import pyclesperanto as cle
 
 
-@pytest.mark.backend
+
 def test_statistics_of_labelled_pixels(gpu_backend):
 
     labels = cle.push(

@@ -5,7 +5,7 @@ import pyclesperanto as cle
 
 
 # @pytest.mark.skip(reason="Fails on github CI but passes locally")
-@pytest.mark.backend
+
 def test_sign(gpu_backend):
     data = np.asarray([-np.inf, np.inf, 0, 1, -1, np.nan])
 

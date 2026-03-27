@@ -4,7 +4,7 @@ import pytest
 import pyclesperanto as cle
 
 
-@pytest.mark.backend
+
 def test_radians_to_degrees(gpu_backend):
     test = cle.push(np.asarray([[np.pi, 0, -0.5 * np.pi]]))
 

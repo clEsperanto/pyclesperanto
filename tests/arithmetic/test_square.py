@@ -4,7 +4,7 @@ import pytest
 import pyclesperanto as cle
 
 
-@pytest.mark.backend
+
 def test_square(gpu_backend):
     test1 = cle.push(np.asarray([4, 6]))
 

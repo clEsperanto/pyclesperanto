@@ -4,7 +4,7 @@ import pytest
 import pyclesperanto as cle
 
 
-@pytest.mark.backend
+
 def test_add_image_and_scalar(gpu_backend):
     data = np.arange(100).reshape(10, 10)
     # push an array to the GPU

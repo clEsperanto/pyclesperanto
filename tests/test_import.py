@@ -5,13 +5,13 @@ import pytest
 import pyclesperanto as cle
 
 
-@pytest.mark.backend
+
 def test_import(gpu_backend):
     """Test basic import of pyclesperanto."""
     assert hasattr(cle, "__version__")
 
 
-@pytest.mark.backend
+
 def test_backend_detection(gpu_backend):
     """Test that available backends are detected."""
     backends = cle.list_available_backends()
@@ -19,7 +19,7 @@ def test_backend_detection(gpu_backend):
     assert len(backends) > 0, "At least one backend should be available"
 
 
-@pytest.mark.backend
+
 def test_backend_switching(gpu_backend):
     """Test switching between available backends."""
     # Test that we can get the active backend name

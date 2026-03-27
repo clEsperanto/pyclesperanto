@@ -4,7 +4,7 @@ import pytest
 import pyclesperanto as cle
 
 
-@pytest.mark.backend
+
 def test_min(gpu_backend):
     example = np.asarray(
         [
@@ -21,7 +21,7 @@ def test_min(gpu_backend):
     assert gpu_example.min() == example.min()
 
 
-@pytest.mark.backend
+
 def test_min_max_xyz(gpu_backend):
     example = np.asarray(
         [
@@ -69,7 +69,7 @@ def test_min_max_xyz(gpu_backend):
     assert np.allclose(gpu_example.sum(), example.sum())
 
 
-@pytest.mark.backend
+
 def test_min_out(gpu_backend):
     example = np.asarray(
         [
@@ -99,7 +99,7 @@ def test_min_out(gpu_backend):
     assert np.allclose(minimum, copy)
 
 
-@pytest.mark.backend
+
 def test_max_out(gpu_backend):
     example = np.asarray(
         [
@@ -129,7 +129,7 @@ def test_max_out(gpu_backend):
     assert np.allclose(maximum, copy)
 
 
-@pytest.mark.backend
+
 def test_sum_out(gpu_backend):
     example = np.asarray(
         [

@@ -4,7 +4,7 @@ import pytest
 import pyclesperanto as cle
 
 
-@pytest.mark.backend
+
 def test_copy(gpu_backend):
     test1 = cle.push(np.asarray([[1, 1], [1, 0]]))
 

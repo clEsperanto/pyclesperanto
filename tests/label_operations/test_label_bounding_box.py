@@ -4,7 +4,7 @@ import pytest
 import pyclesperanto as cle
 
 
-@pytest.mark.backend
+
 def test_label_bounding_box_2d(gpu_backend):
 
     test = cle.push(

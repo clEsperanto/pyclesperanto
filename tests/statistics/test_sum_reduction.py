@@ -16,7 +16,7 @@ def sum_reduction(source, blocksize):
     return cle.pull(block_sums)
 
 
-@pytest.mark.backend
+
 def test_sum_reduction(gpu_backend):
     result = sum_reduction(source, 4)
     print(result)

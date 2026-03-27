@@ -4,7 +4,7 @@ import pytest
 import pyclesperanto as cle
 
 
-@pytest.mark.backend
+
 def test_label_pixel_count_map(gpu_backend):
 
     labels = cle.push(np.asarray([[1, 1, 2], [1, 0, 0], [3, 3, 0]]))
@@ -22,7 +22,7 @@ def test_label_pixel_count_map(gpu_backend):
     assert np.array_equal(a, b)
 
 
-@pytest.mark.backend
+
 def test_label_pixel_count_map_3d(gpu_backend):
 
     labels = cle.push(

@@ -72,7 +72,7 @@ test_square_eroded_expected = cle.push(
 # ============================================================================
 
 
-@pytest.mark.backend
+
 def test_dilate_old(gpu_backend):
     result = cle.create(test_simple)
     cle.dilate_box(test_simple, result)
@@ -84,7 +84,7 @@ def test_dilate_old(gpu_backend):
     assert np.array_equal(a, b)
 
 
-@pytest.mark.backend
+
 def test_dilate(gpu_backend):
     result = cle.create(test_simple)
     cle.binary_dilate(test_simple, result)
@@ -101,7 +101,7 @@ def test_dilate(gpu_backend):
 # ============================================================================
 
 
-@pytest.mark.backend
+
 def test_dilate_sphere_old(gpu_backend):
     result = cle.create(test_simple)
     cle.dilate_sphere(test_simple, result)
@@ -113,7 +113,7 @@ def test_dilate_sphere_old(gpu_backend):
     assert np.array_equal(a, b)
 
 
-@pytest.mark.backend
+
 def test_dilate_sphere(gpu_backend):
     result = cle.create(test_simple)
     cle.binary_dilate(test_simple, result, connectivity="sphere")
@@ -130,7 +130,7 @@ def test_dilate_sphere(gpu_backend):
 # ============================================================================
 
 
-@pytest.mark.backend
+
 def test_erode_box_old(gpu_backend):
     result = cle.create(test_square)
     cle.erode_box(test_square, result)
@@ -142,7 +142,7 @@ def test_erode_box_old(gpu_backend):
     assert np.array_equal(a, b)
 
 
-@pytest.mark.backend
+
 def test_erode_box(gpu_backend):
     result = cle.create(test_square)
     cle.binary_erode(test_square, result)
@@ -159,7 +159,7 @@ def test_erode_box(gpu_backend):
 # ============================================================================
 
 
-@pytest.mark.backend
+
 def test_erode_sphere_old(gpu_backend):
     result = cle.create(test_square)
     cle.erode_sphere(test_square, result)
@@ -171,7 +171,7 @@ def test_erode_sphere_old(gpu_backend):
     assert np.array_equal(a, b)
 
 
-@pytest.mark.backend
+
 def test_erode_sphere(gpu_backend):
     result = cle.create(test_square)
     cle.binary_erode(test_square, result, connectivity="sphere")
@@ -201,7 +201,7 @@ gpu_complex_input = cle.push(
 )
 
 
-@pytest.mark.backend
+
 def test_opening_box_old(gpu_backend):
     gpu_input = cle.push(
         np.asarray(
@@ -240,7 +240,7 @@ def test_opening_box_old(gpu_backend):
     assert np.array_equal(a, b)
 
 
-@pytest.mark.backend
+
 def test_opening_box_2d(gpu_backend):
     gpu_input = cle.push(
         np.asarray(
@@ -277,7 +277,7 @@ def test_opening_box_2d(gpu_backend):
     print(b)
 
 
-@pytest.mark.backend
+
 def test_opening_sphere_old(gpu_backend):
     gpu_input = cle.push(
         np.asarray(
@@ -316,7 +316,7 @@ def test_opening_sphere_old(gpu_backend):
     assert np.array_equal(a, b)
 
 
-@pytest.mark.backend
+
 def test_opening_sphere(gpu_backend):
     gpu_input = cle.push(
         np.asarray(
@@ -362,7 +362,7 @@ def test_opening_sphere(gpu_backend):
 # ============================================================================
 
 
-@pytest.mark.backend
+
 def test_close_box_old(gpu_backend):
     gpu_input = cle.push(
         np.asarray(
@@ -401,7 +401,7 @@ def test_close_box_old(gpu_backend):
     assert np.array_equal(a, b)
 
 
-@pytest.mark.backend
+
 def test_close_box_2d(gpu_backend):
     gpu_input = cle.push(
         np.asarray(
@@ -440,7 +440,7 @@ def test_close_box_2d(gpu_backend):
     assert np.array_equal(a, b)
 
 
-@pytest.mark.backend
+
 def test_closing_sphere_old(gpu_backend):
     gpu_input = cle.push(
         np.asarray(
@@ -479,7 +479,7 @@ def test_closing_sphere_old(gpu_backend):
     assert np.array_equal(a, b)
 
 
-@pytest.mark.backend
+
 def test_closing_sphere(gpu_backend):
     gpu_input = cle.push(
         np.asarray(
@@ -525,7 +525,7 @@ def test_closing_sphere(gpu_backend):
 # ============================================================================
 
 
-@pytest.mark.backend
+
 def test_top_hat_box(gpu_backend):
     gpu_input = cle.push(
         np.asarray(
@@ -564,7 +564,7 @@ def test_top_hat_box(gpu_backend):
     assert np.array_equal(a, b)
 
 
-@pytest.mark.backend
+
 def test_top_hat_sphere(gpu_backend):
     test = cle.push(
         np.asarray(
@@ -593,7 +593,7 @@ def test_top_hat_sphere(gpu_backend):
 # ============================================================================
 
 
-@pytest.mark.backend
+
 def test_bottom_hat_box(gpu_backend):
     test = cle.push(
         np.asarray(
@@ -617,7 +617,7 @@ def test_bottom_hat_box(gpu_backend):
     assert np.max(a) == 50
 
 
-@pytest.mark.backend
+
 def test_bottom_hat_sphere(gpu_backend):
     test = cle.push(
         np.asarray(

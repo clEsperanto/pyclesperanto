@@ -4,7 +4,7 @@ import pytest
 import pyclesperanto as cle
 
 
-@pytest.mark.backend
+
 def test_extend_labeling_via_voronoi(gpu_backend):
     gpu_input = cle.push(
         np.asarray(

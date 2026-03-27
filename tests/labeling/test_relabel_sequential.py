@@ -4,7 +4,7 @@ import pytest
 import pyclesperanto as cle
 
 
-@pytest.mark.backend
+
 def test_relabel_sequential(gpu_backend):
     gpu_input = cle.push(np.asarray([[1, 2, 3], [1, 6, 6], [7, 8, 9]]))
     gpu_output = cle.create_like(gpu_input)

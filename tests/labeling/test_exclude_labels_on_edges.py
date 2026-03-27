@@ -5,7 +5,7 @@ from skimage.io import imread
 import pyclesperanto as cle
 
 
-@pytest.mark.backend
+
 def test_exclude_labels_on_edges_2d(gpu_backend):
     gpu_input = cle.push(
         np.asarray(
@@ -44,7 +44,7 @@ def test_exclude_labels_on_edges_2d(gpu_backend):
     assert np.array_equal(a, b)
 
 
-@pytest.mark.backend
+
 def test_exclude_labels_on_edges_3d(gpu_backend):
     gpu_input = cle.push(
         np.asarray(
@@ -119,7 +119,7 @@ def test_exclude_labels_on_edges_3d(gpu_backend):
     assert np.array_equal(a, b)
 
 
-@pytest.mark.backend
+
 def test_exclude_labels_on_edges_blobs(gpu_backend):
     # initialize GPU
     print("Used GPU: " + cle.get_device().name)
@@ -149,7 +149,7 @@ def test_exclude_labels_on_edges_blobs(gpu_backend):
     assert num_labels == 44
 
 
-@pytest.mark.backend
+
 def test_exclude_labels_on_edges_blobs_2(gpu_backend):
     # initialize GPU
     print("Used GPU: " + cle.get_device().name)

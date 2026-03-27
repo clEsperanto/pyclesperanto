@@ -4,7 +4,7 @@ import pytest
 import pyclesperanto as cle
 
 
-@pytest.mark.backend
+
 def test_maximum_sphere_1(gpu_backend):
     test = cle.push(np.asarray([[1, 1, 1], [1, 2, 1], [1, 1, 1]]))
 
@@ -25,7 +25,7 @@ def test_maximum_sphere_1(gpu_backend):
     assert np.mean(a) == 5
 
 
-@pytest.mark.backend
+
 def test_maximum_sphere_2(gpu_backend):
     gpu_a = cle.push(np.asarray([[1, 1, 1], [1, 2, 1], [1, 1, 1]]))
     gpu_b = cle.create(gpu_a)

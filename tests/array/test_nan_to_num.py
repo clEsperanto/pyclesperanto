@@ -4,7 +4,7 @@ import pytest
 import pyclesperanto as cle
 
 
-@pytest.mark.backend
+
 def test_nan_to_num(gpu_backend):
     data = np.asarray([[-np.inf], [np.inf], [np.nan], [0], [1]])
 
@@ -17,7 +17,7 @@ def test_nan_to_num(gpu_backend):
     )
 
 
-@pytest.mark.backend
+
 def test_nan_to_num_defaults(gpu_backend):
     data = np.asarray([[-np.inf], [np.inf], [np.nan], [0], [1]])
 

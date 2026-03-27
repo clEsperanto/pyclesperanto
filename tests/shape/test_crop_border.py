@@ -4,7 +4,7 @@ import pytest
 import pyclesperanto as cle
 
 
-@pytest.mark.backend
+
 def test_crop_border_2d(gpu_backend):
     test1 = cle.push(
         np.asarray([[0, 0, 0, 1], [0, 0, 3, 1], [0, 0, 3, 1], [1, 1, 1, 1]])
@@ -21,7 +21,7 @@ def test_crop_border_2d(gpu_backend):
     assert np.array_equal(a, b)
 
 
-@pytest.mark.backend
+
 def test_crop_3d(gpu_backend):
     input_image = cle.push(
         np.asarray(

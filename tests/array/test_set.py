@@ -4,7 +4,7 @@ import pytest
 import pyclesperanto as cle
 
 
-@pytest.mark.backend
+
 def test_set(gpu_backend):
     result = cle.create((5, 5))
 

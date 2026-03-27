@@ -4,7 +4,7 @@ import pytest
 import pyclesperanto as cle
 
 
-@pytest.mark.backend
+
 def test_reduce_labels_to_centroids(gpu_backend):
     test = np.asarray(
         [

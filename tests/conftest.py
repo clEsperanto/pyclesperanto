@@ -1,18 +1,26 @@
 """Pytest configuration for pyclesperanto tests.
 
 Provides fixtures for testing across multiple GPU backends (OpenCL, CUDA).
+
+Usage:
+    pytest -v              # run tests on ALL available backends
+    pytest -k opencl -v    # run tests only on OpenCL
+    pytest -k cuda -v      # run tests only on CUDA
+
+Markers:
+    @pytest.mark.skip_backend("cuda", reason="...")  — skip on specific backend
+    @pytest.mark.only_backend("opencl")              — run only on specific backend
+    @pytest.mark.skip_if_no_backend                  — skip if no backend available
 """
 
 import pytest
-
 import pyclesperanto as cle
 
-# Store available backends for use in hooks
 _available_backends = None
 
 
 def _get_available_backends():
-    """Get list of available backends, with fallback manual detection."""
+    """Get and cache the list of available backends."""
     global _available_backends
     if _available_backends is not None:
         return _available_backends
@@ -20,106 +28,91 @@ def _get_available_backends():
     backends = cle.list_available_backends()
 
     if not backends:
-        # Try manual detection if automatic detection failed
-        backends = []
-        try:
-            import pyclesperanto_opencl
-
-            backends.append("opencl")
-        except ImportError:
-            pass
-        try:
-            import pyclesperanto_cuda
-
-            backends.append("cuda")
-        except ImportError:
-            pass
+        # Fallback: try importing backend modules directly
+        for name, module in [
+            ("opencl", "pyclesperanto_opencl"),
+            ("cuda", "pyclesperanto_cuda"),
+        ]:
+            try:
+                __import__(module)
+                backends.append(name)
+            except ImportError:
+                pass
 
     _available_backends = backends
     return backends
 
 
 def pytest_configure(config):
-    """Register custom pytest markers and cache backends."""
-    global _available_backends
-    _available_backends = _get_available_backends()
-
+    """Register custom markers."""
     config.addinivalue_line(
         "markers",
         "skip_if_no_backend: skip test if no GPU backend is available",
     )
     config.addinivalue_line(
         "markers",
-        "backend: parametrize test to run with each available backend",
+        "skip_backend(name, reason=''): skip test for a specific backend",
+    )
+    config.addinivalue_line(
+        "markers",
+        "only_backend(name): run test only on a specific backend",
     )
 
 
 def pytest_generate_tests(metafunc):
-    """Dynamically parametrize tests marked with @pytest.mark.backend."""
-    if "gpu_backend" in metafunc.fixturenames:
-        if metafunc.definition.get_closest_marker("backend"):
-            backends = _get_available_backends()
-            if backends:
-                metafunc.parametrize("gpu_backend", backends, ids=backends)
+    """Auto-parametrize any test that requests the `gpu_backend` fixture."""
+    if "gpu_backend" not in metafunc.fixturenames:
+        return
+
+    backends = _get_available_backends()
+
+    if backends:
+        metafunc.parametrize("gpu_backend", backends, ids=backends)
+    else:
+        # Provide a single skip-marked param so the test shows as skipped, not missing
+        metafunc.parametrize(
+            "gpu_backend",
+            [
+                pytest.param(
+                    "none",
+                    marks=pytest.mark.skip(reason="No GPU backend available"),
+                )
+            ],
+        )
 
 
 @pytest.fixture(scope="function")
 def gpu_backend(request):
-    """Fixture that selects a GPU backend for the test.
+    """Select the GPU backend for this test.
 
-    Use this fixture in test functions that need backend parametrization:
+    Usage — just add it as a parameter, no marker needed:
 
-        @pytest.mark.backend
         def test_my_operation(gpu_backend):
-            # Test will run once per available backend
-            device = cle.select_device("TX")
+            arr = cle.push(np.ones((10, 10), dtype=np.float32))
             ...
 
-    The fixture automatically switches backends before each test invocation.
+    The test will automatically run once per available backend,
+    with IDs like test_my_operation[opencl] and test_my_operation[cuda].
     """
-    # Tests are always parametrized via pytest_collection_modifyitems
     backend_name = request.param
     cle.select_backend(backend_name)
+
+    # Handle skip_backend marker
+    for marker in request.node.iter_markers("skip_backend"):
+        if backend_name in marker.args:
+            pytest.skip(
+                f"Skipped on {backend_name}: {marker.kwargs.get('reason', '')}"
+            )
+
+    # Handle only_backend marker
+    for marker in request.node.iter_markers("only_backend"):
+        if backend_name not in marker.args:
+            pytest.skip(f"Only runs on {', '.join(marker.args)}")
+
     yield backend_name
-    # No cleanup needed, next test will select its own backend
 
 
 @pytest.fixture(scope="function")
 def available_backends():
     """Fixture that returns list of available backends."""
-    return cle.list_available_backends()
-
-
-@pytest.fixture(scope="function", autouse=True)
-def ensure_gpu_backend_available(request):
-    """Automatically skip tests if no GPU backend is available.
-
-    Tests marked with @pytest.mark.skip_if_no_backend will be skipped
-    if no GPU backend is available.
-    """
-    available_backends = cle.list_available_backends()
-
-    if not available_backends:
-        # Check if test is marked to skip if no backend
-        if request.node.get_closest_marker("skip_if_no_backend"):
-            pytest.skip("No GPU backend available")
-        # Also warn on any test that tries to use cle operations
-        if "cle" in request.node.name.lower() or "gpu" in request.node.name.lower():
-            pytest.skip("No GPU backend available")
-
-
-@pytest.fixture(scope="function", autouse=False)
-def clear_gpu_cache(request):
-    """Optional fixture to clear GPU cache between tests.
-
-    Use with: @pytest.mark.usefixtures("clear_gpu_cache")
-    """
-    yield
-    # GPU cache will be cleared if the backend supports it
-    try:
-        device = cle.get_device()
-        if device:
-            # Could add device.clear_cache() here if available
-            pass
-    except Exception:
-        pass
+    return _get_available_backends()

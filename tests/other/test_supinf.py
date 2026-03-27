@@ -5,7 +5,7 @@ from skimage.segmentation.morphsnakes import inf_sup, sup_inf
 import pyclesperanto as cle
 
 
-@pytest.mark.backend
+
 def test_superior_inferior_2d(gpu_backend):
     test = cle.push(
         np.asarray(
@@ -54,7 +54,7 @@ def test_superior_inferior_2d(gpu_backend):
     assert cle.array_equal(result, reference2)
 
 
-@pytest.mark.backend
+
 def test_superior_inferior_2d_compare_with_skimage_x(gpu_backend):
 
     array = np.zeros((100, 85), dtype=np.uint8)
@@ -70,7 +70,7 @@ def test_superior_inferior_2d_compare_with_skimage_x(gpu_backend):
     assert cle.array_equal(result, reference)
 
 
-@pytest.mark.backend
+
 def test_superior_inferior_2d_compare_with_skimage_y(gpu_backend):
 
     array = np.zeros((85, 100), dtype=np.uint8)
@@ -86,7 +86,7 @@ def test_superior_inferior_2d_compare_with_skimage_y(gpu_backend):
     assert cle.array_equal(result, reference)
 
 
-@pytest.mark.backend
+
 def test_superior_inferior_3d(gpu_backend):
     test = cle.push(
         np.asarray(
@@ -142,7 +142,7 @@ def test_superior_inferior_3d(gpu_backend):
     assert np.array_equal(a, b)
 
 
-@pytest.mark.backend
+
 def test_superior_inferior_3d_compare_with_skimage_x(gpu_backend):
 
     array = np.zeros((5, 5, 4), dtype=np.uint8)
@@ -158,7 +158,7 @@ def test_superior_inferior_3d_compare_with_skimage_x(gpu_backend):
     assert cle.array_equal(result, reference)
 
 
-@pytest.mark.backend
+
 def test_superior_inferior_3d_compare_with_skimage_y(gpu_backend):
 
     array = np.zeros((5, 4, 5), dtype=np.uint8)
@@ -174,7 +174,7 @@ def test_superior_inferior_3d_compare_with_skimage_y(gpu_backend):
     assert cle.array_equal(result, reference)
 
 
-@pytest.mark.backend
+
 def test_superior_inferior_3d_compare_with_skimage_z(gpu_backend):
 
     array = np.zeros((4, 5, 5), dtype=np.uint8)

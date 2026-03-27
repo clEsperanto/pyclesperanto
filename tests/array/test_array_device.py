@@ -4,7 +4,7 @@ import pytest
 import pyclesperanto as cle
 
 
-@pytest.mark.backend
+
 def test_zeros_arrays(gpu_backend):
     gpu_arr = cle.zeros((10, 10))
 
@@ -14,7 +14,7 @@ def test_zeros_arrays(gpu_backend):
     assert gpu_arr.min() == 0
 
 
-@pytest.mark.backend
+
 def test_empty_like(gpu_backend):
     arr = np.zeros((10, 10))
     gpu_arr = cle.empty_like(arr)
@@ -22,7 +22,7 @@ def test_empty_like(gpu_backend):
     assert gpu_arr.shape == arr.shape
 
 
-@pytest.mark.backend
+
 def test_zeros_like(gpu_backend):
     arr = np.zeros((10, 10))
     gpu_arr = cle.zeros_like(arr)
@@ -33,7 +33,7 @@ def test_zeros_like(gpu_backend):
     assert gpu_arr.min() == 0
 
 
-@pytest.mark.backend
+
 def test_ones_like(gpu_backend):
     arr = np.zeros((10, 10))
     gpu_arr = cle.ones_like(arr)
@@ -44,7 +44,7 @@ def test_ones_like(gpu_backend):
     assert gpu_arr.min() == 1
 
 
-@pytest.mark.backend
+
 def test_ones_arrays(gpu_backend):
     gpu_arr = cle.ones((10, 10))
 
@@ -54,7 +54,7 @@ def test_ones_arrays(gpu_backend):
     assert gpu_arr.min() == 1
 
 
-@pytest.mark.backend
+
 def test_from_array(gpu_backend):
     arr = np.zeros((10, 10))
     gpu_arr = cle.from_array(arr)
@@ -65,7 +65,7 @@ def test_from_array(gpu_backend):
     assert gpu_arr.min() == 0
 
 
-@pytest.mark.backend
+
 def test_array_ufunc_add(gpu_backend):
     array1 = cle.push(np.ones((10, 10)))
     array2 = cle.push(np.ones((10, 10)))
@@ -75,7 +75,7 @@ def test_array_ufunc_add(gpu_backend):
     assert np.all(res == 2)
 
 
-@pytest.mark.backend
+
 def test_repr(gpu_backend):
     array = cle.zeros((10, 10))
     result = repr(array)

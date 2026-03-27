@@ -4,7 +4,7 @@ import pytest
 import pyclesperanto as cle
 
 
-@pytest.mark.backend
+
 def test_array_equal(gpu_backend):
     input1 = np.asarray([1, 2, 3])
     input2 = np.asarray([4, 5, 7])

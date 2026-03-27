@@ -4,7 +4,7 @@ import pytest
 import pyclesperanto as cle
 
 
-@pytest.mark.backend
+
 def test_count_touching_neighbors(gpu_backend):
     labels = cle.push(
         np.asarray(
@@ -33,7 +33,7 @@ def test_count_touching_neighbors(gpu_backend):
     assert np.array_equal(a, b)
 
 
-@pytest.mark.backend
+
 def test_count_touching_neighbors_not_ignoring_background(gpu_backend):
     labels = cle.push(
         np.asarray(

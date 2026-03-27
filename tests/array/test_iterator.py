@@ -4,7 +4,7 @@ import pytest
 import pyclesperanto as cle
 
 
-@pytest.mark.backend
+
 def test_iterator(gpu_backend):
     image = np.random.random((3, 2, 5))
     cle_image = cle.asarray(image)
@@ -18,7 +18,7 @@ def test_iterator(gpu_backend):
         assert cle.array_equal(i, j)
 
 
-@pytest.mark.backend
+
 def test_enumerate(gpu_backend):
     cle_array = cle.create((2, 10))
     cle.set_ramp_x(cle_array)
@@ -31,7 +31,7 @@ def test_enumerate(gpu_backend):
     assert sum_ == 45
 
 
-@pytest.mark.backend
+
 def test_zip(gpu_backend):
     cle_array = cle.create((2, 10))
     cle.set_ramp_x(cle_array)

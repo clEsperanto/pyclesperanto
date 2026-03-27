@@ -15,8 +15,11 @@ torch = pytest.importorskip("torch", reason="torch not installed")
 def test_cle_to_cupy_dtypes(gpu_backend, dtype):
     print(cle.get_device().name)
     data = np.ones((4, 4), dtype=dtype)
+    print("NumPy Data dtype:", data.dtype)
     arr = cle.Array.from_array(data)
+    print("pyCle Data dtype:", arr.dtype)
     cp_arr = cupy.from_dlpack(arr)
+    print("cuPy Data dtype:", cp_arr.dtype)
     assert cp_arr.dtype == dtype
     np.testing.assert_array_equal(cp_arr.get(), data)
 

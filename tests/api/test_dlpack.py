@@ -13,6 +13,8 @@ torch = pytest.importorskip("torch", reason="torch not installed")
 )
 @pytest.mark.skip_backend("opencl", reason="OpenCL does not support this feature")
 def test_cle_to_cupy_dtypes(gpu_backend, dtype):
+    cle.select_backend(gpu_backend)
+    cle.select_device()
     print(cle.get_device().info)
     data = np.ones((4, 4), dtype=dtype)
     print("NumPy Data dtype:", data.dtype)

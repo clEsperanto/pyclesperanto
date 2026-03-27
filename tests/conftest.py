@@ -105,6 +105,9 @@ def gpu_backend(request):
         cle.get_backend_name() == backend_name
     ), f"Backend switch failed: wanted {backend_name}, got {cle.get_backend_name()}"
 
+    print(f"Running test on backend: {backend_name}")
+    print(cle.get_device().info)
+
     return backend_name
 
 

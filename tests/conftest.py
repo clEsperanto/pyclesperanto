@@ -64,24 +64,16 @@ def pytest_configure(config):
 
 
 def pytest_generate_tests(metafunc):
-    """Auto-parametrize any test that requests the `gpu_backend` fixture."""
     if "gpu_backend" not in metafunc.fixturenames:
         return
-
     backends = _get_available_backends()
-
     if backends:
-        metafunc.parametrize("gpu_backend", backends, ids=backends)
+        metafunc.parametrize("gpu_backend", backends, ids=backends, indirect=True)  # ← add indirect=True
     else:
-        # Provide a single skip-marked param so the test shows as skipped, not missing
         metafunc.parametrize(
             "gpu_backend",
-            [
-                pytest.param(
-                    "none",
-                    marks=pytest.mark.skip(reason="No GPU backend available"),
-                )
-            ],
+            [pytest.param("none", marks=pytest.mark.skip(reason="No GPU backend available"))],
+            indirect=True,  # ← here too
         )
 
 

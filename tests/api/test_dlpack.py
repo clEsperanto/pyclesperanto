@@ -1,6 +1,7 @@
 # test_dlpack_cupy.py
 import numpy as np
 import pytest
+from conftest import use_backend
 
 import pyclesperanto as cle
 

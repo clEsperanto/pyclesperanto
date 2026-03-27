@@ -82,26 +82,32 @@ def pytest_generate_tests(metafunc):
         )
 
 
+# conftest.py
+
 @pytest.fixture(scope="function")
 def gpu_backend(request):
-    """Select the GPU backend for this test."""
+    """Parametrize backend and handle skip markers."""
     backend_name = request.param
 
-    # Handle skip_backend marker BEFORE switching
     for marker in request.node.iter_markers("skip_backend"):
         if backend_name in marker.args:
-            pytest.skip(f"Skipped on {backend_name}: {marker.kwargs.get('reason', '')}")
+            pytest.skip(
+                f"Skipped on {backend_name}: {marker.kwargs.get('reason', '')}"
+            )
 
-    # Handle only_backend marker BEFORE switching
     for marker in request.node.iter_markers("only_backend"):
         if backend_name not in marker.args:
             pytest.skip(f"Only runs on {', '.join(marker.args)}")
 
-    # Do the switch RIGHT before yielding to the test body
-    cle.select_backend(backend_name)
-    cle.select_device()
+    # Only provide the name — don't switch here
+    return backend_name
 
-    yield backend_name
+
+def use_backend(name):
+    """Call this at the start of each test to switch backend."""
+    cle.select_backend(name)
+    cle.select_device()
+    assert cle.get_backend_name() == name, f"Backend switch failed: wanted {name}, got {cle.get_backend_name()}"
 
 
 @pytest.fixture(scope="function")

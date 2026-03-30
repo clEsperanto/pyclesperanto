@@ -4,86 +4,35 @@ import pytest
 import pyclesperanto as cle
 
 # ============================================================================
-# TEST DATA - SIMPLE MORPHOLOGICAL
-# ============================================================================
-
-test_simple = cle.push(
-    np.asarray(
-        [
-            [0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0],
-            [0, 0, 1, 0, 0],
-            [0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0],
-        ]
-    )
-)
-
-test_simple_box_expected = cle.push(
-    np.asarray(
-        [
-            [0, 0, 0, 0, 0],
-            [0, 1, 1, 1, 0],
-            [0, 1, 1, 1, 0],
-            [0, 1, 1, 1, 0],
-            [0, 0, 0, 0, 0],
-        ]
-    )
-)
-
-test_simple_sphere_expected = cle.push(
-    np.asarray(
-        [
-            [0, 0, 0, 0, 0],
-            [0, 0, 1, 0, 0],
-            [0, 1, 1, 1, 0],
-            [0, 0, 1, 0, 0],
-            [0, 0, 0, 0, 0],
-        ]
-    )
-)
-
-test_square = cle.push(
-    np.asarray(
-        [
-            [0, 0, 0, 0, 0],
-            [0, 1, 1, 1, 0],
-            [0, 1, 1, 1, 0],
-            [0, 1, 1, 1, 0],
-            [0, 0, 0, 0, 0],
-        ]
-    )
-)
-
-test_square_eroded_expected = cle.push(
-    np.asarray(
-        [
-            [0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0],
-            [0, 0, 1, 0, 0],
-            [0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0],
-        ]
-    )
-)
-
-# ============================================================================
 # DILATE BOX TESTS
 # ============================================================================
 
 
-def test_dilate_old(gpu_backend):
-    result = cle.create(test_simple)
-    cle.dilate_box(test_simple, result)
-
-    print(result)
-
-    a = cle.pull(result)
-    b = cle.pull(test_simple_box_expected)
-    assert np.array_equal(a, b)
-
-
 def test_dilate(gpu_backend):
+    test_simple = cle.push(
+        np.asarray(
+            [
+                [0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0],
+                [0, 0, 1, 0, 0],
+                [0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0],
+            ]
+        )
+    )
+
+    test_simple_box_expected = cle.push(
+        np.asarray(
+            [
+                [0, 0, 0, 0, 0],
+                [0, 1, 1, 1, 0],
+                [0, 1, 1, 1, 0],
+                [0, 1, 1, 1, 0],
+                [0, 0, 0, 0, 0],
+            ]
+        )
+    )
+
     result = cle.create(test_simple)
     cle.binary_dilate(test_simple, result)
 
@@ -99,18 +48,43 @@ def test_dilate(gpu_backend):
 # ============================================================================
 
 
-def test_dilate_sphere_old(gpu_backend):
-    result = cle.create(test_simple)
-    cle.dilate_sphere(test_simple, result)
-
-    print(result)
-
-    a = cle.pull(result)
-    b = cle.pull(test_simple_sphere_expected)
-    assert np.array_equal(a, b)
-
-
 def test_dilate_sphere(gpu_backend):
+    test_simple = cle.push(
+        np.asarray(
+            [
+                [0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0],
+                [0, 0, 1, 0, 0],
+                [0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0],
+            ]
+        )
+    )
+
+    test_simple_box_expected = cle.push(
+        np.asarray(
+            [
+                [0, 0, 0, 0, 0],
+                [0, 1, 1, 1, 0],
+                [0, 1, 1, 1, 0],
+                [0, 1, 1, 1, 0],
+                [0, 0, 0, 0, 0],
+            ]
+        )
+    )
+
+    test_simple_sphere_expected = cle.push(
+        np.asarray(
+            [
+                [0, 0, 0, 0, 0],
+                [0, 0, 1, 0, 0],
+                [0, 1, 1, 1, 0],
+                [0, 0, 1, 0, 0],
+                [0, 0, 0, 0, 0],
+            ]
+        )
+    )
+   
     result = cle.create(test_simple)
     cle.binary_dilate(test_simple, result, connectivity="sphere")
 
@@ -126,18 +100,32 @@ def test_dilate_sphere(gpu_backend):
 # ============================================================================
 
 
-def test_erode_box_old(gpu_backend):
-    result = cle.create(test_square)
-    cle.erode_box(test_square, result)
-
-    print(result)
-
-    a = cle.pull(result)
-    b = cle.pull(test_square_eroded_expected)
-    assert np.array_equal(a, b)
-
-
 def test_erode_box(gpu_backend):
+
+
+    test_square = cle.push(
+        np.asarray(
+            [
+                [0, 0, 0, 0, 0],
+                [0, 1, 1, 1, 0],
+                [0, 1, 1, 1, 0],
+                [0, 1, 1, 1, 0],
+                [0, 0, 0, 0, 0],
+            ]
+        )
+    )
+
+    test_square_eroded_expected = cle.push(
+        np.asarray(
+            [
+                [0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0],
+                [0, 0, 1, 0, 0],
+                [0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0],
+            ]
+        )
+    )    
     result = cle.create(test_square)
     cle.binary_erode(test_square, result)
 
@@ -153,18 +141,32 @@ def test_erode_box(gpu_backend):
 # ============================================================================
 
 
-def test_erode_sphere_old(gpu_backend):
-    result = cle.create(test_square)
-    cle.erode_sphere(test_square, result)
-
-    print(result)
-
-    a = cle.pull(result)
-    b = cle.pull(test_square_eroded_expected)
-    assert np.array_equal(a, b)
-
 
 def test_erode_sphere(gpu_backend):
+
+    test_square = cle.push(
+        np.asarray(
+            [
+                [0, 0, 0, 0, 0],
+                [0, 1, 1, 1, 0],
+                [0, 1, 1, 1, 0],
+                [0, 1, 1, 1, 0],
+                [0, 0, 0, 0, 0],
+            ]
+        )
+    )
+
+    test_square_eroded_expected = cle.push(
+        np.asarray(
+            [
+                [0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0],
+                [0, 0, 1, 0, 0],
+                [0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0],
+            ]
+        )
+    )    
     result = cle.create(test_square)
     cle.binary_erode(test_square, result, connectivity="sphere")
 
@@ -178,20 +180,6 @@ def test_erode_sphere(gpu_backend):
 # ============================================================================
 # OPENING TESTS
 # ============================================================================
-
-gpu_complex_input = cle.push(
-    np.asarray(
-        [
-            [0, 0, 0, 0, 0, 0],
-            [1, 1, 1, 0, 0, 0],
-            [1, 1, 1, 0, 2, 0],
-            [1, 1, 1, 0, 2, 0],
-            [0, 0, 0, 0, 2, 0],
-            [3, 0, 0, 0, 0, 0],
-        ]
-    )
-)
-
 
 def test_opening_box_old(gpu_backend):
     gpu_input = cle.push(

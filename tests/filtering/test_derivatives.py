@@ -147,44 +147,47 @@ def test_gradient_z(gpu_backend):
 # LAPLACE TESTS
 # ============================================================================
 
-test_laplace_input = cle.push(
-    np.asarray(
-        [
-            [0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0],
-            [0, 0, 1, 0, 0],
-            [0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0],
-        ]
-    )
-)
-
-laplace_box_reference = cle.push(
-    np.asarray(
-        [
-            [0, 0, 0, 0, 0],
-            [0, -1, -1, -1, 0],
-            [0, -1, 8, -1, 0],
-            [0, -1, -1, -1, 0],
-            [0, 0, 0, 0, 0],
-        ]
-    )
-)
-
-laplace_sphere_reference = cle.push(
-    np.asarray(
-        [
-            [0, 0, 0, 0, 0],
-            [0, 0, -1, 0, 0],
-            [0, -1, 4, -1, 0],
-            [0, 0, -1, 0, 0],
-            [0, 0, 0, 0, 0],
-        ]
-    )
-)
 
 
 def test_laplace_box(gpu_backend):
+
+
+    test_laplace_input = cle.push(
+        np.asarray(
+            [
+                [0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0],
+                [0, 0, 1, 0, 0],
+                [0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0],
+            ]
+        )
+    )
+
+    laplace_box_reference = cle.push(
+        np.asarray(
+            [
+                [0, 0, 0, 0, 0],
+                [0, -1, -1, -1, 0],
+                [0, -1, 8, -1, 0],
+                [0, -1, -1, -1, 0],
+                [0, 0, 0, 0, 0],
+            ]
+        )
+    )
+
+    laplace_sphere_reference = cle.push(
+        np.asarray(
+            [
+                [0, 0, 0, 0, 0],
+                [0, 0, -1, 0, 0],
+                [0, -1, 4, -1, 0],
+                [0, 0, -1, 0, 0],
+                [0, 0, 0, 0, 0],
+            ]
+        )
+    )
+
     result = cle.create(test_laplace_input)
     cle.laplace(test_laplace_input, result)
 
@@ -197,6 +200,44 @@ def test_laplace_box(gpu_backend):
 
 
 def test_laplace_sphere(gpu_backend):
+
+
+    test_laplace_input = cle.push(
+        np.asarray(
+            [
+                [0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0],
+                [0, 0, 1, 0, 0],
+                [0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0],
+            ]
+        )
+    )
+
+    laplace_box_reference = cle.push(
+        np.asarray(
+            [
+                [0, 0, 0, 0, 0],
+                [0, -1, -1, -1, 0],
+                [0, -1, 8, -1, 0],
+                [0, -1, -1, -1, 0],
+                [0, 0, 0, 0, 0],
+            ]
+        )
+    )
+
+    laplace_sphere_reference = cle.push(
+        np.asarray(
+            [
+                [0, 0, 0, 0, 0],
+                [0, 0, -1, 0, 0],
+                [0, -1, 4, -1, 0],
+                [0, 0, -1, 0, 0],
+                [0, 0, 0, 0, 0],
+            ]
+        )
+    )
+
     result = cle.create(test_laplace_input)
     cle.laplace(test_laplace_input, result, connectivity="sphere")
 

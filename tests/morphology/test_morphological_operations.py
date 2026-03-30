@@ -84,7 +84,7 @@ def test_dilate_sphere(gpu_backend):
             ]
         )
     )
-   
+
     result = cle.create(test_simple)
     cle.binary_dilate(test_simple, result, connectivity="sphere")
 
@@ -101,7 +101,6 @@ def test_dilate_sphere(gpu_backend):
 
 
 def test_erode_box(gpu_backend):
-
 
     test_square = cle.push(
         np.asarray(
@@ -125,7 +124,7 @@ def test_erode_box(gpu_backend):
                 [0, 0, 0, 0, 0],
             ]
         )
-    )    
+    )
     result = cle.create(test_square)
     cle.binary_erode(test_square, result)
 
@@ -139,7 +138,6 @@ def test_erode_box(gpu_backend):
 # ============================================================================
 # ERODE SPHERE TESTS
 # ============================================================================
-
 
 
 def test_erode_sphere(gpu_backend):
@@ -166,7 +164,7 @@ def test_erode_sphere(gpu_backend):
                 [0, 0, 0, 0, 0],
             ]
         )
-    )    
+    )
     result = cle.create(test_square)
     cle.binary_erode(test_square, result, connectivity="sphere")
 
@@ -180,6 +178,7 @@ def test_erode_sphere(gpu_backend):
 # ============================================================================
 # OPENING TESTS
 # ============================================================================
+
 
 def test_opening_box_old(gpu_backend):
     gpu_input = cle.push(

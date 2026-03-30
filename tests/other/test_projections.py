@@ -207,9 +207,6 @@ def test_maximum_y_projection_against_numpy_small(gpu_backend):
     assert np.array_equal(max_cle.get(), max_np)
 
 
-
-
-
 def test_maximum_z_projection(gpu_backend):
 
     # Maximum Z Projection tests
@@ -402,7 +399,7 @@ def test_maximum_z_projection_creator_passing_none(gpu_backend):
             ]
         )
     )
-    
+
     result = cle.maximum_z_projection(test1_z, None)
 
     a = cle.pull(result)

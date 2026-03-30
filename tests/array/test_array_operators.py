@@ -3,6 +3,7 @@ import pytest
 
 import pyclesperanto as cle
 
+
 def test_max(gpu_backend):
 
     arr1 = cle.push(np.asarray([1, 2, 3, 4, 5]))

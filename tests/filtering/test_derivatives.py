@@ -148,9 +148,7 @@ def test_gradient_z(gpu_backend):
 # ============================================================================
 
 
-
 def test_laplace_box(gpu_backend):
-
 
     test_laplace_input = cle.push(
         np.asarray(
@@ -200,7 +198,6 @@ def test_laplace_box(gpu_backend):
 
 
 def test_laplace_sphere(gpu_backend):
-
 
     test_laplace_input = cle.push(
         np.asarray(

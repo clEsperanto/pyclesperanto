@@ -5,12 +5,12 @@ import pytest
 import pyclesperanto as cle
 
 
-def test_import(gpu_backend):
+def test_import():
     """Test basic import of pyclesperanto."""
     assert hasattr(cle, "__version__")
 
 
-def test_backend_detection(gpu_backend):
+def test_backend_detection():
     """Test that available backends are detected."""
     backends = cle.list_available_backends()
     assert isinstance(backends, list)

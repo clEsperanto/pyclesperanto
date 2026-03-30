@@ -17,7 +17,7 @@ def test_cle_to_cupy_dtypes(gpu_backend, dtype):
     arr = cle.Array.from_array(data)
     cp_arr = cupy.from_dlpack(arr)
     assert cp_arr.dtype == dtype
-    np.testing.assert_array_equal(cp_arr.asnumpy(), data)
+    np.testing.assert_array_equal(cp_arr.get(), data)
 
 
 @pytest.mark.only_backend("cuda")
@@ -27,7 +27,7 @@ def test_cle_to_cupy(gpu_backend):
     cp_arr = cupy.from_dlpack(arr)
     assert cp_arr.shape == data.shape
     assert cp_arr.dtype == np.float32
-    np.testing.assert_array_equal(cupy.asnumpy(cp_arr), data)
+    np.testing.assert_array_equal(cupy.get(cp_arr), data)
 
 
 @pytest.mark.only_backend("cuda")
@@ -55,7 +55,7 @@ def test_3d_array(gpu_backend):
     arr = cle.Array.from_array(data)
     cp_arr = cupy.from_dlpack(arr)
     assert cp_arr.shape == (3, 4, 5)
-    np.testing.assert_array_equal(cupy.asnumpy(cp_arr), data)
+    np.testing.assert_array_equal(cupy.get(cp_arr), data)
 
 
 @pytest.mark.only_backend("cuda")
@@ -76,7 +76,7 @@ def test_cle_to_torch_dtypes(gpu_backend, dtype):
     data = np.ones((4, 4), dtype=dtype)
     arr = cle.Array.from_array(data)
     tensor_arr = torch.from_dlpack(arr)
-    assert tensor_arr.dtype == dtype
+    assert tensor_arr.cpu().numpy().dtype == np.dtype(dtype)
     np.testing.assert_array_equal(torch.asnumpy(tensor_arr), data)
 
 
@@ -86,7 +86,7 @@ def test_cle_to_torch(gpu_backend):
     arr = cle.Array.from_array(data)
     tensor_arr = torch.from_dlpack(arr)
     assert tensor_arr.shape == data.shape
-    assert tensor_arr.dtype == np.float32
+    assert tensor_arr.cpu().numpy().dtype == np.float32
     np.testing.assert_array_equal(torch.asnumpy(tensor_arr), data)
 
 
@@ -96,7 +96,7 @@ def test_torch_to_cle(gpu_backend):
     tensor_arr = torch.asarray(data)
     arr = cle.Array.from_dlpack(tensor_arr)
     assert arr.shape == data.shape
-    assert arr.dtype == np.float32
+    assert tensor_arr.cpu().numpy().dtype == np.float32
     np.testing.assert_array_equal(arr.get(), data)
 
 

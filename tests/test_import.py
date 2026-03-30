@@ -15,5 +15,3 @@ def test_backend_detection(gpu_backend):
     backends = cle.list_available_backends()
     assert isinstance(backends, list)
     assert len(backends) > 0, "At least one backend should be available"
-
-

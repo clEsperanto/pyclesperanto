@@ -259,9 +259,7 @@ def empty(cls, shape, dtype=None, mtype="buffer", device=None):
         raise ValueError(
             f"Invalid memory type: {mtype}. Supported values are 'buffer' and 'image'."
         )
-
-    print(device)
-
+    
     _assert_supported_dtype(dtype)
     return cls.create(shape=shape, dtype=dtype, mtype=mtype, device=device)
 
@@ -448,10 +446,12 @@ def __dlpack_device__(self):
     return self._dlpack_device()  # calls the C++ binding
 
 
-def from_dlpack(cls, ext_tensor, *, device=None, copy=None):
+def from_dlpack(cls, dltensor, *, device=None, copy=None):
     """Create an Array from any object implementing the DLPack protocol.
 
-    The returned Array shares memory with the source tensor. This is zero-copy and efficient if
+    DLPack is a open in memory tensor structure: https://dmlc.github.io/dlpack/latest/
+
+    The returned Array shares memory with the source tensor. This is copy-free and efficient if
     the source tensor is on the same device as the target Array, however ownership is not transferred
     (the source tensor remains responsible for freeing the memory).
     If copy is forced or necessary (e.g. cross-device), the data is copied and ownership is transferred
@@ -459,7 +459,7 @@ def from_dlpack(cls, ext_tensor, *, device=None, copy=None):
 
     Parameters
     ----------
-    ext_tensor : object
+    dltensor : object
         Any object with ``__dlpack__`` and ``__dlpack_device__`` methods,
         or a raw DLPack capsule.
     device : Device, optional
@@ -472,7 +472,7 @@ def from_dlpack(cls, ext_tensor, *, device=None, copy=None):
     Returns
     -------
     Array
-        A cle Array sharing or copying the data from ext_tensor.
+        A cle Array sharing or copying the data from dltensor.
     """
     # DLPack device type constants
     _DLPACK_DEVICE_CPU = 1
@@ -483,8 +483,8 @@ def from_dlpack(cls, ext_tensor, *, device=None, copy=None):
     target_device = device if device is not None else get_device()
 
     # --- resolve source device type ---
-    if hasattr(ext_tensor, "__dlpack_device__"):
-        src_device_type, src_device_id = ext_tensor.__dlpack_device__()
+    if hasattr(dltensor, "__dlpack_device__"):
+        src_device_type, src_device_id = dltensor.__dlpack_device__()
     else:
         # raw capsule — assume same device
         src_device_type, src_device_id = None, None
@@ -517,16 +517,16 @@ def from_dlpack(cls, ext_tensor, *, device=None, copy=None):
     if needs_copy or src_is_cpu:
         # CPU path: materialise to numpy then upload
         if src_is_cpu:
-            np_arr = np.from_dlpack(ext_tensor)
+            np_arr = np.from_dlpack(dltensor)
             return cls.from_array(np_arr, device=target_device)
 
         # GPU→GPU cross-device: export to numpy (host) then re-upload
         # (no direct peer-to-peer via DLPack in cle yet)
-        np_arr = np.array(ext_tensor.get())  # triggers device→host copy via __array__
+        np_arr = np.array(dltensor.get())  # triggers device→host copy via __array__
         return cls.from_array(np_arr, device=target_device)
 
     # Zero-copy path: same device, wrap the DLPack capsule directly
-    return cls._from_dlpack(ext_tensor, target_device)
+    return cls._from_dlpack(dltensor, target_device)
 
 
 def _patch_array_class():

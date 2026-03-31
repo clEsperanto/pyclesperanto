@@ -259,7 +259,7 @@ def empty(cls, shape, dtype=None, mtype="buffer", device=None):
         raise ValueError(
             f"Invalid memory type: {mtype}. Supported values are 'buffer' and 'image'."
         )
-    
+
     _assert_supported_dtype(dtype)
     return cls.create(shape=shape, dtype=dtype, mtype=mtype, device=device)
 

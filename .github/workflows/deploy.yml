@@ -58,7 +58,7 @@ jobs:
 
       # - name: Install CUDA Toolkit (Windows)
       #   if: matrix.os == 'windows-latest'
-      #   uses: Jimver/cuda-toolkit@v0.2.30
+      #   uses: Jimver/cuda-toolkit@v0.2.35
       #   with:
       #     cuda: '12.6.0'
       #     method: 'local'
@@ -70,7 +70,7 @@ jobs:
       - name: Install CUDA Toolkit (Windows)
         if: matrix.os == 'windows-latest'
         id: cuda-toolkit-windows
-        uses: Jimver/cuda-toolkit@v0.2.30
+        uses: Jimver/cuda-toolkit@v0.2.35
         with:
           cuda: ${{ env.CUDA_VERSION }}
           method: 'local'

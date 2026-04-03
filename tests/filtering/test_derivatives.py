@@ -174,18 +174,6 @@ def test_laplace_box(gpu_backend):
         )
     )
 
-    laplace_sphere_reference = cle.push(
-        np.asarray(
-            [
-                [0, 0, 0, 0, 0],
-                [0, 0, -1, 0, 0],
-                [0, -1, 4, -1, 0],
-                [0, 0, -1, 0, 0],
-                [0, 0, 0, 0, 0],
-            ]
-        )
-    )
-
     result = cle.create(test_laplace_input)
     cle.laplace(test_laplace_input, result)
 

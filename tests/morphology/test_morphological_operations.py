@@ -61,18 +61,6 @@ def test_dilate_sphere(gpu_backend):
         )
     )
 
-    test_simple_box_expected = cle.push(
-        np.asarray(
-            [
-                [0, 0, 0, 0, 0],
-                [0, 1, 1, 1, 0],
-                [0, 1, 1, 1, 0],
-                [0, 1, 1, 1, 0],
-                [0, 0, 0, 0, 0],
-            ]
-        )
-    )
-
     test_simple_sphere_expected = cle.push(
         np.asarray(
             [

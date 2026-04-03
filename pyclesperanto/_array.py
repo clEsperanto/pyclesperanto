@@ -477,8 +477,8 @@ def from_dlpack(cls, dltensor, *, device=None, copy=None):
     # DLPack device type constants
     _DLPACK_DEVICE_CPU = 1
     _DLPACK_DEVICE_CUDA = 2
+    _DLPACK_DEVICE_OPENCL = 4
     _DLPACK_DEVICE_METAL = 8
-    _DLPACK_DEVICE_OPENCL = 7
 
     # get target device (default to current)
     target_device = device if device is not None else get_device()
@@ -502,13 +502,17 @@ def from_dlpack(cls, dltensor, *, device=None, copy=None):
     src_is_cpu = src_device_type == _DLPACK_DEVICE_CPU
 
     same_device = (
-        target_is_cuda and src_is_cuda and src_device_id == target_device.index)
+        (target_is_cuda and src_is_cuda and src_device_id == target_device.index)
         or (target_is_opencl and src_is_opencl and src_device_id == target_device.index)
         or (target_is_metal and src_is_metal and src_device_id == target_device.index)
+    )
 
+    # Metal zero-copy DLPack import is not yet supported in the C++ backend;
+    # force a copy through the host for Metal sources.
     needs_copy = (
         copy is True  # user forced copy
         or src_is_cpu  # source is CPU — always need to upload
+        or src_is_metal  # Metal zero-copy not yet supported
         or not same_device  # different GPU device
     )
 
@@ -519,14 +523,15 @@ def from_dlpack(cls, dltensor, *, device=None, copy=None):
         )
 
     if needs_copy or src_is_cpu:
-        # CPU path: materialise to numpy then upload
-        if src_is_cpu:
+        # Materialise to numpy then upload to target device
+        if hasattr(dltensor, "cpu"):
+            # PyTorch-like: move to CPU first, then convert
+            np_arr = np.asarray(dltensor.cpu())
+        elif hasattr(dltensor, "get"):
+            # cle Array or CuPy-like
+            np_arr = np.asarray(dltensor.get())
+        else:
             np_arr = np.from_dlpack(dltensor)
-            return cls.from_array(np_arr, device=target_device)
-
-        # GPU→GPU cross-device: export to numpy (host) then re-upload
-        # (no direct peer-to-peer via DLPack in cle yet)
-        np_arr = np.array(dltensor.get())  # triggers device→host copy via __array__
         return cls.from_array(np_arr, device=target_device)
 
     # Zero-copy path: same device, wrap the DLPack capsule directly

@@ -90,6 +90,24 @@ jobs:
           path: ./wheelhouse/*.whl
           name: artifacts-cuda-${{ matrix.os }}
 
+  build_metal_wheels:
+    name: build metal (${{ matrix.os }})
+    runs-on: macos-latest
+    if: github.event_name == 'release' || contains(github.event.pull_request.labels.*.name, 'ready-to-deploy')
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Build wheels
+        uses: pypa/cibuildwheel@v3.4.0
+        with:
+          package-dir: backends/metal
+        env:
+          CIBW_ARCHS_MACOS: x86_64 arm64
+
+      - uses: actions/upload-artifact@v7
+        with:
+
   # =========================================================================
   # Build pyclesperanto pure Python package (sdist + wheel)
   # =========================================================================

@@ -5,8 +5,8 @@ project(
   VERSION ${SKBUILD_PROJECT_VERSION}
   LANGUAGES CXX)
 
-# The compiled module is always _pyclesperanto, installed into pyclesperanto_opencl/
-set(PY_PACKAGE_NAME "pyclesperanto_opencl")
+# The compiled module is always _pyclesperanto, installed into pyclesperanto_metal/
+set(PY_PACKAGE_NAME "pyclesperanto_metal")
 set(CY_PACKAGE_NAME "_pyclesperanto")
 
 ## flags and options
@@ -36,7 +36,7 @@ string(REGEX MATCH "CLIC_VERSION = \"([^\"]+)\"" _ ${VERSION_FILE_CONTENT})
 set(CLIC_REPO_TAG "metal-cuda-backend")
 set(CLIC_REPO_URL "https://github.com/clEsperanto/CLIc.git")
 # if not set, set the default build type to Release
-set(CLE_BACKEND "OPENCL" CACHE STRING "Backend to use (CUDA or OCL)")
+set(CLE_BACKEND "METAL" CACHE STRING "Backend to use (CUDA or OCL)")
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/../../src/clic ${CMAKE_CURRENT_BINARY_DIR}/clic EXCLUDE_FROM_ALL)
 
 

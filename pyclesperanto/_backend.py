@@ -2,28 +2,32 @@ import warnings
 
 _opencl_module = None
 _cuda_module = None
+_metal_module = None
 _active_backend = None
 _backends_detected = False
 
 _BACKENDS = {
     "opencl": "pyclesperanto_opencl._pyclesperanto",
     "cuda": "pyclesperanto_cuda._pyclesperanto",
+    "metal": "pyclesperanto_metal._pyclesperanto",
 }
 
 _DIST_NAMES = {
     "opencl": "pyclesperanto-opencl",
     "cuda": "pyclesperanto-cuda",
+    "metal": "pyclesperanto-metal",
 }
 
 _MODULES = {
     "opencl": "_opencl_module",
     "cuda": "_cuda_module",
+    "metal": "_metal_module",
 }
 
 
 def _detect_backends():
     """Try importing each backend package. Only runs once."""
-    global _opencl_module, _cuda_module, _backends_detected
+    global _opencl_module, _cuda_module, _metal_module, _backends_detected
     if _backends_detected:
         return
     _backends_detected = True
@@ -33,8 +37,10 @@ def _detect_backends():
             mod = __import__(module_path, fromlist=[module_path.rsplit(".", 1)[-1]])
             if name == "opencl":
                 _opencl_module = mod
-            else:
+            elif name == "cuda":
                 _cuda_module = mod
+            elif name == "metal":
+                _metal_module = mod
         except ImportError as e:
             _warn_if_installed(name, e)
 
@@ -60,25 +66,28 @@ def _get_module(name):
         return _opencl_module
     if name == "cuda":
         return _cuda_module
+    if name == "metal":
+        return _metal_module
     return None
 
 
 def _get_backend():
     """Return the active compiled backend module.
 
-    Auto-selects on first call (prefers OpenCL, then CUDA).
+    Auto-selects on first call (prefers OpenCL, then CUDA, then Metal).
     Raises RuntimeError if no backend is available.
     """
     global _active_backend
     if _active_backend is None:
         _detect_backends()
-        _active_backend = _opencl_module or _cuda_module
+        _active_backend = _opencl_module or _cuda_module or _metal_module
         if _active_backend is None:
             raise RuntimeError(
                 "No pyclesperanto backend found.\n"
                 "Install one with:\n"
                 "  pip install pyclesperanto[opencl]\n"
                 "  pip install pyclesperanto[cuda]\n"
+                "  pip install pyclesperanto[metal]\n"
                 "  pip install pyclesperanto[all]"
             )
         # Activate the C++ side and patch Array for the auto-selected backend
@@ -90,11 +99,13 @@ def _get_backend():
 
 
 def get_backend_name() -> str:
-    """Return the name of the active backend ('opencl' or 'cuda'), or None."""
+    """Return the name of the active backend ('opencl' or 'cuda' or 'metal'), or None."""
     if _active_backend is _opencl_module and _opencl_module is not None:
         return "opencl"
     if _active_backend is _cuda_module and _cuda_module is not None:
         return "cuda"
+    if _active_backend is _metal_module and _metal_module is not None:
+        return "metal"
     return None
 
 

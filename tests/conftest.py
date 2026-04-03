@@ -36,6 +36,7 @@ def _get_available_backends():
         for name, module in [
             ("opencl", "pyclesperanto_opencl"),
             ("cuda", "pyclesperanto_cuda"),
+            ("metal", "pyclesperanto_metal"),
         ]:
             try:
                 __import__(module)

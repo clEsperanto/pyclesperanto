@@ -31,6 +31,7 @@ def _lazy_init():
             "Install one with:\n"
             "  pip install pyclesperanto[opencl]   # for OpenCL\n"
             "  pip install pyclesperanto[cuda]     # for CUDA\n"
+            "  pip install pyclesperanto[metal]    # for Metal\n"
             "  pip install pyclesperanto[all]      # for both",
             RuntimeWarning,
         )

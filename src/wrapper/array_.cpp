@@ -23,7 +23,7 @@ static int get_dlpack_device_type(const cle::Array::Pointer & array)
     {
         case cle::Device::Type::CUDA:   return kDLCUDA;
         case cle::Device::Type::OPENCL: return kDLOpenCL;
-        case cle::Device::Type::METAL:  return kDLMetal; 
+        case cle::Device::Type::METAL:  return kDLMetal;
         default: throw std::runtime_error("Unsupported device type for DLPack");
     }
 }

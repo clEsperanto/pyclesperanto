@@ -92,8 +92,13 @@ jobs:
 
   build_metal_wheels:
     name: build metal (${{ matrix.os }})
-    runs-on: macos-latest
+    runs-on: ${{ matrix.os }}
     # if: github.event_name == 'release' || contains(github.event.pull_request.labels.*.name, 'ready-to-deploy')
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [macos-latest]
+        
     steps:
       - name: Checkout
         uses: actions/checkout@v6
@@ -134,7 +139,7 @@ jobs:
   # =========================================================================
   upload_all:
     name: publish (PyPI)
-    needs: [build_opencl_wheels, build_cuda_wheels, build_main]
+    needs: [build_opencl_wheels, build_cuda_wheels, build_metal_wheels, build_main]
     runs-on: ubuntu-latest
     if: success()
     steps:

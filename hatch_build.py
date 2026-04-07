@@ -25,8 +25,12 @@ class CustomMetadataHook(MetadataHookInterface):
             "cuda": [
                 f"pyclesperanto-cuda{op}{v}; sys_platform != 'darwin'",
             ],
+            "metal": [
+                f"pyclesperanto-metal{op}{v}; sys_platform == 'darwin'",
+            ],
             "all": [
                 f"pyclesperanto-opencl{op}{v}",
                 f"pyclesperanto-cuda{op}{v}; sys_platform != 'darwin'",
+                f"pyclesperanto-metal{op}{v}; sys_platform == 'darwin'",
             ],
         }

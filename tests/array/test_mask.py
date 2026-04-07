@@ -4,7 +4,6 @@ import pytest
 import pyclesperanto as cle
 
 
-@pytest.mark.backend
 def test_mask(gpu_backend):
     test1 = cle.push(
         np.asarray(

@@ -5,10 +5,10 @@ from typing import Callable, Optional, Union
 
 import numpy as np
 
-from ._array import Array, Image, to_device
+from ._array import Array, Image
 from ._backend import _get_backend
 from ._core import Device, get_device
-from ._memory import create, pull, push
+from ._memory import create, push
 
 
 def execute(

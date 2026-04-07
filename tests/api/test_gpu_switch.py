@@ -3,9 +3,9 @@ import pytest
 
 import pyclesperanto as cle
 
-
 # this test may only work on a machine with multiple GPUs
-@pytest.mark.backend
+
+
 def test_gpu_switch(gpu_backend):
     image = np.random.random((100, 100))
 

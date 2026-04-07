@@ -1,6 +1,11 @@
 import warnings
 
-from ._array import Array, Image, _patch_array_class, is_image
+from ._array import (
+    Array,
+    Image,
+    _patch_array_class,
+    is_image,
+)
 from ._backend import (
     _get_backend,
     get_backend_name,
@@ -26,6 +31,7 @@ def _lazy_init():
             "Install one with:\n"
             "  pip install pyclesperanto[opencl]   # for OpenCL\n"
             "  pip install pyclesperanto[cuda]     # for CUDA\n"
+            "  pip install pyclesperanto[metal]    # for Metal\n"
             "  pip install pyclesperanto[all]      # for both",
             RuntimeWarning,
         )
@@ -55,7 +61,20 @@ if _backend_available:
     )
     from ._execute import evaluate, execute, native_execute
     from ._functionalities import imshow, operation, operations
-    from ._memory import create, create_like, pull, push
+    from ._memory import (
+        create,
+        create_like,
+        empty,
+        empty_like,
+        from_array,
+        from_dlpack,
+        ones,
+        ones_like,
+        pull,
+        push,
+        zeros,
+        zeros_like,
+    )
     from ._tier1 import *
     from ._tier2 import *
     from ._tier3 import *

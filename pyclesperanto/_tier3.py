@@ -398,7 +398,7 @@ def histogram(
     device: Optional[Device] = None,
 ) -> Image:
     """Determines the histogram of a given image. The histogram image has dimensions
-    number_of_bins × 1 × 1 (a 3D image with height = 1 and depth = 1). Histogram
+    number_of_bins x 1 x 1 (a 3D image with height = 1 and depth = 1). Histogram
     bins contain the number of pixels with intensity in the corresponding bin. The
     bins are uniformly distributed between the given minimum and maximum gray-value
     intensities. If the flag determine_min_max is set, the minimum and maximum

@@ -1,0 +1,65 @@
+# =============================================================================
+# Build System Configuration
+# =============================================================================
+
+[build-system]
+build-backend = "scikit_build_core.build"
+requires = ["wheel", "scikit-build-core", "pybind11"]
+
+[tool.scikit-build]
+build-dir = "build/{wheel_tag}"
+
+[tool.scikit-build.ninja]
+make-fallback = false
+
+[tool.scikit-build.cmake]
+build-type = "Release"
+
+[tool.scikit-build.metadata.version]
+provider = "scikit_build_core.metadata.regex"
+input = "../../pyclesperanto/_version.py"
+regex = 'VERSION = "(?P<value>[0-9]+\.[0-9]+\.[0-9]+[a-z0-9.]*)"'
+
+[tool.scikit-build.sdist]
+exclude = [".git*"]
+
+# =============================================================================
+# Package Metadata
+# =============================================================================
+
+[project]
+authors = [
+  { name = "Stephane Rigaud", email = "stephane.rigaud@pasteur.fr" },
+  { name = "Robert Haase", email = "robert.haase@uni-leipzig.de" },
+]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Programming Language :: C++",
+  "Programming Language :: Python :: 3",
+  "License :: OSI Approved :: BSD License",
+  "Operating System :: OS Independent",
+  "Intended Audience :: Science/Research",
+  "Intended Audience :: Developers",
+  "Topic :: Scientific/Engineering :: Image Processing",
+]
+description = "Metal backend for pyclesperanto, a Python library for GPU-accelerated image processing"
+name = "pyclesperanto-metal"
+requires-python = ">=3.8"
+dynamic = ["version"]
+license = { file = "../../LICENSE" }
+keywords = ["image processing", "GPU", "Metal", "scientific computing"]
+
+# =============================================================================
+# cibuildwheel Configuration
+# =============================================================================
+
+[tool.cibuildwheel]
+build = ["cp38-*", "cp39-*", "cp310-*", "cp311-*", "cp312-*", "cp313-*", "cp314-*"]
+skip = ["*-win32", "*-musllinux*", "*_i686", "*_universal2", "*-win64", "*-manylinux*"]
+build-frontend = "build"
+build-verbosity = 1
+test-command = "python -c \"import pyclesperanto_metal; print('Metal backend OK')\""
+
+[tool.cibuildwheel.macos]
+archs = ["arm64", "x86_64"]
+environment = { MACOSX_DEPLOYMENT_TARGET = '11.0' }

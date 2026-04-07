@@ -4,7 +4,6 @@ import pytest
 import pyclesperanto as cle
 
 
-@pytest.mark.backend
 def test_reduce_labels_to_label_edges(gpu_backend):
     test = np.asarray(
         [

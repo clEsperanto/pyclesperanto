@@ -21,7 +21,6 @@ def block_enum(source, blocksize):
     return cle.pull(new_indices)
 
 
-@pytest.mark.backend
 def test_block_enumerate(gpu_backend):
     result = block_enum(source, 4)
     print(result)

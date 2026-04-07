@@ -25,7 +25,8 @@ import pyclesperanto as cle
 
 
 # make a test for matrix multiplication
-@pytest.mark.backend
+
+
 def test_multiply_matrix(gpu_backend):
     matrix_a = np.random.rand(3, 3).astype("float32")
     matrix_b = np.random.rand(3, 3).astype("float32")

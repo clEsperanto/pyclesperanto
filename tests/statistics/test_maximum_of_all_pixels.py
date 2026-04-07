@@ -4,7 +4,6 @@ import pytest
 import pyclesperanto as cle
 
 
-@pytest.mark.backend
 def test_maximum_of_all_pixels(gpu_backend):
     np_input = np.asarray(
         [
@@ -24,7 +23,6 @@ def test_maximum_of_all_pixels(gpu_backend):
     assert result == 15
 
 
-@pytest.mark.backend
 def test_maximum_of_all_pixels_against_numpy(gpu_backend):
     from skimage.data import camera
 

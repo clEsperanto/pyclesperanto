@@ -4,7 +4,6 @@ import pytest
 import pyclesperanto as cle
 
 
-@pytest.mark.backend
 def test_generate_binary_overlap_matrix_2d(gpu_backend):
     gpu_input1 = cle.push(
         np.asarray(
@@ -47,7 +46,6 @@ def test_generate_binary_overlap_matrix_2d(gpu_backend):
     assert np.allclose(a, b, 0.01)
 
 
-@pytest.mark.backend
 def test_generate_binary_overlap_matrix_3d(gpu_backend):
     gpu_input1 = cle.push(
         np.asarray(

@@ -151,18 +151,13 @@ def info():
 def _default_initialisation():
     """Select a default device on the active backend."""
     try:
-        # The C++ BackendManager must be told which backend to use
-        # before any device can be selected.
-        backend_mod = _get_backend()
-        backend_name = getattr(
-            __import__(backend_mod.__name__.rsplit(".", 1)[0]),
-            "__backend__",
-            None,
-        )
+        from ._backend import get_backend_name
+
+        backend_name = get_backend_name()
         if backend_name is None:
-            # Fallback: infer from module name
-            pkg = backend_mod.__name__.rsplit(".", 1)[0]  # e.g. "pyclesperanto_opencl"
-            backend_name = pkg.replace("pyclesperanto_", "")  # e.g. "opencl"
+            # _get_backend() triggers auto-selection; then re-read the name
+            _get_backend()
+            backend_name = get_backend_name()
         _get_backend_manager().set_backend(backend_name)
         select_device()
     except Exception as e:

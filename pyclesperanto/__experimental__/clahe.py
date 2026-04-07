@@ -45,7 +45,7 @@ def clahe(
         The processed image.
     """
 
-    input_image = Array.to_device(input_image)
+    input_image = Array.from_array(input_image)
     output_image = Array.empty_like(input_image)
     minimum_intensity = (
         minimum_of_all_pixels(input_image)

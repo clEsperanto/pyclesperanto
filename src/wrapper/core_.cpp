@@ -14,11 +14,13 @@ auto core_(pybind11::module_ &m) -> void
 {
     py::enum_<cle::Backend::Type>(m, "_BackendType", py::module_local())
         .value("OpenCL", cle::Backend::Type::OPENCL)
-        .value("CUDA", cle::Backend::Type::CUDA);
+        .value("CUDA", cle::Backend::Type::CUDA)
+        .value("Metal", cle::Backend::Type::METAL);
 
     py::enum_<cle::Device::Type>(m, "_DeviceType", py::module_local())
         .value("OpenCL", cle::Device::Type::OPENCL)
-        .value("CUDA", cle::Device::Type::CUDA);
+        .value("CUDA", cle::Device::Type::CUDA)
+        .value("Metal", cle::Device::Type::METAL);
 
     py::class_<cle::Device, std::shared_ptr<cle::Device>>(m, "_Device", py::module_local())
         // .def_property_readonly("name", &cle::Device::getName, py::arg("lowercase"))
@@ -26,6 +28,7 @@ auto core_(pybind11::module_ &m) -> void
                                { return device.getName(false); })
         .def_property_readonly("info", &cle::Device::getInfo)
         .def_property_readonly("type", &cle::Device::getType)
+        .def_property_readonly("index", &cle::Device::getDeviceIndex)
         .def("set_wait_to_finish", &cle::Device::setWaitToFinish)
         .def("__str__", [](const cle::Device &device)
              {

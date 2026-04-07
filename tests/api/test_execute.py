@@ -34,7 +34,6 @@ __kernel void add_arrays(__global const float* a, __global const float* b, __glo
 """
 
 
-@pytest.mark.backend
 def test_execute_native_from_file(gpu_backend):
     input1 = cle.push(np.ones(10).astype(float))
     input2 = cle.push(np.ones(10).astype(float) * 2)
@@ -58,7 +57,6 @@ def test_execute_native_from_file(gpu_backend):
     assert np.mean(a) == 3
 
 
-@pytest.mark.backend
 def test_execute_absolute_from_file(gpu_backend):
     input = cle.push(np.asarray([[1, -1], [1, -1]]).astype(float))
     output = cle.create(input)
@@ -80,7 +78,6 @@ def test_execute_absolute_from_file(gpu_backend):
     assert np.mean(a) == 1
 
 
-@pytest.mark.backend
 def test_execute_native(gpu_backend):
     input1 = cle.push(np.ones(10).astype(float))
     input2 = cle.push(np.ones(10).astype(float) * 2)
@@ -103,7 +100,6 @@ def test_execute_native(gpu_backend):
     assert np.mean(a) == 3
 
 
-@pytest.mark.backend
 def test_execute_absolute(gpu_backend):
     input = cle.push(np.asarray([[1, -1], [1, -1]]).astype(float))
     output = cle.create(input)

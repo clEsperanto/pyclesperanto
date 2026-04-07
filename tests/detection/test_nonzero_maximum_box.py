@@ -4,7 +4,6 @@ import pytest
 import pyclesperanto as cle
 
 
-@pytest.mark.backend
 def test_nonzero_maximum_box(gpu_backend):
     test = cle.push(
         np.asarray(

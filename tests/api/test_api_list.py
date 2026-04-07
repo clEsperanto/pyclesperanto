@@ -3,7 +3,6 @@ import pytest
 import pyclesperanto as cle
 
 
-@pytest.mark.backend
 def test_operations(gpu_backend):
 
     ops_list = cle.operations(must_have_categories=["filter"])

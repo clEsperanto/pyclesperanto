@@ -59,7 +59,7 @@ pattern = 'VERSION = "(?P<version>[0-9]+\.[0-9]+\.[0-9]+[a-z0-9.]*)"'
 # =============================================================================
 
 [tool.pytest.ini_options]
-addopts = "-ra -q"
+addopts = "-ra"
 testpaths = ["tests"]
 
 [tool.isort]

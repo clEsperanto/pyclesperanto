@@ -3,6 +3,8 @@
 
 #include "array.hpp"
 #include "utils.hpp"
+#include "device.hpp"
+#include "dlpack/dlpack.h"
 
 #include <pybind11/functional.h>
 #include <pybind11/numpy.h>
@@ -10,6 +12,21 @@
 #include <pybind11/stl.h>
 
 namespace py = pybind11;
+
+
+// dlpack device type mapping function
+static int get_dlpack_device_type(const cle::Array::Pointer & array)
+{
+    auto dev_type = array->device()->getType(); // returns DeviceType enum
+    // adjust to your DeviceType enum values
+    switch (dev_type)
+    {
+        case cle::Device::Type::CUDA:   return kDLCUDA;
+        case cle::Device::Type::OPENCL: return kDLOpenCL;
+        case cle::Device::Type::METAL:  return kDLMetal;
+        default: throw std::runtime_error("Unsupported device type for DLPack");
+    }
+}
 
 // function that takes a py tuple or list, invert it, and store it in a std::array of size 3
 // if the tuple or list is smaller than 3, the remaining values are set to 0
@@ -254,7 +271,9 @@ auto array_(py::module_ &m) -> void
          .def("_read_uint16", &read_region<uint16_t>, py::return_value_policy::move, py::arg("origin") = py::none(), py::arg("region") = py::none())
          .def("_read_uint32", &read_region<uint32_t>, py::return_value_policy::move, py::arg("origin") = py::none(), py::arg("region") = py::none())
 
+
          .def("copy", &copy_region, py::arg("dst"), py::arg("src_origin") = py::none(), py::arg("dst_origin") = py::none(), py::arg("region") = py::none())
+         .def("reshape", &cle::Array::reshape, py::arg("width") =1, py::arg("height") =1, py::arg("depth") =1, py::arg("dimension") = 0)
          .def("fill", &cle::Array::fill, py::arg("value"))
 
          .def_property_readonly("width", &cle::Array::width)
@@ -279,5 +298,74 @@ auto array_(py::module_ &m) -> void
                return array->depth();
           default:
                throw std::invalid_argument("Invalid dimension value");
-          } });
+          } })
+
+
+          .def("_dlpack", [](const cle::Array::Pointer &arr, py::object stream, py::tuple version) {
+
+               if (arr->mtype() == cle::mType::IMAGE)
+                         throw std::runtime_error("DLPack export not supported for IMAGE memory type");
+
+               // stream sync handling:
+               int64_t stream_val = stream.is_none() ? 0 : stream.cast<int64_t>();
+               arr->syncToStream(stream_val);
+
+               // version handling: for now we only support 1.0
+               // toDLPack return a DLManagedTensorVersioned
+               auto * managed = arr->toDLPack();
+
+               // we return a capsule with name "dltensor_versioned", and a custom destructor
+               return py::capsule(managed, "dltensor_versioned", [](PyObject *obj)
+               {
+                    // Check the capsule's current name:
+                    //  - "dltensor_versioned"      → nobody consumed it, WE must clean up
+                    //  - "used_dltensor_versioned"  → consumer took ownership, do nothing
+                    const char *name = PyCapsule_GetName(obj);
+                    if (name && std::strcmp(name, "dltensor_versioned") == 0)
+                    {
+                         auto *m = static_cast<DLManagedTensorVersioned *>(
+                              PyCapsule_GetPointer(obj, "dltensor_versioned"));
+                         if (m) m->deleter(m);
+                    }
+               });
+               }, py::arg("stream") = py::none(), py::arg("version") = py::make_tuple(1, 0))
+
+
+          .def("_dlpack_device",
+               [](const cle::Array::Pointer & arr) -> py::tuple
+               {
+                    return py::make_tuple( // avoid creating a DLManagedTensor just to get device info
+                         get_dlpack_device_type(arr),
+                         arr->device()->getDeviceIndex()  // device index / ordinal
+                    );
+               })
+
+          .def_static("_from_dlpack", [](py::object capsule_or_tensor, cle::Device::Pointer device) {
+               py::object capsule;
+               if (py::hasattr(capsule_or_tensor, "__dlpack__")) {
+                    capsule = capsule_or_tensor.attr("__dlpack__")(py::arg("max_version") = py::make_tuple(1, 0));
+               } else {
+                    capsule = capsule_or_tensor;
+               }
+
+               void * ptr = PyCapsule_GetPointer(capsule.ptr(), "dltensor_versioned");
+               if (!ptr) {
+                    PyErr_Clear();
+                    throw std::runtime_error("Invalid DLPack capsule: expected 'dltensor_versioned'");
+               }
+
+               auto * managed = static_cast<DLManagedTensorVersioned *>(ptr);
+
+               // check the dtype as we do not support 64bit (int64 or uint64 or float64)
+               if (managed->dl_tensor.dtype.bits == 64) {
+                    throw std::runtime_error("DLPack export not supported for 64-bit dtypes, as cle does not support them. Consumer should cast to a supported dtype before exporting to DLPack.");
+               }
+
+
+               auto array = cle::Array::fromDLPack(managed, device);
+               PyCapsule_SetName(capsule.ptr(), "used_dltensor_versioned");
+               return array;
+               }, py::arg("capsule_or_tensor"), py::arg("device"));
+
+
 }

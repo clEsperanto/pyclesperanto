@@ -8,7 +8,6 @@ import pyclesperanto as cle
 # ============================================================================
 
 
-@pytest.mark.backend
 def test_binary_and_1(gpu_backend):
     test = cle.push(np.asarray([[1, 0], [1, 0]]))
 
@@ -25,7 +24,6 @@ def test_binary_and_1(gpu_backend):
     assert np.mean(a) == 0.25
 
 
-@pytest.mark.backend
 def test_binary_and_2(gpu_backend):
     a = np.asarray([[1, 0], [1, 0]])
     b = np.asarray([[1, 1], [0, 0]])
@@ -43,7 +41,6 @@ def test_binary_and_2(gpu_backend):
 # ============================================================================
 
 
-@pytest.mark.backend
 def test_binary_or(gpu_backend):
     test = cle.push(np.asarray([[1, 0], [1, 0]]))
 
@@ -65,7 +62,6 @@ def test_binary_or(gpu_backend):
 # ============================================================================
 
 
-@pytest.mark.backend
 def test_binary_xor(gpu_backend):
     test = cle.push(np.asarray([[1, 0], [1, 0]]))
 
@@ -87,7 +83,6 @@ def test_binary_xor(gpu_backend):
 # ============================================================================
 
 
-@pytest.mark.backend
 def test_binary_not(gpu_backend):
     test1 = cle.push(np.asarray([[1, 1], [1, 0]]))
 
@@ -106,7 +101,6 @@ def test_binary_not(gpu_backend):
 # ============================================================================
 
 
-@pytest.mark.backend
 def test_binary_subtract(gpu_backend):
     test = cle.push(np.asarray([[1, 0], [1, 0]]))
 
@@ -128,7 +122,6 @@ def test_binary_subtract(gpu_backend):
 # ============================================================================
 
 
-@pytest.mark.backend
 def test_binary_edge_detection(gpu_backend):
     test1 = cle.push(
         np.asarray(

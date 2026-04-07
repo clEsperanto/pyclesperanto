@@ -4,7 +4,6 @@ import pytest
 import pyclesperanto as cle
 
 
-@pytest.mark.backend
 def test_maximum_images(gpu_backend):
     test1 = cle.push(
         np.asarray(
@@ -51,7 +50,6 @@ def test_maximum_images(gpu_backend):
     assert np.array_equal(a, b)
 
 
-@pytest.mark.backend
 def test_maximum_images_with_types(gpu_backend):
     import numpy as np
 

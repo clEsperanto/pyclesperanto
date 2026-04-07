@@ -55,7 +55,7 @@ keywords = ["image processing", "GPU", "CUDA", "scientific computing"]
 # =============================================================================
 
 [tool.cibuildwheel]
-build = ["cp38-*", "cp39-*", "cp310-*", "cp311-*", "cp312-*", "cp313-*"]
+build = ["cp38-*", "cp39-*", "cp310-*", "cp311-*", "cp312-*", "cp313-*", "cp314-*"]
 skip = ["*-win32", "*-musllinux*", "*_i686", "*_universal2", "*-macosx*"]
 build-frontend = "build"
 build-verbosity = 1
@@ -66,27 +66,22 @@ test-command = "python -c \"from importlib.metadata import distribution; files =
 [tool.cibuildwheel.linux]
 before-all = "bash {package}/../../scripts/build-cuda-linux.sh"
 manylinux-x86_64-image = "manylinux_2_28"
-# Build-time environment (stubs needed for linking without GPU)
-environment = { CUDA_HOME = "/usr/local/cuda", PATH = "/usr/local/cuda/bin:$PATH", LD_LIBRARY_PATH = "/usr/local/cuda/lib64:/usr/local/cuda/lib64/stubs:$LD_LIBRARY_PATH", SKBUILD_CMAKE_ARGS = "-DCLE_BACKEND=CUDA"}
-# Repair-time: override LD_LIBRARY_PATH to REMOVE stubs, exclude driver libs
+environment = { CUDA_HOME = "/usr/local/cuda", PATH = "/usr/local/cuda/bin:$PATH", LD_LIBRARY_PATH = "/usr/local/cuda/lib64:/usr/local/cuda/lib64/stubs:$LD_LIBRARY_PATH", SKBUILD_CMAKE_ARGS = "-DCLE_BACKEND=CUDA" }
 repair-wheel-command = """
-  LD_LIBRARY_PATH=/usr/local/cuda/lib64 \
-  auditwheel show {wheel} && \
   LD_LIBRARY_PATH=/usr/local/cuda/lib64 \
   auditwheel repair \
     --lib-sdir .libs \
     --exclude libcuda.so.1 \
     --exclude libnvidia-ml.so.1 \
     --exclude libnvidia-ptxjitcompiler.so.1 \
-    -w {dest_dir} {wheel}
+    -w {dest_dir} {wheel} && \
+  bash {package}/../../scripts/repair-nvrtc-linux.sh {dest_dir}
 """
 
-## IMPORTANT: cuda version must match the one used to build the wheel
-## Current version is 12.6
 [tool.cibuildwheel.windows]
 before-build = "pip install delvewheel"
-environment = { SKBUILD_CMAKE_ARGS = "-DCLE_BACKEND=CUDA", CUDA_HOME = "C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v12.6", CUDA_PATH = "C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v12.6", PATH = "C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v12.6\\bin;$PATH"}
-repair-wheel-command = "delvewheel show {wheel} && delvewheel repair --add-path \"C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v12.6/bin\" --no-dll \"nvcuda.dll;msvcp140.dll;vcruntime140_1.dll;vcruntime140.dll\" -w {dest_dir} {wheel}"
+environment = { SKBUILD_CMAKE_ARGS = "-DCLE_BACKEND=CUDA" }
+repair-wheel-command = "bash {package}/../../scripts/repair-cuda-windows.sh {dest_dir} {wheel}"
 
 [tool.cibuildwheel.macos]
 # CUDA is not supported on macOS — builds are skipped via the skip pattern above

@@ -4,7 +4,6 @@ import pytest
 import pyclesperanto as cle
 
 
-@pytest.mark.backend
 def test_modulo_images(gpu_backend):
     test = [[2, 5], [2, 3]]
     test_div = [[2, 2], [2, 2]]

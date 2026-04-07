@@ -153,15 +153,15 @@ jobs:
           path: dist
           merge-multiple: true
 
-      # TestPyPI on PR with 'ready-to-deploy' label
-      - name: Publish to TestPyPI
-        if: github.event_name == 'pull_request'
-        uses: pypa/gh-action-pypi-publish@v1.13.0
-        with:
-          password: ${{ secrets.TEST_PYPI_TOKEN }}
-          repository-url: https://test.pypi.org/legacy/
-          skip-existing: true
-          verbose: true
+      # # TestPyPI on PR with 'ready-to-deploy' label
+      # - name: Publish to TestPyPI
+      #   if: github.event_name == 'pull_request'
+      #   uses: pypa/gh-action-pypi-publish@v1.13.0
+      #   with:
+      #     password: ${{ secrets.TEST_PYPI_TOKEN }}
+      #     repository-url: https://test.pypi.org/legacy/
+      #     skip-existing: true
+      #     verbose: true
 
       # Real PyPI on release
       - name: Publish to PyPI

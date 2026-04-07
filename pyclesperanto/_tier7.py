@@ -17,11 +17,11 @@ from ._decorators import plugin_function
 @plugin_function
 def affine_transform(
     input_image: Image,
-    output_image: Optional[Image] = None,
-    transform_matrix: Optional[list] = None,
-    interpolate: bool = False,
-    resize: bool = False,
-    device: Optional[Device] = None,
+    output_image: Optional[Image] =None,
+    transform_matrix: Optional[list] =None,
+    interpolate: bool =False,
+    resize: bool =False,
+    device: Optional[Device] =None
 ) -> Image:
     """Applies an affine transformation matrix to an array and returns the result.  The
     transformation matrix must be 3×3 or 4×4, stored as a 1D array.  The matrix
@@ -30,7 +30,7 @@ def affine_transform(
 
     Parameters
     ----------
-    input_image: Image
+    input_image: Image 
         Input image to be transformed.
     output_image: Optional[Image] (= None)
         Output image.
@@ -47,18 +47,15 @@ def affine_transform(
     -------
     Image
     """
-    return _get_backend()._affine_transform(
-        device, input_image, output_image, transform_matrix, interpolate, resize
-    )
-
+    return _get_backend()._affine_transform(device, input_image, output_image, transform_matrix, interpolate, resize)
 
 @plugin_function(categories=["label", "in assistant"])
 def eroded_otsu_labeling(
     input_image: Image,
-    output_image: Optional[Image] = None,
-    number_of_erosions: int = 5,
-    outline_sigma: float = 2,
-    device: Optional[Device] = None,
+    output_image: Optional[Image] =None,
+    number_of_erosions: int =5,
+    outline_sigma: float =2,
+    device: Optional[Device] =None
 ) -> Image:
     """Segments and labels an image using blurring, Otsu thresholding, binary erosion,
     and  masked Voronoi labeling.  After blurring and Otsu thresholding the image,
@@ -72,7 +69,7 @@ def eroded_otsu_labeling(
 
     Parameters
     ----------
-    input_image: Image
+    input_image: Image 
         Input image to be transformed.
     output_image: Optional[Image] (= None)
         Output label image.
@@ -92,25 +89,22 @@ def eroded_otsu_labeling(
     [1] https://github.com/biovoxxel/bv3dbox
     [2] https://zenodo.org/badge/latestdoi/434949702
     """
-    return _get_backend()._eroded_otsu_labeling(
-        device, input_image, output_image, int(number_of_erosions), float(outline_sigma)
-    )
-
+    return _get_backend()._eroded_otsu_labeling(device, input_image, output_image, int(number_of_erosions), float(outline_sigma))
 
 @plugin_function(categories=["transform", "in assistant"])
 def rigid_transform(
     input_image: Image,
-    output_image: Optional[Image] = None,
-    translate_x: float = 0,
-    translate_y: float = 0,
-    translate_z: float = 0,
-    angle_x: float = 0,
-    angle_y: float = 0,
-    angle_z: float = 0,
-    centered: bool = True,
-    interpolate: bool = False,
-    resize: bool = False,
-    device: Optional[Device] = None,
+    output_image: Optional[Image] =None,
+    translate_x: float =0,
+    translate_y: float =0,
+    translate_z: float =0,
+    angle_x: float =0,
+    angle_y: float =0,
+    angle_z: float =0,
+    centered: bool =True,
+    interpolate: bool =False,
+    resize: bool =False,
+    device: Optional[Device] =None
 ) -> Image:
     """Translates the image by a given vector and rotates it by given angles. Angles
     are given in radians. To convert degrees to radians, use this formula:
@@ -118,7 +112,7 @@ def rigid_transform(
 
     Parameters
     ----------
-    input_image: Image
+    input_image: Image 
         Input image to be transformed.
     output_image: Optional[Image] (= None)
         Output image.
@@ -147,33 +141,19 @@ def rigid_transform(
     -------
     Image
     """
-    return _get_backend()._rigid_transform(
-        device,
-        input_image,
-        output_image,
-        float(translate_x),
-        float(translate_y),
-        float(translate_z),
-        float(angle_x),
-        float(angle_y),
-        float(angle_z),
-        centered,
-        interpolate,
-        resize,
-    )
-
+    return _get_backend()._rigid_transform(device, input_image, output_image, float(translate_x), float(translate_y), float(translate_z), float(angle_x), float(angle_y), float(angle_z), centered, interpolate, resize)
 
 @plugin_function(categories=["transform", "in assistant"])
 def rotate(
     input_image: Image,
-    output_image: Optional[Image] = None,
-    angle_x: float = 0,
-    angle_y: float = 0,
-    angle_z: float = 0,
-    centered: bool = True,
-    interpolate: bool = False,
-    resize: bool = False,
-    device: Optional[Device] = None,
+    output_image: Optional[Image] =None,
+    angle_x: float =0,
+    angle_y: float =0,
+    angle_z: float =0,
+    centered: bool =True,
+    interpolate: bool =False,
+    resize: bool =False,
+    device: Optional[Device] =None
 ) -> Image:
     """Rotates the image by given angles. Angles are given in degrees. To convert
     radians to degrees, use this formula: angle_in_degrees = angle_in_radians ×
@@ -181,7 +161,7 @@ def rotate(
 
     Parameters
     ----------
-    input_image: Image
+    input_image: Image 
         Input image to be rotated.
     output_image: Optional[Image] (= None)
         Output image.
@@ -204,36 +184,25 @@ def rotate(
     -------
     Image
     """
-    return _get_backend()._rotate(
-        device,
-        input_image,
-        output_image,
-        float(angle_x),
-        float(angle_y),
-        float(angle_z),
-        centered,
-        interpolate,
-        resize,
-    )
-
+    return _get_backend()._rotate(device, input_image, output_image, float(angle_x), float(angle_y), float(angle_z), centered, interpolate, resize)
 
 @plugin_function(categories=["transform", "in assistant"])
 def scale(
     input_image: Image,
-    output_image: Optional[Image] = None,
-    factor_x: float = 1,
-    factor_y: float = 1,
-    factor_z: float = 1,
-    centered: bool = True,
-    interpolate: bool = False,
-    resize: bool = False,
-    device: Optional[Device] = None,
+    output_image: Optional[Image] =None,
+    factor_x: float =1,
+    factor_y: float =1,
+    factor_z: float =1,
+    centered: bool =True,
+    interpolate: bool =False,
+    resize: bool =False,
+    device: Optional[Device] =None
 ) -> Image:
     """Scales the image by given factors.
 
     Parameters
     ----------
-    input_image: Image
+    input_image: Image 
         Input image to be scaled.
     output_image: Optional[Image] (= None)
         Output image.
@@ -256,34 +225,23 @@ def scale(
     -------
     Image
     """
-    return _get_backend()._scale(
-        device,
-        input_image,
-        output_image,
-        float(factor_x),
-        float(factor_y),
-        float(factor_z),
-        centered,
-        interpolate,
-        resize,
-    )
-
+    return _get_backend()._scale(device, input_image, output_image, float(factor_x), float(factor_y), float(factor_z), centered, interpolate, resize)
 
 @plugin_function(categories=["transform", "in assistant"])
 def translate(
     input_image: Image,
-    output_image: Optional[Image] = None,
-    translate_x: float = 0,
-    translate_y: float = 0,
-    translate_z: float = 0,
-    interpolate: bool = False,
-    device: Optional[Device] = None,
+    output_image: Optional[Image] =None,
+    translate_x: float =0,
+    translate_y: float =0,
+    translate_z: float =0,
+    interpolate: bool =False,
+    device: Optional[Device] =None
 ) -> Image:
     """Translates the image by a given vector.
 
     Parameters
     ----------
-    input_image: Image
+    input_image: Image 
         Input image to be translated.
     output_image: Optional[Image] (= None)
         Output image.
@@ -302,34 +260,25 @@ def translate(
     -------
     Image
     """
-    return _get_backend()._translate(
-        device,
-        input_image,
-        output_image,
-        float(translate_x),
-        float(translate_y),
-        float(translate_z),
-        interpolate,
-    )
-
+    return _get_backend()._translate(device, input_image, output_image, float(translate_x), float(translate_y), float(translate_z), interpolate)
 
 @plugin_function
 def deskew_x(
     input_image: Image,
-    output_image: Optional[Image] = None,
-    angle: float = 30,
-    voxel_size_x: float = 1.0,
-    voxel_size_y: float = 1.0,
-    voxel_size_z: float = 1.0,
-    scale_factor: float = 1.0,
-    device: Optional[Device] = None,
+    output_image: Optional[Image] =None,
+    angle: float =30,
+    voxel_size_x: float =1.0,
+    voxel_size_y: float =1.0,
+    voxel_size_z: float =1.0,
+    scale_factor: float =1.0,
+    device: Optional[Device] =None
 ) -> Image:
     """Deskews a volume as acquired with oblique plane light-sheet microscopy with skew
     in the x direction.
 
     Parameters
     ----------
-    input_image: Image
+    input_image: Image 
         Input image to be deskewed.
     output_image: Optional[Image] (= None)
         Output image.
@@ -350,35 +299,25 @@ def deskew_x(
     -------
     Image
     """
-    return _get_backend()._deskew_x(
-        device,
-        input_image,
-        output_image,
-        float(angle),
-        float(voxel_size_x),
-        float(voxel_size_y),
-        float(voxel_size_z),
-        float(scale_factor),
-    )
-
+    return _get_backend()._deskew_x(device, input_image, output_image, float(angle), float(voxel_size_x), float(voxel_size_y), float(voxel_size_z), float(scale_factor))
 
 @plugin_function
 def deskew_y(
     input_image: Image,
-    output_image: Optional[Image] = None,
-    angle: float = 30,
-    voxel_size_x: float = 1.0,
-    voxel_size_y: float = 1.0,
-    voxel_size_z: float = 1.0,
-    scale_factor: float = 1.0,
-    device: Optional[Device] = None,
+    output_image: Optional[Image] =None,
+    angle: float =30,
+    voxel_size_x: float =1.0,
+    voxel_size_y: float =1.0,
+    voxel_size_z: float =1.0,
+    scale_factor: float =1.0,
+    device: Optional[Device] =None
 ) -> Image:
     """Deskews a volume as acquired with oblique plane light-sheet microscopy with skew
     in the y direction.
 
     Parameters
     ----------
-    input_image: Image
+    input_image: Image 
         Input image to be deskewed.
     output_image: Optional[Image] (= None)
         Output image.
@@ -399,24 +338,14 @@ def deskew_y(
     -------
     Image
     """
-    return _get_backend()._deskew_y(
-        device,
-        input_image,
-        output_image,
-        float(angle),
-        float(voxel_size_x),
-        float(voxel_size_y),
-        float(voxel_size_z),
-        float(scale_factor),
-    )
-
+    return _get_backend()._deskew_y(device, input_image, output_image, float(angle), float(voxel_size_x), float(voxel_size_y), float(voxel_size_z), float(scale_factor))
 
 @plugin_function(categories=["label processing", "in assistant"])
 def closing_labels(
     input_image: Image,
-    output_image: Optional[Image] = None,
-    radius: int = 0,
-    device: Optional[Device] = None,
+    output_image: Optional[Image] =None,
+    radius: int =0,
+    device: Optional[Device] =None
 ) -> Image:
     """Applies a morphological closing operation to a label image. The operation
     consists of iterative dilation and erosion of the labels. With every iteration,
@@ -426,7 +355,7 @@ def closing_labels(
 
     Parameters
     ----------
-    input_image: Image
+    input_image: Image 
         Input label image.
     output_image: Optional[Image] (= None)
         Output label image.
@@ -439,17 +368,14 @@ def closing_labels(
     -------
     Image
     """
-    return _get_backend()._closing_labels(
-        device, input_image, output_image, int(radius)
-    )
-
+    return _get_backend()._closing_labels(device, input_image, output_image, int(radius))
 
 @plugin_function(categories=["label processing", "in assistant"])
 def erode_connected_labels(
     input_image: Image,
-    output_image: Optional[Image] = None,
-    radius: int = 1,
-    device: Optional[Device] = None,
+    output_image: Optional[Image] =None,
+    radius: int =1,
+    device: Optional[Device] =None
 ) -> Image:
     """Erodes labels to a smaller size. Note: Depending on the label image and the
     radius,  labels may disappear and labels may split into multiple islands. Thus,
@@ -457,7 +383,7 @@ def erode_connected_labels(
 
     Parameters
     ----------
-    input_image: Image
+    input_image: Image 
         Input image to process.
     output_image: Optional[Image] (= None)
         Output label image.
@@ -470,17 +396,14 @@ def erode_connected_labels(
     -------
     Image
     """
-    return _get_backend()._erode_connected_labels(
-        device, input_image, output_image, int(radius)
-    )
-
+    return _get_backend()._erode_connected_labels(device, input_image, output_image, int(radius))
 
 @plugin_function(categories=["label processing", "in assistant"])
 def opening_labels(
     input_image: Image,
-    output_image: Optional[Image] = None,
-    radius: int = 0,
-    device: Optional[Device] = None,
+    output_image: Optional[Image] =None,
+    radius: int =0,
+    device: Optional[Device] =None
 ) -> Image:
     """Applies a morphological opening operation to a label image. The operation
     consists of iterative erosion and dilation of the labels. With every iteration,
@@ -490,7 +413,7 @@ def opening_labels(
 
     Parameters
     ----------
-    input_image: Image
+    input_image: Image 
         Input label image.
     output_image: Optional[Image] (= None)
         Output label image.
@@ -503,18 +426,15 @@ def opening_labels(
     -------
     Image
     """
-    return _get_backend()._opening_labels(
-        device, input_image, output_image, int(radius)
-    )
-
+    return _get_backend()._opening_labels(device, input_image, output_image, int(radius))
 
 @plugin_function(categories=["label", "in assistant", "bia-bob-suggestion"])
 def voronoi_otsu_labeling(
     input_image: Image,
-    output_image: Optional[Image] = None,
-    spot_sigma: float = 2,
-    outline_sigma: float = 2,
-    device: Optional[Device] = None,
+    output_image: Optional[Image] =None,
+    spot_sigma: float =2,
+    outline_sigma: float =2,
+    device: Optional[Device] =None
 ) -> Image:
     """Labels objects directly from gray-value images. The two sigma parameters allow
     tuning the segmentation result. Under the hood, this filter applies two Gaussian
@@ -524,7 +444,7 @@ def voronoi_otsu_labeling(
 
     Parameters
     ----------
-    input_image: Image
+    input_image: Image 
         Input intensity image.
     output_image: Optional[Image] (= None)
         Output label image.
@@ -545,22 +465,6 @@ def voronoi_otsu_labeling(
     [2] https://ieeexplore.ieee.org/document/4310076
     [3] https://en.wikipedia.org/wiki/Voronoi_diagram
     """
-    return _get_backend()._voronoi_otsu_labeling(
-        device, input_image, output_image, float(spot_sigma), float(outline_sigma)
-    )
+    return _get_backend()._voronoi_otsu_labeling(device, input_image, output_image, float(spot_sigma), float(outline_sigma))
 
-
-__all__ = [
-    "affine_transform",
-    "eroded_otsu_labeling",
-    "rigid_transform",
-    "rotate",
-    "scale",
-    "translate",
-    "deskew_x",
-    "deskew_y",
-    "closing_labels",
-    "erode_connected_labels",
-    "opening_labels",
-    "voronoi_otsu_labeling",
-]
+__all__ = ["affine_transform", "eroded_otsu_labeling", "rigid_transform", "rotate", "scale", "translate", "deskew_x", "deskew_y", "closing_labels", "erode_connected_labels", "opening_labels", "voronoi_otsu_labeling"]

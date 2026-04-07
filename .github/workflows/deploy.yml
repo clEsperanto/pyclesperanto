@@ -29,7 +29,7 @@ jobs:
         uses: actions/checkout@v6
 
       - name: Build wheels
-        uses: pypa/cibuildwheel@v3.4.0
+        uses: pypa/cibuildwheel@v3.4.1
         with:
           package-dir: backends/opencl
         env:
@@ -78,7 +78,7 @@ jobs:
           log-file-suffix: '_windows'
 
       - name: Build wheels
-        uses: pypa/cibuildwheel@v3.4.0
+        uses: pypa/cibuildwheel@v3.4.1
         with:
           package-dir: backends/cuda
         env:

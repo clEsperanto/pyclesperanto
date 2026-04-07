@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
-CUDA_VERSION="12-6"
+CUDA_VERSION="${CUDA_VERSION:-12-6}"
 
 set -e -x
 

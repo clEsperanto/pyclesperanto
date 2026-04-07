@@ -3,7 +3,7 @@
 # libnvrtc-builtins is loaded via dlopen() by libnvrtc, so auditwheel
 # cannot detect it. This script injects it into the wheel's .libs/ directory.
 # The bundled libnvrtc already has RUNPATH=$ORIGIN (set by auditwheel),
-# so dlopen("libnvrtc-builtins.so.12.6") searches .libs/ and finds it.
+# so dlopen("libnvrtc-builtins.so.<version>") searches .libs/ and finds it.
 
 set -e -x
 
@@ -18,7 +18,7 @@ if [ -z "${BUILTINS}" ]; then
   exit 1
 fi
 
-# Read canonical soname that libnvrtc will dlopen (e.g. libnvrtc-builtins.so.12.6)
+# Read canonical soname that libnvrtc will dlopen (e.g. libnvrtc-builtins.so.12.x)
 SONAME=$(objdump -p "${BUILTINS}" | awk '/SONAME/{print $2}')
 : "${SONAME:=$(basename "${BUILTINS}")}"
 

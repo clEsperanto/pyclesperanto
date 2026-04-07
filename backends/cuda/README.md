@@ -1,6 +1,6 @@
 # pyclEsperanto CUDA
 
-This python package is a wrapping of the [CLIc](https://github.com/clEsperanto/CLIc) C++ library build with [CUDA](https://developer.nvidia.com/cuda-12-6-0-download-archive) (12.6) as a backend.
+This python package is a wrapping of the [CLIc](https://github.com/clEsperanto/CLIc) C++ library build with [CUDA](https://developer.nvidia.com/cuda-toolkit) as a backend.
 
 
 

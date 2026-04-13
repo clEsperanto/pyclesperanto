@@ -8,7 +8,7 @@
 [![codecov](https://codecov.io/gh/clesperanto/pyclesperanto/branch/main/graph/badge.svg)](https://codecov.io/gh/clesperanto/pyclesperanto)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.13853800.svg)](https://doi.org/10.5281/zenodo.13853800)
 
-__pyclesperanto__ is the python package of [clEsperanto] - a multi-language framework for GPU-accelerated image processing, compatible with [OpenCL](https://www.khronos.org/opencl/), [CUDA](https://developer.nvidia.com/cuda-zone), and [Metal](https://developer.apple.com/metal/).  
+__pyclesperanto__ is the python package of [clEsperanto] - a multi-language framework for GPU-accelerated image processing, compatible with [OpenCL](https://www.khronos.org/opencl/), [CUDA](https://developer.nvidia.com/cuda-zone), and [Metal](https://developer.apple.com/metal/).
 
 ## Installation, Documentation, and Uses
 

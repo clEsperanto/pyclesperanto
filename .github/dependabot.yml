@@ -10,6 +10,11 @@ updates:
     schedule:
       interval: "weekly"
     version: "~major.minor"
+    automerged_updates:
+      enabled: true
+      merge_method: "squash"     # use "merge" or "rebase" if you prefer
+      commit_message:
+        prefix: "chore(deps)"
 
   # - package-ecosystem: "gitsubmodule" # See documentation for possible values
   #   directory: "/" # Location of package manifests

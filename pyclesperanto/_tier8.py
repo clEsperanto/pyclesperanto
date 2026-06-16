@@ -202,7 +202,7 @@ def make_isotropic(
     current_spacing_y: float =1.0,
     current_spacing_z: float =1.0,
     target_spacing: float =-1.0,
-    interpolate: bool =true,
+    interpolate: bool =True,
     device: Optional[Device] =None
 ) -> Image:
     """Resamples an image to make it isotropic by rescaling the image to a target
@@ -227,7 +227,7 @@ def make_isotropic(
         Original spacing in z dimension.
     target_spacing: float (= -1.0)
         Target isotropic spacing.
-    interpolate: bool (= true)
+    interpolate: bool (= True)
         If true, interpolate the image during rescaling.
     device: Optional[Device] (= None)
         Device to perform the operation on.
@@ -246,7 +246,7 @@ def make_anisotropic(
     target_spacing_x: float =-1.0,
     target_spacing_y: float =-1.0,
     target_spacing_z: float =-1.0,
-    interpolate: bool =true,
+    interpolate: bool =True,
     device: Optional[Device] =None
 ) -> Image:
     """Resamples an image to make it anisotropic by rescaling the image to target
@@ -271,7 +271,7 @@ def make_anisotropic(
         Target spacing in y dimension.
     target_spacing_z: float (= -1.0)
         Target spacing in z dimension.
-    interpolate: bool (= true)
+    interpolate: bool (= True)
         If true, interpolate the image during rescaling.
     device: Optional[Device] (= None)
         Device to perform the operation on.

@@ -471,7 +471,7 @@ def voronoi_otsu_labeling(
 def labels_neighbors_statistics(
     label: Image,
     proximal_distances: list =[10, 20, 40, 80, 160],
-    nearest_neighbor_ns: ,
+    nearest_neighbor_ns: list =[1, 2, 3, 4, 5, 6, 7, 8, 10, 20],
     dilation_radii: list =[5, 10],
     device: Optional[Device] =None
 ) -> dict:
@@ -487,9 +487,9 @@ def labels_neighbors_statistics(
     label: Image 
         Input
     proximal_distances: list (= [10, 20, 40, 80, 160])
-        Vector of proximal distances to consider for analysis.
-    nearest_neighbor_ns:  
-        Vector of n nearest neighbors to consider for analysis.
+        Proximal distances list for analysis.
+    nearest_neighbor_ns: list (= [1, 2, 3, 4, 5, 6, 7, 8, 10, 20])
+        n-nearest neighbors list for analysis.
     dilation_radii: list (= [5, 10])
         Vector of dilation radii to consider for analysis.
     device: Optional[Device] (= None)
@@ -505,7 +505,7 @@ def labels_neighbors_statistics(
 def statistics_of_labelled_neighbors(
     label: Image,
     proximal_distances: list =[10, 20, 40, 80, 160],
-    nearest_neighbor_ns: ,
+    nearest_neighbor_ns: list =[1, 2, 3, 4, 5, 6, 7, 8, 10, 20],
     dilation_radii: list =[5, 10],
     device: Optional[Device] =None
 ) -> dict:
@@ -521,9 +521,9 @@ def statistics_of_labelled_neighbors(
     label: Image 
         Input
     proximal_distances: list (= [10, 20, 40, 80, 160])
-        Vector of proximal distances to consider for analysis.
-    nearest_neighbor_ns:  
-        Vector of n nearest neighbors to consider for analysis.
+        Proximal distances list for analysis.
+    nearest_neighbor_ns: list (= [1, 2, 3, 4, 5, 6, 7, 8, 10, 20])
+        n-nearest neighbors list for analysis.
     dilation_radii: list (= [5, 10])
         Vector of dilation radii to consider for analysis.
     device: Optional[Device] (= None)

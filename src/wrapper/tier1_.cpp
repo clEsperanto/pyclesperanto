@@ -714,7 +714,7 @@ m.def("_absolute", &cle::tier1::absolute_func, "Call cle::tier1::absolute_func f
     py::return_value_policy::automatic_reference,
     py::arg("device"), py::arg("src"), py::arg("dst"));
 
-    m.def("_minimum_distance_of_touching_neighbors", &cle::tier1::minimum_distance_of_touching_neighbors_func, "Call cle::tier1::minimum_distance_of_touching_neighbors_func from C++ CLIc.",
+    m.def("_minimum_distance_touching_neighbors", &cle::tier1::minimum_distance_touching_neighbors_func, "Call cle::tier1::minimum_distance_touching_neighbors_func from C++ CLIc.",
     py::return_value_policy::automatic_reference,
     py::arg("device"), py::arg("src_distance_matrix"), py::arg("src_touch_matrix"), py::arg("dst_index_list"));
 

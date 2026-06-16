@@ -33,7 +33,7 @@ def smooth_labels(
     output_image: Optional[Image] (= None)
         Output label image.
     radius: int (= 0)
-        Smoothing
+        Smoothing radius.
     device: Optional[Device] (= None)
         Device to perform the operation on.
 
@@ -61,7 +61,7 @@ def smooth_connected_labels(
     output_image: Optional[Image] (= None)
         Output label image.
     radius: int (= 0)
-        Smoothing
+        Smoothing radius.
     device: Optional[Device] (= None)
         Device to perform the operation on.
 
@@ -182,7 +182,7 @@ def deconvolve_fft(
     output_image: Optional[Image] (= None)
         Output image.
     iteration: int (= 100)
-        Maximum number of
+        Maximum number of iterations.
     regularization: float (= 0.0)
         Regularization parameter.
     device: Optional[Device] (= None)
@@ -228,7 +228,7 @@ def make_isotropic(
     target_spacing: float (= -1.0)
         Target isotropic spacing.
     interpolate: bool (= true)
-        If true,
+        If true, interpolate the image during rescaling.
     device: Optional[Device] (= None)
         Device to perform the operation on.
 
@@ -272,7 +272,7 @@ def make_anisotropic(
     target_spacing_z: float (= -1.0)
         Target spacing in z dimension.
     interpolate: bool (= true)
-        If true,
+        If true, interpolate the image during rescaling.
     device: Optional[Device] (= None)
         Device to perform the operation on.
 

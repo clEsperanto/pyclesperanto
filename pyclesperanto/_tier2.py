@@ -192,8 +192,8 @@ def bottom_hat(
 def clip(
     input_image: Image,
     output_image: Optional[Image] =None,
-    min_intensity: float =float('nan',
-    max_intensity: float =float('nan',
+    min_intensity: float =float('nan'),
+    max_intensity: float =float('nan'),
     device: Optional[Device] =None
 ) -> Image:
     """Limits the range of values in an image. This function works similarly to its
@@ -205,9 +205,9 @@ def clip(
         Input image to process.
     output_image: Optional[Image] (= None)
         Output image.
-    min_intensity: float (= float('nan')
+    min_intensity: float (= float('nan'))
         New lower limit of the intensity range.
-    max_intensity: float (= float('nan')
+    max_intensity: float (= float('nan'))
         New upper limit of the intensity range.
     device: Optional[Device] (= None)
         Device to perform the operation on.
@@ -1037,7 +1037,7 @@ def minimum_of_masked_pixels(
     input_image: Image 
         Input image to process.
     mask: Image 
-        Input
+        Input mask.
     device: Optional[Device] (= None)
         Device to perform the operation on.
 

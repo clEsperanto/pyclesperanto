@@ -574,7 +574,7 @@ def block_enumerate(
     output_image: Optional[Image] (= None)
         output enumerated vector image
     blocksize: int (= 256)
-        
+        blocksize; must correspond correctly to how the
     device: Optional[Device] (= None)
         Device to perform the operation on.
 
@@ -1826,7 +1826,7 @@ def laplace(
     output_image: Optional[Image] (= None)
         Output result image.
     connectivity: str (= "box")
-        Filter neighborhood
+        Filter neighborhood connectivity, "box" or "sphere"
     device: Optional[Device] (= None)
         Device to perform the operation on.
 
@@ -1854,7 +1854,7 @@ def local_cross_correlation(
     input_image: Image 
         Input image to process.
     kernel: Image 
-        Input
+        Input kernel.
     output_image: Optional[Image] (= None)
         Output result image.
     device: Optional[Device] (= None)
@@ -2148,7 +2148,7 @@ def maximum_filter(
     radius_z: float (= 1)
         Radius size along z axis.
     connectivity: str (= "box")
-        Filter neighborhood
+        Filter neighborhood connectivity, "box" or "sphere"
     device: Optional[Device] (= None)
         Device to perform the operation on.
 
@@ -2192,7 +2192,7 @@ def grayscale_dilate(
     radius_z: float (= 1)
         Radius size along z axis.
     connectivity: str (= "box")
-        Filter neighborhood
+        Filter neighborhood connectivity, "box" or "sphere"
     device: Optional[Device] (= None)
         Device to perform the operation on.
 
@@ -2389,7 +2389,7 @@ def mean_filter(
     radius_z: float (= 1)
         Radius size along z axis.
     connectivity: str (= "box")
-        Filter neighborhood
+        Filter neighborhood connectivity, "box" or "sphere"
     device: Optional[Device] (= None)
         Device to perform the operation on.
 
@@ -2588,7 +2588,7 @@ def median(
     radius_z: float (= 1)
         Radius size along z axis.
     connectivity: str (= "box")
-        Filter neighborhood
+        Filter neighborhood connectivity, "box" or "sphere"
     device: Optional[Device] (= None)
         Device to perform the operation on.
 
@@ -2665,7 +2665,7 @@ def minimum_filter(
     radius_z: float (= 1)
         Radius size along z axis.
     connectivity: str (= "box")
-        Filter neighborhood
+        Filter neighborhood connectivity, "box" or "sphere"
     device: Optional[Device] (= None)
         Device to perform the operation on.
 
@@ -2709,7 +2709,7 @@ def grayscale_erode(
     radius_z: float (= 1)
         Radius size along z axis.
     connectivity: str (= "box")
-        Filter neighborhood
+        Filter neighborhood connectivity, "box" or "sphere"
     device: Optional[Device] (= None)
         Device to perform the operation on.
 
@@ -2969,7 +2969,7 @@ def mode(
     radius_z: float (= 1)
         Radius size along z axis.
     connectivity: str (= "box")
-        Filter neighborhood
+        Filter neighborhood connectivity, "box" or "sphere"
     device: Optional[Device] (= None)
         Device to perform the operation on.
 
@@ -3103,8 +3103,8 @@ def nan_to_num(
     input_image: Image,
     output_image: Optional[Image] =None,
     nan: float =0,
-    posinf: float =np.nan_to_num(float('inf',
-    neginf: float =np.nan_to_num(float('-inf',
+    posinf: float =np.nan_to_num(float('inf')),
+    neginf: float =np.nan_to_num(float('-inf')),
     device: Optional[Device] =None
 ) -> Image:
     """Copies all pixels instead those which are not a number (NaN), or
@@ -3120,10 +3120,10 @@ def nan_to_num(
     output_image: Optional[Image] (= None)
         Output image where results are written into.
     nan: float (= 0)
-        Value to replace
-    posinf: float (= np.nan_to_num(float('inf')
+        Value to replace nan with.
+    posinf: float (= np.nan_to_num(float('inf')))
         Value to replace +inf with.
-    neginf: float (= np.nan_to_num(float('-inf')
+    neginf: float (= np.nan_to_num(float('-inf')))
         Value to replace -inf with.
     device: Optional[Device] (= None)
         Device to perform the operation on.
@@ -3227,7 +3227,7 @@ def nonzero_maximum(
     output_image1: Optional[Image] (= None)
         Output image where results are written into.
     connectivity: str (= "box")
-        Filter neighborhood
+        Filter neighborhood connectivity, "box" or "sphere"
     device: Optional[Device] (= None)
         Device to perform the operation on.
 
@@ -3331,7 +3331,7 @@ def nonzero_minimum(
     output_image1: Optional[Image] (= None)
         Output image where results are written into.
     connectivity: str (= "box")
-        Filter neigborhood
+        Filter neigborhood connectivity, "box" or "sphere"
     device: Optional[Device] (= None)
         Device to perform the operation on.
 
@@ -3459,7 +3459,7 @@ def onlyzero_overwrite_maximum_box(
     input_image: Image 
         Input image to process.
     flag: Image 
-        Output
+        Output flag value, 0 or 1.
     output_image: Optional[Image] (= None)
         Output image.
     device: Optional[Device] (= None)
@@ -3490,7 +3490,7 @@ def onlyzero_overwrite_maximum_diamond(
     input_image: Image 
         Input image to process.
     flag: Image 
-        Output
+        Output flag value, 0 or 1.
     output_image: Optional[Image] (= None)
         Output image.
     device: Optional[Device] (= None)
@@ -3522,11 +3522,11 @@ def onlyzero_overwrite_maximum(
     input_image: Image 
         Input image to process.
     flag: Image 
-        Output
+        Output flag value, 0 or 1.
     output_image: Optional[Image] (= None)
         Output image.
     connectivity: str (= "box")
-        Filter neigborhood
+        Filter neigborhood connectivity, "box" or "sphere"
     device: Optional[Device] (= None)
         Device to perform the operation on.
 
@@ -4980,7 +4980,7 @@ def variance_filter(
     radius_z: float (= 1)
         Radius size along z axis.
     connectivity: str (= "box")
-        Filter neigborhood
+        Filter neigborhood connectivity, "box" or "sphere"
     device: Optional[Device] (= None)
         Device to perform the operation on.
 
@@ -5217,9 +5217,9 @@ def mean_of_touching_neighbors(
     Parameters
     ----------
     vector: Image 
-        Input
+        Input vector to process.
     matrix: Image 
-        Input adjacency
+        Input adjacency matrix to process.
     output_image: Optional[Image] (= None)
         Output result vector.
     device: Optional[Device] (= None)
@@ -5243,9 +5243,9 @@ def median_of_touching_neighbors(
     Parameters
     ----------
     vector: Image 
-        Input
+        Input vector to process.
     matrix: Image 
-        Input adjacency
+        Input adjacency matrix to process.
     output_image: Optional[Image] (= None)
         Output result vector.
     device: Optional[Device] (= None)
@@ -5269,9 +5269,9 @@ def minimum_of_touching_neighbors(
     Parameters
     ----------
     vector: Image 
-        Input
+        Input vector to process.
     matrix: Image 
-        Input adjacency
+        Input adjacency matrix to process.
     output_image: Optional[Image] (= None)
         Output result vector.
     device: Optional[Device] (= None)
@@ -5295,9 +5295,9 @@ def maximum_of_touching_neighbors(
     Parameters
     ----------
     vector: Image 
-        Input
+        Input vector to process.
     matrix: Image 
-        Input adjacency
+        Input adjacency matrix to process.
     output_image: Optional[Image] (= None)
         Output result vector.
     device: Optional[Device] (= None)
@@ -5321,9 +5321,9 @@ def standard_deviation_of_touching_neighbors(
     Parameters
     ----------
     vector: Image 
-        Input
+        Input vector to process.
     matrix: Image 
-        Input adjacency
+        Input adjacency matrix to process.
     output_image: Optional[Image] (= None)
         Output result vector.
     device: Optional[Device] (= None)
@@ -5347,9 +5347,9 @@ def mode_of_touching_neighbors(
     Parameters
     ----------
     vector: Image 
-        Input
+        Input vector to process.
     matrix: Image 
-        Input adjacency
+        Input adjacency matrix to process.
     output_image: Optional[Image] (= None)
         Output result vector.
     device: Optional[Device] (= None)
@@ -5581,7 +5581,7 @@ def mean_distance_n_nearest_neighbors(
     output_image_index_list: Optional[Image] (= None)
         Output vector containing the mean N-nearest-neighbor distance per label.
     n: int (= 1)
-        Number of
+        Number of nearest neighbors to consider.
     device: Optional[Device] (= None)
         Device to perform the operation on.
 
@@ -5608,7 +5608,7 @@ def maximum_distance_n_nearest_neighbors(
     output_image_index_list: Optional[Image] (= None)
         Output vector containing the maximum N-nearest-neighbor distance per label.
     n: int (= 1)
-        Number of
+        Number of nearest neighbors to consider.
     device: Optional[Device] (= None)
         Device to perform the operation on.
 
@@ -5635,7 +5635,7 @@ def mean_distance_n_farthest_neighbors(
     output_image_index_list: Optional[Image] (= None)
         Output vector containing the mean N-farthest-neighbor distance per label.
     n: int (= 1)
-        Number of farthest
+        Number of farthest neighbors to consider.
     device: Optional[Device] (= None)
         Device to perform the operation on.
 
@@ -5662,7 +5662,7 @@ def average_distance_of_n_nearest_distances(
     output_image_index_list: Optional[Image] (= None)
         Output vector containing the mean N-nearest-neighbor distance per label.
     n: int (= 1)
-        Number of
+        Number of nearest neighbors to consider.
     device: Optional[Device] (= None)
         Device to perform the operation on.
 
@@ -5689,7 +5689,7 @@ def maximum_distance_of_n_shortest_distances(
     output_image_index_list: Optional[Image] (= None)
         Output vector containing the maximum N-nearest-neighbor distance per label.
     n: int (= 1)
-        Number of
+        Number of nearest neighbors to consider.
     device: Optional[Device] (= None)
         Device to perform the operation on.
 
@@ -5716,7 +5716,7 @@ def average_distance_of_n_far_off_distances(
     output_image_index_list: Optional[Image] (= None)
         Output vector containing the mean N-farthest-neighbor distance per label.
     n: int (= 1)
-        Number of farthest
+        Number of farthest neighbors to consider.
     device: Optional[Device] (= None)
         Device to perform the operation on.
 

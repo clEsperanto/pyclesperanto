@@ -388,7 +388,7 @@ def erode_connected_labels(
     output_image: Optional[Image] (= None)
         Output label image.
     radius: int (= 1)
-        Erosion
+        Erosion radius.
     device: Optional[Device] (= None)
         Device to perform the operation on.
 
@@ -485,7 +485,7 @@ def labels_neighbors_statistics(
     Parameters
     ----------
     label: Image 
-        Input
+        Input label image.
     proximal_distances: list (= [10, 20, 40, 80, 160])
         Proximal distances list for analysis.
     nearest_neighbor_ns: list (= [1, 2, 3, 4, 5, 6, 7, 8, 10, 20])
@@ -519,7 +519,7 @@ def statistics_of_labelled_neighbors(
     Parameters
     ----------
     label: Image 
-        Input
+        Input label image.
     proximal_distances: list (= [10, 20, 40, 80, 160])
         Proximal distances list for analysis.
     nearest_neighbor_ns: list (= [1, 2, 3, 4, 5, 6, 7, 8, 10, 20])

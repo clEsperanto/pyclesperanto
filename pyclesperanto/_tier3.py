@@ -71,8 +71,8 @@ def clahe(
     output_image: Optional[Image] =None,
     tile_size: int =8,
     clip_limit: float =0.01,
-    minimum_intensity: float =float('nan',
-    maximum_intensity: float =float('nan',
+    minimum_intensity: float =float('nan'),
+    maximum_intensity: float =float('nan'),
     device: Optional[Device] =None
 ) -> Image:
     """Applies CLAHE (Contrast Limited Adaptive Histogram Equalization) to the input
@@ -89,9 +89,9 @@ def clahe(
         Size of the tiles used for CLAHE.
     clip_limit: float (= 0.01)
         Clip limit for CLAHE.
-    minimum_intensity: float (= float('nan')
+    minimum_intensity: float (= float('nan'))
         Minimum intensity value.
-    maximum_intensity: float (= float('nan')
+    maximum_intensity: float (= float('nan'))
         Maximum intensity value.
     device: Optional[Device] (= None)
         Device to perform the operation on.
@@ -420,8 +420,8 @@ def histogram(
     input_image: Image,
     output_image: Optional[Image] =None,
     num_bins: int =256,
-    minimum_intensity: float =float('nan',
-    maximum_intensity: float =float('nan',
+    minimum_intensity: float =float('nan'),
+    maximum_intensity: float =float('nan'),
     device: Optional[Device] =None
 ) -> Image:
     """Determines the histogram of a given image. The histogram image has dimensions
@@ -450,9 +450,9 @@ def histogram(
         Output histogram.
     num_bins: int (= 256)
         Number of bins.
-    minimum_intensity: float (= float('nan')
+    minimum_intensity: float (= float('nan'))
         Minimum intensity.
-    maximum_intensity: float (= float('nan')
+    maximum_intensity: float (= float('nan'))
         Maximum intensity.
     device: Optional[Device] (= None)
         Device to perform the operation on.
@@ -513,7 +513,7 @@ def labelled_spots_to_pointlist(
     Parameters
     ----------
     label: Image 
-        Input
+        Input label image.
     dspointlistt: Optional[Image] (= None)
         Output coordinate list.
     device: Optional[Device] (= None)
@@ -616,7 +616,7 @@ def morphological_chan_vese(
     num_iter: int (= 100)
         Number of iterations.
     smoothing: int (= 1)
-        Number of
+        Number of smoothing iterations.
     lambda1: float (= 1)
         Lambda1.
     lambda2: float (= 1)
@@ -853,9 +853,9 @@ def read_map_values(
     Parameters
     ----------
     map: Image 
-        Input
+        Input map image.
     label: Image 
-        Input
+        Input label image.
     output_image: Optional[Image] (= None)
         Output result image.
     device: Optional[Device] (= None)
@@ -880,9 +880,9 @@ def read_intensities_from_map(
     Parameters
     ----------
     label: Image 
-        Input
+        Input label image.
     map: Image 
-        Input
+        Input map image.
     output_image: Optional[Image] (= None)
         Output result image.
     device: Optional[Device] (= None)

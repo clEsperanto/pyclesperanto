@@ -32,7 +32,7 @@ def dilate_labels(
     output_image: Optional[Image] (= None)
         Output label image.
     radius: int (= 2)
-        Dilation
+        Dilation radius.
     device: Optional[Device] (= None)
         Device to perform the operation on.
 
@@ -62,7 +62,7 @@ def erode_labels(
     output_image: Optional[Image] (= None)
         Output label image.
     radius: int (= 1)
-        Erosion
+        Erosion radius.
     relabel: bool (= False)
         Relabel the image, e.g., if objects disappear or split.
     device: Optional[Device] (= None)
@@ -125,7 +125,7 @@ def masked_voronoi_labeling(
     input_image: Image 
         Input binary image.
     mask: Image 
-        Input
+        Input mask.
     output_image: Optional[Image] (= None)
         Output label image.
     device: Optional[Device] (= None)

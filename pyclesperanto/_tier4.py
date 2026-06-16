@@ -232,7 +232,7 @@ def parametric_map(
     intensity: Optional[Image] (= None)
         Intensity image.
     property: str (= "label")
-        Name of the
+        Name of the property to map.
     output_image: Optional[Image] (= None)
         Parametric image computed.
     device: Optional[Device] (= None)
@@ -424,7 +424,7 @@ def remove_labels_with_map_values_out_of_range(
     input_image: Image 
         Input image where labels will be filtered.
     values: Image 
-        Vector of
+        Vector of values associated with the labels.
     output_image: Optional[Image] (= None)
         Output image where labels will be written to.
     min_value: float (= 0)
@@ -461,7 +461,7 @@ def remove_labels_with_map_values_within_range(
     input_image: Image 
         Input image where labels will be filtered.
     values: Image 
-        Vector of
+        Vector of values associated with the labels.
     output_image: Optional[Image] (= None)
         Output image where labels will be written to.
     min_value: float (= 0)
@@ -806,7 +806,7 @@ def mean_of_touching_neighbors_map(
     Parameters
     ----------
     map: Image 
-        Input parametric
+        Input parametric map image.
     labels: Image 
         Input vector image.
     output_image: Optional[Image] (= None)
@@ -842,7 +842,7 @@ def median_of_touching_neighbors_map(
     Parameters
     ----------
     map: Image 
-        Input parametric
+        Input parametric map image.
     labels: Image 
         Input label image.
     output_image: Optional[Image] (= None)
@@ -878,7 +878,7 @@ def minimum_of_touching_neighbors_map(
     Parameters
     ----------
     map: Image 
-        Input parametric
+        Input parametric map image.
     labels: Image 
         Input label image.
     output_image: Optional[Image] (= None)
@@ -914,7 +914,7 @@ def maximum_of_touching_neighbors_map(
     Parameters
     ----------
     map: Image 
-        Input parametric
+        Input parametric map image.
     labels: Image 
         Input label image.
     output_image: Optional[Image] (= None)
@@ -950,7 +950,7 @@ def standard_deviation_of_touching_neighbors_map(
     Parameters
     ----------
     map: Image 
-        Input parametric
+        Input parametric map image.
     labels: Image 
         Input label image.
     output_image: Optional[Image] (= None)
@@ -986,7 +986,7 @@ def mode_of_touching_neighbors_map(
     Parameters
     ----------
     map: Image 
-        Input parametric
+        Input parametric map image.
     labels: Image 
         Input label image.
     output_image: Optional[Image] (= None)

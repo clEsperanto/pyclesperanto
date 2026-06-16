@@ -1,5 +1,5 @@
 // this code is auto-generated, do not edit manually
-
+    
 #include "pycle_wrapper.hpp"
 #include "tier7.hpp"
 
@@ -53,4 +53,12 @@ m.def("_affine_transform", &cle::tier7::affine_transform_func, "Call cle::tier7:
     m.def("_voronoi_otsu_labeling", &cle::tier7::voronoi_otsu_labeling_func, "Call cle::tier7::voronoi_otsu_labeling_func from C++ CLIc.",
     py::return_value_policy::automatic_reference,
     py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("spot_sigma"), py::arg("outline_sigma"));
+
+    m.def("_labels_neighbors_statistics", &cle::tier7::labels_neighbors_statistics_func, "Call cle::tier7::labels_neighbors_statistics_func from C++ CLIc.",
+    py::return_value_policy::automatic_reference,
+    py::arg("device"), py::arg("label"), py::arg("proximal_distances"), py::arg("nearest_neighbor_ns"), py::arg("dilation_radii"));
+
+    m.def("_statistics_of_labelled_neighbors", &cle::tier7::statistics_of_labelled_neighbors_func, "Call cle::tier7::statistics_of_labelled_neighbors_func from C++ CLIc.",
+    py::return_value_policy::automatic_reference,
+    py::arg("device"), py::arg("label"), py::arg("proximal_distances"), py::arg("nearest_neighbor_ns"), py::arg("dilation_radii"));
 }

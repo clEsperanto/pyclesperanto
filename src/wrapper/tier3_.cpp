@@ -1,5 +1,5 @@
 // this code is auto-generated, do not edit manually
-
+    
 #include "pycle_wrapper.hpp"
 #include "tier3.hpp"
 
@@ -50,6 +50,14 @@ m.def("_bounding_box", &cle::tier3::bounding_box_func, "Call cle::tier3::boundin
     py::return_value_policy::automatic_reference,
     py::arg("device"), py::arg("src"), py::arg("dst_matrix"));
 
+    m.def("_generate_touching_area_matrix", &cle::tier3::generate_touching_area_matrix_func, "Call cle::tier3::generate_touching_area_matrix_func from C++ CLIc.",
+    py::return_value_policy::automatic_reference,
+    py::arg("device"), py::arg("src_label"), py::arg("dst_matrix"));
+
+    m.def("_generate_touch_count_matrix", &cle::tier3::generate_touch_count_matrix_func, "Call cle::tier3::generate_touch_count_matrix_func from C++ CLIc.",
+    py::return_value_policy::automatic_reference,
+    py::arg("device"), py::arg("src_label"), py::arg("dst_matrix"));
+
     m.def("_histogram", &cle::tier3::histogram_func, "Call cle::tier3::histogram_func from C++ CLIc.",
     py::return_value_policy::automatic_reference,
     py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("num_bins"), py::arg("minimum_intensity"), py::arg("maximum_intensity"));
@@ -77,6 +85,10 @@ m.def("_bounding_box", &cle::tier3::bounding_box_func, "Call cle::tier3::boundin
     m.def("_morphological_chan_vese", &cle::tier3::morphological_chan_vese_func, "Call cle::tier3::morphological_chan_vese_func from C++ CLIc.",
     py::return_value_policy::automatic_reference,
     py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("num_iter"), py::arg("smoothing"), py::arg("lambda1"), py::arg("lambda2"));
+
+    m.def("_labels_statistics", &cle::tier3::labels_statistics_func, "Call cle::tier3::labels_statistics_func from C++ CLIc.",
+    py::return_value_policy::automatic_reference,
+    py::arg("device"), py::arg("label"), py::arg("intensity"), py::arg("include_background"));
 
     m.def("_statistics_of_labelled_pixels", &cle::tier3::statistics_of_labelled_pixels_func, "Call cle::tier3::statistics_of_labelled_pixels_func from C++ CLIc.",
     py::return_value_policy::automatic_reference,

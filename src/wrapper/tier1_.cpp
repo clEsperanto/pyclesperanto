@@ -1,5 +1,5 @@
 // this code is auto-generated, do not edit manually
-
+    
 #include "pycle_wrapper.hpp"
 #include "tier1.hpp"
 
@@ -713,4 +713,44 @@ m.def("_absolute", &cle::tier1::absolute_func, "Call cle::tier1::absolute_func f
     m.def("_truncate", &cle::tier1::truncate_func, "Call cle::tier1::truncate_func from C++ CLIc.",
     py::return_value_policy::automatic_reference,
     py::arg("device"), py::arg("src"), py::arg("dst"));
+
+    m.def("_minimum_distance_of_touching_neighbors", &cle::tier1::minimum_distance_of_touching_neighbors_func, "Call cle::tier1::minimum_distance_of_touching_neighbors_func from C++ CLIc.",
+    py::return_value_policy::automatic_reference,
+    py::arg("device"), py::arg("src_distance_matrix"), py::arg("src_touch_matrix"), py::arg("dst_index_list"));
+
+    m.def("_maximum_distance_touching_neighbors", &cle::tier1::maximum_distance_touching_neighbors_func, "Call cle::tier1::maximum_distance_touching_neighbors_func from C++ CLIc.",
+    py::return_value_policy::automatic_reference,
+    py::arg("device"), py::arg("src_distance_matrix"), py::arg("src_touch_matrix"), py::arg("dst_index_list"));
+
+    m.def("_mean_distance_touching_neighbors", &cle::tier1::mean_distance_touching_neighbors_func, "Call cle::tier1::mean_distance_touching_neighbors_func from C++ CLIc.",
+    py::return_value_policy::automatic_reference,
+    py::arg("device"), py::arg("src_distance_matrix"), py::arg("src_touch_matrix"), py::arg("dst_index_list"));
+
+    m.def("_average_distance_touching_neighbors", &cle::tier1::average_distance_touching_neighbors_func, "Call cle::tier1::average_distance_touching_neighbors_func from C++ CLIc.",
+    py::return_value_policy::automatic_reference,
+    py::arg("device"), py::arg("src_distance_matrix"), py::arg("src_touch_matrix"), py::arg("dst_index_list"));
+
+    m.def("_mean_distance_n_nearest_neighbors", &cle::tier1::mean_distance_n_nearest_neighbors_func, "Call cle::tier1::mean_distance_n_nearest_neighbors_func from C++ CLIc.",
+    py::return_value_policy::automatic_reference,
+    py::arg("device"), py::arg("src_distance_matrix"), py::arg("dst_index_list"), py::arg("n"));
+
+    m.def("_maximum_distance_n_nearest_neighbors", &cle::tier1::maximum_distance_n_nearest_neighbors_func, "Call cle::tier1::maximum_distance_n_nearest_neighbors_func from C++ CLIc.",
+    py::return_value_policy::automatic_reference,
+    py::arg("device"), py::arg("src_distance_matrix"), py::arg("dst_index_list"), py::arg("n"));
+
+    m.def("_mean_distance_n_farthest_neighbors", &cle::tier1::mean_distance_n_farthest_neighbors_func, "Call cle::tier1::mean_distance_n_farthest_neighbors_func from C++ CLIc.",
+    py::return_value_policy::automatic_reference,
+    py::arg("device"), py::arg("src_distance_matrix"), py::arg("dst_index_list"), py::arg("n"));
+
+    m.def("_average_distance_of_n_nearest_distances", &cle::tier1::average_distance_of_n_nearest_distances_func, "Call cle::tier1::average_distance_of_n_nearest_distances_func from C++ CLIc.",
+    py::return_value_policy::automatic_reference,
+    py::arg("device"), py::arg("src_distance_matrix"), py::arg("dst_index_list"), py::arg("n"));
+
+    m.def("_maximum_distance_of_n_shortest_distances", &cle::tier1::maximum_distance_of_n_shortest_distances_func, "Call cle::tier1::maximum_distance_of_n_shortest_distances_func from C++ CLIc.",
+    py::return_value_policy::automatic_reference,
+    py::arg("device"), py::arg("src_distance_matrix"), py::arg("dst_index_list"), py::arg("n"));
+
+    m.def("_average_distance_of_n_far_off_distances", &cle::tier1::average_distance_of_n_far_off_distances_func, "Call cle::tier1::average_distance_of_n_far_off_distances_func from C++ CLIc.",
+    py::return_value_policy::automatic_reference,
+    py::arg("device"), py::arg("src_distance_matrix"), py::arg("dst_index_list"), py::arg("n"));
 }

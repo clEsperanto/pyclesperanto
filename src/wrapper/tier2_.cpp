@@ -1,5 +1,5 @@
 // this code is auto-generated, do not edit manually
-
+    
 #include "pycle_wrapper.hpp"
 #include "tier2.hpp"
 
@@ -233,4 +233,24 @@ m.def("_absolute_difference", &cle::tier2::absolute_difference_func, "Call cle::
     m.def("_generate_proximal_neighbors_matrix", &cle::tier2::generate_proximal_neighbors_matrix_func, "Call cle::tier2::generate_proximal_neighbors_matrix_func from C++ CLIc.",
     py::return_value_policy::automatic_reference,
     py::arg("device"), py::arg("src_matrix"), py::arg("dst_matrix"), py::arg("min_distance"), py::arg("max_distance"));
+
+    m.def("_generate_partial_touching_area_matrix_within_range", &cle::tier2::generate_partial_touching_area_matrix_within_range_func, "Call cle::tier2::generate_partial_touching_area_matrix_within_range_func from C++ CLIc.",
+    py::return_value_policy::automatic_reference,
+    py::arg("device"), py::arg("src_matrix"), py::arg("dst_matrix"), py::arg("min_distance"), py::arg("max_distance"));
+
+    m.def("_generate_touch_portion_within_range_neighbors_matrix", &cle::tier2::generate_touch_portion_within_range_neighbors_matrix_func, "Call cle::tier2::generate_touch_portion_within_range_neighbors_matrix_func from C++ CLIc.",
+    py::return_value_policy::automatic_reference,
+    py::arg("device"), py::arg("src_matrix"), py::arg("dst_matrix"), py::arg("min_distance"), py::arg("max_distance"));
+
+    m.def("_symmetric_maximum_matrix", &cle::tier2::symmetric_maximum_matrix_func, "Call cle::tier2::symmetric_maximum_matrix_func from C++ CLIc.",
+    py::return_value_policy::automatic_reference,
+    py::arg("device"), py::arg("src_matrix"), py::arg("dst_matrix"));
+
+    m.def("_symmetric_minimum_matrix", &cle::tier2::symmetric_minimum_matrix_func, "Call cle::tier2::symmetric_minimum_matrix_func from C++ CLIc.",
+    py::return_value_policy::automatic_reference,
+    py::arg("device"), py::arg("src_matrix"), py::arg("dst_matrix"));
+
+    m.def("_symmetric_mean_matrix", &cle::tier2::symmetric_mean_matrix_func, "Call cle::tier2::symmetric_mean_matrix_func from C++ CLIc.",
+    py::return_value_policy::automatic_reference,
+    py::arg("device"), py::arg("src_matrix"), py::arg("dst_matrix"));
 }

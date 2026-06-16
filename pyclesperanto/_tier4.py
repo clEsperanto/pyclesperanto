@@ -377,7 +377,7 @@ def label_pixel_count_map(
 @plugin_function
 def centroids_of_labels(
     label_image: Image,
-    centroids_coordinates: ,
+    centroids_coordinates: Optional[Image] =None,
     include_background: bool =False,
     device: Optional[Device] =None
 ) -> Image:
@@ -390,8 +390,8 @@ def centroids_of_labels(
     ----------
     label_image: Image 
         Label image from which the centroids will be determined.
-    centroids_coordinates:  
-        Output list of coordinates where the centroids will be written.
+    centroids_coordinates: Optional[Image] (= None)
+        Output list of coordinates.
     include_background: bool (= False)
         Determines if the background label should be included.
     device: Optional[Device] (= None)

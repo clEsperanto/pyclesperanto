@@ -74,6 +74,28 @@ def create_like(
     return create(array.shape, dtype, mtype, device)
 
 
+@warnings.deprecated('create_labels_like: This function is deprecated. Consider using create_like() instead, with `dtype=np.uint32` for label images.')
+def create_labels_like(
+    array: Image,
+    device: Optional[Device] = None,
+) -> Array:
+    """Create a new image on the device with the same shape and dtype as the input image.
+
+    Parameters
+    ----------
+    array : Image
+        Input image
+    device : Device, optional
+        Device on which the image is created, current device by default if None
+
+    Returns
+    -------
+    Array
+        Created an empty Array on the device
+    """
+    return create(array.shape, np.uint32, "buffer", device)
+
+
 def push(
     array,
     dtype: Optional[type] = None,

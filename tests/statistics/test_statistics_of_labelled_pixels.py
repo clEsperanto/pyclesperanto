@@ -4,7 +4,7 @@ import pytest
 import pyclesperanto as cle
 
 
-def test_statistics_of_labelled_pixels(gpu_backend):
+def test_label_statistics(gpu_backend):
 
     labels = cle.push(
         np.asarray(
@@ -32,7 +32,7 @@ def test_statistics_of_labelled_pixels(gpu_backend):
         )
     )
 
-    result = cle.statistics_of_labelled_pixels(intensities, labels)
+    result = cle.labels_statistics(labels, intensities)
 
     print(result)
 

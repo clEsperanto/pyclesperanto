@@ -10,7 +10,7 @@ def test_connected_components_labeling_box(gpu_backend):
 
     gpu_reference = cle.push(np.asarray([[[1, 0, 2], [1, 0, 0], [0, 0, 3]]]))
 
-    gpu_output = cle.connected_components_labeling(gpu_input, connectivity="box")
+    gpu_output = cle.connected_component_labeling(gpu_input, connectivity="box")
 
     a = cle.pull(gpu_output)
     b = cle.pull(gpu_reference)
@@ -26,7 +26,7 @@ def test_connected_components_labeling_sphere(gpu_backend):
 
     gpu_reference = cle.push(np.asarray([[0, 1, 0, 2], [0, 1, 0, 0], [3, 0, 0, 4]]))
 
-    gpu_output = cle.connected_components_labeling(gpu_input, connectivity="sphere")
+    gpu_output = cle.connected_component_labeling(gpu_input, connectivity="sphere")
 
     a = cle.pull(gpu_output)
     b = cle.pull(gpu_reference)
@@ -53,7 +53,7 @@ def test_connected_components_labeling_box_blobs(gpu_backend):
     # process the image
     blurred = cle.gaussian_blur(image, sigma_x=1, sigma_y=1)
     binary = cle.threshold_otsu(blurred)
-    labeled = cle.connected_components_labeling(binary, connectivity="box")
+    labeled = cle.connected_component_labeling(binary, connectivity="box")
 
     # The maxmium intensity in a label image corresponds to the number of objects
     num_labels = cle.maximum_of_all_pixels(labeled)

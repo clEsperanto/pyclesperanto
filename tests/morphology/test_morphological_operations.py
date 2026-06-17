@@ -168,44 +168,6 @@ def test_erode_sphere(gpu_backend):
 # ============================================================================
 
 
-def test_opening_box_old(gpu_backend):
-    gpu_input = cle.push(
-        np.asarray(
-            [
-                [0, 0, 0, 0, 0, 0],
-                [1, 1, 1, 0, 0, 0],
-                [1, 1, 1, 0, 2, 0],
-                [1, 1, 1, 0, 2, 0],
-                [0, 0, 0, 0, 2, 0],
-                [3, 0, 0, 0, 0, 0],
-            ]
-        )
-    )
-
-    gpu_reference = cle.push(
-        np.asarray(
-            [
-                [0, 0, 0, 0, 0, 0],
-                [1, 1, 1, 0, 0, 0],
-                [1, 1, 1, 0, 0, 0],
-                [1, 1, 1, 0, 0, 0],
-                [0, 0, 0, 0, 0, 0],
-                [0, 0, 0, 0, 0, 0],
-            ]
-        )
-    )
-
-    gpu_output = cle.opening_box(gpu_input, radius_x=1, radius_y=1)
-
-    a = cle.pull(gpu_output)
-    b = cle.pull(gpu_reference)
-
-    print(a)
-    print(b)
-
-    assert np.array_equal(a, b)
-
-
 def test_opening_box_2d(gpu_backend):
     gpu_input = cle.push(
         np.asarray(
@@ -240,44 +202,6 @@ def test_opening_box_2d(gpu_backend):
 
     print(a)
     print(b)
-
-
-def test_opening_sphere_old(gpu_backend):
-    gpu_input = cle.push(
-        np.asarray(
-            [
-                [0, 0, 0, 0, 0, 0],
-                [1, 1, 1, 0, 0, 0],
-                [1, 1, 1, 0, 2, 0],
-                [1, 1, 1, 0, 2, 0],
-                [0, 0, 0, 0, 2, 0],
-                [3, 0, 0, 0, 0, 0],
-            ]
-        )
-    )
-
-    gpu_reference = cle.push(
-        np.asarray(
-            [
-                [0, 0, 0, 0, 0, 0],
-                [1, 1, 0, 0, 0, 0],
-                [1, 1, 1, 0, 0, 0],
-                [1, 1, 0, 0, 0, 0],
-                [0, 0, 0, 0, 0, 0],
-                [0, 0, 0, 0, 0, 0],
-            ]
-        )
-    )
-
-    gpu_output = cle.opening_sphere(gpu_input, radius_x=1, radius_y=1)
-
-    a = cle.pull(gpu_output)
-    b = cle.pull(gpu_reference)
-
-    print(a)
-    print(b)
-
-    assert np.array_equal(a, b)
 
 
 def test_opening_sphere(gpu_backend):
@@ -325,44 +249,6 @@ def test_opening_sphere(gpu_backend):
 # ============================================================================
 
 
-def test_close_box_old(gpu_backend):
-    gpu_input = cle.push(
-        np.asarray(
-            [
-                [0, 0, 0, 0, 0, 0],
-                [1, 1, 1, 0, 0, 0],
-                [1, 1, 1, 0, 2, 0],
-                [1, 1, 1, 0, 2, 0],
-                [0, 0, 0, 0, 2, 0],
-                [3, 0, 0, 0, 0, 0],
-            ]
-        )
-    )
-
-    gpu_reference = cle.push(
-        np.asarray(
-            [
-                [1, 1, 1, 0, 0, 0],
-                [1, 1, 1, 0, 0, 0],
-                [1, 1, 1, 1, 2, 2],
-                [1, 1, 1, 1, 2, 2],
-                [1, 0, 0, 0, 2, 2],
-                [3, 0, 0, 0, 2, 2],
-            ]
-        )
-    )
-
-    gpu_output = cle.closing_box(gpu_input, radius_x=1, radius_y=1)
-
-    a = cle.pull(gpu_output)
-    b = cle.pull(gpu_reference)
-
-    print(a)
-    print(b)
-
-    assert np.array_equal(a, b)
-
-
 def test_close_box_2d(gpu_backend):
     gpu_input = cle.push(
         np.asarray(
@@ -390,45 +276,7 @@ def test_close_box_2d(gpu_backend):
         )
     )
 
-    gpu_output = cle.grayscale_closing(gpu_input, radius_x=1, radius_y=1)
-
-    a = cle.pull(gpu_output)
-    b = cle.pull(gpu_reference)
-
-    print(a)
-    print(b)
-
-    assert np.array_equal(a, b)
-
-
-def test_closing_sphere_old(gpu_backend):
-    gpu_input = cle.push(
-        np.asarray(
-            [
-                [0, 0, 0, 0, 0, 0],
-                [1, 1, 1, 0, 0, 0],
-                [1, 1, 1, 0, 2, 0],
-                [1, 1, 1, 0, 2, 0],
-                [0, 0, 0, 0, 2, 0],
-                [3, 0, 0, 0, 0, 0],
-            ]
-        )
-    )
-
-    gpu_reference = cle.push(
-        np.asarray(
-            [
-                [1, 1, 0, 0, 0, 0],
-                [1, 1, 1, 0, 0, 0],
-                [1, 1, 1, 1, 2, 0],
-                [1, 1, 1, 1, 2, 2],
-                [1, 1, 0, 0, 2, 0],
-                [3, 0, 0, 0, 0, 0],
-            ]
-        )
-    )
-
-    gpu_output = cle.closing_sphere(gpu_input, radius_x=1, radius_y=1)
+    gpu_output = cle.grayscale_closing(gpu_input, radius_x=1, radius_y=1, connectivity="box")
 
     a = cle.pull(gpu_output)
     b = cle.pull(gpu_reference)
@@ -511,7 +359,7 @@ def test_top_hat_box(gpu_backend):
         )
     )
 
-    gpu_output = cle.top_hat_box(gpu_input, radius_x=1, radius_y=1)
+    gpu_output = cle.top_hat(gpu_input, radius_x=1, radius_y=1, connectivity="box")
 
     a = cle.pull(gpu_output)
     b = cle.pull(gpu_reference)
@@ -564,7 +412,7 @@ def test_bottom_hat_box(gpu_backend):
     )
 
     result = cle.create_like(test)
-    cle.bottom_hat(test, result, 1, 1, 0)
+    cle.bottom_hat(test, result, 1, 1, 0, connectivity="box")
 
     print(result)
 
@@ -587,7 +435,7 @@ def test_bottom_hat_sphere(gpu_backend):
     )
 
     result = cle.create_like(test)
-    cle.bottom_hat(test, result, 1, 1, 0, "sphere")
+    cle.bottom_hat(test, result, 1, 1, 0, connectivity="sphere")
 
     print(result)
 

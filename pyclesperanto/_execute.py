@@ -1,14 +1,51 @@
-import re
-from os import path
+import inspect
 from pathlib import Path
-from typing import Callable, Optional, Union
 
 import numpy as np
 
-from ._array import Array, Image
+from ._array import Array
 from ._backend import _get_backend
 from ._core import Device, get_device
 from ._memory import create, push
+
+
+def _resolve_kernel_path(kernel_source, anchor=None):
+    """Resolve kernel source to either a file path or kernel code string.
+    
+    Returns the kernel code as a string. If kernel_source is a file path (.cl or .cu),
+    loads and returns the file contents. Otherwise, returns kernel_source unchanged.
+    
+    Parameters
+    ----------
+    kernel_source : str
+        Either a filename (*.cl or *.cu) or a string containing kernel code
+    anchor : str, optional
+        Path to a module file (__file__) used to resolve relative kernel paths.
+        If provided, kernel files are resolved relative to anchor's directory.
+        If not provided and kernel_source is a file, it's resolved relative to
+        the caller's module directory.
+        
+    Returns
+    -------
+    str
+        The kernel code as a string
+        
+    Raises
+    ------
+    FileNotFoundError
+        If the kernel file cannot be found at the resolved path
+    """
+    if not (kernel_source.endswith(".cl") or kernel_source.endswith(".cu")):
+        return kernel_source
+    
+    if anchor is not None:
+        kernel_path = Path(anchor).parent / kernel_source
+    else:
+        caller_frame = inspect.currentframe().f_back
+        caller_file = inspect.getfile(caller_frame)
+        kernel_path = Path(caller_file).parent / kernel_source
+    
+    return kernel_path.read_text()
 
 
 def execute(
@@ -28,10 +65,11 @@ def execute(
 
     Parameters
     ----------
-    anchor : str, default = 'None'
-        Use __file__ when calling this method and the corresponding open.cl
-        file lies in the same folder as the python file calling it.
-        Ignored if kernel_source is a string.
+    anchor : str, default = None
+        Path to a module file (__file__) used to resolve relative kernel paths.
+        If provided, kernel files are resolved relative to anchor's directory.
+        If not provided and kernel_source is a file, it's resolved relative to
+        the caller's module directory. Ignored if kernel_source is a string.
     kernel_source : str
         Filename of the open.cl file to be called, or string containing the open.cl source code
     kernel_name : str
@@ -39,6 +77,8 @@ def execute(
         most clij/clesperanto kernel functions have the same name as the file they are in
     global_size : tuple (z,y,x), default = (1, 1, 1)
         Global_size according to OpenCL definition (usually shape of the destination image).
+    local_size : tuple (z,y,x), default = (0, 0, 0)
+        Local_size according to OpenCL definition.
     parameters : dict(str, [Array, float, int])
         Dictionary containing parameters. Take care: They must be of the
         right type and in the right order as specified in the open.cl file.
@@ -50,18 +90,7 @@ def execute(
         The device to execute the kernel on. If None, use the current device
     """
 
-    # load the kernel file
-    def load_file(anchor, filename):
-        """Load the opencl kernel file as a string"""
-        if anchor is None:
-            kernel = Path(filename).read_text()
-        else:
-            kernel = (Path(anchor).parent / filename).read_text()
-        return kernel
-
-    # test if kernel_source ends with .cl or .cu
-    if kernel_source.endswith(".cl") or kernel_source.endswith(".cu"):
-        kernel_source = load_file(anchor, kernel_source)
+    kernel_source = _resolve_kernel_path(kernel_source, anchor)
 
     # manage the device if not given
     if not device:
@@ -113,10 +142,11 @@ def native_execute(
 
     Parameters
     ----------
-    anchor : str, default = '__file__'
-        Enter __file__ when calling this method and the corresponding open.cl
-        file lies in the same folder as the python file calling it.
-        Ignored if kernel_source is a string.
+    anchor : str, default = None
+        Path to a module file (__file__) used to resolve relative kernel paths.
+        If provided, kernel files are resolved relative to anchor's directory.
+        If not provided and kernel_source is a file, it's resolved relative to
+        the caller's module directory. Ignored if kernel_source is a string.
     kernel_source : str
         Filename of the open.cl file to be called or string containing the open.cl source code
     kernel_name : str
@@ -133,18 +163,7 @@ def native_execute(
         The device to execute the kernel on. If None, use the current device
     """
 
-    # load the kernel file
-    def load_file(anchor, filename):
-        """Load the opencl kernel file as a string"""
-        if anchor is None:
-            kernel = Path(filename).read_text()
-        else:
-            kernel = (Path(anchor).parent / filename).read_text()
-        return kernel
-
-    # test if kernel_source ends with .cl or .cu
-    if kernel_source.endswith(".cl") or kernel_source.endswith(".cu"):
-        kernel_source = load_file(anchor, kernel_source)
+    kernel_source = _resolve_kernel_path(kernel_source, anchor)
 
     # manage the device if not given
     if not device:

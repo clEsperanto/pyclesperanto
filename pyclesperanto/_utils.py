@@ -7,14 +7,24 @@ from ._backend import _get_backend
 cl_buffer_datatype_dict = {
     bool: "bool",
     np.uint8: "uchar",
+    np.ubyte: "uchar",
     np.uint16: "ushort",
+    np.ushort: "ushort",
     np.uint32: "uint",
+    np.uintc: "uint",
     np.uint64: "ulong",
+
     np.int8: "char",
+    np.byte: "char",
     np.int16: "short",
+    np.short: "short",
     np.int32: "int",
+    np.intc: "int",
     np.int64: "long",
+
     np.float32: "float",
+    np.single: "float",
+    
     np.complex64: "cfloat_t",
     int: "int",
     float: "float",

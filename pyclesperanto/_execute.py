@@ -11,10 +11,10 @@ from ._memory import create, push
 
 def _resolve_kernel_path(kernel_source, anchor=None):
     """Resolve kernel source to either a file path or kernel code string.
-    
+
     Returns the kernel code as a string. If kernel_source is a file path (.cl or .cu),
     loads and returns the file contents. Otherwise, returns kernel_source unchanged.
-    
+
     Parameters
     ----------
     kernel_source : str
@@ -24,12 +24,12 @@ def _resolve_kernel_path(kernel_source, anchor=None):
         If provided, kernel files are resolved relative to anchor's directory.
         If not provided and kernel_source is a file, it's resolved relative to
         the caller's module directory.
-        
+
     Returns
     -------
     str
         The kernel code as a string
-        
+
     Raises
     ------
     FileNotFoundError
@@ -37,14 +37,14 @@ def _resolve_kernel_path(kernel_source, anchor=None):
     """
     if not (kernel_source.endswith(".cl") or kernel_source.endswith(".cu")):
         return kernel_source
-    
+
     if anchor is not None:
         kernel_path = Path(anchor).parent / kernel_source
     else:
         caller_frame = inspect.currentframe().f_back
         caller_file = inspect.getfile(caller_frame)
         kernel_path = Path(caller_file).parent / kernel_source
-    
+
     return kernel_path.read_text()
 
 

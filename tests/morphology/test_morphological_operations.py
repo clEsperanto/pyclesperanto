@@ -276,7 +276,9 @@ def test_close_box_2d(gpu_backend):
         )
     )
 
-    gpu_output = cle.grayscale_closing(gpu_input, radius_x=1, radius_y=1, connectivity="box")
+    gpu_output = cle.grayscale_closing(
+        gpu_input, radius_x=1, radius_y=1, connectivity="box"
+    )
 
     a = cle.pull(gpu_output)
     b = cle.pull(gpu_reference)

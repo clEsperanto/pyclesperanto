@@ -13,7 +13,6 @@ cl_buffer_datatype_dict = {
     np.uint32: "uint",
     np.uintc: "uint",
     np.uint64: "ulong",
-
     np.int8: "char",
     np.byte: "char",
     np.int16: "short",
@@ -21,10 +20,8 @@ cl_buffer_datatype_dict = {
     np.int32: "int",
     np.intc: "int",
     np.int64: "long",
-
     np.float32: "float",
     np.single: "float",
-    
     np.complex64: "cfloat_t",
     int: "int",
     float: "float",

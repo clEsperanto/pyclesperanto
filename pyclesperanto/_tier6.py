@@ -2,8 +2,6 @@
 # This code is auto-generated from CLIc 'cle::tier6.hpp' file, do not edit manually.
 #
 
-import functools
-import importlib
 import warnings
 from typing import Optional
 
@@ -13,20 +11,6 @@ from ._array import Image
 from ._backend import _get_backend
 from ._core import Device
 from ._decorators import plugin_function
-
-
-def _deprecated(message: str):
-    '''Emit a deprecation warning when the wrapped function is called.'''
-    def _decorator(func):
-        @functools.wraps(func)
-        def _wrapper(*args, **kwargs):
-            warnings.warn(message, DeprecationWarning, stacklevel=2)
-            return func(*args, **kwargs)
-
-        return _wrapper
-
-    return _decorator
-
 
 @plugin_function(categories=["label processing", "in assistant", "bia-bob-suggestion"])
 def dilate_labels(

@@ -11,6 +11,7 @@ from ._array import Image
 from ._backend import _get_backend
 from ._core import Device
 from ._decorators import plugin_function
+from ._utils import deprecated
 
 
 @plugin_function
@@ -415,7 +416,7 @@ def generate_touching_area_matrix(
     )
 
 
-@warnings.deprecated(
+@deprecated(
     "generate_touch_count_matrix: This function is deprecated. Consider using generate_touch_matrix() with an explicit dst_matrix argument instead."
 )
 @plugin_function
@@ -703,7 +704,7 @@ def labels_statistics(
     )
 
 
-@warnings.deprecated(
+@deprecated(
     "statistics_of_labelled_pixels: This function is deprecated. Consider using labels_statistics() instead."
 )
 @plugin_function
@@ -738,7 +739,7 @@ def statistics_of_labelled_pixels(
     return _get_backend()._statistics_of_labelled_pixels(device, intensity, label)
 
 
-@warnings.deprecated(
+@deprecated(
     "statistics_of_background_and_labelled_pixels: This function is deprecated. Consider using labels_statistics() instead."
 )
 @plugin_function
@@ -942,7 +943,7 @@ def read_map_values(
     return _get_backend()._read_map_values(device, map, label, output_image)
 
 
-@warnings.deprecated(
+@deprecated(
     "read_intensities_from_map: This function is deprecated. Consider using read_map_values() instead."
 )
 @plugin_function

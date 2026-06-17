@@ -1,10 +1,12 @@
 import warnings
 from typing import Optional, Tuple
+from functools import wraps
 
 import numpy as np
 
 from ._array import Array, Image
 from ._core import Device, get_device
+from ._utils import deprecated
 
 
 def create(
@@ -74,9 +76,7 @@ def create_like(
     return create(array.shape, dtype, mtype, device)
 
 
-@warnings.deprecated(
-    "create_labels_like: This function is deprecated. Consider using create_like() instead, with `dtype=np.uint32` for label images."
-)
+@deprecated(  "create_labels_like: This function is deprecated. Consider using create_like() instead, with `dtype=np.uint32` for label images.")
 def create_labels_like(
     array: Image,
     device: Optional[Device] = None,

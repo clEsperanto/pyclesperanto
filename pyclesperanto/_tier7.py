@@ -11,6 +11,7 @@ from ._array import Image
 from ._backend import _get_backend
 from ._core import Device
 from ._decorators import plugin_function
+from ._utils import deprecated
 
 
 @plugin_function
@@ -586,7 +587,7 @@ def labels_neighbors_statistics(
     )
 
 
-@warnings.deprecated(
+@deprecated(
     "statistics_of_labelled_neighbors: This function is deprecated. Consider using statistics_of_neighbor_labels() instead."
 )
 @plugin_function

@@ -11,6 +11,7 @@ from ._array import Image
 from ._backend import _get_backend
 from ._core import Device
 from ._decorators import plugin_function
+from ._utils import deprecated
 
 
 @plugin_function(categories=["combine"])
@@ -79,7 +80,7 @@ def combine_labels(
     )
 
 
-@warnings.deprecated(
+@deprecated(
     "connected_components_labeling: This method is deprecated. Consider using connected_component_labeling() instead."
 )
 @plugin_function(categories=["label", "in assistant"])
@@ -377,7 +378,7 @@ def standard_deviation_partial_touching_area_matrix(
     )
 
 
-@warnings.deprecated(
+@deprecated(
     "standard_deviation_touch_portion: This function is deprecated. Use standard_deviation_partial_touching_area_matrix() instead."
 )
 @plugin_function

@@ -11,6 +11,7 @@ from ._array import Image
 from ._backend import _get_backend
 from ._core import Device
 from ._decorators import plugin_function
+from ._utils import deprecated
 
 
 @plugin_function
@@ -292,7 +293,7 @@ def mean_intensity_map(
     return _get_backend()._mean_intensity_map(device, input_image, labels, output_image)
 
 
-@warnings.deprecated(
+@deprecated(
     "label_mean_intensity_map: This function is deprecated. Use mean_intensity_map_func instead."
 )
 @plugin_function(categories=["label measurement", "map", "in assistant", "combine"])
@@ -360,7 +361,7 @@ def pixel_count_map(
     return _get_backend()._pixel_count_map(device, input_image, output_image)
 
 
-@warnings.deprecated(
+@deprecated(
     "label_pixel_count_map: This function is deprecated. Use pixel_count_map_func instead."
 )
 @plugin_function(categories=["label measurement", "map", "in assistant"])
@@ -509,7 +510,7 @@ def remove_labels_with_map_values_within_range(
     )
 
 
-@warnings.deprecated(
+@deprecated(
     "exclude_labels_with_map_values_out_of_range: This function is deprecated. Use remove_labels_with_map_values_out_of_range_func instead."
 )
 @plugin_function(categories=["label processing", "combine"])
@@ -557,7 +558,7 @@ def exclude_labels_with_map_values_out_of_range(
     )
 
 
-@warnings.deprecated(
+@deprecated(
     "exclude_labels_with_map_values_within_range: This function is deprecated. Use remove_labels_with_values_within_range_func instead."
 )
 @plugin_function(categories=["label processing", "combine"])
@@ -1131,7 +1132,7 @@ def generate_partial_touching_area_matrix(
     )
 
 
-@warnings.deprecated(
+@deprecated(
     "generate_touch_portion_matrix: This function is deprecated. Use generate_partial_touching_area_matrix() instead."
 )
 @plugin_function

@@ -11,6 +11,7 @@ from ._array import Image
 from ._backend import _get_backend
 from ._core import Device
 from ._decorators import plugin_function
+from ._utils import deprecated
 
 
 @plugin_function(categories=["combine", "in assistant"])
@@ -79,7 +80,7 @@ def add_images(
     return _get_backend()._add_images(device, input_image0, input_image1, output_image)
 
 
-@warnings.deprecated(
+@deprecated(
     "bottom_hat_box: This method is deprecated. Consider using bottom_hat() instead."
 )
 @plugin_function(categories=["filter", "background removal", "in assistant"])
@@ -126,7 +127,7 @@ def bottom_hat_box(
     )
 
 
-@warnings.deprecated(
+@deprecated(
     "bottom_hat_sphere: This method is deprecated. Consider using bottom_hat() instead."
 )
 @plugin_function(categories=["filter", "background removal", "in assistant"])
@@ -259,7 +260,7 @@ def clip(
     )
 
 
-@warnings.deprecated(
+@deprecated(
     "closing_box: This method is deprecated. Consider using closing() instead."
 )
 @plugin_function(categories=["filter", "in assistant"])
@@ -303,7 +304,7 @@ def closing_box(
     )
 
 
-@warnings.deprecated(
+@deprecated(
     "closing_sphere: This method is deprecated. Consider using closing() instead."
 )
 @plugin_function(categories=["filter", "in assistant", "bia-bob-suggestion"])
@@ -744,7 +745,7 @@ def degrees_to_radians(
     return _get_backend()._degrees_to_radians(device, input_image, output_image)
 
 
-@warnings.deprecated(
+@deprecated(
     "detect_maxima_box: This method is deprecated. Consider using detect_maxima() instead."
 )
 @plugin_function(categories=["binarize", "in assistant"])
@@ -844,7 +845,7 @@ def detect_maxima(
     )
 
 
-@warnings.deprecated(
+@deprecated(
     "detect_minima_box: This method is deprecated. Consider using detect_minima() instead."
 )
 @plugin_function(categories=["binarize", "in assistant"])
@@ -1219,7 +1220,7 @@ def minimum_of_masked_pixels(
     return _get_backend()._minimum_of_masked_pixels(device, input_image, mask)
 
 
-@warnings.deprecated(
+@deprecated(
     "opening_box: This method is deprecated. Consider using opening() instead."
 )
 @plugin_function(categories=["filter", "in assistant"])
@@ -1263,7 +1264,7 @@ def opening_box(
     )
 
 
-@warnings.deprecated(
+@deprecated(
     "opening_sphere: This method is deprecated. Consider using opening() instead."
 )
 @plugin_function(categories=["filter", "in assistant"])
@@ -1567,7 +1568,7 @@ def squared_difference(
     )
 
 
-@warnings.deprecated(
+@deprecated(
     "standard_deviation_box: This method is deprecated. Consider using standard_deviation() instead."
 )
 @plugin_function(categories=["filter", "edge detection", "in assistant"])
@@ -1616,7 +1617,7 @@ def standard_deviation_box(
     )
 
 
-@warnings.deprecated(
+@deprecated(
     "standard_deviation_sphere: This method is deprecated. Consider using standard_deviation() instead."
 )
 @plugin_function(categories=["filter", "edge detection", "in assistant"])
@@ -1895,7 +1896,7 @@ def sum_of_all_pixels(
     return _get_backend()._sum_of_all_pixels(device, input_image)
 
 
-@warnings.deprecated(
+@deprecated(
     "top_hat_box: This method is deprecated. Consider using top_hat() instead."
 )
 @plugin_function(categories=["filter", "background removal", "in assistant"])
@@ -1942,7 +1943,7 @@ def top_hat_box(
     )
 
 
-@warnings.deprecated(
+@deprecated(
     "top_hat_sphere: This method is deprecated. Consider using top_hat() instead."
 )
 @plugin_function(
@@ -2234,7 +2235,7 @@ def generate_partial_touching_area_matrix_within_range(
     )
 
 
-@warnings.deprecated(
+@deprecated(
     "generate_touch_portion_within_range_neighbors_matrix: This function is deprecated. Consider using generate_partial_touching_area_matrix_within_range() instead."
 )
 @plugin_function

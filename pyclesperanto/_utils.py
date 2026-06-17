@@ -1,4 +1,6 @@
+from functools import wraps
 from typing import Tuple
+import warnings
 
 import numpy as np
 
@@ -141,3 +143,17 @@ def fft_smooth_shape(
         shape = shape + [0] * (3 - len(shape))
 
     return _get_backend()._fft_smooth_shape(shape)[:length]
+
+
+def deprecated(message):
+    def decorator(func):
+        @wraps(func)
+        def wrapper(*args, **kwargs):
+            warnings.warn(
+                message,
+                category=DeprecationWarning,
+                stacklevel=2
+            )
+            return func(*args, **kwargs)
+        return wrapper
+    return decorator

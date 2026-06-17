@@ -11,7 +11,7 @@ from ._array import Image
 from ._backend import _get_backend
 from ._core import Device
 from ._decorators import plugin_function
-
+from ._utils import deprecated
 
 @plugin_function(categories=["filter", "in assistant"])
 def absolute(
@@ -973,7 +973,7 @@ def detect_label_edges(
     return _get_backend()._detect_label_edges(device, input_image, output_image)
 
 
-@warnings.deprecated(
+@deprecated(
     "dilation: This function is deprecated. Consider using erode() instead."
 )
 @plugin_function(categories=["binary processing" "filter"])
@@ -1010,7 +1010,7 @@ def dilation(
     return _get_backend()._dilation(device, input_image, footprint, output_image)
 
 
-@warnings.deprecated(
+@deprecated(
     "dilate_box: This function is deprecated. Consider using dilate() instead."
 )
 @plugin_function(categories=["binary processing"])
@@ -1046,7 +1046,7 @@ def dilate_box(
     return _get_backend()._dilate_box(device, input_image, output_image)
 
 
-@warnings.deprecated(
+@deprecated(
     "dilate_sphere: This function is deprecated. Consider using dilate() instead."
 )
 @plugin_function(categories=["binary processing"])
@@ -1297,7 +1297,7 @@ def erosion(
     return _get_backend()._erosion(device, input_image, footprint, output_image)
 
 
-@warnings.deprecated(
+@deprecated(
     "erode_box: This function is deprecated. Consider using erode() instead."
 )
 @plugin_function(categories=["binary processing"])
@@ -1333,7 +1333,7 @@ def erode_box(
     return _get_backend()._erode_box(device, input_image, output_image)
 
 
-@warnings.deprecated(
+@deprecated(
     "erode_sphere: This function is deprecated. Consider using erode() instead."
 )
 @plugin_function(categories=["binary processing"])
@@ -1952,7 +1952,7 @@ def hessian_eigenvalues(
     )
 
 
-@warnings.deprecated(
+@deprecated(
     "laplace_box: This function is deprecated. Consider using laplace() instead."
 )
 @plugin_function(categories=["filter", "edge detection", "in assistant"])
@@ -1983,7 +1983,7 @@ def laplace_box(
     return _get_backend()._laplace_box(device, input_image, output_image)
 
 
-@warnings.deprecated(
+@deprecated(
     "laplace_diamond: This function is deprecated. Consider using laplace() instead."
 )
 @plugin_function(categories=["filter", "edge detection"])
@@ -2306,7 +2306,7 @@ def maximum_images(
     )
 
 
-@warnings.deprecated(
+@deprecated(
     "maximum_box: This function is deprecated. Consider using maximum_filter() instead."
 )
 @plugin_function(categories=["filter", "in assistant"])
@@ -2542,7 +2542,7 @@ def maximum_z_projection(
     return _get_backend()._maximum_z_projection(device, input_image, output_image)
 
 
-@warnings.deprecated(
+@deprecated(
     "mean_box: This function is deprecated. Consider using mean() instead."
 )
 @plugin_function(categories=["filter", "denoise", "in assistant"])
@@ -2590,7 +2590,7 @@ def mean_box(
     )
 
 
-@warnings.deprecated(
+@deprecated(
     "mean_sphere: This function is deprecated. Consider using mean() instead."
 )
 @plugin_function(categories=["filter", "denoise", "in assistant", "bia-bob-suggestion"])
@@ -2772,7 +2772,7 @@ def mean_z_projection(
     return _get_backend()._mean_z_projection(device, input_image, output_image)
 
 
-@warnings.deprecated(
+@deprecated(
     "median_box: This function is deprecated. Consider using median() instead."
 )
 @plugin_function(categories=["filter", "denoise", "in assistant"])
@@ -2821,7 +2821,7 @@ def median_box(
     )
 
 
-@warnings.deprecated(
+@deprecated(
     "median_sphere: This function is deprecated. Consider using median() instead."
 )
 @plugin_function(categories=["filter", "denoise", "in assistant"])
@@ -2921,7 +2921,7 @@ def median(
     )
 
 
-@warnings.deprecated(
+@deprecated(
     "minimum_box: This function is deprecated. Consider using minimum_filter() instead."
 )
 @plugin_function(categories=["filter", "in assistant"])
@@ -3224,7 +3224,7 @@ def minimum_z_projection(
     return _get_backend()._minimum_z_projection(device, input_image, output_image)
 
 
-@warnings.deprecated(
+@deprecated(
     "mode_box: This function is deprecated. Consider using mode() instead."
 )
 @plugin_function(categories=["label processing", "in assistant"])
@@ -3271,7 +3271,7 @@ def mode_box(
     )
 
 
-@warnings.deprecated(
+@deprecated(
     "mode_sphere: This function is deprecated. Consider using mode() instead."
 )
 @plugin_function(categories=["label processing", "in assistant", "bia-bob-suggestion"])
@@ -3541,7 +3541,7 @@ def nan_to_num(
     )
 
 
-@warnings.deprecated(
+@deprecated(
     "nonzero_maximum_box: This function is deprecated. Consider using nonzero_maximum() instead."
 )
 @plugin_function
@@ -3580,7 +3580,7 @@ def nonzero_maximum_box(
     )
 
 
-@warnings.deprecated(
+@deprecated(
     "nonzero_maximum_diamond: This function is deprecated. Consider using nonzero_maximum() instead."
 )
 @plugin_function
@@ -3660,7 +3660,7 @@ def nonzero_maximum(
     )
 
 
-@warnings.deprecated(
+@deprecated(
     "nonzero_minimum_box: This function is deprecated. Consider using nonzero_minimum() instead."
 )
 @plugin_function
@@ -3699,7 +3699,7 @@ def nonzero_minimum_box(
     )
 
 
-@warnings.deprecated(
+@deprecated(
     "nonzero_minimum_diamond: This function is deprecated. Consider using nonzero_minimum() instead."
 )
 @plugin_function
@@ -3889,7 +3889,7 @@ def paste(
     )
 
 
-@warnings.deprecated(
+@deprecated(
     "onlyzero_overwrite_maximum_box: This function is deprecated. Consider using onlyzero_overwrite_maximum() instead."
 )
 @plugin_function
@@ -3926,7 +3926,7 @@ def onlyzero_overwrite_maximum_box(
     )
 
 
-@warnings.deprecated(
+@deprecated(
     "onlyzero_overwrite_maximum_diamond: This function is deprecated. Consider using onlyzero_overwrite_maximum() instead."
 )
 @plugin_function
@@ -4236,7 +4236,7 @@ def replace_value(
     )
 
 
-@warnings.deprecated(
+@deprecated(
     "replace_intensity: This function is deprecated. Consider using replace_value() instead."
 )
 @plugin_function
@@ -4279,7 +4279,7 @@ def replace_intensity(
     )
 
 
-@warnings.deprecated(
+@deprecated(
     "replace_intensities: This function is deprecated. Consider using replace_values() instead."
 )
 @plugin_function
@@ -4317,7 +4317,7 @@ def replace_intensities(
     )
 
 
-@warnings.deprecated(
+@deprecated(
     "maximum_sphere: This function is deprecated. Consider using maximum() instead."
 )
 @plugin_function(categories=["filter", "in assistant", "bia-bob-suggestion"])
@@ -4365,7 +4365,7 @@ def maximum_sphere(
     )
 
 
-@warnings.deprecated(
+@deprecated(
     "minimum_sphere: This function is deprecated. Consider using minimum() instead."
 )
 @plugin_function(categories=["filter", "in assistant", "bia-bob-suggestion"])
@@ -5451,7 +5451,7 @@ def undefined_to_zero(
     return _get_backend()._undefined_to_zero(device, input_image, output_image)
 
 
-@warnings.deprecated(
+@deprecated(
     "variance_box: This function is deprecated. Consider using variance() instead."
 )
 @plugin_function(categories=["filter", "edge detection", "in assistant"])
@@ -5500,7 +5500,7 @@ def variance_box(
     )
 
 
-@warnings.deprecated(
+@deprecated(
     "variance_sphere: This function is deprecated. Consider using variance() instead."
 )
 @plugin_function(categories=["filter", "edge detection", "in assistant"])
@@ -6204,7 +6204,7 @@ def mean_distance_touching_neighbors(
     )
 
 
-@warnings.deprecated(
+@deprecated(
     "average_distance_touching_neighbors: This function is deprecated. Consider using mean_distance_of_touching_neighbors() instead."
 )
 @plugin_function
@@ -6330,7 +6330,7 @@ def mean_distance_n_farthest_neighbors(
     )
 
 
-@warnings.deprecated(
+@deprecated(
     "average_distance_of_n_nearest_distances: This function is deprecated. Consider using mean_distance_n_nearest_neighbors() instead."
 )
 @plugin_function
@@ -6363,7 +6363,7 @@ def average_distance_of_n_nearest_distances(
     )
 
 
-@warnings.deprecated(
+@deprecated(
     "maximum_distance_of_n_shortest_distances: This function is deprecated. Consider using maximum_distance_n_nearest_neighbors() instead."
 )
 @plugin_function
@@ -6396,7 +6396,7 @@ def maximum_distance_of_n_shortest_distances(
     )
 
 
-@warnings.deprecated(
+@deprecated(
     "average_distance_of_n_far_off_distances: This function is deprecated. Consider using mean_distance_n_farthest_neighbors() instead."
 )
 @plugin_function

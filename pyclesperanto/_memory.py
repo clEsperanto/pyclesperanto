@@ -74,7 +74,9 @@ def create_like(
     return create(array.shape, dtype, mtype, device)
 
 
-@warnings.deprecated('create_labels_like: This function is deprecated. Consider using create_like() instead, with `dtype=np.uint32` for label images.')
+@warnings.deprecated(
+    "create_labels_like: This function is deprecated. Consider using create_like() instead, with `dtype=np.uint32` for label images."
+)
 def create_labels_like(
     array: Image,
     device: Optional[Device] = None,

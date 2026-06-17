@@ -63,8 +63,8 @@ if _backend_available:
     from ._functionalities import imshow, operation, operations
     from ._memory import (
         create,
-        create_like,
         create_labels_like,
+        create_like,
         empty,
         empty_like,
         from_array,

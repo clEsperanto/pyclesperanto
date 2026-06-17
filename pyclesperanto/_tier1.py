@@ -13,6 +13,7 @@ from ._core import Device
 from ._decorators import plugin_function
 from ._utils import deprecated
 
+
 @plugin_function(categories=["filter", "in assistant"])
 def absolute(
     input_image: Image,
@@ -973,9 +974,7 @@ def detect_label_edges(
     return _get_backend()._detect_label_edges(device, input_image, output_image)
 
 
-@deprecated(
-    "dilation: This function is deprecated. Consider using erode() instead."
-)
+@deprecated("dilation: This function is deprecated. Consider using erode() instead.")
 @plugin_function(categories=["binary processing" "filter"])
 def dilation(
     input_image: Image,
@@ -1010,9 +1009,7 @@ def dilation(
     return _get_backend()._dilation(device, input_image, footprint, output_image)
 
 
-@deprecated(
-    "dilate_box: This function is deprecated. Consider using dilate() instead."
-)
+@deprecated("dilate_box: This function is deprecated. Consider using dilate() instead.")
 @plugin_function(categories=["binary processing"])
 def dilate_box(
     input_image: Image,
@@ -1297,9 +1294,7 @@ def erosion(
     return _get_backend()._erosion(device, input_image, footprint, output_image)
 
 
-@deprecated(
-    "erode_box: This function is deprecated. Consider using erode() instead."
-)
+@deprecated("erode_box: This function is deprecated. Consider using erode() instead.")
 @plugin_function(categories=["binary processing"])
 def erode_box(
     input_image: Image,
@@ -2542,9 +2537,7 @@ def maximum_z_projection(
     return _get_backend()._maximum_z_projection(device, input_image, output_image)
 
 
-@deprecated(
-    "mean_box: This function is deprecated. Consider using mean() instead."
-)
+@deprecated("mean_box: This function is deprecated. Consider using mean() instead.")
 @plugin_function(categories=["filter", "denoise", "in assistant"])
 def mean_box(
     input_image: Image,
@@ -2590,9 +2583,7 @@ def mean_box(
     )
 
 
-@deprecated(
-    "mean_sphere: This function is deprecated. Consider using mean() instead."
-)
+@deprecated("mean_sphere: This function is deprecated. Consider using mean() instead.")
 @plugin_function(categories=["filter", "denoise", "in assistant", "bia-bob-suggestion"])
 def mean_sphere(
     input_image: Image,
@@ -2772,9 +2763,7 @@ def mean_z_projection(
     return _get_backend()._mean_z_projection(device, input_image, output_image)
 
 
-@deprecated(
-    "median_box: This function is deprecated. Consider using median() instead."
-)
+@deprecated("median_box: This function is deprecated. Consider using median() instead.")
 @plugin_function(categories=["filter", "denoise", "in assistant"])
 def median_box(
     input_image: Image,
@@ -3224,9 +3213,7 @@ def minimum_z_projection(
     return _get_backend()._minimum_z_projection(device, input_image, output_image)
 
 
-@deprecated(
-    "mode_box: This function is deprecated. Consider using mode() instead."
-)
+@deprecated("mode_box: This function is deprecated. Consider using mode() instead.")
 @plugin_function(categories=["label processing", "in assistant"])
 def mode_box(
     input_image: Image,
@@ -3271,9 +3258,7 @@ def mode_box(
     )
 
 
-@deprecated(
-    "mode_sphere: This function is deprecated. Consider using mode() instead."
-)
+@deprecated("mode_sphere: This function is deprecated. Consider using mode() instead.")
 @plugin_function(categories=["label processing", "in assistant", "bia-bob-suggestion"])
 def mode_sphere(
     input_image: Image,

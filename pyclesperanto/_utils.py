@@ -1,6 +1,6 @@
+import warnings
 from functools import wraps
 from typing import Tuple
-import warnings
 
 import numpy as np
 
@@ -149,11 +149,9 @@ def deprecated(message):
     def decorator(func):
         @wraps(func)
         def wrapper(*args, **kwargs):
-            warnings.warn(
-                message,
-                category=DeprecationWarning,
-                stacklevel=2
-            )
+            warnings.warn(message, category=DeprecationWarning, stacklevel=2)
             return func(*args, **kwargs)
+
         return wrapper
+
     return decorator

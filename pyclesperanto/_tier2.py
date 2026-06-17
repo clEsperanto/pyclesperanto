@@ -260,9 +260,7 @@ def clip(
     )
 
 
-@deprecated(
-    "closing_box: This method is deprecated. Consider using closing() instead."
-)
+@deprecated("closing_box: This method is deprecated. Consider using closing() instead.")
 @plugin_function(categories=["filter", "in assistant"])
 def closing_box(
     input_image: Image,
@@ -1220,9 +1218,7 @@ def minimum_of_masked_pixels(
     return _get_backend()._minimum_of_masked_pixels(device, input_image, mask)
 
 
-@deprecated(
-    "opening_box: This method is deprecated. Consider using opening() instead."
-)
+@deprecated("opening_box: This method is deprecated. Consider using opening() instead.")
 @plugin_function(categories=["filter", "in assistant"])
 def opening_box(
     input_image: Image,
@@ -1896,9 +1892,7 @@ def sum_of_all_pixels(
     return _get_backend()._sum_of_all_pixels(device, input_image)
 
 
-@deprecated(
-    "top_hat_box: This method is deprecated. Consider using top_hat() instead."
-)
+@deprecated("top_hat_box: This method is deprecated. Consider using top_hat() instead.")
 @plugin_function(categories=["filter", "background removal", "in assistant"])
 def top_hat_box(
     input_image: Image,

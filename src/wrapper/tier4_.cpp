@@ -36,7 +36,7 @@ m.def("_label_bounding_box", &cle::tier4::label_bounding_box_func, "Call cle::ti
 
     m.def("_parametric_map", &cle::tier4::parametric_map_func, "Call cle::tier4::parametric_map_func from C++ CLIc.",
     py::return_value_policy::automatic_reference,
-    py::arg("device"), py::arg("labels"), py::arg("properties"), py::arg("property"), py::arg("dst"));
+    py::arg("device"), py::arg("labels"), py::arg("properties"), py::arg("dst"), py::arg("property"));
 
     m.def("_mean_intensity_map", &cle::tier4::mean_intensity_map_func, "Call cle::tier4::mean_intensity_map_func from C++ CLIc.",
     py::return_value_policy::automatic_reference,

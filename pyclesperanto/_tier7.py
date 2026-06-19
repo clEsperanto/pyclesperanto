@@ -472,7 +472,7 @@ def labels_neighbors_statistics(
     proximal_distances: list =[10, 20, 40, 80, 160],
     nearest_neighbor_ns: list =[1, 2, 3, 4, 5, 6, 7, 8, 10, 20],
     dilation_radii: list =[5, 10],
-    include_background: const bool & =False,
+    include_background: bool =False,
     device: Optional[Device] =None
 ) -> dict:
     """Computes touching, distance-based, and neighborhood statistics of labels and
@@ -492,7 +492,7 @@ def labels_neighbors_statistics(
         n-nearest neighbors list for analysis.
     dilation_radii: list (= [5, 10])
         Vector of dilation radii to consider for analysis.
-    include_background: const bool & (= False)
+    include_background: bool (= False)
         If true, the background label is included (but set to 0).
     device: Optional[Device] (= None)
         Device to perform the operation on.

@@ -250,7 +250,7 @@ def parametric_map(
     [4] https://clij.github.io/clij2-docs/reference_maximumIntensityMap
     [5] https://clij.github.io/clij2-docs/reference_standardDeviationIntensityMap
     """
-    return _get_backend()._parametric_map(device, labels, properties, str(property), output_image)
+    return _get_backend()._parametric_map(device, labels, properties, output_image, str(property))
 
 @plugin_function(categories=["label measurement", "map", "in assistant", "combine"])
 def mean_intensity_map(

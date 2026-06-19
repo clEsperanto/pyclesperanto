@@ -1,5 +1,5 @@
 // this code is auto-generated, do not edit manually
-
+    
 #include "pycle_wrapper.hpp"
 #include "tier7.hpp"
 
@@ -56,7 +56,7 @@ m.def("_affine_transform", &cle::tier7::affine_transform_func, "Call cle::tier7:
 
     m.def("_labels_neighbors_statistics", &cle::tier7::labels_neighbors_statistics_func, "Call cle::tier7::labels_neighbors_statistics_func from C++ CLIc.",
     py::return_value_policy::automatic_reference,
-    py::arg("device"), py::arg("label"), py::arg("proximal_distances"), py::arg("nearest_neighbor_ns"), py::arg("dilation_radii"));
+    py::arg("device"), py::arg("label"), py::arg("proximal_distances"), py::arg("nearest_neighbor_ns"), py::arg("dilation_radii"), py::arg("include_background"));
 
     m.def("_statistics_of_labelled_neighbors", &cle::tier7::statistics_of_labelled_neighbors_func, "Call cle::tier7::statistics_of_labelled_neighbors_func from C++ CLIc.",
     py::return_value_policy::automatic_reference,

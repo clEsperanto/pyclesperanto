@@ -20,21 +20,23 @@ from ._array import Image
 warnings.filterwarnings("always", category=DeprecationWarning, module=__name__)
 
 
-def label(input_image: Image, output_image: Image = None, connectivity: str = "box") -> Image:
+def label(
+    input_image: Image, output_image: Image = None, connectivity: str = "box"
+) -> Image:
     """
     Label connected components in an image.
-    
+
     Parameters
     ----------
     input_image : Image
-        The input image to be labeled.  
+        The input image to be labeled.
     output_image : Image, optional
         The output image where the labeled components will be stored. If not provided, a new image
         will be created.
     connectivity : str, optional
         The connectivity criterion to use for labeling. Can be either 'box' or 'sphere'.
         Default is 'box'.
-        
+
     Returns
     -------
     Image
@@ -42,7 +44,9 @@ def label(input_image: Image, output_image: Image = None, connectivity: str = "b
     """
     from ._tier5 import connected_component_labeling
 
-    return connected_component_labeling(input_image=input_image, output_image=output_image)
+    return connected_component_labeling(
+        input_image=input_image, output_image=output_image
+    )
 
 
 def affine_transform(

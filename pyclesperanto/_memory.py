@@ -171,7 +171,7 @@ def asarray(
         Memory type of the image (buffer, image), buffer by default if None
     device : Device, optional
         Device on which the image is created, current device by default if None
-    
+
     Returns
     -------
     Array

@@ -119,7 +119,10 @@ def list_available_devices(device_type: str = "all") -> list:
         )
     return dev_list
 
-@deprecated("available_device_names: This function is deprecated, please use list_available_devices() instead.")
+
+@deprecated(
+    "available_device_names: This function is deprecated, please use list_available_devices() instead."
+)
 def available_device_names(device_type: str = "all") -> list:
     """Retrieve a list of names of available devices
 
@@ -168,7 +171,10 @@ def info():
     ]
     print("".join(device_info))
 
-@deprecated("set_wait_for_kernel_finish: This function is deprecated, please use wait_for_kernel_to_finish() instead.")
+
+@deprecated(
+    "set_wait_for_kernel_finish: This function is deprecated, please use wait_for_kernel_to_finish() instead."
+)
 def set_wait_for_kernel_finish(wait: bool = True):
     """Wait for kernel to finish"""
     wait_for_kernel_to_finish(wait)

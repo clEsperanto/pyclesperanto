@@ -53,18 +53,19 @@ if _backend_available:
     from ._core import (
         Device,
         _default_initialisation,
+        available_device_names,
+        cl_info,
         get_device,
         info,
-        cl_info,
         list_available_devices,
-        available_device_names,
         select_device,
-        wait_for_kernel_to_finish,
         set_wait_for_kernel_finish,
+        wait_for_kernel_to_finish,
     )
     from ._execute import evaluate, execute, native_execute
     from ._functionalities import imshow, operation, operations
     from ._memory import (
+        asarray,
         create,
         create_labels_like,
         create_like,
@@ -78,7 +79,6 @@ if _backend_available:
         push,
         zeros,
         zeros_like,
-        asarray,
     )
     from ._tier1 import *
     from ._tier2 import *

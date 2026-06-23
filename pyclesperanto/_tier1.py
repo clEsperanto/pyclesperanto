@@ -4303,7 +4303,7 @@ def replace_intensities(
 
 
 @deprecated(
-    "maximum_sphere: This function is deprecated. Consider using maximum() instead."
+    "maximum_sphere: This function is deprecated. Consider using maximum_filter() instead."
 )
 @plugin_function(categories=["filter", "in assistant", "bia-bob-suggestion"])
 def maximum_sphere(

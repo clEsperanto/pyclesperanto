@@ -4,6 +4,7 @@ from typing import Optional, Union
 import numpy as np
 
 from ._backend import _get_backend
+from ._utils import deprecated
 
 
 def _get_backend_manager():
@@ -118,6 +119,26 @@ def list_available_devices(device_type: str = "all") -> list:
         )
     return dev_list
 
+@deprecated("available_device_names: This function is deprecated, please use list_available_devices() instead.")
+def available_device_names(device_type: str = "all") -> list:
+    """Retrieve a list of names of available devices
+
+    Will search the system for backend compatible device available and return a list of their names.
+    This will NOT set the device!
+    Use 'select_device' to select devices.
+    Use 'get_device' to retrieve the current device.
+
+    Parameters
+    ----------
+    device_type : str, default = "all"
+        Type of device to be selected (e.g. "all", "cpu", "gpu")
+
+    Returns
+    -------
+    name list : list[str]
+    """
+    return list_available_devices(device_type=device_type)
+
 
 def wait_for_kernel_to_finish(wait: bool = True, device: Device = None):
     """Wait for kernel to finish
@@ -146,6 +167,17 @@ def info():
         for idx, device in enumerate(list_available_devices())
     ]
     print("".join(device_info))
+
+@deprecated("set_wait_for_kernel_finish: This function is deprecated, please use wait_for_kernel_to_finish() instead.")
+def set_wait_for_kernel_finish(wait: bool = True):
+    """Wait for kernel to finish"""
+    wait_for_kernel_to_finish(wait)
+
+
+@deprecated("cl_info: This function is deprecated, please use info() instead.")
+def cl_info():
+    """Print information about the devices available on the system"""
+    info()
 
 
 def _default_initialisation():

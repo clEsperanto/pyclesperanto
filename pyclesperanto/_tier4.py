@@ -295,7 +295,7 @@ def mean_intensity_map(
 
 
 @deprecated(
-    "label_mean_intensity_map: This function is deprecated. Use mean_intensity_map_func instead."
+    "label_mean_intensity_map: This function is deprecated. Use mean_intensity_map instead."
 )
 @plugin_function(categories=["label measurement", "map", "in assistant", "combine"])
 def label_mean_intensity_map(
@@ -363,7 +363,7 @@ def pixel_count_map(
 
 
 @deprecated(
-    "label_pixel_count_map: This function is deprecated. Use pixel_count_map_func instead."
+    "label_pixel_count_map: This function is deprecated. Use pixel_count_map instead."
 )
 @plugin_function(categories=["label measurement", "map", "in assistant"])
 def label_pixel_count_map(
@@ -512,7 +512,7 @@ def remove_labels_with_map_values_within_range(
 
 
 @deprecated(
-    "exclude_labels_with_map_values_out_of_range: This function is deprecated. Use remove_labels_with_map_values_out_of_range_func instead."
+    "exclude_labels_with_map_values_out_of_range: This function is deprecated. Use remove_labels_with_map_values_out_of_range instead."
 )
 @plugin_function(categories=["label processing", "combine"])
 def exclude_labels_with_map_values_out_of_range(
@@ -560,7 +560,7 @@ def exclude_labels_with_map_values_out_of_range(
 
 
 @deprecated(
-    "exclude_labels_with_map_values_within_range: This function is deprecated. Use remove_labels_with_values_within_range_func instead."
+    "exclude_labels_with_map_values_within_range: This function is deprecated. Use remove_labels_with_map_values_within_range instead."
 )
 @plugin_function(categories=["label processing", "combine"])
 def exclude_labels_with_map_values_within_range(

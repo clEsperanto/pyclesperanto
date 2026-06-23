@@ -16,20 +16,33 @@ import numpy as np
 
 from ._array import Image
 
-# pyclesperanto_prototype aliases
-from ._core import info as cl_info
-from ._core import list_available_devices as available_device_names
-from ._core import wait_for_kernel_to_finish
-
-# numpy operations aliases
-from ._memory import push as asarray
-
-# scikit-image aliases
-from ._tier5 import connected_components_labeling as label
-from ._tier7 import affine_transform as _tier7_affine_transform
-
 # enforce deprecation warnings display
 warnings.filterwarnings("always", category=DeprecationWarning, module=__name__)
+
+
+def label(input_image: Image, output_image: Image = None, connectivity: str = "box") -> Image:
+    """
+    Label connected components in an image.
+    
+    Parameters
+    ----------
+    input_image : Image
+        The input image to be labeled.  
+    output_image : Image, optional
+        The output image where the labeled components will be stored. If not provided, a new image
+        will be created.
+    connectivity : str, optional
+        The connectivity criterion to use for labeling. Can be either 'box' or 'sphere'.
+        Default is 'box'.
+        
+    Returns
+    -------
+    Image
+        The labeled image.
+    """
+    from ._tier5 import connected_component_labeling
+
+    return connected_component_labeling(input_image=input_image, output_image=output_image)
 
 
 def affine_transform(
@@ -43,9 +56,11 @@ def affine_transform(
     auto_size: Optional[bool] = None,
 ) -> Image:
 
+    from ._tier7 import affine_transform as _tier7_affine_transform
+
     if transform is not None:
         warnings.warn(
-            "affine_transform : 'transform_matrix' parameter is deprecated. Please use 'transform' instead.",
+            "affine_transform : 'transform' parameter is deprecated. Please use 'transform_matrix' instead.",
             DeprecationWarning,
         )
         transform_matrix = transform.ravel().tolist()
@@ -76,84 +91,3 @@ def affine_transform(
         interpolate=interpolate,
         resize=resize,
     )
-
-
-def set_wait_for_kernel_finish(wait: bool = True):
-    warnings.warn(
-        "set_wait_for_kernel_finish : This method is deprecated. Consider using wait_for_kernel_to_finish() instead.",
-        DeprecationWarning,
-    )
-    wait_for_kernel_to_finish(wait)
-
-
-# def clip(a, a_min, a_max, out=None):
-#     from ._tier2 import clip
-
-#     a = asarray(a)
-#     if out:
-#         out = asarray(out)
-#     return clip(
-#         input_image=a,
-#         output_image=out,
-#         min_intensity=a_min,
-#         max_intensity=a_max,
-#         device=a.device,
-#     )
-
-
-# def mod(x1, x2, out=None):
-#     from ._tier1 import modulo_images
-
-#     x1 = asarray(x1)
-#     if out:
-#         out = asarray(out)
-#     return modulo_images(input_image0=x1, input_image1=x2, device=x1.device)
-
-
-# def sqrt(x, out=None):
-#     from ._tier1 import square_root
-
-#     x = asarray(x)
-#     if out:
-#         out = asarray(out)
-#     return square_root(input_image=x, output_image=out, device=x.device)
-
-
-# def cbrt(x, out=None):
-#     from ._tier1 import cubic_root
-
-#     x = asarray(x)
-#     if out:
-#         out = asarray(out)
-#     return cubic_root(input_image=x, output_image=out, device=x.device)
-
-
-# def power(x1, x2, out=None):
-#     x1 = asarray(x1)
-#     if out:
-#         out = asarray(out)
-
-#     # test if x2 is a scalar
-#     if np.isscalar(x2):
-#         from ._tier1 import power
-
-#         return power(input_image=x1, scalar=x2, output_image=out, device=x1.device)
-#     else:
-#         from ._tier1 import power_images
-
-#         x2 = asarray(x2)
-#         return power_images(
-#             input_image0=x1, input_image1=x2, output_image=out, device=x1.device
-#         )
-
-
-# def fabs(x, out=None):
-#     from ._memory import create
-#     from ._tier1 import absolute
-
-#     x = asarray(x)
-#     if out:
-#         out = asarray(out)
-#     else:
-#         out = create(x.shape, dtype=float, mtype=x.mtype, device=x.device)
-#     return absolute(input_image=x, output_image=out, device=x.device)

@@ -150,6 +150,36 @@ def push(
     return create(array.shape, dtype, mtype, device).set(array)
 
 
+def asarray(
+    array,
+    dtype: Optional[type] = None,
+    mtype: Optional[str] = None,
+    device: Optional[Device] = None,
+) -> Array:
+    """Create a new image on the device and push the input image into it.
+
+    Parameters
+    ----------
+    array : Image
+        Input image
+    dtype : type, optional
+        If provided, the input image is cast to the given dtype before being
+        pushed to the device. Examples are `np.int8`, `np.float32`, etc.
+        By default, no casting is performed and the dtype of the pushed
+        image will match the dtype of the input image.
+    mtype : str, optional
+        Memory type of the image (buffer, image), buffer by default if None
+    device : Device, optional
+        Device on which the image is created, current device by default if None
+    
+    Returns
+    -------
+    Array
+        Created Array on the device with the input image data
+    """
+    return push(array, dtype=dtype, mtype=mtype, device=device)
+
+
 def pull(array: Image) -> np.ndarray:
     """Pull the input image from the device to the host.
 

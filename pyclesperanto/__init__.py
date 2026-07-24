@@ -65,14 +65,19 @@ if _backend_available:
     from ._execute import evaluate, execute, native_execute
     from ._functionalities import imshow, operation, operations
     from ._memory import (
+        arange,
         asarray,
         create,
         create_labels_like,
         create_like,
         empty,
         empty_like,
+        eye,
         from_array,
         from_dlpack,
+        full,
+        full_like,
+        linspace,
         ones,
         ones_like,
         pull,

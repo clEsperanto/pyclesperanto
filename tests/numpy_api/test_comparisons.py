@@ -15,6 +15,7 @@ def _run_subprocess(code):
         [sys.executable, "-c", code], capture_output=True, text=True, timeout=300
     )
 
+
 _COMPARISONS = [
     operator.gt,
     operator.ge,

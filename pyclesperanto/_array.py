@@ -668,16 +668,25 @@ def _apply_ufunc(name, inputs):
     return NotImplemented
 
 
-def _apply_reduce(ufunc_name, arr, axis=None, dtype=None, out=None, keepdims=False, initial=None, where=True):
+def _apply_reduce(
+    ufunc_name,
+    arr,
+    axis=None,
+    dtype=None,
+    out=None,
+    keepdims=False,
+    initial=None,
+    where=True,
+):
     """Apply ufunc.reduce to an Array by routing to existing reduction kernels."""
     if initial is not None or where is not True:
         return NotImplemented
-    
-    from ._operators import _sum, _max, _min, _prod
-    
+
+    from ._operators import _max, _min, _prod, _sum
+
     if axis is None:
         axis = 0
-    
+
     if ufunc_name == "add":
         return _sum(arr, axis=axis, dtype=dtype, out=out, keepdims=keepdims)
     elif ufunc_name == "maximum":
@@ -686,7 +695,7 @@ def _apply_reduce(ufunc_name, arr, axis=None, dtype=None, out=None, keepdims=Fal
         return _min(arr, axis=axis, out=out, keepdims=keepdims)
     elif ufunc_name == "multiply":
         return _prod(arr, axis=axis, dtype=dtype, out=out, keepdims=keepdims)
-    
+
     return NotImplemented
 
 
@@ -705,11 +714,11 @@ def _normalize_axis(axis, ndim):
 def _apply_accumulate(ufunc_name, arr, axis=0, dtype=None, out=None):
     """Apply ufunc.accumulate to an Array using backend cumulative kernels."""
     from ._tier1 import (
+        copy,
         cumulative_max,
         cumulative_min,
         cumulative_product,
         cumulative_sum,
-        copy,
     )
 
     if dtype is not None:

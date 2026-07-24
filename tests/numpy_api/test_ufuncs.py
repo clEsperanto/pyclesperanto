@@ -102,7 +102,9 @@ def test_power_ufunc(gpu_backend):
 def test_np_power_scalar_base(gpu_backend):
     data = np.asarray([1.0, 2.0, 3.0], dtype=np.float32)
     arr = cle.Array.from_array(data)
-    np.testing.assert_allclose(np.asarray(np.power(2, arr)), np.power(2, data), rtol=1e-5)
+    np.testing.assert_allclose(
+        np.asarray(np.power(2, arr)), np.power(2, data), rtol=1e-5
+    )
 
 
 @pytest.mark.parametrize("ufunc", _UNARY_MAPPED, ids=lambda u: u.__name__)
@@ -153,7 +155,9 @@ def test_accumulate_supported(gpu_backend, ufunc):
     data = np.asarray([[1.0, 2.0], [3.0, 4.0]], dtype=np.float32)
     arr = cle.Array.from_array(data)
     result = ufunc.accumulate(arr, axis=1)
-    np.testing.assert_allclose(np.asarray(result), ufunc.accumulate(data, axis=1), rtol=1e-5)
+    np.testing.assert_allclose(
+        np.asarray(result), ufunc.accumulate(data, axis=1), rtol=1e-5
+    )
 
 
 def test_accumulate_supported_with_out_numpy(gpu_backend):
@@ -171,14 +175,18 @@ def test_accumulate_supported_with_out_array(gpu_backend):
     out = cle.Array.empty(data.shape, dtype=np.float32)
     result = np.add.accumulate(arr, axis=0, out=out)
     assert result is out
-    np.testing.assert_allclose(np.asarray(out), np.add.accumulate(data, axis=0), rtol=1e-5)
+    np.testing.assert_allclose(
+        np.asarray(out), np.add.accumulate(data, axis=0), rtol=1e-5
+    )
 
 
 def test_accumulate_supported_with_negative_axis(gpu_backend):
     data = np.asarray([[1.0, 2.0], [3.0, 4.0]], dtype=np.float32)
     arr = cle.Array.from_array(data)
     result = np.multiply.accumulate(arr, axis=-1)
-    np.testing.assert_allclose(np.asarray(result), np.multiply.accumulate(data, axis=-1), rtol=1e-5)
+    np.testing.assert_allclose(
+        np.asarray(result), np.multiply.accumulate(data, axis=-1), rtol=1e-5
+    )
 
 
 def test_accumulate_dtype(gpu_backend):

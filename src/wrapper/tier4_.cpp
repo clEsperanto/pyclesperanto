@@ -1,5 +1,5 @@
 // this code is auto-generated, do not edit manually
-
+    
 #include "pycle_wrapper.hpp"
 #include "tier4.hpp"
 
@@ -132,7 +132,11 @@ m.def("_label_bounding_box", &cle::tier4::label_bounding_box_func, "Call cle::ti
 
     m.def("_standard_deviation_of_all_pixels", &cle::tier4::standard_deviation_of_all_pixels_func, "Call cle::tier4::standard_deviation_of_all_pixels_func from C++ CLIc.",
     py::return_value_policy::automatic_reference,
-    py::arg("device"), py::arg("src"));
+    py::arg("device"), py::arg("src"), py::arg("ddof"));
+
+    m.def("_variance_of_all_pixels", &cle::tier4::variance_of_all_pixels_func, "Call cle::tier4::variance_of_all_pixels_func from C++ CLIc.",
+    py::return_value_policy::automatic_reference,
+    py::arg("device"), py::arg("src"), py::arg("ddof"));
 
     m.def("_generate_partial_touching_area_matrix", &cle::tier4::generate_partial_touching_area_matrix_func, "Call cle::tier4::generate_partial_touching_area_matrix_func from C++ CLIc.",
     py::return_value_policy::automatic_reference,

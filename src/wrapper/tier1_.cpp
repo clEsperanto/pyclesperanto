@@ -1,5 +1,5 @@
 // this code is auto-generated, do not edit manually
-
+    
 #include "pycle_wrapper.hpp"
 #include "tier1.hpp"
 
@@ -93,6 +93,22 @@ m.def("_absolute", &cle::tier1::absolute_func, "Call cle::tier1::absolute_func f
     m.def("_circular_shift", &cle::tier1::circular_shift_func, "Call cle::tier1::circular_shift_func from C++ CLIc.",
     py::return_value_policy::automatic_reference,
     py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("shift_x"), py::arg("shift_y"), py::arg("shift_z"));
+
+    m.def("_cumulative_sum", &cle::tier1::cumulative_sum_func, "Call cle::tier1::cumulative_sum_func from C++ CLIc.",
+    py::return_value_policy::automatic_reference,
+    py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("axis"), py::arg("keep_dims"));
+
+    m.def("_cumulative_min", &cle::tier1::cumulative_min_func, "Call cle::tier1::cumulative_min_func from C++ CLIc.",
+    py::return_value_policy::automatic_reference,
+    py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("axis"), py::arg("keep_dims"));
+
+    m.def("_cumulative_max", &cle::tier1::cumulative_max_func, "Call cle::tier1::cumulative_max_func from C++ CLIc.",
+    py::return_value_policy::automatic_reference,
+    py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("axis"), py::arg("keep_dims"));
+
+    m.def("_cumulative_product", &cle::tier1::cumulative_product_func, "Call cle::tier1::cumulative_product_func from C++ CLIc.",
+    py::return_value_policy::automatic_reference,
+    py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("axis"), py::arg("keep_dims"));
 
     m.def("_convolve", &cle::tier1::convolve_func, "Call cle::tier1::convolve_func from C++ CLIc.",
     py::return_value_policy::automatic_reference,
@@ -292,15 +308,15 @@ m.def("_absolute", &cle::tier1::absolute_func, "Call cle::tier1::absolute_func f
 
     m.def("_maximum_x_projection", &cle::tier1::maximum_x_projection_func, "Call cle::tier1::maximum_x_projection_func from C++ CLIc.",
     py::return_value_policy::automatic_reference,
-    py::arg("device"), py::arg("src"), py::arg("dst"));
+    py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("keep_dims"));
 
     m.def("_maximum_y_projection", &cle::tier1::maximum_y_projection_func, "Call cle::tier1::maximum_y_projection_func from C++ CLIc.",
     py::return_value_policy::automatic_reference,
-    py::arg("device"), py::arg("src"), py::arg("dst"));
+    py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("keep_dims"));
 
     m.def("_maximum_z_projection", &cle::tier1::maximum_z_projection_func, "Call cle::tier1::maximum_z_projection_func from C++ CLIc.",
     py::return_value_policy::automatic_reference,
-    py::arg("device"), py::arg("src"), py::arg("dst"));
+    py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("keep_dims"));
 
     m.def("_mean_box", &cle::tier1::mean_box_func, "Call cle::tier1::mean_box_func from C++ CLIc.",
     py::return_value_policy::automatic_reference,
@@ -316,15 +332,15 @@ m.def("_absolute", &cle::tier1::absolute_func, "Call cle::tier1::absolute_func f
 
     m.def("_mean_x_projection", &cle::tier1::mean_x_projection_func, "Call cle::tier1::mean_x_projection_func from C++ CLIc.",
     py::return_value_policy::automatic_reference,
-    py::arg("device"), py::arg("src"), py::arg("dst"));
+    py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("keep_dims"));
 
     m.def("_mean_y_projection", &cle::tier1::mean_y_projection_func, "Call cle::tier1::mean_y_projection_func from C++ CLIc.",
     py::return_value_policy::automatic_reference,
-    py::arg("device"), py::arg("src"), py::arg("dst"));
+    py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("keep_dims"));
 
     m.def("_mean_z_projection", &cle::tier1::mean_z_projection_func, "Call cle::tier1::mean_z_projection_func from C++ CLIc.",
     py::return_value_policy::automatic_reference,
-    py::arg("device"), py::arg("src"), py::arg("dst"));
+    py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("keep_dims"));
 
     m.def("_median_box", &cle::tier1::median_box_func, "Call cle::tier1::median_box_func from C++ CLIc.",
     py::return_value_policy::automatic_reference,
@@ -360,15 +376,15 @@ m.def("_absolute", &cle::tier1::absolute_func, "Call cle::tier1::absolute_func f
 
     m.def("_minimum_x_projection", &cle::tier1::minimum_x_projection_func, "Call cle::tier1::minimum_x_projection_func from C++ CLIc.",
     py::return_value_policy::automatic_reference,
-    py::arg("device"), py::arg("src"), py::arg("dst"));
+    py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("keep_dims"));
 
     m.def("_minimum_y_projection", &cle::tier1::minimum_y_projection_func, "Call cle::tier1::minimum_y_projection_func from C++ CLIc.",
     py::return_value_policy::automatic_reference,
-    py::arg("device"), py::arg("src"), py::arg("dst"));
+    py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("keep_dims"));
 
     m.def("_minimum_z_projection", &cle::tier1::minimum_z_projection_func, "Call cle::tier1::minimum_z_projection_func from C++ CLIc.",
     py::return_value_policy::automatic_reference,
-    py::arg("device"), py::arg("src"), py::arg("dst"));
+    py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("keep_dims"));
 
     m.def("_mode_box", &cle::tier1::mode_box_func, "Call cle::tier1::mode_box_func from C++ CLIc.",
     py::return_value_policy::automatic_reference,
@@ -459,6 +475,14 @@ m.def("_absolute", &cle::tier1::absolute_func, "Call cle::tier1::absolute_func f
     py::arg("device"), py::arg("src0"), py::arg("src1"), py::arg("dst"));
 
     m.def("_range", &cle::tier1::range_func, "Call cle::tier1::range_func from C++ CLIc.",
+    py::return_value_policy::automatic_reference,
+    py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("start_x"), py::arg("stop_x"), py::arg("step_x"), py::arg("start_y"), py::arg("stop_y"), py::arg("step_y"), py::arg("start_z"), py::arg("stop_z"), py::arg("step_z"));
+
+    m.def("_gather", &cle::tier1::gather_func, "Call cle::tier1::gather_func from C++ CLIc.",
+    py::return_value_policy::automatic_reference,
+    py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("start_x"), py::arg("stop_x"), py::arg("step_x"), py::arg("start_y"), py::arg("stop_y"), py::arg("step_y"), py::arg("start_z"), py::arg("stop_z"), py::arg("step_z"));
+
+    m.def("_scatter", &cle::tier1::scatter_func, "Call cle::tier1::scatter_func from C++ CLIc.",
     py::return_value_policy::automatic_reference,
     py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("start_x"), py::arg("stop_x"), py::arg("step_x"), py::arg("start_y"), py::arg("stop_y"), py::arg("step_y"), py::arg("start_z"), py::arg("stop_z"), py::arg("step_z"));
 
@@ -584,15 +608,27 @@ m.def("_absolute", &cle::tier1::absolute_func, "Call cle::tier1::absolute_func f
 
     m.def("_std_x_projection", &cle::tier1::std_x_projection_func, "Call cle::tier1::std_x_projection_func from C++ CLIc.",
     py::return_value_policy::automatic_reference,
-    py::arg("device"), py::arg("src"), py::arg("dst"));
+    py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("ddof"), py::arg("keep_dims"));
 
     m.def("_std_y_projection", &cle::tier1::std_y_projection_func, "Call cle::tier1::std_y_projection_func from C++ CLIc.",
     py::return_value_policy::automatic_reference,
-    py::arg("device"), py::arg("src"), py::arg("dst"));
+    py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("ddof"), py::arg("keep_dims"));
 
     m.def("_std_z_projection", &cle::tier1::std_z_projection_func, "Call cle::tier1::std_z_projection_func from C++ CLIc.",
     py::return_value_policy::automatic_reference,
-    py::arg("device"), py::arg("src"), py::arg("dst"));
+    py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("ddof"), py::arg("keep_dims"));
+
+    m.def("_variance_x_projection", &cle::tier1::variance_x_projection_func, "Call cle::tier1::variance_x_projection_func from C++ CLIc.",
+    py::return_value_policy::automatic_reference,
+    py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("ddof"), py::arg("keep_dims"));
+
+    m.def("_variance_y_projection", &cle::tier1::variance_y_projection_func, "Call cle::tier1::variance_y_projection_func from C++ CLIc.",
+    py::return_value_policy::automatic_reference,
+    py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("ddof"), py::arg("keep_dims"));
+
+    m.def("_variance_z_projection", &cle::tier1::variance_z_projection_func, "Call cle::tier1::variance_z_projection_func from C++ CLIc.",
+    py::return_value_policy::automatic_reference,
+    py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("ddof"), py::arg("keep_dims"));
 
     m.def("_subtract_image_from_scalar", &cle::tier1::subtract_image_from_scalar_func, "Call cle::tier1::subtract_image_from_scalar_func from C++ CLIc.",
     py::return_value_policy::automatic_reference,
@@ -604,15 +640,27 @@ m.def("_absolute", &cle::tier1::absolute_func, "Call cle::tier1::absolute_func f
 
     m.def("_sum_x_projection", &cle::tier1::sum_x_projection_func, "Call cle::tier1::sum_x_projection_func from C++ CLIc.",
     py::return_value_policy::automatic_reference,
-    py::arg("device"), py::arg("src"), py::arg("dst"));
+    py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("keep_dims"));
 
     m.def("_sum_y_projection", &cle::tier1::sum_y_projection_func, "Call cle::tier1::sum_y_projection_func from C++ CLIc.",
     py::return_value_policy::automatic_reference,
-    py::arg("device"), py::arg("src"), py::arg("dst"));
+    py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("keep_dims"));
 
     m.def("_sum_z_projection", &cle::tier1::sum_z_projection_func, "Call cle::tier1::sum_z_projection_func from C++ CLIc.",
     py::return_value_policy::automatic_reference,
-    py::arg("device"), py::arg("src"), py::arg("dst"));
+    py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("keep_dims"));
+
+    m.def("_product_x_projection", &cle::tier1::product_x_projection_func, "Call cle::tier1::product_x_projection_func from C++ CLIc.",
+    py::return_value_policy::automatic_reference,
+    py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("keep_dims"));
+
+    m.def("_product_y_projection", &cle::tier1::product_y_projection_func, "Call cle::tier1::product_y_projection_func from C++ CLIc.",
+    py::return_value_policy::automatic_reference,
+    py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("keep_dims"));
+
+    m.def("_product_z_projection", &cle::tier1::product_z_projection_func, "Call cle::tier1::product_z_projection_func from C++ CLIc.",
+    py::return_value_policy::automatic_reference,
+    py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("keep_dims"));
 
     m.def("_transpose_xy", &cle::tier1::transpose_xy_func, "Call cle::tier1::transpose_xy_func from C++ CLIc.",
     py::return_value_policy::automatic_reference,
@@ -648,27 +696,27 @@ m.def("_absolute", &cle::tier1::absolute_func, "Call cle::tier1::absolute_func f
 
     m.def("_x_position_of_maximum_x_projection", &cle::tier1::x_position_of_maximum_x_projection_func, "Call cle::tier1::x_position_of_maximum_x_projection_func from C++ CLIc.",
     py::return_value_policy::automatic_reference,
-    py::arg("device"), py::arg("src"), py::arg("dst"));
+    py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("keep_dims"));
 
     m.def("_x_position_of_minimum_x_projection", &cle::tier1::x_position_of_minimum_x_projection_func, "Call cle::tier1::x_position_of_minimum_x_projection_func from C++ CLIc.",
     py::return_value_policy::automatic_reference,
-    py::arg("device"), py::arg("src"), py::arg("dst"));
+    py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("keep_dims"));
 
     m.def("_y_position_of_maximum_y_projection", &cle::tier1::y_position_of_maximum_y_projection_func, "Call cle::tier1::y_position_of_maximum_y_projection_func from C++ CLIc.",
     py::return_value_policy::automatic_reference,
-    py::arg("device"), py::arg("src"), py::arg("dst"));
+    py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("keep_dims"));
 
     m.def("_y_position_of_minimum_y_projection", &cle::tier1::y_position_of_minimum_y_projection_func, "Call cle::tier1::y_position_of_minimum_y_projection_func from C++ CLIc.",
     py::return_value_policy::automatic_reference,
-    py::arg("device"), py::arg("src"), py::arg("dst"));
+    py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("keep_dims"));
 
     m.def("_z_position_of_maximum_z_projection", &cle::tier1::z_position_of_maximum_z_projection_func, "Call cle::tier1::z_position_of_maximum_z_projection_func from C++ CLIc.",
     py::return_value_policy::automatic_reference,
-    py::arg("device"), py::arg("src"), py::arg("dst"));
+    py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("keep_dims"));
 
     m.def("_z_position_of_minimum_z_projection", &cle::tier1::z_position_of_minimum_z_projection_func, "Call cle::tier1::z_position_of_minimum_z_projection_func from C++ CLIc.",
     py::return_value_policy::automatic_reference,
-    py::arg("device"), py::arg("src"), py::arg("dst"));
+    py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("keep_dims"));
 
     m.def("_z_position_projection", &cle::tier1::z_position_projection_func, "Call cle::tier1::z_position_projection_func from C++ CLIc.",
     py::return_value_policy::automatic_reference,

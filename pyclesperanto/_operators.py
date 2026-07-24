@@ -326,7 +326,12 @@ def _write_out(out, result):
         np.copyto(out, np.asarray(result).astype(out.dtype))
 
 
-def _max(self, axis: Optional[Union[int, tuple, list]] = None, out=None, keepdims: bool = False):
+def _max(
+    self,
+    axis: Optional[Union[int, tuple, list]] = None,
+    out=None,
+    keepdims: bool = False,
+):
     """Return the maximum of the Array, or along an axis if specified."""
     from ._tier2 import maximum_of_all_pixels
 
@@ -338,7 +343,12 @@ def _max(self, axis: Optional[Union[int, tuple, list]] = None, out=None, keepdim
     return result
 
 
-def _min(self, axis: Optional[Union[int, tuple, list]] = None, out=None, keepdims: bool = False):
+def _min(
+    self,
+    axis: Optional[Union[int, tuple, list]] = None,
+    out=None,
+    keepdims: bool = False,
+):
     """Return the minimum of the Array, or along an axis if specified."""
     from ._tier2 import minimum_of_all_pixels
 
@@ -350,7 +360,13 @@ def _min(self, axis: Optional[Union[int, tuple, list]] = None, out=None, keepdim
     return result
 
 
-def _sum(self, axis: Optional[Union[int, tuple, list]] = None, dtype=None, out=None, keepdims: bool = False):
+def _sum(
+    self,
+    axis: Optional[Union[int, tuple, list]] = None,
+    dtype=None,
+    out=None,
+    keepdims: bool = False,
+):
     """Return the sum of the Array, or along an axis if specified.
 
     Note: integer inputs are promoted to 32-bit (int32/uint32) rather than
@@ -359,14 +375,22 @@ def _sum(self, axis: Optional[Union[int, tuple, list]] = None, dtype=None, out=N
     from ._tier2 import sum_of_all_pixels
 
     if axis is None:
-        result = _full_reduce(self, sum_of_all_pixels(self), _sum_prod_dtype(self.dtype), keepdims)
+        result = _full_reduce(
+            self, sum_of_all_pixels(self), _sum_prod_dtype(self.dtype), keepdims
+        )
     else:
         result = _axis_projection(self, "sum", axis, keepdims)
     _write_out(out, result)
     return result
 
 
-def _mean(self, axis: Optional[Union[int, tuple, list]] = None, dtype=None, out=None, keepdims: bool = False):
+def _mean(
+    self,
+    axis: Optional[Union[int, tuple, list]] = None,
+    dtype=None,
+    out=None,
+    keepdims: bool = False,
+):
     """Return the mean of the Array, or along an axis if specified.
 
     Note: the result dtype is always float32, since the device does not
@@ -382,7 +406,14 @@ def _mean(self, axis: Optional[Union[int, tuple, list]] = None, dtype=None, out=
     return result
 
 
-def _std(self, axis: Optional[Union[int, tuple, list]] = None, dtype=None, out=None, ddof: int = 0, keepdims: bool = False):
+def _std(
+    self,
+    axis: Optional[Union[int, tuple, list]] = None,
+    dtype=None,
+    out=None,
+    ddof: int = 0,
+    keepdims: bool = False,
+):
     """Return the standard deviation of the Array, or along an axis.
 
     Note: the result dtype is always float32, since the device does not
@@ -392,7 +423,10 @@ def _std(self, axis: Optional[Union[int, tuple, list]] = None, dtype=None, out=N
 
     if axis is None:
         result = _full_reduce(
-            self, standard_deviation_of_all_pixels(self, ddof=ddof), np.float32, keepdims
+            self,
+            standard_deviation_of_all_pixels(self, ddof=ddof),
+            np.float32,
+            keepdims,
         )
     elif isinstance(axis, (tuple, list)):
         axes = _norm_axes(axis, self.ndim)
@@ -412,7 +446,14 @@ def _std(self, axis: Optional[Union[int, tuple, list]] = None, dtype=None, out=N
     return result
 
 
-def _var(self, axis: Optional[Union[int, tuple, list]] = None, dtype=None, out=None, ddof: int = 0, keepdims: bool = False):
+def _var(
+    self,
+    axis: Optional[Union[int, tuple, list]] = None,
+    dtype=None,
+    out=None,
+    ddof: int = 0,
+    keepdims: bool = False,
+):
     """Return the variance of the Array, or along an axis if specified.
 
     Note: the result dtype is always float32, since the device does not
@@ -442,7 +483,13 @@ def _var(self, axis: Optional[Union[int, tuple, list]] = None, dtype=None, out=N
     return result
 
 
-def _prod(self, axis: Optional[Union[int, tuple, list]] = None, dtype=None, out=None, keepdims: bool = False):
+def _prod(
+    self,
+    axis: Optional[Union[int, tuple, list]] = None,
+    dtype=None,
+    out=None,
+    keepdims: bool = False,
+):
     """Return the product of the Array, or along an axis if specified.
 
     Note: integer inputs are promoted to 32-bit (int32/uint32) rather than
@@ -451,7 +498,9 @@ def _prod(self, axis: Optional[Union[int, tuple, list]] = None, dtype=None, out=
     from ._tier2 import product_of_all_pixels
 
     if axis is None:
-        result = _full_reduce(self, product_of_all_pixels(self), _sum_prod_dtype(self.dtype), keepdims)
+        result = _full_reduce(
+            self, product_of_all_pixels(self), _sum_prod_dtype(self.dtype), keepdims
+        )
     else:
         result = _axis_projection(self, "product", axis, keepdims)
     _write_out(out, result)
@@ -493,7 +542,12 @@ def _argmin(self, axis: Optional[int] = None, out=None, keepdims: bool = False):
     return result
 
 
-def _any(self, axis: Optional[Union[int, tuple, list]] = None, out=None, keepdims: bool = False):
+def _any(
+    self,
+    axis: Optional[Union[int, tuple, list]] = None,
+    out=None,
+    keepdims: bool = False,
+):
     """Test whether any array element along a given axis evaluates to True."""
     result = _max(self != 0, axis=axis, keepdims=keepdims)
     if axis is None and not keepdims:
@@ -502,14 +556,18 @@ def _any(self, axis: Optional[Union[int, tuple, list]] = None, out=None, keepdim
     return result
 
 
-def _all(self, axis: Optional[Union[int, tuple, list]] = None, out=None, keepdims: bool = False):
+def _all(
+    self,
+    axis: Optional[Union[int, tuple, list]] = None,
+    out=None,
+    keepdims: bool = False,
+):
     """Test whether all array elements along a given axis evaluate to True."""
     result = _min(self != 0, axis=axis, keepdims=keepdims)
     if axis is None and not keepdims:
         result = bool(result)
     _write_out(out, result)
     return result
-
 
 
 def _align(x1, x2):

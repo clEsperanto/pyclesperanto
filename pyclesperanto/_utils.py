@@ -7,7 +7,6 @@ import numpy as np
 from ._backend import _get_backend
 
 cl_buffer_datatype_dict = {
-    bool: "bool",
     np.uint8: "uchar",
     np.ubyte: "uchar",
     np.uint16: "ushort",
@@ -27,6 +26,7 @@ cl_buffer_datatype_dict = {
     np.complex64: "cfloat_t",
     int: "int",
     float: "float",
+    bool: "bool",
     np.float64: "float",
 }
 
@@ -105,6 +105,20 @@ def _trim_index_to_shape(index, shape):
     if len(index) > len(shape):
         index = index[-len(shape) :]
     return index
+
+
+def _canonical_dtype(dtype):
+    """Map dtypes unsupported on device to their device equivalent.
+
+    Device arrays cannot store booleans, so ``bool`` is represented as
+    ``uint8`` (0/1 values), matching the bool<->uint8 correspondence used
+    by comparison operators.
+    """
+    if dtype is None:
+        return None
+    if dtype is bool or np.dtype(dtype) == np.bool_:
+        return np.uint8
+    return dtype
 
 
 def _assert_supported_dtype(x):

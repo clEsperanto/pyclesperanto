@@ -198,7 +198,7 @@ def pull(array: Image) -> np.ndarray:
     return array
 
 
-def from_array(arr, dtype=None, mtype="buffer", device=None):
+def from_array(arr, dtype=None, *, mtype="buffer", device=None):
     """Create an pyclesperanto Array object from a numpy array (same shape, dtype, and memory).
 
     Parameters
@@ -220,7 +220,7 @@ def from_array(arr, dtype=None, mtype="buffer", device=None):
     return Array.from_array(arr, dtype=dtype, mtype=mtype, device=device)
 
 
-def empty(shape, dtype=None, mtype="buffer", device=None):
+def empty(shape, dtype=None, *, mtype="buffer", device=None):
     """Create an empty Array object from a shape.
 
     Parameters
@@ -242,7 +242,7 @@ def empty(shape, dtype=None, mtype="buffer", device=None):
     return Array.empty(shape, dtype=dtype, mtype=mtype, device=device)
 
 
-def empty_like(arr, dtype=None, mtype="buffer", device=None):
+def empty_like(arr, dtype=None, *, mtype="buffer", device=None):
     """Create an empty Array object from an other array.
 
     Parameters
@@ -264,7 +264,7 @@ def empty_like(arr, dtype=None, mtype="buffer", device=None):
     return Array.empty_like(arr, dtype=dtype, mtype=mtype, device=device)
 
 
-def zeros(shape, dtype=None, mtype="buffer", device=None):
+def zeros(shape, dtype=None, *, mtype="buffer", device=None):
     """Create an Array object full of zeros from a shape.
 
     Parameters
@@ -286,7 +286,7 @@ def zeros(shape, dtype=None, mtype="buffer", device=None):
     return Array.zeros(shape, dtype=dtype, mtype=mtype, device=device)
 
 
-def zeros_like(arr, dtype=None, mtype="buffer", device=None):
+def zeros_like(arr, dtype=None, *, mtype="buffer", device=None):
     """Create an Array object filled with zeros from an other array.
 
     Parameters
@@ -308,7 +308,7 @@ def zeros_like(arr, dtype=None, mtype="buffer", device=None):
     return Array.zeros_like(arr, dtype=dtype, mtype=mtype, device=device)
 
 
-def ones(shape, dtype=None, mtype="buffer", device=None):
+def ones(shape, dtype=None, *, mtype="buffer", device=None):
     """Create an Array object full of ones from a shape.
 
     Parameters
@@ -330,7 +330,7 @@ def ones(shape, dtype=None, mtype="buffer", device=None):
     return Array.ones(shape, dtype=dtype, mtype=mtype, device=device)
 
 
-def ones_like(arr, dtype=None, mtype="buffer", device=None):
+def ones_like(arr, dtype=None, *, mtype="buffer", device=None):
     """Create an Array object filled with ones from an other array.
 
     Parameters
@@ -351,6 +351,97 @@ def ones_like(arr, dtype=None, mtype="buffer", device=None):
         The created array.
     """
     return Array.ones_like(arr, dtype=dtype, mtype=mtype, device=device)
+
+
+def full(shape, fill_value, dtype=None, *, mtype="buffer", device=None):
+    """Create an Array of a given shape filled with ``fill_value``.
+
+    Parameters
+    ----------
+    shape : tuple, list or np.ndarray
+        The shape of the array, maximum 3 elements.
+    fill_value : scalar
+        The value to fill the array with.
+    dtype : np.dtype, optional
+        The dtype of the array. If None, inferred from ``fill_value``.
+    mtype : str, optional
+        The memory type, by default "buffer"
+    device : Device, optional
+        The device, by default None
+
+    Returns
+    -------
+    Array
+        The created array.
+    """
+    return Array.full(shape, fill_value, dtype=dtype, mtype=mtype, device=device)
+
+
+def full_like(arr, fill_value, dtype=None, *, mtype="buffer", device=None):
+    """Create an Array filled with ``fill_value`` from another array.
+
+    Parameters
+    ----------
+    arr : np.ndarray or Array or other array-like structure
+        The array to create like.
+    fill_value : scalar
+        The value to fill the array with.
+    dtype : np.dtype, optional
+        Override the dtype of the created Array.
+    mtype : str, optional
+        The memory type. By default "buffer".
+    device : Device, optional
+        The device on which to create the Array. If None, uses the current active device.
+
+    Returns
+    -------
+    Array
+        The created array.
+    """
+    return Array.full_like(arr, fill_value, dtype=dtype, mtype=mtype, device=device)
+
+
+def arange(start, stop=None, step=1, dtype=None, *, mtype="buffer", device=None):
+    """Create an Array with evenly spaced values within a given interval.
+
+    Mirrors ``numpy.arange``.
+
+    Returns
+    -------
+    Array
+        The created 1-D array.
+    """
+    return Array.arange(start, stop, step, dtype=dtype, mtype=mtype, device=device)
+
+
+def linspace(
+    start, stop, num=50, endpoint=True, dtype=None, *, mtype="buffer", device=None
+):
+    """Create an Array of ``num`` evenly spaced values from ``start`` to ``stop``.
+
+    Mirrors ``numpy.linspace``.
+
+    Returns
+    -------
+    Array
+        The created 1-D array.
+    """
+    return Array.linspace(
+        start, stop, num=num, endpoint=endpoint, dtype=dtype, mtype=mtype, device=device
+    )
+
+
+def eye(N, M=None, k=0, dtype=None, *, mtype="buffer", device=None):
+    """Create a 2-D Array with ones on a diagonal and zeros elsewhere.
+
+    Mirrors ``numpy.eye``.
+
+    Returns
+    -------
+    Array
+        The created 2-D array.
+    """
+    return Array.eye(N, M, k, dtype=dtype, mtype=mtype, device=device)
 
 
 def from_dlpack(object, *, device=None, copy=None):

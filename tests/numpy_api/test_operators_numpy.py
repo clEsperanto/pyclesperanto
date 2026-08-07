@@ -164,3 +164,77 @@ def test_comparison_with_numpy_operand(gpu_backend):
     arr = cle.Array.from_array(d1)
     np.testing.assert_array_equal(np.asarray(arr > d2).astype(bool), d1 > d2)
     np.testing.assert_array_equal(np.asarray(arr == d2).astype(bool), d1 == d2)
+
+
+def test_maximum_with_broadcast(gpu_backend):
+    d1 = np.asarray([[1.0, 5.0], [3.0, 2.0]], dtype=np.float32)
+    d2 = np.asarray([[2.0, 4.0]], dtype=np.float32)
+    a1 = cle.Array.from_array(d1)
+    a2 = cle.Array.from_array(d2)
+    np.testing.assert_allclose(np.asarray(np.maximum(a1, a2)), np.maximum(d1, d2))
+
+
+def test_greater_than_with_broadcast(gpu_backend):
+    d1 = np.asarray([[1.0, 5.0], [3.0, 2.0]], dtype=np.float32)
+    d2 = np.asarray([[2.0, 4.0]], dtype=np.float32)
+    a1 = cle.Array.from_array(d1)
+    a2 = cle.Array.from_array(d2)
+    np.testing.assert_array_equal(np.asarray(a1 > a2).astype(bool), d1 > d2)
+
+
+def test_hypot_atan2_with_broadcast(gpu_backend):
+    d1 = np.asarray([[3.0, 4.0], [1.0, 2.0]], dtype=np.float32)
+    d2 = np.asarray([[4.0, 3.0]], dtype=np.float32)
+    a1 = cle.Array.from_array(d1)
+    a2 = cle.Array.from_array(d2)
+    np.testing.assert_allclose(np.asarray(np.hypot(a1, a2)), np.hypot(d1, d2))
+    np.testing.assert_allclose(
+        np.asarray(np.arctan2(a1, a2)), np.arctan2(d1, d2), atol=1e-5
+    )
+
+
+def test_inplace_mul_div_pow_with_broadcast(gpu_backend):
+    data = np.arange(1, 25, dtype=np.float32).reshape(2, 3, 4)
+    other = np.full((1, 3, 1), 2.0, dtype=np.float32)
+
+    arr = cle.Array.from_array(data.copy())
+    arr *= other
+    np.testing.assert_allclose(np.asarray(arr), data * other)
+
+    arr = cle.Array.from_array(data.copy())
+    arr /= other
+    np.testing.assert_allclose(np.asarray(arr), data / other)
+
+    arr = cle.Array.from_array(data.copy())
+    arr **= other
+    np.testing.assert_allclose(np.asarray(arr), data**other, rtol=1e-5)
+
+
+def test_size_one_array_operand_stays_on_device(gpu_backend):
+    data = np.asarray([[1.0, 2.0], [3.0, 4.0]], dtype=np.float32)
+    scalar_like = np.asarray([[5.0]], dtype=np.float32)
+    a1 = cle.Array.from_array(data)
+    a2 = cle.Array.from_array(scalar_like)
+
+    np.testing.assert_allclose(np.asarray(a1 + a2), data + scalar_like)
+    np.testing.assert_array_equal(
+        np.asarray(a1 > a2).astype(bool), data > scalar_like
+    )
+
+    arr = cle.Array.from_array(data.copy())
+    arr += a2
+    np.testing.assert_allclose(np.asarray(arr), data + scalar_like)
+
+
+def test_incompatible_broadcast_raises(gpu_backend):
+    a1 = cle.Array.from_array(np.ones((4, 3), dtype=np.float32))
+    a2 = cle.Array.from_array(np.ones((5,), dtype=np.float32))
+    with pytest.raises(ValueError):
+        a1 + a2
+
+
+def test_incompatible_inplace_broadcast_raises(gpu_backend):
+    a1 = cle.Array.from_array(np.ones((1, 3), dtype=np.float32))
+    a2 = cle.Array.from_array(np.ones((4, 3), dtype=np.float32))
+    with pytest.raises(ValueError):
+        a1 += a2

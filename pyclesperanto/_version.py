@@ -1,3 +1,3 @@
 VERSION = "0.23.0"
-CLIC_VERSION = "master"
+CLIC_VERSION = "array-broadcasting"
 COMMON_ALIAS = "cle"

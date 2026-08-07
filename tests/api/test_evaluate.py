@@ -55,14 +55,23 @@ class TestEvaluate:
         assert np.allclose(result_np, 4.0)
 
     def test_evaluate_shape_mismatch_error(self):
-        """Test that error is raised when Array parameters have different shapes"""
+        """Test that error is raised when Array parameters are not broadcast-compatible"""
         a = cle.push(np.ones((5, 5)))
         b = cle.push(np.ones((3, 3)))
 
-        with pytest.raises(
-            ValueError, match="All Array parameters must have the same shape"
-        ):
+        with pytest.raises(ValueError, match="cannot be broadcast"):
             cle.evaluate("a + b", {"a": a, "b": b})
+
+    def test_evaluate_broadcast_shapes(self):
+        """Test that Array parameters with broadcast-compatible shapes are allowed"""
+        a = cle.push(np.ones((4, 3)) * 2)
+        b = cle.push(np.ones((1, 3)) * 3)
+
+        result = cle.evaluate("a + b", {"a": a, "b": b})
+        result_np = cle.pull(result)
+
+        assert result_np.shape == (4, 3)
+        assert np.allclose(result_np, 5.0)
 
     def test_evaluate_mixed_array_and_scalar(self):
         """Test expression with both Array and scalar parameters"""

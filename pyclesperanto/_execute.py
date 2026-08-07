@@ -225,18 +225,11 @@ def evaluate(expression: str, parameters: dict) -> Array:
         if isinstance(value, np.ndarray):
             parameters[key] = push(value, device=device)
 
-    # check that all Array parameters have the same shape and get the shape
-    out_shape = None
-    for value in parameters.values():
-        if isinstance(value, Array):
-            if out_shape is None:
-                out_shape = value.shape
-            elif out_shape != value.shape:
-                raise ValueError("All Array parameters must have the same shape")
-
-    # Default to (1, 1) shape if no Array parameters found (all scalar)
-    if out_shape is None:
-        out_shape = (1, 1)
+    # derive the output shape from all Array parameters, allowing per-axis
+    # broadcasting (e.g. shape (1, 3) with (4, 3)); the backend performs the
+    # actual broadcast device-side. Incompatible shapes raise ValueError.
+    shapes = [value.shape for value in parameters.values() if isinstance(value, Array)]
+    out_shape = np.broadcast_shapes(*shapes) if shapes else (1, 1)
 
     out = create(out_shape, dtype=np.float32, device=device)
     _get_backend()._evaluate(

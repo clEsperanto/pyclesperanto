@@ -10,7 +10,7 @@ def test_label_pixel_count_map(gpu_backend):
 
     reference = cle.push(np.asarray([[3, 3, 1], [3, 0, 0], [2, 2, 0]]))
 
-    result = cle.label_pixel_count_map(labels)
+    result = cle.pixel_count_map(labels)
 
     a = cle.pull(result)
     b = cle.pull(reference)
@@ -55,7 +55,7 @@ def test_label_pixel_count_map_3d(gpu_backend):
         )
     )
 
-    result = cle.label_pixel_count_map(labels)
+    result = cle.pixel_count_map(labels)
 
     a = cle.pull(result)
     b = cle.pull(reference)

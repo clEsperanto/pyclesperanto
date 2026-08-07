@@ -45,4 +45,12 @@ m.def("_array_equal", &cle::tier5::array_equal_func, "Call cle::tier5::array_equ
     m.def("_normalize", &cle::tier5::normalize_func, "Call cle::tier5::normalize_func from C++ CLIc.",
     py::return_value_policy::automatic_reference,
     py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("low_percentile"), py::arg("high_percentile"));
+
+    m.def("_standard_deviation_partial_touching_area_matrix", &cle::tier5::standard_deviation_partial_touching_area_matrix_func, "Call cle::tier5::standard_deviation_partial_touching_area_matrix_func from C++ CLIc.",
+    py::return_value_policy::automatic_reference,
+    py::arg("device"), py::arg("src_label"), py::arg("dst_vector"));
+
+    m.def("_standard_deviation_touch_portion", &cle::tier5::standard_deviation_touch_portion_func, "Call cle::tier5::standard_deviation_touch_portion_func from C++ CLIc.",
+    py::return_value_policy::automatic_reference,
+    py::arg("device"), py::arg("src_label"), py::arg("dst_vector"));
 }

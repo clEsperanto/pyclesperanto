@@ -2,7 +2,6 @@
 # This code is auto-generated from CLIc 'cle::tier7.hpp' file, do not edit manually.
 #
 
-import importlib
 import warnings
 from typing import Optional
 
@@ -12,6 +11,7 @@ from ._array import Image
 from ._backend import _get_backend
 from ._core import Device
 from ._decorators import plugin_function
+from ._utils import deprecated
 
 
 @plugin_function
@@ -462,7 +462,7 @@ def erode_connected_labels(
     output_image: Optional[Image] (= None)
         Output label image.
     radius: int (= 1)
-        Erosion
+        Erosion radius.
     device: Optional[Device] (= None)
         Device to perform the operation on.
 
@@ -550,6 +550,91 @@ def voronoi_otsu_labeling(
     )
 
 
+@plugin_function
+def labels_neighbors_statistics(
+    label: Image,
+    proximal_distances: list = [10, 20, 40, 80, 160],
+    nearest_neighbor_ns: list = [1, 2, 3, 4, 5, 6, 7, 8, 10, 20],
+    dilation_radii: list = [5, 10],
+    include_background: bool = False,
+    device: Optional[Device] = None,
+) -> dict:
+    """Computes touching, distance-based, and neighborhood statistics of labels and
+    their neighbors. For each label in the input label image, this function computes
+    statistics of its surrounding labels within specified proximal distances. The
+    statistics include the count of neighboring labels, their distances, if they are
+    touching, how many pixels they share on the boundary, etc. Important: This
+    expect an isotropic image with isotropic pixel spacing.
+
+    Parameters
+    ----------
+    label: Image
+        Input label image.
+    proximal_distances: list (= [10, 20, 40, 80, 160])
+        Proximal distances list for analysis.
+    nearest_neighbor_ns: list (= [1, 2, 3, 4, 5, 6, 7, 8, 10, 20])
+        n-nearest neighbors list for analysis.
+    dilation_radii: list (= [5, 10])
+        Vector of dilation radii to consider for analysis.
+    include_background: bool (= False)
+        If true, the background label is included (but set to 0).
+    device: Optional[Device] (= None)
+        Device to perform the operation on.
+
+    Returns
+    -------
+    dict
+    """
+    return _get_backend()._labels_neighbors_statistics(
+        device,
+        label,
+        proximal_distances,
+        nearest_neighbor_ns,
+        dilation_radii,
+        include_background,
+    )
+
+
+@deprecated(
+    "statistics_of_labelled_neighbors: This function is deprecated. Consider using statistics_of_neighbor_labels() instead."
+)
+@plugin_function
+def statistics_of_labelled_neighbors(
+    label: Image,
+    proximal_distances: list = [10, 20, 40, 80, 160],
+    nearest_neighbor_ns: list = [1, 2, 3, 4, 5, 6, 7, 8, 10, 20],
+    dilation_radii: list = [5, 10],
+    device: Optional[Device] = None,
+) -> dict:
+    """Computes distance-based statistics of the nearest neighbor labels. For each
+    label in the input label image, this function computes statistics of the
+    neighboring labels within specified proximal distances. The statistics include
+    the count of neighboring labels, their distances, if they are touching, how many
+    pixels they share on the boundary, etc. Important: This expect an isotropic
+    image with isotropic pixel spacing.
+
+    Parameters
+    ----------
+    label: Image
+        Input label image.
+    proximal_distances: list (= [10, 20, 40, 80, 160])
+        Proximal distances list for analysis.
+    nearest_neighbor_ns: list (= [1, 2, 3, 4, 5, 6, 7, 8, 10, 20])
+        n-nearest neighbors list for analysis.
+    dilation_radii: list (= [5, 10])
+        Vector of dilation radii to consider for analysis.
+    device: Optional[Device] (= None)
+        Device to perform the operation on.
+
+    Returns
+    -------
+    dict
+    """
+    return _get_backend()._statistics_of_labelled_neighbors(
+        device, label, proximal_distances, nearest_neighbor_ns, dilation_radii
+    )
+
+
 __all__ = [
     "affine_transform",
     "eroded_otsu_labeling",
@@ -563,4 +648,6 @@ __all__ = [
     "erode_connected_labels",
     "opening_labels",
     "voronoi_otsu_labeling",
+    "labels_neighbors_statistics",
+    "statistics_of_labelled_neighbors",
 ]

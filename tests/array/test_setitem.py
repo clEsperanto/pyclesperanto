@@ -71,17 +71,36 @@ def test_setitem_negative_indices(gpu_backend):
 
 def test_setitem_every_2_rows(gpu_backend):
     image = cle.create([10, 20, 30])
-    data = np.ones((5, 20, 30))
+    data = np.arange(5 * 20 * 30, dtype=np.float32).reshape(5, 20, 30)
     image[::2, :, :] = data
 
     result = cle.pull(image)
     assert np.array_equal(result[::2, :, :], data)
 
 
+def test_setitem_strided_columns(gpu_backend):
+    reference = np.arange(6 * 8, dtype=np.float32).reshape(6, 8)
+    data = np.arange(6 * 4, dtype=np.float32).reshape(6, 4) + 100
+    image = cle.push(reference.copy())
+    image[:, ::2] = data
+    reference[:, ::2] = data
+
+    assert np.array_equal(cle.pull(image), reference)
+
+
+def test_setitem_strided_scalar(gpu_backend):
+    reference = np.arange(6 * 8, dtype=np.float32).reshape(6, 8)
+    image = cle.push(reference.copy())
+    image[::2, ::2] = -1
+    reference[::2, ::2] = -1
+
+    assert np.array_equal(cle.pull(image), reference)
+
+
 def test_setitem_negative_step(gpu_backend):
     image = cle.create([10, 20, 30])
-    data = np.ones((5, 20, 30))
-    image[2:7:-1, :, :] = data
+    data = np.arange(5 * 20 * 30, dtype=np.float32).reshape(5, 20, 30)
+    image[7:2:-1, :, :] = data
 
     result = cle.pull(image)
-    assert np.array_equal(result[2:7, :, :], data)
+    assert np.array_equal(result[3:8, :, :], data[::-1])

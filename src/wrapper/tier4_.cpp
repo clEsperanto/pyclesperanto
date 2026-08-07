@@ -36,7 +36,7 @@ m.def("_label_bounding_box", &cle::tier4::label_bounding_box_func, "Call cle::ti
 
     m.def("_parametric_map", &cle::tier4::parametric_map_func, "Call cle::tier4::parametric_map_func from C++ CLIc.",
     py::return_value_policy::automatic_reference,
-    py::arg("device"), py::arg("labels"), py::arg("intensity"), py::arg("property"), py::arg("dst"));
+    py::arg("device"), py::arg("labels"), py::arg("properties"), py::arg("dst"), py::arg("property"));
 
     m.def("_mean_intensity_map", &cle::tier4::mean_intensity_map_func, "Call cle::tier4::mean_intensity_map_func from C++ CLIc.",
     py::return_value_policy::automatic_reference,
@@ -132,5 +132,17 @@ m.def("_label_bounding_box", &cle::tier4::label_bounding_box_func, "Call cle::ti
 
     m.def("_standard_deviation_of_all_pixels", &cle::tier4::standard_deviation_of_all_pixels_func, "Call cle::tier4::standard_deviation_of_all_pixels_func from C++ CLIc.",
     py::return_value_policy::automatic_reference,
-    py::arg("device"), py::arg("src"));
+    py::arg("device"), py::arg("src"), py::arg("ddof"));
+
+    m.def("_variance_of_all_pixels", &cle::tier4::variance_of_all_pixels_func, "Call cle::tier4::variance_of_all_pixels_func from C++ CLIc.",
+    py::return_value_policy::automatic_reference,
+    py::arg("device"), py::arg("src"), py::arg("ddof"));
+
+    m.def("_generate_partial_touching_area_matrix", &cle::tier4::generate_partial_touching_area_matrix_func, "Call cle::tier4::generate_partial_touching_area_matrix_func from C++ CLIc.",
+    py::return_value_policy::automatic_reference,
+    py::arg("device"), py::arg("src_label"), py::arg("dst_matrix"));
+
+    m.def("_generate_touch_portion_matrix", &cle::tier4::generate_touch_portion_matrix_func, "Call cle::tier4::generate_touch_portion_matrix_func from C++ CLIc.",
+    py::return_value_policy::automatic_reference,
+    py::arg("device"), py::arg("src_label"), py::arg("dst_matrix"));
 }

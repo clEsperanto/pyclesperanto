@@ -4,7 +4,7 @@ import pyclesperanto as cle
 
 
 def test_cl_info(gpu_backend):
-    print(cle.cl_info())
+    print(cle.info())
     assert True
 
 

@@ -217,9 +217,7 @@ def test_size_one_array_operand_stays_on_device(gpu_backend):
     a2 = cle.Array.from_array(scalar_like)
 
     np.testing.assert_allclose(np.asarray(a1 + a2), data + scalar_like)
-    np.testing.assert_array_equal(
-        np.asarray(a1 > a2).astype(bool), data > scalar_like
-    )
+    np.testing.assert_array_equal(np.asarray(a1 > a2).astype(bool), data > scalar_like)
 
     arr = cle.Array.from_array(data.copy())
     arr += a2

@@ -516,13 +516,29 @@ def _arg_reduce(self, op, axis, keepdims):
     return kernel(self, keep_dims=keepdims)
 
 
+def _arg_full_reduce(self, op):
+    """Return the flat (row-major) index of the global maximum/minimum.
+
+    Delegates to CLIc's maximum_position/minimum_position, which resolves the
+    position device-side (X-then-Y-then-Z, matching NumPy's first-occurrence
+    tie-break) and returns only the 3 winning coordinates, never the full buffer.
+    """
+    from ._tier3 import maximum_position, minimum_position
+
+    kernel = maximum_position if op == "maximum" else minimum_position
+    xyz = kernel(self)[: self.ndim]
+    return int(np.ravel_multi_index(tuple(int(c) for c in reversed(xyz)), self.shape))
+
+
 def _argmax(self, axis: Optional[int] = None, out=None, keepdims: bool = False):
     """Return the indices of the maximum values, over all pixels or along an axis.
 
     Deviation from NumPy: the result dtype is uint32 instead of int64.
     """
     if axis is None:
-        result = _full_reduce(self, self.get().argmax(), np.uint32, keepdims)
+        result = _full_reduce(
+            self, _arg_full_reduce(self, "maximum"), np.uint32, keepdims
+        )
     else:
         result = _arg_reduce(self, "maximum", axis, keepdims)
     _write_out(out, result)
@@ -535,7 +551,9 @@ def _argmin(self, axis: Optional[int] = None, out=None, keepdims: bool = False):
     Deviation from NumPy: the result dtype is uint32 instead of int64.
     """
     if axis is None:
-        result = _full_reduce(self, self.get().argmin(), np.uint32, keepdims)
+        result = _full_reduce(
+            self, _arg_full_reduce(self, "minimum"), np.uint32, keepdims
+        )
     else:
         result = _arg_reduce(self, "minimum", axis, keepdims)
     _write_out(out, result)
@@ -571,57 +589,42 @@ def _all(
 
 
 def _align(x1, x2):
-    """Limited broadcasting for array-array operations.
+    """Validate array-array broadcast compatibility without host transfers.
 
-    Scalars pass through untouched. A size-1 Array (or ndarray) operand is
-    reduced to a Python scalar. Otherwise both operands are broadcast (on the
-    host) to their common NumPy shape and returned as device arrays.
+    Scalars and other non-array operands pass through untouched. ``ndarray``
+    operands are converted to backend arrays. Array operands (including
+    size-1 arrays) are left as-is; only shape compatibility is checked via
+    ``np.broadcast_shapes`` so incompatible operands still raise early.
+    Actual broadcasting is performed device-side by the CLIc backend.
     """
     ArrayCls = _get_array_class()
     if isinstance(x2, np.ndarray):
         x2 = ArrayCls.from_array(x2)
     if not isinstance(x2, ArrayCls):
         return x1, x2
-    if x1.shape == x2.shape:
-        return x1, x2
-    if x2.size == 1:
-        return x1, x2.item()
-    shape = np.broadcast_shapes(x1.shape, x2.shape)
-    a = (
-        x1
-        if x1.shape == shape
-        else ArrayCls.from_array(np.broadcast_to(x1.get(), shape).copy())
-    )
-    b = (
-        x2
-        if x2.shape == shape
-        else ArrayCls.from_array(np.broadcast_to(x2.get(), shape).copy())
-    )
-    return a, b
+    np.broadcast_shapes(x1.shape, x2.shape)
+    return x1, x2
 
 
 def _align_inplace(x1, x2):
-    """Broadcast x2 to x1's shape for in-place operations.
+    """Validate x2 is broadcastable to x1's shape for in-place operations.
 
     Unlike `_align`, x1 is never replaced, since in-place operations must
-    write into the original array. Raises ValueError if x2's shape cannot be
-    broadcast to x1's shape.
+    write into the original array. No host transfer happens; broadcasting is
+    performed device-side by the CLIc backend. Raises ValueError if x2's
+    shape cannot be broadcast to x1's shape.
     """
     ArrayCls = _get_array_class()
     if isinstance(x2, np.ndarray):
         x2 = ArrayCls.from_array(x2)
     if not isinstance(x2, ArrayCls):
         return x2
-    if x2.shape == x1.shape:
-        return x2
-    if x2.size == 1:
-        return x2.item()
     shape = np.broadcast_shapes(x1.shape, x2.shape)
     if shape != x1.shape:
         raise ValueError(
             f"cannot broadcast shape {x2.shape} into in-place operand of shape {x1.shape}"
         )
-    return ArrayCls.from_array(np.broadcast_to(x2.get(), shape).copy())
+    return x2
 
 
 def __pos__(x1):

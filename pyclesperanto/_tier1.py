@@ -2,7 +2,6 @@
 # This code is auto-generated from CLIc 'cle::tier1.hpp' file, do not edit manually.
 #
 
-import importlib
 import warnings
 from typing import Optional
 
@@ -12,6 +11,7 @@ from ._array import Image
 from ._backend import _get_backend
 from ._core import Device
 from ._decorators import plugin_function
+from ._utils import deprecated
 
 
 @plugin_function(categories=["filter", "in assistant"])
@@ -647,7 +647,7 @@ def block_enumerate(
     output_image: Optional[Image] (= None)
         output enumerated vector image
     blocksize: int (= 256)
-
+        blocksize; must correspond correctly to how the
     device: Optional[Device] (= None)
         Device to perform the operation on.
 
@@ -694,6 +694,138 @@ def circular_shift(
     """
     return _get_backend()._circular_shift(
         device, input_image, output_image, int(shift_x), int(shift_y), int(shift_z)
+    )
+
+
+@plugin_function(categories=["accumulate", "in assistant"])
+def cumulative_sum(
+    input_image: Image,
+    output_image: Optional[Image] = None,
+    axis: int = 0,
+    keep_dims: bool = False,
+    device: Optional[Device] = None,
+) -> Image:
+    """Computes the cumulative sum along a given axis. Equivalent to numpy.cumsum with
+    an explicit axis.
+
+    Parameters
+    ----------
+    input_image: Image
+        Input image to process.
+    output_image: Optional[Image] (= None)
+        Output result image.
+    axis: int (= 0)
+        Axis along which to compute the cumulative sum (0=X, 1=Y, 2=Z).
+    keep_dims: bool (= False)
+        If true, keeps the source dimension metadata when creating the destination.
+    device: Optional[Device] (= None)
+        Device to perform the operation on.
+
+    Returns
+    -------
+    Image
+    """
+    return _get_backend()._cumulative_sum(
+        device, input_image, output_image, int(axis), keep_dims
+    )
+
+
+@plugin_function(categories=["accumulate", "in assistant"])
+def cumulative_min(
+    input_image: Image,
+    output_image: Optional[Image] = None,
+    axis: int = 0,
+    keep_dims: bool = False,
+    device: Optional[Device] = None,
+) -> Image:
+    """Computes the cumulative minimum along a given axis. Equivalent to numpy.cummin
+    with an explicit axis.
+
+    Parameters
+    ----------
+    input_image: Image
+        Input image to process.
+    output_image: Optional[Image] (= None)
+        Output result image.
+    axis: int (= 0)
+        Axis along which to compute the cumulative minimum (0=X, 1=Y, 2=Z).
+    keep_dims: bool (= False)
+        If true, keeps the source dimension metadata when creating the destination.
+    device: Optional[Device] (= None)
+        Device to perform the operation on.
+
+    Returns
+    -------
+    Image
+    """
+    return _get_backend()._cumulative_min(
+        device, input_image, output_image, int(axis), keep_dims
+    )
+
+
+@plugin_function(categories=["accumulate", "in assistant"])
+def cumulative_max(
+    input_image: Image,
+    output_image: Optional[Image] = None,
+    axis: int = 0,
+    keep_dims: bool = False,
+    device: Optional[Device] = None,
+) -> Image:
+    """Computes the cumulative maximum along a given axis. Equivalent to numpy.cummax
+    with an explicit axis.
+
+    Parameters
+    ----------
+    input_image: Image
+        Input image to process.
+    output_image: Optional[Image] (= None)
+        Output result image.
+    axis: int (= 0)
+        Axis along which to compute the cumulative maximum (0=X, 1=Y, 2=Z).
+    keep_dims: bool (= False)
+        If true, keeps the source dimension metadata when creating the destination.
+    device: Optional[Device] (= None)
+        Device to perform the operation on.
+
+    Returns
+    -------
+    Image
+    """
+    return _get_backend()._cumulative_max(
+        device, input_image, output_image, int(axis), keep_dims
+    )
+
+
+@plugin_function(categories=["accumulate", "in assistant"])
+def cumulative_product(
+    input_image: Image,
+    output_image: Optional[Image] = None,
+    axis: int = 0,
+    keep_dims: bool = False,
+    device: Optional[Device] = None,
+) -> Image:
+    """Computes the cumulative product along a given axis. Equivalent to numpy.cumprod
+    with an explicit axis.
+
+    Parameters
+    ----------
+    input_image: Image
+        Input image to process.
+    output_image: Optional[Image] (= None)
+        Output result image.
+    axis: int (= 0)
+        Axis along which to compute the cumulative product (0=X, 1=Y, 2=Z).
+    keep_dims: bool (= False)
+        If true, keeps the source dimension metadata when creating the destination.
+    device: Optional[Device] (= None)
+        Device to perform the operation on.
+
+    Returns
+    -------
+    Image
+    """
+    return _get_backend()._cumulative_product(
+        device, input_image, output_image, int(axis), keep_dims
     )
 
 
@@ -974,6 +1106,7 @@ def detect_label_edges(
     return _get_backend()._detect_label_edges(device, input_image, output_image)
 
 
+@deprecated("dilation: This function is deprecated. Consider using erode() instead.")
 @plugin_function(categories=["binary processing" "filter"])
 def dilation(
     input_image: Image,
@@ -1008,6 +1141,7 @@ def dilation(
     return _get_backend()._dilation(device, input_image, footprint, output_image)
 
 
+@deprecated("dilate_box: This function is deprecated. Consider using dilate() instead.")
 @plugin_function(categories=["binary processing"])
 def dilate_box(
     input_image: Image,
@@ -1041,6 +1175,9 @@ def dilate_box(
     return _get_backend()._dilate_box(device, input_image, output_image)
 
 
+@deprecated(
+    "dilate_sphere: This function is deprecated. Consider using dilate() instead."
+)
 @plugin_function(categories=["binary processing"])
 def dilate_sphere(
     input_image: Image,
@@ -1289,6 +1426,7 @@ def erosion(
     return _get_backend()._erosion(device, input_image, footprint, output_image)
 
 
+@deprecated("erode_box: This function is deprecated. Consider using erode() instead.")
 @plugin_function(categories=["binary processing"])
 def erode_box(
     input_image: Image,
@@ -1322,6 +1460,9 @@ def erode_box(
     return _get_backend()._erode_box(device, input_image, output_image)
 
 
+@deprecated(
+    "erode_sphere: This function is deprecated. Consider using erode() instead."
+)
 @plugin_function(categories=["binary processing"])
 def erode_sphere(
     input_image: Image,
@@ -1938,6 +2079,9 @@ def hessian_eigenvalues(
     )
 
 
+@deprecated(
+    "laplace_box: This function is deprecated. Consider using laplace() instead."
+)
 @plugin_function(categories=["filter", "edge detection", "in assistant"])
 def laplace_box(
     input_image: Image,
@@ -1966,6 +2110,9 @@ def laplace_box(
     return _get_backend()._laplace_box(device, input_image, output_image)
 
 
+@deprecated(
+    "laplace_diamond: This function is deprecated. Consider using laplace() instead."
+)
 @plugin_function(categories=["filter", "edge detection"])
 def laplace_diamond(
     input_image: Image,
@@ -2011,7 +2158,7 @@ def laplace(
     output_image: Optional[Image] (= None)
         Output result image.
     connectivity: str (= "box")
-        Filter neighborhood
+        Filter neighborhood connectivity, "box" or "sphere"
     device: Optional[Device] (= None)
         Device to perform the operation on.
 
@@ -2040,7 +2187,7 @@ def local_cross_correlation(
     input_image: Image
         Input image to process.
     kernel: Image
-        Input
+        Input kernel.
     output_image: Optional[Image] (= None)
         Output result image.
     device: Optional[Device] (= None)
@@ -2286,6 +2433,9 @@ def maximum_images(
     )
 
 
+@deprecated(
+    "maximum_box: This function is deprecated. Consider using maximum_filter() instead."
+)
 @plugin_function(categories=["filter", "in assistant"])
 def maximum_box(
     input_image: Image,
@@ -2358,7 +2508,7 @@ def maximum_filter(
     radius_z: float (= 1)
         Radius size along z axis.
     connectivity: str (= "box")
-        Filter neighborhood
+        Filter neighborhood connectivity, "box" or "sphere"
     device: Optional[Device] (= None)
         Device to perform the operation on.
 
@@ -2411,7 +2561,7 @@ def grayscale_dilate(
     radius_z: float (= 1)
         Radius size along z axis.
     connectivity: str (= "box")
-        Filter neighborhood
+        Filter neighborhood connectivity, "box" or "sphere"
     device: Optional[Device] (= None)
         Device to perform the operation on.
 
@@ -2439,6 +2589,7 @@ def grayscale_dilate(
 def maximum_x_projection(
     input_image: Image,
     output_image: Optional[Image] = None,
+    keep_dims: bool = False,
     device: Optional[Device] = None,
 ) -> Image:
     """Determines the maximum intensity projection of an image along X.
@@ -2449,6 +2600,8 @@ def maximum_x_projection(
         Input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
+    keep_dims: bool (= False)
+        If true, the reduced axis is kept as a singleton dimension in the output.
     device: Optional[Device] (= None)
         Device to perform the operation on.
 
@@ -2460,13 +2613,16 @@ def maximum_x_projection(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_maximumXProjection
     """
-    return _get_backend()._maximum_x_projection(device, input_image, output_image)
+    return _get_backend()._maximum_x_projection(
+        device, input_image, output_image, keep_dims
+    )
 
 
 @plugin_function(categories=["projection"])
 def maximum_y_projection(
     input_image: Image,
     output_image: Optional[Image] = None,
+    keep_dims: bool = False,
     device: Optional[Device] = None,
 ) -> Image:
     """Determines the maximum intensity projection of an image along X.
@@ -2477,6 +2633,8 @@ def maximum_y_projection(
         Input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
+    keep_dims: bool (= False)
+        If true, the reduced axis is kept as a singleton dimension in the output.
     device: Optional[Device] (= None)
         Device to perform the operation on.
 
@@ -2488,13 +2646,16 @@ def maximum_y_projection(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_maximumYProjection
     """
-    return _get_backend()._maximum_y_projection(device, input_image, output_image)
+    return _get_backend()._maximum_y_projection(
+        device, input_image, output_image, keep_dims
+    )
 
 
 @plugin_function(categories=["projection", "in assistant", "bia-bob-suggestion"])
 def maximum_z_projection(
     input_image: Image,
     output_image: Optional[Image] = None,
+    keep_dims: bool = False,
     device: Optional[Device] = None,
 ) -> Image:
     """Determines the maximum intensity projection of an image along Z.
@@ -2505,6 +2666,8 @@ def maximum_z_projection(
         Input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
+    keep_dims: bool (= False)
+        If true, the reduced axis is kept as a singleton dimension in the output.
     device: Optional[Device] (= None)
         Device to perform the operation on.
 
@@ -2516,9 +2679,12 @@ def maximum_z_projection(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_maximumZProjection
     """
-    return _get_backend()._maximum_z_projection(device, input_image, output_image)
+    return _get_backend()._maximum_z_projection(
+        device, input_image, output_image, keep_dims
+    )
 
 
+@deprecated("mean_box: This function is deprecated. Consider using mean() instead.")
 @plugin_function(categories=["filter", "denoise", "in assistant"])
 def mean_box(
     input_image: Image,
@@ -2564,6 +2730,7 @@ def mean_box(
     )
 
 
+@deprecated("mean_sphere: This function is deprecated. Consider using mean() instead.")
 @plugin_function(categories=["filter", "denoise", "in assistant", "bia-bob-suggestion"])
 def mean_sphere(
     input_image: Image,
@@ -2636,7 +2803,7 @@ def mean_filter(
     radius_z: float (= 1)
         Radius size along z axis.
     connectivity: str (= "box")
-        Filter neighborhood
+        Filter neighborhood connectivity, "box" or "sphere"
     device: Optional[Device] (= None)
         Device to perform the operation on.
 
@@ -2663,6 +2830,7 @@ def mean_filter(
 def mean_x_projection(
     input_image: Image,
     output_image: Optional[Image] = None,
+    keep_dims: bool = False,
     device: Optional[Device] = None,
 ) -> Image:
     """Determines the mean average intensity projection of an image along X.
@@ -2673,6 +2841,8 @@ def mean_x_projection(
         Input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
+    keep_dims: bool (= False)
+        If true, the reduced axis is kept as a singleton dimension in the output.
     device: Optional[Device] (= None)
         Device to perform the operation on.
 
@@ -2684,13 +2854,16 @@ def mean_x_projection(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_meanXProjection
     """
-    return _get_backend()._mean_x_projection(device, input_image, output_image)
+    return _get_backend()._mean_x_projection(
+        device, input_image, output_image, keep_dims
+    )
 
 
 @plugin_function(categories=["projection"])
 def mean_y_projection(
     input_image: Image,
     output_image: Optional[Image] = None,
+    keep_dims: bool = False,
     device: Optional[Device] = None,
 ) -> Image:
     """Determines the mean average intensity projection of an image along Y.
@@ -2701,6 +2874,8 @@ def mean_y_projection(
         Input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
+    keep_dims: bool (= False)
+        If true, the reduced axis is kept as a singleton dimension in the output.
     device: Optional[Device] (= None)
         Device to perform the operation on.
 
@@ -2712,13 +2887,16 @@ def mean_y_projection(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_meanYProjection
     """
-    return _get_backend()._mean_y_projection(device, input_image, output_image)
+    return _get_backend()._mean_y_projection(
+        device, input_image, output_image, keep_dims
+    )
 
 
 @plugin_function(categories=["projection", "in assistant", "bia-bob-suggestion"])
 def mean_z_projection(
     input_image: Image,
     output_image: Optional[Image] = None,
+    keep_dims: bool = False,
     device: Optional[Device] = None,
 ) -> Image:
     """Determines the mean average intensity projection of an image along Z.
@@ -2729,6 +2907,8 @@ def mean_z_projection(
         Input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
+    keep_dims: bool (= False)
+        If true, the reduced axis is kept as a singleton dimension in the output.
     device: Optional[Device] (= None)
         Device to perform the operation on.
 
@@ -2740,9 +2920,12 @@ def mean_z_projection(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_meanZProjection
     """
-    return _get_backend()._mean_z_projection(device, input_image, output_image)
+    return _get_backend()._mean_z_projection(
+        device, input_image, output_image, keep_dims
+    )
 
 
+@deprecated("median_box: This function is deprecated. Consider using median() instead.")
 @plugin_function(categories=["filter", "denoise", "in assistant"])
 def median_box(
     input_image: Image,
@@ -2789,6 +2972,9 @@ def median_box(
     )
 
 
+@deprecated(
+    "median_sphere: This function is deprecated. Consider using median() instead."
+)
 @plugin_function(categories=["filter", "denoise", "in assistant"])
 def median_sphere(
     input_image: Image,
@@ -2863,7 +3049,7 @@ def median(
     radius_z: float (= 1)
         Radius size along z axis.
     connectivity: str (= "box")
-        Filter neighborhood
+        Filter neighborhood connectivity, "box" or "sphere"
     device: Optional[Device] (= None)
         Device to perform the operation on.
 
@@ -2886,6 +3072,9 @@ def median(
     )
 
 
+@deprecated(
+    "minimum_box: This function is deprecated. Consider using minimum_filter() instead."
+)
 @plugin_function(categories=["filter", "in assistant"])
 def minimum_box(
     input_image: Image,
@@ -2957,7 +3146,7 @@ def minimum_filter(
     radius_z: float (= 1)
         Radius size along z axis.
     connectivity: str (= "box")
-        Filter neighborhood
+        Filter neighborhood connectivity, "box" or "sphere"
     device: Optional[Device] (= None)
         Device to perform the operation on.
 
@@ -3010,7 +3199,7 @@ def grayscale_erode(
     radius_z: float (= 1)
         Radius size along z axis.
     connectivity: str (= "box")
-        Filter neighborhood
+        Filter neighborhood connectivity, "box" or "sphere"
     device: Optional[Device] (= None)
         Device to perform the operation on.
 
@@ -3106,6 +3295,7 @@ def minimum_images(
 def minimum_x_projection(
     input_image: Image,
     output_image: Optional[Image] = None,
+    keep_dims: bool = False,
     device: Optional[Device] = None,
 ) -> Image:
     """Determines the minimum intensity projection of an image along Y.
@@ -3116,6 +3306,8 @@ def minimum_x_projection(
         Input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
+    keep_dims: bool (= False)
+        If true, the reduced axis is kept as a singleton dimension in the output.
     device: Optional[Device] (= None)
         Device to perform the operation on.
 
@@ -3127,13 +3319,16 @@ def minimum_x_projection(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_minimumXProjection
     """
-    return _get_backend()._minimum_x_projection(device, input_image, output_image)
+    return _get_backend()._minimum_x_projection(
+        device, input_image, output_image, keep_dims
+    )
 
 
 @plugin_function(categories=["projection"])
 def minimum_y_projection(
     input_image: Image,
     output_image: Optional[Image] = None,
+    keep_dims: bool = False,
     device: Optional[Device] = None,
 ) -> Image:
     """Determines the minimum intensity projection of an image along Y.
@@ -3144,6 +3339,8 @@ def minimum_y_projection(
         Input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
+    keep_dims: bool (= False)
+        If true, the reduced axis is kept as a singleton dimension in the output.
     device: Optional[Device] (= None)
         Device to perform the operation on.
 
@@ -3155,13 +3352,16 @@ def minimum_y_projection(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_minimumYProjection
     """
-    return _get_backend()._minimum_y_projection(device, input_image, output_image)
+    return _get_backend()._minimum_y_projection(
+        device, input_image, output_image, keep_dims
+    )
 
 
 @plugin_function(categories=["projection", "in assistant", "bia-bob-suggestion"])
 def minimum_z_projection(
     input_image: Image,
     output_image: Optional[Image] = None,
+    keep_dims: bool = False,
     device: Optional[Device] = None,
 ) -> Image:
     """Determines the minimum intensity projection of an image along Z.
@@ -3172,6 +3372,8 @@ def minimum_z_projection(
         Input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
+    keep_dims: bool (= False)
+        If true, the reduced axis is kept as a singleton dimension in the output.
     device: Optional[Device] (= None)
         Device to perform the operation on.
 
@@ -3183,9 +3385,12 @@ def minimum_z_projection(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_minimumZProjection
     """
-    return _get_backend()._minimum_z_projection(device, input_image, output_image)
+    return _get_backend()._minimum_z_projection(
+        device, input_image, output_image, keep_dims
+    )
 
 
+@deprecated("mode_box: This function is deprecated. Consider using mode() instead.")
 @plugin_function(categories=["label processing", "in assistant"])
 def mode_box(
     input_image: Image,
@@ -3230,6 +3435,7 @@ def mode_box(
     )
 
 
+@deprecated("mode_sphere: This function is deprecated. Consider using mode() instead.")
 @plugin_function(categories=["label processing", "in assistant", "bia-bob-suggestion"])
 def mode_sphere(
     input_image: Image,
@@ -3304,7 +3510,7 @@ def mode(
     radius_z: float (= 1)
         Radius size along z axis.
     connectivity: str (= "box")
-        Filter neighborhood
+        Filter neighborhood connectivity, "box" or "sphere"
     device: Optional[Device] (= None)
         Device to perform the operation on.
 
@@ -3330,7 +3536,8 @@ def modulo_images(
     output_image: Optional[Image] = None,
     device: Optional[Device] = None,
 ) -> Image:
-    """Computes the remainder of a division of pairwise pixel values in two images
+    """Computes the remainder of a division of pairwise pixel values in two images Uses
+    C truncated division, different than Python's floor division.
 
     Parameters
     ----------
@@ -3476,7 +3683,7 @@ def nan_to_num(
     output_image: Optional[Image] (= None)
         Output image where results are written into.
     nan: float (= 0)
-        Value to replace
+        Value to replace nan with.
     posinf: float (= np.nan_to_num(float('inf')))
         Value to replace +inf with.
     neginf: float (= np.nan_to_num(float('-inf')))
@@ -3497,6 +3704,9 @@ def nan_to_num(
     )
 
 
+@deprecated(
+    "nonzero_maximum_box: This function is deprecated. Consider using nonzero_maximum() instead."
+)
 @plugin_function
 def nonzero_maximum_box(
     input_image: Image,
@@ -3533,6 +3743,9 @@ def nonzero_maximum_box(
     )
 
 
+@deprecated(
+    "nonzero_maximum_diamond: This function is deprecated. Consider using nonzero_maximum() instead."
+)
 @plugin_function
 def nonzero_maximum_diamond(
     input_image: Image,
@@ -3592,7 +3805,7 @@ def nonzero_maximum(
     output_image1: Optional[Image] (= None)
         Output image where results are written into.
     connectivity: str (= "box")
-        Filter neighborhood
+        Filter neighborhood connectivity, "box" or "sphere"
     device: Optional[Device] (= None)
         Device to perform the operation on.
 
@@ -3610,6 +3823,9 @@ def nonzero_maximum(
     )
 
 
+@deprecated(
+    "nonzero_minimum_box: This function is deprecated. Consider using nonzero_minimum() instead."
+)
 @plugin_function
 def nonzero_minimum_box(
     input_image: Image,
@@ -3646,6 +3862,9 @@ def nonzero_minimum_box(
     )
 
 
+@deprecated(
+    "nonzero_minimum_diamond: This function is deprecated. Consider using nonzero_minimum() instead."
+)
 @plugin_function
 def nonzero_minimum_diamond(
     input_image: Image,
@@ -3705,7 +3924,7 @@ def nonzero_minimum(
     output_image1: Optional[Image] (= None)
         Output image where results are written into.
     connectivity: str (= "box")
-        Filter neigborhood
+        Filter neigborhood connectivity, "box" or "sphere"
     device: Optional[Device] (= None)
         Device to perform the operation on.
 
@@ -3833,6 +4052,9 @@ def paste(
     )
 
 
+@deprecated(
+    "onlyzero_overwrite_maximum_box: This function is deprecated. Consider using onlyzero_overwrite_maximum() instead."
+)
 @plugin_function
 def onlyzero_overwrite_maximum_box(
     input_image: Image,
@@ -3848,7 +4070,7 @@ def onlyzero_overwrite_maximum_box(
     input_image: Image
         Input image to process.
     flag: Image
-        Output
+        Output flag value, 0 or 1.
     output_image: Optional[Image] (= None)
         Output image.
     device: Optional[Device] (= None)
@@ -3867,6 +4089,9 @@ def onlyzero_overwrite_maximum_box(
     )
 
 
+@deprecated(
+    "onlyzero_overwrite_maximum_diamond: This function is deprecated. Consider using onlyzero_overwrite_maximum() instead."
+)
 @plugin_function
 def onlyzero_overwrite_maximum_diamond(
     input_image: Image,
@@ -3882,7 +4107,7 @@ def onlyzero_overwrite_maximum_diamond(
     input_image: Image
         Input image to process.
     flag: Image
-        Output
+        Output flag value, 0 or 1.
     output_image: Optional[Image] (= None)
         Output image.
     device: Optional[Device] (= None)
@@ -3917,11 +4142,11 @@ def onlyzero_overwrite_maximum(
     input_image: Image
         Input image to process.
     flag: Image
-        Output
+        Output flag value, 0 or 1.
     output_image: Optional[Image] (= None)
         Output image.
     connectivity: str (= "box")
-        Filter neigborhood
+        Filter neigborhood connectivity, "box" or "sphere"
     device: Optional[Device] (= None)
         Device to perform the operation on.
 
@@ -4004,6 +4229,7 @@ def power_images(
     )
 
 
+@deprecated("range: This function is deprecated. Consider using gather() instead.")
 @plugin_function(categories=["transform", "in assistant"])
 def range(
     input_image: Image,
@@ -4019,7 +4245,9 @@ def range(
     step_z: Optional[int] = None,
     device: Optional[Device] = None,
 ) -> Image:
-    """Crops an image according to a defined range and step size.
+    """Read values from a strided region into a destination image in place, following
+    the rule src[start + i * step] = dst[i] along each dimension. The destination
+    image is not reallocated.
 
     Parameters
     ----------
@@ -4053,6 +4281,138 @@ def range(
     Image
     """
     return _get_backend()._range(
+        device,
+        input_image,
+        output_image,
+        start_x,
+        stop_x,
+        step_x,
+        start_y,
+        stop_y,
+        step_y,
+        start_z,
+        stop_z,
+        step_z,
+    )
+
+
+@plugin_function(categories=["transform", "in assistant"])
+def gather(
+    input_image: Image,
+    output_image: Optional[Image] = None,
+    start_x: Optional[int] = None,
+    stop_x: Optional[int] = None,
+    step_x: Optional[int] = None,
+    start_y: Optional[int] = None,
+    stop_y: Optional[int] = None,
+    step_y: Optional[int] = None,
+    start_z: Optional[int] = None,
+    stop_z: Optional[int] = None,
+    step_z: Optional[int] = None,
+    device: Optional[Device] = None,
+) -> Image:
+    """Read values from a strided region into a destination image in place, following
+    the rule src[start + i * step] = dst[i] along each dimension. The destination
+    image is not reallocated.
+
+    Parameters
+    ----------
+    input_image: Image
+        First input image to process.
+    output_image: Optional[Image] (= None)
+        Output result image.
+    start_x: Optional[int] (= None)
+        Range starting value in x
+    stop_x: Optional[int] (= None)
+        Range stop value in x
+    step_x: Optional[int] (= None)
+        Range step value in x
+    start_y: Optional[int] (= None)
+        Range starting value in y
+    stop_y: Optional[int] (= None)
+        Range stop value in y
+    step_y: Optional[int] (= None)
+        Range step value in y
+    start_z: Optional[int] (= None)
+        Range starting value in z
+    stop_z: Optional[int] (= None)
+        Range stop value in z
+    step_z: Optional[int] (= None)
+        Range step value in z
+    device: Optional[Device] (= None)
+        Device to perform the operation on.
+
+    Returns
+    -------
+    Image
+    """
+    return _get_backend()._gather(
+        device,
+        input_image,
+        output_image,
+        start_x,
+        stop_x,
+        step_x,
+        start_y,
+        stop_y,
+        step_y,
+        start_z,
+        stop_z,
+        step_z,
+    )
+
+
+@plugin_function(categories=["transform", "in assistant"])
+def scatter(
+    input_image: Image,
+    output_image: Image,
+    start_x: Optional[int] = None,
+    stop_x: Optional[int] = None,
+    step_x: Optional[int] = None,
+    start_y: Optional[int] = None,
+    stop_y: Optional[int] = None,
+    step_y: Optional[int] = None,
+    start_z: Optional[int] = None,
+    stop_z: Optional[int] = None,
+    step_z: Optional[int] = None,
+    device: Optional[Device] = None,
+) -> Image:
+    """Writes a source image into a strided region of a destination image in place,
+    following the rule dst[start + i * step] = src[i] along each dimension. The
+    destination image is not reallocated.
+
+    Parameters
+    ----------
+    input_image: Image
+        Input image to scatter into dst.
+    output_image: Image
+        Destination image written in place.
+    start_x: Optional[int] (= None)
+        Range starting value in x
+    stop_x: Optional[int] (= None)
+        Range stop value in x
+    step_x: Optional[int] (= None)
+        Range step value in x
+    start_y: Optional[int] (= None)
+        Range starting value in y
+    stop_y: Optional[int] (= None)
+        Range stop value in y
+    step_y: Optional[int] (= None)
+        Range step value in y
+    start_z: Optional[int] (= None)
+        Range starting value in z
+    stop_z: Optional[int] (= None)
+        Range stop value in z
+    step_z: Optional[int] (= None)
+        Range step value in z
+    device: Optional[Device] (= None)
+        Device to perform the operation on.
+
+    Returns
+    -------
+    Image
+    """
+    return _get_backend()._scatter(
         device,
         input_image,
         output_image,
@@ -4174,6 +4534,9 @@ def replace_value(
     )
 
 
+@deprecated(
+    "replace_intensity: This function is deprecated. Consider using replace_value() instead."
+)
 @plugin_function
 def replace_intensity(
     input_image: Image,
@@ -4214,6 +4577,9 @@ def replace_intensity(
     )
 
 
+@deprecated(
+    "replace_intensities: This function is deprecated. Consider using replace_values() instead."
+)
 @plugin_function
 def replace_intensities(
     input_image0: Image,
@@ -4249,6 +4615,9 @@ def replace_intensities(
     )
 
 
+@deprecated(
+    "maximum_sphere: This function is deprecated. Consider using maximum_filter() instead."
+)
 @plugin_function(categories=["filter", "in assistant", "bia-bob-suggestion"])
 def maximum_sphere(
     input_image: Image,
@@ -4294,6 +4663,9 @@ def maximum_sphere(
     )
 
 
+@deprecated(
+    "minimum_sphere: This function is deprecated. Consider using minimum_filter() instead."
+)
 @plugin_function(categories=["filter", "in assistant", "bia-bob-suggestion"])
 def minimum_sphere(
     input_image: Image,
@@ -5033,6 +5405,8 @@ def square_root(
 def std_x_projection(
     input_image: Image,
     output_image: Optional[Image] = None,
+    ddof: int = 0,
+    keep_dims: bool = False,
     device: Optional[Device] = None,
 ) -> Image:
     """Determines the standard deviation intensity projection of an image stack along
@@ -5044,6 +5418,10 @@ def std_x_projection(
         Input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
+    ddof: int (= 0)
+        Delta degrees of freedom. The divisor used is (n - ddof).
+    keep_dims: bool (= False)
+        If true, the reduced axis is kept as a singleton dimension in the output.
     device: Optional[Device] (= None)
         Device to perform the operation on.
 
@@ -5055,13 +5433,17 @@ def std_x_projection(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_standardDeviationXProjection
     """
-    return _get_backend()._std_x_projection(device, input_image, output_image)
+    return _get_backend()._std_x_projection(
+        device, input_image, output_image, int(ddof), keep_dims
+    )
 
 
 @plugin_function(categories=["projection"])
 def std_y_projection(
     input_image: Image,
     output_image: Optional[Image] = None,
+    ddof: int = 0,
+    keep_dims: bool = False,
     device: Optional[Device] = None,
 ) -> Image:
     """Determines the standard deviation intensity projection of an image stack along
@@ -5073,6 +5455,10 @@ def std_y_projection(
         Input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
+    ddof: int (= 0)
+        Delta degrees of freedom. The divisor used is (n - ddof).
+    keep_dims: bool (= False)
+        If true, the reduced axis is kept as a singleton dimension in the output.
     device: Optional[Device] (= None)
         Device to perform the operation on.
 
@@ -5084,13 +5470,17 @@ def std_y_projection(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_standardDeviationYProjection
     """
-    return _get_backend()._std_y_projection(device, input_image, output_image)
+    return _get_backend()._std_y_projection(
+        device, input_image, output_image, int(ddof), keep_dims
+    )
 
 
 @plugin_function(categories=["projection", "in assistant", "bia-bob-suggestion"])
 def std_z_projection(
     input_image: Image,
     output_image: Optional[Image] = None,
+    ddof: int = 0,
+    keep_dims: bool = False,
     device: Optional[Device] = None,
 ) -> Image:
     """Determines the standard deviation intensity projection of an image stack along
@@ -5102,6 +5492,10 @@ def std_z_projection(
         Input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
+    ddof: int (= 0)
+        Delta degrees of freedom. The divisor used is (n - ddof).
+    keep_dims: bool (= False)
+        If true, the reduced axis is kept as a singleton dimension in the output.
     device: Optional[Device] (= None)
         Device to perform the operation on.
 
@@ -5113,7 +5507,105 @@ def std_z_projection(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_standardDeviationZProjection
     """
-    return _get_backend()._std_z_projection(device, input_image, output_image)
+    return _get_backend()._std_z_projection(
+        device, input_image, output_image, int(ddof), keep_dims
+    )
+
+
+@plugin_function(categories=["projection"])
+def variance_x_projection(
+    input_image: Image,
+    output_image: Optional[Image] = None,
+    ddof: int = 0,
+    keep_dims: bool = False,
+    device: Optional[Device] = None,
+) -> Image:
+    """Determines the variance intensity projection of an image stack along X.
+
+    Parameters
+    ----------
+    input_image: Image
+        Input image to process.
+    output_image: Optional[Image] (= None)
+        Output result image.
+    ddof: int (= 0)
+        Delta degrees of freedom. The divisor used is (n - ddof).
+    keep_dims: bool (= False)
+        If true, the reduced axis is kept as a singleton dimension in the output.
+    device: Optional[Device] (= None)
+        Device to perform the operation on.
+
+    Returns
+    -------
+    Image
+    """
+    return _get_backend()._variance_x_projection(
+        device, input_image, output_image, int(ddof), keep_dims
+    )
+
+
+@plugin_function(categories=["projection"])
+def variance_y_projection(
+    input_image: Image,
+    output_image: Optional[Image] = None,
+    ddof: int = 0,
+    keep_dims: bool = False,
+    device: Optional[Device] = None,
+) -> Image:
+    """Determines the variance intensity projection of an image stack along Y.
+
+    Parameters
+    ----------
+    input_image: Image
+        Input image to process.
+    output_image: Optional[Image] (= None)
+        Output result image.
+    ddof: int (= 0)
+        Delta degrees of freedom. The divisor used is (n - ddof).
+    keep_dims: bool (= False)
+        If true, the reduced axis is kept as a singleton dimension in the output.
+    device: Optional[Device] (= None)
+        Device to perform the operation on.
+
+    Returns
+    -------
+    Image
+    """
+    return _get_backend()._variance_y_projection(
+        device, input_image, output_image, int(ddof), keep_dims
+    )
+
+
+@plugin_function(categories=["projection", "in assistant", "bia-bob-suggestion"])
+def variance_z_projection(
+    input_image: Image,
+    output_image: Optional[Image] = None,
+    ddof: int = 0,
+    keep_dims: bool = False,
+    device: Optional[Device] = None,
+) -> Image:
+    """Determines the variance intensity projection of an image stack along Z.
+
+    Parameters
+    ----------
+    input_image: Image
+        Input image to process.
+    output_image: Optional[Image] (= None)
+        Output result image.
+    ddof: int (= 0)
+        Delta degrees of freedom. The divisor used is (n - ddof).
+    keep_dims: bool (= False)
+        If true, the reduced axis is kept as a singleton dimension in the output.
+    device: Optional[Device] (= None)
+        Device to perform the operation on.
+
+    Returns
+    -------
+    Image
+    """
+    return _get_backend()._variance_z_projection(
+        device, input_image, output_image, int(ddof), keep_dims
+    )
 
 
 @plugin_function(categories=["filter", "in assistant"])
@@ -5184,6 +5676,7 @@ def sum_reduction_x(
 def sum_x_projection(
     input_image: Image,
     output_image: Optional[Image] = None,
+    keep_dims: bool = False,
     device: Optional[Device] = None,
 ) -> Image:
     """Determines the sum intensity projection of an image along Z.
@@ -5194,6 +5687,8 @@ def sum_x_projection(
         Input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
+    keep_dims: bool (= False)
+        If true, the reduced axis is kept as a singleton dimension in the output.
     device: Optional[Device] (= None)
         Device to perform the operation on.
 
@@ -5205,13 +5700,16 @@ def sum_x_projection(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_sumXProjection
     """
-    return _get_backend()._sum_x_projection(device, input_image, output_image)
+    return _get_backend()._sum_x_projection(
+        device, input_image, output_image, keep_dims
+    )
 
 
 @plugin_function(categories=["projection"])
 def sum_y_projection(
     input_image: Image,
     output_image: Optional[Image] = None,
+    keep_dims: bool = False,
     device: Optional[Device] = None,
 ) -> Image:
     """Determines the sum intensity projection of an image along Z.
@@ -5222,6 +5720,8 @@ def sum_y_projection(
         Input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
+    keep_dims: bool (= False)
+        If true, the reduced axis is kept as a singleton dimension in the output.
     device: Optional[Device] (= None)
         Device to perform the operation on.
 
@@ -5233,13 +5733,16 @@ def sum_y_projection(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_sumYProjection
     """
-    return _get_backend()._sum_y_projection(device, input_image, output_image)
+    return _get_backend()._sum_y_projection(
+        device, input_image, output_image, keep_dims
+    )
 
 
 @plugin_function(categories=["projection", "in assistant", "bia-bob-suggestion"])
 def sum_z_projection(
     input_image: Image,
     output_image: Optional[Image] = None,
+    keep_dims: bool = False,
     device: Optional[Device] = None,
 ) -> Image:
     """Determines the sum intensity projection of an image along Z.
@@ -5250,6 +5753,8 @@ def sum_z_projection(
         Input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
+    keep_dims: bool (= False)
+        If true, the reduced axis is kept as a singleton dimension in the output.
     device: Optional[Device] (= None)
         Device to perform the operation on.
 
@@ -5261,7 +5766,99 @@ def sum_z_projection(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_sumZProjection
     """
-    return _get_backend()._sum_z_projection(device, input_image, output_image)
+    return _get_backend()._sum_z_projection(
+        device, input_image, output_image, keep_dims
+    )
+
+
+@plugin_function(categories=["projection"])
+def product_x_projection(
+    input_image: Image,
+    output_image: Optional[Image] = None,
+    keep_dims: bool = False,
+    device: Optional[Device] = None,
+) -> Image:
+    """Determines the product intensity projection of an image along X. <pre>f(y,z) =
+    prod_x(src(x,y,z))</pre>
+
+    Parameters
+    ----------
+    input_image: Image
+        Input image to process.
+    output_image: Optional[Image] (= None)
+        Output result image.
+    keep_dims: bool (= False)
+        If true, the reduced axis is kept as a singleton dimension in the output.
+    device: Optional[Device] (= None)
+        Device to perform the operation on.
+
+    Returns
+    -------
+    Image
+    """
+    return _get_backend()._product_x_projection(
+        device, input_image, output_image, keep_dims
+    )
+
+
+@plugin_function(categories=["projection"])
+def product_y_projection(
+    input_image: Image,
+    output_image: Optional[Image] = None,
+    keep_dims: bool = False,
+    device: Optional[Device] = None,
+) -> Image:
+    """Determines the product intensity projection of an image along Y. <pre>f(x,z) =
+    prod_y(src(x,y,z))</pre>
+
+    Parameters
+    ----------
+    input_image: Image
+        Input image to process.
+    output_image: Optional[Image] (= None)
+        Output result image.
+    keep_dims: bool (= False)
+        If true, the reduced axis is kept as a singleton dimension in the output.
+    device: Optional[Device] (= None)
+        Device to perform the operation on.
+
+    Returns
+    -------
+    Image
+    """
+    return _get_backend()._product_y_projection(
+        device, input_image, output_image, keep_dims
+    )
+
+
+@plugin_function(categories=["projection", "in assistant", "bia-bob-suggestion"])
+def product_z_projection(
+    input_image: Image,
+    output_image: Optional[Image] = None,
+    keep_dims: bool = False,
+    device: Optional[Device] = None,
+) -> Image:
+    """Determines the product intensity projection of an image along Z. <pre>f(x,y) =
+    prod_z(src(x,y,z))</pre>
+
+    Parameters
+    ----------
+    input_image: Image
+        Input image to process.
+    output_image: Optional[Image] (= None)
+        Output result image.
+    keep_dims: bool (= False)
+        If true, the reduced axis is kept as a singleton dimension in the output.
+    device: Optional[Device] (= None)
+        Device to perform the operation on.
+
+    Returns
+    -------
+    Image
+    """
+    return _get_backend()._product_z_projection(
+        device, input_image, output_image, keep_dims
+    )
 
 
 @plugin_function(categories=["transform"])
@@ -5377,6 +5974,9 @@ def undefined_to_zero(
     return _get_backend()._undefined_to_zero(device, input_image, output_image)
 
 
+@deprecated(
+    "variance_box: This function is deprecated. Consider using variance() instead."
+)
 @plugin_function(categories=["filter", "edge detection", "in assistant"])
 def variance_box(
     input_image: Image,
@@ -5423,6 +6023,9 @@ def variance_box(
     )
 
 
+@deprecated(
+    "variance_sphere: This function is deprecated. Consider using variance() instead."
+)
 @plugin_function(categories=["filter", "edge detection", "in assistant"])
 def variance_sphere(
     input_image: Image,
@@ -5496,7 +6099,7 @@ def variance_filter(
     radius_z: float (= 1)
         Radius size along z axis.
     connectivity: str (= "box")
-        Filter neigborhood
+        Filter neigborhood connectivity, "box" or "sphere"
     device: Optional[Device] (= None)
         Device to perform the operation on.
 
@@ -5554,6 +6157,7 @@ def write_values_to_positions(
 def x_position_of_maximum_x_projection(
     input_image: Image,
     output_image: Optional[Image] = None,
+    keep_dims: bool = False,
     device: Optional[Device] = None,
 ) -> Image:
     """Determines an Xposition of the maximum intensity along X and writes it into the
@@ -5566,6 +6170,8 @@ def x_position_of_maximum_x_projection(
         Input image stack
     output_image: Optional[Image] (= None)
         altitude map
+    keep_dims: bool (= False)
+        If true, the reduced axis is kept as a singleton dimension in the output.
     device: Optional[Device] (= None)
         Device to perform the operation on.
 
@@ -5574,7 +6180,7 @@ def x_position_of_maximum_x_projection(
     Image
     """
     return _get_backend()._x_position_of_maximum_x_projection(
-        device, input_image, output_image
+        device, input_image, output_image, keep_dims
     )
 
 
@@ -5582,6 +6188,7 @@ def x_position_of_maximum_x_projection(
 def x_position_of_minimum_x_projection(
     input_image: Image,
     output_image: Optional[Image] = None,
+    keep_dims: bool = False,
     device: Optional[Device] = None,
 ) -> Image:
     """Determines an Xposition of the minimum intensity along X and writes it into the
@@ -5594,6 +6201,8 @@ def x_position_of_minimum_x_projection(
         Input image stack
     output_image: Optional[Image] (= None)
         altitude map
+    keep_dims: bool (= False)
+        If true, the reduced axis is kept as a singleton dimension in the output.
     device: Optional[Device] (= None)
         Device to perform the operation on.
 
@@ -5602,7 +6211,7 @@ def x_position_of_minimum_x_projection(
     Image
     """
     return _get_backend()._x_position_of_minimum_x_projection(
-        device, input_image, output_image
+        device, input_image, output_image, keep_dims
     )
 
 
@@ -5610,6 +6219,7 @@ def x_position_of_minimum_x_projection(
 def y_position_of_maximum_y_projection(
     input_image: Image,
     output_image: Optional[Image] = None,
+    keep_dims: bool = False,
     device: Optional[Device] = None,
 ) -> Image:
     """Determines an Yposition of the maximum intensity along Y and writes it into the
@@ -5622,6 +6232,8 @@ def y_position_of_maximum_y_projection(
         Input image stack
     output_image: Optional[Image] (= None)
         altitude map
+    keep_dims: bool (= False)
+        If true, the reduced axis is kept as a singleton dimension in the output.
     device: Optional[Device] (= None)
         Device to perform the operation on.
 
@@ -5630,7 +6242,7 @@ def y_position_of_maximum_y_projection(
     Image
     """
     return _get_backend()._y_position_of_maximum_y_projection(
-        device, input_image, output_image
+        device, input_image, output_image, keep_dims
     )
 
 
@@ -5638,6 +6250,7 @@ def y_position_of_maximum_y_projection(
 def y_position_of_minimum_y_projection(
     input_image: Image,
     output_image: Optional[Image] = None,
+    keep_dims: bool = False,
     device: Optional[Device] = None,
 ) -> Image:
     """Determines an Yposition of the minimum intensity along Y and writes it into the
@@ -5650,6 +6263,8 @@ def y_position_of_minimum_y_projection(
         Input image stack
     output_image: Optional[Image] (= None)
         altitude map
+    keep_dims: bool (= False)
+        If true, the reduced axis is kept as a singleton dimension in the output.
     device: Optional[Device] (= None)
         Device to perform the operation on.
 
@@ -5658,7 +6273,7 @@ def y_position_of_minimum_y_projection(
     Image
     """
     return _get_backend()._y_position_of_minimum_y_projection(
-        device, input_image, output_image
+        device, input_image, output_image, keep_dims
     )
 
 
@@ -5666,6 +6281,7 @@ def y_position_of_minimum_y_projection(
 def z_position_of_maximum_z_projection(
     input_image: Image,
     output_image: Optional[Image] = None,
+    keep_dims: bool = False,
     device: Optional[Device] = None,
 ) -> Image:
     """Determines a Zposition of the maximum intensity along Z and writes it into the
@@ -5678,6 +6294,8 @@ def z_position_of_maximum_z_projection(
         Input image stack
     output_image: Optional[Image] (= None)
         altitude map
+    keep_dims: bool (= False)
+        If true, the reduced axis is kept as a singleton dimension in the output.
     device: Optional[Device] (= None)
         Device to perform the operation on.
 
@@ -5686,7 +6304,7 @@ def z_position_of_maximum_z_projection(
     Image
     """
     return _get_backend()._z_position_of_maximum_z_projection(
-        device, input_image, output_image
+        device, input_image, output_image, keep_dims
     )
 
 
@@ -5694,6 +6312,7 @@ def z_position_of_maximum_z_projection(
 def z_position_of_minimum_z_projection(
     input_image: Image,
     output_image: Optional[Image] = None,
+    keep_dims: bool = False,
     device: Optional[Device] = None,
 ) -> Image:
     """Determines a Zposition of the minimum intensity along Z and writes it into the
@@ -5706,6 +6325,8 @@ def z_position_of_minimum_z_projection(
         Input image stack
     output_image: Optional[Image] (= None)
         altitude map
+    keep_dims: bool (= False)
+        If true, the reduced axis is kept as a singleton dimension in the output.
     device: Optional[Device] (= None)
         Device to perform the operation on.
 
@@ -5714,7 +6335,7 @@ def z_position_of_minimum_z_projection(
     Image
     """
     return _get_backend()._z_position_of_minimum_z_projection(
-        device, input_image, output_image
+        device, input_image, output_image, keep_dims
     )
 
 
@@ -5764,9 +6385,9 @@ def mean_of_touching_neighbors(
     Parameters
     ----------
     vector: Image
-        Input
+        Input vector to process.
     matrix: Image
-        Input adjacency
+        Input adjacency matrix to process.
     output_image: Optional[Image] (= None)
         Output result vector.
     device: Optional[Device] (= None)
@@ -5793,9 +6414,9 @@ def median_of_touching_neighbors(
     Parameters
     ----------
     vector: Image
-        Input
+        Input vector to process.
     matrix: Image
-        Input adjacency
+        Input adjacency matrix to process.
     output_image: Optional[Image] (= None)
         Output result vector.
     device: Optional[Device] (= None)
@@ -5822,9 +6443,9 @@ def minimum_of_touching_neighbors(
     Parameters
     ----------
     vector: Image
-        Input
+        Input vector to process.
     matrix: Image
-        Input adjacency
+        Input adjacency matrix to process.
     output_image: Optional[Image] (= None)
         Output result vector.
     device: Optional[Device] (= None)
@@ -5851,9 +6472,9 @@ def maximum_of_touching_neighbors(
     Parameters
     ----------
     vector: Image
-        Input
+        Input vector to process.
     matrix: Image
-        Input adjacency
+        Input adjacency matrix to process.
     output_image: Optional[Image] (= None)
         Output result vector.
     device: Optional[Device] (= None)
@@ -5880,9 +6501,9 @@ def standard_deviation_of_touching_neighbors(
     Parameters
     ----------
     vector: Image
-        Input
+        Input vector to process.
     matrix: Image
-        Input adjacency
+        Input adjacency matrix to process.
     output_image: Optional[Image] (= None)
         Output result vector.
     device: Optional[Device] (= None)
@@ -5909,9 +6530,9 @@ def mode_of_touching_neighbors(
     Parameters
     ----------
     vector: Image
-        Input
+        Input vector to process.
     matrix: Image
-        Input adjacency
+        Input adjacency matrix to process.
     output_image: Optional[Image] (= None)
         Output result vector.
     device: Optional[Device] (= None)
@@ -6025,6 +6646,330 @@ def truncate(
     return _get_backend()._truncate(device, input_image, output_image)
 
 
+@plugin_function
+def minimum_distance_touching_neighbors(
+    input_image_distance_matrix: Image,
+    input_image_touch_matrix: Image,
+    output_image_index_list: Optional[Image] = None,
+    device: Optional[Device] = None,
+) -> Image:
+    """For each label in a touch matrix and its corresponding distance matrix, compute
+    the minimum distance to all touching neighbors.
+
+    Parameters
+    ----------
+    input_image_distance_matrix: Image
+        Input distance matrix containing pairwise distances between labels.
+    input_image_touch_matrix: Image
+        Input touch matrix encoding which labels are neighbors.
+    output_image_index_list: Optional[Image] (= None)
+        Output vector containing the minimum touching-neighbor distance per label.
+    device: Optional[Device] (= None)
+        Device to perform the operation on.
+
+    Returns
+    -------
+    Image
+    """
+    return _get_backend()._minimum_distance_touching_neighbors(
+        device,
+        input_image_distance_matrix,
+        input_image_touch_matrix,
+        output_image_index_list,
+    )
+
+
+@plugin_function
+def maximum_distance_touching_neighbors(
+    input_image_distance_matrix: Image,
+    input_image_touch_matrix: Image,
+    output_image_index_list: Optional[Image] = None,
+    device: Optional[Device] = None,
+) -> Image:
+    """For each label in a touch matrix and its corresponding distance matrix, compute
+    the maximum distance to all touching neighbors.
+
+    Parameters
+    ----------
+    input_image_distance_matrix: Image
+        Input distance matrix containing pairwise distances between labels.
+    input_image_touch_matrix: Image
+        Input touch matrix encoding which labels are neighbors.
+    output_image_index_list: Optional[Image] (= None)
+        Output vector containing the maximum touching-neighbor distance per label.
+    device: Optional[Device] (= None)
+        Device to perform the operation on.
+
+    Returns
+    -------
+    Image
+    """
+    return _get_backend()._maximum_distance_touching_neighbors(
+        device,
+        input_image_distance_matrix,
+        input_image_touch_matrix,
+        output_image_index_list,
+    )
+
+
+@plugin_function
+def mean_distance_touching_neighbors(
+    input_image_distance_matrix: Image,
+    input_image_touch_matrix: Image,
+    output_image_index_list: Optional[Image] = None,
+    device: Optional[Device] = None,
+) -> Image:
+    """For each label in a touch matrix and its corresponding distance matrix, compute
+    the mean distance to all touching neighbors.
+
+    Parameters
+    ----------
+    input_image_distance_matrix: Image
+        Input distance matrix containing pairwise distances between labels.
+    input_image_touch_matrix: Image
+        Input touch matrix encoding which labels are neighbors.
+    output_image_index_list: Optional[Image] (= None)
+        Output vector containing the mean touching-neighbor distance per label.
+    device: Optional[Device] (= None)
+        Device to perform the operation on.
+
+    Returns
+    -------
+    Image
+    """
+    return _get_backend()._mean_distance_touching_neighbors(
+        device,
+        input_image_distance_matrix,
+        input_image_touch_matrix,
+        output_image_index_list,
+    )
+
+
+@deprecated(
+    "average_distance_touching_neighbors: This function is deprecated. Consider using mean_distance_touching_neighbors() instead."
+)
+@plugin_function
+def average_distance_touching_neighbors(
+    input_image_distance_matrix: Image,
+    input_image_touch_matrix: Image,
+    output_image_index_list: Optional[Image] = None,
+    device: Optional[Device] = None,
+) -> Image:
+    """For each label in a touch matrix and its corresponding distance matrix, compute
+    the mean distance to all touching neighbors.
+
+    Parameters
+    ----------
+    input_image_distance_matrix: Image
+        Input distance matrix containing pairwise distances between labels.
+    input_image_touch_matrix: Image
+        Input touch matrix encoding which labels are neighbors.
+    output_image_index_list: Optional[Image] (= None)
+        Output vector containing the average touching-neighbor distance per label.
+    device: Optional[Device] (= None)
+        Device to perform the operation on.
+
+    Returns
+    -------
+    Image
+    """
+    return _get_backend()._average_distance_touching_neighbors(
+        device,
+        input_image_distance_matrix,
+        input_image_touch_matrix,
+        output_image_index_list,
+    )
+
+
+@plugin_function
+def mean_distance_n_nearest_neighbors(
+    input_image_distance_matrix: Image,
+    output_image_index_list: Optional[Image] = None,
+    n: int = 1,
+    device: Optional[Device] = None,
+) -> Image:
+    """For each label in a distance matrix, compute the mean distance to its N nearest
+    neighbors.
+
+    Parameters
+    ----------
+    input_image_distance_matrix: Image
+        Input distance matrix containing pairwise distances between labels.
+    output_image_index_list: Optional[Image] (= None)
+        Output vector containing the mean N-nearest-neighbor distance per label.
+    n: int (= 1)
+        Number of nearest neighbors to consider.
+    device: Optional[Device] (= None)
+        Device to perform the operation on.
+
+    Returns
+    -------
+    Image
+    """
+    return _get_backend()._mean_distance_n_nearest_neighbors(
+        device, input_image_distance_matrix, output_image_index_list, int(n)
+    )
+
+
+@plugin_function
+def maximum_distance_n_nearest_neighbors(
+    input_image_distance_matrix: Image,
+    output_image_index_list: Optional[Image] = None,
+    n: int = 1,
+    device: Optional[Device] = None,
+) -> Image:
+    """For each label in a distance matrix, compute the maximum distance among its N
+    nearest neighbors.
+
+    Parameters
+    ----------
+    input_image_distance_matrix: Image
+        Input distance matrix containing pairwise distances between labels.
+    output_image_index_list: Optional[Image] (= None)
+        Output vector containing the maximum N-nearest-neighbor distance per label.
+    n: int (= 1)
+        Number of nearest neighbors to consider.
+    device: Optional[Device] (= None)
+        Device to perform the operation on.
+
+    Returns
+    -------
+    Image
+    """
+    return _get_backend()._maximum_distance_n_nearest_neighbors(
+        device, input_image_distance_matrix, output_image_index_list, int(n)
+    )
+
+
+@plugin_function
+def mean_distance_n_farthest_neighbors(
+    input_image_distance_matrix: Image,
+    output_image_index_list: Optional[Image] = None,
+    n: int = 1,
+    device: Optional[Device] = None,
+) -> Image:
+    """For each label in a distance matrix, compute the mean distance to its N farthest
+    neighbors.
+
+    Parameters
+    ----------
+    input_image_distance_matrix: Image
+        Input distance matrix containing pairwise distances between labels.
+    output_image_index_list: Optional[Image] (= None)
+        Output vector containing the mean N-farthest-neighbor distance per label.
+    n: int (= 1)
+        Number of farthest neighbors to consider.
+    device: Optional[Device] (= None)
+        Device to perform the operation on.
+
+    Returns
+    -------
+    Image
+    """
+    return _get_backend()._mean_distance_n_farthest_neighbors(
+        device, input_image_distance_matrix, output_image_index_list, int(n)
+    )
+
+
+@deprecated(
+    "average_distance_of_n_nearest_distances: This function is deprecated. Consider using mean_distance_n_nearest_neighbors() instead."
+)
+@plugin_function
+def average_distance_of_n_nearest_distances(
+    input_image_distance_matrix: Image,
+    output_image_index_list: Optional[Image] = None,
+    n: int = 1,
+    device: Optional[Device] = None,
+) -> Image:
+    """For each label in a distance matrix, compute the mean distance to its N nearest
+    neighbors.
+
+    Parameters
+    ----------
+    input_image_distance_matrix: Image
+        Input distance matrix containing pairwise distances between labels.
+    output_image_index_list: Optional[Image] (= None)
+        Output vector containing the mean N-nearest-neighbor distance per label.
+    n: int (= 1)
+        Number of nearest neighbors to consider.
+    device: Optional[Device] (= None)
+        Device to perform the operation on.
+
+    Returns
+    -------
+    Image
+    """
+    return _get_backend()._average_distance_of_n_nearest_distances(
+        device, input_image_distance_matrix, output_image_index_list, int(n)
+    )
+
+
+@deprecated(
+    "maximum_distance_of_n_shortest_distances: This function is deprecated. Consider using maximum_distance_n_nearest_neighbors() instead."
+)
+@plugin_function
+def maximum_distance_of_n_shortest_distances(
+    input_image_distance_matrix: Image,
+    output_image_index_list: Optional[Image] = None,
+    n: int = 1,
+    device: Optional[Device] = None,
+) -> Image:
+    """For each label in a distance matrix, compute the maximum distance among its N
+    nearest neighbors.
+
+    Parameters
+    ----------
+    input_image_distance_matrix: Image
+        Input distance matrix containing pairwise distances between labels.
+    output_image_index_list: Optional[Image] (= None)
+        Output vector containing the maximum N-nearest-neighbor distance per label.
+    n: int (= 1)
+        Number of nearest neighbors to consider.
+    device: Optional[Device] (= None)
+        Device to perform the operation on.
+
+    Returns
+    -------
+    Image
+    """
+    return _get_backend()._maximum_distance_of_n_shortest_distances(
+        device, input_image_distance_matrix, output_image_index_list, int(n)
+    )
+
+
+@deprecated(
+    "average_distance_of_n_far_off_distances: This function is deprecated. Consider using mean_distance_n_farthest_neighbors() instead."
+)
+@plugin_function
+def average_distance_of_n_far_off_distances(
+    input_image_distance_matrix: Image,
+    output_image_index_list: Optional[Image] = None,
+    n: int = 1,
+    device: Optional[Device] = None,
+) -> Image:
+    """For each label in a distance matrix, compute the mean distance to its N farthest
+    neighbors.
+
+    Parameters
+    ----------
+    input_image_distance_matrix: Image
+        Input distance matrix containing pairwise distances between labels.
+    output_image_index_list: Optional[Image] (= None)
+        Output vector containing the mean N-farthest-neighbor distance per label.
+    n: int (= 1)
+        Number of farthest neighbors to consider.
+    device: Optional[Device] (= None)
+        Device to perform the operation on.
+
+    Returns
+    -------
+    Image
+    """
+    return _get_backend()._average_distance_of_n_far_off_distances(
+        device, input_image_distance_matrix, output_image_index_list, int(n)
+    )
+
+
 __all__ = [
     "absolute",
     "sin",
@@ -6048,6 +6993,10 @@ __all__ = [
     "binary_infsup",
     "block_enumerate",
     "circular_shift",
+    "cumulative_sum",
+    "cumulative_min",
+    "cumulative_max",
+    "cumulative_product",
     "convolve",
     "copy",
     "copy_slice",
@@ -6140,6 +7089,8 @@ __all__ = [
     "power",
     "power_images",
     "range",
+    "gather",
+    "scatter",
     "read_values_from_positions",
     "replace_values",
     "replace_value",
@@ -6173,11 +7124,17 @@ __all__ = [
     "std_x_projection",
     "std_y_projection",
     "std_z_projection",
+    "variance_x_projection",
+    "variance_y_projection",
+    "variance_z_projection",
     "subtract_image_from_scalar",
     "sum_reduction_x",
     "sum_x_projection",
     "sum_y_projection",
     "sum_z_projection",
+    "product_x_projection",
+    "product_y_projection",
+    "product_z_projection",
     "transpose_xy",
     "transpose_xz",
     "transpose_yz",
@@ -6203,4 +7160,14 @@ __all__ = [
     "floor",
     "round",
     "truncate",
+    "minimum_distance_touching_neighbors",
+    "maximum_distance_touching_neighbors",
+    "mean_distance_touching_neighbors",
+    "average_distance_touching_neighbors",
+    "mean_distance_n_nearest_neighbors",
+    "maximum_distance_n_nearest_neighbors",
+    "mean_distance_n_farthest_neighbors",
+    "average_distance_of_n_nearest_distances",
+    "maximum_distance_of_n_shortest_distances",
+    "average_distance_of_n_far_off_distances",
 ]

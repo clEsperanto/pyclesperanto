@@ -46,26 +46,15 @@ jobs:
   build_cuda_wheels:
     name: build cuda (${{ matrix.os }})
     runs-on: ${{ matrix.os }}
-    if: github.event_name == 'release' || contains(github.event.pull_request.labels.*.name, 'ready-to-deploy')
+    # if: github.event_name == 'release' || contains(github.event.pull_request.labels.*.name, 'ready-to-deploy')
     strategy:
-      fail-fast: false
+      fail-fast: true
       matrix:
         os: [ubuntu-latest, windows-latest]
 
     steps:
       - name: Checkout
         uses: actions/checkout@v7
-
-      # - name: Install CUDA Toolkit (Windows)
-      #   if: matrix.os == 'windows-latest'
-      #   uses: Jimver/cuda-toolkit@v0.2.35
-      #   with:
-      #     cuda: '12.6.0'
-      #     method: 'local'
-      #     sub-packages: '["nvcc","cudart","cudart-dev","nvrtc","nvrtc-dev"]'
-      #     non-cuda-sub-packages: '["nvJitLink","nvJitLink-dev"]'
-      #     use-local-cache: true
-      #     use-github-cache: false
 
       - name: Install CUDA Toolkit (Windows)
         if: matrix.os == 'windows-latest'
@@ -95,7 +84,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     # if: github.event_name == 'release' || contains(github.event.pull_request.labels.*.name, 'ready-to-deploy')
     strategy:
-      fail-fast: false
+      fail-fast: true
       matrix:
         os: [macos-latest]
 

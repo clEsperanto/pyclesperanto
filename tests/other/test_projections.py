@@ -60,7 +60,7 @@ def test_maximum_x_projection(gpu_backend):
                 [7, 7, 9, 10, 8],
                 [10, 10, 10, 10, 10],
             ]
-        )
+        ).T
     )
 
     result = cle.create(reference)
@@ -77,7 +77,7 @@ def test_maximum_x_projection(gpu_backend):
 def test_maximum_x_projection_of_pointlist(gpu_backend):
     positions_and_values = cle.push(np.asarray([[0, 0, 2, 3, 5], [0, 1, 3, 2, 6]]))
 
-    reference = cle.push(np.asarray([[5], [6]]))
+    reference = cle.push(np.asarray([5, 6]))
 
     result = cle.maximum_x_projection(positions_and_values)
 
@@ -467,7 +467,7 @@ def test_mean_x_projection(gpu_backend):
                 [2.2, 2.2, 2.0, 2.8, 2.0],
                 [4.2, 4.2, 4.2, 4.2, 4.2],
             ]
-        )
+        ).T
     )
 
     result = cle.create(reference)
@@ -672,7 +672,7 @@ def test_minimum_x_projection(gpu_backend):
                 [0, 0, 0, 0, 0],
                 [1, 1, 1, 1, 1],
             ]
-        )
+        ).T
     )
 
     result = cle.create(reference)
@@ -876,7 +876,7 @@ def test_sum_x_projection(gpu_backend):
                 [11.0, 11.0, 10.0, 14.0, 10.0],
                 [21.0, 21.0, 21.0, 21.0, 21.0],
             ]
-        )
+        ).T
     )
 
     result = cle.create(reference)

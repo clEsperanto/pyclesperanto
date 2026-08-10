@@ -133,7 +133,7 @@ def test_exclude_labels_on_edges_blobs(gpu_backend):
     # process the image
     blurred = cle.gaussian_blur(image, sigma_x=1, sigma_y=1)
     binary = cle.threshold_otsu(blurred)
-    labeled = cle.connected_components_labeling(binary)
+    labeled = cle.connected_component_labeling(binary)
 
     wo_edges = cle.exclude_labels_on_edges(labeled)
 
@@ -162,7 +162,7 @@ def test_exclude_labels_on_edges_blobs_2(gpu_backend):
     # process the image
     blurred = cle.gaussian_blur(image, sigma_x=1, sigma_y=1)
     binary = cle.threshold_otsu(blurred)
-    labeled = cle.connected_components_labeling(binary)
+    labeled = cle.connected_component_labeling(binary)
 
     wo_edges = cle.exclude_labels_on_edges(labeled, exclude_y=False)
 

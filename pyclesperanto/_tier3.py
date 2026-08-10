@@ -2,7 +2,6 @@
 # This code is auto-generated from CLIc 'cle::tier3.hpp' file, do not edit manually.
 #
 
-import importlib
 import warnings
 from typing import Optional
 
@@ -12,6 +11,7 @@ from ._array import Image
 from ._backend import _get_backend
 from ._core import Device
 from ._decorators import plugin_function
+from ._utils import deprecated
 
 
 @plugin_function
@@ -389,6 +389,65 @@ def generate_touch_matrix(
 
 
 @plugin_function
+def generate_touching_area_matrix(
+    input_image_label: Image,
+    output_image_matrix: Optional[Image] = None,
+    device: Optional[Device] = None,
+) -> Image:
+    """Takes a label map and generates a symmetric (n+1)×(n+1) matrix where each entry
+    [i,j] holds the number of pixels shared on the boundary between label i and
+    label j. The result is a symmetric matrix.
+
+    Parameters
+    ----------
+    input_image_label: Image
+        Input label image
+    output_image_matrix: Optional[Image] (= None)
+        Output matrix
+    device: Optional[Device] (= None)
+        Device to perform the operation on.
+
+    Returns
+    -------
+    Image
+    """
+    return _get_backend()._generate_touching_area_matrix(
+        device, input_image_label, output_image_matrix
+    )
+
+
+@deprecated(
+    "generate_touch_count_matrix: This function is deprecated. Consider using generate_touch_matrix() with an explicit dst_matrix argument instead."
+)
+@plugin_function
+def generate_touch_count_matrix(
+    input_image_label: Image,
+    output_image_matrix: Optional[Image] = None,
+    device: Optional[Device] = None,
+) -> Image:
+    """Takes a label map and generates a symmetric (n+1)×(n+1) matrix where each entry
+    [i,j] holds the number of pixels shared on the boundary between label i and
+    label j. The result is a symmetric matrix.
+
+    Parameters
+    ----------
+    input_image_label: Image
+        Input label image
+    output_image_matrix: Optional[Image] (= None)
+        Output matrix
+    device: Optional[Device] (= None)
+        Device to perform the operation on.
+
+    Returns
+    -------
+    Image
+    """
+    return _get_backend()._generate_touch_count_matrix(
+        device, input_image_label, output_image_matrix
+    )
+
+
+@plugin_function
 def histogram(
     input_image: Image,
     output_image: Optional[Image] = None,
@@ -491,7 +550,7 @@ def labelled_spots_to_pointlist(
     Parameters
     ----------
     label: Image
-        Input
+        Input label image.
     dspointlistt: Optional[Image] (= None)
         Output coordinate list.
     device: Optional[Device] (= None)
@@ -589,7 +648,7 @@ def morphological_chan_vese(
     num_iter: int (= 100)
         Number of iterations.
     smoothing: int (= 1)
-        Number of
+        Number of smoothing iterations.
     lambda1: float (= 1)
         Lambda1.
     lambda2: float (= 1)
@@ -612,6 +671,42 @@ def morphological_chan_vese(
     )
 
 
+@plugin_function
+def labels_statistics(
+    label: Optional[Image] = None,
+    intensity: Optional[Image] = None,
+    include_background: bool = False,
+    device: Optional[Device] = None,
+) -> dict:
+    """Computes the bounding box, area (in pixels/voxels), minimum intensity, maximum
+    intensity, average intensity, standard deviation of the intensity, and shape
+    descriptors of labelled objects in a label image and its corresponding intensity
+    image. If not provided, the intensity image defaults to the label image. If not
+    provided, the label image defaults to a single label covering the entire image.
+
+    Parameters
+    ----------
+    label: Optional[Image] (= None)
+        Label image to compute the statistics.
+    intensity: Optional[Image] (= None)
+        Intensity image.
+    include_background: bool (= False)
+        Computed the statistics for the background (label 0).
+    device: Optional[Device] (= None)
+        Device to perform the operation on.
+
+    Returns
+    -------
+    dict
+    """
+    return _get_backend()._labels_statistics(
+        device, label, intensity, include_background
+    )
+
+
+@deprecated(
+    "statistics_of_labelled_pixels: This function is deprecated. Consider using labels_statistics() instead."
+)
 @plugin_function
 def statistics_of_labelled_pixels(
     intensity: Optional[Image] = None,
@@ -644,6 +739,9 @@ def statistics_of_labelled_pixels(
     return _get_backend()._statistics_of_labelled_pixels(device, intensity, label)
 
 
+@deprecated(
+    "statistics_of_background_and_labelled_pixels: This function is deprecated. Consider using labels_statistics() instead."
+)
 @plugin_function
 def statistics_of_background_and_labelled_pixels(
     intensity: Optional[Image] = None,
@@ -830,9 +928,9 @@ def read_map_values(
     Parameters
     ----------
     map: Image
-        Input
+        Input map image.
     label: Image
-        Input
+        Input label image.
     output_image: Optional[Image] (= None)
         Output result image.
     device: Optional[Device] (= None)
@@ -845,6 +943,9 @@ def read_map_values(
     return _get_backend()._read_map_values(device, map, label, output_image)
 
 
+@deprecated(
+    "read_intensities_from_map: This function is deprecated. Consider using read_map_values() instead."
+)
 @plugin_function
 def read_intensities_from_map(
     label: Image,
@@ -858,9 +959,9 @@ def read_intensities_from_map(
     Parameters
     ----------
     label: Image
-        Input
+        Input label image.
     map: Image
-        Input
+        Input map image.
     output_image: Optional[Image] (= None)
         Output result image.
     device: Optional[Device] (= None)
@@ -885,6 +986,8 @@ __all__ = [
     "gamma_correction",
     "generate_binary_overlap_matrix",
     "generate_touch_matrix",
+    "generate_touching_area_matrix",
+    "generate_touch_count_matrix",
     "histogram",
     "jaccard_index",
     "labelled_spots_to_pointlist",
@@ -892,6 +995,7 @@ __all__ = [
     "mean_of_all_pixels",
     "minimum_position",
     "morphological_chan_vese",
+    "labels_statistics",
     "statistics_of_labelled_pixels",
     "statistics_of_background_and_labelled_pixels",
     "sato_filter",

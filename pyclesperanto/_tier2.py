@@ -2,7 +2,6 @@
 # This code is auto-generated from CLIc 'cle::tier2.hpp' file, do not edit manually.
 #
 
-import importlib
 import warnings
 from typing import Optional
 
@@ -12,6 +11,7 @@ from ._array import Image
 from ._backend import _get_backend
 from ._core import Device
 from ._decorators import plugin_function
+from ._utils import deprecated
 
 
 @plugin_function(categories=["combine", "in assistant"])
@@ -80,6 +80,9 @@ def add_images(
     return _get_backend()._add_images(device, input_image0, input_image1, output_image)
 
 
+@deprecated(
+    "bottom_hat_box: This method is deprecated. Consider using bottom_hat() instead."
+)
 @plugin_function(categories=["filter", "background removal", "in assistant"])
 def bottom_hat_box(
     input_image: Image,
@@ -124,6 +127,9 @@ def bottom_hat_box(
     )
 
 
+@deprecated(
+    "bottom_hat_sphere: This method is deprecated. Consider using bottom_hat() instead."
+)
 @plugin_function(categories=["filter", "background removal", "in assistant"])
 def bottom_hat_sphere(
     input_image: Image,
@@ -254,6 +260,7 @@ def clip(
     )
 
 
+@deprecated("closing_box: This method is deprecated. Consider using closing() instead.")
 @plugin_function(categories=["filter", "in assistant"])
 def closing_box(
     input_image: Image,
@@ -295,6 +302,9 @@ def closing_box(
     )
 
 
+@deprecated(
+    "closing_sphere: This method is deprecated. Consider using closing() instead."
+)
 @plugin_function(categories=["filter", "in assistant", "bia-bob-suggestion"])
 def closing_sphere(
     input_image: Image,
@@ -733,6 +743,9 @@ def degrees_to_radians(
     return _get_backend()._degrees_to_radians(device, input_image, output_image)
 
 
+@deprecated(
+    "detect_maxima_box: This method is deprecated. Consider using detect_maxima() instead."
+)
 @plugin_function(categories=["binarize", "in assistant"])
 def detect_maxima_box(
     input_image: Image,
@@ -830,6 +843,9 @@ def detect_maxima(
     )
 
 
+@deprecated(
+    "detect_minima_box: This method is deprecated. Consider using detect_minima() instead."
+)
 @plugin_function(categories=["binarize", "in assistant"])
 def detect_minima_box(
     input_image: Image,
@@ -1187,7 +1203,7 @@ def minimum_of_masked_pixels(
     input_image: Image
         Input image to process.
     mask: Image
-        Input
+        Input mask.
     device: Optional[Device] (= None)
         Device to perform the operation on.
 
@@ -1202,6 +1218,7 @@ def minimum_of_masked_pixels(
     return _get_backend()._minimum_of_masked_pixels(device, input_image, mask)
 
 
+@deprecated("opening_box: This method is deprecated. Consider using opening() instead.")
 @plugin_function(categories=["filter", "in assistant"])
 def opening_box(
     input_image: Image,
@@ -1243,6 +1260,9 @@ def opening_box(
     )
 
 
+@deprecated(
+    "opening_sphere: This method is deprecated. Consider using opening() instead."
+)
 @plugin_function(categories=["filter", "in assistant"])
 def opening_sphere(
     input_image: Image,
@@ -1544,6 +1564,9 @@ def squared_difference(
     )
 
 
+@deprecated(
+    "standard_deviation_box: This method is deprecated. Consider using standard_deviation() instead."
+)
 @plugin_function(categories=["filter", "edge detection", "in assistant"])
 def standard_deviation_box(
     input_image: Image,
@@ -1590,6 +1613,9 @@ def standard_deviation_box(
     )
 
 
+@deprecated(
+    "standard_deviation_sphere: This method is deprecated. Consider using standard_deviation() instead."
+)
 @plugin_function(categories=["filter", "edge detection", "in assistant"])
 def standard_deviation_sphere(
     input_image: Image,
@@ -1866,6 +1892,27 @@ def sum_of_all_pixels(
     return _get_backend()._sum_of_all_pixels(device, input_image)
 
 
+@plugin_function(categories=["combine"])
+def product_of_all_pixels(
+    input_image: Optional[Image] = None, device: Optional[Device] = None
+) -> float:
+    """Determines the product of all pixels in a given image.
+
+    Parameters
+    ----------
+    input_image: Optional[Image] (= None)
+        Input image to process.
+    device: Optional[Device] (= None)
+        Device to perform the operation on.
+
+    Returns
+    -------
+    float
+    """
+    return _get_backend()._product_of_all_pixels(device, input_image)
+
+
+@deprecated("top_hat_box: This method is deprecated. Consider using top_hat() instead.")
 @plugin_function(categories=["filter", "background removal", "in assistant"])
 def top_hat_box(
     input_image: Image,
@@ -1910,6 +1957,9 @@ def top_hat_box(
     )
 
 
+@deprecated(
+    "top_hat_sphere: This method is deprecated. Consider using top_hat() instead."
+)
 @plugin_function(
     categories=["filter", "background removal", "in assistant", "bia-bob-suggestion"]
 )
@@ -2161,6 +2211,165 @@ def generate_proximal_neighbors_matrix(
     )
 
 
+@plugin_function
+def generate_partial_touching_area_matrix_within_range(
+    input_image_matrix: Image,
+    output_image_matrix: Optional[Image] = None,
+    min_distance: float = 0,
+    max_distance: float = 1.1,
+    device: Optional[Device] = None,
+) -> Image:
+    """Generates a touch matrix from a matrix describing how much labels touch by
+    selecting neighbors whose touch portion lies strictly within a specified range.
+    Minimum and maximum range boundaries are excluded.
+
+    Parameters
+    ----------
+    input_image_matrix: Image
+        Input matrix containing touching portions between labels.
+    output_image_matrix: Optional[Image] (= None)
+        Output touch matrix.
+    min_distance: float (= 0)
+        Lower excluded bound of the touching-portion range.
+    max_distance: float (= 1.1)
+        Upper excluded bound of the touching-portion range.
+    device: Optional[Device] (= None)
+        Device to perform the operation on.
+
+    Returns
+    -------
+    Image
+    """
+    return _get_backend()._generate_partial_touching_area_matrix_within_range(
+        device,
+        input_image_matrix,
+        output_image_matrix,
+        float(min_distance),
+        float(max_distance),
+    )
+
+
+@deprecated(
+    "generate_touch_portion_within_range_neighbors_matrix: This function is deprecated. Consider using generate_partial_touching_area_matrix_within_range() instead."
+)
+@plugin_function
+def generate_touch_portion_within_range_neighbors_matrix(
+    input_image_matrix: Image,
+    output_image_matrix: Optional[Image] = None,
+    min_distance: float = 0,
+    max_distance: float = 1.1,
+    device: Optional[Device] = None,
+) -> Image:
+    """Generates a touch matrix from a matrix describing how much labels touch by
+    selecting neighbors whose touch portion lies strictly within a specified range.
+
+    Parameters
+    ----------
+    input_image_matrix: Image
+        Input matrix containing touching portions between labels.
+    output_image_matrix: Optional[Image] (= None)
+        Output touch matrix.
+    min_distance: float (= 0)
+        Lower excluded bound of the touching-portion range.
+    max_distance: float (= 1.1)
+        Upper excluded bound of the touching-portion range.
+    device: Optional[Device] (= None)
+        Device to perform the operation on.
+
+    Returns
+    -------
+    Image
+    """
+    return _get_backend()._generate_touch_portion_within_range_neighbors_matrix(
+        device,
+        input_image_matrix,
+        output_image_matrix,
+        float(min_distance),
+        float(max_distance),
+    )
+
+
+@plugin_function
+def symmetric_maximum_matrix(
+    input_image_matrix: Image,
+    output_image_matrix: Optional[Image] = None,
+    device: Optional[Device] = None,
+) -> Image:
+    """Transforms a matrix into a symmetric matrix by resolving conflicting values
+    (X,Y) and (Y,X) using their maximum.
+
+    Parameters
+    ----------
+    input_image_matrix: Image
+        Input matrix.
+    output_image_matrix: Optional[Image] (= None)
+        Output symmetric matrix.
+    device: Optional[Device] (= None)
+        Device to perform the operation on.
+
+    Returns
+    -------
+    Image
+    """
+    return _get_backend()._symmetric_maximum_matrix(
+        device, input_image_matrix, output_image_matrix
+    )
+
+
+@plugin_function
+def symmetric_minimum_matrix(
+    input_image_matrix: Image,
+    output_image_matrix: Optional[Image] = None,
+    device: Optional[Device] = None,
+) -> Image:
+    """Transforms a matrix into a symmetric matrix by resolving conflicting values
+    (X,Y) and (Y,X) using their minimum.
+
+    Parameters
+    ----------
+    input_image_matrix: Image
+        Input matrix.
+    output_image_matrix: Optional[Image] (= None)
+        Output symmetric matrix.
+    device: Optional[Device] (= None)
+        Device to perform the operation on.
+
+    Returns
+    -------
+    Image
+    """
+    return _get_backend()._symmetric_minimum_matrix(
+        device, input_image_matrix, output_image_matrix
+    )
+
+
+@plugin_function
+def symmetric_mean_matrix(
+    input_image_matrix: Image,
+    output_image_matrix: Optional[Image] = None,
+    device: Optional[Device] = None,
+) -> Image:
+    """Transforms a matrix into a symmetric matrix by resolving conflicting values
+    (X,Y) and (Y,X) using their mean.
+
+    Parameters
+    ----------
+    input_image_matrix: Image
+        Input matrix.
+    output_image_matrix: Optional[Image] (= None)
+        Output symmetric matrix.
+    device: Optional[Device] (= None)
+        Device to perform the operation on.
+
+    Returns
+    -------
+    Image
+    """
+    return _get_backend()._symmetric_mean_matrix(
+        device, input_image_matrix, output_image_matrix
+    )
+
+
 __all__ = [
     "absolute_difference",
     "add_images",
@@ -2212,6 +2421,7 @@ __all__ = [
     "sub_stack",
     "reduce_stack",
     "sum_of_all_pixels",
+    "product_of_all_pixels",
     "top_hat_box",
     "top_hat_sphere",
     "top_hat",
@@ -2219,4 +2429,9 @@ __all__ = [
     "extended_depth_of_focus_sobel_projection",
     "hessian_gaussian_eigenvalues",
     "generate_proximal_neighbors_matrix",
+    "generate_partial_touching_area_matrix_within_range",
+    "generate_touch_portion_within_range_neighbors_matrix",
+    "symmetric_maximum_matrix",
+    "symmetric_minimum_matrix",
+    "symmetric_mean_matrix",
 ]

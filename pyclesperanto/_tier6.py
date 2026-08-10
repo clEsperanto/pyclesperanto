@@ -2,7 +2,6 @@
 # This code is auto-generated from CLIc 'cle::tier6.hpp' file, do not edit manually.
 #
 
-import importlib
 import warnings
 from typing import Optional
 
@@ -12,6 +11,7 @@ from ._array import Image
 from ._backend import _get_backend
 from ._core import Device
 from ._decorators import plugin_function
+from ._utils import deprecated
 
 
 @plugin_function(categories=["label processing", "in assistant", "bia-bob-suggestion"])
@@ -32,7 +32,7 @@ def dilate_labels(
     output_image: Optional[Image] (= None)
         Output label image.
     radius: int (= 2)
-        Dilation
+        Dilation radius.
     device: Optional[Device] (= None)
         Device to perform the operation on.
 
@@ -63,7 +63,7 @@ def erode_labels(
     output_image: Optional[Image] (= None)
         Output label image.
     radius: int (= 1)
-        Erosion
+        Erosion radius.
     relabel: bool (= False)
         Relabel the image, e.g., if objects disappear or split.
     device: Optional[Device] (= None)
@@ -132,7 +132,7 @@ def masked_voronoi_labeling(
     input_image: Image
         Input binary image.
     mask: Image
-        Input
+        Input mask.
     output_image: Optional[Image] (= None)
         Output label image.
     device: Optional[Device] (= None)

@@ -2,7 +2,6 @@
 # This code is auto-generated from CLIc 'cle::tier5.hpp' file, do not edit manually.
 #
 
-import importlib
 import warnings
 from typing import Optional
 
@@ -12,6 +11,7 @@ from ._array import Image
 from ._backend import _get_backend
 from ._core import Device
 from ._decorators import plugin_function
+from ._utils import deprecated
 
 
 @plugin_function(categories=["combine"])
@@ -80,6 +80,9 @@ def combine_labels(
     )
 
 
+@deprecated(
+    "connected_components_labeling: This method is deprecated. Consider using connected_component_labeling() instead."
+)
 @plugin_function(categories=["label", "in assistant"])
 def connected_components_labeling(
     input_image: Image,
@@ -346,6 +349,67 @@ def normalize(
     )
 
 
+@plugin_function
+def standard_deviation_partial_touching_area_matrix(
+    input_image_label: Image,
+    output_image_vector: Optional[Image] = None,
+    device: Optional[Device] = None,
+) -> Image:
+    """Measures partial touching values between labels and determines their standard
+    deviation in a vector. For each label X, this function analyzes how much of its
+    perimeter touches neighboring labels and computes the standard deviation of
+    these partial touching values.
+
+    Parameters
+    ----------
+    input_image_label: Image
+        Input label image.
+    output_image_vector: Optional[Image] (= None)
+        Output vector containing standard deviations per label.
+    device: Optional[Device] (= None)
+        Device to perform the operation on.
+
+    Returns
+    -------
+    Image
+    """
+    return _get_backend()._standard_deviation_partial_touching_area_matrix(
+        device, input_image_label, output_image_vector
+    )
+
+
+@deprecated(
+    "standard_deviation_touch_portion: This function is deprecated. Use standard_deviation_partial_touching_area_matrix() instead."
+)
+@plugin_function
+def standard_deviation_touch_portion(
+    input_image_label: Image,
+    output_image_vector: Optional[Image] = None,
+    device: Optional[Device] = None,
+) -> Image:
+    """Measures partial touching values between labels and determines their standard
+    deviation in a vector. For each label X, this function analyzes how much of its
+    perimeter touches neighboring labels and computes the standard deviation of
+    these partial touching values.
+
+    Parameters
+    ----------
+    input_image_label: Image
+        Input label image.
+    output_image_vector: Optional[Image] (= None)
+        Output vector containing standard deviations per label.
+    device: Optional[Device] (= None)
+        Device to perform the operation on.
+
+    Returns
+    -------
+    Image
+    """
+    return _get_backend()._standard_deviation_touch_portion(
+        device, input_image_label, output_image_vector
+    )
+
+
 __all__ = [
     "array_equal",
     "combine_labels",
@@ -357,4 +421,6 @@ __all__ = [
     "merge_touching_labels",
     "proximal_neighbor_count",
     "normalize",
+    "standard_deviation_partial_touching_area_matrix",
+    "standard_deviation_touch_portion",
 ]

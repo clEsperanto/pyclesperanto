@@ -2,7 +2,6 @@
 # This code is auto-generated from CLIc 'cle::tier8.hpp' file, do not edit manually.
 #
 
-import importlib
 import warnings
 from typing import Optional
 
@@ -12,6 +11,7 @@ from ._array import Image
 from ._backend import _get_backend
 from ._core import Device
 from ._decorators import plugin_function
+from ._utils import deprecated
 
 
 @plugin_function(categories=["label processing", "in assistant", "bia-bob-suggestion"])
@@ -33,7 +33,7 @@ def smooth_labels(
     output_image: Optional[Image] (= None)
         Output label image.
     radius: int (= 0)
-        Smoothing
+        Smoothing radius.
     device: Optional[Device] (= None)
         Device to perform the operation on.
 
@@ -62,7 +62,7 @@ def smooth_connected_labels(
     output_image: Optional[Image] (= None)
         Output label image.
     radius: int (= 0)
-        Smoothing
+        Smoothing radius.
     device: Optional[Device] (= None)
         Device to perform the operation on.
 
@@ -189,7 +189,7 @@ def deconvolve_fft(
     output_image: Optional[Image] (= None)
         Output image.
     iteration: int (= 100)
-        Maximum number of
+        Maximum number of iterations.
     regularization: float (= 0.0)
         Regularization parameter.
     device: Optional[Device] (= None)
@@ -210,6 +210,114 @@ def deconvolve_fft(
     )
 
 
+@plugin_function
+def make_isotropic(
+    input_image: Image,
+    output_image: Optional[Image] = None,
+    current_spacing_x: float = 1.0,
+    current_spacing_y: float = 1.0,
+    current_spacing_z: float = 1.0,
+    target_spacing: float = -1.0,
+    interpolate: bool = True,
+    device: Optional[Device] = None,
+) -> Image:
+    """Resamples an image to make it isotropic by rescaling the image to a target
+    spacing. The current spacings of the image in x, y, and z dimensions must be
+    provided and should be >= 0. If the target spacing is <= 0 or not provided, the
+    function assumes the target spacing is the minimum of the current spacings.
+    Finally, an interpolation option is provided to choose whether to interpolate
+    the image during rescaling or not (default is true). For label images, it is
+    recommended to set the interpolation option to false.
+
+    Parameters
+    ----------
+    input_image: Image
+        Input image.
+    output_image: Optional[Image] (= None)
+        Output image.
+    current_spacing_x: float (= 1.0)
+        Original spacing in x dimension.
+    current_spacing_y: float (= 1.0)
+        Original spacing in y dimension.
+    current_spacing_z: float (= 1.0)
+        Original spacing in z dimension.
+    target_spacing: float (= -1.0)
+        Target isotropic spacing.
+    interpolate: bool (= True)
+        If true, interpolate the image during rescaling.
+    device: Optional[Device] (= None)
+        Device to perform the operation on.
+
+    Returns
+    -------
+    Image
+    """
+    return _get_backend()._make_isotropic(
+        device,
+        input_image,
+        output_image,
+        float(current_spacing_x),
+        float(current_spacing_y),
+        float(current_spacing_z),
+        float(target_spacing),
+        interpolate,
+    )
+
+
+@plugin_function
+def make_anisotropic(
+    input_image: Image,
+    output_image: Optional[Image] = None,
+    current_spacing: float = -1.0,
+    target_spacing_x: float = -1.0,
+    target_spacing_y: float = -1.0,
+    target_spacing_z: float = -1.0,
+    interpolate: bool = True,
+    device: Optional[Device] = None,
+) -> Image:
+    """Resamples an image to make it anisotropic by rescaling the image to target
+    spacings in x, y, and z dimensions. The current isotropic spacing of the image
+    in each dimension must be provided and should be >= 0. If the target spacings
+    for x, y, and z shoudl be provided and >= 0. Finally, an interpolation option is
+    provided to choose whether to interpolate the image during rescaling or not
+    (default is true). For label images, it is recommended to set the interpolation
+    option to false.
+
+    Parameters
+    ----------
+    input_image: Image
+        Input image.
+    output_image: Optional[Image] (= None)
+        Output image.
+    current_spacing: float (= -1.0)
+        Current spacing of the image in each dimension.
+    target_spacing_x: float (= -1.0)
+        Target spacing in x dimension.
+    target_spacing_y: float (= -1.0)
+        Target spacing in y dimension.
+    target_spacing_z: float (= -1.0)
+        Target spacing in z dimension.
+    interpolate: bool (= True)
+        If true, interpolate the image during rescaling.
+    device: Optional[Device] (= None)
+        Device to perform the operation on.
+
+    Returns
+    -------
+    Image
+    """
+    return _get_backend()._make_anisotropic(
+        device,
+        input_image,
+        output_image,
+        float(current_spacing),
+        float(target_spacing_x),
+        float(target_spacing_y),
+        float(target_spacing_z),
+        interpolate,
+    )
+
+
 __all__ = [
     "smooth_labels",
     "smooth_connected_labels",
@@ -217,4 +325,6 @@ __all__ = [
     "ifft",
     "convolve_fft",
     "deconvolve_fft",
+    "make_isotropic",
+    "make_anisotropic",
 ]

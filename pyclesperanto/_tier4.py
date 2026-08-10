@@ -2,7 +2,6 @@
 # This code is auto-generated from CLIc 'cle::tier4.hpp' file, do not edit manually.
 #
 
-import importlib
 import warnings
 from typing import Optional
 
@@ -12,6 +11,7 @@ from ._array import Image
 from ._backend import _get_backend
 from ._core import Device
 from ._decorators import plugin_function
+from ._utils import deprecated
 
 
 @plugin_function
@@ -220,26 +220,27 @@ def threshold_mean(
 @plugin_function(categories=["label measurement", "map", "in assistant", "combine"])
 def parametric_map(
     labels: Image,
-    intensity: Optional[Image] = None,
-    property: str = "label",
+    properties: dict,
     output_image: Optional[Image] = None,
+    property: str = "label",
     device: Optional[Device] = None,
 ) -> Image:
-    """Takes an image, a corresponding label map, and maps a specified property (e.g.,
-    'mean_intensity') determined per label onto a new image where every label is
-    replaced by the corresponding property value. The property name must be
-    available from the statistics_labelled_pixels function.
+    """Takes label map and its corresponding quantifications table and plots the
+    requested property (e.g., 'mean_intensity') on to the labels. The resulting
+    image is a parametric map of the requested property. NOTE: The quantification
+    table can be generated using labels_statistics or labels_neighbors_statistics
+    functions, with the 'include_background' parameter set to 'True'.
 
     Parameters
     ----------
     labels: Image
         Label image.
-    intensity: Optional[Image] (= None)
-        Intensity image.
-    property: str (= "label")
-        Name of the
+    properties: dict
+        Statistics properties map (including the background).
     output_image: Optional[Image] (= None)
-        Parametric image computed.
+        Output parametric map.
+    property: str (= "label")
+        Name of the property to map.
     device: Optional[Device] (= None)
         Device to perform the operation on.
 
@@ -256,7 +257,7 @@ def parametric_map(
     [5] https://clij.github.io/clij2-docs/reference_standardDeviationIntensityMap
     """
     return _get_backend()._parametric_map(
-        device, labels, intensity, str(property), output_image
+        device, labels, properties, output_image, str(property)
     )
 
 
@@ -293,6 +294,9 @@ def mean_intensity_map(
     return _get_backend()._mean_intensity_map(device, input_image, labels, output_image)
 
 
+@deprecated(
+    "label_mean_intensity_map: This function is deprecated. Use mean_intensity_map() instead.)"
+)
 @plugin_function(categories=["label measurement", "map", "in assistant", "combine"])
 def label_mean_intensity_map(
     input_image: Image,
@@ -358,6 +362,9 @@ def pixel_count_map(
     return _get_backend()._pixel_count_map(device, input_image, output_image)
 
 
+@deprecated(
+    "label_pixel_count_map: This function is deprecated. Use pixel_count_map() instead."
+)
 @plugin_function(categories=["label measurement", "map", "in assistant"])
 def label_pixel_count_map(
     input_image: Image,
@@ -391,7 +398,7 @@ def label_pixel_count_map(
 @plugin_function
 def centroids_of_labels(
     label_image: Image,
-    centroids_coordinates: Image,
+    centroids_coordinates: Optional[Image] = None,
     include_background: bool = False,
     device: Optional[Device] = None,
 ) -> Image:
@@ -404,8 +411,8 @@ def centroids_of_labels(
     ----------
     label_image: Image
         Label image from which the centroids will be determined.
-    centroids_coordinates: Image
-        Output list of coordinates where the centroids will be written.
+    centroids_coordinates: Optional[Image] (= None)
+        Output list of coordinates.
     include_background: bool (= False)
         Determines if the background label should be included.
     device: Optional[Device] (= None)
@@ -417,7 +424,7 @@ def centroids_of_labels(
 
     References
     ----------
-    [1] https://clij.github.io/clij2-docs/reference_centroidsOfLabels
+    [1] https://clij.github.io/clij2-docs/reference_OfLabels
     """
     return _get_backend()._centroids_of_labels(
         device, label_image, centroids_coordinates, include_background
@@ -441,7 +448,7 @@ def remove_labels_with_map_values_out_of_range(
     input_image: Image
         Input image where labels will be filtered.
     values: Image
-        Vector of
+        Vector of values associated with the labels.
     output_image: Optional[Image] (= None)
         Output image where labels will be written to.
     min_value: float (= 0)
@@ -481,7 +488,7 @@ def remove_labels_with_map_values_within_range(
     input_image: Image
         Input image where labels will be filtered.
     values: Image
-        Vector of
+        Vector of values associated with the labels.
     output_image: Optional[Image] (= None)
         Output image where labels will be written to.
     min_value: float (= 0)
@@ -504,6 +511,9 @@ def remove_labels_with_map_values_within_range(
     )
 
 
+@deprecated(
+    "exclude_labels_with_map_values_out_of_range: This function is deprecated. Use remove_labels_with_map_values_out_of_range() instead."
+)
 @plugin_function(categories=["label processing", "combine"])
 def exclude_labels_with_map_values_out_of_range(
     values_map: Image,
@@ -549,6 +559,9 @@ def exclude_labels_with_map_values_out_of_range(
     )
 
 
+@deprecated(
+    "exclude_labels_with_map_values_within_range: This function is deprecated. Use remove_labels_with_map_values_within_range() instead."
+)
 @plugin_function(categories=["label processing", "combine"])
 def exclude_labels_with_map_values_within_range(
     values_map: Image,
@@ -855,7 +868,7 @@ def mean_of_touching_neighbors_map(
     Parameters
     ----------
     map: Image
-        Input parametric
+        Input parametric map image.
     labels: Image
         Input vector image.
     output_image: Optional[Image] (= None)
@@ -894,7 +907,7 @@ def median_of_touching_neighbors_map(
     Parameters
     ----------
     map: Image
-        Input parametric
+        Input parametric map image.
     labels: Image
         Input label image.
     output_image: Optional[Image] (= None)
@@ -933,7 +946,7 @@ def minimum_of_touching_neighbors_map(
     Parameters
     ----------
     map: Image
-        Input parametric
+        Input parametric map image.
     labels: Image
         Input label image.
     output_image: Optional[Image] (= None)
@@ -972,7 +985,7 @@ def maximum_of_touching_neighbors_map(
     Parameters
     ----------
     map: Image
-        Input parametric
+        Input parametric map image.
     labels: Image
         Input label image.
     output_image: Optional[Image] (= None)
@@ -1011,7 +1024,7 @@ def standard_deviation_of_touching_neighbors_map(
     Parameters
     ----------
     map: Image
-        Input parametric
+        Input parametric map image.
     labels: Image
         Input label image.
     output_image: Optional[Image] (= None)
@@ -1050,7 +1063,7 @@ def mode_of_touching_neighbors_map(
     Parameters
     ----------
     map: Image
-        Input parametric
+        Input parametric map image.
     labels: Image
         Input label image.
     output_image: Optional[Image] (= None)
@@ -1073,7 +1086,7 @@ def mode_of_touching_neighbors_map(
 
 @plugin_function
 def standard_deviation_of_all_pixels(
-    input_image: Image, device: Optional[Device] = None
+    input_image: Image, ddof: int = 0, device: Optional[Device] = None
 ) -> float:
     """Computes the standard deviation of all pixel values in an image.
 
@@ -1081,6 +1094,8 @@ def standard_deviation_of_all_pixels(
     ----------
     input_image: Image
         Input image.
+    ddof: int (= 0)
+        Delta degrees of freedom. The divisor used is (n - ddof).
     device: Optional[Device] (= None)
         Device to perform the operation on.
 
@@ -1088,7 +1103,92 @@ def standard_deviation_of_all_pixels(
     -------
     float
     """
-    return _get_backend()._standard_deviation_of_all_pixels(device, input_image)
+    return _get_backend()._standard_deviation_of_all_pixels(
+        device, input_image, int(ddof)
+    )
+
+
+@plugin_function
+def variance_of_all_pixels(
+    input_image: Image, ddof: int = 0, device: Optional[Device] = None
+) -> float:
+    """Computes the variance of all pixel values in an image.
+
+    Parameters
+    ----------
+    input_image: Image
+        Input image.
+    ddof: int (= 0)
+        Delta degrees of freedom. The divisor used is (n - ddof).
+    device: Optional[Device] (= None)
+        Device to perform the operation on.
+
+    Returns
+    -------
+    float
+    """
+    return _get_backend()._variance_of_all_pixels(device, input_image, int(ddof))
+
+
+@plugin_function
+def generate_partial_touching_area_matrix(
+    input_image_label: Image,
+    output_image_matrix: Optional[Image] = None,
+    device: Optional[Device] = None,
+) -> Image:
+    """Computes, for each pair of touching labels (X, Y), the ratio of the perimeter of
+    label X that is in contact with label Y. Each entry (X, Y) in the output matrix
+    holds the fraction of label X's total perimeter that touches label Y (i.e.,
+    touching_area(X,Y) / total_perimeter(X)).
+
+    Parameters
+    ----------
+    input_image_label: Image
+        Input label image.
+    output_image_matrix: Optional[Image] (= None)
+        Output matrix of perimeter-contact ratios.
+    device: Optional[Device] (= None)
+        Device to perform the operation on.
+
+    Returns
+    -------
+    Image
+    """
+    return _get_backend()._generate_partial_touching_area_matrix(
+        device, input_image_label, output_image_matrix
+    )
+
+
+@deprecated(
+    "generate_touch_portion_matrix: This function is deprecated. Use generate_partial_touching_area_matrix() instead."
+)
+@plugin_function
+def generate_touch_portion_matrix(
+    input_image_label: Image,
+    output_image_matrix: Optional[Image] = None,
+    device: Optional[Device] = None,
+) -> Image:
+    """Computes, for each pair of touching labels (X, Y), the ratio of the perimeter of
+    label X that is in contact with label Y. Each entry (X, Y) in the output matrix
+    holds the fraction of label X's total perimeter that touches label Y (i.e.,
+    touching_area(X,Y) / total_perimeter(X)).
+
+    Parameters
+    ----------
+    input_image_label: Image
+        Input label image.
+    output_image_matrix: Optional[Image] (= None)
+        Output matrix of perimeter-contact ratios.
+    device: Optional[Device] (= None)
+        Device to perform the operation on.
+
+    Returns
+    -------
+    Image
+    """
+    return _get_backend()._generate_touch_portion_matrix(
+        device, input_image_label, output_image_matrix
+    )
 
 
 __all__ = [
@@ -1124,4 +1224,7 @@ __all__ = [
     "standard_deviation_of_touching_neighbors_map",
     "mode_of_touching_neighbors_map",
     "standard_deviation_of_all_pixels",
+    "variance_of_all_pixels",
+    "generate_partial_touching_area_matrix",
+    "generate_touch_portion_matrix",
 ]

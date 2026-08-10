@@ -32,7 +32,7 @@ def _lazy_init():
             "  pip install pyclesperanto[opencl]   # for OpenCL\n"
             "  pip install pyclesperanto[cuda]     # for CUDA\n"
             "  pip install pyclesperanto[metal]    # for Metal\n"
-            "  pip install pyclesperanto[all]      # for both",
+            "  pip install pyclesperanto[all]      # for All backends\n",
             RuntimeWarning,
         )
         return False
@@ -53,21 +53,31 @@ if _backend_available:
     from ._core import (
         Device,
         _default_initialisation,
+        available_device_names,
+        cl_info,
         get_device,
         info,
         list_available_devices,
         select_device,
+        set_wait_for_kernel_finish,
         wait_for_kernel_to_finish,
     )
     from ._execute import evaluate, execute, native_execute
     from ._functionalities import imshow, operation, operations
     from ._memory import (
+        arange,
+        asarray,
         create,
+        create_labels_like,
         create_like,
         empty,
         empty_like,
+        eye,
         from_array,
         from_dlpack,
+        full,
+        full_like,
+        linspace,
         ones,
         ones_like,
         pull,

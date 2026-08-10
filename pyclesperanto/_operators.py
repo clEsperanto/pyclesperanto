@@ -3,7 +3,6 @@ from typing import Optional, Union
 import numpy as np
 
 from ._utils import (
-    _assert_supported_dtype,
     _compute_range,
     _process_ellipsis_into_slice,
     _trim_index_to_shape,
@@ -50,8 +49,25 @@ _INTEGER_TYPES = (
 _supported_numeric_types = tuple(cl_buffer_datatype_dict.keys())
 
 
-def _astype(self, dtype: type):
-    """Convert the Array to a different data type."""
+def _astype(self, dtype: type, casting="unsafe", copy=True):
+    """Convert the Array to a different data type.
+
+    Parameters
+    ----------
+    dtype : type
+        Target data type. ``bool`` is stored as ``uint8`` on device.
+        64-bit types are silently downcast (``float64 -> float32``,
+        ``int64 -> int32``) due to backend (CLIc) limitations.
+    casting : str, optional
+        Accepted for NumPy signature compatibility, ignored (the device
+        backend always performs an unsafe cast).
+    copy : bool, optional
+        If True (default, matching NumPy), always return a new array.
+        If False, return the array itself when the dtype already matches.
+    """
+    from ._utils import _canonical_dtype
+
+    dtype = _canonical_dtype(dtype)
     if dtype not in _supported_numeric_types:
         raise ValueError(
             "dtype "
@@ -59,101 +75,556 @@ def _astype(self, dtype: type):
             + " not supported. Use one of "
             + str(_supported_numeric_types)
         )
-    if dtype == self.dtype:
+    if dtype == self.dtype and not copy:
         return self
 
     from ._memory import create_like
-    from ._tier1 import copy
+    from ._tier1 import copy as _copy_kernel
 
     result = create_like(self, dtype=dtype)
-    copy(input_image=self, output_image=result)
+    _copy_kernel(input_image=self, output_image=result)
     return result
 
 
-def _max(self, axis: Optional[int] = None, out=None):
-    """Return the maximum value in the Array, or along an axis if specified."""
-    from ._tier1 import maximum_x_projection, maximum_y_projection, maximum_z_projection
+def _copy(self, *args, **kwargs):
+    """Return a copy of the Array.
+
+    Without arguments, behaves like ``numpy.ndarray.copy`` and returns a new
+    Array duplicating the data. With arguments, forwards to the backend
+    region-copy method (``dst, src_origin, dst_origin, region``).
+    """
+    if args or kwargs:
+        return self._copy_region(*args, **kwargs)
+    from ._tier1 import copy as _copy_kernel
+
+    return _copy_kernel(self)
+
+
+def _squeeze(self, axis=None):
+    """Remove axes of length one from the Array.
+
+    Deviation from NumPy: squeezing all axes returns a 1-element 1D Array
+    instead of a 0-d array (the backend has no 0-d arrays).
+    """
+    shape = list(self.shape)
+    if axis is None:
+        new_shape = [s for s in shape if s != 1]
+    else:
+        if np.isscalar(axis):
+            axis = (axis,)
+        axis = tuple(a + len(shape) if a < 0 else a for a in axis)
+        for a in axis:
+            if shape[a] != 1:
+                raise ValueError(
+                    "cannot select an axis to squeeze out which has size not equal to one"
+                )
+        new_shape = [s for i, s in enumerate(shape) if i not in axis]
+    if not new_shape:
+        new_shape = [1]
+    if tuple(new_shape) == tuple(shape):
+        return self
+    return _reshape_result(self, new_shape, None)
+
+
+def _ravel(self):
+    """Return the Array flattened to 1D, sharing the device memory."""
+    return _reshape_result(self, [int(self.size)], None)
+
+
+def _reshape(self, *shape):
+    """Return an Array with a new shape (NumPy-compatible signature)."""
+    if len(shape) == 1 and isinstance(shape[0], (tuple, list)):
+        new_shape = list(shape[0])
+    else:
+        new_shape = list(shape)
+    new_shape = [int(s) for s in new_shape]
+    size = int(self.size)
+    if new_shape.count(-1) > 1:
+        raise ValueError("can only specify one unknown dimension")
+    if -1 in new_shape:
+        known = 1
+        for s in new_shape:
+            if s != -1:
+                known *= s
+        if known == 0 or size % known != 0:
+            raise ValueError(
+                f"cannot reshape array of size {size} into shape {tuple(new_shape)}"
+            )
+        new_shape[new_shape.index(-1)] = size // known
+    if int(np.prod(new_shape)) != size:
+        raise ValueError(
+            f"cannot reshape array of size {size} into shape {tuple(new_shape)}"
+        )
+    return _reshape_result(self, new_shape, None)
+
+
+def _flatten(self):
+    """Return a 1D copy of the Array."""
+    return _reshape_result(_copy(self), [int(self.size)], None)
+
+
+def _item(self, *args):
+    """Copy one element of the Array to a standard Python scalar.
+
+    This avoids transferring the full buffer by reading only a 1-element ROI.
+    """
+    if len(args) == 0:
+        if self.size != 1:
+            raise ValueError("can only convert an array of size 1 to a Python scalar")
+        indices = tuple(0 for _ in self.shape)
+    elif len(args) == 1 and isinstance(args[0], tuple):
+        indices = args[0]
+    elif len(args) == 1 and isinstance(args[0], (int, np.integer)):
+        flat_index = int(args[0])
+        if flat_index < 0:
+            flat_index += int(self.size)
+        if not 0 <= flat_index < int(self.size):
+            raise IndexError("index out of bounds")
+        indices = np.unravel_index(flat_index, self.shape)
+    else:
+        indices = args
+
+    if len(indices) != self.ndim:
+        raise ValueError("incorrect number of indices for array")
+
+    normalized = []
+    for axis, idx in enumerate(indices):
+        if not isinstance(idx, (int, np.integer)):
+            raise TypeError("an integer is required")
+        pos = int(idx)
+        if pos < 0:
+            pos += self.shape[axis]
+        if not 0 <= pos < self.shape[axis]:
+            raise IndexError("index out of bounds")
+        normalized.append(pos)
+
+    origin = [0, 0, 0]
+    offset = 3 - self.ndim
+    for axis, pos in enumerate(normalized):
+        origin[offset + axis] = pos
+    return self.get(origin, [1, 1, 1]).item()
+
+
+def __float__(self):
+    """Convert a size-1 Array to a Python float."""
+    if self.size != 1:
+        raise TypeError("only length-1 arrays can be converted to Python scalars")
+    return float(self.get().reshape(-1)[0])
+
+
+def __int__(self):
+    """Convert a size-1 Array to a Python int."""
+    if self.size != 1:
+        raise TypeError("only length-1 arrays can be converted to Python scalars")
+    return int(self.get().reshape(-1)[0])
+
+
+def __bool__(self):
+    """Return the truth value of a size-1 Array."""
+    if self.size != 1:
+        raise ValueError(
+            "The truth value of an array with more than one element is "
+            "ambiguous. Use a.any() or a.all()"
+        )
+    return bool(self.get().reshape(-1)[0])
+
+
+def _tolist(self):
+    """Return the Array as a (nested) Python list."""
+    return self.get().tolist()
+
+
+def _clip(self, min=None, max=None, out=None):
+    """Clip the values of the Array between min and max."""
+    from ._tier2 import clip
+
+    min = float("nan") if min is None else min
+    max = float("nan") if max is None else max
+    return clip(self, output_image=out, min_intensity=min, max_intensity=max)
+
+
+def _round(self, out=None):
+    """Round the values of the Array to the nearest integer."""
+    from ._tier1 import round as _round_kernel
+
+    return _round_kernel(self, output_image=out)
+
+
+def _norm_axis(axis, ndim):
+    if not isinstance(axis, (int, np.integer)):
+        raise TypeError(f"axis must be an integer, got {type(axis).__name__}")
+    ax = int(axis)
+    if ax < 0:
+        ax += ndim
+    if not 0 <= ax < ndim:
+        raise ValueError(f"axis {axis} is out of bounds for array of dimension {ndim}")
+    return ax
+
+
+def _norm_axes(axis, ndim):
+    if not isinstance(axis, (tuple, list)):
+        return (_norm_axis(axis, ndim),)
+    axes = tuple(_norm_axis(ax, ndim) for ax in axis)
+    if len(set(axes)) != len(axes):
+        raise ValueError(f"duplicate value in axis {axis}")
+    return axes
+
+
+def _axis_projection(self, prefix, axis, keepdims, **kwargs):
+    from . import _tier1
+
+    axes = _norm_axes(axis, self.ndim)
+    result = self
+    for ax in sorted(axes, reverse=True):
+        coord = "xyz"[result.ndim - 1 - ax]
+        projection = getattr(_tier1, f"{prefix}_{coord}_projection")
+        result = projection(result, keep_dims=keepdims, **kwargs)
+    return result
+
+
+def _sum_prod_dtype(dtype):
+    """Return the NumPy-compatible accumulator dtype for sum/prod full reductions.
+
+    Mirrors NumPy's integer promotion (sum/prod of an integer array is
+    computed in a wider integer type), capped at 32-bit since the device
+    does not support 64-bit types.
+    """
+    if np.issubdtype(dtype, np.floating):
+        return np.float32
+    if np.issubdtype(dtype, np.unsignedinteger):
+        return np.uint32
+    if np.issubdtype(dtype, np.signedinteger):
+        return np.int32
+    return np.float32
+
+
+def _full_reduce(self, value, dtype, keepdims):
+    if keepdims:
+        return self.from_array(np.full((1,) * self.ndim, value, dtype=dtype))
+    return np.dtype(dtype).type(value)
+
+
+def _slice_reduce(self, reducer, axes, dtype, keepdims):
+    kept = tuple(d for d in range(self.ndim) if d not in axes)
+    if not kept:
+        return _full_reduce(self, reducer(self), dtype, keepdims)
+    out_shape = tuple(self.shape[d] for d in kept)
+    values = np.empty(out_shape, dtype=dtype)
+    for idx in np.ndindex(*out_shape):
+        sl = [slice(None)] * self.ndim
+        for pos, d in enumerate(kept):
+            sl[d] = idx[pos]
+        values[idx] = reducer(self[tuple(sl)])
+    if keepdims:
+        shape = tuple(1 if d in axes else self.shape[d] for d in range(self.ndim))
+        values = values.reshape(shape)
+    return self.from_array(values)
+
+
+def _write_out(out, result):
+    if isinstance(out, (_get_array_class(), np.ndarray)):
+        np.copyto(out, np.asarray(result).astype(out.dtype))
+
+
+def _max(
+    self,
+    axis: Optional[Union[int, tuple, list]] = None,
+    out=None,
+    keepdims: bool = False,
+):
+    """Return the maximum of the Array, or along an axis if specified."""
     from ._tier2 import maximum_of_all_pixels
 
-    if axis == 0:
-        result = maximum_z_projection(self)
-    elif axis == 1:
-        result = maximum_y_projection(self)
-    elif axis == 2:
-        result = maximum_x_projection(self)
-    elif axis is None:
-        result = maximum_of_all_pixels(self)
+    if axis is None:
+        result = _full_reduce(self, maximum_of_all_pixels(self), self.dtype, keepdims)
     else:
-        raise ValueError("Axis " + str(axis) + " not supported")
-    if out is not None:
-        if isinstance(out, (_get_array_class(), np.ndarray)):
-            np.copyto(out, result.get().astype(out.dtype))
-        else:
-            out = result
+        result = _axis_projection(self, "maximum", axis, keepdims)
+    _write_out(out, result)
     return result
 
 
-def _min(self, axis: Optional[int] = None, out=None):
-    """Return the minimum value in the Array, or along an axis if specified."""
-    from ._tier1 import minimum_x_projection, minimum_y_projection, minimum_z_projection
+def _min(
+    self,
+    axis: Optional[Union[int, tuple, list]] = None,
+    out=None,
+    keepdims: bool = False,
+):
+    """Return the minimum of the Array, or along an axis if specified."""
     from ._tier2 import minimum_of_all_pixels
 
-    if axis == 0:
-        result = minimum_z_projection(self)
-    elif axis == 1:
-        result = minimum_y_projection(self)
-    elif axis == 2:
-        result = minimum_x_projection(self)
-    elif axis is None:
-        result = minimum_of_all_pixels(self)
+    if axis is None:
+        result = _full_reduce(self, minimum_of_all_pixels(self), self.dtype, keepdims)
     else:
-        raise ValueError("Axis " + str(axis) + " not supported")
-    if out is not None:
-        if isinstance(out, (_get_array_class(), np.ndarray)):
-            np.copyto(out, result.get().astype(out.dtype))
+        result = _axis_projection(self, "minimum", axis, keepdims)
+    _write_out(out, result)
     return result
 
 
-def _sum(self, axis: Optional[int] = None, out=None):
-    """Return the sum of the Array, or along an axis if specified."""
-    from ._tier1 import sum_x_projection, sum_y_projection, sum_z_projection
+def _sum(
+    self,
+    axis: Optional[Union[int, tuple, list]] = None,
+    dtype=None,
+    out=None,
+    keepdims: bool = False,
+):
+    """Return the sum of the Array, or along an axis if specified.
+
+    Note: integer inputs are promoted to 32-bit (int32/uint32) rather than
+    NumPy's 64-bit default, since the device does not support 64-bit types.
+    """
     from ._tier2 import sum_of_all_pixels
 
-    if axis == 0:
-        result = sum_z_projection(self)
-    elif axis == 1:
-        result = sum_y_projection(self)
-    elif axis == 2:
-        result = sum_x_projection(self)
-    elif axis is None:
-        result = sum_of_all_pixels(self)
+    if axis is None:
+        result = _full_reduce(
+            self, sum_of_all_pixels(self), _sum_prod_dtype(self.dtype), keepdims
+        )
     else:
-        raise ValueError("Axis " + str(axis) + " not supported")
-    if out is not None:
-        if isinstance(out, (_get_array_class(), np.ndarray)):
-            np.copyto(out, result.get().astype(out.dtype))
+        result = _axis_projection(self, "sum", axis, keepdims)
+    _write_out(out, result)
     return result
 
 
-def _std(self, axis: Optional[int] = None, out=None):
-    """Return the std of the Array, or along an axis if specified."""
-    from ._tier1 import std_x_projection, std_y_projection, std_z_projection
+def _mean(
+    self,
+    axis: Optional[Union[int, tuple, list]] = None,
+    dtype=None,
+    out=None,
+    keepdims: bool = False,
+):
+    """Return the mean of the Array, or along an axis if specified.
+
+    Note: the result dtype is always float32, since the device does not
+    support float64 (NumPy promotes integer input to float64).
+    """
+    from ._tier3 import mean_of_all_pixels
+
+    if axis is None:
+        result = _full_reduce(self, mean_of_all_pixels(self), np.float32, keepdims)
+    else:
+        result = _axis_projection(self, "mean", axis, keepdims)
+    _write_out(out, result)
+    return result
+
+
+def _std(
+    self,
+    axis: Optional[Union[int, tuple, list]] = None,
+    dtype=None,
+    out=None,
+    ddof: int = 0,
+    keepdims: bool = False,
+):
+    """Return the standard deviation of the Array, or along an axis.
+
+    Note: the result dtype is always float32, since the device does not
+    support float64 (NumPy promotes integer input to float64).
+    """
     from ._tier4 import standard_deviation_of_all_pixels
 
-    if axis == 0:
-        result = std_z_projection(self)
-    elif axis == 1:
-        result = std_y_projection(self)
-    elif axis == 2:
-        result = std_x_projection(self)
-    elif axis is None:
-        result = standard_deviation_of_all_pixels(self)
+    if axis is None:
+        result = _full_reduce(
+            self,
+            standard_deviation_of_all_pixels(self, ddof=ddof),
+            np.float32,
+            keepdims,
+        )
+    elif isinstance(axis, (tuple, list)):
+        axes = _norm_axes(axis, self.ndim)
+        if len(axes) == 1:
+            result = _axis_projection(self, "std", axes[0], keepdims, ddof=ddof)
+        else:
+            result = _slice_reduce(
+                self,
+                lambda a: standard_deviation_of_all_pixels(a, ddof=ddof),
+                axes,
+                np.float32,
+                keepdims,
+            )
     else:
-        raise ValueError("Axis " + str(axis) + " not supported")
-    if out is not None:
-        if isinstance(out, (_get_array_class(), np.ndarray)):
-            np.copyto(out, result.get().astype(out.dtype))
+        result = _axis_projection(self, "std", axis, keepdims, ddof=ddof)
+    _write_out(out, result)
     return result
+
+
+def _var(
+    self,
+    axis: Optional[Union[int, tuple, list]] = None,
+    dtype=None,
+    out=None,
+    ddof: int = 0,
+    keepdims: bool = False,
+):
+    """Return the variance of the Array, or along an axis if specified.
+
+    Note: the result dtype is always float32, since the device does not
+    support float64 (NumPy promotes integer input to float64).
+    """
+    from ._tier4 import variance_of_all_pixels
+
+    if axis is None:
+        result = _full_reduce(
+            self, variance_of_all_pixels(self, ddof=ddof), np.float32, keepdims
+        )
+    elif isinstance(axis, (tuple, list)):
+        axes = _norm_axes(axis, self.ndim)
+        if len(axes) == 1:
+            result = _axis_projection(self, "variance", axes[0], keepdims, ddof=ddof)
+        else:
+            result = _slice_reduce(
+                self,
+                lambda a: variance_of_all_pixels(a, ddof=ddof),
+                axes,
+                np.float32,
+                keepdims,
+            )
+    else:
+        result = _axis_projection(self, "variance", axis, keepdims, ddof=ddof)
+    _write_out(out, result)
+    return result
+
+
+def _prod(
+    self,
+    axis: Optional[Union[int, tuple, list]] = None,
+    dtype=None,
+    out=None,
+    keepdims: bool = False,
+):
+    """Return the product of the Array, or along an axis if specified.
+
+    Note: integer inputs are promoted to 32-bit (int32/uint32) rather than
+    NumPy's 64-bit default, since the device does not support 64-bit types.
+    """
+    from ._tier2 import product_of_all_pixels
+
+    if axis is None:
+        result = _full_reduce(
+            self, product_of_all_pixels(self), _sum_prod_dtype(self.dtype), keepdims
+        )
+    else:
+        result = _axis_projection(self, "product", axis, keepdims)
+    _write_out(out, result)
+    return result
+
+
+def _arg_reduce(self, op, axis, keepdims):
+    from . import _tier1
+
+    ax = _norm_axis(axis, self.ndim)
+    coord = "xyz"[self.ndim - 1 - ax]
+    kernel = getattr(_tier1, f"{coord}_position_of_{op}_{coord}_projection")
+    return kernel(self, keep_dims=keepdims)
+
+
+def _arg_full_reduce(self, op):
+    """Return the flat (row-major) index of the global maximum/minimum.
+
+    Delegates to CLIc's maximum_position/minimum_position, which resolves the
+    position device-side (X-then-Y-then-Z, matching NumPy's first-occurrence
+    tie-break) and returns only the 3 winning coordinates, never the full buffer.
+    """
+    from ._tier3 import maximum_position, minimum_position
+
+    kernel = maximum_position if op == "maximum" else minimum_position
+    xyz = kernel(self)[: self.ndim]
+    return int(np.ravel_multi_index(tuple(int(c) for c in reversed(xyz)), self.shape))
+
+
+def _argmax(self, axis: Optional[int] = None, out=None, keepdims: bool = False):
+    """Return the indices of the maximum values, over all pixels or along an axis.
+
+    Deviation from NumPy: the result dtype is uint32 instead of int64.
+    """
+    if axis is None:
+        result = _full_reduce(
+            self, _arg_full_reduce(self, "maximum"), np.uint32, keepdims
+        )
+    else:
+        result = _arg_reduce(self, "maximum", axis, keepdims)
+    _write_out(out, result)
+    return result
+
+
+def _argmin(self, axis: Optional[int] = None, out=None, keepdims: bool = False):
+    """Return the indices of the minimum values, over all pixels or along an axis.
+
+    Deviation from NumPy: the result dtype is uint32 instead of int64.
+    """
+    if axis is None:
+        result = _full_reduce(
+            self, _arg_full_reduce(self, "minimum"), np.uint32, keepdims
+        )
+    else:
+        result = _arg_reduce(self, "minimum", axis, keepdims)
+    _write_out(out, result)
+    return result
+
+
+def _any(
+    self,
+    axis: Optional[Union[int, tuple, list]] = None,
+    out=None,
+    keepdims: bool = False,
+):
+    """Test whether any array element along a given axis evaluates to True."""
+    result = _max(self != 0, axis=axis, keepdims=keepdims)
+    if axis is None and not keepdims:
+        result = bool(result)
+    _write_out(out, result)
+    return result
+
+
+def _all(
+    self,
+    axis: Optional[Union[int, tuple, list]] = None,
+    out=None,
+    keepdims: bool = False,
+):
+    """Test whether all array elements along a given axis evaluate to True."""
+    result = _min(self != 0, axis=axis, keepdims=keepdims)
+    if axis is None and not keepdims:
+        result = bool(result)
+    _write_out(out, result)
+    return result
+
+
+def _align(x1, x2):
+    """Validate array-array broadcast compatibility without host transfers.
+
+    Scalars and other non-array operands pass through untouched. ``ndarray``
+    operands are converted to backend arrays. Array operands (including
+    size-1 arrays) are left as-is; only shape compatibility is checked via
+    ``np.broadcast_shapes`` so incompatible operands still raise early.
+    Actual broadcasting is performed device-side by the CLIc backend.
+    """
+    ArrayCls = _get_array_class()
+    if isinstance(x2, np.ndarray):
+        x2 = ArrayCls.from_array(x2)
+    if not isinstance(x2, ArrayCls):
+        return x1, x2
+    np.broadcast_shapes(x1.shape, x2.shape)
+    return x1, x2
+
+
+def _align_inplace(x1, x2):
+    """Validate x2 is broadcastable to x1's shape for in-place operations.
+
+    Unlike `_align`, x1 is never replaced, since in-place operations must
+    write into the original array. No host transfer happens; broadcasting is
+    performed device-side by the CLIc backend. Raises ValueError if x2's
+    shape cannot be broadcast to x1's shape.
+    """
+    ArrayCls = _get_array_class()
+    if isinstance(x2, np.ndarray):
+        x2 = ArrayCls.from_array(x2)
+    if not isinstance(x2, ArrayCls):
+        return x2
+    shape = np.broadcast_shapes(x1.shape, x2.shape)
+    if shape != x1.shape:
+        raise ValueError(
+            f"cannot broadcast shape {x2.shape} into in-place operand of shape {x1.shape}"
+        )
+    return x2
 
 
 def __pos__(x1):
@@ -170,6 +641,7 @@ def __add__(x1, x2):
     """Addition of two arrays."""
     from ._tier1 import add_image_and_scalar, add_images_weighted
 
+    x1, x2 = _align(x1, x2)
     if isinstance(x2, _supported_numeric_types):
         return add_image_and_scalar(x1, scalar=x2)
     return add_images_weighted(x1, x2, factor1=1, factor2=1)
@@ -180,6 +652,7 @@ def __iadd__(x1, x2):
     from ._tier1 import add_image_and_scalar, add_images_weighted, copy
 
     temp = copy(x1)
+    x2 = _align_inplace(x1, x2)
     if isinstance(x2, _supported_numeric_types):
         return add_image_and_scalar(temp, output_image=x1, scalar=x2)
     return add_images_weighted(temp, x2, output_image=x1, factor1=1, factor2=1)
@@ -194,6 +667,7 @@ def __sub__(x1, x2):
     """Subtraction of two arrays."""
     from ._tier1 import add_image_and_scalar, add_images_weighted
 
+    x1, x2 = _align(x1, x2)
     if isinstance(x2, _supported_numeric_types):
         return add_image_and_scalar(x1, scalar=-x2)
     return add_images_weighted(x1, x2, factor1=1, factor2=-1)
@@ -204,6 +678,7 @@ def __isub__(x1, x2):
     from ._tier1 import add_image_and_scalar, add_images_weighted, copy
 
     temp = copy(x1)
+    x2 = _align_inplace(x1, x2)
     if isinstance(x2, _supported_numeric_types):
         return add_image_and_scalar(temp, output_image=x1, scalar=-x2)
     return add_images_weighted(temp, x2, output_image=x1, factor1=1, factor2=-1)
@@ -219,56 +694,91 @@ def __rsub__(x1, x2):
 
 
 def __div__(x1, x2):
-    """Division of two arrays."""
-    from ._tier1 import divide_images, multiply_image_and_scalar
+    """Division of two arrays (deprecated Python 2 alias for __truediv__)."""
+    import warnings
 
-    if isinstance(x2, _supported_numeric_types):
-        if x2 == 0:
-            raise ZeroDivisionError("division by zero")
-        return multiply_image_and_scalar(x1, scalar=1.0 / x2)
-    return divide_images(x1, x2)
+    warnings.warn(
+        "__div__ is deprecated, use __truediv__ instead",
+        DeprecationWarning,
+        stacklevel=2,
+    )
+    return x1.__truediv__(x2)
 
 
 def __truediv__(x1, x2):
     """Division of two arrays."""
-    return x1.__div__(x2)
+    from ._tier1 import divide_images, multiply_image_and_scalar
+
+    x1, x2 = _align(x1, x2)
+    if isinstance(x2, _supported_numeric_types):
+        if x2 == 0:
+            import warnings
+
+            warnings.warn(
+                "divide by zero encountered in divide", RuntimeWarning, stacklevel=2
+            )
+            return multiply_image_and_scalar(x1, scalar=float("inf"))
+        return multiply_image_and_scalar(x1, scalar=1.0 / x2)
+    return divide_images(x1, x2)
 
 
 def __idiv__(x1, x2):
+    """Division of two arrays (deprecated Python 2 alias for __itruediv__)."""
+    import warnings
+
+    warnings.warn(
+        "__idiv__ is deprecated, use __itruediv__ instead",
+        DeprecationWarning,
+        stacklevel=2,
+    )
+    return x1.__itruediv__(x2)
+
+
+def __itruediv__(x1, x2):
     """Division of two arrays."""
     from ._tier1 import copy, divide_images, multiply_image_and_scalar
 
     temp = copy(x1)
+    x2 = _align_inplace(x1, x2)
     if isinstance(x2, _supported_numeric_types):
         if x2 == 0:
-            raise ZeroDivisionError("division by zero")
+            import warnings
+
+            warnings.warn(
+                "divide by zero encountered in divide", RuntimeWarning, stacklevel=2
+            )
+            return multiply_image_and_scalar(temp, x1, scalar=float("inf"))
         return multiply_image_and_scalar(temp, x1, scalar=1.0 / x2)
     return divide_images(temp, x2, x1)
 
 
 def __rdiv__(x1, x2):
-    """Division of two arrays."""
-    from ._tier1 import divide_images, divide_scalar_by_image
+    """Division of two arrays (deprecated Python 2 alias for __rtruediv__)."""
+    import warnings
 
-    if isinstance(x2, _supported_numeric_types):
-        return divide_scalar_by_image(x1, scalar=x2)
-    return divide_images(x2, x1)
-
-
-def __itruediv__(x1, x2):
-    """Division of two arrays."""
-    return x1.__idiv__(x2)
+    warnings.warn(
+        "__rdiv__ is deprecated, use __rtruediv__ instead",
+        DeprecationWarning,
+        stacklevel=2,
+    )
+    return x1.__rtruediv__(x2)
 
 
 def __rtruediv__(x1, x2):
     """Division of two arrays."""
-    return x1.__rdiv__(x2)
+    from ._tier1 import divide_images, divide_scalar_by_image
+
+    x1, x2 = _align(x1, x2)
+    if isinstance(x2, _supported_numeric_types):
+        return divide_scalar_by_image(x1, scalar=x2)
+    return divide_images(x2, x1)
 
 
 def __mul__(x1, x2):
     """Multiplication of two arrays."""
     from ._tier1 import multiply_image_and_scalar, multiply_images
 
+    x1, x2 = _align(x1, x2)
     if isinstance(x2, _supported_numeric_types):
         return multiply_image_and_scalar(x1, scalar=x2)
     return multiply_images(x1, x2)
@@ -284,69 +794,182 @@ def __imul__(x1, x2):
     from ._tier1 import copy, multiply_image_and_scalar, multiply_images
 
     temp = copy(x1)
+    x2 = _align_inplace(x1, x2)
     if isinstance(x2, _supported_numeric_types):
         return multiply_image_and_scalar(temp, x1, scalar=x2)
     return multiply_images(temp, x2, x1)
+
+
+def _bool_out(x1):
+    """Create a uint8 output array, the device stand-in for bool results."""
+    from ._memory import create_like
+
+    return create_like(x1, dtype=np.uint8)
+
+
+def _unsupported_operand(x2):
+    """Return True for operands that cannot be compared element-wise on device."""
+    ArrayCls = _get_array_class()
+    if isinstance(x2, (ArrayCls, np.ndarray)):
+        return False
+    return not isinstance(x2, _supported_numeric_types)
+
+
+def maximum(x1, x2):
+    """Element-wise maximum of an array and an array or scalar."""
+    from ._tier1 import maximum_image_and_scalar, maximum_images
+
+    x1, x2 = _align(x1, x2)
+    if isinstance(x2, _supported_numeric_types):
+        return maximum_image_and_scalar(x1, scalar=x2)
+    return maximum_images(x1, x2)
+
+
+def minimum(x1, x2):
+    """Element-wise minimum of an array and an array or scalar."""
+    from ._tier1 import minimum_image_and_scalar, minimum_images
+
+    x1, x2 = _align(x1, x2)
+    if isinstance(x2, _supported_numeric_types):
+        return minimum_image_and_scalar(x1, scalar=x2)
+    return minimum_images(x1, x2)
+
+
+def logical_and(x1, x2):
+    """Element-wise logical AND (truthiness: all non-zero values treated as True)."""
+    from ._tier1 import binary_and
+
+    x1, x2 = _align(x1, x2)
+    return binary_and(x1, x2)
+
+
+def logical_or(x1, x2):
+    """Element-wise logical OR (truthiness: all non-zero values treated as True)."""
+    from ._tier1 import binary_or
+
+    x1, x2 = _align(x1, x2)
+    return binary_or(x1, x2)
+
+
+def logical_xor(x1, x2):
+    """Element-wise logical XOR (truthiness: all non-zero values treated as True)."""
+    from ._tier1 import binary_xor
+
+    x1, x2 = _align(x1, x2)
+    return binary_xor(x1, x2)
+
+
+def rint(x1):
+    """Element-wise round to nearest integer."""
+    from ._execute import evaluate
+
+    return evaluate("rint(a)", parameters={"a": x1})
+
+
+def isnan(x1):
+    """Element-wise check for NaN values."""
+    from ._execute import evaluate
+
+    return evaluate("isnan(a)", parameters={"a": x1})
+
+
+def isfinite(x1):
+    """Element-wise check for finite values."""
+    from ._execute import evaluate
+
+    return evaluate("isfinite(a)", parameters={"a": x1})
+
+
+def atan2(x1, x2):
+    """Element-wise arctangent of x1/x2, using the signs of both arguments to determine the quadrant."""
+    from ._execute import evaluate
+
+    x1, x2 = _align(x1, x2)
+    return evaluate("atan2(a, b)", parameters={"a": x1, "b": x2})
+
+
+def _atan2_reversed(x1, x2):
+    """Element-wise arctan2(x2, x1), used to handle reflected `arctan2` ufunc dispatch."""
+    return atan2(x2, x1)
 
 
 def __gt__(x1, x2):
     """Greater than comparison of two arrays."""
     from ._tier1 import greater, greater_constant
 
+    if _unsupported_operand(x2):
+        return NotImplemented
+    x1, x2 = _align(x1, x2)
     if isinstance(x2, _supported_numeric_types):
-        return greater_constant(x1, scalar=x2)
-    return greater(x1, x2)
+        return greater_constant(x1, _bool_out(x1), scalar=x2)
+    return greater(x1, x2, _bool_out(x1))
 
 
 def __ge__(x1, x2):
     """Greater than or equal comparison of two arrays."""
     from ._tier1 import greater_or_equal, greater_or_equal_constant
 
+    if _unsupported_operand(x2):
+        return NotImplemented
+    x1, x2 = _align(x1, x2)
     if isinstance(x2, _supported_numeric_types):
-        return greater_or_equal_constant(x1, scalar=x2)
-    return greater_or_equal(x1, x2)
+        return greater_or_equal_constant(x1, _bool_out(x1), scalar=x2)
+    return greater_or_equal(x1, x2, _bool_out(x1))
 
 
 def __lt__(x1, x2):
     """Less than comparison of two arrays."""
     from ._tier1 import smaller, smaller_constant
 
+    if _unsupported_operand(x2):
+        return NotImplemented
+    x1, x2 = _align(x1, x2)
     if isinstance(x2, _supported_numeric_types):
-        return smaller_constant(x1, scalar=x2)
-    return smaller(x1, x2)
+        return smaller_constant(x1, _bool_out(x1), scalar=x2)
+    return smaller(x1, x2, _bool_out(x1))
 
 
 def __le__(x1, x2):
     """Less than or equal comparison of two arrays."""
     from ._tier1 import smaller_or_equal, smaller_or_equal_constant
 
+    if _unsupported_operand(x2):
+        return NotImplemented
+    x1, x2 = _align(x1, x2)
     if isinstance(x2, _supported_numeric_types):
-        return smaller_or_equal_constant(x1, scalar=x2)
-    return smaller_or_equal(x1, x2)
+        return smaller_or_equal_constant(x1, _bool_out(x1), scalar=x2)
+    return smaller_or_equal(x1, x2, _bool_out(x1))
 
 
 def __eq__(x1, x2):
     """Equal comparison of two arrays."""
     from ._tier1 import equal, equal_constant
 
+    if _unsupported_operand(x2):
+        return NotImplemented
+    x1, x2 = _align(x1, x2)
     if isinstance(x2, _supported_numeric_types):
-        return equal_constant(x1, scalar=x2)
-    return equal(x1, x2)
+        return equal_constant(x1, _bool_out(x1), scalar=x2)
+    return equal(x1, x2, _bool_out(x1))
 
 
 def __ne__(x1, x2):
     """Not equal comparison of two arrays."""
     from ._tier1 import not_equal, not_equal_constant
 
+    if _unsupported_operand(x2):
+        return NotImplemented
+    x1, x2 = _align(x1, x2)
     if isinstance(x2, _supported_numeric_types):
-        return not_equal_constant(x1, scalar=x2)
-    return not_equal(x1, x2)
+        return not_equal_constant(x1, _bool_out(x1), scalar=x2)
+    return not_equal(x1, x2, _bool_out(x1))
 
 
 def __pow__(x1, x2):
     """Power function of two arrays."""
     from ._tier1 import power, power_images
 
+    x1, x2 = _align(x1, x2)
     if isinstance(x2, _supported_numeric_types):
         return power(x1, scalar=x2)
     return power_images(x1, x2)
@@ -357,9 +980,124 @@ def __ipow__(x1, x2):
     from ._tier1 import copy, power, power_images
 
     temp = copy(x1)
+    x2 = _align_inplace(x1, x2)
     if isinstance(x2, _supported_numeric_types):
         return power(temp, x1, scalar=x2)
     return power_images(temp, x2, x1)
+
+
+def __rpow__(x1, x2):
+    """Power function of two arrays (reflected)."""
+    from ._execute import evaluate
+
+    return evaluate("pow(b, a)", parameters={"b": x2, "a": x1})
+
+
+def __abs__(x1):
+    """Element-wise absolute value."""
+    from ._tier1 import absolute
+
+    return absolute(x1)
+
+
+def __floordiv__(x1, x2):
+    """Floor division of two arrays."""
+    from ._tier1 import floor
+
+    return floor(x1.__truediv__(x2))
+
+
+def __rfloordiv__(x1, x2):
+    """Floor division of two arrays (reflected)."""
+    from ._tier1 import floor
+
+    return floor(x1.__rtruediv__(x2))
+
+
+def __ifloordiv__(x1, x2):
+    """In-place floor division of two arrays."""
+    from ._tier1 import copy
+
+    return copy(x1.__floordiv__(x2), x1)
+
+
+def __mod__(x1, x2):
+    """Remainder of the floor division of two arrays."""
+    from ._execute import evaluate
+
+    return evaluate("a - floor(a/b)*b", parameters={"a": x1, "b": x2})
+
+
+def __rmod__(x1, x2):
+    """Remainder of the floor division of two arrays (reflected)."""
+    from ._execute import evaluate
+
+    return evaluate("b - floor(b/a)*a", parameters={"b": x2, "a": x1})
+
+
+def __imod__(x1, x2):
+    """In-place remainder of the floor division of two arrays."""
+    from ._tier1 import copy
+
+    return copy(x1.__mod__(x2), x1)
+
+
+def _binarize(x1, value):
+    """Return value as a device array matching x1 for bitwise/logical kernels."""
+    ArrayCls = _get_array_class()
+    if isinstance(value, ArrayCls):
+        return _align(x1, value)[1]
+    return ArrayCls.from_array(np.full(x1.shape, value, dtype=np.uint8))
+
+
+def __and__(x1, x2):
+    """Element-wise logical AND (mask arrays)."""
+    from ._tier1 import binary_and
+
+    return binary_and(x1, _binarize(x1, x2))
+
+
+def __or__(x1, x2):
+    """Element-wise logical OR (mask arrays)."""
+    from ._tier1 import binary_or
+
+    return binary_or(x1, _binarize(x1, x2))
+
+
+def __xor__(x1, x2):
+    """Element-wise logical XOR (mask arrays)."""
+    from ._tier1 import binary_xor
+
+    return binary_xor(x1, _binarize(x1, x2))
+
+
+def __invert__(x1):
+    """Element-wise logical NOT (mask arrays)."""
+    from ._tier1 import binary_not
+
+    return binary_not(x1)
+
+
+def log1p(x):
+    """Compute log(1 + x) element-wise."""
+    from ._execute import evaluate
+
+    return evaluate("log(a + 1)", parameters={"a": x})
+
+
+def expm1(x):
+    """Compute exp(x) - 1 element-wise."""
+    from ._execute import evaluate
+
+    return evaluate("exp(a) - 1", parameters={"a": x})
+
+
+def hypot(x1, x2):
+    """Compute sqrt(x1**2 + x2**2) element-wise."""
+    from ._execute import evaluate
+
+    x1, x2 = _align(x1, x2)
+    return evaluate("sqrt(a*a + b*b)", parameters={"a": x1, "b": x2})
 
 
 def __iter__(self):
@@ -548,7 +1286,7 @@ def _parse_index(index, shape):
 def _compute_dst_shape(region, steps, squeeze_axes, ndim):
     """Compute the output shape after slicing, honouring squeezed (scalar-indexed) axes."""
     # Full 3-D stepped shape
-    full = [int(abs(r / s)) for r, s in zip(region, steps)]
+    full = [-(-abs(r) // abs(s)) for r, s in zip(region, steps)]
     # Map back to the original ndim (region is always 3-D internally)
     offset = 3 - ndim
     out = full[offset:]
@@ -566,7 +1304,9 @@ def _reshape_result(result, dst_shape, region):
     while len(dst_shape) < 3:
         dst_shape.insert(0, 1)
 
-    return result.reshape(
+    reshape = getattr(type(result), "_native_reshape", None) or type(result).reshape
+    return reshape(
+        result,
         width=int(dst_shape[-1]),
         height=int(dst_shape[-2]),
         depth=int(dst_shape[-3]),
@@ -626,6 +1366,12 @@ def _fancy_setitem(self, index, value):
 
 def __getitem__(self, index):
     """Get a pixel value or a region of interest from the Array."""
+    if (
+        isinstance(index, list)
+        and len(index) == self.ndim
+        and all(isinstance(i, (int, np.integer)) for i in index)
+    ):
+        index = tuple(index)
     if _is_fancy_index(index, len(self.shape)):
         return _fancy_getitem(self, index)
 
@@ -648,9 +1394,9 @@ def __getitem__(self, index):
     if total == 1:
         return self.get(origin, region).item()
 
-    from ._tier1 import range as gpu_range
+    from ._tier1 import gather
 
-    result = gpu_range(
+    result = gather(
         self,
         start_x=range_x[0],
         stop_x=range_x[1],
@@ -681,18 +1427,24 @@ def __setitem__(self, index, value):
     )
     total = region[0] * region[1] * region[2]
 
-    if value.size == 1:
-        if total > 1:
-            value = np.broadcast_to(np.asarray(value).ravel(), total)
-            value = value.reshape(region)
-        self.set(value, origin, region)
-        return
-
     if any(s != 1 for s in steps):
-        from ._tier1 import range as gpu_range
+        from ._memory import create, push
+        from ._tier1 import scatter
 
-        gpu_range(
-            value,
+        full = [-(-abs(r) // abs(s)) for r, s in zip(region, steps)]
+        if value.size == 1:
+            source = create(full, dtype=self.dtype, device=self.device)
+            source.fill(float(np.asarray(value).ravel()[0]))
+        else:
+            data = (
+                value.get()
+                if isinstance(value, _get_array_class())
+                else np.asarray(value)
+            )
+            data = np.broadcast_to(data, full).astype(self.dtype)
+            source = push(data, device=self.device)
+        scatter(
+            source,
             self,
             start_x=range_x[0],
             stop_x=range_x[1],
@@ -706,9 +1458,16 @@ def __setitem__(self, index, value):
         )
         return
 
+    if value.size == 1:
+        if total > 1:
+            value = np.broadcast_to(np.asarray(value).ravel(), total)
+            value = value.reshape(region)
+        self.set(value, origin, region)
+        return
+
     if isinstance(value, _get_array_class()):
         if self.dtype == value.dtype:
-            self.copy(value, origin, (0, 0, 0), region)
+            value._copy_region(self, (0, 0, 0), origin, region)
         else:
             from ._tier1 import paste
 

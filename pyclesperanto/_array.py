@@ -6,7 +6,7 @@ import numpy as np
 from . import _operators
 from ._backend import _get_backend
 from ._core import Device, get_device
-from ._utils import _assert_supported_dtype
+from ._utils import _assert_supported_dtype, _canonical_dtype
 
 
 def _get_array_class():
@@ -42,6 +42,15 @@ class Array(metaclass=_ArrayMeta):
 
     Attribute access is forwarded to the *currently active* backend _Array,
     so switching backends with select_backend() is fully transparent.
+
+    Notes
+    -----
+    Known deviations from NumPy, due to backend (CLIc) limitations:
+
+    - 64-bit dtypes are silently downcast on device: ``float64 -> float32``
+      and ``int64 -> int32``.
+    - ``bool`` is stored as ``uint8`` (0/1 values).
+    - Arrays are limited to at most 3 dimensions.
     """
 
     pass
@@ -148,12 +157,16 @@ def get(
     return caster[self.dtype.name](origin, region)
 
 
-def __array__(self, dtype=None) -> np.ndarray:
-    """Returns a numpy array representation of the Array."""
-    if dtype is None:
-        return self.get()
-    else:
-        return self.get().astype(dtype)
+def __array__(self, dtype=None, copy=None) -> np.ndarray:
+    """Returns a numpy array representation of the Array (NumPy >= 2.0 protocol)."""
+    if copy is False:
+        raise ValueError(
+            "Unable to avoid copy: converting a device Array to numpy always copies."
+        )
+    arr = self.get()
+    if dtype is not None and arr.dtype != np.dtype(dtype):
+        arr = arr.astype(dtype)
+    return arr
 
 
 def to_device(cls, arr, *args, **kwargs):
@@ -181,8 +194,12 @@ def to_device(cls, arr, *args, **kwargs):
     return cls.from_array(arr, *args, **kwargs)
 
 
-def from_array(cls, arr, dtype=None, mtype="buffer", device=None):
+def from_array(cls, arr, dtype=None, *, mtype="buffer", device=None):
     """Create an pyclesperanto Array object from a numpy array (same shape, dtype, and memory).
+
+    Note: 64-bit dtypes are silently downcast on device (``float64 -> float32``,
+    ``int64 -> int32``) and ``bool`` is stored as ``uint8``, due to backend
+    (CLIc) limitations.
 
     Parameters
     ----------
@@ -204,12 +221,16 @@ def from_array(cls, arr, dtype=None, mtype="buffer", device=None):
         # nothing to do
         return arr
 
+    dtype = _canonical_dtype(dtype)
+
     if isinstance(arr, Array) and dtype != arr.dtype:
         # dtype conversion on device
         return arr.astype(dtype)
 
     # we are not on the device yet, so we can convert dtype with numpy and then upload
     arr = np.asarray(arr, dtype=dtype) if dtype else np.asarray(arr)
+    if arr.dtype == np.bool_:
+        arr = arr.astype(np.uint8)
 
     _assert_supported_dtype(arr.dtype)
 
@@ -224,7 +245,7 @@ def from_array(cls, arr, dtype=None, mtype="buffer", device=None):
     return cls.create(arr.shape, arr.dtype, mtype, device).set(arr)
 
 
-def empty(cls, shape, dtype=None, mtype="buffer", device=None):
+def empty(cls, shape, dtype=None, *, mtype="buffer", device=None):
     """Create an empty Array object from a shape.
 
     Parameters
@@ -251,6 +272,7 @@ def empty(cls, shape, dtype=None, mtype="buffer", device=None):
 
     if dtype is None:
         dtype = np.float32
+    dtype = _canonical_dtype(dtype)
 
     if device is None:
         device = get_device()
@@ -264,7 +286,7 @@ def empty(cls, shape, dtype=None, mtype="buffer", device=None):
     return cls.create(shape=shape, dtype=dtype, mtype=mtype, device=device)
 
 
-def empty_like(cls, arr, dtype=None, mtype="buffer", device=None):
+def empty_like(cls, arr, dtype=None, *, mtype="buffer", device=None):
     """Create an empty Array object from an other array.
 
     Parameters
@@ -288,7 +310,7 @@ def empty_like(cls, arr, dtype=None, mtype="buffer", device=None):
     return cls.empty(shape=arr.shape, dtype=dtype, mtype=mtype, device=device)
 
 
-def zeros(cls, shape, dtype=None, mtype="buffer", device=None):
+def zeros(cls, shape, dtype=None, *, mtype="buffer", device=None):
     """Create an Array object full of zeros from a shape.
 
     Parameters
@@ -312,7 +334,7 @@ def zeros(cls, shape, dtype=None, mtype="buffer", device=None):
     return new_array
 
 
-def zeros_like(cls, arr, dtype=None, mtype="buffer", device=None):
+def zeros_like(cls, arr, dtype=None, *, mtype="buffer", device=None):
     """Create an Array object filled with zeros from an other array.
 
     Parameters
@@ -361,7 +383,7 @@ def ones(cls, shape, dtype=None, *, mtype="buffer", device=None):
     return new_array
 
 
-def ones_like(cls, arr, dtype=None, mtype="buffer", device=None):
+def ones_like(cls, arr, dtype=None, *, mtype="buffer", device=None):
     """Create an Array object filled with ones from an other array.
 
     Parameters
@@ -386,8 +408,125 @@ def ones_like(cls, arr, dtype=None, mtype="buffer", device=None):
     return cls.ones(shape=arr.shape, dtype=dtype, mtype=mtype, device=device)
 
 
+def full(cls, shape, fill_value, dtype=None, *, mtype="buffer", device=None):
+    """Create an Array of a given shape filled with ``fill_value``.
+
+    Parameters
+    ----------
+    shape : tuple, list or np.ndarray
+        The shape of the array, maximum 3 elements.
+    fill_value : scalar
+        The value to fill the array with.
+    dtype : np.dtype, optional
+        The dtype of the array. If None, inferred from ``fill_value``.
+    mtype : str, optional
+        The memory type, by default "buffer"
+    device : Device, optional
+        The device, by default None
+
+    Returns
+    -------
+    Array
+        The created array.
+    """
+    if dtype is None:
+        dtype = np.asarray(fill_value).dtype
+    new_array = cls.empty(shape=shape, dtype=dtype, mtype=mtype, device=device)
+    new_array.fill(fill_value)
+    return new_array
+
+
+def full_like(cls, arr, fill_value, dtype=None, *, mtype="buffer", device=None):
+    """Create an Array filled with ``fill_value`` from another array.
+
+    Parameters
+    ----------
+    arr : np.ndarray or Array or other array-like structure
+        The array to create like.
+    fill_value : scalar
+        The value to fill the array with.
+    dtype : np.dtype, optional
+        Override the dtype of the created Array.
+    mtype : str, optional
+        The memory type. By default "buffer".
+    device : Device, optional
+        The device on which to create the Array. If None, uses the current active device.
+
+    Returns
+    -------
+    Array
+        The created array.
+    """
+    if dtype is None:
+        dtype = arr.dtype
+    return cls.full(
+        shape=arr.shape,
+        fill_value=fill_value,
+        dtype=dtype,
+        mtype=mtype,
+        device=device,
+    )
+
+
+def arange(cls, start, stop=None, step=1, dtype=None, *, mtype="buffer", device=None):
+    """Create an Array with evenly spaced values within a given interval.
+
+    Mirrors ``numpy.arange``. The values are computed on the host and uploaded.
+
+    Returns
+    -------
+    Array
+        The created 1-D array.
+    """
+    values = np.arange(start, stop, step, dtype=dtype)
+    return cls.from_array(values, mtype=mtype, device=device)
+
+
+def linspace(
+    cls,
+    start,
+    stop,
+    num=50,
+    endpoint=True,
+    dtype=None,
+    *,
+    mtype="buffer",
+    device=None,
+):
+    """Create an Array of ``num`` evenly spaced values from ``start`` to ``stop``.
+
+    Mirrors ``numpy.linspace``. The values are computed on the host and uploaded.
+
+    Returns
+    -------
+    Array
+        The created 1-D array.
+    """
+    values = np.linspace(start, stop, num=num, endpoint=endpoint, dtype=dtype)
+    return cls.from_array(values, mtype=mtype, device=device)
+
+
+def eye(cls, N, M=None, k=0, dtype=None, *, mtype="buffer", device=None):
+    """Create a 2-D Array with ones on a diagonal and zeros elsewhere.
+
+    Mirrors ``numpy.eye``. The values are computed on the host and uploaded.
+
+    Returns
+    -------
+    Array
+        The created 2-D array.
+    """
+    values = np.eye(N, M, k, dtype=dtype if dtype is not None else float)
+    return cls.from_array(values, mtype=mtype, device=device)
+
+
 def T(self):
-    """Transpose the Array. Only works for 2D and 3D arrays."""
+    """Transpose the Array, reversing the axes order (NumPy semantics).
+
+    2D arrays are transposed with ``transpose_xy``, 3D arrays with
+    ``transpose_xz`` (which reverses (z, y, x) to (x, y, z)).
+    Arrays with fewer than 2 dimensions are returned unchanged.
+    """
     from ._tier1 import transpose_xy, transpose_xz
 
     if len(self.shape) == 2:
@@ -398,15 +537,264 @@ def T(self):
         return self
 
 
-def __array_ufunc__(self, ufunc, method, *inputs, **kwargs):
-    if method == "__call__":
-        func = getattr(Array, f"__{ufunc.__name__}__", None)
-        if func is not None:
-            return func(
-                *[Array.from_array(i) for i in inputs],
-                **kwargs,
-            )
+def mT(self):
+    """Transpose the last two axes of the Array (NumPy ``matrix transpose``)."""
+    from ._tier1 import transpose_xy
+
+    if len(self.shape) < 2:
+        raise ValueError("matrix transpose with ndim < 2 is undefined")
+    return transpose_xy(self)
+
+
+def real(self):
+    """The real part of the Array. Device dtypes are real, returns self."""
+    return self
+
+
+def imag(self):
+    """The imaginary part of the Array. Device dtypes are real, returns zeros."""
+    from ._memory import create_like
+
+    result = create_like(self)
+    result.fill(0)
+    return result
+
+
+class _Flags:
+    c_contiguous = True
+    f_contiguous = False
+    owndata = True
+    writeable = True
+
+    def __getitem__(self, key):
+        mapping = {
+            "C_CONTIGUOUS": self.c_contiguous,
+            "C": self.c_contiguous,
+            "F_CONTIGUOUS": self.f_contiguous,
+            "F": self.f_contiguous,
+            "OWNDATA": self.owndata,
+            "WRITEABLE": self.writeable,
+        }
+        return mapping[key.upper()]
+
+
+def flags(self):
+    """Minimal information about the memory layout of the Array."""
+    return _Flags()
+
+
+# ufunc name -> tier1/tier2 kernel name (single input)
+_UNARY_UFUNCS = {
+    "sqrt": "square_root",
+    "exp": "exponential",
+    "exp2": "exponential2",
+    "log": "logarithm",
+    "log2": "logarithm2",
+    "log10": "logarithm10",
+    "log1p": "log1p",
+    "expm1": "expm1",
+    "absolute": "absolute",
+    "fabs": "absolute",
+    "sin": "sin",
+    "cos": "cos",
+    "tan": "tan",
+    "arcsin": "asin",
+    "arccos": "acos",
+    "arctan": "atan",
+    "sinh": "sinh",
+    "cosh": "cosh",
+    "tanh": "tanh",
+    "square": "square",
+    "negative": "__neg__",
+    "positive": "__pos__",
+    "floor": "floor",
+    "ceil": "ceil",
+    "trunc": "truncate",
+    "sign": "sign",
+    "rint": "rint",
+    "isnan": "isnan",
+    "isfinite": "isfinite",
+}
+
+# ufunc name -> (forward operator, reflected operator or None) in _operators
+_BINARY_UFUNCS = {
+    "add": ("__add__", "__radd__"),
+    "subtract": ("__sub__", "__rsub__"),
+    "multiply": ("__mul__", "__rmul__"),
+    "divide": ("__truediv__", "__rtruediv__"),
+    "true_divide": ("__truediv__", "__rtruediv__"),
+    "power": ("__pow__", "__rpow__"),
+    "floor_divide": ("__floordiv__", "__rfloordiv__"),
+    "mod": ("__mod__", "__rmod__"),
+    "remainder": ("__mod__", "__rmod__"),
+    "greater": ("__gt__", "__lt__"),
+    "greater_equal": ("__ge__", "__le__"),
+    "less": ("__lt__", "__gt__"),
+    "less_equal": ("__le__", "__ge__"),
+    "equal": ("__eq__", "__eq__"),
+    "not_equal": ("__ne__", "__ne__"),
+    "maximum": ("maximum", "maximum"),
+    "minimum": ("minimum", "minimum"),
+    "hypot": ("hypot", "hypot"),
+    "arctan2": ("atan2", "_atan2_reversed"),
+    "logical_and": ("logical_and", "logical_and"),
+    "logical_or": ("logical_or", "logical_or"),
+    "logical_xor": ("logical_xor", "logical_xor"),
+}
+
+
+def _apply_ufunc(name, inputs):
+    """Apply a supported ufunc to inputs (Arrays or scalars), or return NotImplemented."""
+    from . import _operators, _tier1, _tier2
+
+    if name in _UNARY_UFUNCS and len(inputs) == 1:
+        kernel = _UNARY_UFUNCS[name]
+        func = (
+            getattr(_operators, kernel, None)
+            or getattr(_tier1, kernel, None)
+            or getattr(_tier2, kernel)
+        )
+        return func(inputs[0])
+
+    if name in _BINARY_UFUNCS and len(inputs) == 2:
+        fwd, rev = _BINARY_UFUNCS[name]
+        x1, x2 = inputs
+        if isinstance(x1, _get_array_class()):
+            return getattr(_operators, fwd)(x1, x2)
+        if rev is None:
+            return NotImplemented
+        return getattr(_operators, rev)(x2, x1)
+
     return NotImplemented
+
+
+def _apply_reduce(
+    ufunc_name,
+    arr,
+    axis=None,
+    dtype=None,
+    out=None,
+    keepdims=False,
+    initial=None,
+    where=True,
+):
+    """Apply ufunc.reduce to an Array by routing to existing reduction kernels."""
+    if initial is not None or where is not True:
+        return NotImplemented
+
+    from ._operators import _max, _min, _prod, _sum
+
+    if axis is None:
+        axis = 0
+
+    if ufunc_name == "add":
+        return _sum(arr, axis=axis, dtype=dtype, out=out, keepdims=keepdims)
+    elif ufunc_name == "maximum":
+        return _max(arr, axis=axis, out=out, keepdims=keepdims)
+    elif ufunc_name == "minimum":
+        return _min(arr, axis=axis, out=out, keepdims=keepdims)
+    elif ufunc_name == "multiply":
+        return _prod(arr, axis=axis, dtype=dtype, out=out, keepdims=keepdims)
+
+    return NotImplemented
+
+
+def _normalize_axis(axis, ndim):
+    """Normalize and validate a single axis index."""
+    if not isinstance(axis, (int, np.integer)):
+        raise TypeError(f"axis must be an integer, got {type(axis).__name__}")
+    axis = int(axis)
+    if axis < 0:
+        axis += ndim
+    if not 0 <= axis < ndim:
+        raise ValueError(f"axis {axis} is out of bounds for array of dimension {ndim}")
+    return axis
+
+
+def _apply_accumulate(ufunc_name, arr, axis=0, dtype=None, out=None):
+    """Apply ufunc.accumulate to an Array using backend cumulative kernels."""
+    from ._tier1 import (
+        copy,
+        cumulative_max,
+        cumulative_min,
+        cumulative_product,
+        cumulative_sum,
+    )
+
+    if dtype is not None:
+        arr = arr.astype(dtype)
+
+    axis = _normalize_axis(axis, arr.ndim)
+    # Backend cumulative kernels expect axis in X/Y/Z order, while NumPy axes
+    # follow the array shape order. Mirror the mapping used by projections.
+    backend_axis = arr.ndim - 1 - axis
+
+    if ufunc_name == "add":
+        result = cumulative_sum(arr, axis=backend_axis)
+    elif ufunc_name == "maximum":
+        result = cumulative_max(arr, axis=backend_axis)
+    elif ufunc_name == "minimum":
+        result = cumulative_min(arr, axis=backend_axis)
+    elif ufunc_name == "multiply":
+        result = cumulative_product(arr, axis=backend_axis)
+    else:
+        return NotImplemented
+
+    if out is not None:
+        if isinstance(out, tuple):
+            if len(out) != 1:
+                return NotImplemented
+            out = out[0]
+        if out is None:
+            return NotImplemented
+        if isinstance(out, np.ndarray):
+            np.copyto(out, result.get().astype(out.dtype))
+            return out
+        copy(result, out)
+        return out
+
+    return result
+
+
+def __array_ufunc__(self, ufunc, method, *inputs, **kwargs):
+    """Dispatch NumPy ufuncs to the corresponding device kernels."""
+    if method == "reduce":
+        return _apply_reduce(ufunc.__name__, self, **kwargs)
+    if method == "accumulate":
+        axis = kwargs.pop("axis", 0)
+        dtype = kwargs.pop("dtype", None)
+        out = kwargs.pop("out", None)
+        if kwargs:
+            return NotImplemented
+        return _apply_accumulate(ufunc.__name__, self, axis=axis, dtype=dtype, out=out)
+    if method != "__call__":
+        return NotImplemented
+    out = kwargs.pop("out", None)
+    if kwargs:
+        return NotImplemented
+
+    ArrayCls = _get_array_class()
+    inputs = [
+        i if isinstance(i, ArrayCls) or np.isscalar(i) else ArrayCls.from_array(i)
+        for i in inputs
+    ]
+
+    result = _apply_ufunc(ufunc.__name__, inputs)
+    if result is NotImplemented:
+        return NotImplemented
+
+    if out is not None:
+        if len(out) != 1 or out[0] is None:
+            return NotImplemented
+        target = out[0]
+        if isinstance(target, np.ndarray):
+            np.copyto(target, result.get().astype(target.dtype))
+        else:
+            from ._tier1 import copy
+
+            copy(result, target)
+        return target
+    return result
 
 
 def _reset_array_patch():
@@ -548,6 +936,10 @@ def _patch_array_class():
     BackendArray = _get_array_class()
 
     setattr(BackendArray, "T", property(T))
+    setattr(BackendArray, "mT", property(mT))
+    setattr(BackendArray, "real", property(real))
+    setattr(BackendArray, "imag", property(imag))
+    setattr(BackendArray, "flags", property(flags))
     setattr(BackendArray, "set", set)
     setattr(BackendArray, "get", get)
     setattr(BackendArray, "__array_ufunc__", __array_ufunc__)
@@ -561,19 +953,41 @@ def _patch_array_class():
     setattr(BackendArray, "zeros_like", classmethod(zeros_like))
     setattr(BackendArray, "ones", classmethod(ones))
     setattr(BackendArray, "ones_like", classmethod(ones_like))
+    setattr(BackendArray, "full", classmethod(full))
+    setattr(BackendArray, "full_like", classmethod(full_like))
+    setattr(BackendArray, "arange", classmethod(arange))
+    setattr(BackendArray, "linspace", classmethod(linspace))
+    setattr(BackendArray, "eye", classmethod(eye))
     setattr(BackendArray, "to_device", classmethod(to_device))
     ## dlpack support
     setattr(BackendArray, "__dlpack__", __dlpack__)
     setattr(BackendArray, "__dlpack_device__", __dlpack_device__)
     setattr(BackendArray, "from_dlpack", classmethod(from_dlpack))
     ## copy-free reshape
-    # setattr(BackendArray, "reshape", reshape)
+    if "_native_reshape" not in BackendArray.__dict__:
+        setattr(BackendArray, "_native_reshape", BackendArray.reshape)
+    setattr(BackendArray, "reshape", _operators._reshape)
 
     setattr(BackendArray, "astype", _operators._astype)
+    setattr(BackendArray, "copy", _operators._copy)
+    setattr(BackendArray, "squeeze", _operators._squeeze)
+    setattr(BackendArray, "ravel", _operators._ravel)
+    setattr(BackendArray, "flatten", _operators._flatten)
+    setattr(BackendArray, "item", _operators._item)
+    setattr(BackendArray, "tolist", _operators._tolist)
+    setattr(BackendArray, "clip", _operators._clip)
+    setattr(BackendArray, "round", _operators._round)
     setattr(BackendArray, "max", _operators._max)
     setattr(BackendArray, "min", _operators._min)
     setattr(BackendArray, "sum", _operators._sum)
     setattr(BackendArray, "std", _operators._std)
+    setattr(BackendArray, "mean", _operators._mean)
+    setattr(BackendArray, "var", _operators._var)
+    setattr(BackendArray, "prod", _operators._prod)
+    setattr(BackendArray, "argmax", _operators._argmax)
+    setattr(BackendArray, "argmin", _operators._argmin)
+    setattr(BackendArray, "any", _operators._any)
+    setattr(BackendArray, "all", _operators._all)
     setattr(BackendArray, "__pos__", _operators.__pos__)
     setattr(BackendArray, "__neg__", _operators.__neg__)
     setattr(BackendArray, "__add__", _operators.__add__)
@@ -599,6 +1013,21 @@ def _patch_array_class():
     setattr(BackendArray, "__ne__", _operators.__ne__)
     setattr(BackendArray, "__pow__", _operators.__pow__)
     setattr(BackendArray, "__ipow__", _operators.__ipow__)
+    setattr(BackendArray, "__rpow__", _operators.__rpow__)
+    setattr(BackendArray, "__abs__", _operators.__abs__)
+    setattr(BackendArray, "__floordiv__", _operators.__floordiv__)
+    setattr(BackendArray, "__rfloordiv__", _operators.__rfloordiv__)
+    setattr(BackendArray, "__ifloordiv__", _operators.__ifloordiv__)
+    setattr(BackendArray, "__mod__", _operators.__mod__)
+    setattr(BackendArray, "__rmod__", _operators.__rmod__)
+    setattr(BackendArray, "__imod__", _operators.__imod__)
+    setattr(BackendArray, "__and__", _operators.__and__)
+    setattr(BackendArray, "__or__", _operators.__or__)
+    setattr(BackendArray, "__xor__", _operators.__xor__)
+    setattr(BackendArray, "__invert__", _operators.__invert__)
+    setattr(BackendArray, "__float__", _operators.__float__)
+    setattr(BackendArray, "__int__", _operators.__int__)
+    setattr(BackendArray, "__bool__", _operators.__bool__)
     # setattr(BackendArray, "_figure_to_png", _operators.__figure_to_png__)
     # setattr(BackendArray, "_png_to_html", _operators.__png_to_html__)
     setattr(BackendArray, "_repr_html_", _operators.__repr_html__)

@@ -155,7 +155,7 @@ def test_true_divide_by_zero_scalar(gpu_backend):
     arr = cle.Array.from_array(data)
     with np.errstate(divide="ignore"):
         expected = data / 0
-    np.testing.assert_allclose(np.asarray(arr / 0), expected)
+        np.testing.assert_allclose(np.asarray(arr / 0), expected)
 
 
 def test_comparison_with_numpy_operand(gpu_backend):

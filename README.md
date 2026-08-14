@@ -10,6 +10,9 @@
 
 __pyclesperanto__ is the python package of [clEsperanto] - a multi-language framework for GPU-accelerated image processing, compatible with [OpenCL](https://www.khronos.org/opencl/), [CUDA](https://developer.nvidia.com/cuda-zone), and [Metal](https://developer.apple.com/metal/).
 
+We mostly use it in the life sciences for analysing 3- and 4-dimensional microsopy data, e.g. as we face it developmental biology when segmenting cells and studying their individual properties as well as properties of compounds of cells forming tissues.
+
+
 ## Installation, Documentation, and Uses
 
 To install pyclesperanto from `pip`:
@@ -17,9 +20,14 @@ To install pyclesperanto from `pip`:
 pip install pyclesperanto[all]
 ```
 
-Please, refere to the [documentation] for full installation details, options, guides, and examples on how to use the pyclesperanto.
+Full documentation, examples and API references [here](https://clesperanto-doc.readthedocs.io/en/latest/docs/pyclesperanto/index.html) 📚 
+
 If you encountering any difficulties or have questions we encourage you to raise them on the [image.sc forum] under the tag `clesperanto`,
 or to open a [github issue](https://github.com/clEsperanto/pyclesperanto/issues).
+
+> [!NOTE]
+> If transitioning from `pyclesperanto_prototype`, check out the [transition notes](https://github.com/clEsperanto/pyclesperanto-transition-notes/blob/main/transition_notes.md) to help you update your code.
+
 
 ## __Code Example__
 
@@ -60,9 +68,10 @@ imsave("result.tif", output_image)
 <img src="docs/demos/images/select_device.png" width="300"/>
 </td><td>
 
-* [Select and Manage devices](docs/demos/api/select_devices.ipynb)
-* [Host-Device memory management](docs/demos/api/push_pull_create.ipynb)
-* [Process an image](docs/demos/api/process_image.ipynb)
+- [Select a Backend](docs/demos/api/manage_backends.ipynb)
+- [Choose a devices](docs/demos/api/select_devices.ipynb)
+- [Host-Device memory transfer](docs/demos/api/push_pull_create.ipynb)
+- [Process an array](docs/demos/api/process_image.ipynb)
 
 </td></tr>
 
@@ -70,46 +79,50 @@ imsave("result.tif", output_image)
 <img src="docs/demos/images/crop_and_paste_images.png" width="300"/>
 </td><td>
 
-* [Crop, Flip, Paste arrays](docs/demos/basics/crop_flip_paste.ipynb)
-* [Math operations](docs/demos/basics/arithmetic_operators.ipynb)
-* [Matrix operations](docs/demos/basics/matrices_operations.ipynb)
-* [Vector and Matrix operations](docs/demos/basics/vectors_and_matrices_operations.ipynb)
-* [How to inspecting 3D image](docs/demos/basics/inspecting_3d_images.ipynb)
+- [Arrays manipulation](docs/demos/basics/array_manipulation.ipynb)
+- [Arrays arithmetics](docs/demos/basics/array_arithmetics.ipynb)
+- [Matrix arithmetics](docs/demos/basics/matrix_operations.ipynb)
+- [Numpy compatibility](docs/demos/interoperability/numpy.ipynb)
+- [Cupy and Torch interoperability](docs/demos/interoperability/cupy_torch.ipynb)
 
 </td></tr>
-
 
 <tr><td>
 <img src="docs/demos/images/segmentation_3d.png" width="300"/>
 </td><td>
 
-* [Segment and analyse blobs](docs/demos/examples/analyse_blobs.ipynb)
-* [Voronoi-Otsu labeling](docs/demos/examples/voronoi_otsu_labeling.ipynb)
-* [Cell segmentation based on membrane](docs/demos/examples/membrane_segmentation_2d.ipynb)
-* [Cell segmentation in 3D](docs/demos/examples/Segmentation_3D.ipynb)
+- [Histogram correction](docs/demos/examples/histogram_and_clahe.ipynb)
+- [Denoising filters](docs/demos/examples/denoising_filters.ipynb)
+- [Thresholding](docs/demos/examples/thresholding.ipynb)
+- [Spot detection](docs/demos/examples/spot_detection.ipynb)
+- [Template matching detection](docs/demos/examples/template_matching_detection.ipynb)
+- [Edge and Ridge filtering](docs/demos/examples/edge_and_ridge_filters.ipynb)
 
 </td></tr>
-
 
 <tr><td>
 <img src="docs/demos/images/affine_transforms.png" width="300"/>
 </td><td>
 
-* [Edge detection](docs/demos/examples/edge_detection_and_enhancement.ipynb)
-* [Ridge and Tube detection](docs/demos/examples/ridge_detection.ipynb)
-* [Parametric maps](docs/demos/examples/parametric_maps.ipynb)
-* [Rotation, scaling, translation, and affine transform](docs/demos/examples/affine_transforms.ipynb)
-<!-- * [Morphomathic operations](https://github.com/clEsperanto/pyclesperanto/tree/main/docs/demos/examples/morphomath_operation.ipynb)   -->
+- [Voronoi-Otsu segmentation](docs/demos/examples/voronoi_otsu_labeling.ipynb)
+- [Membrane segmentation](docs/demos/examples/membrane_segmentation_2d.ipynb)
+- [3D nuclei segmentation](docs/demos/examples/Segmentation_3D.ipynb)
+- [Chan-Vese segmentation](docs/demos/examples/chan_vese_segmentation.ipynb)
+- [Labels quantifications](docs/demos/basics/label_statistics.ipynb)
+- [Parametrical maps](docs/demos/examples/parametric_maps.ipynb)
+- [Map quantifications](docs/demos/examples/map_quantification.ipynb)
+- [Filter nuclei by intensity](docs/demos/examples/identify_nuclei_by_intensity.ipynb)
 
 </td></tr>
-
 
 <tr><td>
 <img src="docs/demos/images/multi-device-tiling.png" width="300"/>
 </td><td>
 
-* [Multi-device tile processing](docs/demos/examples/multi-gpu_tile_processing_with_dask.ipynb)
-* [Ask Bia-Bob example](docs/demos/interoperability/biabob-example.ipynb)
+- [Image transformation](docs/demos/examples/affine_transforms.ipynb)
+- [FFT Convolution and Deconvolution](docs/demos/examples/image_deconvolution.ipynb)
+- [Multi-GPU and tile processing with Dask docs](demos/examples/multi-gpu_tile_processing_with_dask.ipynb)
+- [Ask Bia-Bob docs](demos/interoperability/biabob-example.ipynb)
 
 </td></tr>
 

@@ -13,18 +13,19 @@ from ._core import Device
 from ._decorators import plugin_function
 from ._utils import deprecated
 
+
 @plugin_function(categories=["filter", "in assistant"])
 def absolute(
     input_image: Image,
-    output_image: Optional[Image] =None,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    device: Optional[Device] = None,
 ) -> Image:
     """Computes the absolute value of every individual pixel x in a given image.
     <pre>f(x) = |x| </pre>
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         The input image to be processed.
     output_image: Optional[Image] (= None)
         Output image where results are written into.
@@ -41,17 +42,18 @@ def absolute(
     """
     return _get_backend()._absolute(device, input_image, output_image)
 
+
 @plugin_function
 def sin(
     input_image: Image,
-    output_image: Optional[Image] =None,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    device: Optional[Device] = None,
 ) -> Image:
     """Compute the sin(x) for each element x in the array.
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         The input image to be processed.
     output_image: Optional[Image] (= None)
         Output image where results are written into.
@@ -64,17 +66,18 @@ def sin(
     """
     return _get_backend()._sin(device, input_image, output_image)
 
+
 @plugin_function
 def cos(
     input_image: Image,
-    output_image: Optional[Image] =None,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    device: Optional[Device] = None,
 ) -> Image:
     """Compute the cos(x) for each element x in the array.
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         The input image to be processed.
     output_image: Optional[Image] (= None)
         Output image where results are written into.
@@ -87,17 +90,18 @@ def cos(
     """
     return _get_backend()._cos(device, input_image, output_image)
 
+
 @plugin_function
 def tan(
     input_image: Image,
-    output_image: Optional[Image] =None,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    device: Optional[Device] = None,
 ) -> Image:
     """Compute the tan(x) for each element x in the array.
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         The input image to be processed.
     output_image: Optional[Image] (= None)
         Output image where results are written into.
@@ -110,17 +114,18 @@ def tan(
     """
     return _get_backend()._tan(device, input_image, output_image)
 
+
 @plugin_function
 def asin(
     input_image: Image,
-    output_image: Optional[Image] =None,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    device: Optional[Device] = None,
 ) -> Image:
     """Compute the asin(x) for each element x in the array.
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         The input image to be processed.
     output_image: Optional[Image] (= None)
         Output image where results are written into.
@@ -133,17 +138,18 @@ def asin(
     """
     return _get_backend()._asin(device, input_image, output_image)
 
+
 @plugin_function
 def acos(
     input_image: Image,
-    output_image: Optional[Image] =None,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    device: Optional[Device] = None,
 ) -> Image:
     """Compute the acos(x) for each element x in the array.
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         The input image to be processed.
     output_image: Optional[Image] (= None)
         Output image where results are written into.
@@ -156,17 +162,18 @@ def acos(
     """
     return _get_backend()._acos(device, input_image, output_image)
 
+
 @plugin_function
 def atan(
     input_image: Image,
-    output_image: Optional[Image] =None,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    device: Optional[Device] = None,
 ) -> Image:
     """Compute the atan(x) for each element x in the array.
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         The input image to be processed.
     output_image: Optional[Image] (= None)
         Output image where results are written into.
@@ -179,17 +186,18 @@ def atan(
     """
     return _get_backend()._atan(device, input_image, output_image)
 
+
 @plugin_function
 def sinh(
     input_image: Image,
-    output_image: Optional[Image] =None,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    device: Optional[Device] = None,
 ) -> Image:
     """Compute the sinh(x) for each element x in the array.
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         The input image to be processed.
     output_image: Optional[Image] (= None)
         Output image where results are written into.
@@ -202,17 +210,18 @@ def sinh(
     """
     return _get_backend()._sinh(device, input_image, output_image)
 
+
 @plugin_function
 def cosh(
     input_image: Image,
-    output_image: Optional[Image] =None,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    device: Optional[Device] = None,
 ) -> Image:
     """Compute the cosh(x) for each element x in the array.
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         The input image to be processed.
     output_image: Optional[Image] (= None)
         Output image where results are written into.
@@ -225,17 +234,18 @@ def cosh(
     """
     return _get_backend()._cosh(device, input_image, output_image)
 
+
 @plugin_function
 def tanh(
     input_image: Image,
-    output_image: Optional[Image] =None,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    device: Optional[Device] = None,
 ) -> Image:
     """Compute the tanh(x) for each element x in the array.
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         The input image to be processed.
     output_image: Optional[Image] (= None)
         Output image where results are written into.
@@ -248,23 +258,24 @@ def tanh(
     """
     return _get_backend()._tanh(device, input_image, output_image)
 
+
 @plugin_function(categories=["combine", "in assistant"])
 def add_images_weighted(
     input_image0: Image,
     input_image1: Image,
-    output_image: Optional[Image] =None,
-    factor1: float =1,
-    factor2: float =1,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    factor1: float = 1,
+    factor2: float = 1,
+    device: Optional[Device] = None,
 ) -> Image:
     """Calculates the sum of pairs of pixels x and y from images X and Y weighted with
     factors a and b. <pre>f(x, y, a, b) = x * a + y * b</pre>
 
     Parameters
     ----------
-    input_image0: Image 
+    input_image0: Image
         First input image to add.
-    input_image1: Image 
+    input_image1: Image
         Second image to add.
     output_image: Optional[Image] (= None)
         Output image where results are written into.
@@ -283,21 +294,24 @@ def add_images_weighted(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_addImagesWeighted
     """
-    return _get_backend()._add_images_weighted(device, input_image0, input_image1, output_image, float(factor1), float(factor2))
+    return _get_backend()._add_images_weighted(
+        device, input_image0, input_image1, output_image, float(factor1), float(factor2)
+    )
+
 
 @plugin_function(categories=["filter", "in assistant"])
 def add_image_and_scalar(
     input_image: Image,
-    output_image: Optional[Image] =None,
-    scalar: float =1,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    scalar: float = 1,
+    device: Optional[Device] = None,
 ) -> Image:
     """Adds a scalar value s to all pixels x of a given image X. <pre>f(x, s) = x +
     s</pre>
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input image to process.
     output_image: Optional[Image] (= None)
         Output image.
@@ -314,14 +328,25 @@ def add_image_and_scalar(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_addImageAndScalar
     """
-    return _get_backend()._add_image_and_scalar(device, input_image, output_image, float(scalar))
+    return _get_backend()._add_image_and_scalar(
+        device, input_image, output_image, float(scalar)
+    )
 
-@plugin_function(categories=["combine", "binary processing", "in assistant", "combine labels", "label processing"])
+
+@plugin_function(
+    categories=[
+        "combine",
+        "binary processing",
+        "in assistant",
+        "combine labels",
+        "label processing",
+    ]
+)
 def binary_and(
     input_image0: Image,
     input_image1: Image,
-    output_image: Optional[Image] =None,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    device: Optional[Device] = None,
 ) -> Image:
     """Computes a binary image (containing pixel values 0 and 1) from two images X and
     Y by connecting pairs of pixels x and y with the binary AND operator &. All
@@ -330,9 +355,9 @@ def binary_and(
 
     Parameters
     ----------
-    input_image0: Image 
+    input_image0: Image
         First binary input image to be processed.
-    input_image1: Image 
+    input_image1: Image
         Second binary input image to be processed.
     output_image: Optional[Image] (= None)
         Output image where results are written into.
@@ -349,18 +374,26 @@ def binary_and(
     """
     return _get_backend()._binary_and(device, input_image0, input_image1, output_image)
 
-@plugin_function(categories=["binary processing", "label processing", "in assistant", "bia-bob-suggestion"])
+
+@plugin_function(
+    categories=[
+        "binary processing",
+        "label processing",
+        "in assistant",
+        "bia-bob-suggestion",
+    ]
+)
 def binary_edge_detection(
     input_image: Image,
-    output_image: Optional[Image] =None,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    device: Optional[Device] = None,
 ) -> Image:
     """Determines pixels/voxels which are on the surface of binary objects and sets
     only them to 1 in the destination image. All other pixels are set to 0.
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Binary input image where edges will be searched.
     output_image: Optional[Image] (= None)
         Output image where edge pixels will be 1.
@@ -377,11 +410,20 @@ def binary_edge_detection(
     """
     return _get_backend()._binary_edge_detection(device, input_image, output_image)
 
-@plugin_function(categories=["binary processing", "filter", "label processing", "in assistant", "bia-bob-suggestion"])
+
+@plugin_function(
+    categories=[
+        "binary processing",
+        "filter",
+        "label processing",
+        "in assistant",
+        "bia-bob-suggestion",
+    ]
+)
 def binary_not(
     input_image: Image,
-    output_image: Optional[Image] =None,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    device: Optional[Device] = None,
 ) -> Image:
     """Computes a binary image (containing pixel values 0 and 1) from an image X by
     negating its pixel values x using the binary NOT operator ! All pixel values
@@ -389,7 +431,7 @@ def binary_not(
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Binary input image to be inverted.
     output_image: Optional[Image] (= None)
         Output image where results are written into.
@@ -406,12 +448,21 @@ def binary_not(
     """
     return _get_backend()._binary_not(device, input_image, output_image)
 
-@plugin_function(categories=["combine", "binary processing", "in assistant", "combine labels", "label processing"])
+
+@plugin_function(
+    categories=[
+        "combine",
+        "binary processing",
+        "in assistant",
+        "combine labels",
+        "label processing",
+    ]
+)
 def binary_or(
     input_image0: Image,
     input_image1: Image,
-    output_image: Optional[Image] =None,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    device: Optional[Device] = None,
 ) -> Image:
     """Computes a binary image (containing pixel values 0 and 1) from two images X and
     Y by connecting pairs of pixels x and y with the binary OR operator |. All pixel
@@ -420,9 +471,9 @@ def binary_or(
 
     Parameters
     ----------
-    input_image0: Image 
+    input_image0: Image
         First binary input image to be processed.
-    input_image1: Image 
+    input_image1: Image
         Second binary input image to be processed.
     output_image: Optional[Image] (= None)
         Output image where results are written into.
@@ -439,20 +490,29 @@ def binary_or(
     """
     return _get_backend()._binary_or(device, input_image0, input_image1, output_image)
 
-@plugin_function(categories=["combine", "binary processing", "in assistant", "combine labels", "label processing"])
+
+@plugin_function(
+    categories=[
+        "combine",
+        "binary processing",
+        "in assistant",
+        "combine labels",
+        "label processing",
+    ]
+)
 def binary_subtract(
     input_image0: Image,
     input_image1: Image,
-    output_image: Optional[Image] =None,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    device: Optional[Device] = None,
 ) -> Image:
     """Subtracts one binary image from another.
 
     Parameters
     ----------
-    input_image0: Image 
+    input_image0: Image
         First binary input image to be processed.
-    input_image1: Image 
+    input_image1: Image
         Second binary input image to be subtracted from the first.
     output_image: Optional[Image] (= None)
         Output image where results are written into.
@@ -467,14 +527,25 @@ def binary_subtract(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_binarySubtract
     """
-    return _get_backend()._binary_subtract(device, input_image0, input_image1, output_image)
+    return _get_backend()._binary_subtract(
+        device, input_image0, input_image1, output_image
+    )
 
-@plugin_function(categories=["combine", "binary processing", "in assistant", "combine labels", "label processing"])
+
+@plugin_function(
+    categories=[
+        "combine",
+        "binary processing",
+        "in assistant",
+        "combine labels",
+        "label processing",
+    ]
+)
 def binary_xor(
     input_image0: Image,
     input_image1: Image,
-    output_image: Optional[Image] =None,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    device: Optional[Device] = None,
 ) -> Image:
     """Computes a binary image (containing pixel values 0 and 1) from two images X and
     Y by connecting pairs of pixels x and y with the binary operators AND &, OR |
@@ -483,9 +554,9 @@ def binary_xor(
 
     Parameters
     ----------
-    input_image0: Image 
+    input_image0: Image
         First binary input image to be processed.
-    input_image1: Image 
+    input_image1: Image
         Second binary input image to be processed.
     output_image: Optional[Image] (= None)
         Output image where results are written into.
@@ -502,18 +573,19 @@ def binary_xor(
     """
     return _get_backend()._binary_xor(device, input_image0, input_image1, output_image)
 
+
 @plugin_function(categories=["filter", "binary processing"])
 def binary_supinf(
     input_image: Image,
-    output_image: Optional[Image] =None,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    device: Optional[Device] = None,
 ) -> Image:
     """Computes the maximum of erosions with planar structuring elements. Note: This
     operation supports only binary image data types.
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         The binary input image to be processed.
     output_image: Optional[Image] (= None)
         Output image where results are written into.
@@ -526,18 +598,19 @@ def binary_supinf(
     """
     return _get_backend()._binary_supinf(device, input_image, output_image)
 
+
 @plugin_function(categories=["filter", "binary processing"])
 def binary_infsup(
     input_image: Image,
-    output_image: Optional[Image] =None,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    device: Optional[Device] = None,
 ) -> Image:
     """Computes the minimum of dilations with planar structuring elements. Note: This
     operation supports only binary image data types.
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         The binary input image to be processed.
     output_image: Optional[Image] (= None)
         Output image where results are written into.
@@ -550,13 +623,14 @@ def binary_infsup(
     """
     return _get_backend()._binary_infsup(device, input_image, output_image)
 
+
 @plugin_function
 def block_enumerate(
     input_image0: Image,
     input_image1: Image,
-    output_image: Optional[Image] =None,
-    blocksize: int =256,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    blocksize: int = 256,
+    device: Optional[Device] = None,
 ) -> Image:
     """Enumerates pixels with value 1 in a one-dimensional image. For example, [0, 1,
     1, 0, 1, 0, 1, 1] becomes [0, 1, 2, 0, 3, 0, 4, 5]. This functionality is
@@ -566,9 +640,9 @@ def block_enumerate(
 
     Parameters
     ----------
-    input_image0: Image 
+    input_image0: Image
         input binary vector image
-    input_image1: Image 
+    input_image1: Image
         precomputed sums of blocks
     output_image: Optional[Image] (= None)
         output enumerated vector image
@@ -581,16 +655,19 @@ def block_enumerate(
     -------
     Image
     """
-    return _get_backend()._block_enumerate(device, input_image0, input_image1, output_image, int(blocksize))
+    return _get_backend()._block_enumerate(
+        device, input_image0, input_image1, output_image, int(blocksize)
+    )
+
 
 @plugin_function
 def circular_shift(
     input_image: Image,
-    output_image: Optional[Image] =None,
-    shift_x: int =0,
-    shift_y: int =0,
-    shift_z: int =0,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    shift_x: int = 0,
+    shift_y: int = 0,
+    shift_z: int = 0,
+    device: Optional[Device] = None,
 ) -> Image:
     """Apply a circular shift (roll) to the input image. Elements at the borders will
     be shifted to the other side of the image. The shift is specified for each
@@ -598,7 +675,7 @@ def circular_shift(
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
@@ -615,22 +692,25 @@ def circular_shift(
     -------
     Image
     """
-    return _get_backend()._circular_shift(device, input_image, output_image, int(shift_x), int(shift_y), int(shift_z))
+    return _get_backend()._circular_shift(
+        device, input_image, output_image, int(shift_x), int(shift_y), int(shift_z)
+    )
+
 
 @plugin_function(categories=["accumulate", "in assistant"])
 def cumulative_sum(
     input_image: Image,
-    output_image: Optional[Image] =None,
-    axis: int =0,
-    keep_dims: bool =False,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    axis: int = 0,
+    keep_dims: bool = False,
+    device: Optional[Device] = None,
 ) -> Image:
     """Computes the cumulative sum along a given axis. Equivalent to numpy.cumsum with
     an explicit axis.
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
@@ -645,22 +725,25 @@ def cumulative_sum(
     -------
     Image
     """
-    return _get_backend()._cumulative_sum(device, input_image, output_image, int(axis), keep_dims)
+    return _get_backend()._cumulative_sum(
+        device, input_image, output_image, int(axis), keep_dims
+    )
+
 
 @plugin_function(categories=["accumulate", "in assistant"])
 def cumulative_min(
     input_image: Image,
-    output_image: Optional[Image] =None,
-    axis: int =0,
-    keep_dims: bool =False,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    axis: int = 0,
+    keep_dims: bool = False,
+    device: Optional[Device] = None,
 ) -> Image:
     """Computes the cumulative minimum along a given axis. Equivalent to numpy.cummin
     with an explicit axis.
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
@@ -675,22 +758,25 @@ def cumulative_min(
     -------
     Image
     """
-    return _get_backend()._cumulative_min(device, input_image, output_image, int(axis), keep_dims)
+    return _get_backend()._cumulative_min(
+        device, input_image, output_image, int(axis), keep_dims
+    )
+
 
 @plugin_function(categories=["accumulate", "in assistant"])
 def cumulative_max(
     input_image: Image,
-    output_image: Optional[Image] =None,
-    axis: int =0,
-    keep_dims: bool =False,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    axis: int = 0,
+    keep_dims: bool = False,
+    device: Optional[Device] = None,
 ) -> Image:
     """Computes the cumulative maximum along a given axis. Equivalent to numpy.cummax
     with an explicit axis.
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
@@ -705,22 +791,25 @@ def cumulative_max(
     -------
     Image
     """
-    return _get_backend()._cumulative_max(device, input_image, output_image, int(axis), keep_dims)
+    return _get_backend()._cumulative_max(
+        device, input_image, output_image, int(axis), keep_dims
+    )
+
 
 @plugin_function(categories=["accumulate", "in assistant"])
 def cumulative_product(
     input_image: Image,
-    output_image: Optional[Image] =None,
-    axis: int =0,
-    keep_dims: bool =False,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    axis: int = 0,
+    keep_dims: bool = False,
+    device: Optional[Device] = None,
 ) -> Image:
     """Computes the cumulative product along a given axis. Equivalent to numpy.cumprod
     with an explicit axis.
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
@@ -735,23 +824,26 @@ def cumulative_product(
     -------
     Image
     """
-    return _get_backend()._cumulative_product(device, input_image, output_image, int(axis), keep_dims)
+    return _get_backend()._cumulative_product(
+        device, input_image, output_image, int(axis), keep_dims
+    )
+
 
 @plugin_function(categories=["filter", "combine", "in assistant"])
 def convolve(
     input_image0: Image,
     input_image1: Image,
-    output_image: Optional[Image] =None,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    device: Optional[Device] = None,
 ) -> Image:
     """Convolve the image with a given kernel image. It is recommended that the kernel
     image has an odd size in X, Y and Z.
 
     Parameters
     ----------
-    input_image0: Image 
+    input_image0: Image
         First input image to process.
-    input_image1: Image 
+    input_image1: Image
         Second input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
@@ -768,17 +860,18 @@ def convolve(
     """
     return _get_backend()._convolve(device, input_image0, input_image1, output_image)
 
+
 @plugin_function
 def copy(
     input_image: Image,
-    output_image: Optional[Image] =None,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    device: Optional[Device] = None,
 ) -> Image:
     """Copies an image. <pre>f(x) = x</pre>
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input image to copy.
     output_image: Optional[Image] (= None)
         Output copy image.
@@ -795,12 +888,13 @@ def copy(
     """
     return _get_backend()._copy(device, input_image, output_image)
 
+
 @plugin_function
 def copy_slice(
     input_image: Image,
-    output_image: Optional[Image] =None,
-    slice_index: int =0,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    slice_index: int = 0,
+    device: Optional[Device] = None,
 ) -> Image:
     """This method has two purposes: It copies a 2D image to a given slice_index z
     position in a 3D image stack or it copies a given slice_index at position z in
@@ -808,7 +902,7 @@ def copy_slice(
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input image to copy from.
     output_image: Optional[Image] (= None)
         Output copy image slice_index.
@@ -825,14 +919,17 @@ def copy_slice(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_copySlice
     """
-    return _get_backend()._copy_slice(device, input_image, output_image, int(slice_index))
+    return _get_backend()._copy_slice(
+        device, input_image, output_image, int(slice_index)
+    )
+
 
 @plugin_function
 def copy_horizontal_slice(
     input_image: Image,
-    output_image: Optional[Image] =None,
-    slice_index: int =0,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    slice_index: int = 0,
+    device: Optional[Device] = None,
 ) -> Image:
     """This method has two purposes: It copies a 2D image to a given slice_index y
     position in a 3D image stack or It copies a given slice_index at position y in
@@ -840,7 +937,7 @@ def copy_horizontal_slice(
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input image to copy from.
     output_image: Optional[Image] (= None)
         Output copy image slice_index.
@@ -857,14 +954,17 @@ def copy_horizontal_slice(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_copySlice
     """
-    return _get_backend()._copy_horizontal_slice(device, input_image, output_image, int(slice_index))
+    return _get_backend()._copy_horizontal_slice(
+        device, input_image, output_image, int(slice_index)
+    )
+
 
 @plugin_function
 def copy_vertical_slice(
     input_image: Image,
-    output_image: Optional[Image] =None,
-    slice_index: int =0,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    slice_index: int = 0,
+    device: Optional[Device] = None,
 ) -> Image:
     """This method has two purposes: It copies a 2D image to a given slice_index x
     position in a 3D image stack or It copies a given slice_index at position x in
@@ -872,7 +972,7 @@ def copy_vertical_slice(
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input image to copy from.
     output_image: Optional[Image] (= None)
         Output copy image slice_index.
@@ -889,26 +989,29 @@ def copy_vertical_slice(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_copySlice
     """
-    return _get_backend()._copy_vertical_slice(device, input_image, output_image, int(slice_index))
+    return _get_backend()._copy_vertical_slice(
+        device, input_image, output_image, int(slice_index)
+    )
+
 
 @plugin_function
 def crop(
     input_image: Image,
-    output_image: Optional[Image] =None,
-    start_x: int =0,
-    start_y: int =0,
-    start_z: int =0,
-    width: int =1,
-    height: int =1,
-    depth: int =1,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    start_x: int = 0,
+    start_y: int = 0,
+    start_z: int = 0,
+    width: int = 1,
+    height: int = 1,
+    depth: int = 1,
+    device: Optional[Device] = None,
 ) -> Image:
     """Crops a given substack out of a given image stack. Note: If the destination
     image already exists, it will be overwritten and keep its dimensions.
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
@@ -935,19 +1038,30 @@ def crop(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_crop3D
     """
-    return _get_backend()._crop(device, input_image, output_image, int(start_x), int(start_y), int(start_z), int(width), int(height), int(depth))
+    return _get_backend()._crop(
+        device,
+        input_image,
+        output_image,
+        int(start_x),
+        int(start_y),
+        int(start_z),
+        int(width),
+        int(height),
+        int(depth),
+    )
+
 
 @plugin_function(categories=["filter", "in assistant"])
 def cubic_root(
     input_image: Image,
-    output_image: Optional[Image] =None,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    device: Optional[Device] = None,
 ) -> Image:
     """Computes the cubic root of each pixel.
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
@@ -960,18 +1074,21 @@ def cubic_root(
     """
     return _get_backend()._cubic_root(device, input_image, output_image)
 
-@plugin_function(categories=["binarize", "label processing", "in assistant", "bia-bob-suggestion"])
+
+@plugin_function(
+    categories=["binarize", "label processing", "in assistant", "bia-bob-suggestion"]
+)
 def detect_label_edges(
     input_image: Image,
-    output_image: Optional[Image] =None,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    device: Optional[Device] = None,
 ) -> Image:
     """Takes a labelmap and returns an image where all pixels on label edges are set to
     1 and all other pixels to 0.
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
@@ -988,13 +1105,14 @@ def detect_label_edges(
     """
     return _get_backend()._detect_label_edges(device, input_image, output_image)
 
-@deprecated('dilation: This function is deprecated. Consider using erode() instead.')
+
+@deprecated("dilation: This function is deprecated. Consider using erode() instead.")
 @plugin_function(categories=["binary processing" "filter"])
 def dilation(
     input_image: Image,
     footprint: Image,
-    output_image: Optional[Image] =None,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    device: Optional[Device] = None,
 ) -> Image:
     """Computes the dilation operation between an image and a structuring element. The
     operation is applied in grayscale if the image is in grayscale. The structuring
@@ -1003,9 +1121,9 @@ def dilation(
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input image to process.
-    footprint: Image 
+    footprint: Image
         Structuring element to use for the operation.
     output_image: Optional[Image] (= None)
         Output result image.
@@ -1022,12 +1140,13 @@ def dilation(
     """
     return _get_backend()._dilation(device, input_image, footprint, output_image)
 
-@deprecated('dilate_box: This function is deprecated. Consider using dilate() instead.')
+
+@deprecated("dilate_box: This function is deprecated. Consider using dilate() instead.")
 @plugin_function(categories=["binary processing"])
 def dilate_box(
     input_image: Image,
-    output_image: Optional[Image] =None,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    device: Optional[Device] = None,
 ) -> Image:
     """Computes a binary image with pixel values 0 and 1 containing the binary dilation
     of a given input image. The dilation takes the Moore neighborhood (8 pixels in
@@ -1038,7 +1157,7 @@ def dilate_box(
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
@@ -1055,12 +1174,15 @@ def dilate_box(
     """
     return _get_backend()._dilate_box(device, input_image, output_image)
 
-@deprecated('dilate_sphere: This function is deprecated. Consider using dilate() instead.')
+
+@deprecated(
+    "dilate_sphere: This function is deprecated. Consider using dilate() instead."
+)
 @plugin_function(categories=["binary processing"])
 def dilate_sphere(
     input_image: Image,
-    output_image: Optional[Image] =None,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    device: Optional[Device] = None,
 ) -> Image:
     """Computes a binary image with pixel values 0 and 1 containing the binary dilation
     of a given input image. The dilation takes the von Neumann neighborhood (4
@@ -1069,7 +1191,7 @@ def dilate_sphere(
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
@@ -1086,15 +1208,16 @@ def dilate_sphere(
     """
     return _get_backend()._dilate_sphere(device, input_image, output_image)
 
+
 @plugin_function(categories=["binary processing"])
 def binary_dilate(
     input_image: Image,
-    output_image: Optional[Image] =None,
-    radius_x: float =1,
-    radius_y: float =1,
-    radius_z: float =1,
-    connectivity: str ="box",
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    radius_x: float = 1,
+    radius_y: float = 1,
+    radius_z: float = 1,
+    connectivity: str = "box",
+    device: Optional[Device] = None,
 ) -> Image:
     """Computes a binary image with pixel values 0 and 1 containing the binary dilation
     of a given input image. The dilation apply the Moore neighborhood (8 pixels in
@@ -1106,7 +1229,7 @@ def binary_dilate(
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input image to process. Input image to process.
     output_image: Optional[Image] (= None)
         Output result image. Output result image.
@@ -1130,22 +1253,31 @@ def binary_dilate(
     [1] https://clij.github.io/clij2-docs/reference_dilateBox
     [2] https://clij.github.io/clij2-docs/reference_dilateSphere
     """
-    return _get_backend()._binary_dilate(device, input_image, output_image, float(radius_x), float(radius_y), float(radius_z), str(connectivity))
+    return _get_backend()._binary_dilate(
+        device,
+        input_image,
+        output_image,
+        float(radius_x),
+        float(radius_y),
+        float(radius_z),
+        str(connectivity),
+    )
+
 
 @plugin_function(categories=["combine", "in assistant"])
 def divide_images(
     input_image0: Image,
     input_image1: Image,
-    output_image: Optional[Image] =None,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    device: Optional[Device] = None,
 ) -> Image:
     """Divides two images X and Y by each other pixel wise. <pre>f(x, y) = x / y</pre>
 
     Parameters
     ----------
-    input_image0: Image 
+    input_image0: Image
         The dividend input image to process.
-    input_image1: Image 
+    input_image1: Image
         The divisor input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
@@ -1160,20 +1292,23 @@ def divide_images(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_divideImages
     """
-    return _get_backend()._divide_images(device, input_image0, input_image1, output_image)
+    return _get_backend()._divide_images(
+        device, input_image0, input_image1, output_image
+    )
+
 
 @plugin_function(categories=["filter", "in assistant"])
 def divide_scalar_by_image(
     input_image: Image,
-    output_image: Optional[Image] =None,
-    scalar: float =0,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    scalar: float = 0,
+    device: Optional[Device] = None,
 ) -> Image:
     """Divides a scalar by an image pixel by pixel. <pre>f(x, s) = s / x</pre>
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
@@ -1186,23 +1321,26 @@ def divide_scalar_by_image(
     -------
     Image
     """
-    return _get_backend()._divide_scalar_by_image(device, input_image, output_image, float(scalar))
+    return _get_backend()._divide_scalar_by_image(
+        device, input_image, output_image, float(scalar)
+    )
+
 
 @plugin_function(categories=["combine", "binarize", "in assistant"])
 def equal(
     input_image0: Image,
     input_image1: Image,
-    output_image: Optional[Image] =None,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    device: Optional[Device] = None,
 ) -> Image:
     """Determines if two images A and B equal pixel wise. <pre>f(a, b) = 1 if a == b; 0
     otherwise.</pre>
 
     Parameters
     ----------
-    input_image0: Image 
+    input_image0: Image
         First image to be compared with.
-    input_image1: Image 
+    input_image1: Image
         Second image to be compared with the first.
     output_image: Optional[Image] (= None)
         Output binary image.
@@ -1219,19 +1357,20 @@ def equal(
     """
     return _get_backend()._equal(device, input_image0, input_image1, output_image)
 
+
 @plugin_function(categories=["binarize", "in assistant"])
 def equal_constant(
     input_image: Image,
-    output_image: Optional[Image] =None,
-    scalar: float =0,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    scalar: float = 0,
+    device: Optional[Device] = None,
 ) -> Image:
     """Determines if an image A and a constant b are equal. <pre>f(a, b) = 1 if a == b;
     0 otherwise.</pre>
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input image where every pixel is compared to the constant.
     output_image: Optional[Image] (= None)
         Output binary image.
@@ -1248,14 +1387,17 @@ def equal_constant(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_equalConstant
     """
-    return _get_backend()._equal_constant(device, input_image, output_image, float(scalar))
+    return _get_backend()._equal_constant(
+        device, input_image, output_image, float(scalar)
+    )
+
 
 @plugin_function(categories=["binary processing" "filter"])
 def erosion(
     input_image: Image,
     footprint: Image,
-    output_image: Optional[Image] =None,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    device: Optional[Device] = None,
 ) -> Image:
     """Computes the erosion operation between an image and a structuring element. The
     operation is applied in grayscale if the image is in grayscale. The structuring
@@ -1264,9 +1406,9 @@ def erosion(
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input image to process.
-    footprint: Image 
+    footprint: Image
         Structuring element to use for the operation.
     output_image: Optional[Image] (= None)
         Output result image.
@@ -1283,12 +1425,13 @@ def erosion(
     """
     return _get_backend()._erosion(device, input_image, footprint, output_image)
 
-@deprecated('erode_box: This function is deprecated. Consider using erode() instead.')
+
+@deprecated("erode_box: This function is deprecated. Consider using erode() instead.")
 @plugin_function(categories=["binary processing"])
 def erode_box(
     input_image: Image,
-    output_image: Optional[Image] =None,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    device: Optional[Device] = None,
 ) -> Image:
     """Computes a binary image with pixel values 0 and 1 containing the binary erosion
     of a given input image. The erosion takes the Moore neighborhood (8 pixels in 2D
@@ -1299,7 +1442,7 @@ def erode_box(
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
@@ -1316,12 +1459,15 @@ def erode_box(
     """
     return _get_backend()._erode_box(device, input_image, output_image)
 
-@deprecated('erode_sphere: This function is deprecated. Consider using erode() instead.')
+
+@deprecated(
+    "erode_sphere: This function is deprecated. Consider using erode() instead."
+)
 @plugin_function(categories=["binary processing"])
 def erode_sphere(
     input_image: Image,
-    output_image: Optional[Image] =None,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    device: Optional[Device] = None,
 ) -> Image:
     """Computes a binary image with pixel values 0 and 1 containing the binary erosion
     of a given input image. The erosion takes the von Neumann neighborhood (4 pixels
@@ -1330,7 +1476,7 @@ def erode_sphere(
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
@@ -1347,15 +1493,16 @@ def erode_sphere(
     """
     return _get_backend()._erode_sphere(device, input_image, output_image)
 
+
 @plugin_function(categories=["binary processing"])
 def binary_erode(
     input_image: Image,
-    output_image: Optional[Image] =None,
-    radius_x: float =1,
-    radius_y: float =1,
-    radius_z: float =1,
-    connectivity: str ="box",
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    radius_x: float = 1,
+    radius_y: float = 1,
+    radius_z: float = 1,
+    connectivity: str = "box",
+    device: Optional[Device] = None,
 ) -> Image:
     """Computes a binary image with pixel values 0 and 1 containing the binary erosion
     of a given input image. The erosion apply the Moore neighborhood (8 pixels in 2D
@@ -1366,7 +1513,7 @@ def binary_erode(
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
@@ -1390,19 +1537,28 @@ def binary_erode(
     [1] https://clij.github.io/clij2-docs/reference_erodeBox
     [2] https://clij.github.io/clij2-docs/reference_erodeSphere
     """
-    return _get_backend()._binary_erode(device, input_image, output_image, float(radius_x), float(radius_y), float(radius_z), str(connectivity))
+    return _get_backend()._binary_erode(
+        device,
+        input_image,
+        output_image,
+        float(radius_x),
+        float(radius_y),
+        float(radius_z),
+        str(connectivity),
+    )
+
 
 @plugin_function(categories=["filter", "in assistant"])
 def exponential(
     input_image: Image,
-    output_image: Optional[Image] =None,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    device: Optional[Device] = None,
 ) -> Image:
     """Computes the base-e exponential of all pixel values. f(x) = exp(x)
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
@@ -1420,17 +1576,18 @@ def exponential(
     """
     return _get_backend()._exponential(device, input_image, output_image)
 
+
 @plugin_function(categories=["filter", "in assistant"])
 def exponential2(
     input_image: Image,
-    output_image: Optional[Image] =None,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    device: Optional[Device] = None,
 ) -> Image:
     """Computes the base-2 exponential of all pixel values. f(x) = exp2(x)
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
@@ -1448,17 +1605,18 @@ def exponential2(
     """
     return _get_backend()._exponential2(device, input_image, output_image)
 
+
 @plugin_function(categories=["filter", "in assistant"])
 def exponential10(
     input_image: Image,
-    output_image: Optional[Image] =None,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    device: Optional[Device] = None,
 ) -> Image:
     """Computes the base-10 exponential of all pixel values. f(x) = exp10(x)
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
@@ -1476,20 +1634,21 @@ def exponential10(
     """
     return _get_backend()._exponential10(device, input_image, output_image)
 
+
 @plugin_function
 def flip(
     input_image: Image,
-    output_image: Optional[Image] =None,
-    flip_x: bool =True,
-    flip_y: bool =True,
-    flip_z: bool =True,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    flip_x: bool = True,
+    flip_y: bool = True,
+    flip_z: bool = True,
+    device: Optional[Device] = None,
 ) -> Image:
     """Flips an image in X, Y and/or Z direction depending on boolean flags.
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
@@ -1510,16 +1669,19 @@ def flip(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_flip3D
     """
-    return _get_backend()._flip(device, input_image, output_image, flip_x, flip_y, flip_z)
+    return _get_backend()._flip(
+        device, input_image, output_image, flip_x, flip_y, flip_z
+    )
+
 
 @plugin_function(categories=["filter", "denoise", "in assistant", "bia-bob-suggestion"])
 def gaussian_blur(
     input_image: Image,
-    output_image: Optional[Image] =None,
-    sigma_x: float =0,
-    sigma_y: float =0,
-    sigma_z: float =0,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    sigma_x: float = 0,
+    sigma_y: float = 0,
+    sigma_z: float = 0,
+    device: Optional[Device] = None,
 ) -> Image:
     """Computes the Gaussian blurred image of an image given sigma values in X, Y and
     Z. Thus, the filter kernel can have nonisotropic shape. The implementation is
@@ -1527,7 +1689,7 @@ def gaussian_blur(
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
@@ -1548,19 +1710,27 @@ def gaussian_blur(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_gaussianBlur3D
     """
-    return _get_backend()._gaussian_blur(device, input_image, output_image, float(sigma_x), float(sigma_y), float(sigma_z))
+    return _get_backend()._gaussian_blur(
+        device,
+        input_image,
+        output_image,
+        float(sigma_x),
+        float(sigma_y),
+        float(sigma_z),
+    )
+
 
 @plugin_function(categories=["filter", "in assistant"])
 def gaussian_derivative(
     input_image: Image,
-    output_image: Optional[Image] =None,
-    sigma_x: float =0,
-    sigma_y: float =0,
-    sigma_z: float =0,
-    order_x: int =0,
-    order_y: int =0,
-    order_z: int =0,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    sigma_x: float = 0,
+    sigma_y: float = 0,
+    sigma_z: float = 0,
+    order_x: int = 0,
+    order_y: int = 0,
+    order_z: int = 0,
+    device: Optional[Device] = None,
 ) -> Image:
     """Convolves the image with a Gaussian derivative. The filter kernel can have
     anisotropic sigma and order. The implementation is done separable. In case a
@@ -1569,7 +1739,7 @@ def gaussian_derivative(
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
@@ -1592,14 +1762,25 @@ def gaussian_derivative(
     -------
     Image
     """
-    return _get_backend()._gaussian_derivative(device, input_image, output_image, float(sigma_x), float(sigma_y), float(sigma_z), int(order_x), int(order_y), int(order_z))
+    return _get_backend()._gaussian_derivative(
+        device,
+        input_image,
+        output_image,
+        float(sigma_x),
+        float(sigma_y),
+        float(sigma_z),
+        int(order_x),
+        int(order_y),
+        int(order_z),
+    )
+
 
 @plugin_function
 def generate_distance_matrix(
     coordinate_list1: Image,
     coordinate_list2: Image,
-    distance_matrix_destination: Optional[Image] =None,
-    device: Optional[Device] =None
+    distance_matrix_destination: Optional[Image] = None,
+    device: Optional[Device] = None,
 ) -> Image:
     """Computes distances between all points in two point lists. Takes two images
     containing point lists with shape n×d and m×d (n/m: number of points; d:
@@ -1611,9 +1792,9 @@ def generate_distance_matrix(
 
     Parameters
     ----------
-    coordinate_list1: Image 
+    coordinate_list1: Image
         First coordinate list to process.
-    coordinate_list2: Image 
+    coordinate_list2: Image
         Second coordinate list to process.
     distance_matrix_destination: Optional[Image] (= None)
         Output result image.
@@ -1628,13 +1809,16 @@ def generate_distance_matrix(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_generateDistanceMatrix
     """
-    return _get_backend()._generate_distance_matrix(device, coordinate_list1, coordinate_list2, distance_matrix_destination)
+    return _get_backend()._generate_distance_matrix(
+        device, coordinate_list1, coordinate_list2, distance_matrix_destination
+    )
+
 
 @plugin_function(categories=["filter", "edge detection", "in assistant"])
 def gradient_x(
     input_image: Image,
-    output_image: Optional[Image] =None,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    device: Optional[Device] = None,
 ) -> Image:
     """Computes the gradient of gray values along X. Assuming a, b and c are three
     adjacent pixels in X direction, the gradient at b is computed as: <pre>b' = c -
@@ -1642,7 +1826,7 @@ def gradient_x(
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
@@ -1659,11 +1843,12 @@ def gradient_x(
     """
     return _get_backend()._gradient_x(device, input_image, output_image)
 
+
 @plugin_function(categories=["filter", "edge detection", "in assistant"])
 def gradient_y(
     input_image: Image,
-    output_image: Optional[Image] =None,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    device: Optional[Device] = None,
 ) -> Image:
     """Computes the gradient of gray values along Y. Assuming a, b and c are three
     adjacent pixels in Y direction, the gradient at b is computed as: <pre>b' = c -
@@ -1671,7 +1856,7 @@ def gradient_y(
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
@@ -1688,11 +1873,12 @@ def gradient_y(
     """
     return _get_backend()._gradient_y(device, input_image, output_image)
 
+
 @plugin_function(categories=["filter", "edge detection", "in assistant"])
 def gradient_z(
     input_image: Image,
-    output_image: Optional[Image] =None,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    device: Optional[Device] = None,
 ) -> Image:
     """Computes the gradient of gray values along Z. Assuming a, b and c are three
     adjacent pixels in Z direction, the gradient at b is computed as: <pre>b' = c -
@@ -1700,7 +1886,7 @@ def gradient_z(
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
@@ -1717,21 +1903,22 @@ def gradient_z(
     """
     return _get_backend()._gradient_z(device, input_image, output_image)
 
+
 @plugin_function(categories=["combine", "binarize", "in assistant"])
 def greater(
     input_image0: Image,
     input_image1: Image,
-    output_image: Optional[Image] =None,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    device: Optional[Device] = None,
 ) -> Image:
     """Determines if two images A and B greater pixel wise. f(a, b) = 1 if a > b; 0
     otherwise.
 
     Parameters
     ----------
-    input_image0: Image 
+    input_image0: Image
         First input image to process.
-    input_image1: Image 
+    input_image1: Image
         Second input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
@@ -1748,19 +1935,20 @@ def greater(
     """
     return _get_backend()._greater(device, input_image0, input_image1, output_image)
 
+
 @plugin_function(categories=["binarize", "in assistant"])
 def greater_constant(
     input_image: Image,
-    output_image: Optional[Image] =None,
-    scalar: float =0,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    scalar: float = 0,
+    device: Optional[Device] = None,
 ) -> Image:
     """Determines if two images A and B greater pixel wise. f(a, b) = 1 if a > b; 0
     otherwise.
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
@@ -1777,23 +1965,26 @@ def greater_constant(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_greaterConstant
     """
-    return _get_backend()._greater_constant(device, input_image, output_image, float(scalar))
+    return _get_backend()._greater_constant(
+        device, input_image, output_image, float(scalar)
+    )
+
 
 @plugin_function(categories=["combine", "binarize", "in assistant"])
 def greater_or_equal(
     input_image0: Image,
     input_image1: Image,
-    output_image: Optional[Image] =None,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    device: Optional[Device] = None,
 ) -> Image:
     """Determines if two images A and B greater or equal pixel wise. f(a, b) = 1 if a
     >= b; 0 otherwise.
 
     Parameters
     ----------
-    input_image0: Image 
+    input_image0: Image
         First input image to process.
-    input_image1: Image 
+    input_image1: Image
         Second input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
@@ -1808,21 +1999,24 @@ def greater_or_equal(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_greaterOrEqual
     """
-    return _get_backend()._greater_or_equal(device, input_image0, input_image1, output_image)
+    return _get_backend()._greater_or_equal(
+        device, input_image0, input_image1, output_image
+    )
+
 
 @plugin_function(categories=["binarize", "in assistant"])
 def greater_or_equal_constant(
     input_image: Image,
-    output_image: Optional[Image] =None,
-    scalar: float =0,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    scalar: float = 0,
+    device: Optional[Device] = None,
 ) -> Image:
     """Determines if two images A and B greater or equal pixel wise. f(a, b) = 1 if a
     >= b; 0 otherwise.
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
@@ -1839,15 +2033,18 @@ def greater_or_equal_constant(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_greaterOrEqualConstant
     """
-    return _get_backend()._greater_or_equal_constant(device, input_image, output_image, float(scalar))
+    return _get_backend()._greater_or_equal_constant(
+        device, input_image, output_image, float(scalar)
+    )
+
 
 @plugin_function
 def hessian_eigenvalues(
     input_image: Image,
-    small_eigenvalue: Optional[Image] =None,
-    middle_eigenvalue: Optional[Image] =None,
-    large_eigenvalue: Optional[Image] =None,
-    device: Optional[Device] =None
+    small_eigenvalue: Optional[Image] = None,
+    middle_eigenvalue: Optional[Image] = None,
+    large_eigenvalue: Optional[Image] = None,
+    device: Optional[Device] = None,
 ) -> Image:
     """Computes the eigenvalues of the hessian matrix of a 2d or 3d image. Hessian
     matrix or 2D images: [Ixx, Ixy] [Ixy, Iyy] Hessian matrix for 3D images: [Ixx,
@@ -1862,7 +2059,7 @@ def hessian_eigenvalues(
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input image to process.
     small_eigenvalue: Optional[Image] (= None)
         Output result image.
@@ -1877,20 +2074,25 @@ def hessian_eigenvalues(
     -------
     Image
     """
-    return _get_backend()._hessian_eigenvalues(device, input_image, small_eigenvalue, middle_eigenvalue, large_eigenvalue)
+    return _get_backend()._hessian_eigenvalues(
+        device, input_image, small_eigenvalue, middle_eigenvalue, large_eigenvalue
+    )
 
-@deprecated('laplace_box: This function is deprecated. Consider using laplace() instead.')
+
+@deprecated(
+    "laplace_box: This function is deprecated. Consider using laplace() instead."
+)
 @plugin_function(categories=["filter", "edge detection", "in assistant"])
 def laplace_box(
     input_image: Image,
-    output_image: Optional[Image] =None,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    device: Optional[Device] = None,
 ) -> Image:
     """Applies the Laplace operator (Box neighborhood) to an image.
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
@@ -1907,18 +2109,21 @@ def laplace_box(
     """
     return _get_backend()._laplace_box(device, input_image, output_image)
 
-@deprecated('laplace_diamond: This function is deprecated. Consider using laplace() instead.')
+
+@deprecated(
+    "laplace_diamond: This function is deprecated. Consider using laplace() instead."
+)
 @plugin_function(categories=["filter", "edge detection"])
 def laplace_diamond(
     input_image: Image,
-    output_image: Optional[Image] =None,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    device: Optional[Device] = None,
 ) -> Image:
     """Applies the Laplace operator (Diamond neighborhood) to an image.
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
@@ -1935,19 +2140,20 @@ def laplace_diamond(
     """
     return _get_backend()._laplace_diamond(device, input_image, output_image)
 
+
 @plugin_function(categories=["filter", "edge detection"])
 def laplace(
     input_image: Image,
-    output_image: Optional[Image] =None,
-    connectivity: str ="box",
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    connectivity: str = "box",
+    device: Optional[Device] = None,
 ) -> Image:
     """Applies the Laplace operator with a "box" or a "sphere" neighborhood to an
     image.
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
@@ -1966,20 +2172,21 @@ def laplace(
     """
     return _get_backend()._laplace(device, input_image, output_image, str(connectivity))
 
+
 @plugin_function(categories=["filter", "combine", "in assistant"])
 def local_cross_correlation(
     input_image: Image,
     kernel: Image,
-    output_image: Optional[Image] =None,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    device: Optional[Device] = None,
 ) -> Image:
     """Compute the cross correlation of an image to a given kernel.
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input image to process.
-    kernel: Image 
+    kernel: Image
         Input kernel.
     output_image: Optional[Image] (= None)
         Output result image.
@@ -1990,20 +2197,23 @@ def local_cross_correlation(
     -------
     Image
     """
-    return _get_backend()._local_cross_correlation(device, input_image, kernel, output_image)
+    return _get_backend()._local_cross_correlation(
+        device, input_image, kernel, output_image
+    )
+
 
 @plugin_function(categories=["filter", "in assistant"])
 def logarithm(
     input_image: Image,
-    output_image: Optional[Image] =None,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    device: Optional[Device] = None,
 ) -> Image:
     """Computes base e logarithm of all pixels values. f(x) = log(x) Author(s): Peter
     Haub, Robert Haase
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
@@ -2021,18 +2231,19 @@ def logarithm(
     """
     return _get_backend()._logarithm(device, input_image, output_image)
 
+
 @plugin_function(categories=["filter", "in assistant"])
 def logarithm2(
     input_image: Image,
-    output_image: Optional[Image] =None,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    device: Optional[Device] = None,
 ) -> Image:
     """Computes base 2 logarithm of all pixels values. f(x) = log2(x) Author(s): Peter
     Haub, Robert Haase
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
@@ -2050,18 +2261,19 @@ def logarithm2(
     """
     return _get_backend()._logarithm2(device, input_image, output_image)
 
+
 @plugin_function(categories=["filter", "in assistant"])
 def logarithm10(
     input_image: Image,
-    output_image: Optional[Image] =None,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    device: Optional[Device] = None,
 ) -> Image:
     """Computes base 10 logarithm of all pixels values. f(x) = log10(x) Author(s):
     Peter Haub, Robert Haase
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
@@ -2079,12 +2291,13 @@ def logarithm10(
     """
     return _get_backend()._logarithm10(device, input_image, output_image)
 
+
 @plugin_function
 def mask(
     input_image: Image,
     mask: Image,
-    output_image: Optional[Image] =None,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    device: Optional[Device] = None,
 ) -> Image:
     """Computes a masked image by applying a binary mask to an image. All pixel values
     x of image X will be copied to the destination image in case pixel value m at
@@ -2093,9 +2306,9 @@ def mask(
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input image to process.
-    mask: Image 
+    mask: Image
         Mask image to apply.
     output_image: Optional[Image] (= None)
         Output result image.
@@ -2112,13 +2325,14 @@ def mask(
     """
     return _get_backend()._mask(device, input_image, mask, output_image)
 
+
 @plugin_function
 def mask_label(
     input_image0: Image,
     input_image1: Image,
-    output_image: Optional[Image] =None,
-    label: float =1,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    label: float = 1,
+    device: Optional[Device] = None,
 ) -> Image:
     """Computes a masked image by applying a label mask to an image. All pixel values x
     of image X will be copied to the destination image in case pixel value m at the
@@ -2127,9 +2341,9 @@ def mask_label(
 
     Parameters
     ----------
-    input_image0: Image 
+    input_image0: Image
         Input Intensity image.
-    input_image1: Image 
+    input_image1: Image
         Input Label image.
     output_image: Optional[Image] (= None)
         Output result image.
@@ -2146,21 +2360,24 @@ def mask_label(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_maskLabel
     """
-    return _get_backend()._mask_label(device, input_image0, input_image1, output_image, float(label))
+    return _get_backend()._mask_label(
+        device, input_image0, input_image1, output_image, float(label)
+    )
+
 
 @plugin_function(categories=["filter", "in assistant"])
 def maximum_image_and_scalar(
     input_image: Image,
-    output_image: Optional[Image] =None,
-    scalar: float =0,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    scalar: float = 0,
+    device: Optional[Device] = None,
 ) -> Image:
     """Computes the maximum of a constant scalar s and each pixel value x in a given
     image X. <pre>f(x, s) = max(x, s)</pre>
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
@@ -2177,23 +2394,26 @@ def maximum_image_and_scalar(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_maximumImageAndScalar
     """
-    return _get_backend()._maximum_image_and_scalar(device, input_image, output_image, float(scalar))
+    return _get_backend()._maximum_image_and_scalar(
+        device, input_image, output_image, float(scalar)
+    )
+
 
 @plugin_function(categories=["combine", "in assistant"])
 def maximum_images(
     input_image0: Image,
     input_image1: Image,
-    output_image: Optional[Image] =None,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    device: Optional[Device] = None,
 ) -> Image:
     """Computes the maximum of a pair of pixel values x, y from two given images X and
     Y. <pre>f(x, y) = max(x, y)</pre>
 
     Parameters
     ----------
-    input_image0: Image 
+    input_image0: Image
         First input image to process.
-    input_image1: Image 
+    input_image1: Image
         Second input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
@@ -2208,24 +2428,29 @@ def maximum_images(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_maximumImages
     """
-    return _get_backend()._maximum_images(device, input_image0, input_image1, output_image)
+    return _get_backend()._maximum_images(
+        device, input_image0, input_image1, output_image
+    )
 
-@deprecated('maximum_box: This function is deprecated. Consider using maximum_filter() instead.')
+
+@deprecated(
+    "maximum_box: This function is deprecated. Consider using maximum_filter() instead."
+)
 @plugin_function(categories=["filter", "in assistant"])
 def maximum_box(
     input_image: Image,
-    output_image: Optional[Image] =None,
-    radius_x: float =1,
-    radius_y: float =1,
-    radius_z: float =1,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    radius_x: float = 1,
+    radius_y: float = 1,
+    radius_z: float = 1,
+    device: Optional[Device] = None,
 ) -> Image:
     """Computes the local maximum of a pixels cube neighborhood. The cubes size is
     specified by its halfwidth, halfheight and halfdepth (radius).
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
@@ -2246,17 +2471,25 @@ def maximum_box(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_maximum3DBox
     """
-    return _get_backend()._maximum_box(device, input_image, output_image, float(radius_x), float(radius_y), float(radius_z))
+    return _get_backend()._maximum_box(
+        device,
+        input_image,
+        output_image,
+        float(radius_x),
+        float(radius_y),
+        float(radius_z),
+    )
+
 
 @plugin_function(categories=["filter", "in assistant"])
 def maximum_filter(
     input_image: Image,
-    output_image: Optional[Image] =None,
-    radius_x: float =1,
-    radius_y: float =1,
-    radius_z: float =1,
-    connectivity: str ="box",
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    radius_x: float = 1,
+    radius_y: float = 1,
+    radius_z: float = 1,
+    connectivity: str = "box",
+    device: Optional[Device] = None,
 ) -> Image:
     """Computes the local maximum of a pixels neighborhood (box or sphere). The
     neighborhood size is specified by its halfwidth, halfheight and halfdepth
@@ -2264,7 +2497,7 @@ def maximum_filter(
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
@@ -2288,17 +2521,26 @@ def maximum_filter(
     [1] https://clij.github.io/clij2-docs/reference_maximum3DBox
     [2] https://clij.github.io/clij2-docs/reference_maximum3DSphere
     """
-    return _get_backend()._maximum_filter(device, input_image, output_image, float(radius_x), float(radius_y), float(radius_z), str(connectivity))
+    return _get_backend()._maximum_filter(
+        device,
+        input_image,
+        output_image,
+        float(radius_x),
+        float(radius_y),
+        float(radius_z),
+        str(connectivity),
+    )
+
 
 @plugin_function(categories=["filter", "in assistant"])
 def grayscale_dilate(
     input_image: Image,
-    output_image: Optional[Image] =None,
-    radius_x: float =1,
-    radius_y: float =1,
-    radius_z: float =1,
-    connectivity: str ="box",
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    radius_x: float = 1,
+    radius_y: float = 1,
+    radius_z: float = 1,
+    connectivity: str = "box",
+    device: Optional[Device] = None,
 ) -> Image:
     """Computes a grayscale image containing the grayscale dilation of a given input
     image. The erosion apply the Moore neighborhood (8 pixels in 2D and 26 pixels in
@@ -2308,7 +2550,7 @@ def grayscale_dilate(
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
@@ -2332,20 +2574,29 @@ def grayscale_dilate(
     [1] https://clij.github.io/clij2-docs/reference_minimum3DBox
     [2] https://clij.github.io/clij2-docs/reference_minimum3DSphere
     """
-    return _get_backend()._grayscale_dilate(device, input_image, output_image, float(radius_x), float(radius_y), float(radius_z), str(connectivity))
+    return _get_backend()._grayscale_dilate(
+        device,
+        input_image,
+        output_image,
+        float(radius_x),
+        float(radius_y),
+        float(radius_z),
+        str(connectivity),
+    )
+
 
 @plugin_function(categories=["projection"])
 def maximum_x_projection(
     input_image: Image,
-    output_image: Optional[Image] =None,
-    keep_dims: bool =False,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    keep_dims: bool = False,
+    device: Optional[Device] = None,
 ) -> Image:
     """Determines the maximum intensity projection of an image along X.
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
@@ -2362,20 +2613,23 @@ def maximum_x_projection(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_maximumXProjection
     """
-    return _get_backend()._maximum_x_projection(device, input_image, output_image, keep_dims)
+    return _get_backend()._maximum_x_projection(
+        device, input_image, output_image, keep_dims
+    )
+
 
 @plugin_function(categories=["projection"])
 def maximum_y_projection(
     input_image: Image,
-    output_image: Optional[Image] =None,
-    keep_dims: bool =False,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    keep_dims: bool = False,
+    device: Optional[Device] = None,
 ) -> Image:
     """Determines the maximum intensity projection of an image along X.
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
@@ -2392,20 +2646,23 @@ def maximum_y_projection(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_maximumYProjection
     """
-    return _get_backend()._maximum_y_projection(device, input_image, output_image, keep_dims)
+    return _get_backend()._maximum_y_projection(
+        device, input_image, output_image, keep_dims
+    )
+
 
 @plugin_function(categories=["projection", "in assistant", "bia-bob-suggestion"])
 def maximum_z_projection(
     input_image: Image,
-    output_image: Optional[Image] =None,
-    keep_dims: bool =False,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    keep_dims: bool = False,
+    device: Optional[Device] = None,
 ) -> Image:
     """Determines the maximum intensity projection of an image along Z.
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
@@ -2422,24 +2679,27 @@ def maximum_z_projection(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_maximumZProjection
     """
-    return _get_backend()._maximum_z_projection(device, input_image, output_image, keep_dims)
+    return _get_backend()._maximum_z_projection(
+        device, input_image, output_image, keep_dims
+    )
 
-@deprecated('mean_box: This function is deprecated. Consider using mean() instead.')
+
+@deprecated("mean_box: This function is deprecated. Consider using mean() instead.")
 @plugin_function(categories=["filter", "denoise", "in assistant"])
 def mean_box(
     input_image: Image,
-    output_image: Optional[Image] =None,
-    radius_x: float =1,
-    radius_y: float =1,
-    radius_z: float =1,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    radius_x: float = 1,
+    radius_y: float = 1,
+    radius_z: float = 1,
+    device: Optional[Device] = None,
 ) -> Image:
     """Computes the local mean average of a pixels boxshaped neighborhood. The cubes
     size is specified by its halfwidth, halfheight and halfdepth (radius).
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
@@ -2460,24 +2720,32 @@ def mean_box(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_mean3DBox
     """
-    return _get_backend()._mean_box(device, input_image, output_image, float(radius_x), float(radius_y), float(radius_z))
+    return _get_backend()._mean_box(
+        device,
+        input_image,
+        output_image,
+        float(radius_x),
+        float(radius_y),
+        float(radius_z),
+    )
 
-@deprecated('mean_sphere: This function is deprecated. Consider using mean() instead.')
+
+@deprecated("mean_sphere: This function is deprecated. Consider using mean() instead.")
 @plugin_function(categories=["filter", "denoise", "in assistant", "bia-bob-suggestion"])
 def mean_sphere(
     input_image: Image,
-    output_image: Optional[Image] =None,
-    radius_x: float =1,
-    radius_y: float =1,
-    radius_z: float =1,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    radius_x: float = 1,
+    radius_y: float = 1,
+    radius_z: float = 1,
+    device: Optional[Device] = None,
 ) -> Image:
     """Computes the local mean average of a pixels spherical neighborhood. The spheres
     size is specified by its halfwidth, halfheight and halfdepth (radius).
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
@@ -2498,17 +2766,25 @@ def mean_sphere(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_mean3DSphere
     """
-    return _get_backend()._mean_sphere(device, input_image, output_image, float(radius_x), float(radius_y), float(radius_z))
+    return _get_backend()._mean_sphere(
+        device,
+        input_image,
+        output_image,
+        float(radius_x),
+        float(radius_y),
+        float(radius_z),
+    )
+
 
 @plugin_function(categories=["filter", "denoise", "in assistant"])
 def mean_filter(
     input_image: Image,
-    output_image: Optional[Image] =None,
-    radius_x: float =1,
-    radius_y: float =1,
-    radius_z: float =1,
-    connectivity: str ="box",
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    radius_x: float = 1,
+    radius_y: float = 1,
+    radius_z: float = 1,
+    connectivity: str = "box",
+    device: Optional[Device] = None,
 ) -> Image:
     """Computes the local mean average of a pixels neighborhood defined as a boxshaped
     or a sphereshaped. The shape size is specified by its halfwidth, halfheight and
@@ -2516,7 +2792,7 @@ def mean_filter(
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
@@ -2539,20 +2815,29 @@ def mean_filter(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_mean3DSphere
     """
-    return _get_backend()._mean_filter(device, input_image, output_image, float(radius_x), float(radius_y), float(radius_z), str(connectivity))
+    return _get_backend()._mean_filter(
+        device,
+        input_image,
+        output_image,
+        float(radius_x),
+        float(radius_y),
+        float(radius_z),
+        str(connectivity),
+    )
+
 
 @plugin_function(categories=["projection"])
 def mean_x_projection(
     input_image: Image,
-    output_image: Optional[Image] =None,
-    keep_dims: bool =False,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    keep_dims: bool = False,
+    device: Optional[Device] = None,
 ) -> Image:
     """Determines the mean average intensity projection of an image along X.
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
@@ -2569,20 +2854,23 @@ def mean_x_projection(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_meanXProjection
     """
-    return _get_backend()._mean_x_projection(device, input_image, output_image, keep_dims)
+    return _get_backend()._mean_x_projection(
+        device, input_image, output_image, keep_dims
+    )
+
 
 @plugin_function(categories=["projection"])
 def mean_y_projection(
     input_image: Image,
-    output_image: Optional[Image] =None,
-    keep_dims: bool =False,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    keep_dims: bool = False,
+    device: Optional[Device] = None,
 ) -> Image:
     """Determines the mean average intensity projection of an image along Y.
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
@@ -2599,20 +2887,23 @@ def mean_y_projection(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_meanYProjection
     """
-    return _get_backend()._mean_y_projection(device, input_image, output_image, keep_dims)
+    return _get_backend()._mean_y_projection(
+        device, input_image, output_image, keep_dims
+    )
+
 
 @plugin_function(categories=["projection", "in assistant", "bia-bob-suggestion"])
 def mean_z_projection(
     input_image: Image,
-    output_image: Optional[Image] =None,
-    keep_dims: bool =False,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    keep_dims: bool = False,
+    device: Optional[Device] = None,
 ) -> Image:
     """Determines the mean average intensity projection of an image along Z.
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
@@ -2629,17 +2920,20 @@ def mean_z_projection(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_meanZProjection
     """
-    return _get_backend()._mean_z_projection(device, input_image, output_image, keep_dims)
+    return _get_backend()._mean_z_projection(
+        device, input_image, output_image, keep_dims
+    )
 
-@deprecated('median_box: This function is deprecated. Consider using median() instead.')
+
+@deprecated("median_box: This function is deprecated. Consider using median() instead.")
 @plugin_function(categories=["filter", "denoise", "in assistant"])
 def median_box(
     input_image: Image,
-    output_image: Optional[Image] =None,
-    radius_x: float =1,
-    radius_y: float =1,
-    radius_z: float =1,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    radius_x: float = 1,
+    radius_y: float = 1,
+    radius_z: float = 1,
+    device: Optional[Device] = None,
 ) -> Image:
     """Computes the local median of a pixels box shaped neighborhood. The box is
     specified by its halfwidth and halfheight (radius). For technical reasons, the
@@ -2647,7 +2941,7 @@ def median_box(
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
@@ -2668,17 +2962,27 @@ def median_box(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_median3DBox
     """
-    return _get_backend()._median_box(device, input_image, output_image, float(radius_x), float(radius_y), float(radius_z))
+    return _get_backend()._median_box(
+        device,
+        input_image,
+        output_image,
+        float(radius_x),
+        float(radius_y),
+        float(radius_z),
+    )
 
-@deprecated('median_sphere: This function is deprecated. Consider using median() instead.')
+
+@deprecated(
+    "median_sphere: This function is deprecated. Consider using median() instead."
+)
 @plugin_function(categories=["filter", "denoise", "in assistant"])
 def median_sphere(
     input_image: Image,
-    output_image: Optional[Image] =None,
-    radius_x: float =1,
-    radius_y: float =1,
-    radius_z: float =1,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    radius_x: float = 1,
+    radius_y: float = 1,
+    radius_z: float = 1,
+    device: Optional[Device] = None,
 ) -> Image:
     """Computes the local median of a pixels sphere shaped neighborhood. The sphere is
     specified by its halfwidth and halfheight (radius). For technical reasons, the
@@ -2686,7 +2990,7 @@ def median_sphere(
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
@@ -2707,17 +3011,25 @@ def median_sphere(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_median3DSphere
     """
-    return _get_backend()._median_sphere(device, input_image, output_image, float(radius_x), float(radius_y), float(radius_z))
+    return _get_backend()._median_sphere(
+        device,
+        input_image,
+        output_image,
+        float(radius_x),
+        float(radius_y),
+        float(radius_z),
+    )
+
 
 @plugin_function(categories=["filter", "denoise", "in assistant"])
 def median(
     input_image: Image,
-    output_image: Optional[Image] =None,
-    radius_x: float =1,
-    radius_y: float =1,
-    radius_z: float =1,
-    connectivity: str ="box",
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    radius_x: float = 1,
+    radius_y: float = 1,
+    radius_z: float = 1,
+    connectivity: str = "box",
+    device: Optional[Device] = None,
 ) -> Image:
     """Computes the local median of a pixels neighborhood. The neighborhood is defined
     as a box or a sphere shape. Its size is specified by its halfwidth, halfheight,
@@ -2726,7 +3038,7 @@ def median(
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
@@ -2749,24 +3061,35 @@ def median(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_median3DSphere
     """
-    return _get_backend()._median(device, input_image, output_image, float(radius_x), float(radius_y), float(radius_z), str(connectivity))
+    return _get_backend()._median(
+        device,
+        input_image,
+        output_image,
+        float(radius_x),
+        float(radius_y),
+        float(radius_z),
+        str(connectivity),
+    )
 
-@deprecated('minimum_box: This function is deprecated. Consider using minimum_filter() instead.')
+
+@deprecated(
+    "minimum_box: This function is deprecated. Consider using minimum_filter() instead."
+)
 @plugin_function(categories=["filter", "in assistant"])
 def minimum_box(
     input_image: Image,
-    output_image: Optional[Image] =None,
-    radius_x: float =1,
-    radius_y: float =1,
-    radius_z: float =1,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    radius_x: float = 1,
+    radius_y: float = 1,
+    radius_z: float = 1,
+    device: Optional[Device] = None,
 ) -> Image:
     """Computes the local minimum of a pixels cube neighborhood. The cubes size is
     specified by its halfwidth, halfheight and halfdepth (radius).
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
@@ -2787,24 +3110,32 @@ def minimum_box(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_minimum3DBox
     """
-    return _get_backend()._minimum_box(device, input_image, output_image, float(radius_x), float(radius_y), float(radius_z))
+    return _get_backend()._minimum_box(
+        device,
+        input_image,
+        output_image,
+        float(radius_x),
+        float(radius_y),
+        float(radius_z),
+    )
+
 
 @plugin_function(categories=["filter", "in assistant"])
 def minimum_filter(
     input_image: Image,
-    output_image: Optional[Image] =None,
-    radius_x: float =1,
-    radius_y: float =1,
-    radius_z: float =1,
-    connectivity: str ="box",
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    radius_x: float = 1,
+    radius_y: float = 1,
+    radius_z: float = 1,
+    connectivity: str = "box",
+    device: Optional[Device] = None,
 ) -> Image:
     """Computes the local minimum of a pixels cube neighborhood. The cubes size is
     specified by its halfwidth, halfheight and halfdepth (radius).
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
@@ -2828,17 +3159,26 @@ def minimum_filter(
     [1] https://clij.github.io/clij2-docs/reference_minimum3DBox
     [2] https://clij.github.io/clij2-docs/reference_minimum3DSphere
     """
-    return _get_backend()._minimum_filter(device, input_image, output_image, float(radius_x), float(radius_y), float(radius_z), str(connectivity))
+    return _get_backend()._minimum_filter(
+        device,
+        input_image,
+        output_image,
+        float(radius_x),
+        float(radius_y),
+        float(radius_z),
+        str(connectivity),
+    )
+
 
 @plugin_function(categories=["filter", "in assistant"])
 def grayscale_erode(
     input_image: Image,
-    output_image: Optional[Image] =None,
-    radius_x: float =1,
-    radius_y: float =1,
-    radius_z: float =1,
-    connectivity: str ="box",
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    radius_x: float = 1,
+    radius_y: float = 1,
+    radius_z: float = 1,
+    connectivity: str = "box",
+    device: Optional[Device] = None,
 ) -> Image:
     """Computes a grayscale image containing the grayscale erosion of a given input
     image. The erosion apply the Mooreneighborhood (8 pixels in 2D and 26 pixels in
@@ -2848,7 +3188,7 @@ def grayscale_erode(
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
@@ -2872,21 +3212,30 @@ def grayscale_erode(
     [1] https://clij.github.io/clij2-docs/reference_minimum3DBox
     [2] https://clij.github.io/clij2-docs/reference_minimum3DSphere
     """
-    return _get_backend()._grayscale_erode(device, input_image, output_image, float(radius_x), float(radius_y), float(radius_z), str(connectivity))
+    return _get_backend()._grayscale_erode(
+        device,
+        input_image,
+        output_image,
+        float(radius_x),
+        float(radius_y),
+        float(radius_z),
+        str(connectivity),
+    )
+
 
 @plugin_function(categories=["filter", "in assistant"])
 def minimum_image_and_scalar(
     input_image: Image,
-    output_image: Optional[Image] =None,
-    scalar: float =0,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    scalar: float = 0,
+    device: Optional[Device] = None,
 ) -> Image:
     """Computes the minimum of a constant scalar s and each pixel value x in a given
     image X. <pre>f(x, s) = min(x, s)</pre>
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
@@ -2903,23 +3252,26 @@ def minimum_image_and_scalar(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_minimumImageAndScalar
     """
-    return _get_backend()._minimum_image_and_scalar(device, input_image, output_image, float(scalar))
+    return _get_backend()._minimum_image_and_scalar(
+        device, input_image, output_image, float(scalar)
+    )
+
 
 @plugin_function(categories=["combine", "in assistant"])
 def minimum_images(
     input_image0: Image,
     input_image1: Image,
-    output_image: Optional[Image] =None,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    device: Optional[Device] = None,
 ) -> Image:
     """Computes the minimum of a pair of pixel values x, y from two given images X and
     Y. <pre>f(x, y) = min(x, y)</pre>
 
     Parameters
     ----------
-    input_image0: Image 
+    input_image0: Image
         First input image to process.
-    input_image1: Image 
+    input_image1: Image
         Second input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
@@ -2934,20 +3286,23 @@ def minimum_images(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_minimumImages
     """
-    return _get_backend()._minimum_images(device, input_image0, input_image1, output_image)
+    return _get_backend()._minimum_images(
+        device, input_image0, input_image1, output_image
+    )
+
 
 @plugin_function(categories=["projection"])
 def minimum_x_projection(
     input_image: Image,
-    output_image: Optional[Image] =None,
-    keep_dims: bool =False,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    keep_dims: bool = False,
+    device: Optional[Device] = None,
 ) -> Image:
     """Determines the minimum intensity projection of an image along Y.
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
@@ -2964,20 +3319,23 @@ def minimum_x_projection(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_minimumXProjection
     """
-    return _get_backend()._minimum_x_projection(device, input_image, output_image, keep_dims)
+    return _get_backend()._minimum_x_projection(
+        device, input_image, output_image, keep_dims
+    )
+
 
 @plugin_function(categories=["projection"])
 def minimum_y_projection(
     input_image: Image,
-    output_image: Optional[Image] =None,
-    keep_dims: bool =False,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    keep_dims: bool = False,
+    device: Optional[Device] = None,
 ) -> Image:
     """Determines the minimum intensity projection of an image along Y.
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
@@ -2994,20 +3352,23 @@ def minimum_y_projection(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_minimumYProjection
     """
-    return _get_backend()._minimum_y_projection(device, input_image, output_image, keep_dims)
+    return _get_backend()._minimum_y_projection(
+        device, input_image, output_image, keep_dims
+    )
+
 
 @plugin_function(categories=["projection", "in assistant", "bia-bob-suggestion"])
 def minimum_z_projection(
     input_image: Image,
-    output_image: Optional[Image] =None,
-    keep_dims: bool =False,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    keep_dims: bool = False,
+    device: Optional[Device] = None,
 ) -> Image:
     """Determines the minimum intensity projection of an image along Z.
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
@@ -3024,17 +3385,20 @@ def minimum_z_projection(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_minimumZProjection
     """
-    return _get_backend()._minimum_z_projection(device, input_image, output_image, keep_dims)
+    return _get_backend()._minimum_z_projection(
+        device, input_image, output_image, keep_dims
+    )
 
-@deprecated('mode_box: This function is deprecated. Consider using mode() instead.')
+
+@deprecated("mode_box: This function is deprecated. Consider using mode() instead.")
 @plugin_function(categories=["label processing", "in assistant"])
 def mode_box(
     input_image: Image,
-    output_image: Optional[Image] =None,
-    radius_x: float =1,
-    radius_y: float =1,
-    radius_z: float =1,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    radius_x: float = 1,
+    radius_y: float = 1,
+    radius_z: float = 1,
+    device: Optional[Device] = None,
 ) -> Image:
     """Computes the local mode of a pixels box shaped neighborhood. This can be used to
     postprocess and locally correct semantic segmentation results. The box is
@@ -3044,7 +3408,7 @@ def mode_box(
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
@@ -3061,17 +3425,25 @@ def mode_box(
     -------
     Image
     """
-    return _get_backend()._mode_box(device, input_image, output_image, float(radius_x), float(radius_y), float(radius_z))
+    return _get_backend()._mode_box(
+        device,
+        input_image,
+        output_image,
+        float(radius_x),
+        float(radius_y),
+        float(radius_z),
+    )
 
-@deprecated('mode_sphere: This function is deprecated. Consider using mode() instead.')
+
+@deprecated("mode_sphere: This function is deprecated. Consider using mode() instead.")
 @plugin_function(categories=["label processing", "in assistant", "bia-bob-suggestion"])
 def mode_sphere(
     input_image: Image,
-    output_image: Optional[Image] =None,
-    radius_x: float =1,
-    radius_y: float =1,
-    radius_z: float =1,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    radius_x: float = 1,
+    radius_y: float = 1,
+    radius_z: float = 1,
+    device: Optional[Device] = None,
 ) -> Image:
     """Computes the local mode of a pixels sphere shaped neighborhood. This can be used
     to postprocess and locally correct semantic segmentation results. The sphere is
@@ -3081,7 +3453,7 @@ def mode_sphere(
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
@@ -3098,17 +3470,25 @@ def mode_sphere(
     -------
     Image
     """
-    return _get_backend()._mode_sphere(device, input_image, output_image, float(radius_x), float(radius_y), float(radius_z))
+    return _get_backend()._mode_sphere(
+        device,
+        input_image,
+        output_image,
+        float(radius_x),
+        float(radius_y),
+        float(radius_z),
+    )
+
 
 @plugin_function(categories=["label processing", "in assistant"])
 def mode(
     input_image: Image,
-    output_image: Optional[Image] =None,
-    radius_x: float =1,
-    radius_y: float =1,
-    radius_z: float =1,
-    connectivity: str ="box",
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    radius_x: float = 1,
+    radius_y: float = 1,
+    radius_z: float = 1,
+    connectivity: str = "box",
+    device: Optional[Device] = None,
 ) -> Image:
     """Computes the local mode of a pixels neighborhood. This neighborhood can be
     shaped as a box or a sphere. This can be used to postprocess and locally correct
@@ -3119,7 +3499,7 @@ def mode(
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
@@ -3138,23 +3518,32 @@ def mode(
     -------
     Image
     """
-    return _get_backend()._mode(device, input_image, output_image, float(radius_x), float(radius_y), float(radius_z), str(connectivity))
+    return _get_backend()._mode(
+        device,
+        input_image,
+        output_image,
+        float(radius_x),
+        float(radius_y),
+        float(radius_z),
+        str(connectivity),
+    )
+
 
 @plugin_function(categories=["combine"])
 def modulo_images(
     input_image0: Image,
     input_image1: Image,
-    output_image: Optional[Image] =None,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    device: Optional[Device] = None,
 ) -> Image:
     """Computes the remainder of a division of pairwise pixel values in two images Uses
     C truncated division, different than Python's floor division.
 
     Parameters
     ----------
-    input_image0: Image 
+    input_image0: Image
         First input image to process.
-    input_image1: Image 
+    input_image1: Image
         Second input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
@@ -3165,21 +3554,24 @@ def modulo_images(
     -------
     Image
     """
-    return _get_backend()._modulo_images(device, input_image0, input_image1, output_image)
+    return _get_backend()._modulo_images(
+        device, input_image0, input_image1, output_image
+    )
+
 
 @plugin_function
 def multiply_image_and_position(
     input_image: Image,
-    output_image: Optional[Image] =None,
-    dimension: int =0,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    dimension: int = 0,
+    device: Optional[Device] = None,
 ) -> Image:
     """Multiplies all pixel intensities with the x, y or z coordinate, depending on
     specified dimension.
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
@@ -3196,21 +3588,24 @@ def multiply_image_and_position(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_multiplyImageAndCoordinate
     """
-    return _get_backend()._multiply_image_and_position(device, input_image, output_image, int(dimension))
+    return _get_backend()._multiply_image_and_position(
+        device, input_image, output_image, int(dimension)
+    )
+
 
 @plugin_function(categories=["filter", "in assistant"])
 def multiply_image_and_scalar(
     input_image: Image,
-    output_image: Optional[Image] =None,
-    scalar: float =0,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    scalar: float = 0,
+    device: Optional[Device] = None,
 ) -> Image:
     """Multiplies all pixels value x in a given image X with a constant scalar s.
     <pre>f(x, s) = x * s</pre>
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         The input image to be multiplied with a constant.
     output_image: Optional[Image] (= None)
         Output image where results are written into.
@@ -3227,23 +3622,26 @@ def multiply_image_and_scalar(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_multiplyImageAndScalar
     """
-    return _get_backend()._multiply_image_and_scalar(device, input_image, output_image, float(scalar))
+    return _get_backend()._multiply_image_and_scalar(
+        device, input_image, output_image, float(scalar)
+    )
+
 
 @plugin_function(categories=["combine", "in assistant"])
 def multiply_images(
     input_image0: Image,
     input_image1: Image,
-    output_image: Optional[Image] =None,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    device: Optional[Device] = None,
 ) -> Image:
     """Multiplies all pairs of pixel values x and y from two image X and Y. <pre>f(x,
     y) = x * y</pre>
 
     Parameters
     ----------
-    input_image0: Image 
+    input_image0: Image
         First input image to be multiplied.
-    input_image1: Image 
+    input_image1: Image
         Second image to be multiplied.
     output_image: Optional[Image] (= None)
         Output image where results are written into.
@@ -3258,16 +3656,19 @@ def multiply_images(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_multiplyImages
     """
-    return _get_backend()._multiply_images(device, input_image0, input_image1, output_image)
+    return _get_backend()._multiply_images(
+        device, input_image0, input_image1, output_image
+    )
+
 
 @plugin_function
 def nan_to_num(
     input_image: Image,
-    output_image: Optional[Image] =None,
-    nan: float =0,
-    posinf: float =np.nan_to_num(float('inf')),
-    neginf: float =np.nan_to_num(float('-inf')),
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    nan: float = 0,
+    posinf: float = np.nan_to_num(float("inf")),
+    neginf: float = np.nan_to_num(float("-inf")),
+    device: Optional[Device] = None,
 ) -> Image:
     """Copies all pixels instead those which are not a number (NaN), or
     positive/negative infinity which are replaced by a defined new value, default 0.
@@ -3277,7 +3678,7 @@ def nan_to_num(
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input image to process.
     output_image: Optional[Image] (= None)
         Output image where results are written into.
@@ -3298,15 +3699,20 @@ def nan_to_num(
     ----------
     [1] https://numpy.org/doc/stable/reference/generated/numpy.nan_to_num.html
     """
-    return _get_backend()._nan_to_num(device, input_image, output_image, float(nan), float(posinf), float(neginf))
+    return _get_backend()._nan_to_num(
+        device, input_image, output_image, float(nan), float(posinf), float(neginf)
+    )
 
-@deprecated('nonzero_maximum_box: This function is deprecated. Consider using nonzero_maximum() instead.')
+
+@deprecated(
+    "nonzero_maximum_box: This function is deprecated. Consider using nonzero_maximum() instead."
+)
 @plugin_function
 def nonzero_maximum_box(
     input_image: Image,
     output_image0: Image,
-    output_image1: Optional[Image] =None,
-    device: Optional[Device] =None
+    output_image1: Optional[Image] = None,
+    device: Optional[Device] = None,
 ) -> Image:
     """Apply a maximum filter (box shape) to the input image. The radius is fixed to 1
     and pixels with value 0 are ignored. Note: Pixels with 0 value in the input
@@ -3315,9 +3721,9 @@ def nonzero_maximum_box(
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input image to process.
-    output_image0: Image 
+    output_image0: Image
         Output flag (0 or 1).
     output_image1: Optional[Image] (= None)
         Output image where results are written into.
@@ -3332,15 +3738,20 @@ def nonzero_maximum_box(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_nonzeroMaximumBox
     """
-    return _get_backend()._nonzero_maximum_box(device, input_image, output_image0, output_image1)
+    return _get_backend()._nonzero_maximum_box(
+        device, input_image, output_image0, output_image1
+    )
 
-@deprecated('nonzero_maximum_diamond: This function is deprecated. Consider using nonzero_maximum() instead.')
+
+@deprecated(
+    "nonzero_maximum_diamond: This function is deprecated. Consider using nonzero_maximum() instead."
+)
 @plugin_function
 def nonzero_maximum_diamond(
     input_image: Image,
     output_image0: Image,
-    output_image1: Optional[Image] =None,
-    device: Optional[Device] =None
+    output_image1: Optional[Image] = None,
+    device: Optional[Device] = None,
 ) -> Image:
     """Apply a maximum filter (diamond shape) to the input image. The radius is fixed
     to 1 and pixels with value 0 are ignored. Note: Pixels with 0 value in the input
@@ -3349,9 +3760,9 @@ def nonzero_maximum_diamond(
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input image to process.
-    output_image0: Image 
+    output_image0: Image
         Output flag (0 or 1).
     output_image1: Optional[Image] (= None)
         Output image where results are written into.
@@ -3366,15 +3777,18 @@ def nonzero_maximum_diamond(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_nonzeroMaximumDiamond
     """
-    return _get_backend()._nonzero_maximum_diamond(device, input_image, output_image0, output_image1)
+    return _get_backend()._nonzero_maximum_diamond(
+        device, input_image, output_image0, output_image1
+    )
+
 
 @plugin_function
 def nonzero_maximum(
     input_image: Image,
     output_image0: Image,
-    output_image1: Optional[Image] =None,
-    connectivity: str ="box",
-    device: Optional[Device] =None
+    output_image1: Optional[Image] = None,
+    connectivity: str = "box",
+    device: Optional[Device] = None,
 ) -> Image:
     """Apply a maximum filter of a neighborhood to the input image. The neighborhood
     shape can be a box or a sphere. The size is fixed to 1 and pixels with value 0
@@ -3384,9 +3798,9 @@ def nonzero_maximum(
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input image to process.
-    output_image0: Image 
+    output_image0: Image
         Output flag (0 or 1).
     output_image1: Optional[Image] (= None)
         Output image where results are written into.
@@ -3404,15 +3818,20 @@ def nonzero_maximum(
     [1] https://clij.github.io/clij2-docs/reference_nonzeroMaximumBox
     [2] https://clij.github.io/clij2-docs/reference_nonzeroMaximumDiamond
     """
-    return _get_backend()._nonzero_maximum(device, input_image, output_image0, output_image1, str(connectivity))
+    return _get_backend()._nonzero_maximum(
+        device, input_image, output_image0, output_image1, str(connectivity)
+    )
 
-@deprecated('nonzero_minimum_box: This function is deprecated. Consider using nonzero_minimum() instead.')
+
+@deprecated(
+    "nonzero_minimum_box: This function is deprecated. Consider using nonzero_minimum() instead."
+)
 @plugin_function
 def nonzero_minimum_box(
     input_image: Image,
     output_image0: Image,
-    output_image1: Optional[Image] =None,
-    device: Optional[Device] =None
+    output_image1: Optional[Image] = None,
+    device: Optional[Device] = None,
 ) -> Image:
     """Apply a minimum filter (box shape) to the input image. The radius is fixed to 1
     and pixels with value 0 are ignored. Note: Pixels with 0 value in the input
@@ -3421,9 +3840,9 @@ def nonzero_minimum_box(
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input image to process.
-    output_image0: Image 
+    output_image0: Image
         Output flag (0 or 1).
     output_image1: Optional[Image] (= None)
         Output image where results are written into.
@@ -3438,15 +3857,20 @@ def nonzero_minimum_box(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_nonzeroMinimumBox
     """
-    return _get_backend()._nonzero_minimum_box(device, input_image, output_image0, output_image1)
+    return _get_backend()._nonzero_minimum_box(
+        device, input_image, output_image0, output_image1
+    )
 
-@deprecated('nonzero_minimum_diamond: This function is deprecated. Consider using nonzero_minimum() instead.')
+
+@deprecated(
+    "nonzero_minimum_diamond: This function is deprecated. Consider using nonzero_minimum() instead."
+)
 @plugin_function
 def nonzero_minimum_diamond(
     input_image: Image,
     output_image0: Image,
-    output_image1: Optional[Image] =None,
-    device: Optional[Device] =None
+    output_image1: Optional[Image] = None,
+    device: Optional[Device] = None,
 ) -> Image:
     """Apply a minimum filter (diamond shape) to the input image. The radius is fixed
     to 1 and pixels with value 0 are ignored.Note: Pixels with 0 value in the input
@@ -3455,9 +3879,9 @@ def nonzero_minimum_diamond(
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input image to process.
-    output_image0: Image 
+    output_image0: Image
         Output flag (0 or 1).
     output_image1: Optional[Image] (= None)
         Output image where results are written into.
@@ -3472,15 +3896,18 @@ def nonzero_minimum_diamond(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_nonzeroMinimumDiamond
     """
-    return _get_backend()._nonzero_minimum_diamond(device, input_image, output_image0, output_image1)
+    return _get_backend()._nonzero_minimum_diamond(
+        device, input_image, output_image0, output_image1
+    )
+
 
 @plugin_function
 def nonzero_minimum(
     input_image: Image,
     output_image0: Image,
-    output_image1: Optional[Image] =None,
-    connectivity: str ="box",
-    device: Optional[Device] =None
+    output_image1: Optional[Image] = None,
+    connectivity: str = "box",
+    device: Optional[Device] = None,
 ) -> Image:
     """Apply a minimum filter of a neighborhood to the input image. The neighborhood
     shape can be a box or a sphere. The radius is fixed to 1 and pixels with value 0
@@ -3490,9 +3917,9 @@ def nonzero_minimum(
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input image to process.
-    output_image0: Image 
+    output_image0: Image
         Output flag (0 or 1).
     output_image1: Optional[Image] (= None)
         Output image where results are written into.
@@ -3510,23 +3937,26 @@ def nonzero_minimum(
     [1] https://clij.github.io/clij2-docs/reference_nonzeroMinimumBox
     [2] https://clij.github.io/clij2-docs/reference_nonzeroMinimumDiamond
     """
-    return _get_backend()._nonzero_minimum(device, input_image, output_image0, output_image1, str(connectivity))
+    return _get_backend()._nonzero_minimum(
+        device, input_image, output_image0, output_image1, str(connectivity)
+    )
+
 
 @plugin_function(categories=["combine", "binarize", "in assistant"])
 def not_equal(
     input_image0: Image,
     input_image1: Image,
-    output_image: Optional[Image] =None,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    device: Optional[Device] = None,
 ) -> Image:
     """Determines if two images A and B equal pixel wise. f(a, b) = 1 if a != b; 0
     otherwise.
 
     Parameters
     ----------
-    input_image0: Image 
+    input_image0: Image
         First image to be compared with.
-    input_image1: Image 
+    input_image1: Image
         Second image to be compared with the first.
     output_image: Optional[Image] (= None)
         The resulting binary image where pixels will be 1 only if source1
@@ -3543,19 +3973,20 @@ def not_equal(
     """
     return _get_backend()._not_equal(device, input_image0, input_image1, output_image)
 
+
 @plugin_function(categories=["binarize", "in assistant"])
 def not_equal_constant(
     input_image: Image,
-    output_image: Optional[Image] =None,
-    scalar: float =0,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    scalar: float = 0,
+    device: Optional[Device] = None,
 ) -> Image:
     """Determines if two images A and B equal pixel wise. f(a, b) = 1 if a != b; 0
     otherwise.
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         The image where every pixel is compared to the constant.
     output_image: Optional[Image] (= None)
         The resulting binary image where pixels will be 1 only if source1
@@ -3572,22 +4003,25 @@ def not_equal_constant(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_notEqualConstant
     """
-    return _get_backend()._not_equal_constant(device, input_image, output_image, float(scalar))
+    return _get_backend()._not_equal_constant(
+        device, input_image, output_image, float(scalar)
+    )
+
 
 @plugin_function(categories=["combine", "in assistant"])
 def paste(
     input_image: Image,
-    output_image: Optional[Image] =None,
-    destination_x: int =0,
-    destination_y: int =0,
-    destination_z: int =0,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    destination_x: int = 0,
+    destination_y: int = 0,
+    destination_z: int = 0,
+    device: Optional[Device] = None,
 ) -> Image:
     """Pastes an image into another image at a given position.
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
@@ -3608,24 +4042,34 @@ def paste(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_paste3D
     """
-    return _get_backend()._paste(device, input_image, output_image, int(destination_x), int(destination_y), int(destination_z))
+    return _get_backend()._paste(
+        device,
+        input_image,
+        output_image,
+        int(destination_x),
+        int(destination_y),
+        int(destination_z),
+    )
 
-@deprecated('onlyzero_overwrite_maximum_box: This function is deprecated. Consider using onlyzero_overwrite_maximum() instead.')
+
+@deprecated(
+    "onlyzero_overwrite_maximum_box: This function is deprecated. Consider using onlyzero_overwrite_maximum() instead."
+)
 @plugin_function
 def onlyzero_overwrite_maximum_box(
     input_image: Image,
     flag: Image,
-    output_image: Optional[Image] =None,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    device: Optional[Device] = None,
 ) -> Image:
     """Apply a local maximum filter to an image which only overwrites pixels with value
     0.
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input image to process.
-    flag: Image 
+    flag: Image
         Output flag value, 0 or 1.
     output_image: Optional[Image] (= None)
         Output image.
@@ -3640,24 +4084,29 @@ def onlyzero_overwrite_maximum_box(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_onlyzeroOverwriteMaximumBox
     """
-    return _get_backend()._onlyzero_overwrite_maximum_box(device, input_image, flag, output_image)
+    return _get_backend()._onlyzero_overwrite_maximum_box(
+        device, input_image, flag, output_image
+    )
 
-@deprecated('onlyzero_overwrite_maximum_diamond: This function is deprecated. Consider using onlyzero_overwrite_maximum() instead.')
+
+@deprecated(
+    "onlyzero_overwrite_maximum_diamond: This function is deprecated. Consider using onlyzero_overwrite_maximum() instead."
+)
 @plugin_function
 def onlyzero_overwrite_maximum_diamond(
     input_image: Image,
     flag: Image,
-    output_image: Optional[Image] =None,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    device: Optional[Device] = None,
 ) -> Image:
     """Apply a local maximum filter to an image which only overwrites pixels with value
     0.
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input image to process.
-    flag: Image 
+    flag: Image
         Output flag value, 0 or 1.
     output_image: Optional[Image] (= None)
         Output image.
@@ -3672,24 +4121,27 @@ def onlyzero_overwrite_maximum_diamond(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_onlyzeroOverwriteMaximumDiamond
     """
-    return _get_backend()._onlyzero_overwrite_maximum_diamond(device, input_image, flag, output_image)
+    return _get_backend()._onlyzero_overwrite_maximum_diamond(
+        device, input_image, flag, output_image
+    )
+
 
 @plugin_function
 def onlyzero_overwrite_maximum(
     input_image: Image,
     flag: Image,
-    output_image: Optional[Image] =None,
-    connectivity: str ="box",
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    connectivity: str = "box",
+    device: Optional[Device] = None,
 ) -> Image:
     """Apply a local maximum filter to an image which only overwrites pixels with value
     0.
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input image to process.
-    flag: Image 
+    flag: Image
         Output flag value, 0 or 1.
     output_image: Optional[Image] (= None)
         Output image.
@@ -3707,21 +4159,24 @@ def onlyzero_overwrite_maximum(
     [1] https://clij.github.io/clij2-docs/reference_onlyzeroOverwriteMaximumBox
     [2] https://clij.github.io/clij2-docs/reference_onlyzeroOverwriteMaximumDiamond
     """
-    return _get_backend()._onlyzero_overwrite_maximum(device, input_image, flag, output_image, str(connectivity))
+    return _get_backend()._onlyzero_overwrite_maximum(
+        device, input_image, flag, output_image, str(connectivity)
+    )
+
 
 @plugin_function(categories=["filter", "in assistant"])
 def power(
     input_image: Image,
-    output_image: Optional[Image] =None,
-    scalar: float =1,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    scalar: float = 1,
+    device: Optional[Device] = None,
 ) -> Image:
     """Computes all pixels value x to the power of a given exponent a. <pre>f(x, a) = x
     ^ a</pre>
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
@@ -3740,20 +4195,21 @@ def power(
     """
     return _get_backend()._power(device, input_image, output_image, float(scalar))
 
+
 @plugin_function(categories=["combine", "in assistant"])
 def power_images(
     input_image0: Image,
     input_image1: Image,
-    output_image: Optional[Image] =None,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    device: Optional[Device] = None,
 ) -> Image:
     """Calculates x to the power of y pixel wise of two images X and Y.
 
     Parameters
     ----------
-    input_image0: Image 
+    input_image0: Image
         First input image to process.
-    input_image1: Image 
+    input_image1: Image
         Second input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
@@ -3768,23 +4224,26 @@ def power_images(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_powerImages
     """
-    return _get_backend()._power_images(device, input_image0, input_image1, output_image)
+    return _get_backend()._power_images(
+        device, input_image0, input_image1, output_image
+    )
 
-@deprecated('range: This function is deprecated. Consider using gather() instead.')
+
+@deprecated("range: This function is deprecated. Consider using gather() instead.")
 @plugin_function(categories=["transform", "in assistant"])
 def range(
     input_image: Image,
-    output_image: Optional[Image] =None,
-    start_x: Optional[int] =None,
-    stop_x: Optional[int] =None,
-    step_x: Optional[int] =None,
-    start_y: Optional[int] =None,
-    stop_y: Optional[int] =None,
-    step_y: Optional[int] =None,
-    start_z: Optional[int] =None,
-    stop_z: Optional[int] =None,
-    step_z: Optional[int] =None,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    start_x: Optional[int] = None,
+    stop_x: Optional[int] = None,
+    step_x: Optional[int] = None,
+    start_y: Optional[int] = None,
+    stop_y: Optional[int] = None,
+    step_y: Optional[int] = None,
+    start_z: Optional[int] = None,
+    stop_z: Optional[int] = None,
+    step_z: Optional[int] = None,
+    device: Optional[Device] = None,
 ) -> Image:
     """Read values from a strided region into a destination image in place, following
     the rule src[start + i * step] = dst[i] along each dimension. The destination
@@ -3792,7 +4251,7 @@ def range(
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         First input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
@@ -3821,22 +4280,36 @@ def range(
     -------
     Image
     """
-    return _get_backend()._range(device, input_image, output_image, start_x, stop_x, step_x, start_y, stop_y, step_y, start_z, stop_z, step_z)
+    return _get_backend()._range(
+        device,
+        input_image,
+        output_image,
+        start_x,
+        stop_x,
+        step_x,
+        start_y,
+        stop_y,
+        step_y,
+        start_z,
+        stop_z,
+        step_z,
+    )
+
 
 @plugin_function(categories=["transform", "in assistant"])
 def gather(
     input_image: Image,
-    output_image: Optional[Image] =None,
-    start_x: Optional[int] =None,
-    stop_x: Optional[int] =None,
-    step_x: Optional[int] =None,
-    start_y: Optional[int] =None,
-    stop_y: Optional[int] =None,
-    step_y: Optional[int] =None,
-    start_z: Optional[int] =None,
-    stop_z: Optional[int] =None,
-    step_z: Optional[int] =None,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    start_x: Optional[int] = None,
+    stop_x: Optional[int] = None,
+    step_x: Optional[int] = None,
+    start_y: Optional[int] = None,
+    stop_y: Optional[int] = None,
+    step_y: Optional[int] = None,
+    start_z: Optional[int] = None,
+    stop_z: Optional[int] = None,
+    step_z: Optional[int] = None,
+    device: Optional[Device] = None,
 ) -> Image:
     """Read values from a strided region into a destination image in place, following
     the rule src[start + i * step] = dst[i] along each dimension. The destination
@@ -3844,7 +4317,7 @@ def gather(
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         First input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
@@ -3873,22 +4346,36 @@ def gather(
     -------
     Image
     """
-    return _get_backend()._gather(device, input_image, output_image, start_x, stop_x, step_x, start_y, stop_y, step_y, start_z, stop_z, step_z)
+    return _get_backend()._gather(
+        device,
+        input_image,
+        output_image,
+        start_x,
+        stop_x,
+        step_x,
+        start_y,
+        stop_y,
+        step_y,
+        start_z,
+        stop_z,
+        step_z,
+    )
+
 
 @plugin_function(categories=["transform", "in assistant"])
 def scatter(
     input_image: Image,
     output_image: Image,
-    start_x: Optional[int] =None,
-    stop_x: Optional[int] =None,
-    step_x: Optional[int] =None,
-    start_y: Optional[int] =None,
-    stop_y: Optional[int] =None,
-    step_y: Optional[int] =None,
-    start_z: Optional[int] =None,
-    stop_z: Optional[int] =None,
-    step_z: Optional[int] =None,
-    device: Optional[Device] =None
+    start_x: Optional[int] = None,
+    stop_x: Optional[int] = None,
+    step_x: Optional[int] = None,
+    start_y: Optional[int] = None,
+    stop_y: Optional[int] = None,
+    step_y: Optional[int] = None,
+    start_z: Optional[int] = None,
+    stop_z: Optional[int] = None,
+    step_z: Optional[int] = None,
+    device: Optional[Device] = None,
 ) -> Image:
     """Writes a source image into a strided region of a destination image in place,
     following the rule dst[start + i * step] = src[i] along each dimension. The
@@ -3896,9 +4383,9 @@ def scatter(
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input image to scatter into dst.
-    output_image: Image 
+    output_image: Image
         Destination image written in place.
     start_x: Optional[int] (= None)
         Range starting value in x
@@ -3925,14 +4412,28 @@ def scatter(
     -------
     Image
     """
-    return _get_backend()._scatter(device, input_image, output_image, start_x, stop_x, step_x, start_y, stop_y, step_y, start_z, stop_z, step_z)
+    return _get_backend()._scatter(
+        device,
+        input_image,
+        output_image,
+        start_x,
+        stop_x,
+        step_x,
+        start_y,
+        stop_y,
+        step_y,
+        start_z,
+        stop_z,
+        step_z,
+    )
+
 
 @plugin_function
 def read_values_from_positions(
     input_image: Image,
     list: Image,
-    output_image: Optional[Image] =None,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    device: Optional[Device] = None,
 ) -> Image:
     """Go to positions in a given image specified by a pointlist and read intensities
     of those pixels. The intensities are stored in a new vector. The positions are
@@ -3940,9 +4441,9 @@ def read_values_from_positions(
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input image to process.
-    list: Image 
+    list: Image
         List of coordinate, as a 2D matrix.
     output_image: Optional[Image] (= None)
         Output vector image of intensities.
@@ -3953,14 +4454,17 @@ def read_values_from_positions(
     -------
     Image
     """
-    return _get_backend()._read_values_from_positions(device, input_image, list, output_image)
+    return _get_backend()._read_values_from_positions(
+        device, input_image, list, output_image
+    )
+
 
 @plugin_function(categories=["bia-bob-suggestion"])
 def replace_values(
     input_image0: Image,
     input_image1: Image,
-    output_image: Optional[Image] =None,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    device: Optional[Device] = None,
 ) -> Image:
     """Replaces integer intensities specified in a vector image. The values are passed
     as a vector of values. The vector index represents the old intensity and the
@@ -3968,9 +4472,9 @@ def replace_values(
 
     Parameters
     ----------
-    input_image0: Image 
+    input_image0: Image
         Input image to process.
-    input_image1: Image 
+    input_image1: Image
         List of intensities to replace, as a vector of values.
     output_image: Optional[Image] (= None)
         Output result image.
@@ -3985,21 +4489,24 @@ def replace_values(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_replaceIntensities
     """
-    return _get_backend()._replace_values(device, input_image0, input_image1, output_image)
+    return _get_backend()._replace_values(
+        device, input_image0, input_image1, output_image
+    )
+
 
 @plugin_function
 def replace_value(
     input_image: Image,
-    output_image: Optional[Image] =None,
-    value_to_replace: float =0,
-    value_replacement: float =1,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    value_to_replace: float = 0,
+    value_replacement: float = 1,
+    device: Optional[Device] = None,
 ) -> Image:
     """Replaces a specific intensity in an image with a given new value.
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
@@ -4018,22 +4525,31 @@ def replace_value(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_replaceIntensity
     """
-    return _get_backend()._replace_value(device, input_image, output_image, float(value_to_replace), float(value_replacement))
+    return _get_backend()._replace_value(
+        device,
+        input_image,
+        output_image,
+        float(value_to_replace),
+        float(value_replacement),
+    )
 
-@deprecated('replace_intensity: This function is deprecated. Consider using replace_value() instead.')
+
+@deprecated(
+    "replace_intensity: This function is deprecated. Consider using replace_value() instead."
+)
 @plugin_function
 def replace_intensity(
     input_image: Image,
-    output_image: Optional[Image] =None,
-    value_to_replace: float =0,
-    value_replacement: float =1,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    value_to_replace: float = 0,
+    value_replacement: float = 1,
+    device: Optional[Device] = None,
 ) -> Image:
     """Replaces a specific intensity in an image with a given new value.
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
@@ -4052,15 +4568,24 @@ def replace_intensity(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_replaceIntensity
     """
-    return _get_backend()._replace_intensity(device, input_image, output_image, float(value_to_replace), float(value_replacement))
+    return _get_backend()._replace_intensity(
+        device,
+        input_image,
+        output_image,
+        float(value_to_replace),
+        float(value_replacement),
+    )
 
-@deprecated('replace_intensities: This function is deprecated. Consider using replace_values() instead.')
+
+@deprecated(
+    "replace_intensities: This function is deprecated. Consider using replace_values() instead."
+)
 @plugin_function
 def replace_intensities(
     input_image0: Image,
     input_image1: Image,
-    output_image: Optional[Image] =None,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    device: Optional[Device] = None,
 ) -> Image:
     """Replaces integer intensities specified in a vector image. The values are passed
     as a vector of values. The vector index represents the old intensity and the
@@ -4068,9 +4593,9 @@ def replace_intensities(
 
     Parameters
     ----------
-    input_image0: Image 
+    input_image0: Image
         Input image to process.
-    input_image1: Image 
+    input_image1: Image
         List of intensities to replace, as a vector of values.
     output_image: Optional[Image] (= None)
         Output result image.
@@ -4085,24 +4610,29 @@ def replace_intensities(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_replaceIntensities
     """
-    return _get_backend()._replace_intensities(device, input_image0, input_image1, output_image)
+    return _get_backend()._replace_intensities(
+        device, input_image0, input_image1, output_image
+    )
 
-@deprecated('maximum_sphere: This function is deprecated. Consider using maximum_filter() instead.')
+
+@deprecated(
+    "maximum_sphere: This function is deprecated. Consider using maximum_filter() instead."
+)
 @plugin_function(categories=["filter", "in assistant", "bia-bob-suggestion"])
 def maximum_sphere(
     input_image: Image,
-    output_image: Optional[Image] =None,
-    radius_x: float =1,
-    radius_y: float =1,
-    radius_z: float =0,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    radius_x: float = 1,
+    radius_y: float = 1,
+    radius_z: float = 0,
+    device: Optional[Device] = None,
 ) -> Image:
     """Computes the local maximum of a pixels spherical neighborhood. The spheres size
     is specified by its halfwidth, halfheight and halfdepth (radius).
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
@@ -4123,24 +4653,34 @@ def maximum_sphere(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_maximum3DSphere
     """
-    return _get_backend()._maximum_sphere(device, input_image, output_image, float(radius_x), float(radius_y), float(radius_z))
+    return _get_backend()._maximum_sphere(
+        device,
+        input_image,
+        output_image,
+        float(radius_x),
+        float(radius_y),
+        float(radius_z),
+    )
 
-@deprecated('minimum_sphere: This function is deprecated. Consider using minimum_filter() instead.')
+
+@deprecated(
+    "minimum_sphere: This function is deprecated. Consider using minimum_filter() instead."
+)
 @plugin_function(categories=["filter", "in assistant", "bia-bob-suggestion"])
 def minimum_sphere(
     input_image: Image,
-    output_image: Optional[Image] =None,
-    radius_x: float =1,
-    radius_y: float =1,
-    radius_z: float =1,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    radius_x: float = 1,
+    radius_y: float = 1,
+    radius_z: float = 1,
+    device: Optional[Device] = None,
 ) -> Image:
     """Computes the local minimum of a pixels spherical neighborhood. The spheres size
     is specified by its halfwidth, halfheight and halfdepth (radius).
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
@@ -4161,23 +4701,31 @@ def minimum_sphere(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_minimum3DSphere
     """
-    return _get_backend()._minimum_sphere(device, input_image, output_image, float(radius_x), float(radius_y), float(radius_z))
+    return _get_backend()._minimum_sphere(
+        device,
+        input_image,
+        output_image,
+        float(radius_x),
+        float(radius_y),
+        float(radius_z),
+    )
+
 
 @plugin_function
 def multiply_matrix(
     matrix1: Image,
     matrix2: Image,
-    matrix_destination: Optional[Image] =None,
-    device: Optional[Device] =None
+    matrix_destination: Optional[Image] = None,
+    device: Optional[Device] = None,
 ) -> Image:
     """Multiplies two matrices with each other. Shape of matrix1 should be equal to
     shape of matrix2 transposed.
 
     Parameters
     ----------
-    matrix1: Image 
+    matrix1: Image
         First matrix to process.
-    matrix2: Image 
+    matrix2: Image
         Second matrix to process.
     matrix_destination: Optional[Image] (= None)
         Output result matrix.
@@ -4194,22 +4742,23 @@ def multiply_matrix(
     """
     return _get_backend()._multiply_matrix(device, matrix1, matrix2, matrix_destination)
 
+
 @plugin_function
 def pad(
     input_image: Image,
-    output_image: Optional[Image] =None,
-    size_x: int =0,
-    size_y: int =0,
-    size_z: int =0,
-    value: float =0,
-    center: bool =False,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    size_x: int = 0,
+    size_y: int = 0,
+    size_z: int = 0,
+    value: float = 0,
+    center: bool = False,
+    device: Optional[Device] = None,
 ) -> Image:
     """Pads an image with a given size along dimensions with a given value.
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
@@ -4230,23 +4779,33 @@ def pad(
     -------
     Image
     """
-    return _get_backend()._pad(device, input_image, output_image, int(size_x), int(size_y), int(size_z), float(value), center)
+    return _get_backend()._pad(
+        device,
+        input_image,
+        output_image,
+        int(size_x),
+        int(size_y),
+        int(size_z),
+        float(value),
+        center,
+    )
+
 
 @plugin_function
 def unpad(
     input_image: Image,
-    output_image: Optional[Image] =None,
-    size_x: int =0,
-    size_y: int =0,
-    size_z: int =0,
-    center: bool =False,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    size_x: int = 0,
+    size_y: int = 0,
+    size_z: int = 0,
+    center: bool = False,
+    device: Optional[Device] = None,
 ) -> Image:
     """Removes padding from an image along dimensions.
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
@@ -4265,19 +4824,22 @@ def unpad(
     -------
     Image
     """
-    return _get_backend()._unpad(device, input_image, output_image, int(size_x), int(size_y), int(size_z), center)
+    return _get_backend()._unpad(
+        device, input_image, output_image, int(size_x), int(size_y), int(size_z), center
+    )
+
 
 @plugin_function(categories=["filter", "in assistant"])
 def reciprocal(
     input_image: Image,
-    output_image: Optional[Image] =None,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    device: Optional[Device] = None,
 ) -> Image:
     """Computes 1/x for every pixel value x in a given image X. <pre>f(x) = 1 / x</pre>
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
@@ -4294,18 +4856,17 @@ def reciprocal(
     """
     return _get_backend()._reciprocal(device, input_image, output_image)
 
+
 @plugin_function
 def set(
-    input_image: Image,
-    scalar: float =0,
-    device: Optional[Device] =None
+    input_image: Image, scalar: float = 0, device: Optional[Device] = None
 ) -> Image:
     """Sets all pixel values x of a given image X to a constant value v. <pre>f(x) =
     v</pre>
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input image to process.
     scalar: float (= 0)
         Value to set.
@@ -4322,18 +4883,19 @@ def set(
     """
     return _get_backend()._set(device, input_image, float(scalar))
 
+
 @plugin_function
 def set_column(
     input_image: Image,
-    column_index: int =0,
-    value: float =0,
-    device: Optional[Device] =None
+    column_index: int = 0,
+    value: float = 0,
+    device: Optional[Device] = None,
 ) -> Image:
     """Sets all pixel values x of a given column in X to a constant value v.
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input image to process.
     column_index: int (= 0)
         Column index.
@@ -4350,19 +4912,20 @@ def set_column(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_setColumn
     """
-    return _get_backend()._set_column(device, input_image, int(column_index), float(value))
+    return _get_backend()._set_column(
+        device, input_image, int(column_index), float(value)
+    )
+
 
 @plugin_function
 def set_image_borders(
-    input_image: Image,
-    value: float =0,
-    device: Optional[Device] =None
+    input_image: Image, value: float = 0, device: Optional[Device] = None
 ) -> Image:
     """Sets all pixel values at the image border to a given value.
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input image to process.
     value: float (= 0)
         Value to set.
@@ -4379,18 +4942,19 @@ def set_image_borders(
     """
     return _get_backend()._set_image_borders(device, input_image, float(value))
 
+
 @plugin_function
 def set_plane(
     input_image: Image,
-    plane_index: int =0,
-    value: float =0,
-    device: Optional[Device] =None
+    plane_index: int = 0,
+    value: float = 0,
+    device: Optional[Device] = None,
 ) -> Image:
     """Sets all pixel values x of a given plane in X to a constant value v.
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input image to process.
     plane_index: int (= 0)
         Plane index.
@@ -4407,18 +4971,18 @@ def set_plane(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_setPlane
     """
-    return _get_backend()._set_plane(device, input_image, int(plane_index), float(value))
+    return _get_backend()._set_plane(
+        device, input_image, int(plane_index), float(value)
+    )
+
 
 @plugin_function
-def set_ramp_x(
-    input_image: Image,
-    device: Optional[Device] =None
-) -> Image:
+def set_ramp_x(input_image: Image, device: Optional[Device] = None) -> Image:
     """Sets all pixel values to their X coordinate.
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input image to process.
     device: Optional[Device] (= None)
         Device to perform the operation on.
@@ -4433,16 +4997,14 @@ def set_ramp_x(
     """
     return _get_backend()._set_ramp_x(device, input_image)
 
+
 @plugin_function
-def set_ramp_y(
-    input_image: Image,
-    device: Optional[Device] =None
-) -> Image:
+def set_ramp_y(input_image: Image, device: Optional[Device] = None) -> Image:
     """Sets all pixel values to their Y coordinate.
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input image to process.
     device: Optional[Device] (= None)
         Device to perform the operation on.
@@ -4457,16 +5019,14 @@ def set_ramp_y(
     """
     return _get_backend()._set_ramp_y(device, input_image)
 
+
 @plugin_function
-def set_ramp_z(
-    input_image: Image,
-    device: Optional[Device] =None
-) -> Image:
+def set_ramp_z(input_image: Image, device: Optional[Device] = None) -> Image:
     """Sets all pixel values to their Z coordinate.
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input image to process.
     device: Optional[Device] (= None)
         Device to perform the operation on.
@@ -4481,23 +5041,24 @@ def set_ramp_z(
     """
     return _get_backend()._set_ramp_z(device, input_image)
 
+
 @plugin_function
 def set_row(
     input_image: Image,
-    row_index: int =0,
-    value: float =0,
-    device: Optional[Device] =None
+    row_index: int = 0,
+    value: float = 0,
+    device: Optional[Device] = None,
 ) -> Image:
     """Sets all pixel values x of a given row in X to a constant value v.
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input image to process.
     row_index: int (= 0)
-        
+
     value: float (= 0)
-        
+
     device: Optional[Device] (= None)
         Device to perform the operation on.
 
@@ -4511,18 +5072,19 @@ def set_row(
     """
     return _get_backend()._set_row(device, input_image, int(row_index), float(value))
 
+
 @plugin_function
 def set_nonzero_pixels_to_pixelindex(
     input_image: Image,
-    output_image: Optional[Image] =None,
-    offset: int =1,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    offset: int = 1,
+    device: Optional[Device] = None,
 ) -> Image:
     """Replaces all 0 value pixels in an image with the index of a pixel.
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input image to process.
     output_image: Optional[Image] (= None)
         Output image.
@@ -4535,13 +5097,14 @@ def set_nonzero_pixels_to_pixelindex(
     -------
     Image
     """
-    return _get_backend()._set_nonzero_pixels_to_pixelindex(device, input_image, output_image, int(offset))
+    return _get_backend()._set_nonzero_pixels_to_pixelindex(
+        device, input_image, output_image, int(offset)
+    )
+
 
 @plugin_function
 def set_where_x_equals_y(
-    input_image: Image,
-    value: float =0,
-    device: Optional[Device] =None
+    input_image: Image, value: float = 0, device: Optional[Device] = None
 ) -> Image:
     """Sets all pixel values a of a given image A to a constant value v in case its
     coordinates x == y. Otherwise the pixel is not overwritten. If you want to
@@ -4549,7 +5112,7 @@ def set_where_x_equals_y(
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input image to process.
     value: float (= 0)
         Value to set.
@@ -4566,11 +5129,10 @@ def set_where_x_equals_y(
     """
     return _get_backend()._set_where_x_equals_y(device, input_image, float(value))
 
+
 @plugin_function
 def set_where_x_greater_than_y(
-    input_image: Image,
-    value: float =0,
-    device: Optional[Device] =None
+    input_image: Image, value: float = 0, device: Optional[Device] = None
 ) -> Image:
     """Sets all pixel values a of a given image A to a constant value v in case its
     coordinates x > y. Otherwise the pixel is not overwritten. If you want to
@@ -4578,7 +5140,7 @@ def set_where_x_greater_than_y(
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input image to process.
     value: float (= 0)
         Value to set.
@@ -4595,11 +5157,10 @@ def set_where_x_greater_than_y(
     """
     return _get_backend()._set_where_x_greater_than_y(device, input_image, float(value))
 
+
 @plugin_function
 def set_where_x_smaller_than_y(
-    input_image: Image,
-    value: float =0,
-    device: Optional[Device] =None
+    input_image: Image, value: float = 0, device: Optional[Device] = None
 ) -> Image:
     """Sets all pixel values a of a given image A to a constant value v in case its
     coordinates x < y. Otherwise the pixel is not overwritten. If you want to
@@ -4607,7 +5168,7 @@ def set_where_x_smaller_than_y(
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input image to process.
     value: float (= 0)
         Value to set.
@@ -4624,11 +5185,12 @@ def set_where_x_smaller_than_y(
     """
     return _get_backend()._set_where_x_smaller_than_y(device, input_image, float(value))
 
+
 @plugin_function
 def sign(
     input_image: Image,
-    output_image: Optional[Image] =None,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    device: Optional[Device] = None,
 ) -> Image:
     """Extracts the sign of pixels. If a pixel value < 0, resulting pixel value will be
     1. If it was > 0, it will be 1. Otherwise it will be 0. This function aims to
@@ -4636,7 +5198,7 @@ def sign(
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
@@ -4649,21 +5211,22 @@ def sign(
     """
     return _get_backend()._sign(device, input_image, output_image)
 
+
 @plugin_function(categories=["combine", "binarize", "in assistant"])
 def smaller(
     input_image0: Image,
     input_image1: Image,
-    output_image: Optional[Image] =None,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    device: Optional[Device] = None,
 ) -> Image:
     """Determines if two images A and B smaller pixel wise. f(a, b) = 1 if a < b; 0
     otherwise.
 
     Parameters
     ----------
-    input_image0: Image 
+    input_image0: Image
         First input image to process.
-    input_image1: Image 
+    input_image1: Image
         Second input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
@@ -4680,19 +5243,20 @@ def smaller(
     """
     return _get_backend()._smaller(device, input_image0, input_image1, output_image)
 
+
 @plugin_function(categories=["binarize", "in assistant"])
 def smaller_constant(
     input_image: Image,
-    output_image: Optional[Image] =None,
-    scalar: float =0,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    scalar: float = 0,
+    device: Optional[Device] = None,
 ) -> Image:
     """Determines if two images A and B smaller pixel wise. f(a, b) = 1 if a < b; 0
     otherwise.
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
@@ -4709,23 +5273,26 @@ def smaller_constant(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_smallerConstant
     """
-    return _get_backend()._smaller_constant(device, input_image, output_image, float(scalar))
+    return _get_backend()._smaller_constant(
+        device, input_image, output_image, float(scalar)
+    )
+
 
 @plugin_function(categories=["combine", "binarize", "in assistant"])
 def smaller_or_equal(
     input_image0: Image,
     input_image1: Image,
-    output_image: Optional[Image] =None,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    device: Optional[Device] = None,
 ) -> Image:
     """Determines if two images A and B smaller or equal pixel wise. f(a, b) = 1 if a
     <= b; 0 otherwise.
 
     Parameters
     ----------
-    input_image0: Image 
+    input_image0: Image
         First input image to process.
-    input_image1: Image 
+    input_image1: Image
         Second input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
@@ -4740,21 +5307,24 @@ def smaller_or_equal(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_smallerOrEqual
     """
-    return _get_backend()._smaller_or_equal(device, input_image0, input_image1, output_image)
+    return _get_backend()._smaller_or_equal(
+        device, input_image0, input_image1, output_image
+    )
+
 
 @plugin_function(categories=["binarize", "in assistant"])
 def smaller_or_equal_constant(
     input_image: Image,
-    output_image: Optional[Image] =None,
-    scalar: float =0,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    scalar: float = 0,
+    device: Optional[Device] = None,
 ) -> Image:
     """Determines if two images A and B smaller or equal pixel wise. f(a, b) = 1 if a
     <= b; 0 otherwise.
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
@@ -4771,20 +5341,25 @@ def smaller_or_equal_constant(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_smallerOrEqualConstant
     """
-    return _get_backend()._smaller_or_equal_constant(device, input_image, output_image, float(scalar))
+    return _get_backend()._smaller_or_equal_constant(
+        device, input_image, output_image, float(scalar)
+    )
 
-@plugin_function(categories=["filter", "edge detection", "in assistant", "bia-bob-suggestion"])
+
+@plugin_function(
+    categories=["filter", "edge detection", "in assistant", "bia-bob-suggestion"]
+)
 def sobel(
     input_image: Image,
-    output_image: Optional[Image] =None,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    device: Optional[Device] = None,
 ) -> Image:
     """Convolve the image with the Sobel kernel. Author(s): Ruth WhelanJeans, Robert
     Haase
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
@@ -4801,17 +5376,18 @@ def sobel(
     """
     return _get_backend()._sobel(device, input_image, output_image)
 
+
 @plugin_function(categories=["filter", "in assistant"])
 def square_root(
     input_image: Image,
-    output_image: Optional[Image] =None,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    device: Optional[Device] = None,
 ) -> Image:
     """Computes the square root of each pixel.
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
@@ -4824,20 +5400,21 @@ def square_root(
     """
     return _get_backend()._square_root(device, input_image, output_image)
 
+
 @plugin_function(categories=["projection"])
 def std_x_projection(
     input_image: Image,
-    output_image: Optional[Image] =None,
-    ddof: int =0,
-    keep_dims: bool =False,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    ddof: int = 0,
+    keep_dims: bool = False,
+    device: Optional[Device] = None,
 ) -> Image:
     """Determines the standard deviation intensity projection of an image stack along
     X.
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
@@ -4856,22 +5433,25 @@ def std_x_projection(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_standardDeviationXProjection
     """
-    return _get_backend()._std_x_projection(device, input_image, output_image, int(ddof), keep_dims)
+    return _get_backend()._std_x_projection(
+        device, input_image, output_image, int(ddof), keep_dims
+    )
+
 
 @plugin_function(categories=["projection"])
 def std_y_projection(
     input_image: Image,
-    output_image: Optional[Image] =None,
-    ddof: int =0,
-    keep_dims: bool =False,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    ddof: int = 0,
+    keep_dims: bool = False,
+    device: Optional[Device] = None,
 ) -> Image:
     """Determines the standard deviation intensity projection of an image stack along
     Y.
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
@@ -4890,22 +5470,25 @@ def std_y_projection(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_standardDeviationYProjection
     """
-    return _get_backend()._std_y_projection(device, input_image, output_image, int(ddof), keep_dims)
+    return _get_backend()._std_y_projection(
+        device, input_image, output_image, int(ddof), keep_dims
+    )
+
 
 @plugin_function(categories=["projection", "in assistant", "bia-bob-suggestion"])
 def std_z_projection(
     input_image: Image,
-    output_image: Optional[Image] =None,
-    ddof: int =0,
-    keep_dims: bool =False,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    ddof: int = 0,
+    keep_dims: bool = False,
+    device: Optional[Device] = None,
 ) -> Image:
     """Determines the standard deviation intensity projection of an image stack along
     Z.
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
@@ -4924,21 +5507,24 @@ def std_z_projection(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_standardDeviationZProjection
     """
-    return _get_backend()._std_z_projection(device, input_image, output_image, int(ddof), keep_dims)
+    return _get_backend()._std_z_projection(
+        device, input_image, output_image, int(ddof), keep_dims
+    )
+
 
 @plugin_function(categories=["projection"])
 def variance_x_projection(
     input_image: Image,
-    output_image: Optional[Image] =None,
-    ddof: int =0,
-    keep_dims: bool =False,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    ddof: int = 0,
+    keep_dims: bool = False,
+    device: Optional[Device] = None,
 ) -> Image:
     """Determines the variance intensity projection of an image stack along X.
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
@@ -4953,21 +5539,24 @@ def variance_x_projection(
     -------
     Image
     """
-    return _get_backend()._variance_x_projection(device, input_image, output_image, int(ddof), keep_dims)
+    return _get_backend()._variance_x_projection(
+        device, input_image, output_image, int(ddof), keep_dims
+    )
+
 
 @plugin_function(categories=["projection"])
 def variance_y_projection(
     input_image: Image,
-    output_image: Optional[Image] =None,
-    ddof: int =0,
-    keep_dims: bool =False,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    ddof: int = 0,
+    keep_dims: bool = False,
+    device: Optional[Device] = None,
 ) -> Image:
     """Determines the variance intensity projection of an image stack along Y.
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
@@ -4982,21 +5571,24 @@ def variance_y_projection(
     -------
     Image
     """
-    return _get_backend()._variance_y_projection(device, input_image, output_image, int(ddof), keep_dims)
+    return _get_backend()._variance_y_projection(
+        device, input_image, output_image, int(ddof), keep_dims
+    )
+
 
 @plugin_function(categories=["projection", "in assistant", "bia-bob-suggestion"])
 def variance_z_projection(
     input_image: Image,
-    output_image: Optional[Image] =None,
-    ddof: int =0,
-    keep_dims: bool =False,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    ddof: int = 0,
+    keep_dims: bool = False,
+    device: Optional[Device] = None,
 ) -> Image:
     """Determines the variance intensity projection of an image stack along Z.
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
@@ -5011,20 +5603,23 @@ def variance_z_projection(
     -------
     Image
     """
-    return _get_backend()._variance_z_projection(device, input_image, output_image, int(ddof), keep_dims)
+    return _get_backend()._variance_z_projection(
+        device, input_image, output_image, int(ddof), keep_dims
+    )
+
 
 @plugin_function(categories=["filter", "in assistant"])
 def subtract_image_from_scalar(
     input_image: Image,
-    output_image: Optional[Image] =None,
-    scalar: float =0,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    scalar: float = 0,
+    device: Optional[Device] = None,
 ) -> Image:
     """Subtracts one image X from a scalar s pixel wise. <pre>f(x, s) = s x</pre>
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
@@ -5041,14 +5636,17 @@ def subtract_image_from_scalar(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_subtractImageFromScalar
     """
-    return _get_backend()._subtract_image_from_scalar(device, input_image, output_image, float(scalar))
+    return _get_backend()._subtract_image_from_scalar(
+        device, input_image, output_image, float(scalar)
+    )
+
 
 @plugin_function
 def sum_reduction_x(
     input_image: Image,
-    output_image: Optional[Image] =None,
-    blocksize: int =256,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    blocksize: int = 256,
+    device: Optional[Device] = None,
 ) -> Image:
     """Takes an image and reduces it in width by factor blocksize. The new pixels
     contain the sum of the reduced pixels. For example, given the following image
@@ -5056,7 +5654,7 @@ def sum_reduction_x(
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
@@ -5069,20 +5667,23 @@ def sum_reduction_x(
     -------
     Image
     """
-    return _get_backend()._sum_reduction_x(device, input_image, output_image, int(blocksize))
+    return _get_backend()._sum_reduction_x(
+        device, input_image, output_image, int(blocksize)
+    )
+
 
 @plugin_function(categories=["projection"])
 def sum_x_projection(
     input_image: Image,
-    output_image: Optional[Image] =None,
-    keep_dims: bool =False,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    keep_dims: bool = False,
+    device: Optional[Device] = None,
 ) -> Image:
     """Determines the sum intensity projection of an image along Z.
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
@@ -5099,20 +5700,23 @@ def sum_x_projection(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_sumXProjection
     """
-    return _get_backend()._sum_x_projection(device, input_image, output_image, keep_dims)
+    return _get_backend()._sum_x_projection(
+        device, input_image, output_image, keep_dims
+    )
+
 
 @plugin_function(categories=["projection"])
 def sum_y_projection(
     input_image: Image,
-    output_image: Optional[Image] =None,
-    keep_dims: bool =False,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    keep_dims: bool = False,
+    device: Optional[Device] = None,
 ) -> Image:
     """Determines the sum intensity projection of an image along Z.
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
@@ -5129,20 +5733,23 @@ def sum_y_projection(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_sumYProjection
     """
-    return _get_backend()._sum_y_projection(device, input_image, output_image, keep_dims)
+    return _get_backend()._sum_y_projection(
+        device, input_image, output_image, keep_dims
+    )
+
 
 @plugin_function(categories=["projection", "in assistant", "bia-bob-suggestion"])
 def sum_z_projection(
     input_image: Image,
-    output_image: Optional[Image] =None,
-    keep_dims: bool =False,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    keep_dims: bool = False,
+    device: Optional[Device] = None,
 ) -> Image:
     """Determines the sum intensity projection of an image along Z.
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
@@ -5159,21 +5766,24 @@ def sum_z_projection(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_sumZProjection
     """
-    return _get_backend()._sum_z_projection(device, input_image, output_image, keep_dims)
+    return _get_backend()._sum_z_projection(
+        device, input_image, output_image, keep_dims
+    )
+
 
 @plugin_function(categories=["projection"])
 def product_x_projection(
     input_image: Image,
-    output_image: Optional[Image] =None,
-    keep_dims: bool =False,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    keep_dims: bool = False,
+    device: Optional[Device] = None,
 ) -> Image:
     """Determines the product intensity projection of an image along X. <pre>f(y,z) =
     prod_x(src(x,y,z))</pre>
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
@@ -5186,21 +5796,24 @@ def product_x_projection(
     -------
     Image
     """
-    return _get_backend()._product_x_projection(device, input_image, output_image, keep_dims)
+    return _get_backend()._product_x_projection(
+        device, input_image, output_image, keep_dims
+    )
+
 
 @plugin_function(categories=["projection"])
 def product_y_projection(
     input_image: Image,
-    output_image: Optional[Image] =None,
-    keep_dims: bool =False,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    keep_dims: bool = False,
+    device: Optional[Device] = None,
 ) -> Image:
     """Determines the product intensity projection of an image along Y. <pre>f(x,z) =
     prod_y(src(x,y,z))</pre>
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
@@ -5213,21 +5826,24 @@ def product_y_projection(
     -------
     Image
     """
-    return _get_backend()._product_y_projection(device, input_image, output_image, keep_dims)
+    return _get_backend()._product_y_projection(
+        device, input_image, output_image, keep_dims
+    )
+
 
 @plugin_function(categories=["projection", "in assistant", "bia-bob-suggestion"])
 def product_z_projection(
     input_image: Image,
-    output_image: Optional[Image] =None,
-    keep_dims: bool =False,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    keep_dims: bool = False,
+    device: Optional[Device] = None,
 ) -> Image:
     """Determines the product intensity projection of an image along Z. <pre>f(x,y) =
     prod_z(src(x,y,z))</pre>
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
@@ -5240,19 +5856,22 @@ def product_z_projection(
     -------
     Image
     """
-    return _get_backend()._product_z_projection(device, input_image, output_image, keep_dims)
+    return _get_backend()._product_z_projection(
+        device, input_image, output_image, keep_dims
+    )
+
 
 @plugin_function(categories=["transform"])
 def transpose_xy(
     input_image: Image,
-    output_image: Optional[Image] =None,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    device: Optional[Device] = None,
 ) -> Image:
     """Transpose X and Y axes of an image.
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         The input image.
     output_image: Optional[Image] (= None)
         Output image where results are written into.
@@ -5269,17 +5888,18 @@ def transpose_xy(
     """
     return _get_backend()._transpose_xy(device, input_image, output_image)
 
+
 @plugin_function(categories=["transform"])
 def transpose_xz(
     input_image: Image,
-    output_image: Optional[Image] =None,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    device: Optional[Device] = None,
 ) -> Image:
     """Transpose X and Z axes of an image.
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         The input image.
     output_image: Optional[Image] (= None)
         Output image where results are written into.
@@ -5296,17 +5916,18 @@ def transpose_xz(
     """
     return _get_backend()._transpose_xz(device, input_image, output_image)
 
+
 @plugin_function(categories=["transform"])
 def transpose_yz(
     input_image: Image,
-    output_image: Optional[Image] =None,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    device: Optional[Device] = None,
 ) -> Image:
     """Transpose Y and Z axes of an image.
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         The input image.
     output_image: Optional[Image] (= None)
         Output image where results are written into.
@@ -5323,18 +5944,19 @@ def transpose_yz(
     """
     return _get_backend()._transpose_yz(device, input_image, output_image)
 
+
 @plugin_function
 def undefined_to_zero(
     input_image: Image,
-    output_image: Optional[Image] =None,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    device: Optional[Device] = None,
 ) -> Image:
     """Copies all pixels instead those which are not a number (NaN) or infinity (inf),
     which are replaced by 0.
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
@@ -5351,15 +5973,18 @@ def undefined_to_zero(
     """
     return _get_backend()._undefined_to_zero(device, input_image, output_image)
 
-@deprecated('variance_box: This function is deprecated. Consider using variance() instead.')
+
+@deprecated(
+    "variance_box: This function is deprecated. Consider using variance() instead."
+)
 @plugin_function(categories=["filter", "edge detection", "in assistant"])
 def variance_box(
     input_image: Image,
-    output_image: Optional[Image] =None,
-    radius_x: float =1,
-    radius_y: float =1,
-    radius_z: float =1,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    radius_x: float = 1,
+    radius_y: float = 1,
+    radius_z: float = 1,
+    device: Optional[Device] = None,
 ) -> Image:
     """Computes the local variance of a pixels box neighborhood. The box size is
     specified by its halfwidth, halfheight and halfdepth (radius). If 2D images are
@@ -5367,7 +5992,7 @@ def variance_box(
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
@@ -5388,17 +6013,27 @@ def variance_box(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_varianceBox
     """
-    return _get_backend()._variance_box(device, input_image, output_image, float(radius_x), float(radius_y), float(radius_z))
+    return _get_backend()._variance_box(
+        device,
+        input_image,
+        output_image,
+        float(radius_x),
+        float(radius_y),
+        float(radius_z),
+    )
 
-@deprecated('variance_sphere: This function is deprecated. Consider using variance() instead.')
+
+@deprecated(
+    "variance_sphere: This function is deprecated. Consider using variance() instead."
+)
 @plugin_function(categories=["filter", "edge detection", "in assistant"])
 def variance_sphere(
     input_image: Image,
-    output_image: Optional[Image] =None,
-    radius_x: float =1,
-    radius_y: float =1,
-    radius_z: float =1,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    radius_x: float = 1,
+    radius_y: float = 1,
+    radius_z: float = 1,
+    device: Optional[Device] = None,
 ) -> Image:
     """Computes the local variance of a pixels sphere neighborhood. The sphere size is
     specified by its halfwidth, halfheight and halfdepth (radius). If 2D images are
@@ -5406,7 +6041,7 @@ def variance_sphere(
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
@@ -5427,17 +6062,25 @@ def variance_sphere(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_varianceSphere
     """
-    return _get_backend()._variance_sphere(device, input_image, output_image, float(radius_x), float(radius_y), float(radius_z))
+    return _get_backend()._variance_sphere(
+        device,
+        input_image,
+        output_image,
+        float(radius_x),
+        float(radius_y),
+        float(radius_z),
+    )
+
 
 @plugin_function(categories=["filter", "edge detection", "in assistant"])
 def variance_filter(
     input_image: Image,
-    output_image: Optional[Image] =None,
-    radius_x: float =1,
-    radius_y: float =1,
-    radius_z: float =1,
-    connectivity: str ="box",
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    radius_x: float = 1,
+    radius_y: float = 1,
+    radius_z: float = 1,
+    connectivity: str = "box",
+    device: Optional[Device] = None,
 ) -> Image:
     """Computes the local variance of a pixels neighborhood (box or sphere). The
     neighborhood size is specified by its halfwidth, halfheight and halfdepth
@@ -5445,7 +6088,7 @@ def variance_filter(
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
@@ -5469,13 +6112,22 @@ def variance_filter(
     [1] https://clij.github.io/clij2-docs/reference_varianceBox
     [2] https://clij.github.io/clij2-docs/reference_varianceSphere
     """
-    return _get_backend()._variance_filter(device, input_image, output_image, float(radius_x), float(radius_y), float(radius_z), str(connectivity))
+    return _get_backend()._variance_filter(
+        device,
+        input_image,
+        output_image,
+        float(radius_x),
+        float(radius_y),
+        float(radius_z),
+        str(connectivity),
+    )
+
 
 @plugin_function
 def write_values_to_positions(
     input_image: Image,
-    output_image: Optional[Image] =None,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    device: Optional[Device] = None,
 ) -> Image:
     """Takes an image with three/four rows (2D: height = 3; 3D: height = 4): x, y [, z]
     and v and target image. The value v will be written at position x/y[/z] in the
@@ -5483,7 +6135,7 @@ def write_values_to_positions(
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
@@ -5500,12 +6152,13 @@ def write_values_to_positions(
     """
     return _get_backend()._write_values_to_positions(device, input_image, output_image)
 
+
 @plugin_function(categories=["projection", "in assistant"])
 def x_position_of_maximum_x_projection(
     input_image: Image,
-    output_image: Optional[Image] =None,
-    keep_dims: bool =False,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    keep_dims: bool = False,
+    device: Optional[Device] = None,
 ) -> Image:
     """Determines an Xposition of the maximum intensity along X and writes it into the
     resulting image. If there are multiple xslices with the same value, the smallest
@@ -5513,7 +6166,7 @@ def x_position_of_maximum_x_projection(
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input image stack
     output_image: Optional[Image] (= None)
         altitude map
@@ -5526,14 +6179,17 @@ def x_position_of_maximum_x_projection(
     -------
     Image
     """
-    return _get_backend()._x_position_of_maximum_x_projection(device, input_image, output_image, keep_dims)
+    return _get_backend()._x_position_of_maximum_x_projection(
+        device, input_image, output_image, keep_dims
+    )
+
 
 @plugin_function(categories=["projection", "in assistant"])
 def x_position_of_minimum_x_projection(
     input_image: Image,
-    output_image: Optional[Image] =None,
-    keep_dims: bool =False,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    keep_dims: bool = False,
+    device: Optional[Device] = None,
 ) -> Image:
     """Determines an Xposition of the minimum intensity along X and writes it into the
     resulting image. If there are multiple xslices with the same value, the smallest
@@ -5541,7 +6197,7 @@ def x_position_of_minimum_x_projection(
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input image stack
     output_image: Optional[Image] (= None)
         altitude map
@@ -5554,14 +6210,17 @@ def x_position_of_minimum_x_projection(
     -------
     Image
     """
-    return _get_backend()._x_position_of_minimum_x_projection(device, input_image, output_image, keep_dims)
+    return _get_backend()._x_position_of_minimum_x_projection(
+        device, input_image, output_image, keep_dims
+    )
+
 
 @plugin_function(categories=["projection", "in assistant"])
 def y_position_of_maximum_y_projection(
     input_image: Image,
-    output_image: Optional[Image] =None,
-    keep_dims: bool =False,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    keep_dims: bool = False,
+    device: Optional[Device] = None,
 ) -> Image:
     """Determines an Yposition of the maximum intensity along Y and writes it into the
     resulting image. If there are multiple yslices with the same value, the smallest
@@ -5569,7 +6228,7 @@ def y_position_of_maximum_y_projection(
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input image stack
     output_image: Optional[Image] (= None)
         altitude map
@@ -5582,14 +6241,17 @@ def y_position_of_maximum_y_projection(
     -------
     Image
     """
-    return _get_backend()._y_position_of_maximum_y_projection(device, input_image, output_image, keep_dims)
+    return _get_backend()._y_position_of_maximum_y_projection(
+        device, input_image, output_image, keep_dims
+    )
+
 
 @plugin_function(categories=["projection", "in assistant"])
 def y_position_of_minimum_y_projection(
     input_image: Image,
-    output_image: Optional[Image] =None,
-    keep_dims: bool =False,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    keep_dims: bool = False,
+    device: Optional[Device] = None,
 ) -> Image:
     """Determines an Yposition of the minimum intensity along Y and writes it into the
     resulting image. If there are multiple yslices with the same value, the smallest
@@ -5597,7 +6259,7 @@ def y_position_of_minimum_y_projection(
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input image stack
     output_image: Optional[Image] (= None)
         altitude map
@@ -5610,14 +6272,17 @@ def y_position_of_minimum_y_projection(
     -------
     Image
     """
-    return _get_backend()._y_position_of_minimum_y_projection(device, input_image, output_image, keep_dims)
+    return _get_backend()._y_position_of_minimum_y_projection(
+        device, input_image, output_image, keep_dims
+    )
+
 
 @plugin_function(categories=["projection", "in assistant"])
 def z_position_of_maximum_z_projection(
     input_image: Image,
-    output_image: Optional[Image] =None,
-    keep_dims: bool =False,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    keep_dims: bool = False,
+    device: Optional[Device] = None,
 ) -> Image:
     """Determines a Zposition of the maximum intensity along Z and writes it into the
     resulting image. If there are multiple zslices with the same value, the smallest
@@ -5625,7 +6290,7 @@ def z_position_of_maximum_z_projection(
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input image stack
     output_image: Optional[Image] (= None)
         altitude map
@@ -5638,14 +6303,17 @@ def z_position_of_maximum_z_projection(
     -------
     Image
     """
-    return _get_backend()._z_position_of_maximum_z_projection(device, input_image, output_image, keep_dims)
+    return _get_backend()._z_position_of_maximum_z_projection(
+        device, input_image, output_image, keep_dims
+    )
+
 
 @plugin_function(categories=["projection", "in assistant"])
 def z_position_of_minimum_z_projection(
     input_image: Image,
-    output_image: Optional[Image] =None,
-    keep_dims: bool =False,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    keep_dims: bool = False,
+    device: Optional[Device] = None,
 ) -> Image:
     """Determines a Zposition of the minimum intensity along Z and writes it into the
     resulting image. If there are multiple zslices with the same value, the smallest
@@ -5653,7 +6321,7 @@ def z_position_of_minimum_z_projection(
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input image stack
     output_image: Optional[Image] (= None)
         altitude map
@@ -5666,23 +6334,26 @@ def z_position_of_minimum_z_projection(
     -------
     Image
     """
-    return _get_backend()._z_position_of_minimum_z_projection(device, input_image, output_image, keep_dims)
+    return _get_backend()._z_position_of_minimum_z_projection(
+        device, input_image, output_image, keep_dims
+    )
+
 
 @plugin_function(categories=["projection"])
 def z_position_projection(
     input_image: Image,
     position: Image,
-    output_image: Optional[Image] =None,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    device: Optional[Device] = None,
 ) -> Image:
     """Project a defined Z-slice of a 3D stack into a 2D image.  Which Z-slice is
     defined as the position image, which represents an altitude map.
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input image stack
-    position: Image 
+    position: Image
         altitude map
     output_image: Optional[Image] (= None)
         Output image
@@ -5697,22 +6368,25 @@ def z_position_projection(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_zPositionProjection
     """
-    return _get_backend()._z_position_projection(device, input_image, position, output_image)
+    return _get_backend()._z_position_projection(
+        device, input_image, position, output_image
+    )
+
 
 @plugin_function
 def mean_of_touching_neighbors(
     vector: Image,
     matrix: Image,
-    output_image: Optional[Image] =None,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    device: Optional[Device] = None,
 ) -> Image:
     """Compute the mean_of_touching_neighbors
 
     Parameters
     ----------
-    vector: Image 
+    vector: Image
         Input vector to process.
-    matrix: Image 
+    matrix: Image
         Input adjacency matrix to process.
     output_image: Optional[Image] (= None)
         Output result vector.
@@ -5723,22 +6397,25 @@ def mean_of_touching_neighbors(
     -------
     Image
     """
-    return _get_backend()._mean_of_touching_neighbors(device, vector, matrix, output_image)
+    return _get_backend()._mean_of_touching_neighbors(
+        device, vector, matrix, output_image
+    )
+
 
 @plugin_function
 def median_of_touching_neighbors(
     vector: Image,
     matrix: Image,
-    output_image: Optional[Image] =None,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    device: Optional[Device] = None,
 ) -> Image:
     """Compute the median_of_touching_neighbors
 
     Parameters
     ----------
-    vector: Image 
+    vector: Image
         Input vector to process.
-    matrix: Image 
+    matrix: Image
         Input adjacency matrix to process.
     output_image: Optional[Image] (= None)
         Output result vector.
@@ -5749,22 +6426,25 @@ def median_of_touching_neighbors(
     -------
     Image
     """
-    return _get_backend()._median_of_touching_neighbors(device, vector, matrix, output_image)
+    return _get_backend()._median_of_touching_neighbors(
+        device, vector, matrix, output_image
+    )
+
 
 @plugin_function
 def minimum_of_touching_neighbors(
     vector: Image,
     matrix: Image,
-    output_image: Optional[Image] =None,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    device: Optional[Device] = None,
 ) -> Image:
     """Compute the minimum_of_touching_neighbors
 
     Parameters
     ----------
-    vector: Image 
+    vector: Image
         Input vector to process.
-    matrix: Image 
+    matrix: Image
         Input adjacency matrix to process.
     output_image: Optional[Image] (= None)
         Output result vector.
@@ -5775,22 +6455,25 @@ def minimum_of_touching_neighbors(
     -------
     Image
     """
-    return _get_backend()._minimum_of_touching_neighbors(device, vector, matrix, output_image)
+    return _get_backend()._minimum_of_touching_neighbors(
+        device, vector, matrix, output_image
+    )
+
 
 @plugin_function
 def maximum_of_touching_neighbors(
     vector: Image,
     matrix: Image,
-    output_image: Optional[Image] =None,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    device: Optional[Device] = None,
 ) -> Image:
     """Compute the maximum_of_touching_neighbors
 
     Parameters
     ----------
-    vector: Image 
+    vector: Image
         Input vector to process.
-    matrix: Image 
+    matrix: Image
         Input adjacency matrix to process.
     output_image: Optional[Image] (= None)
         Output result vector.
@@ -5801,22 +6484,25 @@ def maximum_of_touching_neighbors(
     -------
     Image
     """
-    return _get_backend()._maximum_of_touching_neighbors(device, vector, matrix, output_image)
+    return _get_backend()._maximum_of_touching_neighbors(
+        device, vector, matrix, output_image
+    )
+
 
 @plugin_function
 def standard_deviation_of_touching_neighbors(
     vector: Image,
     matrix: Image,
-    output_image: Optional[Image] =None,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    device: Optional[Device] = None,
 ) -> Image:
     """Compute the standard_deviation_of_touching_neighbors
 
     Parameters
     ----------
-    vector: Image 
+    vector: Image
         Input vector to process.
-    matrix: Image 
+    matrix: Image
         Input adjacency matrix to process.
     output_image: Optional[Image] (= None)
         Output result vector.
@@ -5827,22 +6513,25 @@ def standard_deviation_of_touching_neighbors(
     -------
     Image
     """
-    return _get_backend()._standard_deviation_of_touching_neighbors(device, vector, matrix, output_image)
+    return _get_backend()._standard_deviation_of_touching_neighbors(
+        device, vector, matrix, output_image
+    )
+
 
 @plugin_function
 def mode_of_touching_neighbors(
     vector: Image,
     matrix: Image,
-    output_image: Optional[Image] =None,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    device: Optional[Device] = None,
 ) -> Image:
     """Compute the mode_of_touching_neighbors
 
     Parameters
     ----------
-    vector: Image 
+    vector: Image
         Input vector to process.
-    matrix: Image 
+    matrix: Image
         Input adjacency matrix to process.
     output_image: Optional[Image] (= None)
         Output result vector.
@@ -5853,20 +6542,23 @@ def mode_of_touching_neighbors(
     -------
     Image
     """
-    return _get_backend()._mode_of_touching_neighbors(device, vector, matrix, output_image)
+    return _get_backend()._mode_of_touching_neighbors(
+        device, vector, matrix, output_image
+    )
+
 
 @plugin_function(categories=["filter", "in assistant"])
 def ceil(
     input_image: Image,
-    output_image: Optional[Image] =None,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    device: Optional[Device] = None,
 ) -> Image:
     """Computes each values to integral values using the round to positive infinity
     rounding mode.
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
@@ -5879,18 +6571,19 @@ def ceil(
     """
     return _get_backend()._ceil(device, input_image, output_image)
 
+
 @plugin_function(categories=["filter", "in assistant"])
 def floor(
     input_image: Image,
-    output_image: Optional[Image] =None,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    device: Optional[Device] = None,
 ) -> Image:
     """Computes each values to integral values using the round to negative infinity
     rounding mode.
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
@@ -5903,18 +6596,19 @@ def floor(
     """
     return _get_backend()._floor(device, input_image, output_image)
 
+
 @plugin_function(categories=["filter", "in assistant"])
 def round(
     input_image: Image,
-    output_image: Optional[Image] =None,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    device: Optional[Device] = None,
 ) -> Image:
     """Computes each values to integral values using the round to nearest integer
     rounding mode.
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
@@ -5927,17 +6621,18 @@ def round(
     """
     return _get_backend()._round(device, input_image, output_image)
 
+
 @plugin_function(categories=["filter", "in assistant"])
 def truncate(
     input_image: Image,
-    output_image: Optional[Image] =None,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    device: Optional[Device] = None,
 ) -> Image:
     """Computes each values to integral values by removing the fractional part.
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input image to process.
     output_image: Optional[Image] (= None)
         Output result image.
@@ -5950,21 +6645,22 @@ def truncate(
     """
     return _get_backend()._truncate(device, input_image, output_image)
 
+
 @plugin_function
 def minimum_distance_touching_neighbors(
     input_image_distance_matrix: Image,
     input_image_touch_matrix: Image,
-    output_image_index_list: Optional[Image] =None,
-    device: Optional[Device] =None
+    output_image_index_list: Optional[Image] = None,
+    device: Optional[Device] = None,
 ) -> Image:
     """For each label in a touch matrix and its corresponding distance matrix, compute
     the minimum distance to all touching neighbors.
 
     Parameters
     ----------
-    input_image_distance_matrix: Image 
+    input_image_distance_matrix: Image
         Input distance matrix containing pairwise distances between labels.
-    input_image_touch_matrix: Image 
+    input_image_touch_matrix: Image
         Input touch matrix encoding which labels are neighbors.
     output_image_index_list: Optional[Image] (= None)
         Output vector containing the minimum touching-neighbor distance per label.
@@ -5975,23 +6671,29 @@ def minimum_distance_touching_neighbors(
     -------
     Image
     """
-    return _get_backend()._minimum_distance_touching_neighbors(device, input_image_distance_matrix, input_image_touch_matrix, output_image_index_list)
+    return _get_backend()._minimum_distance_touching_neighbors(
+        device,
+        input_image_distance_matrix,
+        input_image_touch_matrix,
+        output_image_index_list,
+    )
+
 
 @plugin_function
 def maximum_distance_touching_neighbors(
     input_image_distance_matrix: Image,
     input_image_touch_matrix: Image,
-    output_image_index_list: Optional[Image] =None,
-    device: Optional[Device] =None
+    output_image_index_list: Optional[Image] = None,
+    device: Optional[Device] = None,
 ) -> Image:
     """For each label in a touch matrix and its corresponding distance matrix, compute
     the maximum distance to all touching neighbors.
 
     Parameters
     ----------
-    input_image_distance_matrix: Image 
+    input_image_distance_matrix: Image
         Input distance matrix containing pairwise distances between labels.
-    input_image_touch_matrix: Image 
+    input_image_touch_matrix: Image
         Input touch matrix encoding which labels are neighbors.
     output_image_index_list: Optional[Image] (= None)
         Output vector containing the maximum touching-neighbor distance per label.
@@ -6002,23 +6704,29 @@ def maximum_distance_touching_neighbors(
     -------
     Image
     """
-    return _get_backend()._maximum_distance_touching_neighbors(device, input_image_distance_matrix, input_image_touch_matrix, output_image_index_list)
+    return _get_backend()._maximum_distance_touching_neighbors(
+        device,
+        input_image_distance_matrix,
+        input_image_touch_matrix,
+        output_image_index_list,
+    )
+
 
 @plugin_function
 def mean_distance_touching_neighbors(
     input_image_distance_matrix: Image,
     input_image_touch_matrix: Image,
-    output_image_index_list: Optional[Image] =None,
-    device: Optional[Device] =None
+    output_image_index_list: Optional[Image] = None,
+    device: Optional[Device] = None,
 ) -> Image:
     """For each label in a touch matrix and its corresponding distance matrix, compute
     the mean distance to all touching neighbors.
 
     Parameters
     ----------
-    input_image_distance_matrix: Image 
+    input_image_distance_matrix: Image
         Input distance matrix containing pairwise distances between labels.
-    input_image_touch_matrix: Image 
+    input_image_touch_matrix: Image
         Input touch matrix encoding which labels are neighbors.
     output_image_index_list: Optional[Image] (= None)
         Output vector containing the mean touching-neighbor distance per label.
@@ -6029,24 +6737,32 @@ def mean_distance_touching_neighbors(
     -------
     Image
     """
-    return _get_backend()._mean_distance_touching_neighbors(device, input_image_distance_matrix, input_image_touch_matrix, output_image_index_list)
+    return _get_backend()._mean_distance_touching_neighbors(
+        device,
+        input_image_distance_matrix,
+        input_image_touch_matrix,
+        output_image_index_list,
+    )
 
-@deprecated('average_distance_touching_neighbors: This function is deprecated. Consider using mean_distance_touching_neighbors() instead.')
+
+@deprecated(
+    "average_distance_touching_neighbors: This function is deprecated. Consider using mean_distance_touching_neighbors() instead."
+)
 @plugin_function
 def average_distance_touching_neighbors(
     input_image_distance_matrix: Image,
     input_image_touch_matrix: Image,
-    output_image_index_list: Optional[Image] =None,
-    device: Optional[Device] =None
+    output_image_index_list: Optional[Image] = None,
+    device: Optional[Device] = None,
 ) -> Image:
     """For each label in a touch matrix and its corresponding distance matrix, compute
     the mean distance to all touching neighbors.
 
     Parameters
     ----------
-    input_image_distance_matrix: Image 
+    input_image_distance_matrix: Image
         Input distance matrix containing pairwise distances between labels.
-    input_image_touch_matrix: Image 
+    input_image_touch_matrix: Image
         Input touch matrix encoding which labels are neighbors.
     output_image_index_list: Optional[Image] (= None)
         Output vector containing the average touching-neighbor distance per label.
@@ -6057,21 +6773,27 @@ def average_distance_touching_neighbors(
     -------
     Image
     """
-    return _get_backend()._average_distance_touching_neighbors(device, input_image_distance_matrix, input_image_touch_matrix, output_image_index_list)
+    return _get_backend()._average_distance_touching_neighbors(
+        device,
+        input_image_distance_matrix,
+        input_image_touch_matrix,
+        output_image_index_list,
+    )
+
 
 @plugin_function
 def mean_distance_n_nearest_neighbors(
     input_image_distance_matrix: Image,
-    output_image_index_list: Optional[Image] =None,
-    n: int =1,
-    device: Optional[Device] =None
+    output_image_index_list: Optional[Image] = None,
+    n: int = 1,
+    device: Optional[Device] = None,
 ) -> Image:
     """For each label in a distance matrix, compute the mean distance to its N nearest
     neighbors.
 
     Parameters
     ----------
-    input_image_distance_matrix: Image 
+    input_image_distance_matrix: Image
         Input distance matrix containing pairwise distances between labels.
     output_image_index_list: Optional[Image] (= None)
         Output vector containing the mean N-nearest-neighbor distance per label.
@@ -6084,21 +6806,24 @@ def mean_distance_n_nearest_neighbors(
     -------
     Image
     """
-    return _get_backend()._mean_distance_n_nearest_neighbors(device, input_image_distance_matrix, output_image_index_list, int(n))
+    return _get_backend()._mean_distance_n_nearest_neighbors(
+        device, input_image_distance_matrix, output_image_index_list, int(n)
+    )
+
 
 @plugin_function
 def maximum_distance_n_nearest_neighbors(
     input_image_distance_matrix: Image,
-    output_image_index_list: Optional[Image] =None,
-    n: int =1,
-    device: Optional[Device] =None
+    output_image_index_list: Optional[Image] = None,
+    n: int = 1,
+    device: Optional[Device] = None,
 ) -> Image:
     """For each label in a distance matrix, compute the maximum distance among its N
     nearest neighbors.
 
     Parameters
     ----------
-    input_image_distance_matrix: Image 
+    input_image_distance_matrix: Image
         Input distance matrix containing pairwise distances between labels.
     output_image_index_list: Optional[Image] (= None)
         Output vector containing the maximum N-nearest-neighbor distance per label.
@@ -6111,21 +6836,24 @@ def maximum_distance_n_nearest_neighbors(
     -------
     Image
     """
-    return _get_backend()._maximum_distance_n_nearest_neighbors(device, input_image_distance_matrix, output_image_index_list, int(n))
+    return _get_backend()._maximum_distance_n_nearest_neighbors(
+        device, input_image_distance_matrix, output_image_index_list, int(n)
+    )
+
 
 @plugin_function
 def mean_distance_n_farthest_neighbors(
     input_image_distance_matrix: Image,
-    output_image_index_list: Optional[Image] =None,
-    n: int =1,
-    device: Optional[Device] =None
+    output_image_index_list: Optional[Image] = None,
+    n: int = 1,
+    device: Optional[Device] = None,
 ) -> Image:
     """For each label in a distance matrix, compute the mean distance to its N farthest
     neighbors.
 
     Parameters
     ----------
-    input_image_distance_matrix: Image 
+    input_image_distance_matrix: Image
         Input distance matrix containing pairwise distances between labels.
     output_image_index_list: Optional[Image] (= None)
         Output vector containing the mean N-farthest-neighbor distance per label.
@@ -6138,22 +6866,27 @@ def mean_distance_n_farthest_neighbors(
     -------
     Image
     """
-    return _get_backend()._mean_distance_n_farthest_neighbors(device, input_image_distance_matrix, output_image_index_list, int(n))
+    return _get_backend()._mean_distance_n_farthest_neighbors(
+        device, input_image_distance_matrix, output_image_index_list, int(n)
+    )
 
-@deprecated('average_distance_of_n_nearest_distances: This function is deprecated. Consider using mean_distance_n_nearest_neighbors() instead.')
+
+@deprecated(
+    "average_distance_of_n_nearest_distances: This function is deprecated. Consider using mean_distance_n_nearest_neighbors() instead."
+)
 @plugin_function
 def average_distance_of_n_nearest_distances(
     input_image_distance_matrix: Image,
-    output_image_index_list: Optional[Image] =None,
-    n: int =1,
-    device: Optional[Device] =None
+    output_image_index_list: Optional[Image] = None,
+    n: int = 1,
+    device: Optional[Device] = None,
 ) -> Image:
     """For each label in a distance matrix, compute the mean distance to its N nearest
     neighbors.
 
     Parameters
     ----------
-    input_image_distance_matrix: Image 
+    input_image_distance_matrix: Image
         Input distance matrix containing pairwise distances between labels.
     output_image_index_list: Optional[Image] (= None)
         Output vector containing the mean N-nearest-neighbor distance per label.
@@ -6166,22 +6899,27 @@ def average_distance_of_n_nearest_distances(
     -------
     Image
     """
-    return _get_backend()._average_distance_of_n_nearest_distances(device, input_image_distance_matrix, output_image_index_list, int(n))
+    return _get_backend()._average_distance_of_n_nearest_distances(
+        device, input_image_distance_matrix, output_image_index_list, int(n)
+    )
 
-@deprecated('maximum_distance_of_n_shortest_distances: This function is deprecated. Consider using maximum_distance_n_nearest_neighbors() instead.')
+
+@deprecated(
+    "maximum_distance_of_n_shortest_distances: This function is deprecated. Consider using maximum_distance_n_nearest_neighbors() instead."
+)
 @plugin_function
 def maximum_distance_of_n_shortest_distances(
     input_image_distance_matrix: Image,
-    output_image_index_list: Optional[Image] =None,
-    n: int =1,
-    device: Optional[Device] =None
+    output_image_index_list: Optional[Image] = None,
+    n: int = 1,
+    device: Optional[Device] = None,
 ) -> Image:
     """For each label in a distance matrix, compute the maximum distance among its N
     nearest neighbors.
 
     Parameters
     ----------
-    input_image_distance_matrix: Image 
+    input_image_distance_matrix: Image
         Input distance matrix containing pairwise distances between labels.
     output_image_index_list: Optional[Image] (= None)
         Output vector containing the maximum N-nearest-neighbor distance per label.
@@ -6194,22 +6932,27 @@ def maximum_distance_of_n_shortest_distances(
     -------
     Image
     """
-    return _get_backend()._maximum_distance_of_n_shortest_distances(device, input_image_distance_matrix, output_image_index_list, int(n))
+    return _get_backend()._maximum_distance_of_n_shortest_distances(
+        device, input_image_distance_matrix, output_image_index_list, int(n)
+    )
 
-@deprecated('average_distance_of_n_far_off_distances: This function is deprecated. Consider using mean_distance_n_farthest_neighbors() instead.')
+
+@deprecated(
+    "average_distance_of_n_far_off_distances: This function is deprecated. Consider using mean_distance_n_farthest_neighbors() instead."
+)
 @plugin_function
 def average_distance_of_n_far_off_distances(
     input_image_distance_matrix: Image,
-    output_image_index_list: Optional[Image] =None,
-    n: int =1,
-    device: Optional[Device] =None
+    output_image_index_list: Optional[Image] = None,
+    n: int = 1,
+    device: Optional[Device] = None,
 ) -> Image:
     """For each label in a distance matrix, compute the mean distance to its N farthest
     neighbors.
 
     Parameters
     ----------
-    input_image_distance_matrix: Image 
+    input_image_distance_matrix: Image
         Input distance matrix containing pairwise distances between labels.
     output_image_index_list: Optional[Image] (= None)
         Output vector containing the mean N-farthest-neighbor distance per label.
@@ -6222,6 +6965,209 @@ def average_distance_of_n_far_off_distances(
     -------
     Image
     """
-    return _get_backend()._average_distance_of_n_far_off_distances(device, input_image_distance_matrix, output_image_index_list, int(n))
+    return _get_backend()._average_distance_of_n_far_off_distances(
+        device, input_image_distance_matrix, output_image_index_list, int(n)
+    )
 
-__all__ = ["absolute", "sin", "cos", "tan", "asin", "acos", "atan", "sinh", "cosh", "tanh", "add_images_weighted", "add_image_and_scalar", "binary_and", "binary_edge_detection", "binary_not", "binary_or", "binary_subtract", "binary_xor", "binary_supinf", "binary_infsup", "block_enumerate", "circular_shift", "cumulative_sum", "cumulative_min", "cumulative_max", "cumulative_product", "convolve", "copy", "copy_slice", "copy_horizontal_slice", "copy_vertical_slice", "crop", "cubic_root", "detect_label_edges", "dilation", "dilate_box", "dilate_sphere", "binary_dilate", "divide_images", "divide_scalar_by_image", "equal", "equal_constant", "erosion", "erode_box", "erode_sphere", "binary_erode", "exponential", "exponential2", "exponential10", "flip", "gaussian_blur", "gaussian_derivative", "generate_distance_matrix", "gradient_x", "gradient_y", "gradient_z", "greater", "greater_constant", "greater_or_equal", "greater_or_equal_constant", "hessian_eigenvalues", "laplace_box", "laplace_diamond", "laplace", "local_cross_correlation", "logarithm", "logarithm2", "logarithm10", "mask", "mask_label", "maximum_image_and_scalar", "maximum_images", "maximum_box", "maximum_filter", "grayscale_dilate", "maximum_x_projection", "maximum_y_projection", "maximum_z_projection", "mean_box", "mean_sphere", "mean_filter", "mean_x_projection", "mean_y_projection", "mean_z_projection", "median_box", "median_sphere", "median", "minimum_box", "minimum_filter", "grayscale_erode", "minimum_image_and_scalar", "minimum_images", "minimum_x_projection", "minimum_y_projection", "minimum_z_projection", "mode_box", "mode_sphere", "mode", "modulo_images", "multiply_image_and_position", "multiply_image_and_scalar", "multiply_images", "nan_to_num", "nonzero_maximum_box", "nonzero_maximum_diamond", "nonzero_maximum", "nonzero_minimum_box", "nonzero_minimum_diamond", "nonzero_minimum", "not_equal", "not_equal_constant", "paste", "onlyzero_overwrite_maximum_box", "onlyzero_overwrite_maximum_diamond", "onlyzero_overwrite_maximum", "power", "power_images", "range", "gather", "scatter", "read_values_from_positions", "replace_values", "replace_value", "replace_intensity", "replace_intensities", "maximum_sphere", "minimum_sphere", "multiply_matrix", "pad", "unpad", "reciprocal", "set", "set_column", "set_image_borders", "set_plane", "set_ramp_x", "set_ramp_y", "set_ramp_z", "set_row", "set_nonzero_pixels_to_pixelindex", "set_where_x_equals_y", "set_where_x_greater_than_y", "set_where_x_smaller_than_y", "sign", "smaller", "smaller_constant", "smaller_or_equal", "smaller_or_equal_constant", "sobel", "square_root", "std_x_projection", "std_y_projection", "std_z_projection", "variance_x_projection", "variance_y_projection", "variance_z_projection", "subtract_image_from_scalar", "sum_reduction_x", "sum_x_projection", "sum_y_projection", "sum_z_projection", "product_x_projection", "product_y_projection", "product_z_projection", "transpose_xy", "transpose_xz", "transpose_yz", "undefined_to_zero", "variance_box", "variance_sphere", "variance_filter", "write_values_to_positions", "x_position_of_maximum_x_projection", "x_position_of_minimum_x_projection", "y_position_of_maximum_y_projection", "y_position_of_minimum_y_projection", "z_position_of_maximum_z_projection", "z_position_of_minimum_z_projection", "z_position_projection", "mean_of_touching_neighbors", "median_of_touching_neighbors", "minimum_of_touching_neighbors", "maximum_of_touching_neighbors", "standard_deviation_of_touching_neighbors", "mode_of_touching_neighbors", "ceil", "floor", "round", "truncate", "minimum_distance_touching_neighbors", "maximum_distance_touching_neighbors", "mean_distance_touching_neighbors", "average_distance_touching_neighbors", "mean_distance_n_nearest_neighbors", "maximum_distance_n_nearest_neighbors", "mean_distance_n_farthest_neighbors", "average_distance_of_n_nearest_distances", "maximum_distance_of_n_shortest_distances", "average_distance_of_n_far_off_distances"]
+
+__all__ = [
+    "absolute",
+    "sin",
+    "cos",
+    "tan",
+    "asin",
+    "acos",
+    "atan",
+    "sinh",
+    "cosh",
+    "tanh",
+    "add_images_weighted",
+    "add_image_and_scalar",
+    "binary_and",
+    "binary_edge_detection",
+    "binary_not",
+    "binary_or",
+    "binary_subtract",
+    "binary_xor",
+    "binary_supinf",
+    "binary_infsup",
+    "block_enumerate",
+    "circular_shift",
+    "cumulative_sum",
+    "cumulative_min",
+    "cumulative_max",
+    "cumulative_product",
+    "convolve",
+    "copy",
+    "copy_slice",
+    "copy_horizontal_slice",
+    "copy_vertical_slice",
+    "crop",
+    "cubic_root",
+    "detect_label_edges",
+    "dilation",
+    "dilate_box",
+    "dilate_sphere",
+    "binary_dilate",
+    "divide_images",
+    "divide_scalar_by_image",
+    "equal",
+    "equal_constant",
+    "erosion",
+    "erode_box",
+    "erode_sphere",
+    "binary_erode",
+    "exponential",
+    "exponential2",
+    "exponential10",
+    "flip",
+    "gaussian_blur",
+    "gaussian_derivative",
+    "generate_distance_matrix",
+    "gradient_x",
+    "gradient_y",
+    "gradient_z",
+    "greater",
+    "greater_constant",
+    "greater_or_equal",
+    "greater_or_equal_constant",
+    "hessian_eigenvalues",
+    "laplace_box",
+    "laplace_diamond",
+    "laplace",
+    "local_cross_correlation",
+    "logarithm",
+    "logarithm2",
+    "logarithm10",
+    "mask",
+    "mask_label",
+    "maximum_image_and_scalar",
+    "maximum_images",
+    "maximum_box",
+    "maximum_filter",
+    "grayscale_dilate",
+    "maximum_x_projection",
+    "maximum_y_projection",
+    "maximum_z_projection",
+    "mean_box",
+    "mean_sphere",
+    "mean_filter",
+    "mean_x_projection",
+    "mean_y_projection",
+    "mean_z_projection",
+    "median_box",
+    "median_sphere",
+    "median",
+    "minimum_box",
+    "minimum_filter",
+    "grayscale_erode",
+    "minimum_image_and_scalar",
+    "minimum_images",
+    "minimum_x_projection",
+    "minimum_y_projection",
+    "minimum_z_projection",
+    "mode_box",
+    "mode_sphere",
+    "mode",
+    "modulo_images",
+    "multiply_image_and_position",
+    "multiply_image_and_scalar",
+    "multiply_images",
+    "nan_to_num",
+    "nonzero_maximum_box",
+    "nonzero_maximum_diamond",
+    "nonzero_maximum",
+    "nonzero_minimum_box",
+    "nonzero_minimum_diamond",
+    "nonzero_minimum",
+    "not_equal",
+    "not_equal_constant",
+    "paste",
+    "onlyzero_overwrite_maximum_box",
+    "onlyzero_overwrite_maximum_diamond",
+    "onlyzero_overwrite_maximum",
+    "power",
+    "power_images",
+    "range",
+    "gather",
+    "scatter",
+    "read_values_from_positions",
+    "replace_values",
+    "replace_value",
+    "replace_intensity",
+    "replace_intensities",
+    "maximum_sphere",
+    "minimum_sphere",
+    "multiply_matrix",
+    "pad",
+    "unpad",
+    "reciprocal",
+    "set",
+    "set_column",
+    "set_image_borders",
+    "set_plane",
+    "set_ramp_x",
+    "set_ramp_y",
+    "set_ramp_z",
+    "set_row",
+    "set_nonzero_pixels_to_pixelindex",
+    "set_where_x_equals_y",
+    "set_where_x_greater_than_y",
+    "set_where_x_smaller_than_y",
+    "sign",
+    "smaller",
+    "smaller_constant",
+    "smaller_or_equal",
+    "smaller_or_equal_constant",
+    "sobel",
+    "square_root",
+    "std_x_projection",
+    "std_y_projection",
+    "std_z_projection",
+    "variance_x_projection",
+    "variance_y_projection",
+    "variance_z_projection",
+    "subtract_image_from_scalar",
+    "sum_reduction_x",
+    "sum_x_projection",
+    "sum_y_projection",
+    "sum_z_projection",
+    "product_x_projection",
+    "product_y_projection",
+    "product_z_projection",
+    "transpose_xy",
+    "transpose_xz",
+    "transpose_yz",
+    "undefined_to_zero",
+    "variance_box",
+    "variance_sphere",
+    "variance_filter",
+    "write_values_to_positions",
+    "x_position_of_maximum_x_projection",
+    "x_position_of_minimum_x_projection",
+    "y_position_of_maximum_y_projection",
+    "y_position_of_minimum_y_projection",
+    "z_position_of_maximum_z_projection",
+    "z_position_of_minimum_z_projection",
+    "z_position_projection",
+    "mean_of_touching_neighbors",
+    "median_of_touching_neighbors",
+    "minimum_of_touching_neighbors",
+    "maximum_of_touching_neighbors",
+    "standard_deviation_of_touching_neighbors",
+    "mode_of_touching_neighbors",
+    "ceil",
+    "floor",
+    "round",
+    "truncate",
+    "minimum_distance_touching_neighbors",
+    "maximum_distance_touching_neighbors",
+    "mean_distance_touching_neighbors",
+    "average_distance_touching_neighbors",
+    "mean_distance_n_nearest_neighbors",
+    "maximum_distance_n_nearest_neighbors",
+    "mean_distance_n_farthest_neighbors",
+    "average_distance_of_n_nearest_distances",
+    "maximum_distance_of_n_shortest_distances",
+    "average_distance_of_n_far_off_distances",
+]

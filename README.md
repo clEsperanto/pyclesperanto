@@ -20,7 +20,7 @@ To install pyclesperanto from `pip`:
 pip install pyclesperanto[all]
 ```
 
-Full documentation, examples and API references [here](https://clesperanto-doc.readthedocs.io/en/latest/docs/pyclesperanto/index.html) 📚 
+Full documentation, examples and API references [here](https://clesperanto-doc.readthedocs.io/en/latest/docs/pyclesperanto/index.html) 📚
 
 If you encountering any difficulties or have questions we encourage you to raise them on the [image.sc forum] under the tag `clesperanto`,
 or to open a [github issue](https://github.com/clEsperanto/pyclesperanto/issues).

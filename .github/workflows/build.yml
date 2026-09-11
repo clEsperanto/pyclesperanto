@@ -25,7 +25,7 @@ jobs:
         uses: actions/checkout@v7
 
       - name: Setup Python with uv
-        uses: astral-sh/setup-uv@v8.0.0
+        uses: astral-sh/setup-uv@v10.0.1
         with:
           python-version: ${{ matrix.python-version }}
           activate-environment: "true"
@@ -39,7 +39,7 @@ jobs:
       - name: Install CUDA Toolkit
         if: matrix.backend == 'CUDA'
         id: cuda-toolkit-linux
-        uses: Jimver/cuda-toolkit@v0.2.35
+        uses: Jimver/cuda-toolkit@v0.2.36
         with:
           cuda: ${{ env.CUDA_VERSION }}
           method: 'network'

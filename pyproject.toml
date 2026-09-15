@@ -4,7 +4,7 @@
 
 [build-system]
 build-backend = "hatchling.build"
-requires = ["hatchling", "wheel"]
+requires = ["hatchling<1.30.0", "wheel"]
 
 # =============================================================================
 # Package Metadata

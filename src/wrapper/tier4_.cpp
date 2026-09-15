@@ -1,5 +1,5 @@
 // this code is auto-generated, do not edit manually
-
+    
 #include "pycle_wrapper.hpp"
 #include "tier4.hpp"
 
@@ -31,6 +31,18 @@ m.def("_label_bounding_box", &cle::tier4::label_bounding_box_func, "Call cle::ti
     py::arg("device"), py::arg("src"), py::arg("dst"));
 
     m.def("_threshold_mean", &cle::tier4::threshold_mean_func, "Call cle::tier4::threshold_mean_func from C++ CLIc.",
+    py::return_value_policy::automatic_reference,
+    py::arg("device"), py::arg("src"), py::arg("dst"));
+
+    m.def("_threshold_triangle", &cle::tier4::threshold_triangle_func, "Call cle::tier4::threshold_triangle_func from C++ CLIc.",
+    py::return_value_policy::automatic_reference,
+    py::arg("device"), py::arg("src"), py::arg("dst"));
+
+    m.def("_threshold_isodata", &cle::tier4::threshold_isodata_func, "Call cle::tier4::threshold_isodata_func from C++ CLIc.",
+    py::return_value_policy::automatic_reference,
+    py::arg("device"), py::arg("src"), py::arg("dst"));
+
+    m.def("_threshold_li", &cle::tier4::threshold_li_func, "Call cle::tier4::threshold_li_func from C++ CLIc.",
     py::return_value_policy::automatic_reference,
     py::arg("device"), py::arg("src"), py::arg("dst"));
 

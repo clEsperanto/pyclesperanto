@@ -97,6 +97,9 @@ if _backend_available:
 
     from ._interroperability import *  # isort:skip
 
+    from . import _transform as transform
+    from ._transform import AffineTransform
+
     _default_initialisation()
 
 __all__ = [
@@ -130,6 +133,8 @@ if _backend_available:
         "push",
         "evaluate",
         "fft_smooth_shape",
+        "AffineTransform",
+        "transform",
     ]
 
     for _tier_name in [

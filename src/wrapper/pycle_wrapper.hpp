@@ -10,8 +10,8 @@ auto types_(pybind11::module_ &module) -> void;
 auto core_(pybind11::module_ &module) -> void;
 auto array_(pybind11::module_ &module) -> void;
 auto transform_(pybind11::module_ &module) -> void;
+auto fft_(pybind11::module_ &module) -> void;
 auto execute_(pybind11::module_ &module) -> void;
-auto utils_(pybind11::module_ &module) -> void;
 
 auto tier1_(pybind11::module_ &module) -> void;
 auto tier2_(pybind11::module_ &module) -> void;

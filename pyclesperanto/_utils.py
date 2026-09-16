@@ -127,7 +127,6 @@ def _assert_supported_dtype(x):
         raise TypeError("dtype %s not supported " % x_type)
 
 
-
 def deprecated(message):
     def decorator(func):
         @wraps(func)

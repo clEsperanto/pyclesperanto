@@ -96,8 +96,8 @@ if _backend_available:
 
     from ._interroperability import *  # isort:skip
 
-    from . import _transform as transform
     from . import _fft as fft
+    from . import _transform as transform
     from ._transform import AffineTransform
 
     _default_initialisation()

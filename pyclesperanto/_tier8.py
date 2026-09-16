@@ -17,9 +17,9 @@ from ._utils import deprecated
 @plugin_function(categories=["label processing", "in assistant", "bia-bob-suggestion"])
 def smooth_labels(
     input_image: Image,
-    output_image: Optional[Image] =None,
-    radius: int =0,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    radius: int = 0,
+    device: Optional[Device] = None,
 ) -> Image:
     """Applies a morphological opening operation to a label image and afterward   fills
     gaps between the labels using Voronoi labeling. Finally, the result   label
@@ -28,7 +28,7 @@ def smooth_labels(
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input label image.
     output_image: Optional[Image] (= None)
         Output label image.
@@ -47,9 +47,9 @@ def smooth_labels(
 @plugin_function(categories=["label processing", "in assistant", "bia-bob-suggestion"])
 def smooth_connected_labels(
     input_image: Image,
-    output_image: Optional[Image] =None,
-    radius: int =0,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    radius: int = 0,
+    device: Optional[Device] = None,
 ) -> Image:
     """Applies a morphological erosion and dilation of the label image with respect to
     the connectivity of the labels.     Note: It is recommended to process isotropic
@@ -57,7 +57,7 @@ def smooth_connected_labels(
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input label image.
     output_image: Optional[Image] (= None)
         Output label image.
@@ -70,19 +70,21 @@ def smooth_connected_labels(
     -------
     Image
     """
-    return _get_backend()._smooth_connected_labels(device, input_image, output_image, int(radius))
+    return _get_backend()._smooth_connected_labels(
+        device, input_image, output_image, int(radius)
+    )
 
 
 @plugin_function
 def make_isotropic(
     input_image: Image,
-    output_image: Optional[Image] =None,
-    current_spacing_x: float =1.0,
-    current_spacing_y: float =1.0,
-    current_spacing_z: float =1.0,
-    target_spacing: float =-1.0,
-    interpolate: bool =True,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    current_spacing_x: float = 1.0,
+    current_spacing_y: float = 1.0,
+    current_spacing_z: float = 1.0,
+    target_spacing: float = -1.0,
+    interpolate: bool = True,
+    device: Optional[Device] = None,
 ) -> Image:
     """Resamples an image to make it isotropic by rescaling the image to a target
     spacing. The current spacings of the image in x, y, and z dimensions must be
@@ -94,7 +96,7 @@ def make_isotropic(
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input image.
     output_image: Optional[Image] (= None)
         Output image.
@@ -115,19 +117,28 @@ def make_isotropic(
     -------
     Image
     """
-    return _get_backend()._make_isotropic(device, input_image, output_image, float(current_spacing_x), float(current_spacing_y), float(current_spacing_z), float(target_spacing), interpolate)
+    return _get_backend()._make_isotropic(
+        device,
+        input_image,
+        output_image,
+        float(current_spacing_x),
+        float(current_spacing_y),
+        float(current_spacing_z),
+        float(target_spacing),
+        interpolate,
+    )
 
 
 @plugin_function
 def make_anisotropic(
     input_image: Image,
-    output_image: Optional[Image] =None,
-    current_spacing: float =-1.0,
-    target_spacing_x: float =-1.0,
-    target_spacing_y: float =-1.0,
-    target_spacing_z: float =-1.0,
-    interpolate: bool =True,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    current_spacing: float = -1.0,
+    target_spacing_x: float = -1.0,
+    target_spacing_y: float = -1.0,
+    target_spacing_z: float = -1.0,
+    interpolate: bool = True,
+    device: Optional[Device] = None,
 ) -> Image:
     """Resamples an image to make it anisotropic by rescaling the image to target
     spacings in x, y, and z dimensions. The current isotropic spacing of the image
@@ -139,7 +150,7 @@ def make_anisotropic(
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input image.
     output_image: Optional[Image] (= None)
         Output image.
@@ -160,6 +171,21 @@ def make_anisotropic(
     -------
     Image
     """
-    return _get_backend()._make_anisotropic(device, input_image, output_image, float(current_spacing), float(target_spacing_x), float(target_spacing_y), float(target_spacing_z), interpolate)
+    return _get_backend()._make_anisotropic(
+        device,
+        input_image,
+        output_image,
+        float(current_spacing),
+        float(target_spacing_x),
+        float(target_spacing_y),
+        float(target_spacing_z),
+        interpolate,
+    )
 
-__all__ = ["smooth_labels", "smooth_connected_labels", "make_isotropic", "make_anisotropic"]
+
+__all__ = [
+    "smooth_labels",
+    "smooth_connected_labels",
+    "make_isotropic",
+    "make_anisotropic",
+]

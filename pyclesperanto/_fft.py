@@ -6,7 +6,6 @@ from ._core import Device
 from ._decorators import plugin_function
 
 
-
 def smooth_shape(
     shape: Union[tuple, list],
 ) -> tuple:
@@ -39,18 +38,17 @@ def smooth_shape(
     return _get_backend()._smooth_shape(shape)[:length]
 
 
-
 @plugin_function
 def fft(
     input_image: Image,
-    output_image: Optional[Image] =None,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    device: Optional[Device] = None,
 ) -> Image:
     """Performs a 1D, 2D, or 3D FFT (Fast Fourier Transform) on the input image.
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input image.
     output_image: Optional[Image] (= None)
         Output image.
@@ -66,9 +64,7 @@ def fft(
 
 @plugin_function
 def ifft(
-    input_image: Image,
-    output_image: Image,
-    device: Optional[Device] =None
+    input_image: Image, output_image: Image, device: Optional[Device] = None
 ) -> Image:
     """Performs a 1D, 2D, or 3D IFFT (Inverse Fast Fourier Transform) on the input
     image. The input image must be Hermitian, and the output image must be provided
@@ -76,9 +72,9 @@ def ifft(
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input image.
-    output_image: Image 
+    output_image: Image
         Output image.
     device: Optional[Device] (= None)
         Device to perform the operation on.
@@ -94,9 +90,9 @@ def ifft(
 def convolve(
     input_image: Image,
     kernel: Image,
-    output_image: Optional[Image] =None,
-    correlate: bool =False,
-    device: Optional[Device] =None
+    output_image: Optional[Image] = None,
+    correlate: bool = False,
+    device: Optional[Device] = None,
 ) -> Image:
     """Performs a 1D, 2D, or 3D convolution using FFT between an input image and a
     kernel. Input image, PSF kernel, and normalization image are expected to be in
@@ -106,9 +102,9 @@ def convolve(
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input image.
-    kernel: Image 
+    kernel: Image
         Kernel image.
     output_image: Optional[Image] (= None)
         Output image.
@@ -121,18 +117,20 @@ def convolve(
     -------
     Image
     """
-    return _get_backend()._convolve(device, input_image, kernel, output_image, correlate)
+    return _get_backend()._convolve(
+        device, input_image, kernel, output_image, correlate
+    )
 
 
 @plugin_function
 def deconvolve(
     input_image: Image,
     psf: Image,
-    normalization: Optional[Image] =None,
-    output_image: Optional[Image] =None,
-    iteration: int =100,
-    regularization: float =0.0,
-    device: Optional[Device] =None
+    normalization: Optional[Image] = None,
+    output_image: Optional[Image] = None,
+    iteration: int = 100,
+    regularization: float = 0.0,
+    device: Optional[Device] = None,
 ) -> Image:
     """Performs a 1D, 2D, or 3D deconvolution using FFT between an input image and a
     PSF kernel. The deconvolution is performed using the Richardson-Lucy algorithm
@@ -145,9 +143,9 @@ def deconvolve(
 
     Parameters
     ----------
-    input_image: Image 
+    input_image: Image
         Input image.
-    psf: Image 
+    psf: Image
         Kernel image.
     normalization: Optional[Image] (= None)
         Normalization image.
@@ -164,7 +162,15 @@ def deconvolve(
     -------
     Image
     """
-    return _get_backend()._deconvolve(device, input_image, psf, normalization, output_image, int(iteration), float(regularization))
+    return _get_backend()._deconvolve(
+        device,
+        input_image,
+        psf,
+        normalization,
+        output_image,
+        int(iteration),
+        float(regularization),
+    )
 
 
 __all__ = ["fft", "ifft", "convolve", "deconvolve", "smooth_shape"]

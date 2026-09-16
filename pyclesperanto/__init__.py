@@ -47,7 +47,7 @@ if _backend_available:
     from . import __experimental__
 
     # Re-import Array/Image after patching so that cle.Array has the real class
-    from ._array import Array, Image  # noqa: F811
+    from ._array import Array, Image
 
     # Auto-select a default device
     from ._core import (
@@ -93,11 +93,11 @@ if _backend_available:
     from ._tier6 import *
     from ._tier7 import *
     from ._tier8 import *
-    from ._utils import fft_smooth_shape
 
     from ._interroperability import *  # isort:skip
 
     from . import _transform as transform
+    from . import _fft as fft
     from ._transform import AffineTransform
 
     _default_initialisation()
@@ -105,36 +105,58 @@ if _backend_available:
 __all__ = [
     "Array",
     "Image",
-    "is_image",
-    "select_backend",
-    "list_available_backends",
-    "get_backend_name",
     "__clic_version__",
     "__common_alias__",
     "__version__",
+    "categories",
+    "get_backend_name",
+    "is_image",
+    "list_available_backends",
+    "select_backend",
 ]
 
 if _backend_available:
     import importlib as _importlib
 
     __all__ += [
+        "AffineTransform",
         "Device",
-        "get_device",
-        "info",
-        "list_available_devices",
-        "select_device",
-        "wait_for_kernel_to_finish",
-        "execute",
-        "imshow",
-        "native_execute",
+        "__experimental__",
+        "arange",
+        "asarray",
+        "available_device_names",
+        "cl_info",
         "create",
+        "create_labels_like",
         "create_like",
+        "empty",
+        "empty_like",
+        "evaluate",
+        "execute",
+        "eye",
+        "fft",
+        "from_array",
+        "from_dlpack",
+        "full",
+        "full_like",
+        "get_device",
+        "imshow",
+        "info",
+        "linspace",
+        "list_available_devices",
+        "native_execute",
+        "ones",
+        "ones_like",
+        "operation",
+        "operations",
         "pull",
         "push",
-        "evaluate",
-        "fft_smooth_shape",
-        "AffineTransform",
+        "select_device",
+        "set_wait_for_kernel_finish",
         "transform",
+        "wait_for_kernel_to_finish",
+        "zeros",
+        "zeros_like",
     ]
 
     for _tier_name in [

@@ -86,10 +86,13 @@ def compute_output_shape_from_transform(
             f"compute_output_shape : 'input_shape' must be a tuple of length 1, 2 or 3, {len(input_shape)} given."
         )
 
-    x, y, z, transform = _get_backend()._prepare_output_shape_and_transform(width, height, depth, transform_matrix)
+    x, y, z, transform = _get_backend()._prepare_output_shape_and_transform(
+        width, height, depth, transform_matrix
+    )
     output_shape = (z, y, x)
 
     return output_shape, transform
+
 
 @plugin_function
 def affine_transform(
@@ -163,8 +166,9 @@ def affine_transform(
                 f"or a flat list/array of 16 or 9 floats, {transform_matrix!r} given."
             ) from error
 
-
-    return _get_backend()._affine_transform(input_image, output_image, transform_matrix, interpolate, resize)
+    return _get_backend()._affine_transform(
+        input_image, output_image, transform_matrix, interpolate, resize
+    )
 
 
 @plugin_function
@@ -212,7 +216,17 @@ def affine_transform_deskew(
     if not isinstance(voxel_size, (tuple, list)) or len(voxel_size) != 3:
         raise ValueError("voxel_size must be a tuple or list of length 3 as (z, y, x).")
 
-    return _get_backend()._affine_transform_deskew(input_image, output_image, transform_matrix, deskew_angle, voxel_size[-1], voxel_size[-2], voxel_size[-3], deskew_direction, resize)
+    return _get_backend()._affine_transform_deskew(
+        input_image,
+        output_image,
+        transform_matrix,
+        deskew_angle,
+        voxel_size[-1],
+        voxel_size[-2],
+        voxel_size[-3],
+        deskew_direction,
+        resize,
+    )
 
 
 __all__ = [

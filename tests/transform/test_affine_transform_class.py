@@ -104,17 +104,13 @@ def test_translate():
 def test_rotate_around_z_axis():
     transform = cle.transform.AffineTransform()
     transform.rotate_around_z_axis(90)
-    assert np.allclose(
-        transform.get_matrix()[:2, :2], [[0, -1], [1, 0]], atol=1e-6
-    )
+    assert np.allclose(transform.get_matrix()[:2, :2], [[0, -1], [1, 0]], atol=1e-6)
 
 
 def test_rotate_around_x_axis():
     transform = cle.transform.AffineTransform()
     transform.rotate_around_x_axis(90)
-    assert np.allclose(
-        transform.get_matrix()[1:3, 1:3], [[0, -1], [1, 0]], atol=1e-6
-    )
+    assert np.allclose(transform.get_matrix()[1:3, 1:3], [[0, -1], [1, 0]], atol=1e-6)
 
 
 def test_rotate_around_y_axis():
@@ -226,7 +222,8 @@ def test_get_inverse_transpose():
 
 def test_to_array_matches_flat_column_major_storage():
     matrix = np.array(
-        [[1, 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12], [13, 14, 15, 16]], dtype=np.float32
+        [[1, 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12], [13, 14, 15, 16]],
+        dtype=np.float32,
     )
     flat = cle.transform.AffineTransform.to_array(matrix)
     assert len(flat) == 16

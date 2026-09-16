@@ -13,10 +13,11 @@ from ._core import Device
 from ._decorators import plugin_function
 from ._utils import deprecated
 
-
 @plugin_function(categories=["combine"])
 def array_equal(
-    input_image0: Image, input_image1: Image, device: Optional[Device] = None
+    input_image0: Image,
+    input_image1: Image,
+    device: Optional[Device] =None
 ) -> bool:
     """Compares if all pixels of two images are identical. If the shape of the images
     or any pixel are different, returns false; true otherwise. This function works
@@ -24,9 +25,9 @@ def array_equal(
 
     Parameters
     ----------
-    input_image0: Image
+    input_image0: Image 
         First array to compare.
-    input_image1: Image
+    input_image1: Image 
         Second array to compare.
     device: Optional[Device] (= None)
         Device to perform the operation on.
@@ -41,20 +42,12 @@ def array_equal(
     """
     return _get_backend()._array_equal(device, input_image0, input_image1)
 
-
-@plugin_function(
-    categories=[
-        "label processing",
-        "combine labels",
-        "in assistant",
-        "bia-bob-suggestion",
-    ]
-)
+@plugin_function(categories=["label processing", "combine labels", "in assistant", "bia-bob-suggestion"])
 def combine_labels(
     input_image0: Image,
     input_image1: Image,
-    output_image: Optional[Image] = None,
-    device: Optional[Device] = None,
+    output_image: Optional[Image] =None,
+    device: Optional[Device] =None
 ) -> Image:
     """Combines two label images by adding labels from one label image to another.
     Labels in the second image overwrite labels in the first image. Afterward,
@@ -62,9 +55,9 @@ def combine_labels(
 
     Parameters
     ----------
-    input_image0: Image
+    input_image0: Image 
         Label image to add labels to.
-    input_image1: Image
+    input_image1: Image 
         Label image to add labels from.
     output_image: Optional[Image] (= None)
         Output label image.
@@ -75,27 +68,22 @@ def combine_labels(
     -------
     Image
     """
-    return _get_backend()._combine_labels(
-        device, input_image0, input_image1, output_image
-    )
+    return _get_backend()._combine_labels(device, input_image0, input_image1, output_image)
 
-
-@deprecated(
-    "connected_components_labeling: This method is deprecated. Consider using connected_component_labeling() instead."
-)
+@deprecated('connected_components_labeling: This method is deprecated. Consider using connected_component_labeling() instead.')
 @plugin_function(categories=["label", "in assistant"])
 def connected_components_labeling(
     input_image: Image,
-    output_image: Optional[Image] = None,
-    connectivity: str = "box",
-    device: Optional[Device] = None,
+    output_image: Optional[Image] =None,
+    connectivity: str ='box',
+    device: Optional[Device] =None
 ) -> Image:
     """Performs connected components analysis by inspecting the neighborhood of every
     pixel in a binary image and generates a label map.
 
     Parameters
     ----------
-    input_image: Image
+    input_image: Image 
         Binary image to label.
     output_image: Optional[Image] (= None)
         Output label image.
@@ -112,24 +100,21 @@ def connected_components_labeling(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_connectedComponentsLabelingBox
     """
-    return _get_backend()._connected_components_labeling(
-        device, input_image, output_image, str(connectivity)
-    )
-
+    return _get_backend()._connected_components_labeling(device, input_image, output_image, str(connectivity))
 
 @plugin_function(categories=["label", "in assistant", "bia-bob-suggestion"])
 def connected_component_labeling(
     input_image: Image,
-    output_image: Optional[Image] = None,
-    connectivity: str = "box",
-    device: Optional[Device] = None,
+    output_image: Optional[Image] =None,
+    connectivity: str ='box',
+    device: Optional[Device] =None
 ) -> Image:
     """Performs connected components analysis by inspecting the neighborhood of every
     pixel in a binary image and generates a label map.
 
     Parameters
     ----------
-    input_image: Image
+    input_image: Image 
         Binary image to label.
     output_image: Optional[Image] (= None)
         Output label image.
@@ -146,22 +131,19 @@ def connected_component_labeling(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_connectedComponentsLabelingBox
     """
-    return _get_backend()._connected_component_labeling(
-        device, input_image, output_image, str(connectivity)
-    )
-
+    return _get_backend()._connected_component_labeling(device, input_image, output_image, str(connectivity))
 
 @plugin_function(categories=["label processing", "in assistant", "bia-bob-suggestion"])
 def reduce_labels_to_centroids(
     input_image: Image,
-    output_image: Optional[Image] = None,
-    device: Optional[Device] = None,
+    output_image: Optional[Image] =None,
+    device: Optional[Device] =None
 ) -> Image:
     """Takes a label map and reduces each label to its centroid.
 
     Parameters
     ----------
-    input_image: Image
+    input_image: Image 
         Label image to reduce.
     output_image: Optional[Image] (= None)
         Output label image with centroids.
@@ -178,20 +160,19 @@ def reduce_labels_to_centroids(
     """
     return _get_backend()._reduce_labels_to_centroids(device, input_image, output_image)
 
-
 @plugin_function(categories=["label processing", "in assistant"])
 def filter_label_by_size(
     input_image: Image,
-    output_image: Optional[Image] = None,
-    minimum_size: float = 0,
-    maximum_size: float = 100,
-    device: Optional[Device] = None,
+    output_image: Optional[Image] =None,
+    minimum_size: float =0,
+    maximum_size: float =100,
+    device: Optional[Device] =None
 ) -> Image:
     """Filters labelled objects outside the min/max size range.
 
     Parameters
     ----------
-    input_image: Image
+    input_image: Image 
         Input label image.
     output_image: Optional[Image] (= None)
         Output label image.
@@ -210,24 +191,21 @@ def filter_label_by_size(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_excludeLabelsOutsideSizeRange
     """
-    return _get_backend()._filter_label_by_size(
-        device, input_image, output_image, float(minimum_size), float(maximum_size)
-    )
-
+    return _get_backend()._filter_label_by_size(device, input_image, output_image, float(minimum_size), float(maximum_size))
 
 @plugin_function(categories=["label processing", "in assistant"])
 def exclude_labels_outside_size_range(
     input_image: Image,
-    output_image: Optional[Image] = None,
-    minimum_size: float = 0,
-    maximum_size: float = 100,
-    device: Optional[Device] = None,
+    output_image: Optional[Image] =None,
+    minimum_size: float =0,
+    maximum_size: float =100,
+    device: Optional[Device] =None
 ) -> Image:
     """Filters labelled objects outside the min/max size range.
 
     Parameters
     ----------
-    input_image: Image
+    input_image: Image 
         Input label image.
     output_image: Optional[Image] (= None)
         Output label image.
@@ -246,22 +224,19 @@ def exclude_labels_outside_size_range(
     ----------
     [1] https://clij.github.io/clij2-docs/reference_excludeLabelsOutsideSizeRange
     """
-    return _get_backend()._exclude_labels_outside_size_range(
-        device, input_image, output_image, float(minimum_size), float(maximum_size)
-    )
-
+    return _get_backend()._exclude_labels_outside_size_range(device, input_image, output_image, float(minimum_size), float(maximum_size))
 
 @plugin_function(categories=["label processing", "in assistant"])
 def merge_touching_labels(
     input_image: Image,
-    output_image: Optional[Image] = None,
-    device: Optional[Device] = None,
+    output_image: Optional[Image] =None,
+    device: Optional[Device] =None
 ) -> Image:
     """Merges touching labels of a label image and relabels the result sequentially.
 
     Parameters
     ----------
-    input_image: Image
+    input_image: Image 
         Input label image.
     output_image: Optional[Image] (= None)
         Output label image.
@@ -278,21 +253,20 @@ def merge_touching_labels(
     """
     return _get_backend()._merge_touching_labels(device, input_image, output_image)
 
-
 @plugin_function(categories=["label measurement"])
 def proximal_neighbor_count(
     input_image: Image,
-    output_image: Optional[Image] = None,
-    min_distance: float = -1,
-    max_distance: float = -1,
-    device: Optional[Device] = None,
+    output_image: Optional[Image] =None,
+    min_distance: float =-1,
+    max_distance: float =-1,
+    device: Optional[Device] =None
 ) -> Image:
     """From a label map, determines which labels are whithin a given distance range of
     each other and returns the number of those in vector.
 
     Parameters
     ----------
-    input_image: Image
+    input_image: Image 
         Input label image.
     output_image: Optional[Image] (= None)
         Output parametric image.
@@ -307,18 +281,15 @@ def proximal_neighbor_count(
     -------
     Image
     """
-    return _get_backend()._proximal_neighbor_count(
-        device, input_image, output_image, float(min_distance), float(max_distance)
-    )
-
+    return _get_backend()._proximal_neighbor_count(device, input_image, output_image, float(min_distance), float(max_distance))
 
 @plugin_function
 def normalize(
     input_image: Image,
-    output_image: Optional[Image] = None,
-    low_percentile: float = -1,
-    high_percentile: float = -1,
-    device: Optional[Device] = None,
+    output_image: Optional[Image] =None,
+    low_percentile: float =-1,
+    high_percentile: float =-1,
+    device: Optional[Device] =None
 ) -> Image:
     """Normalizes the pixel values of an image to the range [0, 1]. This function
     normalize the pixel values between [0, 1] following the linear normalization
@@ -329,7 +300,7 @@ def normalize(
 
     Parameters
     ----------
-    input_image: Image
+    input_image: Image 
         Input image to normalize.
     output_image: Optional[Image] (= None)
         Output normalized image.
@@ -344,16 +315,13 @@ def normalize(
     -------
     Image
     """
-    return _get_backend()._normalize(
-        device, input_image, output_image, float(low_percentile), float(high_percentile)
-    )
-
+    return _get_backend()._normalize(device, input_image, output_image, float(low_percentile), float(high_percentile))
 
 @plugin_function
 def standard_deviation_partial_touching_area_matrix(
     input_image_label: Image,
-    output_image_vector: Optional[Image] = None,
-    device: Optional[Device] = None,
+    output_image_vector: Optional[Image] =None,
+    device: Optional[Device] =None
 ) -> Image:
     """Measures partial touching values between labels and determines their standard
     deviation in a vector. For each label X, this function analyzes how much of its
@@ -362,7 +330,7 @@ def standard_deviation_partial_touching_area_matrix(
 
     Parameters
     ----------
-    input_image_label: Image
+    input_image_label: Image 
         Input label image.
     output_image_vector: Optional[Image] (= None)
         Output vector containing standard deviations per label.
@@ -373,19 +341,14 @@ def standard_deviation_partial_touching_area_matrix(
     -------
     Image
     """
-    return _get_backend()._standard_deviation_partial_touching_area_matrix(
-        device, input_image_label, output_image_vector
-    )
+    return _get_backend()._standard_deviation_partial_touching_area_matrix(device, input_image_label, output_image_vector)
 
-
-@deprecated(
-    "standard_deviation_touch_portion: This function is deprecated. Use standard_deviation_partial_touching_area_matrix() instead."
-)
+@deprecated('standard_deviation_touch_portion: This function is deprecated. Use standard_deviation_partial_touching_area_matrix() instead.')
 @plugin_function
 def standard_deviation_touch_portion(
     input_image_label: Image,
-    output_image_vector: Optional[Image] = None,
-    device: Optional[Device] = None,
+    output_image_vector: Optional[Image] =None,
+    device: Optional[Device] =None
 ) -> Image:
     """Measures partial touching values between labels and determines their standard
     deviation in a vector. For each label X, this function analyzes how much of its
@@ -394,7 +357,7 @@ def standard_deviation_touch_portion(
 
     Parameters
     ----------
-    input_image_label: Image
+    input_image_label: Image 
         Input label image.
     output_image_vector: Optional[Image] (= None)
         Output vector containing standard deviations per label.
@@ -405,22 +368,6 @@ def standard_deviation_touch_portion(
     -------
     Image
     """
-    return _get_backend()._standard_deviation_touch_portion(
-        device, input_image_label, output_image_vector
-    )
+    return _get_backend()._standard_deviation_touch_portion(device, input_image_label, output_image_vector)
 
-
-__all__ = [
-    "array_equal",
-    "combine_labels",
-    "connected_components_labeling",
-    "connected_component_labeling",
-    "reduce_labels_to_centroids",
-    "filter_label_by_size",
-    "exclude_labels_outside_size_range",
-    "merge_touching_labels",
-    "proximal_neighbor_count",
-    "normalize",
-    "standard_deviation_partial_touching_area_matrix",
-    "standard_deviation_touch_portion",
-]
+__all__ = ["array_equal", "combine_labels", "connected_components_labeling", "connected_component_labeling", "reduce_labels_to_centroids", "filter_label_by_size", "exclude_labels_outside_size_range", "merge_touching_labels", "proximal_neighbor_count", "normalize", "standard_deviation_partial_touching_area_matrix", "standard_deviation_touch_portion"]

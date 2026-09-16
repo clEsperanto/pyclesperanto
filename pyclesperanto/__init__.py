@@ -47,7 +47,7 @@ if _backend_available:
     from . import __experimental__
 
     # Re-import Array/Image after patching so that cle.Array has the real class
-    from ._array import Array, Image
+    from ._array import Array, Image  # noqa: F811
 
     # Auto-select a default device
     from ._core import (

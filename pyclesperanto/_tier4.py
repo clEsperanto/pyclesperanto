@@ -217,6 +217,91 @@ def threshold_mean(
     return _get_backend()._threshold_mean(device, input_image, output_image)
 
 
+@plugin_function(categories=["binarize", "in assistant", "bia-bob-suggestion"])
+def threshold_triangle(
+    input_image: Image,
+    output_image: Optional[Image] = None,
+    device: Optional[Device] = None,
+) -> Image:
+    """Binarizes an image using the triangle threshold method (Zack et. al. 1977)
+
+    Parameters
+    ----------
+    input_image: Image
+        Input image to threshold.
+    output_image: Optional[Image] (= None)
+        Output binary image.
+    device: Optional[Device] (= None)
+        Device to perform the operation on.
+
+    Returns
+    -------
+    Image
+
+    References
+    ----------
+    [1] https://scikit-image.org/docs/dev/api/skimage.filters.html#skimage.filters.threshold_triangle
+    """
+    return _get_backend()._threshold_triangle(device, input_image, output_image)
+
+
+@plugin_function(categories=["binarize", "in assistant", "bia-bob-suggestion"])
+def threshold_isodata(
+    input_image: Image,
+    output_image: Optional[Image] = None,
+    device: Optional[Device] = None,
+) -> Image:
+    """Binarizes an image using the isodata threshold method (Ridler & Calvard 1978)
+
+    Parameters
+    ----------
+    input_image: Image
+        Input image to threshold.
+    output_image: Optional[Image] (= None)
+        Output binary image.
+    device: Optional[Device] (= None)
+        Device to perform the operation on.
+
+    Returns
+    -------
+    Image
+
+    References
+    ----------
+    [1] https://scikit-image.org/docs/dev/api/skimage.filters.html#skimage.filters.threshold_isodata
+    """
+    return _get_backend()._threshold_isodata(device, input_image, output_image)
+
+
+@plugin_function(categories=["binarize", "in assistant", "bia-bob-suggestion"])
+def threshold_li(
+    input_image: Image,
+    output_image: Optional[Image] = None,
+    device: Optional[Device] = None,
+) -> Image:
+    """Binarizes an image using Li's minimum cross-entropy threshold method (Li & Lee
+    1993, Li & Tam 1998)
+
+    Parameters
+    ----------
+    input_image: Image
+        Input image to threshold.
+    output_image: Optional[Image] (= None)
+        Output binary image.
+    device: Optional[Device] (= None)
+        Device to perform the operation on.
+
+    Returns
+    -------
+    Image
+
+    References
+    ----------
+    [1] https://scikit-image.org/docs/dev/api/skimage.filters.html#skimage.filters.threshold_li
+    """
+    return _get_backend()._threshold_li(device, input_image, output_image)
+
+
 @plugin_function(categories=["label measurement", "map", "in assistant", "combine"])
 def parametric_map(
     labels: Image,
@@ -1199,6 +1284,9 @@ __all__ = [
     "threshold_otsu",
     "threshold_yen",
     "threshold_mean",
+    "threshold_triangle",
+    "threshold_isodata",
+    "threshold_li",
     "parametric_map",
     "mean_intensity_map",
     "label_mean_intensity_map",

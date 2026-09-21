@@ -127,38 +127,6 @@ def _assert_supported_dtype(x):
         raise TypeError("dtype %s not supported " % x_type)
 
 
-def fft_smooth_shape(
-    shape: list,
-) -> tuple:
-    """
-    Computes the shape for FFT smoothing.
-
-    Parameters
-    ----------
-    shape : tuple
-        The shape of the image.
-
-    Returns
-    -------
-    tuple
-        The shape for FFT smoothing.
-    """
-    length = len(shape)
-
-    if isinstance(shape, Tuple):
-        shape = list(shape)
-
-    if len(shape) > 3:
-        shape = shape[:3]
-
-    shape = [int(s) for s in shape]
-
-    if len(shape) < 3:
-        shape = shape + [0] * (3 - len(shape))
-
-    return _get_backend()._fft_smooth_shape(shape)[:length]
-
-
 def deprecated(message):
     def decorator(func):
         @wraps(func)

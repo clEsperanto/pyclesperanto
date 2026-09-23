@@ -218,6 +218,29 @@ auto transform_(py::module_ &m) -> void
              { return matrix_to_numpy(self.getMatrix()); },
              "Return the transformation matrix as a 4x4 numpy array. Enables np.asarray(transform) / np.array(transform).")
 
+        .def("__getitem__", [](const cle::transform::AffineTransform &self, std::pair<py::ssize_t, py::ssize_t> index)
+             {
+                 const auto & [row, col] = index;
+                 if (row < 0 || row > 3 || col < 0 || col > 3)
+                 {
+                     throw std::out_of_range("AffineTransform index out of range: expected row and col in [0, 3].");
+                 }
+                 return self.getValue(static_cast<size_t>(row), static_cast<size_t>(col));
+             },
+             "Get the transformation matrix value at (row, col).",
+             py::arg("index"))
+        .def("__setitem__", [](cle::transform::AffineTransform &self, std::pair<py::ssize_t, py::ssize_t> index, float value)
+             {
+                 const auto & [row, col] = index;
+                 if (row < 0 || row > 3 || col < 0 || col > 3)
+                 {
+                     throw std::out_of_range("AffineTransform index out of range: expected row and col in [0, 3].");
+                 }
+                 self.setValue(static_cast<size_t>(row), static_cast<size_t>(col), value);
+             },
+             "Set the transformation matrix value at (row, col).",
+             py::arg("index"), py::arg("value"))
+
         .def("__str__", [](const cle::transform::AffineTransform &self)
              {
                  std::ostringstream oss;

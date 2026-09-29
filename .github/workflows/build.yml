@@ -36,6 +36,11 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y pocl-opencl-icd ocl-icd-opencl-dev
 
+      - name: Remove broken apt sources
+        if: matrix.backend == 'CUDA'
+        run: |
+          sudo rm -f /etc/apt/sources.list.d/microsoft-prod.list
+
       - name: Install CUDA Toolkit
         if: matrix.backend == 'CUDA'
         id: cuda-toolkit-linux

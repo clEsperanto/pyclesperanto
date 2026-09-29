@@ -66,7 +66,9 @@ repair-wheel-command = "auditwheel show {wheel} && auditwheel repair --lib-sdir 
 
 [tool.cibuildwheel.windows]
 before-all = "bash {package}/../../scripts/build-opencl-windows.sh"
+before-build = "pip install delvewheel"
 environment = { SKBUILD_CMAKE_ARGS = "-DOpenCL_LIBRARIES:FILEPATH='C:/Program Files/OpenCL-ICD-Loader/lib/OpenCL.lib';-DOpenCL_INCLUDE_DIRS:PATH='C:/Program Files/OpenCL-ICD-Loader/include/'" }
+repair-wheel-command = "delvewheel repair --no-dll ext-ms-win-dx-dxdbhelper-l1-1-0.dll -w {dest_dir} -v {wheel}"
 
 [tool.cibuildwheel.macos]
 environment = { MACOSX_DEPLOYMENT_TARGET = '11.0' }

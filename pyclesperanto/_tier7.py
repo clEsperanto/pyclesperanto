@@ -14,6 +14,9 @@ from ._decorators import plugin_function
 from ._utils import deprecated
 
 
+@deprecated(
+    "affine_transform: This function is deprecated and will be removed in future versions. Use cle.trasnform.affine_transform instead."
+)
 @plugin_function
 def affine_transform(
     input_image: Image,

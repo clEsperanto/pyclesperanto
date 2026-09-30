@@ -1720,6 +1720,52 @@ def gaussian_blur(
     )
 
 
+@plugin_function(categories=["filter", "denoise", "in assistant"])
+def kuwahara_filter(
+    input_image: Image,
+    output_image: Optional[Image] = None,
+    radius: int = 1,
+    sigma: float = 1.0,
+    device: Optional[Device] = None,
+) -> Image:
+    """Applies a generalized Kuwahara filter (Kuwahara et al., 1976) for
+    edge-preserving denoising. In 2D the image is locally divided into 4 quadrants;
+    in 3D into 8 octants. Within each region the mean and variance are computed with
+    Gaussian weights. The output pixel is a weighted blend of the region means,
+    where regions with lower variance contribute more — preserving sharp edges while
+    smoothing homogeneous areas. Increasing @p radius enlarges the local window
+    (kernel_size = 2 * radius + 1), which strengthens denoising but blurs fine
+    details. Increasing @p sigma widens the Gaussian weighting within the window,
+    giving more influence to the center and reducing the effective smoothing at the
+    window boundary; a very small sigma makes all samples equally weighted
+    (box-like), while a large sigma approaches the classical (unweighted) Kuwahara.
+
+    Parameters
+    ----------
+    input_image: Image
+        Input image to process.
+    output_image: Optional[Image] (= None)
+        Output result image.
+    radius: int (= 1)
+        Half-size of the local window; kernel_size = 2 * radius + 1.
+    sigma: float (= 1.0)
+        Standard deviation of the Gaussian weighting within the window.
+    device: Optional[Device] (= None)
+        Device to perform the operation on.
+
+    Returns
+    -------
+    Image
+
+    References
+    ----------
+    [1] https://doi.org/10.1007/978-1-4684-0769-3_13
+    """
+    return _get_backend()._kuwahara_filter(
+        device, input_image, output_image, int(radius), float(sigma)
+    )
+
+
 @plugin_function(categories=["filter", "in assistant"])
 def gaussian_derivative(
     input_image: Image,
@@ -7022,6 +7068,7 @@ __all__ = [
     "exponential10",
     "flip",
     "gaussian_blur",
+    "kuwahara_filter",
     "gaussian_derivative",
     "generate_distance_matrix",
     "gradient_x",

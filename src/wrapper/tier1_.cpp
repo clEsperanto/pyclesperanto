@@ -210,6 +210,10 @@ m.def("_absolute", &cle::tier1::absolute_func, "Call cle::tier1::absolute_func f
     py::return_value_policy::automatic_reference,
     py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("sigma_x"), py::arg("sigma_y"), py::arg("sigma_z"));
 
+    m.def("_kuwahara_filter", &cle::tier1::kuwahara_filter_func, "Call cle::tier1::kuwahara_filter_func from C++ CLIc.",
+    py::return_value_policy::automatic_reference,
+    py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("radius"), py::arg("sigma"));
+
     m.def("_gaussian_derivative", &cle::tier1::gaussian_derivative_func, "Call cle::tier1::gaussian_derivative_func from C++ CLIc.",
     py::return_value_policy::automatic_reference,
     py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("sigma_x"), py::arg("sigma_y"), py::arg("sigma_z"), py::arg("order_x"), py::arg("order_y"), py::arg("order_z"));

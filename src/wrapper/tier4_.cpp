@@ -34,6 +34,18 @@ m.def("_label_bounding_box", &cle::tier4::label_bounding_box_func, "Call cle::ti
     py::return_value_policy::automatic_reference,
     py::arg("device"), py::arg("src"), py::arg("dst"));
 
+    m.def("_threshold_triangle", &cle::tier4::threshold_triangle_func, "Call cle::tier4::threshold_triangle_func from C++ CLIc.",
+    py::return_value_policy::automatic_reference,
+    py::arg("device"), py::arg("src"), py::arg("dst"));
+
+    m.def("_threshold_isodata", &cle::tier4::threshold_isodata_func, "Call cle::tier4::threshold_isodata_func from C++ CLIc.",
+    py::return_value_policy::automatic_reference,
+    py::arg("device"), py::arg("src"), py::arg("dst"));
+
+    m.def("_threshold_li", &cle::tier4::threshold_li_func, "Call cle::tier4::threshold_li_func from C++ CLIc.",
+    py::return_value_policy::automatic_reference,
+    py::arg("device"), py::arg("src"), py::arg("dst"));
+
     m.def("_parametric_map", &cle::tier4::parametric_map_func, "Call cle::tier4::parametric_map_func from C++ CLIc.",
     py::return_value_policy::automatic_reference,
     py::arg("device"), py::arg("labels"), py::arg("properties"), py::arg("dst"), py::arg("property"));

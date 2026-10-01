@@ -44,7 +44,7 @@ classifiers = [
 ]
 description = "OpenCL backend for pyclesperanto, a Python library for GPU-accelerated image processing"
 name = "pyclesperanto-opencl"
-requires-python = ">=3.8"
+requires-python = ">=3.9"
 dynamic = ["version"]
 license = { file = "../../LICENSE" }
 keywords = ["image processing", "GPU", "OpenCL", "scientific computing"]
@@ -54,7 +54,7 @@ keywords = ["image processing", "GPU", "OpenCL", "scientific computing"]
 # =============================================================================
 
 [tool.cibuildwheel]
-build = ["cp38-*", "cp39-*", "cp310-*", "cp311-*", "cp312-*", "cp313-*", "cp314-*"]
+build = ["cp39-*", "cp310-*", "cp311-*", "cp312-*", "cp313-*", "cp314-*"]
 skip = ["*-win32", "*-musllinux*", "*_i686", "*_universal2"]
 build-frontend = "build"
 build-verbosity = 1
@@ -66,7 +66,9 @@ repair-wheel-command = "auditwheel show {wheel} && auditwheel repair --lib-sdir 
 
 [tool.cibuildwheel.windows]
 before-all = "bash {package}/../../scripts/build-opencl-windows.sh"
+before-build = "pip install delvewheel"
 environment = { SKBUILD_CMAKE_ARGS = "-DOpenCL_LIBRARIES:FILEPATH='C:/Program Files/OpenCL-ICD-Loader/lib/OpenCL.lib';-DOpenCL_INCLUDE_DIRS:PATH='C:/Program Files/OpenCL-ICD-Loader/include/'" }
+repair-wheel-command = "delvewheel repair --no-dll ext-ms-win-dx-dxdbhelper-l1-1-0.dll -w {dest_dir} -v {wheel}"
 
 [tool.cibuildwheel.macos]
 environment = { MACOSX_DEPLOYMENT_TARGET = '11.0' }

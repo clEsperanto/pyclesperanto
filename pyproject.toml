@@ -30,7 +30,7 @@ classifiers = [
 description = "GPU-accelerated image processing in python using OpenCL or CUDA"
 name = "pyclesperanto"
 readme = "README.md"
-requires-python = ">=3.8"
+requires-python = ">=3.9"
 dynamic = ["version", "dependencies", "optional-dependencies"]
 license = { file = "LICENSE" }
 keywords = ["image processing", "GPU", "OpenCL", "CUDA", "scientific computing"]

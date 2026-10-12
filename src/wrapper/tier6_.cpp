@@ -5,44 +5,63 @@
 
 namespace py = pybind11;
 
+// release the GIL during CLIc calls, build with -DPYCLE_NO_GIL_RELEASE to keep it held
+#ifndef PYCLE_RELEASE_GIL
+#  ifndef PYCLE_NO_GIL_RELEASE
+#    define PYCLE_RELEASE_GIL py::call_guard<py::gil_scoped_release>()
+#  else
+#    define PYCLE_RELEASE_GIL py::call_guard<>()
+#  endif
+#endif
+
 auto tier6_(py::module &m) -> void {
 m.def("_dilate_labels", &cle::tier6::dilate_labels_func, "Call cle::tier6::dilate_labels_func from C++ CLIc.",
     py::return_value_policy::automatic_reference,
+    PYCLE_RELEASE_GIL,
     py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("radius"));
 
     m.def("_erode_labels", &cle::tier6::erode_labels_func, "Call cle::tier6::erode_labels_func from C++ CLIc.",
     py::return_value_policy::automatic_reference,
+    PYCLE_RELEASE_GIL,
     py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("radius"), py::arg("relabel"));
 
     m.def("_gauss_otsu_labeling", &cle::tier6::gauss_otsu_labeling_func, "Call cle::tier6::gauss_otsu_labeling_func from C++ CLIc.",
     py::return_value_policy::automatic_reference,
+    PYCLE_RELEASE_GIL,
     py::arg("device"), py::arg("src0"), py::arg("dst"), py::arg("outline_sigma"));
 
     m.def("_masked_voronoi_labeling", &cle::tier6::masked_voronoi_labeling_func, "Call cle::tier6::masked_voronoi_labeling_func from C++ CLIc.",
     py::return_value_policy::automatic_reference,
+    PYCLE_RELEASE_GIL,
     py::arg("device"), py::arg("src"), py::arg("mask"), py::arg("dst"));
 
     m.def("_voronoi_labeling", &cle::tier6::voronoi_labeling_func, "Call cle::tier6::voronoi_labeling_func from C++ CLIc.",
     py::return_value_policy::automatic_reference,
+    PYCLE_RELEASE_GIL,
     py::arg("device"), py::arg("input_binary"), py::arg("output_labels"));
 
     m.def("_remove_small_labels", &cle::tier6::remove_small_labels_func, "Call cle::tier6::remove_small_labels_func from C++ CLIc.",
     py::return_value_policy::automatic_reference,
+    PYCLE_RELEASE_GIL,
     py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("minimum_size"));
 
     m.def("_exclude_small_labels", &cle::tier6::exclude_small_labels_func, "Call cle::tier6::exclude_small_labels_func from C++ CLIc.",
     py::return_value_policy::automatic_reference,
+    PYCLE_RELEASE_GIL,
     py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("maximum_size"));
 
     m.def("_remove_large_labels", &cle::tier6::remove_large_labels_func, "Call cle::tier6::remove_large_labels_func from C++ CLIc.",
     py::return_value_policy::automatic_reference,
+    PYCLE_RELEASE_GIL,
     py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("maximum_size"));
 
     m.def("_exclude_large_labels", &cle::tier6::exclude_large_labels_func, "Call cle::tier6::exclude_large_labels_func from C++ CLIc.",
     py::return_value_policy::automatic_reference,
+    PYCLE_RELEASE_GIL,
     py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("minimum_size"));
 
     m.def("_proximal_neighbor_count_map", &cle::tier6::proximal_neighbor_count_map_func, "Call cle::tier6::proximal_neighbor_count_map_func from C++ CLIc.",
     py::return_value_policy::automatic_reference,
+    PYCLE_RELEASE_GIL,
     py::arg("device"), py::arg("labels"), py::arg("dst"), py::arg("min_distance"), py::arg("max_distance"));
 }

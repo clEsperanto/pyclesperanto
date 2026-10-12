@@ -21,6 +21,7 @@ set(CMAKE_SKIP_INSTALL_ALL_DEPENDENCY TRUE)
 option(BUILD_TESTING  OFF)
 option(BUILD_BENCHMARK  OFF)
 option(BUILD_SHARED_LIBS OFF)
+option(PYCLE_NO_GIL_RELEASE "Keep the GIL held during CLIc calls (A/B debugging)" OFF)
 
 # Hide all internal C++ symbols so that CLIc symbols statically linked into this
 # .so do not collide with those in the other backend .so (e.g. opencl).
@@ -65,6 +66,9 @@ if(SKBUILD)
   target_link_libraries(${CY_PACKAGE_NAME} PRIVATE CLIc::CLIc pybind11::headers)
   target_include_directories(${CY_PACKAGE_NAME} PUBLIC "$<BUILD_INTERFACE:${WRAPPER_DIR}>")
   target_compile_definitions(${CY_PACKAGE_NAME} PRIVATE VERSION_INFO=${PROJECT_VERSION})
+  if(PYCLE_NO_GIL_RELEASE)
+    target_compile_definitions(${CY_PACKAGE_NAME} PRIVATE PYCLE_NO_GIL_RELEASE)
+  endif()
 
   # On Linux, hide all symbols from static archives and force internal symbol resolution
   # to prevent cross-module symbol interposition when both backend .so files are loaded.

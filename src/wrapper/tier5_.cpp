@@ -5,52 +5,73 @@
 
 namespace py = pybind11;
 
+// release the GIL during CLIc calls, build with -DPYCLE_NO_GIL_RELEASE to keep it held
+#ifndef PYCLE_RELEASE_GIL
+#  ifndef PYCLE_NO_GIL_RELEASE
+#    define PYCLE_RELEASE_GIL py::call_guard<py::gil_scoped_release>()
+#  else
+#    define PYCLE_RELEASE_GIL py::call_guard<>()
+#  endif
+#endif
+
 auto tier5_(py::module &m) -> void {
 m.def("_array_equal", &cle::tier5::array_equal_func, "Call cle::tier5::array_equal_func from C++ CLIc.",
     py::return_value_policy::automatic_reference,
+    PYCLE_RELEASE_GIL,
     py::arg("device"), py::arg("src0"), py::arg("src1"));
 
     m.def("_combine_labels", &cle::tier5::combine_labels_func, "Call cle::tier5::combine_labels_func from C++ CLIc.",
     py::return_value_policy::automatic_reference,
+    PYCLE_RELEASE_GIL,
     py::arg("device"), py::arg("src0"), py::arg("src1"), py::arg("dst"));
 
     m.def("_connected_components_labeling", &cle::tier5::connected_components_labeling_func, "Call cle::tier5::connected_components_labeling_func from C++ CLIc.",
     py::return_value_policy::automatic_reference,
+    PYCLE_RELEASE_GIL,
     py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("connectivity"));
 
     m.def("_connected_component_labeling", &cle::tier5::connected_component_labeling_func, "Call cle::tier5::connected_component_labeling_func from C++ CLIc.",
     py::return_value_policy::automatic_reference,
+    PYCLE_RELEASE_GIL,
     py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("connectivity"));
 
     m.def("_reduce_labels_to_centroids", &cle::tier5::reduce_labels_to_centroids_func, "Call cle::tier5::reduce_labels_to_centroids_func from C++ CLIc.",
     py::return_value_policy::automatic_reference,
+    PYCLE_RELEASE_GIL,
     py::arg("device"), py::arg("src"), py::arg("dst"));
 
     m.def("_filter_label_by_size", &cle::tier5::filter_label_by_size_func, "Call cle::tier5::filter_label_by_size_func from C++ CLIc.",
     py::return_value_policy::automatic_reference,
+    PYCLE_RELEASE_GIL,
     py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("minimum_size"), py::arg("maximum_size"));
 
     m.def("_exclude_labels_outside_size_range", &cle::tier5::exclude_labels_outside_size_range_func, "Call cle::tier5::exclude_labels_outside_size_range_func from C++ CLIc.",
     py::return_value_policy::automatic_reference,
+    PYCLE_RELEASE_GIL,
     py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("minimum_size"), py::arg("maximum_size"));
 
     m.def("_merge_touching_labels", &cle::tier5::merge_touching_labels_func, "Call cle::tier5::merge_touching_labels_func from C++ CLIc.",
     py::return_value_policy::automatic_reference,
+    PYCLE_RELEASE_GIL,
     py::arg("device"), py::arg("src"), py::arg("dst"));
 
     m.def("_proximal_neighbor_count", &cle::tier5::proximal_neighbor_count_func, "Call cle::tier5::proximal_neighbor_count_func from C++ CLIc.",
     py::return_value_policy::automatic_reference,
+    PYCLE_RELEASE_GIL,
     py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("min_distance"), py::arg("max_distance"));
 
     m.def("_normalize", &cle::tier5::normalize_func, "Call cle::tier5::normalize_func from C++ CLIc.",
     py::return_value_policy::automatic_reference,
+    PYCLE_RELEASE_GIL,
     py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("low_percentile"), py::arg("high_percentile"));
 
     m.def("_standard_deviation_partial_touching_area_matrix", &cle::tier5::standard_deviation_partial_touching_area_matrix_func, "Call cle::tier5::standard_deviation_partial_touching_area_matrix_func from C++ CLIc.",
     py::return_value_policy::automatic_reference,
+    PYCLE_RELEASE_GIL,
     py::arg("device"), py::arg("src_label"), py::arg("dst_vector"));
 
     m.def("_standard_deviation_touch_portion", &cle::tier5::standard_deviation_touch_portion_func, "Call cle::tier5::standard_deviation_touch_portion_func from C++ CLIc.",
     py::return_value_policy::automatic_reference,
+    PYCLE_RELEASE_GIL,
     py::arg("device"), py::arg("src_label"), py::arg("dst_vector"));
 }

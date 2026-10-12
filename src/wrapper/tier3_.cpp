@@ -5,116 +5,153 @@
 
 namespace py = pybind11;
 
+// release the GIL during CLIc calls, build with -DPYCLE_NO_GIL_RELEASE to keep it held
+#ifndef PYCLE_RELEASE_GIL
+#  ifndef PYCLE_NO_GIL_RELEASE
+#    define PYCLE_RELEASE_GIL py::call_guard<py::gil_scoped_release>()
+#  else
+#    define PYCLE_RELEASE_GIL py::call_guard<>()
+#  endif
+#endif
+
 auto tier3_(py::module &m) -> void {
 m.def("_bounding_box", &cle::tier3::bounding_box_func, "Call cle::tier3::bounding_box_func from C++ CLIc.",
     py::return_value_policy::automatic_reference,
+    PYCLE_RELEASE_GIL,
     py::arg("device"), py::arg("src"));
 
     m.def("_center_of_mass", &cle::tier3::center_of_mass_func, "Call cle::tier3::center_of_mass_func from C++ CLIc.",
     py::return_value_policy::automatic_reference,
+    PYCLE_RELEASE_GIL,
     py::arg("device"), py::arg("src"));
 
     m.def("_clahe", &cle::tier3::clahe_func, "Call cle::tier3::clahe_func from C++ CLIc.",
     py::return_value_policy::automatic_reference,
+    PYCLE_RELEASE_GIL,
     py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("tile_size"), py::arg("clip_limit"), py::arg("minimum_intensity"), py::arg("maximum_intensity"));
 
     m.def("_remove_labels", &cle::tier3::remove_labels_func, "Call cle::tier3::remove_labels_func from C++ CLIc.",
     py::return_value_policy::automatic_reference,
+    PYCLE_RELEASE_GIL,
     py::arg("device"), py::arg("src"), py::arg("list"), py::arg("dst"));
 
     m.def("_exclude_labels", &cle::tier3::exclude_labels_func, "Call cle::tier3::exclude_labels_func from C++ CLIc.",
     py::return_value_policy::automatic_reference,
+    PYCLE_RELEASE_GIL,
     py::arg("device"), py::arg("src"), py::arg("list"), py::arg("dst"));
 
     m.def("_remove_labels_on_edges", &cle::tier3::remove_labels_on_edges_func, "Call cle::tier3::remove_labels_on_edges_func from C++ CLIc.",
     py::return_value_policy::automatic_reference,
+    PYCLE_RELEASE_GIL,
     py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("exclude_x"), py::arg("exclude_y"), py::arg("exclude_z"));
 
     m.def("_exclude_labels_on_edges", &cle::tier3::exclude_labels_on_edges_func, "Call cle::tier3::exclude_labels_on_edges_func from C++ CLIc.",
     py::return_value_policy::automatic_reference,
+    PYCLE_RELEASE_GIL,
     py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("exclude_x"), py::arg("exclude_y"), py::arg("exclude_z"));
 
     m.def("_flag_existing_labels", &cle::tier3::flag_existing_labels_func, "Call cle::tier3::flag_existing_labels_func from C++ CLIc.",
     py::return_value_policy::automatic_reference,
+    PYCLE_RELEASE_GIL,
     py::arg("device"), py::arg("src"), py::arg("dst"));
 
     m.def("_gamma_correction", &cle::tier3::gamma_correction_func, "Call cle::tier3::gamma_correction_func from C++ CLIc.",
     py::return_value_policy::automatic_reference,
+    PYCLE_RELEASE_GIL,
     py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("gamma"));
 
     m.def("_generate_binary_overlap_matrix", &cle::tier3::generate_binary_overlap_matrix_func, "Call cle::tier3::generate_binary_overlap_matrix_func from C++ CLIc.",
     py::return_value_policy::automatic_reference,
+    PYCLE_RELEASE_GIL,
     py::arg("device"), py::arg("src0"), py::arg("src1"), py::arg("dst"));
 
     m.def("_generate_touch_matrix", &cle::tier3::generate_touch_matrix_func, "Call cle::tier3::generate_touch_matrix_func from C++ CLIc.",
     py::return_value_policy::automatic_reference,
+    PYCLE_RELEASE_GIL,
     py::arg("device"), py::arg("src"), py::arg("dst_matrix"));
 
     m.def("_generate_touching_area_matrix", &cle::tier3::generate_touching_area_matrix_func, "Call cle::tier3::generate_touching_area_matrix_func from C++ CLIc.",
     py::return_value_policy::automatic_reference,
+    PYCLE_RELEASE_GIL,
     py::arg("device"), py::arg("src_label"), py::arg("dst_matrix"));
 
     m.def("_generate_touch_count_matrix", &cle::tier3::generate_touch_count_matrix_func, "Call cle::tier3::generate_touch_count_matrix_func from C++ CLIc.",
     py::return_value_policy::automatic_reference,
+    PYCLE_RELEASE_GIL,
     py::arg("device"), py::arg("src_label"), py::arg("dst_matrix"));
 
     m.def("_histogram", &cle::tier3::histogram_func, "Call cle::tier3::histogram_func from C++ CLIc.",
     py::return_value_policy::automatic_reference,
+    PYCLE_RELEASE_GIL,
     py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("num_bins"), py::arg("minimum_intensity"), py::arg("maximum_intensity"));
 
     m.def("_jaccard_index", &cle::tier3::jaccard_index_func, "Call cle::tier3::jaccard_index_func from C++ CLIc.",
     py::return_value_policy::automatic_reference,
+    PYCLE_RELEASE_GIL,
     py::arg("device"), py::arg("src0"), py::arg("src1"));
 
     m.def("_labelled_spots_to_pointlist", &cle::tier3::labelled_spots_to_pointlist_func, "Call cle::tier3::labelled_spots_to_pointlist_func from C++ CLIc.",
     py::return_value_policy::automatic_reference,
+    PYCLE_RELEASE_GIL,
     py::arg("device"), py::arg("label"), py::arg("dspointlistt"));
 
     m.def("_maximum_position", &cle::tier3::maximum_position_func, "Call cle::tier3::maximum_position_func from C++ CLIc.",
     py::return_value_policy::automatic_reference,
+    PYCLE_RELEASE_GIL,
     py::arg("device"), py::arg("src"));
 
     m.def("_mean_of_all_pixels", &cle::tier3::mean_of_all_pixels_func, "Call cle::tier3::mean_of_all_pixels_func from C++ CLIc.",
     py::return_value_policy::automatic_reference,
+    PYCLE_RELEASE_GIL,
     py::arg("device"), py::arg("src"));
 
     m.def("_minimum_position", &cle::tier3::minimum_position_func, "Call cle::tier3::minimum_position_func from C++ CLIc.",
     py::return_value_policy::automatic_reference,
+    PYCLE_RELEASE_GIL,
     py::arg("device"), py::arg("src"));
 
     m.def("_morphological_chan_vese", &cle::tier3::morphological_chan_vese_func, "Call cle::tier3::morphological_chan_vese_func from C++ CLIc.",
     py::return_value_policy::automatic_reference,
+    PYCLE_RELEASE_GIL,
     py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("num_iter"), py::arg("smoothing"), py::arg("lambda1"), py::arg("lambda2"));
 
     m.def("_labels_statistics", &cle::tier3::labels_statistics_func, "Call cle::tier3::labels_statistics_func from C++ CLIc.",
     py::return_value_policy::automatic_reference,
+    PYCLE_RELEASE_GIL,
     py::arg("device"), py::arg("label"), py::arg("intensity"), py::arg("include_background"));
 
     m.def("_statistics_of_labelled_pixels", &cle::tier3::statistics_of_labelled_pixels_func, "Call cle::tier3::statistics_of_labelled_pixels_func from C++ CLIc.",
     py::return_value_policy::automatic_reference,
+    PYCLE_RELEASE_GIL,
     py::arg("device"), py::arg("intensity"), py::arg("label"));
 
     m.def("_statistics_of_background_and_labelled_pixels", &cle::tier3::statistics_of_background_and_labelled_pixels_func, "Call cle::tier3::statistics_of_background_and_labelled_pixels_func from C++ CLIc.",
     py::return_value_policy::automatic_reference,
+    PYCLE_RELEASE_GIL,
     py::arg("device"), py::arg("intensity"), py::arg("label"));
 
     m.def("_sato_filter", &cle::tier3::sato_filter_func, "Call cle::tier3::sato_filter_func from C++ CLIc.",
     py::return_value_policy::automatic_reference,
+    PYCLE_RELEASE_GIL,
     py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("sigma_minimum"), py::arg("sigma_maximum"), py::arg("sigma_step"));
 
     m.def("_tubeness", &cle::tier3::tubeness_func, "Call cle::tier3::tubeness_func from C++ CLIc.",
     py::return_value_policy::automatic_reference,
+    PYCLE_RELEASE_GIL,
     py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("sigma"));
 
     m.def("_artificial_tissue", &cle::tier3::artificial_tissue_func, "Call cle::tier3::artificial_tissue_func from C++ CLIc.",
     py::return_value_policy::automatic_reference,
+    PYCLE_RELEASE_GIL,
     py::arg("device"), py::arg("width"), py::arg("height"), py::arg("depth"), py::arg("delta_x"), py::arg("delta_y"), py::arg("delta_z"), py::arg("sigma_x"), py::arg("sigma_y"), py::arg("sigma_z"));
 
     m.def("_read_map_values", &cle::tier3::read_map_values_func, "Call cle::tier3::read_map_values_func from C++ CLIc.",
     py::return_value_policy::automatic_reference,
+    PYCLE_RELEASE_GIL,
     py::arg("device"), py::arg("map"), py::arg("label"), py::arg("dst"));
 
     m.def("_read_intensities_from_map", &cle::tier3::read_intensities_from_map_func, "Call cle::tier3::read_intensities_from_map_func from C++ CLIc.",
     py::return_value_policy::automatic_reference,
+    PYCLE_RELEASE_GIL,
     py::arg("device"), py::arg("label"), py::arg("map"), py::arg("dst"));
 }

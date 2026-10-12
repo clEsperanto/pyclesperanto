@@ -46,34 +46,39 @@ def test_gil_released_during_gpu_work(gpu_backend):
     for _ in range(3):
         run()  # warm-up: kernel compilation
 
-    ticks = [0]
+    # Measure the longest stall of a spinning thread rather than its throughput:
+    # on CPU OpenCL devices (pocl in CI) the kernels compete with the spinner for
+    # CPU cores, which slows it down even with the GIL released, but the OS still
+    # schedules it every few ms. With the GIL held, it is frozen for whole calls.
+    max_stall = [0.0]
     stop = threading.Event()
 
     def spin():
+        last = time.perf_counter()
         while not stop.is_set():
-            ticks[0] += 1
+            now = time.perf_counter()
+            max_stall[0] = max(max_stall[0], now - last)
+            last = now
 
     spinner = threading.Thread(target=spin)
     spinner.start()
     time.sleep(0.2)
+    max_stall[0] = 0.0
 
-    before = ticks[0]
-    start = time.perf_counter()
+    durations = []
     for _ in range(20):
+        start = time.perf_counter()
         run()
-    elapsed = time.perf_counter() - start
-    during = ticks[0] - before
-
-    before = ticks[0]
-    time.sleep(elapsed)
-    idle = ticks[0] - before
+        durations.append(time.perf_counter() - start)
 
     stop.set()
     spinner.join()
 
-    # with the GIL held during the calls the spinner gets ~30% of its idle rate
-    ratio = during / idle
-    assert ratio > 0.6, f"spinner ran at {ratio:.0%} of its idle rate"
+    run_time = float(np.median(durations))
+    assert max_stall[0] < 0.5 * run_time, (
+        f"spinner stalled for {max_stall[0] * 1e3:.1f} ms "
+        f"during {run_time * 1e3:.1f} ms calls"
+    )
 
 
 def test_same_device_concurrent_filters(gpu_backend):

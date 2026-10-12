@@ -5,60 +5,83 @@
 
 namespace py = pybind11;
 
+// release the GIL during CLIc calls, build with -DPYCLE_NO_GIL_RELEASE to keep it held
+#ifndef PYCLE_RELEASE_GIL
+#  ifndef PYCLE_NO_GIL_RELEASE
+#    define PYCLE_RELEASE_GIL py::call_guard<py::gil_scoped_release>()
+#  else
+#    define PYCLE_RELEASE_GIL py::call_guard<>()
+#  endif
+#endif
+
 auto tier7_(py::module &m) -> void {
 m.def("_affine_transform", &cle::tier7::affine_transform_func, "Call cle::tier7::affine_transform_func from C++ CLIc.",
     py::return_value_policy::automatic_reference,
+    PYCLE_RELEASE_GIL,
     py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("transform_matrix"), py::arg("interpolate"), py::arg("resize"));
 
     m.def("_eroded_otsu_labeling", &cle::tier7::eroded_otsu_labeling_func, "Call cle::tier7::eroded_otsu_labeling_func from C++ CLIc.",
     py::return_value_policy::automatic_reference,
+    PYCLE_RELEASE_GIL,
     py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("number_of_erosions"), py::arg("outline_sigma"));
 
     m.def("_rigid_transform", &cle::tier7::rigid_transform_func, "Call cle::tier7::rigid_transform_func from C++ CLIc.",
     py::return_value_policy::automatic_reference,
+    PYCLE_RELEASE_GIL,
     py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("translate_x"), py::arg("translate_y"), py::arg("translate_z"), py::arg("angle_x"), py::arg("angle_y"), py::arg("angle_z"), py::arg("centered"), py::arg("interpolate"), py::arg("resize"));
 
     m.def("_rotate", &cle::tier7::rotate_func, "Call cle::tier7::rotate_func from C++ CLIc.",
     py::return_value_policy::automatic_reference,
+    PYCLE_RELEASE_GIL,
     py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("angle_x"), py::arg("angle_y"), py::arg("angle_z"), py::arg("centered"), py::arg("interpolate"), py::arg("resize"));
 
     m.def("_scale", &cle::tier7::scale_func, "Call cle::tier7::scale_func from C++ CLIc.",
     py::return_value_policy::automatic_reference,
+    PYCLE_RELEASE_GIL,
     py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("factor_x"), py::arg("factor_y"), py::arg("factor_z"), py::arg("centered"), py::arg("interpolate"), py::arg("resize"));
 
     m.def("_translate", &cle::tier7::translate_func, "Call cle::tier7::translate_func from C++ CLIc.",
     py::return_value_policy::automatic_reference,
+    PYCLE_RELEASE_GIL,
     py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("translate_x"), py::arg("translate_y"), py::arg("translate_z"), py::arg("interpolate"));
 
     m.def("_deskew_x", &cle::tier7::deskew_x_func, "Call cle::tier7::deskew_x_func from C++ CLIc.",
     py::return_value_policy::automatic_reference,
+    PYCLE_RELEASE_GIL,
     py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("angle"), py::arg("voxel_size_x"), py::arg("voxel_size_y"), py::arg("voxel_size_z"), py::arg("scale_factor"));
 
     m.def("_deskew_y", &cle::tier7::deskew_y_func, "Call cle::tier7::deskew_y_func from C++ CLIc.",
     py::return_value_policy::automatic_reference,
+    PYCLE_RELEASE_GIL,
     py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("angle"), py::arg("voxel_size_x"), py::arg("voxel_size_y"), py::arg("voxel_size_z"), py::arg("scale_factor"));
 
     m.def("_closing_labels", &cle::tier7::closing_labels_func, "Call cle::tier7::closing_labels_func from C++ CLIc.",
     py::return_value_policy::automatic_reference,
+    PYCLE_RELEASE_GIL,
     py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("radius"));
 
     m.def("_erode_connected_labels", &cle::tier7::erode_connected_labels_func, "Call cle::tier7::erode_connected_labels_func from C++ CLIc.",
     py::return_value_policy::automatic_reference,
+    PYCLE_RELEASE_GIL,
     py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("radius"));
 
     m.def("_opening_labels", &cle::tier7::opening_labels_func, "Call cle::tier7::opening_labels_func from C++ CLIc.",
     py::return_value_policy::automatic_reference,
+    PYCLE_RELEASE_GIL,
     py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("radius"));
 
     m.def("_voronoi_otsu_labeling", &cle::tier7::voronoi_otsu_labeling_func, "Call cle::tier7::voronoi_otsu_labeling_func from C++ CLIc.",
     py::return_value_policy::automatic_reference,
+    PYCLE_RELEASE_GIL,
     py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("spot_sigma"), py::arg("outline_sigma"));
 
     m.def("_labels_neighbors_statistics", &cle::tier7::labels_neighbors_statistics_func, "Call cle::tier7::labels_neighbors_statistics_func from C++ CLIc.",
     py::return_value_policy::automatic_reference,
+    PYCLE_RELEASE_GIL,
     py::arg("device"), py::arg("label"), py::arg("proximal_distances"), py::arg("nearest_neighbor_ns"), py::arg("dilation_radii"), py::arg("include_background"));
 
     m.def("_statistics_of_labelled_neighbors", &cle::tier7::statistics_of_labelled_neighbors_func, "Call cle::tier7::statistics_of_labelled_neighbors_func from C++ CLIc.",
     py::return_value_policy::automatic_reference,
+    PYCLE_RELEASE_GIL,
     py::arg("device"), py::arg("label"), py::arg("proximal_distances"), py::arg("nearest_neighbor_ns"), py::arg("dilation_radii"));
 }

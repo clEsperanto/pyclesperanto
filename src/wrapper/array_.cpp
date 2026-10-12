@@ -79,7 +79,10 @@ py::array_t<T, py::array::c_style> read_region(const cle::Array &array, const py
      py::buffer_info info = np_array.request();
      void *data = info.ptr;
      size_t size = info.size * info.itemsize;
-     array.readTo(data, region_, origin_);
+     {
+          PYCLE_RELEASE_GIL_SCOPE;
+          array.readTo(data, region_, origin_);
+     }
      return np_array;
 }
 
@@ -101,6 +104,7 @@ void write_region(cle::Array &array, const py::array_t<T, py::array::c_style> &v
      py::buffer_info info = value.request();
      const void *data = info.ptr;
      size_t size = info.size * info.itemsize;
+     PYCLE_RELEASE_GIL_SCOPE;
      array.writeFrom(data, region_, origin_);
 }
 
@@ -125,6 +129,7 @@ void copy_region(const cle::Array &array, const cle::Array::Pointer &dst,
      {
           invert_tuple(region_obj.cast<py::tuple>(), &region_);
      }
+     PYCLE_RELEASE_GIL_SCOPE;
      array.copyTo(dst, region_, src_origin_, dst_origin_);
 }
 
@@ -246,8 +251,11 @@ cle::Array::Pointer create_array(py::tuple shape, py::object dtype, std::string 
 
      auto dimension = py::len(shape);
 
-     auto array = cle::Array::create(c_shape[0], c_shape[1], c_shape[2], dimension, get_cle_dtype(dtype), get_cle_mtype(mtype), device);
-     return array;
+     const auto c_dtype = get_cle_dtype(dtype);
+     const auto c_mtype = get_cle_mtype(mtype);
+
+     PYCLE_RELEASE_GIL_SCOPE;
+     return cle::Array::create(c_shape[0], c_shape[1], c_shape[2], dimension, c_dtype, c_mtype, device);
 }
 
 auto array_(py::module_ &m) -> void
@@ -274,7 +282,7 @@ auto array_(py::module_ &m) -> void
 
          .def("_copy_region", &copy_region, py::arg("dst"), py::arg("src_origin") = py::none(), py::arg("dst_origin") = py::none(), py::arg("region") = py::none())
          .def("reshape", &cle::Array::reshape, py::arg("width") =1, py::arg("height") =1, py::arg("depth") =1, py::arg("dimension") = 0)
-         .def("fill", &cle::Array::fill, py::arg("value"))
+         .def("fill", &cle::Array::fill, PYCLE_RELEASE_GIL, py::arg("value"))
 
          .def_property_readonly("width", &cle::Array::width)
          .def_property_readonly("height", &cle::Array::height)

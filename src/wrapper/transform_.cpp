@@ -265,16 +265,19 @@ auto transform_(py::module_ &m) -> void
           "Prepare the output shape (width, height, depth) and updated transform for the given "
           "transformation matrix and array shape.",
           py::return_value_policy::automatic_reference,
+          PYCLE_RELEASE_GIL,
           py::arg("width"), py::arg("height"), py::arg("depth"), py::arg("transform"));
 
     m.def("_affine_transform", &cle::transform::affine_transform,
           "Apply the affine transform matrix to an array.",
           py::return_value_policy::automatic_reference,
+          PYCLE_RELEASE_GIL,
           py::arg("src"), py::arg("dst"), py::arg("transform"), py::arg("interpolate"), py::arg("auto_resize"));
 
      m.def("_affine_transform_deskew", &cle::transform::affine_transform_deskew_3d,
           "Apply the affine transform matrix to a 3D array with deskewing.",
           py::return_value_policy::automatic_reference,
+          PYCLE_RELEASE_GIL,
           py::arg("src"), py::arg("dst"), py::arg("transform"), py::arg("deskew_angle"), py::arg("voxel_size_x"), py::arg("voxel_size_y"), py::arg("voxel_size_z"),
           py::arg("deskew_direction"), py::arg("auto_resize"));
 }

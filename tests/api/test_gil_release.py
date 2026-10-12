@@ -94,7 +94,9 @@ def test_same_device_concurrent_filters(gpu_backend):
     def worker(i):
         for _ in range(N_ITERATIONS):
             result, total = compute(i, images[i])
-            assert np.array_equal(result, references[i][0]), f"thread {i}: image differs"
+            assert np.array_equal(
+                result, references[i][0]
+            ), f"thread {i}: image differs"
             assert total == references[i][1], f"thread {i}: sum differs"
 
     assert not _run_threads(worker, N_THREADS)
@@ -117,7 +119,9 @@ def test_same_device_concurrent_labeling(gpu_backend):
 
     def worker(i):
         for _ in range(N_ITERATIONS // 5):
-            assert np.array_equal(compute(i), references[i]), f"thread {i}: labels differ"
+            assert np.array_equal(
+                compute(i), references[i]
+            ), f"thread {i}: labels differ"
 
     assert not _run_threads(worker, len(images))
 

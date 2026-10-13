@@ -1147,77 +1147,6 @@ def large_hessian_eigenvalue(
     return _get_backend()._large_hessian_eigenvalue(device, input_image, output_image)
 
 
-@plugin_function
-def maximum_of_all_pixels(input_image: Image, device: Optional[Device] = None) -> float:
-    """Determines the maximum of all pixels in a given image.
-
-    Parameters
-    ----------
-    input_image: Image
-        Input image to process.
-    device: Optional[Device] (= None)
-        Device to perform the operation on.
-
-    Returns
-    -------
-    float
-
-    References
-    ----------
-    [1] https://clij.github.io/clij2-docs/reference_maximumOfAllPixels
-    """
-    return _get_backend()._maximum_of_all_pixels(device, input_image)
-
-
-@plugin_function
-def minimum_of_all_pixels(input_image: Image, device: Optional[Device] = None) -> float:
-    """Determines the minimum of all pixels in a given image.
-
-    Parameters
-    ----------
-    input_image: Image
-        Input image to process.
-    device: Optional[Device] (= None)
-        Device to perform the operation on.
-
-    Returns
-    -------
-    float
-
-    References
-    ----------
-    [1] https://clij.github.io/clij2-docs/reference_minimumOfAllPixels
-    """
-    return _get_backend()._minimum_of_all_pixels(device, input_image)
-
-
-@plugin_function
-def minimum_of_masked_pixels(
-    input_image: Image, mask: Image, device: Optional[Device] = None
-) -> float:
-    """Determines the minimum intensity in a masked image, but only over pixels that
-    have nonzero values in a separate mask image.
-
-    Parameters
-    ----------
-    input_image: Image
-        Input image to process.
-    mask: Image
-        Input mask.
-    device: Optional[Device] (= None)
-        Device to perform the operation on.
-
-    Returns
-    -------
-    float
-
-    References
-    ----------
-    [1] https://clij.github.io/clij2-docs/reference_minimumOfMaskedPixels
-    """
-    return _get_backend()._minimum_of_masked_pixels(device, input_image, mask)
-
-
 @deprecated("opening_box: This method is deprecated. Consider using opening() instead.")
 @plugin_function(categories=["filter", "in assistant"])
 def opening_box(
@@ -1421,6 +1350,38 @@ def binary_opening(
         float(radius_z),
         str(connectivity),
     )
+
+
+@plugin_function(categories=["binary processing", "in assistant"])
+def skeletonize(
+    input_image: Image,
+    output_image: Optional[Image] = None,
+    device: Optional[Device] = None,
+) -> Image:
+    """Reduces the objects of a binary image to their skeleton: lines one pixel (voxel)
+    wide that keep the topology of the objects (number of objects, holes and
+    cavities) and their end points. Works on 2D and 3D images; non-zero pixels are
+    considered foreground. The result is similar, but not identical pixel by pixel,
+    to scikit-image's skeletonize (Lee method in 3D).
+
+    Parameters
+    ----------
+    input_image: Image
+        Input binary image.
+    output_image: Optional[Image] (= None)
+        Output skeleton image.
+    device: Optional[Device] (= None)
+        Device to perform the operation on.
+
+    Returns
+    -------
+    Image
+
+    References
+    ----------
+    [1] https://doi.org/10.1006/cgip.1994.1042
+    """
+    return _get_backend()._skeletonize(device, input_image, output_image)
 
 
 @plugin_function
@@ -1866,50 +1827,6 @@ def reduce_stack(
     return _get_backend()._reduce_stack(
         device, input_image, output_image, int(reduction_factor), int(offset)
     )
-
-
-@plugin_function
-def sum_of_all_pixels(
-    input_image: Optional[Image] = None, device: Optional[Device] = None
-) -> float:
-    """Determines the sum of all pixels in a given image.
-
-    Parameters
-    ----------
-    input_image: Optional[Image] (= None)
-        Input image to process.
-    device: Optional[Device] (= None)
-        Device to perform the operation on.
-
-    Returns
-    -------
-    float
-
-    References
-    ----------
-    [1] https://clij.github.io/clij2-docs/reference_sumOfAllPixels
-    """
-    return _get_backend()._sum_of_all_pixels(device, input_image)
-
-
-@plugin_function(categories=["combine"])
-def product_of_all_pixels(
-    input_image: Optional[Image] = None, device: Optional[Device] = None
-) -> float:
-    """Determines the product of all pixels in a given image.
-
-    Parameters
-    ----------
-    input_image: Optional[Image] (= None)
-        Input image to process.
-    device: Optional[Device] (= None)
-        Device to perform the operation on.
-
-    Returns
-    -------
-    float
-    """
-    return _get_backend()._product_of_all_pixels(device, input_image)
 
 
 @deprecated("top_hat_box: This method is deprecated. Consider using top_hat() instead.")
@@ -2400,14 +2317,12 @@ __all__ = [
     "label_spots",
     "pointlist_to_labelled_spots",
     "large_hessian_eigenvalue",
-    "maximum_of_all_pixels",
-    "minimum_of_all_pixels",
-    "minimum_of_masked_pixels",
     "opening_box",
     "opening_sphere",
     "grayscale_opening",
     "opening",
     "binary_opening",
+    "skeletonize",
     "radians_to_degrees",
     "reduce_labels_to_label_edges",
     "small_hessian_eigenvalue",
@@ -2420,8 +2335,6 @@ __all__ = [
     "subtract_images",
     "sub_stack",
     "reduce_stack",
-    "sum_of_all_pixels",
-    "product_of_all_pixels",
     "top_hat_box",
     "top_hat_sphere",
     "top_hat",

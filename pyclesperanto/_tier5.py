@@ -145,6 +145,7 @@ def connected_component_labeling(
     References
     ----------
     [1] https://clij.github.io/clij2-docs/reference_connectedComponentsLabelingBox
+    [2] https://doi.org/10.1109/TPDS.2018.2799216
     """
     return _get_backend()._connected_component_labeling(
         device, input_image, output_image, str(connectivity)

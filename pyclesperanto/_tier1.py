@@ -3436,6 +3436,77 @@ def minimum_z_projection(
     )
 
 
+@plugin_function
+def maximum_of_all_pixels(input_image: Image, device: Optional[Device] = None) -> float:
+    """Determines the maximum of all pixels in a given image.
+
+    Parameters
+    ----------
+    input_image: Image
+        Input image to process.
+    device: Optional[Device] (= None)
+        Device to perform the operation on.
+
+    Returns
+    -------
+    float
+
+    References
+    ----------
+    [1] https://clij.github.io/clij2-docs/reference_maximumOfAllPixels
+    """
+    return _get_backend()._maximum_of_all_pixels(device, input_image)
+
+
+@plugin_function
+def minimum_of_all_pixels(input_image: Image, device: Optional[Device] = None) -> float:
+    """Determines the minimum of all pixels in a given image.
+
+    Parameters
+    ----------
+    input_image: Image
+        Input image to process.
+    device: Optional[Device] (= None)
+        Device to perform the operation on.
+
+    Returns
+    -------
+    float
+
+    References
+    ----------
+    [1] https://clij.github.io/clij2-docs/reference_minimumOfAllPixels
+    """
+    return _get_backend()._minimum_of_all_pixels(device, input_image)
+
+
+@plugin_function
+def minimum_of_masked_pixels(
+    input_image: Image, mask: Image, device: Optional[Device] = None
+) -> float:
+    """Determines the minimum intensity in a masked image, but only over pixels that
+    have nonzero values in a separate mask image.
+
+    Parameters
+    ----------
+    input_image: Image
+        Input image to process.
+    mask: Image
+        Input mask.
+    device: Optional[Device] (= None)
+        Device to perform the operation on.
+
+    Returns
+    -------
+    float
+
+    References
+    ----------
+    [1] https://clij.github.io/clij2-docs/reference_minimumOfMaskedPixels
+    """
+    return _get_backend()._minimum_of_masked_pixels(device, input_image, mask)
+
+
 @deprecated("mode_box: This function is deprecated. Consider using mode() instead.")
 @plugin_function(categories=["label processing", "in assistant"])
 def mode_box(
@@ -5688,6 +5759,50 @@ def subtract_image_from_scalar(
 
 
 @plugin_function
+def sum_of_all_pixels(
+    input_image: Optional[Image] = None, device: Optional[Device] = None
+) -> float:
+    """Determines the sum of all pixels in a given image.
+
+    Parameters
+    ----------
+    input_image: Optional[Image] (= None)
+        Input image to process.
+    device: Optional[Device] (= None)
+        Device to perform the operation on.
+
+    Returns
+    -------
+    float
+
+    References
+    ----------
+    [1] https://clij.github.io/clij2-docs/reference_sumOfAllPixels
+    """
+    return _get_backend()._sum_of_all_pixels(device, input_image)
+
+
+@plugin_function(categories=["combine"])
+def product_of_all_pixels(
+    input_image: Optional[Image] = None, device: Optional[Device] = None
+) -> float:
+    """Determines the product of all pixels in a given image.
+
+    Parameters
+    ----------
+    input_image: Optional[Image] (= None)
+        Input image to process.
+    device: Optional[Device] (= None)
+        Device to perform the operation on.
+
+    Returns
+    -------
+    float
+    """
+    return _get_backend()._product_of_all_pixels(device, input_image)
+
+
+@plugin_function
 def sum_reduction_x(
     input_image: Image,
     output_image: Optional[Image] = None,
@@ -7113,6 +7228,9 @@ __all__ = [
     "minimum_x_projection",
     "minimum_y_projection",
     "minimum_z_projection",
+    "maximum_of_all_pixels",
+    "minimum_of_all_pixels",
+    "minimum_of_masked_pixels",
     "mode_box",
     "mode_sphere",
     "mode",
@@ -7175,6 +7293,8 @@ __all__ = [
     "variance_y_projection",
     "variance_z_projection",
     "subtract_image_from_scalar",
+    "sum_of_all_pixels",
+    "product_of_all_pixels",
     "sum_reduction_x",
     "sum_x_projection",
     "sum_y_projection",

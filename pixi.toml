@@ -12,6 +12,7 @@ pybind11 = ">=3.0.2,<4"
 cmake = ">=4.3.0,<5"
 ninja = ">=1.13.2,<2"
 pre-commit = ">=4.5.1,<5"
+eigen = ">=5.0.1,<6"
 
 [feature.dev.dependencies]
 pytest = ">=9.0.2,<10"

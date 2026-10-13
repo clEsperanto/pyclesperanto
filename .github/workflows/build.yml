@@ -6,6 +6,11 @@ on:
   pull_request:
     branches: [ main ]
 
+# Cancel outdated PR runs when a newer commit arrives; runs on main always complete.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
 env:
   CUDA_VERSION: "12.6.0"
 
@@ -60,6 +65,11 @@ jobs:
           echo "LD_LIBRARY_PATH=/usr/local/cuda/lib64:/usr/local/cuda/lib64/stubs:$LD_LIBRARY_PATH" >> $GITHUB_ENV
           echo "PATH=/usr/local/cuda/bin:$PATH" >> $GITHUB_ENV
           sudo ln -sf /usr/local/cuda/lib64/stubs/libcuda.so /usr/local/cuda/lib64/stubs/libcuda.so.1
+
+      - name: Install Eigen
+        run: |
+          bash scripts/install-eigen.sh "$RUNNER_TEMP/eigen3"
+          echo "Eigen3_ROOT=$RUNNER_TEMP/eigen3" >> $GITHUB_ENV
 
       - name: Install Python packages
         run: |

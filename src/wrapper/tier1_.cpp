@@ -495,6 +495,21 @@ m.def("_absolute", &cle::tier1::absolute_func, "Call cle::tier1::absolute_func f
     PYCLE_RELEASE_GIL,
     py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("keep_dims"));
 
+    m.def("_maximum_of_all_pixels", &cle::tier1::maximum_of_all_pixels_func, "Call cle::tier1::maximum_of_all_pixels_func from C++ CLIc.",
+    py::return_value_policy::automatic_reference,
+    PYCLE_RELEASE_GIL,
+    py::arg("device"), py::arg("src"));
+
+    m.def("_minimum_of_all_pixels", &cle::tier1::minimum_of_all_pixels_func, "Call cle::tier1::minimum_of_all_pixels_func from C++ CLIc.",
+    py::return_value_policy::automatic_reference,
+    PYCLE_RELEASE_GIL,
+    py::arg("device"), py::arg("src"));
+
+    m.def("_minimum_of_masked_pixels", &cle::tier1::minimum_of_masked_pixels_func, "Call cle::tier1::minimum_of_masked_pixels_func from C++ CLIc.",
+    py::return_value_policy::automatic_reference,
+    PYCLE_RELEASE_GIL,
+    py::arg("device"), py::arg("src"), py::arg("mask"));
+
     m.def("_mode_box", &cle::tier1::mode_box_func, "Call cle::tier1::mode_box_func from C++ CLIc.",
     py::return_value_policy::automatic_reference,
     PYCLE_RELEASE_GIL,
@@ -804,6 +819,16 @@ m.def("_absolute", &cle::tier1::absolute_func, "Call cle::tier1::absolute_func f
     py::return_value_policy::automatic_reference,
     PYCLE_RELEASE_GIL,
     py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("scalar"));
+
+    m.def("_sum_of_all_pixels", &cle::tier1::sum_of_all_pixels_func, "Call cle::tier1::sum_of_all_pixels_func from C++ CLIc.",
+    py::return_value_policy::automatic_reference,
+    PYCLE_RELEASE_GIL,
+    py::arg("device"), py::arg("src"));
+
+    m.def("_product_of_all_pixels", &cle::tier1::product_of_all_pixels_func, "Call cle::tier1::product_of_all_pixels_func from C++ CLIc.",
+    py::return_value_policy::automatic_reference,
+    PYCLE_RELEASE_GIL,
+    py::arg("device"), py::arg("src"));
 
     m.def("_sum_reduction_x", &cle::tier1::sum_reduction_x_func, "Call cle::tier1::sum_reduction_x_func from C++ CLIc.",
     py::return_value_policy::automatic_reference,

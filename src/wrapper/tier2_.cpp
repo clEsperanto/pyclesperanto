@@ -160,21 +160,6 @@ m.def("_absolute_difference", &cle::tier2::absolute_difference_func, "Call cle::
     PYCLE_RELEASE_GIL,
     py::arg("device"), py::arg("src"), py::arg("dst"));
 
-    m.def("_maximum_of_all_pixels", &cle::tier2::maximum_of_all_pixels_func, "Call cle::tier2::maximum_of_all_pixels_func from C++ CLIc.",
-    py::return_value_policy::automatic_reference,
-    PYCLE_RELEASE_GIL,
-    py::arg("device"), py::arg("src"));
-
-    m.def("_minimum_of_all_pixels", &cle::tier2::minimum_of_all_pixels_func, "Call cle::tier2::minimum_of_all_pixels_func from C++ CLIc.",
-    py::return_value_policy::automatic_reference,
-    PYCLE_RELEASE_GIL,
-    py::arg("device"), py::arg("src"));
-
-    m.def("_minimum_of_masked_pixels", &cle::tier2::minimum_of_masked_pixels_func, "Call cle::tier2::minimum_of_masked_pixels_func from C++ CLIc.",
-    py::return_value_policy::automatic_reference,
-    PYCLE_RELEASE_GIL,
-    py::arg("device"), py::arg("src"), py::arg("mask"));
-
     m.def("_opening_box", &cle::tier2::opening_box_func, "Call cle::tier2::opening_box_func from C++ CLIc.",
     py::return_value_policy::automatic_reference,
     PYCLE_RELEASE_GIL,
@@ -199,6 +184,11 @@ m.def("_absolute_difference", &cle::tier2::absolute_difference_func, "Call cle::
     py::return_value_policy::automatic_reference,
     PYCLE_RELEASE_GIL,
     py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("radius_x"), py::arg("radius_y"), py::arg("radius_z"), py::arg("connectivity"));
+
+    m.def("_skeletonize", &cle::tier2::skeletonize_func, "Call cle::tier2::skeletonize_func from C++ CLIc.",
+    py::return_value_policy::automatic_reference,
+    PYCLE_RELEASE_GIL,
+    py::arg("device"), py::arg("src"), py::arg("dst"));
 
     m.def("_radians_to_degrees", &cle::tier2::radians_to_degrees_func, "Call cle::tier2::radians_to_degrees_func from C++ CLIc.",
     py::return_value_policy::automatic_reference,
@@ -259,16 +249,6 @@ m.def("_absolute_difference", &cle::tier2::absolute_difference_func, "Call cle::
     py::return_value_policy::automatic_reference,
     PYCLE_RELEASE_GIL,
     py::arg("device"), py::arg("src"), py::arg("dst"), py::arg("reduction_factor"), py::arg("offset"));
-
-    m.def("_sum_of_all_pixels", &cle::tier2::sum_of_all_pixels_func, "Call cle::tier2::sum_of_all_pixels_func from C++ CLIc.",
-    py::return_value_policy::automatic_reference,
-    PYCLE_RELEASE_GIL,
-    py::arg("device"), py::arg("src"));
-
-    m.def("_product_of_all_pixels", &cle::tier2::product_of_all_pixels_func, "Call cle::tier2::product_of_all_pixels_func from C++ CLIc.",
-    py::return_value_policy::automatic_reference,
-    PYCLE_RELEASE_GIL,
-    py::arg("device"), py::arg("src"));
 
     m.def("_top_hat_box", &cle::tier2::top_hat_box_func, "Call cle::tier2::top_hat_box_func from C++ CLIc.",
     py::return_value_policy::automatic_reference,

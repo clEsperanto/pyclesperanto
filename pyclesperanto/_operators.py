@@ -333,7 +333,7 @@ def _max(
     keepdims: bool = False,
 ):
     """Return the maximum of the Array, or along an axis if specified."""
-    from ._tier2 import maximum_of_all_pixels
+    from ._tier1 import maximum_of_all_pixels
 
     if axis is None:
         result = _full_reduce(self, maximum_of_all_pixels(self), self.dtype, keepdims)
@@ -350,7 +350,7 @@ def _min(
     keepdims: bool = False,
 ):
     """Return the minimum of the Array, or along an axis if specified."""
-    from ._tier2 import minimum_of_all_pixels
+    from ._tier1 import minimum_of_all_pixels
 
     if axis is None:
         result = _full_reduce(self, minimum_of_all_pixels(self), self.dtype, keepdims)
@@ -372,7 +372,7 @@ def _sum(
     Note: integer inputs are promoted to 32-bit (int32/uint32) rather than
     NumPy's 64-bit default, since the device does not support 64-bit types.
     """
-    from ._tier2 import sum_of_all_pixels
+    from ._tier1 import sum_of_all_pixels
 
     if axis is None:
         result = _full_reduce(
@@ -495,7 +495,7 @@ def _prod(
     Note: integer inputs are promoted to 32-bit (int32/uint32) rather than
     NumPy's 64-bit default, since the device does not support 64-bit types.
     """
-    from ._tier2 import product_of_all_pixels
+    from ._tier1 import product_of_all_pixels
 
     if axis is None:
         result = _full_reduce(

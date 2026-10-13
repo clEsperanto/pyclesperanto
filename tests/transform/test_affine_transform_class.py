@@ -252,3 +252,56 @@ def test_str_and_repr():
     transform = cle.transform.AffineTransform()
     assert "AffineTransform" in str(transform)
     assert "1" in repr(transform)
+
+
+def test_getitem():
+    transform = cle.transform.AffineTransform()
+    assert transform[0, 0] == 1.0
+    assert transform[1, 1] == 1.0
+    assert transform[0, 3] == 0.0
+
+
+def test_getitem_matches_matrix():
+    transform = cle.transform.AffineTransform()
+    transform.rotate_around_y_axis(30)
+    transform.translate(3, 4, 5)
+
+    matrix = transform.get_matrix()
+    for i in range(4):
+        for j in range(4):
+            assert transform[i, j] == matrix[i, j]
+
+
+def test_setitem():
+    transform = cle.transform.AffineTransform()
+    transform[0, 3] = 10.0
+    transform[1, 2] = -2.5
+
+    matrix = transform.get_matrix()
+    assert transform[0, 3] == 10.0
+    assert transform[1, 2] == -2.5
+    assert matrix[0, 3] == 10.0
+    assert matrix[1, 2] == -2.5
+
+
+def test_setitem_updates_inverse():
+    transform = cle.transform.AffineTransform()
+    transform[0, 3] = 10.0
+
+    matrix = transform.get_matrix()
+    inverse = transform.get_inverse()
+    assert np.allclose(matrix @ inverse, np.eye(4), atol=1e-5)
+
+
+def test_getitem_out_of_range_raises():
+    transform = cle.transform.AffineTransform()
+    for index in [(4, 0), (0, 4), (-1, 0), (0, -1)]:
+        with pytest.raises(IndexError):
+            transform[index]
+
+
+def test_setitem_out_of_range_raises():
+    transform = cle.transform.AffineTransform()
+    for index in [(4, 0), (0, 4), (-1, 0), (0, -1)]:
+        with pytest.raises(IndexError):
+            transform[index] = 1.0

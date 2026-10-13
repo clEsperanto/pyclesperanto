@@ -6,6 +6,18 @@
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
 
+// Release the GIL during CLIc calls, build with -DPYCLE_NO_GIL_RELEASE to keep it held.
+// PYCLE_RELEASE_GIL is a pybind11 extra for bindings whose arguments are all C++ types.
+// PYCLE_RELEASE_GIL_SCOPE releases until the end of the enclosing scope, for bindings that
+// must first convert Python arguments: no Python API may be used after it in that scope.
+#ifndef PYCLE_NO_GIL_RELEASE
+#  define PYCLE_RELEASE_GIL       pybind11::call_guard<pybind11::gil_scoped_release>()
+#  define PYCLE_RELEASE_GIL_SCOPE pybind11::gil_scoped_release pycle_gil_release_
+#else
+#  define PYCLE_RELEASE_GIL       pybind11::call_guard<>()
+#  define PYCLE_RELEASE_GIL_SCOPE (void)0
+#endif
+
 auto types_(pybind11::module_ &module) -> void;
 auto core_(pybind11::module_ &module) -> void;
 auto array_(pybind11::module_ &module) -> void;

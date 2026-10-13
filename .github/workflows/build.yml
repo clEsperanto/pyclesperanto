@@ -25,7 +25,7 @@ jobs:
         uses: actions/checkout@v7
 
       - name: Setup Python with uv
-        uses: astral-sh/setup-uv@v10.0.1
+        uses: astral-sh/setup-uv@v10.2.0
         with:
           python-version: ${{ matrix.python-version }}
           activate-environment: "true"
@@ -35,6 +35,11 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y pocl-opencl-icd ocl-icd-opencl-dev
+
+      - name: Remove broken apt sources
+        if: matrix.backend == 'CUDA'
+        run: |
+          sudo rm -f /etc/apt/sources.list.d/microsoft-prod.list
 
       - name: Install CUDA Toolkit
         if: matrix.backend == 'CUDA'
@@ -86,7 +91,7 @@ jobs:
 
       - name: Upload coverage
         if: matrix.backend == 'OPENCL' && github.actor != 'dependabot[bot]'
-        uses: codecov/codecov-action@v7.0.0
+        uses: codecov/codecov-action@v7.1.1
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           files: ./coverage/coverage.xml

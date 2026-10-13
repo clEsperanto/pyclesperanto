@@ -144,6 +144,7 @@ auto py_execute(
         cle::ParameterList clic_parameters = convert_parameters(parameters);
         cle::ConstantList clic_constants = convert_constants(constants);
 
+        PYCLE_RELEASE_GIL_SCOPE;
         cle::execute(device, kernel_info, clic_parameters,
                     global_range, local_range, clic_constants);
     }
@@ -170,6 +171,7 @@ auto py_native_execute(
 
         cle::ParameterList clic_parameters = convert_parameters(parameters);
 
+        PYCLE_RELEASE_GIL_SCOPE;
         cle::native_execute(device, kernel_info, clic_parameters,
                            global_range, local_range);
     }
@@ -234,6 +236,7 @@ auto py_evaluate(
         std::vector<cle::ParameterType> param_vector =
             convert_evaluate_parameters(parameters);
 
+        PYCLE_RELEASE_GIL_SCOPE;
         cle::evaluate(device, expression, param_vector, output);
     }
     catch (const std::exception &e)

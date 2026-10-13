@@ -66,6 +66,11 @@ jobs:
           echo "PATH=/usr/local/cuda/bin:$PATH" >> $GITHUB_ENV
           sudo ln -sf /usr/local/cuda/lib64/stubs/libcuda.so /usr/local/cuda/lib64/stubs/libcuda.so.1
 
+      - name: Install Eigen
+        run: |
+          bash scripts/install-eigen.sh "$RUNNER_TEMP/eigen3"
+          echo "Eigen3_ROOT=$RUNNER_TEMP/eigen3" >> $GITHUB_ENV
+
       - name: Install Python packages
         run: |
           uv pip install numpy toolz matplotlib pytest pytest-cov pytest-benchmark scikit-image

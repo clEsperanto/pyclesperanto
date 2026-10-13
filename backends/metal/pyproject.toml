@@ -62,4 +62,5 @@ test-command = "python -c \"import pyclesperanto_metal; print('Metal backend OK'
 
 [tool.cibuildwheel.macos]
 archs = ["arm64", "x86_64"]
-environment = { MACOSX_DEPLOYMENT_TARGET = '11.0' }
+before-all = "bash {package}/../../scripts/install-eigen.sh /tmp/eigen3"
+environment = { MACOSX_DEPLOYMENT_TARGET = '11.0', Eigen3_ROOT = "/tmp/eigen3" }

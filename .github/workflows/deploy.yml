@@ -87,8 +87,6 @@ jobs:
         with:
           package-dir: backends/cuda
         env:
-          # On Windows, CUDA is already installed by the action above; skip before-all
-          CIBW_BEFORE_ALL_WINDOWS: ""
           # On Linux, build-cuda-linux.sh installs CUDA inside the container: forward the version
           CUDA_RELEASE: ${{ env.CUDA_VERSION }}
           CIBW_ENVIRONMENT_PASS_LINUX: CUDA_RELEASE

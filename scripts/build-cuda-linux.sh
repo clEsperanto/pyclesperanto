@@ -24,6 +24,9 @@ done
 ln -sfn lib "${CUDA_ROOT}/lib64"
 ln -sfn "${CUDA_ROOT}" /usr/local/cuda
 
+# Eigen for CLIc: installed once here instead of downloaded by CMake for every wheel
+bash "${SCRIPT_DIR}/install-eigen.sh" /usr/local
+
 # Debug: confirm builtins is installed
 echo "=== Installed nvrtc files ==="
 find /usr/local/cuda/lib64/ -name "libnvrtc-builtins*" || true

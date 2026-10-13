@@ -79,8 +79,10 @@ repair-wheel-command = """
 """
 
 [tool.cibuildwheel.windows]
+# CUDA itself is installed by the deploy workflow (Jimver/cuda-toolkit); before-all only installs Eigen
+before-all = "bash {package}/../../scripts/install-eigen.sh C:/eigen3"
 before-build = "pip install delvewheel"
-environment = { SKBUILD_CMAKE_ARGS = "-DCLE_BACKEND=CUDA" }
+environment = { Eigen3_ROOT = "C:/eigen3", SKBUILD_CMAKE_ARGS = "-DCLE_BACKEND=CUDA" }
 repair-wheel-command = "bash {package}/../../scripts/repair-cuda-windows.sh {dest_dir} {wheel}"
 
 [tool.cibuildwheel.macos]

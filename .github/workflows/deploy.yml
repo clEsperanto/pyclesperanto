@@ -1,12 +1,20 @@
 name: Deploy
 
-# Run on release, or when 'ready-to-deploy' label is added to PR:
+# Run on release, or on PRs carrying the 'ready-to-deploy' label: adding the label
+# starts a deploy, and every later push re-runs it as long as the label stays on.
 on:
   pull_request:
     branches: [main]
-    # types: [labeled]
+    types: [opened, synchronize, reopened, labeled]
   release:
-    types: [created]
+    types: [published]
+
+# Cancel an outdated PR deploy when a newer commit arrives. Release runs are never
+# cancelled, and adding an unrelated label gets its own group so it does not
+# cancel a running deploy.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}${{ github.event.action == 'labeled' && github.event.label.name != 'ready-to-deploy' && format('-{0}', github.run_id) || '' }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 env:
   CUDA_VERSION: "12.6.0"
@@ -18,7 +26,10 @@ jobs:
   build_opencl_wheels:
     name: build opencl (${{ matrix.os }})
     runs-on: ${{ matrix.os }}
-    # if: github.event_name == 'release' || contains(github.event.pull_request.labels.*.name, 'ready-to-deploy')
+    if: >-
+      github.event_name == 'release' ||
+      (contains(github.event.pull_request.labels.*.name, 'ready-to-deploy') &&
+       (github.event.action != 'labeled' || github.event.label.name == 'ready-to-deploy'))
     strategy:
       fail-fast: true
       matrix:
@@ -46,7 +57,10 @@ jobs:
   build_cuda_wheels:
     name: build cuda (${{ matrix.os }})
     runs-on: ${{ matrix.os }}
-    # if: github.event_name == 'release' || contains(github.event.pull_request.labels.*.name, 'ready-to-deploy')
+    if: >-
+      github.event_name == 'release' ||
+      (contains(github.event.pull_request.labels.*.name, 'ready-to-deploy') &&
+       (github.event.action != 'labeled' || github.event.label.name == 'ready-to-deploy'))
     strategy:
       fail-fast: false
       matrix:
@@ -62,8 +76,10 @@ jobs:
         uses: Jimver/cuda-toolkit@v0.2.36
         with:
           cuda: ${{ env.CUDA_VERSION }}
-          method: 'local'
-          use-local-cache: true
+          # Network installer + only the components CLIc needs, instead of the full ~3 GB local installer
+          method: 'network'
+          sub-packages: '["nvcc", "cudart", "nvrtc", "nvrtc_dev", "nvjitlink"]'
+          use-github-cache: false
           log-file-suffix: '_windows'
 
       - name: Build wheels
@@ -73,6 +89,9 @@ jobs:
         env:
           # On Windows, CUDA is already installed by the action above; skip before-all
           CIBW_BEFORE_ALL_WINDOWS: ""
+          # On Linux, build-cuda-linux.sh installs CUDA inside the container: forward the version
+          CUDA_RELEASE: ${{ env.CUDA_VERSION }}
+          CIBW_ENVIRONMENT_PASS_LINUX: CUDA_RELEASE
 
       - uses: actions/upload-artifact@v7
         with:
@@ -82,7 +101,10 @@ jobs:
   build_metal_wheels:
     name: build metal (${{ matrix.os }})
     runs-on: ${{ matrix.os }}
-    # if: github.event_name == 'release' || contains(github.event.pull_request.labels.*.name, 'ready-to-deploy')
+    if: >-
+      github.event_name == 'release' ||
+      (contains(github.event.pull_request.labels.*.name, 'ready-to-deploy') &&
+       (github.event.action != 'labeled' || github.event.label.name == 'ready-to-deploy'))
     strategy:
       fail-fast: true
       matrix:
@@ -110,7 +132,10 @@ jobs:
   build_main:
     name: build pyclesperanto
     runs-on: ubuntu-latest
-    # if: github.event_name == 'release' || contains(github.event.pull_request.labels.*.name, 'ready-to-deploy')
+    if: >-
+      github.event_name == 'release' ||
+      (contains(github.event.pull_request.labels.*.name, 'ready-to-deploy') &&
+       (github.event.action != 'labeled' || github.event.label.name == 'ready-to-deploy'))
     steps:
       - name: Checkout
         uses: actions/checkout@v7

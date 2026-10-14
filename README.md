@@ -71,7 +71,7 @@ imsave("result.tif", output_image)
 - [Select a Backend](docs/demos/api/manage_backends.ipynb)
 - [Choose a devices](docs/demos/api/select_devices.ipynb)
 - [Host-Device memory transfer](docs/demos/api/push_pull_create.ipynb)
-- [Process an array](docs/demos/api/process_image.ipynb)
+- [Process an array](docs/demos/api/kernel_usage.ipynb)
 
 </td></tr>
 
@@ -106,7 +106,7 @@ imsave("result.tif", output_image)
 
 - [Voronoi-Otsu segmentation](docs/demos/examples/voronoi_otsu_labeling.ipynb)
 - [Membrane segmentation](docs/demos/examples/membrane_segmentation_2d.ipynb)
-- [3D nuclei segmentation](docs/demos/examples/Segmentation_3D.ipynb)
+- [3D nuclei segmentation](docs/demos/examples/segmentation_3d.ipynb)
 - [Chan-Vese segmentation](docs/demos/examples/chan_vese_segmentation.ipynb)
 - [Labels quantifications](docs/demos/basics/label_statistics.ipynb)
 - [Parametrical maps](docs/demos/examples/parametric_maps.ipynb)
@@ -119,10 +119,10 @@ imsave("result.tif", output_image)
 <img src="docs/demos/images/multi-device-tiling.png" width="300"/>
 </td><td>
 
-- [Image transformation](docs/demos/examples/affine_transforms.ipynb)
+- [Image transformation](docs/demos/examples/image_affine_transforms.ipynb)
 - [FFT Convolution and Deconvolution](docs/demos/examples/image_deconvolution.ipynb)
-- [Multi-GPU and tile processing with Dask docs](demos/examples/multi-gpu_tile_processing_with_dask.ipynb)
-- [Ask Bia-Bob docs](demos/interoperability/biabob-example.ipynb)
+- [Multi-GPU and tile processing with Dask](docs/demos/examples/multi-gpu_tile_processing_with_dask.ipynb)
+- [Ask Bia-Bob](docs/demos/interoperability/biabob-example.ipynb)
 
 </td></tr>
 

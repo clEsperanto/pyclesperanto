@@ -825,7 +825,7 @@ def _reset_array_patch():
 
 
 def __dlpack__(self, stream=None, version=(1, 0)):
-    """Export as DLPack capsule (CUDA and OpenCL BUFFER only)."""
+    """Export as DLPack capsule (CUDA, OpenCL BUFFER and Metal)."""
     return self._dlpack(stream, version)  # calls the C++ binding
 
 
@@ -895,12 +895,12 @@ def from_dlpack(cls, dltensor, *, device=None, copy=None):
         or (target_is_metal and src_is_metal and src_device_id == target_device.index)
     )
 
-    # Metal zero-copy DLPack import is not yet supported in the C++ backend;
-    # force a copy through the host for Metal sources.
+    # Zero-copy import is supported for CUDA, OpenCL and Metal sources on the
+    # target device. For Metal, the producer (e.g. torch MPS) must have finished
+    # its writes before cle reads the buffer (e.g. torch.mps.synchronize()).
     needs_copy = (
         copy is True  # user forced copy
         or src_is_cpu  # source is CPU — always need to upload
-        or src_is_metal  # Metal zero-copy not yet supported
         or not same_device  # different GPU device
     )
 

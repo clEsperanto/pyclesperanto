@@ -20,18 +20,18 @@ repos:
 
 # black - code formatting
 -   repo: https://github.com/psf/black-pre-commit-mirror
-    rev: 26.10.0
+    rev: 26.10.1
     hooks:
     -   id: black
 
 # isort - import sorting
 -   repo: https://github.com/pycqa/isort
-    rev: 9.0.2
+    rev: 10.0.0b2
     hooks:
     -   id: isort
 
 # flake8 - linting
 -   repo: https://github.com/pycqa/flake8
-    rev: 7.4.1
+    rev: 7.5.0
     hooks:
     -   id: flake8

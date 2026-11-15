@@ -1,0 +1,83 @@
+# Run the pytest suite on the CUDA backend on a simulated NVIDIA H100.
+#
+# build.yml builds the CUDA backend but only runs tests/test_import.py on it
+# (the full suite runs on PoCL only). This job builds the CUDA backend and runs
+# the tests on the cuda backend under PantheonSim
+# (https://github.com/pantheongpu/pantheonsim), a functional GPU simulator.
+name: GPU simulator tests
+
+on:
+  push:
+    branches: [ scratch-gpu-sim ]
+  workflow_dispatch: {}
+  pull_request:
+    branches: [ main ]
+    paths:
+      - 'backends/cuda/**'
+      - 'src/**'
+      - 'pyclesperanto/**'
+      - 'tests/**'
+      - 'pyproject.toml'
+      - '.github/workflows/gpu-sim.yml'
+
+concurrency:
+  group: gpu-sim-${{ github.event.number || github.ref_name }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  cuda-h100:
+    name: CUDA 12.6 / simulated H100
+    runs-on: ubuntu-24.04
+    timeout-minutes: 120
+    steps:
+      - name: Checkout
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+        with:
+          persist-credentials: false
+
+      - name: Set up the simulated H100 and CUDA toolkit
+        uses: pantheongpu/setup-pantheonsim@a1b9d4237411f9b2b0e0bb895b4d83377f336a7b # v0.1.9
+        with:
+          gpu: nvidia/h100
+          cuda-toolkit: "12.6"
+
+      - name: Install NVRTC
+        run: |
+          sudo apt-get install -y --no-install-recommends \
+            cuda-nvrtc-dev-12-6 libnvjitlink-dev-12-6
+
+      - name: Set up Python with uv
+        uses: astral-sh/setup-uv@68559e99cc807c1eb7e9238fd43a15bba460eec2 # v10.3.3
+        with:
+          python-version: "3.12"
+          activate-environment: "true"
+
+      - name: Install Eigen
+        run: |
+          bash scripts/install-eigen.sh "$RUNNER_TEMP/eigen3"
+          echo "Eigen3_ROOT=$RUNNER_TEMP/eigen3" >> "$GITHUB_ENV"
+
+      - name: Install Python packages
+        run: uv pip install numpy toolz matplotlib pytest scikit-image
+
+      - name: Build CUDA backend
+        run: |
+          export CUDA_HOME=/usr/local/cuda-12.6
+          export PATH=$CUDA_HOME/bin:$PATH
+          export LIBRARY_PATH=$CUDA_HOME/lib64:$CUDA_HOME/lib64/stubs:${LIBRARY_PATH}
+          ls $CUDA_HOME/include | grep -i nvrtc || true
+          uv pip install ./backends/cuda -v
+          uv pip install --no-deps . -v
+
+      # Left out: tests/api/test_gil_release.py. Its tests time GPU work in
+      # worker threads; on the simulator they take about 17 minutes and say
+      # nothing about the GIL handling.
+      - name: Test on the simulated H100
+        timeout-minutes: 60
+        run: |
+          mkdir test-run && cd test-run
+          vgpu run python -m pytest ../tests -k cuda -v -p no:cacheprovider \
+            --ignore=../tests/api/test_gil_release.py --durations=10
